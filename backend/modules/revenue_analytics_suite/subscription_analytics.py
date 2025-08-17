@@ -84,7 +84,7 @@ async def get_subscription_analytics_dashboard() -> Dict[str, Any]:
                 "customer_percentage": round(percentage, 1),
                 "predicted_churn_rate": round(churn_probability, 1),
                 "revenue_at_risk": int(total_mrr * (percentage / 100) * (churn_probability / 100)),
-                "recommended_actions": self._get_churn_actions(risk)
+                "recommended_actions": _get_churn_actions(risk)
             })
         
         dashboard_data = {
