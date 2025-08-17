@@ -55,6 +55,14 @@ function App() {
   const [crossSellData, setCrossSellData] = useState(null);
   const [referralData, setReferralData] = useState(null);
 
+  // Advanced Features Expansion state
+  const [advancedDashboard, setAdvancedDashboard] = useState(null);
+  const [behavioralClusteringData, setBehavioralClusteringData] = useState(null);
+  const [churnPreventionData, setChurnPreventionData] = useState(null);
+  const [crossSellIntelligenceData, setCrossSellIntelligenceData] = useState(null);
+  const [advancedPricingData, setAdvancedPricingData] = useState(null);
+  const [sentimentAnalysisData, setSentimentAnalysisData] = useState(null);
+
   // Campaign creation state
   const [newCampaign, setNewCampaign] = useState({
     name: '',
