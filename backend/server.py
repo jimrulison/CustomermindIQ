@@ -652,6 +652,283 @@ async def schedule_campaign_sending(campaign_id: str):
     except Exception as e:
         print(f"Customer Mind IQ campaign sending error {campaign_id}: {e}")
 
+# =====================================================
+# CUSTOMER INTELLIGENCE AI MODULE ENDPOINTS
+# =====================================================
+
+@app.get("/api/intelligence/behavioral-clustering")
+async def get_behavioral_clustering():
+    """Get customer behavioral clustering analysis"""
+    try:
+        # Get customers data
+        customers_data = await odoo_service.get_customers()
+        
+        # Perform behavioral clustering analysis
+        clustering_results = await behavioral_clustering_service.analyze_customer_behaviors(customers_data)
+        
+        return {
+            "service": "behavioral_clustering",
+            "status": "success",
+            "data": clustering_results,
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Behavioral clustering error: {e}")
+
+@app.get("/api/intelligence/behavioral-clustering/{customer_id}")
+async def get_customer_cluster_details(customer_id: str):
+    """Get detailed cluster information for specific customer"""
+    try:
+        cluster_details = await behavioral_clustering_service.get_customer_cluster_details(customer_id)
+        
+        if not cluster_details:
+            raise HTTPException(status_code=404, detail="Customer cluster data not found")
+            
+        return {
+            "service": "behavioral_clustering",
+            "customer_id": customer_id,
+            "data": cluster_details,
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Customer cluster details error: {e}")
+
+@app.get("/api/intelligence/churn-prevention")
+async def get_churn_analysis():
+    """Get comprehensive churn prevention analysis"""
+    try:
+        # Get customers data
+        customers_data = await odoo_service.get_customers()
+        
+        # Perform churn risk analysis
+        churn_profiles = await churn_prevention_service.analyze_churn_risk(customers_data)
+        
+        # Get dashboard data
+        dashboard_data = await churn_prevention_service.get_churn_dashboard_data()
+        
+        return {
+            "service": "churn_prevention",
+            "status": "success",
+            "churn_profiles": [profile.dict() for profile in churn_profiles],
+            "dashboard": dashboard_data,
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Churn prevention error: {e}")
+
+@app.post("/api/intelligence/churn-prevention/retention-campaigns")
+async def generate_retention_campaigns():
+    """Generate targeted retention campaigns for high-risk customers"""
+    try:
+        # Get latest churn analysis
+        customers_data = await odoo_service.get_customers()
+        churn_profiles = await churn_prevention_service.analyze_churn_risk(customers_data)
+        
+        # Filter high-risk customers
+        high_risk_customers = [profile for profile in churn_profiles if profile.churn_probability >= 0.6]
+        
+        # Generate retention campaigns
+        campaigns = await churn_prevention_service.generate_retention_campaigns(high_risk_customers)
+        
+        return {
+            "service": "churn_prevention",
+            "action": "retention_campaigns",
+            "campaigns": [campaign.dict() for campaign in campaigns],
+            "high_risk_count": len(high_risk_customers),
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Retention campaigns error: {e}")
+
+@app.get("/api/intelligence/lead-scoring")
+async def get_lead_scoring():
+    """Get comprehensive lead scoring analysis"""
+    try:
+        # Get customers data
+        customers_data = await odoo_service.get_customers()
+        
+        # Calculate lead scores
+        lead_scores = await lead_scoring_service.calculate_lead_scores(customers_data)
+        
+        # Get pipeline insights
+        pipeline_insights = await lead_scoring_service.get_sales_pipeline_insights()
+        
+        return {
+            "service": "lead_scoring",
+            "status": "success", 
+            "lead_scores": [score.dict() for score in lead_scores],
+            "pipeline_insights": pipeline_insights,
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Lead scoring error: {e}")
+
+@app.get("/api/intelligence/lead-scoring/{customer_id}/components")
+async def get_lead_score_components(customer_id: str):
+    """Get detailed lead score component breakdown"""
+    try:
+        components = await lead_scoring_service.get_score_components_analysis(customer_id)
+        
+        return {
+            "service": "lead_scoring",
+            "customer_id": customer_id,
+            "components": [component.dict() for component in components],
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Lead score components error: {e}")
+
+@app.get("/api/intelligence/sentiment-analysis")
+async def get_sentiment_analysis():
+    """Get comprehensive customer sentiment analysis"""
+    try:
+        # Get customers data
+        customers_data = await odoo_service.get_customers()
+        
+        # Perform sentiment analysis
+        sentiment_profiles = await sentiment_analysis_service.analyze_customer_sentiment(customers_data)
+        
+        # Get dashboard data
+        dashboard_data = await sentiment_analysis_service.get_sentiment_dashboard_data()
+        
+        return {
+            "service": "sentiment_analysis",
+            "status": "success",
+            "sentiment_profiles": [profile.dict() for profile in sentiment_profiles],
+            "dashboard": dashboard_data,
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Sentiment analysis error: {e}")
+
+@app.post("/api/intelligence/sentiment-analysis/text")
+async def analyze_text_sentiment(request: dict):
+    """Analyze sentiment from specific customer text/communication"""
+    try:
+        customer_id = request.get('customer_id')
+        text = request.get('text')
+        source = request.get('source', 'manual')
+        
+        if not customer_id or not text:
+            raise HTTPException(status_code=400, detail="customer_id and text are required")
+        
+        sentiment_insight = await sentiment_analysis_service.analyze_sentiment_from_text(
+            customer_id, text, source
+        )
+        
+        return {
+            "service": "sentiment_analysis",
+            "action": "text_analysis",
+            "data": sentiment_insight.dict(),
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Text sentiment analysis error: {e}")
+
+@app.get("/api/intelligence/journey-mapping")
+async def get_journey_mapping():
+    """Get comprehensive customer journey mapping analysis"""
+    try:
+        # Get customers data
+        customers_data = await odoo_service.get_customers()
+        
+        # Analyze customer journeys
+        customer_journeys = await journey_mapping_service.analyze_customer_journeys(customers_data)
+        
+        # Get dashboard data
+        dashboard_data = await journey_mapping_service.get_journey_dashboard_data()
+        
+        return {
+            "service": "journey_mapping",
+            "status": "success",
+            "customer_journeys": [journey.dict() for journey in customer_journeys],
+            "dashboard": dashboard_data,
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Journey mapping error: {e}")
+
+@app.get("/api/intelligence/journey-mapping/stages")
+async def get_journey_stages():
+    """Get journey stage performance analysis"""
+    try:
+        stages = await journey_mapping_service.analyze_journey_stages()
+        
+        return {
+            "service": "journey_mapping",
+            "action": "stage_analysis",
+            "stages": [stage.dict() for stage in stages],
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Journey stages error: {e}")
+
+@app.get("/api/intelligence/journey-mapping/touchpoints")
+async def get_touchpoint_analysis():
+    """Get touchpoint effectiveness analysis"""
+    try:
+        touchpoints = await journey_mapping_service.analyze_touchpoints()
+        
+        return {
+            "service": "journey_mapping", 
+            "action": "touchpoint_analysis",
+            "touchpoints": [touchpoint.dict() for touchpoint in touchpoints],
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Touchpoint analysis error: {e}")
+
+@app.get("/api/intelligence/dashboard")
+async def get_intelligence_dashboard():
+    """Get comprehensive Customer Intelligence AI dashboard"""
+    try:
+        # Get customers data
+        customers_data = await odoo_service.get_customers()
+        
+        # Run all intelligence services in parallel
+        clustering_task = behavioral_clustering_service.analyze_customer_behaviors(customers_data)
+        churn_task = churn_prevention_service.get_churn_dashboard_data()
+        scoring_task = lead_scoring_service.get_sales_pipeline_insights()
+        sentiment_task = sentiment_analysis_service.get_sentiment_dashboard_data()
+        journey_task = journey_mapping_service.get_journey_dashboard_data()
+        
+        # Execute all tasks
+        clustering_results, churn_dashboard, scoring_insights, sentiment_dashboard, journey_dashboard = await asyncio.gather(
+            clustering_task, churn_task, scoring_task, sentiment_task, journey_task,
+            return_exceptions=True
+        )
+        
+        return {
+            "service": "customer_intelligence_ai",
+            "status": "success",
+            "modules": {
+                "behavioral_clustering": clustering_results if not isinstance(clustering_results, Exception) else {"error": str(clustering_results)},
+                "churn_prevention": churn_dashboard if not isinstance(churn_dashboard, Exception) else {"error": str(churn_dashboard)},
+                "lead_scoring": scoring_insights if not isinstance(scoring_insights, Exception) else {"error": str(scoring_insights)},
+                "sentiment_analysis": sentiment_dashboard if not isinstance(sentiment_dashboard, Exception) else {"error": str(sentiment_dashboard)},
+                "journey_mapping": journey_dashboard if not isinstance(journey_dashboard, Exception) else {"error": str(journey_dashboard)}
+            },
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Intelligence dashboard error: {e}")
+
+# =====================================================
+# END CUSTOMER INTELLIGENCE AI MODULE ENDPOINTS  
+# =====================================================
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8001)
