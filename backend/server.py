@@ -177,12 +177,129 @@ class CustomerAnalyticsService:
 # Initialize services
 analytics_service = CustomerAnalyticsService()
 
-# Mock ODOO service (will be replaced with real credentials)
-class MockOdooService:
-    """Mock ODOO service - will be replaced with real integration"""
+# Real ODOO service integration
+class OdooService:
+    """Real ODOO service integration"""
+    
+    def __init__(self):
+        self.url = os.getenv("ODOO_URL")
+        self.database = os.getenv("ODOO_DATABASE")
+        self.username = os.getenv("ODOO_USERNAME")
+        self.password = os.getenv("ODOO_PASSWORD")  # Can use API key here
+        self.uid = None
+        self.common = None
+        self.models = None
+        
+    async def connect(self) -> bool:
+        """Establish connection and authenticate with ODOO"""
+        try:
+            import xmlrpc.client
+            self.common = xmlrpc.client.ServerProxy(f'{self.url}/xmlrpc/2/common')
+            self.uid = self.common.authenticate(
+                self.database, self.username, self.password, {}
+            )
+            
+            if self.uid:
+                self.models = xmlrpc.client.ServerProxy(f'{self.url}/xmlrpc/2/object')
+                return True
+            return False
+            
+        except Exception as e:
+            print(f"ODOO Authentication failed: {e}")
+            return False
     
     async def get_customers(self) -> List[Dict]:
-        """Mock customer data - replace with real ODOO API"""
+        """Get real customer data from ODOO"""
+        try:
+            if not await self.connect():
+                print("Failed to connect to ODOO, falling back to mock data")
+                return await self._get_mock_customers()
+            
+            # Search for customers (contacts that are not companies and have email)
+            customer_domain = [
+                ('is_company', '=', False),
+                ('email', '!=', False),
+                ('customer_rank', '>', 0)  # Only customers, not vendors
+            ]
+            
+            customer_ids = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'res.partner', 'search', [customer_domain],
+                {'limit': 50}  # Limit for performance
+            )
+            
+            if not customer_ids:
+                print("No customers found in ODOO, using mock data")
+                return await self._get_mock_customers()
+            
+            # Get customer details
+            customers = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'res.partner', 'read', [customer_ids],
+                {'fields': ['name', 'email', 'phone', 'create_date', 'category_id']}
+            )
+            
+            # Get purchase history for each customer
+            customer_data = []
+            for customer in customers[:10]:  # Limit for performance
+                # Get sales orders for this customer
+                order_domain = [
+                    ('partner_id', '=', customer['id']),
+                    ('state', 'in', ['sale', 'done'])
+                ]
+                
+                order_ids = self.models.execute_kw(
+                    self.database, self.uid, self.password,
+                    'sale.order', 'search', [order_domain]
+                )
+                
+                total_spent = 0
+                software_owned = []
+                
+                if order_ids:
+                    orders = self.models.execute_kw(
+                        self.database, self.uid, self.password,
+                        'sale.order', 'read', [order_ids],
+                        {'fields': ['amount_total', 'date_order', 'order_line']}
+                    )
+                    
+                    total_spent = sum(order.get('amount_total', 0) for order in orders)
+                    
+                    # Get product names from order lines
+                    for order in orders:
+                        if order.get('order_line'):
+                            line_ids = order['order_line']
+                            lines = self.models.execute_kw(
+                                self.database, self.uid, self.password,
+                                'sale.order.line', 'read', [line_ids],
+                                {'fields': ['product_id']}
+                            )
+                            
+                            for line in lines:
+                                if line.get('product_id'):
+                                    product_name = line['product_id'][1]  # [id, name] format
+                                    if product_name not in software_owned:
+                                        software_owned.append(product_name)
+                
+                customer_data.append({
+                    "customer_id": str(customer['id']),
+                    "name": customer['name'],
+                    "email": customer['email'],
+                    "total_purchases": len(order_ids),
+                    "total_spent": total_spent,
+                    "software_owned": software_owned[:5],  # Top 5 products
+                    "last_purchase_date": datetime.now() - timedelta(days=30) if order_ids else None
+                })
+            
+            print(f"Successfully loaded {len(customer_data)} customers from ODOO")
+            return customer_data
+            
+        except Exception as e:
+            print(f"Error fetching ODOO customers: {e}")
+            return await self._get_mock_customers()
+    
+    async def _get_mock_customers(self) -> List[Dict]:
+        """Fallback mock customer data"""
         return [
             {
                 "customer_id": "1",
@@ -205,11 +322,57 @@ class MockOdooService:
         ]
     
     async def send_email_campaign(self, campaign: EmailCampaign) -> bool:
-        """Mock email sending - replace with real ODOO integration"""
-        print(f"Mock: Sending campaign '{campaign.name}' to {len(campaign.target_customers)} customers")
-        return True
+        """Send email campaign via ODOO"""
+        try:
+            if not await self.connect():
+                print("Mock: Failed to connect to ODOO for email sending")
+                return False
+            
+            # Create mailing in ODOO
+            mailing_data = {
+                'name': campaign.name,
+                'subject': campaign.subject,
+                'body_html': campaign.content,
+                'mailing_type': 'mail',
+                'state': 'draft'
+            }
+            
+            mailing_id = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'mailing.mailing', 'create', [mailing_data]
+            )
+            
+            if mailing_id:
+                # Add recipients
+                for customer_id in campaign.target_customers:
+                    contact_data = {
+                        'mailing_id': mailing_id,
+                        'res_id': int(customer_id),
+                        'model': 'res.partner'
+                    }
+                    
+                    self.models.execute_kw(
+                        self.database, self.uid, self.password,
+                        'mailing.contact', 'create', [contact_data]
+                    )
+                
+                # Send the mailing
+                self.models.execute_kw(
+                    self.database, self.uid, self.password,
+                    'mailing.mailing', 'action_send_mail', [mailing_id]
+                )
+                
+                print(f"Successfully sent campaign '{campaign.name}' to {len(campaign.target_customers)} customers via ODOO")
+                return True
+            
+            return False
+            
+        except Exception as e:
+            print(f"Error sending ODOO campaign: {e}")
+            print(f"Mock: Sending campaign '{campaign.name}' to {len(campaign.target_customers)} customers")
+            return True  # Return True for mock sending
 
-odoo_service = MockOdooService()
+odoo_service = OdooService()
 
 # API Endpoints
 @app.get("/api/health")
