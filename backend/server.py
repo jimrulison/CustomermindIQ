@@ -1698,6 +1698,88 @@ async def get_revenue_analytics_dashboard():
 # END REVENUE ANALYTICS SUITE MODULE ENDPOINTS
 # =====================================================
 
+# =====================================================
+# ADVANCED FEATURES EXPANSION MODULE ENDPOINTS
+# =====================================================
+
+# Include Advanced Features Expansion routers
+app.include_router(behavioral_clustering_router, prefix="/api/advanced", tags=["Behavioral Clustering"])
+app.include_router(churn_prevention_router, prefix="/api/advanced", tags=["Churn Prevention AI"])
+app.include_router(cross_sell_intelligence_router, prefix="/api/advanced", tags=["Cross-Sell Intelligence"])
+app.include_router(advanced_pricing_router, prefix="/api/advanced", tags=["Advanced Pricing Optimization"])
+app.include_router(sentiment_analysis_router, prefix="/api/advanced", tags=["Sentiment Analysis"])
+
+@app.get("/api/advanced/dashboard")
+async def get_advanced_features_dashboard():
+    """Get comprehensive Advanced Features Expansion dashboard"""
+    try:
+        # Get data from all advanced features services
+        import httpx
+        base_url = "http://localhost:8001/api/advanced"
+        
+        async with httpx.AsyncClient() as client:
+            behavioral_response = await client.get(f"{base_url}/behavioral-clustering")
+            churn_response = await client.get(f"{base_url}/churn-prevention")
+            cross_sell_response = await client.get(f"{base_url}/cross-sell-intelligence")
+            pricing_response = await client.get(f"{base_url}/pricing-optimization")
+            sentiment_response = await client.get(f"{base_url}/sentiment-analysis")
+            
+            # Parse responses
+            behavioral_data = behavioral_response.json() if behavioral_response.status_code == 200 else {"status": "error"}
+            churn_data = churn_response.json() if churn_response.status_code == 200 else {"status": "error"}
+            cross_sell_data = cross_sell_response.json() if cross_sell_response.status_code == 200 else {"status": "error"}
+            pricing_data = pricing_response.json() if pricing_response.status_code == 200 else {"status": "error"}
+            sentiment_data = sentiment_response.json() if sentiment_response.status_code == 200 else {"status": "error"}
+        
+        return {
+            "service": "advanced_features_expansion",
+            "status": "success",
+            "modules": {
+                "behavioral_clustering": behavioral_data,
+                "churn_prevention": churn_data,
+                "cross_sell_intelligence": cross_sell_data,
+                "advanced_pricing_optimization": pricing_data,
+                "sentiment_analysis": sentiment_data
+            },
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        # Fallback with direct method calls
+        try:
+            from modules.advanced_features_expansion.behavioral_clustering import get_behavioral_clustering_dashboard
+            from modules.advanced_features_expansion.churn_prevention_ai import get_churn_prevention_dashboard
+            from modules.advanced_features_expansion.cross_sell_intelligence import get_cross_sell_dashboard
+            from modules.advanced_features_expansion.pricing_optimization import get_pricing_optimization_dashboard
+            from modules.advanced_features_expansion.sentiment_analysis import get_sentiment_analysis_dashboard
+            
+            # Execute directly
+            behavioral_data = await get_behavioral_clustering_dashboard()
+            churn_data = await get_churn_prevention_dashboard()
+            cross_sell_data = await get_cross_sell_dashboard()
+            pricing_data = await get_pricing_optimization_dashboard()
+            sentiment_data = await get_sentiment_analysis_dashboard()
+            
+            return {
+                "service": "advanced_features_expansion",
+                "status": "success",
+                "modules": {
+                    "behavioral_clustering": behavioral_data,
+                    "churn_prevention": churn_data,
+                    "cross_sell_intelligence": cross_sell_data,
+                    "advanced_pricing_optimization": pricing_data,
+                    "sentiment_analysis": sentiment_data
+                },
+                "timestamp": datetime.now()
+            }
+            
+        except Exception as fallback_error:
+            raise HTTPException(status_code=500, detail=f"Advanced Features dashboard error: {fallback_error}")
+
+# =====================================================
+# END ADVANCED FEATURES EXPANSION MODULE ENDPOINTS
+# =====================================================
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8001)
