@@ -60,7 +60,7 @@ class CustomerIntelligenceAITester:
             print(f"❌ Failed - Error: {str(e)}")
             return False, {}
 
-        """Run a single API test"""
+    def run_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
         url = f"{self.base_url}/{endpoint}"
         headers = {'Content-Type': 'application/json'}
 
