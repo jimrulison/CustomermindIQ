@@ -1116,7 +1116,7 @@ class CustomerIntelligenceAITester:
             "target_segments": ["loyal_customers", "high_value"]
         }
         
-        success, response = self.run_test(
+        success, response = self.run_marketing_test(
             "Create Referral Campaign",
             "POST",
             "api/marketing/referral-program/campaigns",
