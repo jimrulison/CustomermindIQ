@@ -39,6 +39,15 @@ from modules.revenue_analytics_suite import (
     financial_reporting_router
 )
 
+# Import Advanced Features Expansion Module
+from modules.advanced_features_expansion import (
+    behavioral_clustering_router,
+    churn_prevention_router,
+    cross_sell_intelligence_router,
+    pricing_optimization_router,
+    sentiment_analysis_router
+)
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
