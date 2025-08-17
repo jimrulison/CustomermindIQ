@@ -194,6 +194,10 @@ class OdooService:
         """Establish connection and authenticate with ODOO"""
         try:
             import xmlrpc.client
+            print(f"Attempting ODOO connection to: {self.url}")
+            print(f"Database: {self.database}")
+            print(f"Username: {self.username}")
+            
             self.common = xmlrpc.client.ServerProxy(f'{self.url}/xmlrpc/2/common')
             self.uid = self.common.authenticate(
                 self.database, self.username, self.password, {}
@@ -201,11 +205,14 @@ class OdooService:
             
             if self.uid:
                 self.models = xmlrpc.client.ServerProxy(f'{self.url}/xmlrpc/2/object')
+                print(f"✅ ODOO Authentication successful! User ID: {self.uid}")
                 return True
-            return False
+            else:
+                print("❌ ODOO Authentication failed - invalid credentials")
+                return False
             
         except Exception as e:
-            print(f"ODOO Authentication failed: {e}")
+            print(f"❌ ODOO Authentication failed: {e}")
             return False
     
     async def get_customers(self) -> List[Dict]:
