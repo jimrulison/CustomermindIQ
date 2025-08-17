@@ -7,7 +7,8 @@ import os
 import xmlrpc.client
 from dotenv import load_dotenv
 
-load_dotenv()
+# Load from backend directory
+load_dotenv('/app/backend/.env')
 
 def test_odoo_connection():
     """Test direct ODOO connection"""
