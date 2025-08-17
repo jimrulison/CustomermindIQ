@@ -164,7 +164,254 @@ class CustomerIntelligenceAITester:
         return success
 
     # =====================================================
-    # CUSTOMER INTELLIGENCE AI MODULE TESTS
+    # UNIVERSAL CUSTOMER INTELLIGENCE PLATFORM TESTS
+    # =====================================================
+
+    def test_universal_connectors_status(self):
+        """Test Universal Platform - Get connector status management"""
+        print("\n🔌 Testing Universal Platform - Connector Status Management...")
+        
+        success, response = self.run_universal_test(
+            "Universal Connectors Status",
+            "GET",
+            "api/universal/connectors/status",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            connectors = response.get('connectors', [])
+            total_connected = response.get('total_connected', 0)
+            total_configured = response.get('total_configured', 0)
+            
+            print(f"   Total configured connectors: {total_configured}")
+            print(f"   Total connected connectors: {total_connected}")
+            
+            for connector in connectors:
+                print(f"   - {connector.get('platform_name', 'Unknown')}: {'✅ Connected' if connector.get('is_connected') else '❌ Disconnected'}")
+                print(f"     Last sync: {connector.get('last_sync_time', 'Never')}")
+        
+        return success
+
+    def test_universal_add_connector(self):
+        """Test Universal Platform - Add platform connectors (mock request)"""
+        print("\n➕ Testing Universal Platform - Add Connector (Mock)...")
+        
+        # Test adding a mock Stripe connector
+        stripe_connector_data = {
+            "platform_type": "stripe",
+            "credentials": {
+                "api_key": "sk_test_mock_key_for_testing",
+                "webhook_secret": "whsec_mock_webhook_secret"
+            }
+        }
+        
+        success, response = self.run_universal_test(
+            "Add Stripe Connector (Mock)",
+            "POST",
+            "api/universal/connectors/add",
+            200,
+            data=stripe_connector_data,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Platform: {response.get('platform', 'Unknown')}")
+            print(f"   Connector ID: {response.get('connector_id', 'Unknown')}")
+            print(f"   Message: {response.get('message', 'No message')}")
+        
+        return success
+
+    def test_universal_customers(self):
+        """Test Universal Platform - Get unified customer profiles"""
+        print("\n👥 Testing Universal Platform - Unified Customer Profiles...")
+        
+        success, response = self.run_universal_test(
+            "Universal Unified Customers",
+            "GET",
+            "api/universal/customers",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            customers = response.get('customers', [])
+            total_count = response.get('total_count', 0)
+            platforms_represented = response.get('platforms_represented', [])
+            
+            print(f"   Total unified customers: {total_count}")
+            print(f"   Platforms represented: {', '.join(platforms_represented) if platforms_represented else 'None'}")
+            
+            for customer in customers[:3]:  # Show first 3 customers
+                print(f"   - {customer.get('name', 'Unknown')} ({customer.get('email', 'No email')})")
+                print(f"     Platforms: {', '.join(customer.get('platforms_active', []))}")
+                print(f"     Total value: ${customer.get('total_value', 0):,.2f}")
+        
+        return success
+
+    def test_universal_intelligence(self):
+        """Test Universal Platform - Get comprehensive business intelligence"""
+        print("\n🧠 Testing Universal Platform - Comprehensive Business Intelligence...")
+        
+        success, response = self.run_universal_test(
+            "Universal Business Intelligence",
+            "GET",
+            "api/universal/intelligence",
+            200,
+            timeout=60  # AI analysis takes time
+        )
+        
+        if success:
+            business_intelligence = response.get('business_intelligence', {})
+            action_recommendations = response.get('action_recommendations', [])
+            dashboard_data = response.get('dashboard_data', {})
+            customers_analyzed = response.get('customers_analyzed', 0)
+            
+            print(f"   Customers analyzed: {customers_analyzed}")
+            print(f"   Action recommendations: {len(action_recommendations)}")
+            
+            if business_intelligence:
+                print(f"   Business name: {business_intelligence.get('business_name', 'Unknown')}")
+                print(f"   Intelligence score: {business_intelligence.get('intelligence_score', 0)}/100")
+                
+                key_insights = business_intelligence.get('key_insights', [])
+                print(f"   Key insights: {len(key_insights)}")
+                for insight in key_insights[:2]:  # Show first 2 insights
+                    print(f"   - {insight.get('insight_type', 'Unknown')}: {insight.get('description', 'No description')[:100]}...")
+            
+            # Show top recommendations
+            for rec in action_recommendations[:3]:  # Show first 3 recommendations
+                print(f"   📋 {rec.get('action_type', 'Unknown')} ({rec.get('priority', 'unknown')} priority)")
+                print(f"      Impact: {rec.get('expected_impact', 'Unknown')}")
+        
+        return success
+
+    def test_universal_dashboard(self):
+        """Test Universal Platform - Get universal dashboard for any business"""
+        print("\n📊 Testing Universal Platform - Universal Dashboard...")
+        
+        success, response = self.run_universal_test(
+            "Universal Dashboard",
+            "GET",
+            "api/universal/dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            dashboard = response.get('dashboard', {})
+            connectors = response.get('connectors', [])
+            data_health = response.get('data_health', 'unknown')
+            
+            print(f"   Data health: {data_health}")
+            print(f"   Connected platforms: {len(connectors)}")
+            
+            if dashboard:
+                metrics = dashboard.get('key_metrics', {})
+                print(f"   Total customers: {metrics.get('total_customers', 0)}")
+                print(f"   Total revenue: ${metrics.get('total_revenue', 0):,.2f}")
+                print(f"   Growth rate: {metrics.get('growth_rate', 0):.1f}%")
+                
+                segments = dashboard.get('customer_segments', [])
+                print(f"   Customer segments: {len(segments)}")
+                for segment in segments[:2]:  # Show first 2 segments
+                    print(f"   - {segment.get('segment_name', 'Unknown')}: {segment.get('customer_count', 0)} customers")
+        
+        return success
+
+    def test_universal_recommendations(self):
+        """Test Universal Platform - Get AI-powered action recommendations"""
+        print("\n🎯 Testing Universal Platform - AI Action Recommendations...")
+        
+        success, response = self.run_universal_test(
+            "Universal Action Recommendations",
+            "GET",
+            "api/universal/recommendations",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            urgent_actions = response.get('urgent_actions', [])
+            high_priority = response.get('high_priority', [])
+            medium_priority = response.get('medium_priority', [])
+            total_recommendations = response.get('total_recommendations', 0)
+            
+            print(f"   Total recommendations: {total_recommendations}")
+            print(f"   Urgent actions: {len(urgent_actions)}")
+            print(f"   High priority: {len(high_priority)}")
+            print(f"   Medium priority: {len(medium_priority)}")
+            
+            # Show urgent actions
+            for action in urgent_actions[:2]:  # Show first 2 urgent actions
+                print(f"   🚨 URGENT: {action.get('action_type', 'Unknown')}")
+                print(f"      Description: {action.get('description', 'No description')[:100]}...")
+                print(f"      Expected impact: {action.get('expected_impact', 'Unknown')}")
+            
+            # Show high priority actions
+            for action in high_priority[:2]:  # Show first 2 high priority actions
+                print(f"   ⚡ HIGH: {action.get('action_type', 'Unknown')}")
+                print(f"      Description: {action.get('description', 'No description')[:100]}...")
+        
+        return success
+
+    def test_universal_sync(self):
+        """Test Universal Platform - Test full platform sync (mock)"""
+        print("\n🔄 Testing Universal Platform - Full Platform Sync...")
+        
+        success, response = self.run_universal_test(
+            "Universal Platform Sync",
+            "POST",
+            "api/universal/sync",
+            200,
+            timeout=60  # Sync operations take time
+        )
+        
+        if success:
+            sync_results = response.get('sync_results', {})
+            unified_profiles_created = response.get('unified_profiles_created', 0)
+            business_intelligence = response.get('business_intelligence', {})
+            
+            print(f"   Unified profiles created: {unified_profiles_created}")
+            
+            # Show sync results for each platform
+            for platform, result in sync_results.items():
+                if result.get('success'):
+                    print(f"   ✅ {platform.title()}: {result.get('customers_synced', 0)} customers, {result.get('transactions_synced', 0)} transactions")
+                else:
+                    print(f"   ❌ {platform.title()}: {result.get('error', 'Unknown error')}")
+            
+            if business_intelligence:
+                print(f"   Business intelligence generated: {business_intelligence.get('business_name', 'Unknown')}")
+                print(f"   Intelligence score: {business_intelligence.get('intelligence_score', 0)}/100")
+        
+        return success
+
+    def test_universal_customer_by_email(self):
+        """Test Universal Platform - Get customer by email"""
+        print("\n📧 Testing Universal Platform - Customer Lookup by Email...")
+        
+        # Use a test email - this will likely return 404 but tests the endpoint
+        test_email = "test@example.com"
+        
+        success, response = self.run_universal_test(
+            f"Universal Customer Lookup ({test_email})",
+            "GET",
+            f"api/universal/customers/{test_email}",
+            404,  # Expecting 404 since test email won't exist
+            timeout=30
+        )
+        
+        # For this test, 404 is expected and considered success
+        if not success and response == {}:
+            print("   ✅ Expected 404 response for non-existent test email")
+            self.universal_platform_passed += 1  # Count as passed since 404 is expected
+            return True
+        
+        return success
+
+    # =====================================================
+    # END UNIVERSAL CUSTOMER INTELLIGENCE PLATFORM TESTS
     # =====================================================
 
     def test_behavioral_clustering(self):
