@@ -236,10 +236,20 @@ async def analyze_customer_behavior(customer_data: Dict[str, Any]) -> Dict[str, 
         customer_id = customer_data.get("customer_id", str(uuid.uuid4()))
         
         # Extract behavioral features
+        last_purchase_date = customer_data.get("last_purchase_date")
+        if isinstance(last_purchase_date, str):
+            try:
+                from datetime import datetime
+                last_purchase_date = datetime.fromisoformat(last_purchase_date.replace('Z', '+00:00'))
+            except:
+                last_purchase_date = datetime.now()
+        elif last_purchase_date is None:
+            last_purchase_date = datetime.now()
+            
         features = {
             "purchase_frequency": customer_data.get("total_purchases", 0),
             "avg_order_value": customer_data.get("total_spent", 0) / max(customer_data.get("total_purchases", 1), 1),
-            "days_since_last_purchase": (datetime.now() - customer_data.get("last_purchase_date", datetime.now())).days if customer_data.get("last_purchase_date") else 0,
+            "days_since_last_purchase": (datetime.now() - last_purchase_date).days,
             "product_diversity": len(customer_data.get("software_owned", [])),
             "engagement_score": customer_data.get("engagement_score", 50)
         }
