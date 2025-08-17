@@ -1600,6 +1600,95 @@ async def get_marketing_automation_dashboard():
 # END MARKETING AUTOMATION PRO MODULE ENDPOINTS
 # =====================================================
 
+# =====================================================
+# REVENUE ANALYTICS SUITE MODULE ENDPOINTS
+# =====================================================
+
+# Include Revenue Analytics Suite routers
+app.include_router(revenue_forecasting_router, prefix="/api/revenue", tags=["Revenue Forecasting"])
+app.include_router(price_optimization_router, prefix="/api/revenue", tags=["Price Optimization"])
+app.include_router(profit_margin_analysis_router, prefix="/api/revenue", tags=["Profit Margin Analysis"])
+app.include_router(subscription_analytics_router, prefix="/api/revenue", tags=["Subscription Analytics"])
+app.include_router(financial_reporting_router, prefix="/api/revenue", tags=["Financial Reporting"])
+
+@app.get("/api/revenue/dashboard")
+async def get_revenue_analytics_dashboard():
+    """Get comprehensive Revenue Analytics Suite dashboard"""
+    try:
+        # Get data from all revenue services in parallel
+        forecasting_task = revenue_forecasting_router.url_path_for("get_revenue_forecasting_dashboard")
+        price_task = price_optimization_router.url_path_for("get_price_optimization_dashboard")
+        margin_task = profit_margin_analysis_router.url_path_for("get_profit_margin_dashboard")
+        subscription_task = subscription_analytics_router.url_path_for("get_subscription_analytics_dashboard")
+        reporting_task = financial_reporting_router.url_path_for("get_financial_reporting_dashboard")
+        
+        # Since routers are included, we can make internal requests
+        import httpx
+        base_url = "http://localhost:8001/api/revenue"
+        
+        async with httpx.AsyncClient() as client:
+            forecasting_response = await client.get(f"{base_url}/revenue-forecasting")
+            price_response = await client.get(f"{base_url}/price-optimization")
+            margin_response = await client.get(f"{base_url}/profit-margin-analysis")
+            subscription_response = await client.get(f"{base_url}/subscription-analytics")
+            reporting_response = await client.get(f"{base_url}/financial-reporting")
+            
+            # Parse responses
+            forecasting_data = forecasting_response.json() if forecasting_response.status_code == 200 else {"status": "error"}
+            price_data = price_response.json() if price_response.status_code == 200 else {"status": "error"}
+            margin_data = margin_response.json() if margin_response.status_code == 200 else {"status": "error"}
+            subscription_data = subscription_response.json() if subscription_response.status_code == 200 else {"status": "error"}
+            reporting_data = reporting_response.json() if reporting_response.status_code == 200 else {"status": "error"}
+        
+        return {
+            "service": "revenue_analytics_suite",
+            "status": "success",
+            "modules": {
+                "revenue_forecasting": forecasting_data,
+                "price_optimization": price_data,
+                "profit_margin_analysis": margin_data,
+                "subscription_analytics": subscription_data,
+                "financial_reporting": reporting_data
+            },
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        # Fallback with direct method calls
+        try:
+            from modules.revenue_analytics_suite.revenue_forecasting import get_revenue_forecasting_dashboard
+            from modules.revenue_analytics_suite.price_optimization import get_price_optimization_dashboard
+            from modules.revenue_analytics_suite.profit_margin_analysis import get_profit_margin_dashboard
+            from modules.revenue_analytics_suite.subscription_analytics import get_subscription_analytics_dashboard
+            from modules.revenue_analytics_suite.financial_reporting import get_financial_reporting_dashboard
+            
+            # Execute directly
+            forecasting_data = await get_revenue_forecasting_dashboard()
+            price_data = await get_price_optimization_dashboard()
+            margin_data = await get_profit_margin_dashboard()
+            subscription_data = await get_subscription_analytics_dashboard()
+            reporting_data = await get_financial_reporting_dashboard()
+            
+            return {
+                "service": "revenue_analytics_suite",
+                "status": "success",
+                "modules": {
+                    "revenue_forecasting": forecasting_data,
+                    "price_optimization": price_data,
+                    "profit_margin_analysis": margin_data,
+                    "subscription_analytics": subscription_data,
+                    "financial_reporting": reporting_data
+                },
+                "timestamp": datetime.now()
+            }
+            
+        except Exception as fallback_error:
+            raise HTTPException(status_code=500, detail=f"Revenue Analytics Suite dashboard error: {fallback_error}")
+
+# =====================================================
+# END REVENUE ANALYTICS SUITE MODULE ENDPOINTS
+# =====================================================
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8001)
