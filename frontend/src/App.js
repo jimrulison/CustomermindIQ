@@ -127,6 +127,64 @@ function App() {
     }
   };
 
+  const loadMarketingData = async () => {
+    try {
+      console.log('Loading Marketing Automation Pro data...');
+      
+      const [
+        marketingRes,
+        multiChannelRes,
+        abTestingRes,
+        dynamicContentRes,
+        crossSellRes,
+        referralRes
+      ] = await Promise.all([
+        axios.get(`${API_BASE_URL}/api/marketing/dashboard`).catch(err => {
+          console.error('Marketing dashboard error:', err);
+          return { data: { modules: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/marketing/multi-channel-orchestration`).catch(err => {
+          console.error('Multi-channel error:', err);
+          return { data: { dashboard: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/marketing/ab-testing`).catch(err => {
+          console.error('A/B testing error:', err);
+          return { data: { dashboard: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/marketing/dynamic-content`).catch(err => {
+          console.error('Dynamic content error:', err);
+          return { data: { dashboard: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/marketing/cross-sell-intelligence`).catch(err => {
+          console.error('Cross-sell error:', err);
+          return { data: { dashboard: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/marketing/referral-program`).catch(err => {
+          console.error('Referral program error:', err);
+          return { data: { dashboard: {} } };
+        })
+      ]);
+      
+      setMarketingDashboard(marketingRes.data);
+      setMultiChannelData(multiChannelRes.data);
+      setAbTestingData(abTestingRes.data);
+      setDynamicContentData(dynamicContentRes.data);
+      setCrossSellData(crossSellRes.data);
+      setReferralData(referralRes.data);
+      
+      console.log('Marketing Automation Pro data loaded successfully');
+    } catch (error) {
+      console.error('Error loading marketing data:', error);
+      // Set default values
+      setMarketingDashboard({ modules: {} });
+      setMultiChannelData({ dashboard: {} });
+      setAbTestingData({ dashboard: {} });
+      setDynamicContentData({ dashboard: {} });
+      setCrossSellData({ dashboard: {} });
+      setReferralData({ dashboard: {} });
+    }
+  };
+
   const loadCustomerRecommendations = async (customerId) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/api/customers/${customerId}/recommendations`);
