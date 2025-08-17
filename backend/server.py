@@ -12,13 +12,27 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 import json
 
-# Import Customer Intelligence AI Module
+# Import Customer Intelligence AI Module (Legacy - for backward compatibility)
 from modules.customer_intelligence_ai import (
     BehavioralClusteringService,
     ChurnPreventionService,
     LeadScoringService,
     SentimentAnalysisService,
     JourneyMappingService
+)
+
+# Import Universal Intelligence System
+from universal_intelligence import (
+    UniversalIntelligenceService,
+    CustomerProfileManager,
+    UniversalCustomerProfile
+)
+
+# Import Universal Connectors
+from connectors import (
+    BaseConnector,
+    StripeConnector,
+    OdooConnector
 )
 
 load_dotenv()
