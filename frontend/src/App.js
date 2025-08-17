@@ -111,6 +111,9 @@ function App() {
       // Load Marketing Automation Pro data
       await loadMarketingData();
       
+      // Load Advanced Features Expansion data
+      await loadAdvancedFeaturesData();
+      
       console.log('Customer Mind IQ data loaded successfully');
     } catch (error) {
       console.error('Error loading data:', error);
