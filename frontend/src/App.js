@@ -196,6 +196,64 @@ function App() {
     }
   };
 
+  const loadAdvancedFeaturesData = async () => {
+    try {
+      console.log('Loading Advanced Features Expansion data...');
+      
+      const [
+        advancedRes,
+        behavioralRes,
+        churnRes,
+        crossSellAdvancedRes,
+        pricingRes,
+        sentimentRes
+      ] = await Promise.all([
+        axios.get(`${API_BASE_URL}/api/advanced/dashboard`).catch(err => {
+          console.error('Advanced dashboard error:', err);
+          return { data: { modules: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/advanced/behavioral-clustering`).catch(err => {
+          console.error('Behavioral clustering error:', err);
+          return { data: { dashboard: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/advanced/churn-prevention`).catch(err => {
+          console.error('Churn prevention error:', err);
+          return { data: { dashboard: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/advanced/cross-sell-intelligence`).catch(err => {
+          console.error('Cross-sell intelligence error:', err);
+          return { data: { dashboard: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/advanced/pricing-optimization`).catch(err => {
+          console.error('Advanced pricing error:', err);
+          return { data: { dashboard: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/advanced/sentiment-analysis`).catch(err => {
+          console.error('Sentiment analysis error:', err);
+          return { data: { dashboard: {} } };
+        })
+      ]);
+      
+      setAdvancedDashboard(advancedRes.data);
+      setBehavioralClusteringData(behavioralRes.data);
+      setChurnPreventionData(churnRes.data);
+      setCrossSellIntelligenceData(crossSellAdvancedRes.data);
+      setAdvancedPricingData(pricingRes.data);
+      setSentimentAnalysisData(sentimentRes.data);
+      
+      console.log('Advanced Features Expansion data loaded successfully');
+    } catch (error) {
+      console.error('Error loading advanced features data:', error);
+      // Set default values
+      setAdvancedDashboard({ modules: {} });
+      setBehavioralClusteringData({ dashboard: {} });
+      setChurnPreventionData({ dashboard: {} });
+      setCrossSellIntelligenceData({ dashboard: {} });
+      setAdvancedPricingData({ dashboard: {} });
+      setSentimentAnalysisData({ dashboard: {} });
+    }
+  };
+
   const loadCustomerRecommendations = async (customerId) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/api/customers/${customerId}/recommendations`);
