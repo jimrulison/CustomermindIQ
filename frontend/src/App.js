@@ -99,6 +99,10 @@ function App() {
       setCustomers(customersRes.data);
       setCampaigns(campaignsRes.data);
       setAnalytics(analyticsRes.data);
+      
+      // Load Marketing Automation Pro data
+      await loadMarketingData();
+      
       console.log('Customer Mind IQ data loaded successfully');
     } catch (error) {
       console.error('Error loading data:', error);
