@@ -1176,7 +1176,7 @@ class CustomerIntelligenceAITester:
         url = f"{self.base_url}/{endpoint}"
         headers = {'Content-Type': 'application/json'}
 
-        self.tests_run += 1
+        self.revenue_analytics_tests += 1
         print(f"\n💰 Testing Revenue Analytics Suite: {name}...")
         print(f"   URL: {url}")
         
@@ -1192,7 +1192,7 @@ class CustomerIntelligenceAITester:
 
             success = response.status_code == expected_status
             if success:
-                self.tests_passed += 1
+                self.revenue_analytics_passed += 1
                 print(f"✅ Passed - Status: {response.status_code}")
                 try:
                     response_data = response.json()
