@@ -1783,6 +1783,561 @@ class CustomerIntelligenceAITester:
     # =====================================================
 
     # =====================================================
+    # ADVANCED FEATURES EXPANSION MODULE TESTS
+    # =====================================================
+
+    def run_advanced_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
+        """Run an Advanced Features Expansion API test"""
+        url = f"{self.base_url}/{endpoint}"
+        headers = {'Content-Type': 'application/json'}
+
+        self.advanced_features_tests += 1
+        print(f"\n🚀 Testing Advanced Features Expansion: {name}...")
+        print(f"   URL: {url}")
+        
+        try:
+            if method == 'GET':
+                response = requests.get(url, headers=headers, timeout=timeout)
+            elif method == 'POST':
+                response = requests.post(url, json=data, headers=headers, timeout=timeout)
+            elif method == 'PUT':
+                response = requests.put(url, json=data, headers=headers, timeout=timeout)
+            elif method == 'DELETE':
+                response = requests.delete(url, headers=headers, timeout=timeout)
+
+            success = response.status_code == expected_status
+            if success:
+                self.advanced_features_passed += 1
+                print(f"✅ Passed - Status: {response.status_code}")
+                try:
+                    response_data = response.json()
+                    print(f"   Response preview: {str(response_data)[:200]}...")
+                    return True, response_data
+                except:
+                    return True, {}
+            else:
+                print(f"❌ Failed - Expected {expected_status}, got {response.status_code}")
+                try:
+                    error_data = response.json()
+                    print(f"   Error: {error_data}")
+                except:
+                    print(f"   Error text: {response.text[:200]}")
+                return False, {}
+
+        except requests.exceptions.Timeout:
+            print(f"❌ Failed - Request timed out after {timeout} seconds")
+            return False, {}
+        except Exception as e:
+            print(f"❌ Failed - Error: {str(e)}")
+            return False, {}
+
+    def test_advanced_behavioral_clustering_dashboard(self):
+        """Test Advanced Features Expansion - Behavioral Clustering Dashboard"""
+        print("\n🧠 Testing Advanced Features Expansion - Behavioral Clustering Dashboard...")
+        
+        success, response = self.run_advanced_test(
+            "Behavioral Clustering Dashboard",
+            "GET",
+            "api/advanced/behavioral-clustering",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                summary = dashboard.get('summary_metrics', {})
+                print(f"   Customers Analyzed: {summary.get('total_customers_analyzed', 0)}")
+                print(f"   Clusters Identified: {summary.get('clusters_identified', 0)}")
+                print(f"   Avg Conversion Rate: {summary.get('average_conversion_rate', 0)}%")
+                print(f"   Segmentation Quality: {summary.get('segmentation_quality_score', 0)}/100")
+                
+                clusters = dashboard.get('customer_clusters', [])
+                print(f"   Customer Clusters: {len(clusters)}")
+                for cluster in clusters[:3]:  # Show first 3 clusters
+                    print(f"   - {cluster.get('name', 'Unknown')}: {cluster.get('customer_count', 0)} customers")
+                    print(f"     Conversion Rate: {cluster.get('conversion_rate', 0)}%")
+                    print(f"     Avg LTV: ${cluster.get('avg_lifetime_value', 0):,}")
+                
+                insights = dashboard.get('ai_insights', [])
+                print(f"   AI Insights: {len(insights)}")
+                for insight in insights[:2]:  # Show first 2 insights
+                    print(f"   - {insight.get('insight', 'Unknown')} (Impact: {insight.get('impact', 'unknown')})")
+        
+        return success
+
+    def test_advanced_behavioral_clustering_analyze(self):
+        """Test Advanced Features Expansion - Customer Behavior Analysis"""
+        print("\n🎯 Testing Advanced Features Expansion - Customer Behavior Analysis...")
+        
+        customer_data = {
+            "customer_id": "test_customer_123",
+            "total_purchases": 5,
+            "total_spent": 2500.0,
+            "software_owned": ["CRM Pro", "Analytics Suite"],
+            "engagement_score": 75,
+            "last_purchase_date": "2024-01-15T10:00:00Z"
+        }
+        
+        success, response = self.run_advanced_test(
+            "Customer Behavior Analysis",
+            "POST",
+            "api/advanced/behavioral-clustering/analyze",
+            200,
+            data=customer_data,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Customer ID: {response.get('customer_id', 'unknown')}")
+            
+            cluster_assignment = response.get('cluster_assignment', {})
+            if cluster_assignment:
+                print(f"   Assigned Cluster: {cluster_assignment.get('cluster_name', 'unknown')}")
+                print(f"   Confidence Score: {cluster_assignment.get('confidence_score', 0)}")
+            
+            recommendations = response.get('personalized_recommendations', [])
+            print(f"   Personalized Recommendations: {len(recommendations)}")
+            
+            marketing_strategy = response.get('marketing_strategy', {})
+            if marketing_strategy:
+                print(f"   Email Frequency: {marketing_strategy.get('email_frequency', 'unknown')}")
+                print(f"   Communication Tone: {marketing_strategy.get('communication_tone', 'unknown')}")
+        
+        return success
+
+    def test_advanced_churn_prevention_dashboard(self):
+        """Test Advanced Features Expansion - Churn Prevention AI Dashboard"""
+        print("\n🚨 Testing Advanced Features Expansion - Churn Prevention AI Dashboard...")
+        
+        success, response = self.run_advanced_test(
+            "Churn Prevention AI Dashboard",
+            "GET",
+            "api/advanced/churn-prevention",
+            200,
+            timeout=60
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                summary = dashboard.get('summary_metrics', {})
+                print(f"   Customers Monitored: {summary.get('total_customers_monitored', 0)}")
+                print(f"   At-Risk Customers: {summary.get('at_risk_customers', 0)}")
+                print(f"   Critical Risk Count: {summary.get('critical_risk_count', 0)}")
+                print(f"   Potential Revenue at Risk: ${summary.get('potential_revenue_at_risk', 0):,}")
+                
+                at_risk_customers = dashboard.get('at_risk_customers', [])
+                print(f"   At-Risk Customer Profiles: {len(at_risk_customers)}")
+                for customer in at_risk_customers[:3]:  # Show first 3 at-risk customers
+                    print(f"   - {customer.get('name', 'Unknown')}: {customer.get('churn_probability', 0)}% churn risk")
+                    print(f"     Risk Level: {customer.get('risk_level', 'unknown')}")
+                    print(f"     Potential Loss: ${customer.get('potential_loss', 0):,}")
+                
+                campaigns = dashboard.get('active_retention_campaigns', [])
+                print(f"   Active Retention Campaigns: {len(campaigns)}")
+                
+                model_performance = dashboard.get('model_performance', {})
+                if model_performance:
+                    print(f"   Model Accuracy: {model_performance.get('accuracy', 0)}%")
+                    print(f"   Model Version: {model_performance.get('model_version', 'unknown')}")
+                
+                success_metrics = dashboard.get('success_metrics', {})
+                if success_metrics:
+                    print(f"   Churn Reduction: {success_metrics.get('churn_reduction_percentage', 0)}%")
+                    print(f"   Customers Saved This Month: {success_metrics.get('customers_saved_this_month', 0)}")
+                    print(f"   Revenue Protected: ${success_metrics.get('revenue_protected_this_month', 0):,}")
+        
+        return success
+
+    def test_advanced_churn_prevention_predict(self):
+        """Test Advanced Features Expansion - Individual Customer Churn Prediction"""
+        print("\n🔮 Testing Advanced Features Expansion - Customer Churn Prediction...")
+        
+        customer_data = {
+            "customer_id": "test_customer_456",
+            "days_since_last_login": 21,
+            "usage_frequency_change": -25,
+            "payment_delays": 1,
+            "support_tickets_last_30d": 2,
+            "feature_adoption_rate": 45,
+            "email_engagement_rate": 15,
+            "account_age_days": 180,
+            "last_purchase_days_ago": 45,
+            "subscription_value": 299
+        }
+        
+        success, response = self.run_advanced_test(
+            "Customer Churn Prediction",
+            "POST",
+            "api/advanced/churn-prevention/predict",
+            200,
+            data=customer_data,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Customer ID: {response.get('customer_id', 'unknown')}")
+            
+            prediction = response.get('churn_prediction', {})
+            if prediction:
+                print(f"   Churn Probability: {prediction.get('churn_probability', 0)}%")
+                print(f"   Risk Level: {prediction.get('risk_level', 'unknown')}")
+                print(f"   Days to Predicted Churn: {prediction.get('days_to_predicted_churn', 0)}")
+            
+            interventions = response.get('recommended_interventions', [])
+            print(f"   Recommended Interventions: {len(interventions)}")
+            
+            risk_factors = response.get('risk_factors', [])
+            print(f"   Risk Factors Identified: {len(risk_factors)}")
+        
+        return success
+
+    def test_advanced_cross_sell_intelligence_dashboard(self):
+        """Test Advanced Features Expansion - Cross-Sell Intelligence Dashboard"""
+        print("\n💰 Testing Advanced Features Expansion - Cross-Sell Intelligence Dashboard...")
+        
+        success, response = self.run_advanced_test(
+            "Cross-Sell Intelligence Dashboard",
+            "GET",
+            "api/advanced/cross-sell-intelligence",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                summary = dashboard.get('summary_metrics', {})
+                print(f"   Cross-Sell Opportunities: {summary.get('total_cross_sell_opportunities', 0)}")
+                print(f"   Total Potential Revenue: ${summary.get('total_potential_revenue', 0):,}")
+                print(f"   Avg Cross-Sell Conversion: {summary.get('avg_cross_sell_conversion_rate', 0)}%")
+                print(f"   Cross-Sell Revenue This Month: ${summary.get('cross_sell_revenue_this_month', 0):,}")
+                
+                products = dashboard.get('product_catalog', [])
+                print(f"   Products in Catalog: {len(products)}")
+                
+                relationships = dashboard.get('product_relationships', [])
+                print(f"   Product Relationships: {len(relationships)}")
+                for rel in relationships[:3]:  # Show first 3 relationships
+                    print(f"   - {rel.get('product_a', 'Unknown')} + {rel.get('product_b', 'Unknown')}")
+                    print(f"     Co-Purchase Rate: {rel.get('co_purchase_rate', 0)}%")
+                    print(f"     Revenue Uplift: {rel.get('revenue_uplift', 0)}%")
+                
+                opportunities = dashboard.get('cross_sell_opportunities', [])
+                print(f"   Active Opportunities: {len(opportunities)}")
+                
+                bundles = dashboard.get('top_bundles', [])
+                print(f"   Top Product Bundles: {len(bundles)}")
+                
+                insights = dashboard.get('ai_insights', [])
+                print(f"   AI Insights: {len(insights)}")
+                for insight in insights[:2]:  # Show first 2 insights
+                    print(f"   - {insight.get('insight', 'Unknown')} (Confidence: {insight.get('confidence', 0)}%)")
+        
+        return success
+
+    def test_advanced_cross_sell_intelligence_recommend(self):
+        """Test Advanced Features Expansion - Customer Cross-Sell Recommendations"""
+        print("\n🎯 Testing Advanced Features Expansion - Customer Cross-Sell Recommendations...")
+        
+        customer_data = {
+            "customer_id": "test_customer_789",
+            "current_products": ["CRM Pro"],
+            "segment": "SMB",
+            "purchase_history": [
+                {"product": "CRM Pro", "date": "2024-01-15", "amount": 299}
+            ],
+            "usage_patterns": {
+                "engagement_score": 85,
+                "feature_utilization": 0.7
+            }
+        }
+        
+        success, response = self.run_advanced_test(
+            "Customer Cross-Sell Recommendations",
+            "POST",
+            "api/advanced/cross-sell-intelligence/recommend",
+            200,
+            data=customer_data,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Customer ID: {response.get('customer_id', 'unknown')}")
+            
+            recommendations = response.get('recommendations', [])
+            print(f"   Product Recommendations: {len(recommendations)}")
+            for rec in recommendations[:3]:  # Show first 3 recommendations
+                print(f"   - {rec.get('product_name', 'Unknown')}: ${rec.get('price', 0)}")
+                print(f"     Confidence: {rec.get('confidence_score', 0)}%")
+                print(f"     Conversion Probability: {rec.get('conversion_probability', 0):.2f}")
+                print(f"     Expected ROI: {rec.get('expected_roi', 0):.1f}x")
+            
+            campaign_suggestions = response.get('campaign_suggestions', [])
+            print(f"   Campaign Suggestions: {len(campaign_suggestions)}")
+            
+            revenue_potential = response.get('revenue_potential', {})
+            if revenue_potential:
+                print(f"   Immediate Opportunity: ${revenue_potential.get('immediate_opportunity', 0):,.0f}")
+                print(f"   12-Month Potential: ${revenue_potential.get('12_month_potential', 0):,.0f}")
+        
+        return success
+
+    def test_advanced_pricing_optimization_dashboard(self):
+        """Test Advanced Features Expansion - Advanced Pricing Optimization Dashboard"""
+        print("\n💲 Testing Advanced Features Expansion - Advanced Pricing Optimization Dashboard...")
+        
+        success, response = self.run_advanced_test(
+            "Advanced Pricing Optimization Dashboard",
+            "GET",
+            "api/advanced/pricing-optimization",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                summary = dashboard.get('summary_metrics', {})
+                print(f"   Customers Analyzed: {summary.get('total_customers_analyzed', 0)}")
+                print(f"   Active Pricing Experiments: {summary.get('active_pricing_experiments', 0)}")
+                print(f"   Avg Conversion Improvement: {summary.get('avg_conversion_improvement', 0)}%")
+                print(f"   Revenue Optimization This Month: ${summary.get('revenue_optimization_this_month', 0):,}")
+                
+                segments = dashboard.get('price_sensitivity_segments', [])
+                print(f"   Price Sensitivity Segments: {len(segments)}")
+                for segment in segments[:3]:  # Show first 3 segments
+                    print(f"   - {segment.get('name', 'Unknown')}: {segment.get('customer_count', 0)} customers")
+                    print(f"     Discount Response Rate: {segment.get('characteristics', {}).get('discount_response_rate', 0)}%")
+                    print(f"     Avg LTV: ${segment.get('avg_ltv', 0):,}")
+                
+                experiments = dashboard.get('active_experiments', [])
+                print(f"   Active Pricing Experiments: {len(experiments)}")
+                
+                optimizations = dashboard.get('recent_optimizations', [])
+                print(f"   Recent Price Optimizations: {len(optimizations)}")
+                
+                model_performance = dashboard.get('model_performance', {})
+                if model_performance:
+                    print(f"   Price Prediction Accuracy: {model_performance.get('price_prediction_accuracy', 0)}%")
+                    print(f"   Conversion Lift Average: {model_performance.get('conversion_lift_average', 0)}%")
+                
+                insights = dashboard.get('ai_insights', [])
+                print(f"   AI Insights: {len(insights)}")
+                for insight in insights[:2]:  # Show first 2 insights
+                    print(f"   - {insight.get('insight', 'Unknown')} (Confidence: {insight.get('confidence', 0)}%)")
+        
+        return success
+
+    def test_advanced_pricing_optimization_analyze_customer(self):
+        """Test Advanced Features Expansion - Customer Price Sensitivity Analysis"""
+        print("\n🔍 Testing Advanced Features Expansion - Customer Price Sensitivity Analysis...")
+        
+        customer_data = {
+            "customer_id": "test_customer_pricing_001",
+            "purchase_history": [
+                {"product": "CRM Pro", "price": 299, "date": "2024-01-15"},
+                {"product": "Analytics Suite", "price": 199, "date": "2024-02-20"}
+            ],
+            "avg_order_value": 249,
+            "discount_response_history": [15, 20, 10],
+            "time_between_purchases": 45,
+            "price_comparison_behavior": "moderate",
+            "customer_segment": "SMB",
+            "geographic_region": "US",
+            "company_size": "small",
+            "industry": "technology"
+        }
+        
+        success, response = self.run_advanced_test(
+            "Customer Price Sensitivity Analysis",
+            "POST",
+            "api/advanced/pricing-optimization/analyze-customer",
+            200,
+            data=customer_data,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Customer ID: {response.get('customer_id', 'unknown')}")
+            
+            sensitivity_analysis = response.get('price_sensitivity_analysis', {})
+            if sensitivity_analysis:
+                print(f"   Sensitivity Score: {sensitivity_analysis.get('sensitivity_score', 0)}/100")
+                print(f"   Sensitivity Category: {sensitivity_analysis.get('sensitivity_category', 'unknown')}")
+                print(f"   Price Elasticity: {sensitivity_analysis.get('price_elasticity', 0)}")
+                print(f"   Optimal Discount Range: {sensitivity_analysis.get('optimal_discount_range', 'unknown')}")
+            
+            product_recommendations = response.get('product_recommendations', [])
+            print(f"   Product Pricing Recommendations: {len(product_recommendations)}")
+            for rec in product_recommendations[:3]:  # Show first 3 recommendations
+                print(f"   - {rec.get('product', 'Unknown')}: ${rec.get('base_price', 0)} → ${rec.get('recommended_price', 0)}")
+                print(f"     Discount: {rec.get('discount_percentage', 0)}%")
+                print(f"     Conversion Probability: {rec.get('conversion_probability', 0):.2f}")
+            
+            pricing_tactics = response.get('pricing_tactics', [])
+            print(f"   Pricing Tactics: {len(pricing_tactics)}")
+            
+            risk_assessment = response.get('risk_assessment', {})
+            if risk_assessment:
+                print(f"   Churn Risk on Price Increase: {risk_assessment.get('churn_risk_on_price_increase', 0):.1f}%")
+                print(f"   Revenue Optimization Potential: {risk_assessment.get('revenue_optimization_potential', 'unknown')}")
+        
+        return success
+
+    def test_advanced_sentiment_analysis_dashboard(self):
+        """Test Advanced Features Expansion - Sentiment Analysis Dashboard"""
+        print("\n😊 Testing Advanced Features Expansion - Sentiment Analysis Dashboard...")
+        
+        success, response = self.run_advanced_test(
+            "Sentiment Analysis Dashboard",
+            "GET",
+            "api/advanced/sentiment-analysis",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                summary = dashboard.get('summary_metrics', {})
+                print(f"   Communications Analyzed: {summary.get('total_communications_analyzed', 0)}")
+                print(f"   Overall Sentiment Score: {summary.get('overall_sentiment_score', 0)}")
+                print(f"   Positive Sentiment: {summary.get('positive_sentiment_percentage', 0)}%")
+                print(f"   Active Alerts: {summary.get('active_alerts', 0)}")
+                print(f"   Avg Response Time: {summary.get('avg_response_time', 'unknown')}")
+                
+                sentiment_distribution = dashboard.get('sentiment_distribution', {})
+                if sentiment_distribution:
+                    print(f"   Sentiment Distribution:")
+                    for sentiment, data in sentiment_distribution.items():
+                        print(f"   - {sentiment.title()}: {data.get('count', 0)} ({data.get('percentage', 0)}%)")
+                
+                alerts = dashboard.get('recent_alerts', [])
+                print(f"   Recent Sentiment Alerts: {len(alerts)}")
+                for alert in alerts[:3]:  # Show first 3 alerts
+                    print(f"   - {alert.get('customer_name', 'Unknown')}: {alert.get('alert_type', 'unknown')}")
+                    print(f"     Sentiment Score: {alert.get('sentiment_score', 0)}")
+                    print(f"     Emotion: {alert.get('emotion_detected', 'unknown')}")
+                    print(f"     Priority: {alert.get('priority_score', 0)}/100")
+                
+                insights = dashboard.get('ai_insights', [])
+                print(f"   AI Insights: {len(insights)}")
+                for insight in insights[:2]:  # Show first 2 insights
+                    print(f"   - {insight.get('insight', 'Unknown')} (Confidence: {insight.get('confidence', 0)}%)")
+        
+        return success
+
+    def test_advanced_sentiment_analysis_analyze(self):
+        """Test Advanced Features Expansion - Communication Sentiment Analysis"""
+        print("\n📝 Testing Advanced Features Expansion - Communication Sentiment Analysis...")
+        
+        communication_data = {
+            "communication_id": "comm_test_001",
+            "customer_id": "test_customer_sentiment_001",
+            "text": "I love the new features in the CRM Pro! The customer support has been excellent and the product quality is amazing. Very satisfied with my purchase and would highly recommend to others.",
+            "source": "email",
+            "communication_type": "feedback"
+        }
+        
+        success, response = self.run_advanced_test(
+            "Communication Sentiment Analysis",
+            "POST",
+            "api/advanced/sentiment-analysis/analyze",
+            200,
+            data=communication_data,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Communication ID: {response.get('communication_id', 'unknown')}")
+            print(f"   Customer ID: {response.get('customer_id', 'unknown')}")
+            
+            sentiment_analysis = response.get('sentiment_analysis', {})
+            if sentiment_analysis:
+                print(f"   Sentiment Score: {sentiment_analysis.get('sentiment_score', 0)}")
+                print(f"   Sentiment Category: {sentiment_analysis.get('sentiment_category', 'unknown')}")
+                print(f"   Confidence Score: {sentiment_analysis.get('confidence_score', 0)}%")
+        
+        return success
+
+    def test_advanced_sentiment_analysis_trends(self):
+        """Test Advanced Features Expansion - Customer Sentiment Trends"""
+        print("\n📈 Testing Advanced Features Expansion - Customer Sentiment Trends...")
+        
+        customer_id = "test_customer_sentiment_trends_001"
+        
+        success, response = self.run_advanced_test(
+            f"Customer Sentiment Trends ({customer_id})",
+            "GET",
+            f"api/advanced/sentiment-analysis/trends/{customer_id}?days=30",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Customer ID: {response.get('customer_id', 'unknown')}")
+            print(f"   Analysis Period: {response.get('analysis_period', 'unknown')}")
+            
+            overall_trend = response.get('overall_trend', {})
+            if overall_trend:
+                print(f"   Trend Direction: {overall_trend.get('direction', 'unknown')}")
+                print(f"   Trend Magnitude: {overall_trend.get('magnitude', 0)}")
+                print(f"   Current Avg Sentiment: {overall_trend.get('current_avg_sentiment', 0)}")
+                print(f"   Previous Avg Sentiment: {overall_trend.get('previous_avg_sentiment', 0)}")
+                print(f"   Volatility: {overall_trend.get('volatility', 0)}")
+        
+        return success
+
+    def test_advanced_features_dashboard(self):
+        """Test Advanced Features Expansion - Comprehensive Dashboard"""
+        print("\n📊 Testing Advanced Features Expansion - Comprehensive Dashboard...")
+        
+        success, response = self.run_advanced_test(
+            "Advanced Features Expansion Dashboard",
+            "GET",
+            "api/advanced/dashboard",
+            200,
+            timeout=90  # All advanced services running in parallel
+        )
+        
+        if success:
+            print(f"   Service: {response.get('service', 'unknown')}")
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            modules = response.get('modules', {})
+            print(f"   Integrated {len(modules)} advanced modules:")
+            
+            for module_name, module_data in modules.items():
+                if isinstance(module_data, dict) and 'error' not in module_data:
+                    print(f"   ✅ {module_name.replace('_', ' ').title()}: Working")
+                else:
+                    print(f"   ❌ {module_name.replace('_', ' ').title()}: Error - {module_data.get('error', 'Unknown error')}")
+        
+        return success
+
+    # =====================================================
+    # END ADVANCED FEATURES EXPANSION MODULE TESTS
+    # =====================================================
+
+    # =====================================================
     # LEGACY TESTS (for compatibility)
     # =====================================================
 
