@@ -509,13 +509,7 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "Revenue Analytics Suite - Revenue Forecasting Microservice"
-    - "Revenue Analytics Suite - Price Optimization Microservice"
-    - "Revenue Analytics Suite - Profit Margin Analysis Microservice"
-    - "Revenue Analytics Suite - Subscription Analytics Microservice"
-    - "Revenue Analytics Suite - Financial Reporting Microservice"
-    - "Revenue Analytics Suite API Endpoints Integration"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
