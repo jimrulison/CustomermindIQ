@@ -809,7 +809,7 @@ class CustomerIntelligenceAITester:
         """Test multi-channel orchestration dashboard"""
         print("\n🎯 Testing Marketing Automation Pro - Multi-Channel Orchestration Dashboard...")
         
-        success, response = self.run_test(
+        success, response = self.run_marketing_test(
             "Multi-Channel Orchestration Dashboard",
             "GET",
             "api/marketing/multi-channel-orchestration",
