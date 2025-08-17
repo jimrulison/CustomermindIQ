@@ -7,7 +7,7 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
-from ..connectors.base_connector import UniversalCustomer, UniversalTransaction, UniversalProduct
+from connectors.base_connector import UniversalCustomer, UniversalTransaction, UniversalProduct
 from .universal_models import UniversalCustomerProfile, CustomerValue, ChurnRisk, PurchaseIntent
 import os
 
