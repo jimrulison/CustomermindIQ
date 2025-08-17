@@ -241,6 +241,8 @@ async def analyze_customer_behavior(customer_data: Dict[str, Any]) -> Dict[str, 
             try:
                 from datetime import datetime
                 last_purchase_date = datetime.fromisoformat(last_purchase_date.replace('Z', '+00:00'))
+                # Make it timezone naive for comparison
+                last_purchase_date = last_purchase_date.replace(tzinfo=None)
             except:
                 last_purchase_date = datetime.now()
         elif last_purchase_date is None:
