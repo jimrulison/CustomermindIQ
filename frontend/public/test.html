@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Mind IQ - Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e40af 50%, #0f172a 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+        }
+        .btn {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 1rem;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .status {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://customer-assets.emergentagent.com/job_upsell-tracker/artifacts/a451o37y_Customer%20Mind%20IQ%20logo.png" 
+             alt="Customer Mind IQ Logo" 
+             class="logo">
+        <h1>Customer Mind IQ</h1>
+        <p>AI-Powered Purchase Analytics & Email Marketing</p>
+        
+        <div class="status">
+            <h3>✅ System Status: ONLINE</h3>
+            <p>All services are running properly</p>
+        </div>
+        
+        <a href="/" class="btn">Go to Main Dashboard</a>
+        <button onclick="testAPI()" class="btn">Test API Connection</button>
+        
+        <div id="api-result" style="margin-top: 1rem;"></div>
+    </div>
+
+    <script>
+        async function testAPI() {
+            const resultDiv = document.getElementById('api-result');
+            try {
+                resultDiv.innerHTML = '<p>Testing API...</p>';
+                
+                const response = await fetch('/api/health');
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div style="background: rgba(16, 185, 129, 0.2); padding: 1rem; border-radius: 0.5rem; margin-top: 1rem;">
+                        <h4>✅ API Working!</h4>
+                        <p>Status: ${data.status}</p>
+                        <p>Service: ${data.service}</p>
+                        <p>Version: ${data.version}</p>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div style="background: rgba(239, 68, 68, 0.2); padding: 1rem; border-radius: 0.5rem; margin-top: 1rem;">
+                        <h4>❌ API Error</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Auto-test API on load
+        window.onload = function() {
+            setTimeout(testAPI, 1000);
+        };
+    </script>
+</body>
+</html>
