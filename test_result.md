@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Transform Customer Mind IQ application into modular architecture with 3 main modules: Customer Intelligence AI (5 microservices), Marketing Automation Pro (5 microservices), Revenue Analytics Suite (5 microservices). Starting with Customer Intelligence AI module implementation."
+user_problem_statement: "Transform Customer Mind IQ into Universal Customer Intelligence SaaS Platform that connects to multiple business software systems (starting with Stripe and Odoo) to provide AI-powered customer buying behavior insights. The platform should be sellable to any business wanting to understand their customer habits better."
 
 backend:
   - task: "Customer Intelligence AI - Behavioral Clustering Microservice"
