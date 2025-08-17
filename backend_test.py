@@ -755,6 +755,370 @@ class CustomerIntelligenceAITester:
         return success
 
     # =====================================================
+    # MARKETING AUTOMATION PRO MODULE TESTS
+    # =====================================================
+
+    def test_multi_channel_orchestration_dashboard(self):
+        """Test multi-channel orchestration dashboard"""
+        print("\n🎯 Testing Marketing Automation Pro - Multi-Channel Orchestration Dashboard...")
+        
+        success, response = self.run_test(
+            "Multi-Channel Orchestration Dashboard",
+            "GET",
+            "api/marketing/multi-channel-orchestration",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Service: {response.get('service', 'unknown')}")
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                campaigns = dashboard.get('active_campaigns', [])
+                channels = dashboard.get('channel_performance', {})
+                print(f"   Active campaigns: {len(campaigns)}")
+                print(f"   Channels configured: {len(channels)}")
+                
+                metrics = dashboard.get('performance_metrics', {})
+                print(f"   Total reach: {metrics.get('total_reach', 0):,}")
+                print(f"   Cross-channel conversion: {metrics.get('cross_channel_conversion_rate', 0):.2f}%")
+        
+        return success
+
+    def test_create_multi_channel_campaign(self):
+        """Test creating multi-channel marketing campaign"""
+        print("\n📢 Testing Multi-Channel Campaign Creation...")
+        
+        campaign_data = {
+            "name": "AI-Powered Cross-Channel Campaign",
+            "target_audience": "high_value_customers",
+            "channels": ["email", "social_media", "push_notifications"],
+            "budget": 5000,
+            "duration_days": 14,
+            "objectives": ["brand_awareness", "lead_generation"]
+        }
+        
+        success, response = self.run_test(
+            "Create Multi-Channel Campaign",
+            "POST",
+            "api/marketing/multi-channel-orchestration/campaigns",
+            200,
+            data=campaign_data,
+            timeout=45
+        )
+        
+        if success:
+            campaign = response.get('campaign', {})
+            print(f"   Campaign ID: {campaign.get('campaign_id', 'unknown')}")
+            print(f"   Campaign Name: {campaign.get('name', 'unknown')}")
+            print(f"   Channels: {', '.join(campaign.get('channels', []))}")
+            print(f"   AI Optimization Score: {campaign.get('ai_optimization_score', 0)}/100")
+        
+        return success
+
+    def test_ab_testing_dashboard(self):
+        """Test A/B testing dashboard and analytics"""
+        print("\n🧪 Testing Marketing Automation Pro - A/B Testing Dashboard...")
+        
+        success, response = self.run_test(
+            "A/B Testing Dashboard",
+            "GET",
+            "api/marketing/ab-testing",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Service: {response.get('service', 'unknown')}")
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                active_tests = dashboard.get('active_tests', [])
+                completed_tests = dashboard.get('completed_tests', [])
+                print(f"   Active A/B tests: {len(active_tests)}")
+                print(f"   Completed tests: {len(completed_tests)}")
+                
+                insights = dashboard.get('testing_insights', {})
+                print(f"   Average lift: {insights.get('average_lift', 0):.2f}%")
+                print(f"   Statistical confidence: {insights.get('avg_confidence', 0):.1f}%")
+        
+        return success
+
+    def test_create_ab_test(self):
+        """Test creating A/B test with AI optimization"""
+        print("\n🔬 Testing A/B Test Creation with AI Optimization...")
+        
+        ab_test_data = {
+            "test_name": "Email Subject Line Optimization",
+            "test_type": "email_campaign",
+            "variants": [
+                {
+                    "name": "Control",
+                    "subject_line": "Your Monthly Software Update",
+                    "content": "Standard monthly update email"
+                },
+                {
+                    "name": "AI Optimized",
+                    "subject_line": "🚀 Exclusive Software Features Just for You!",
+                    "content": "Personalized AI-generated content"
+                }
+            ],
+            "traffic_split": 50,
+            "success_metric": "open_rate",
+            "duration_days": 7
+        }
+        
+        success, response = self.run_test(
+            "Create A/B Test",
+            "POST",
+            "api/marketing/ab-testing/tests",
+            200,
+            data=ab_test_data,
+            timeout=45
+        )
+        
+        if success:
+            test = response.get('test', {})
+            print(f"   Test ID: {test.get('test_id', 'unknown')}")
+            print(f"   Test Name: {test.get('test_name', 'unknown')}")
+            print(f"   Variants: {len(test.get('variants', []))}")
+            print(f"   AI Confidence: {test.get('ai_confidence_score', 0)}/100")
+            print(f"   Expected Lift: {test.get('expected_lift', 0):.2f}%")
+        
+        return success
+
+    def test_dynamic_content_dashboard(self):
+        """Test dynamic content personalization dashboard"""
+        print("\n🎨 Testing Marketing Automation Pro - Dynamic Content Dashboard...")
+        
+        success, response = self.run_test(
+            "Dynamic Content Dashboard",
+            "GET",
+            "api/marketing/dynamic-content",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Service: {response.get('service', 'unknown')}")
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                templates = dashboard.get('active_templates', [])
+                personalizations = dashboard.get('personalization_stats', {})
+                print(f"   Active templates: {len(templates)}")
+                print(f"   Personalization rate: {personalizations.get('personalization_rate', 0):.1f}%")
+                print(f"   Content variations: {personalizations.get('total_variations', 0)}")
+                
+                performance = dashboard.get('performance_metrics', {})
+                print(f"   Engagement lift: {performance.get('engagement_lift', 0):.2f}%")
+        
+        return success
+
+    def test_create_content_template(self):
+        """Test creating dynamic content template"""
+        print("\n📝 Testing Dynamic Content Template Creation...")
+        
+        template_data = {
+            "template_name": "Personalized Product Recommendation Email",
+            "template_type": "email",
+            "base_content": "Hi {{customer_name}}, based on your purchase history of {{previous_products}}, we recommend {{recommended_product}}.",
+            "personalization_rules": [
+                {
+                    "field": "customer_name",
+                    "source": "customer_profile",
+                    "fallback": "Valued Customer"
+                },
+                {
+                    "field": "recommended_product",
+                    "source": "ai_recommendations",
+                    "fallback": "Our Premium Software Suite"
+                }
+            ],
+            "target_segments": ["high_value", "active_users"]
+        }
+        
+        success, response = self.run_test(
+            "Create Content Template",
+            "POST",
+            "api/marketing/dynamic-content/templates",
+            200,
+            data=template_data,
+            timeout=45
+        )
+        
+        if success:
+            template = response.get('template', {})
+            print(f"   Template ID: {template.get('template_id', 'unknown')}")
+            print(f"   Template Name: {template.get('template_name', 'unknown')}")
+            print(f"   Personalization Fields: {len(template.get('personalization_rules', []))}")
+            print(f"   AI Optimization Score: {template.get('ai_optimization_score', 0)}/100")
+        
+        return success
+
+    def test_cross_sell_intelligence_dashboard(self):
+        """Test cross-sell intelligence dashboard"""
+        print("\n💰 Testing Marketing Automation Pro - Cross-Sell Intelligence Dashboard...")
+        
+        success, response = self.run_test(
+            "Cross-Sell Intelligence Dashboard",
+            "GET",
+            "api/marketing/cross-sell-intelligence",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Service: {response.get('service', 'unknown')}")
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                opportunities = dashboard.get('total_opportunities', 0)
+                revenue_potential = dashboard.get('revenue_potential', 0)
+                print(f"   Cross-sell opportunities: {opportunities}")
+                print(f"   Revenue potential: ${revenue_potential:,.2f}")
+                
+                top_products = dashboard.get('top_cross_sell_products', [])
+                print(f"   Top cross-sell products: {len(top_products)}")
+                
+                success_rate = dashboard.get('success_metrics', {})
+                print(f"   Cross-sell success rate: {success_rate.get('success_rate', 0):.1f}%")
+        
+        return success
+
+    def test_identify_cross_sell_opportunities(self):
+        """Test identifying cross-sell opportunities"""
+        print("\n🎯 Testing Cross-Sell Opportunity Identification...")
+        
+        success, response = self.run_test(
+            "Identify Cross-Sell Opportunities",
+            "POST",
+            "api/marketing/cross-sell-intelligence/analyze",
+            200,
+            timeout=60  # AI analysis takes time
+        )
+        
+        if success:
+            opportunities = response.get('opportunities', [])
+            total_opportunities = response.get('total_opportunities', 0)
+            
+            print(f"   Total opportunities identified: {total_opportunities}")
+            
+            # Show top opportunities
+            for opp in opportunities[:3]:
+                print(f"   - Customer: {opp.get('customer_id', 'unknown')}")
+                print(f"     Product: {opp.get('recommended_product', 'unknown')}")
+                print(f"     Confidence: {opp.get('confidence_score', 0):.1f}%")
+                print(f"     Revenue Potential: ${opp.get('revenue_potential', 0):,.2f}")
+        
+        return success
+
+    def test_referral_program_dashboard(self):
+        """Test referral program dashboard and analytics"""
+        print("\n🤝 Testing Marketing Automation Pro - Referral Program Dashboard...")
+        
+        success, response = self.run_test(
+            "Referral Program Dashboard",
+            "GET",
+            "api/marketing/referral-program",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Service: {response.get('service', 'unknown')}")
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                active_campaigns = dashboard.get('active_campaigns', [])
+                referrals = dashboard.get('referral_stats', {})
+                print(f"   Active referral campaigns: {len(active_campaigns)}")
+                print(f"   Total referrals: {referrals.get('total_referrals', 0)}")
+                print(f"   Conversion rate: {referrals.get('conversion_rate', 0):.2f}%")
+                
+                performance = dashboard.get('performance_metrics', {})
+                print(f"   Viral coefficient: {performance.get('viral_coefficient', 0):.2f}")
+                print(f"   Customer acquisition cost: ${performance.get('cac_reduction', 0):.2f}")
+        
+        return success
+
+    def test_create_referral_campaign(self):
+        """Test creating referral campaign"""
+        print("\n🎁 Testing Referral Campaign Creation...")
+        
+        campaign_data = {
+            "campaign_name": "AI-Optimized Referral Program",
+            "reward_type": "discount",
+            "referrer_reward": {
+                "type": "percentage",
+                "value": 20,
+                "description": "20% off next purchase"
+            },
+            "referee_reward": {
+                "type": "percentage", 
+                "value": 15,
+                "description": "15% off first purchase"
+            },
+            "duration_days": 30,
+            "target_segments": ["loyal_customers", "high_value"]
+        }
+        
+        success, response = self.run_test(
+            "Create Referral Campaign",
+            "POST",
+            "api/marketing/referral-program/campaigns",
+            200,
+            data=campaign_data,
+            timeout=45
+        )
+        
+        if success:
+            campaign = response.get('campaign', {})
+            print(f"   Campaign ID: {campaign.get('campaign_id', 'unknown')}")
+            print(f"   Campaign Name: {campaign.get('campaign_name', 'unknown')}")
+            print(f"   Referrer Reward: {campaign.get('referrer_reward', {}).get('description', 'unknown')}")
+            print(f"   AI Optimization Score: {campaign.get('ai_optimization_score', 0)}/100")
+        
+        return success
+
+    def test_marketing_automation_dashboard(self):
+        """Test comprehensive Marketing Automation Pro dashboard"""
+        print("\n📊 Testing Marketing Automation Pro - Comprehensive Dashboard...")
+        
+        success, response = self.run_test(
+            "Marketing Automation Pro Dashboard",
+            "GET",
+            "api/marketing/dashboard",
+            200,
+            timeout=90  # All marketing services running in parallel
+        )
+        
+        if success:
+            print(f"   Service: {response.get('service', 'unknown')}")
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            modules = response.get('modules', {})
+            print(f"   Integrated {len(modules)} marketing modules:")
+            
+            for module_name, module_data in modules.items():
+                if isinstance(module_data, dict) and 'error' not in module_data:
+                    print(f"   ✅ {module_name.replace('_', ' ').title()}: Working")
+                else:
+                    print(f"   ❌ {module_name.replace('_', ' ').title()}: Error - {module_data.get('error', 'Unknown error')}")
+        
+        return success
+
+    # =====================================================
+    # END MARKETING AUTOMATION PRO MODULE TESTS
+    # =====================================================
+
+    # =====================================================
     # LEGACY TESTS (for compatibility)
     # =====================================================
 
