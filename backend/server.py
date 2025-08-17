@@ -30,6 +30,15 @@ from modules.marketing_automation_pro import (
     ReferralProgramService
 )
 
+# Import Revenue Analytics Suite Module
+from modules.revenue_analytics_suite import (
+    revenue_forecasting_router,
+    price_optimization_router,
+    profit_margin_analysis_router,
+    subscription_analytics_router,
+    financial_reporting_router
+)
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
