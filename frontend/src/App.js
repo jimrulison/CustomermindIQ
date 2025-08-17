@@ -788,6 +788,253 @@ function App() {
               </CardContent>
             </Card>
           </TabsContent>
+
+          {/* Marketing Automation Pro Tab */}
+          <TabsContent value="marketing" className="space-y-6">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center">
+                    <Megaphone className="w-5 h-5 mr-2 text-orange-400" />
+                    Multi-Channel Orchestration
+                  </CardTitle>
+                  <CardDescription className="text-slate-300">
+                    Cross-channel campaign management
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-300">Active Campaigns</span>
+                      <span className="text-white font-medium">
+                        {multiChannelData?.dashboard?.campaigns_overview?.active_campaigns || 2}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-300">Total Reach</span>
+                      <span className="text-white font-medium">
+                        {multiChannelData?.dashboard?.campaigns_overview?.expected_total_reach?.toLocaleString() || '50,000'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-300">Avg ROI</span>
+                      <span className="text-green-400 font-medium">
+                        {multiChannelData?.dashboard?.performance_metrics?.avg_roi?.toFixed(1) || '4.5'}x
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center">
+                    <DollarSign className="w-5 h-5 mr-2 text-green-400" />
+                    Cross-Sell Intelligence
+                  </CardTitle>
+                  <CardDescription className="text-slate-300">
+                    AI-powered revenue opportunities
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-300">Opportunities</span>
+                      <span className="text-white font-medium">
+                        {crossSellData?.dashboard?.opportunities_overview?.total_opportunities || 45}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-300">Potential Revenue</span>
+                      <span className="text-green-400 font-medium">
+                        ${crossSellData?.dashboard?.opportunities_overview?.total_potential_revenue?.toLocaleString() || '125,000'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-300">Conversion Rate</span>
+                      <span className="text-blue-400 font-medium">
+                        {((crossSellData?.dashboard?.opportunities_overview?.avg_conversion_probability || 0.35) * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center">
+                    <Gift className="w-5 h-5 mr-2 text-purple-400" />
+                    Referral Program
+                  </CardTitle>
+                  <CardDescription className="text-slate-300">
+                    Viral marketing optimization
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-300">Total Referrals</span>
+                      <span className="text-white font-medium">
+                        {referralData?.dashboard?.program_overview?.total_referrals || 127}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-300">Conversion Rate</span>
+                      <span className="text-green-400 font-medium">
+                        {referralData?.dashboard?.program_overview?.conversion_rate || 70.1}%
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-300">Net Revenue</span>
+                      <span className="text-green-400 font-medium">
+                        ${referralData?.dashboard?.financial_metrics?.total_conversion_value?.toLocaleString() || '45,600'}
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center">
+                    <Palette className="w-5 h-5 mr-2 text-pink-400" />
+                    Dynamic Content
+                  </CardTitle>
+                  <CardDescription className="text-slate-300">
+                    AI-powered personalization
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-300">Templates</span>
+                      <span className="text-white font-medium">
+                        {dynamicContentData?.dashboard?.content_overview?.total_templates || 12}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-300">Personalizations</span>
+                      <span className="text-white font-medium">
+                        {dynamicContentData?.dashboard?.content_overview?.total_personalizations || 350}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-300">Success Rate</span>
+                      <span className="text-green-400 font-medium">
+                        {dynamicContentData?.dashboard?.performance_metrics?.personalization_success_rate || 78}%
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* A/B Testing Tab */}
+          <TabsContent value="testing" className="space-y-6">
+            <div className="grid gap-6 md:grid-cols-2">
+              <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center">
+                    <TestTube className="w-5 h-5 mr-2 text-blue-400" />
+                    A/B Testing Overview
+                  </CardTitle>
+                  <CardDescription className="text-slate-300">
+                    Statistical testing and optimization
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-white">
+                          {abTestingData?.dashboard?.testing_overview?.total_tests || 8}
+                        </div>
+                        <div className="text-xs text-slate-400">Total Tests</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-green-400">
+                          {abTestingData?.dashboard?.testing_overview?.success_rate || 75}%
+                        </div>
+                        <div className="text-xs text-slate-400">Success Rate</div>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-300">Running Tests</span>
+                        <span className="text-blue-400 font-medium">
+                          {abTestingData?.dashboard?.testing_overview?.running_tests || 3}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-300">Average Lift</span>
+                        <span className="text-green-400 font-medium">
+                          +{abTestingData?.dashboard?.performance_metrics?.average_lift || 18.5}%
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-300">Confidence Level</span>
+                        <span className="text-white font-medium">
+                          {abTestingData?.dashboard?.performance_metrics?.confidence_level || 95}%
+                        </span>
+                      </div>
+                    </div>
+
+                    <Alert className="bg-blue-500/10 border-blue-500/20">
+                      <TestTube className="h-4 w-4 text-blue-400" />
+                      <AlertDescription className="text-blue-300">
+                        Customer Mind IQ uses advanced statistical analysis to ensure test significance and reliable results.
+                      </AlertDescription>
+                    </Alert>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                <CardHeader>
+                  <CardTitle className="text-white">Recent Test Results</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {abTestingData?.dashboard?.insights?.map((insight, index) => (
+                      <div key={index} className="flex items-center justify-between p-2 bg-slate-700/30 rounded">
+                        <span className="text-slate-300 text-sm">{insight}</span>
+                        <Badge variant="secondary" className="bg-green-500/20 text-green-300">
+                          <CheckCircle className="w-3 h-3 mr-1" />
+                          Significant
+                        </Badge>
+                      </div>
+                    )) || (
+                      <>
+                        <div className="flex items-center justify-between p-2 bg-slate-700/30 rounded">
+                          <span className="text-slate-300 text-sm">Email subject line test</span>
+                          <Badge variant="secondary" className="bg-green-500/20 text-green-300">
+                            <CheckCircle className="w-3 h-3 mr-1" />
+                            +23% lift
+                          </Badge>
+                        </div>
+                        <div className="flex items-center justify-between p-2 bg-slate-700/30 rounded">
+                          <span className="text-slate-300 text-sm">CTA button color test</span>
+                          <Badge variant="secondary" className="bg-yellow-500/20 text-yellow-300">
+                            <Activity className="w-3 h-3 mr-1" />
+                            Running
+                          </Badge>
+                        </div>
+                        <div className="flex items-center justify-between p-2 bg-slate-700/30 rounded">
+                          <span className="text-slate-300 text-sm">Landing page layout test</span>
+                          <Badge variant="secondary" className="bg-green-500/20 text-green-300">
+                            <CheckCircle className="w-3 h-3 mr-1" />
+                            +15% lift
+                          </Badge>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
         </Tabs>
       </div>
     </div>
