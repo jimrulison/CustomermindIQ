@@ -14,6 +14,8 @@ class CustomerIntelligenceAITester:
         self.real_customers_loaded = False
         self.universal_platform_tests = 0
         self.universal_platform_passed = 0
+        self.marketing_automation_tests = 0
+        self.marketing_automation_passed = 0
 
     def run_universal_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
         """Run a Universal Platform API test"""
