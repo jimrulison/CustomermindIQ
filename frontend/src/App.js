@@ -32,7 +32,8 @@ import {
   Settings,
   Activity,
   PieChart,
-  ArrowRightLeft
+  ArrowRightLeft,
+  MessageSquare
 } from 'lucide-react';
 import axios from 'axios';
 import './App.css';
