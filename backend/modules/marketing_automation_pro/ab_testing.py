@@ -11,6 +11,7 @@ from emergentintegrations.llm.chat import LlmChat, UserMessage
 import os
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel
+from enum import Enum
 import uuid
 import random
 from scipy import stats
