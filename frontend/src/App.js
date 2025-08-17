@@ -154,7 +154,18 @@ function App() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading Customer Mind IQ...</div>
+        <div className="text-center">
+          <img 
+            src="https://customer-assets.emergentagent.com/job_upsell-tracker/artifacts/a451o37y_Customer%20Mind%20IQ%20logo.png" 
+            alt="Customer Mind IQ Logo" 
+            className="h-16 w-16 mx-auto mb-4 animate-pulse"
+          />
+          <div className="text-white text-xl mb-2">Customer Mind IQ</div>
+          <div className="text-slate-300 text-sm">Loading AI Analytics Platform...</div>
+          <div className="mt-4">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
+          </div>
+        </div>
       </div>
     );
   }
