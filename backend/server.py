@@ -12,6 +12,15 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 import json
 
+# Import Customer Intelligence AI Module
+from modules.customer_intelligence_ai import (
+    BehavioralClusteringService,
+    ChurnPreventionService,
+    LeadScoringService,
+    SentimentAnalysisService,
+    JourneyMappingService
+)
+
 load_dotenv()
 
 # MongoDB setup
