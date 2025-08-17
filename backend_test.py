@@ -2414,6 +2414,13 @@ def main():
     print("4. Sentiment Analysis - Customer emotional intelligence")
     print("5. Journey Mapping - Customer journey optimization")
     print("=" * 80)
+    print("Plus Advanced Features Expansion Module (NEW):")
+    print("1. Behavioral Clustering - K-means clustering for customer segmentation")
+    print("2. Churn Prevention AI - Predictive churn modeling with automated retention")
+    print("3. Cross-Sell Intelligence - Product relationship analysis and recommendations")
+    print("4. Advanced Pricing Optimization - AI-driven price sensitivity and dynamic pricing")
+    print("5. Sentiment Analysis - NLP analysis of customer communications")
+    print("=" * 80)
     
     tester = CustomerIntelligenceAITester()
     
