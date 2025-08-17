@@ -185,7 +185,7 @@ class OdooService:
         self.url = os.getenv("ODOO_URL")
         self.database = os.getenv("ODOO_DATABASE")
         self.username = os.getenv("ODOO_USERNAME")
-        self.password = os.getenv("ODOO_API_KEY")  # Use API key instead of password
+        self.password = os.getenv("ODOO_PASSWORD")  # Use password instead of API key
         self.uid = None
         self.common = None
         self.models = None
