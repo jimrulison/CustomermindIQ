@@ -941,7 +941,7 @@ class CustomerIntelligenceAITester:
         """Test dynamic content personalization dashboard"""
         print("\n🎨 Testing Marketing Automation Pro - Dynamic Content Dashboard...")
         
-        success, response = self.run_test(
+        success, response = self.run_marketing_test(
             "Dynamic Content Dashboard",
             "GET",
             "api/marketing/dynamic-content",
