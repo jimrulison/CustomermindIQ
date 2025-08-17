@@ -1166,6 +1166,619 @@ class CustomerIntelligenceAITester:
     # =====================================================
 
     # =====================================================
+    # REVENUE ANALYTICS SUITE MODULE TESTS
+    # =====================================================
+
+    def run_revenue_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
+        """Run a Revenue Analytics Suite API test"""
+        url = f"{self.base_url}/{endpoint}"
+        headers = {'Content-Type': 'application/json'}
+
+        self.tests_run += 1
+        print(f"\n💰 Testing Revenue Analytics Suite: {name}...")
+        print(f"   URL: {url}")
+        
+        try:
+            if method == 'GET':
+                response = requests.get(url, headers=headers, timeout=timeout)
+            elif method == 'POST':
+                response = requests.post(url, json=data, headers=headers, timeout=timeout)
+            elif method == 'PUT':
+                response = requests.put(url, json=data, headers=headers, timeout=timeout)
+            elif method == 'DELETE':
+                response = requests.delete(url, headers=headers, timeout=timeout)
+
+            success = response.status_code == expected_status
+            if success:
+                self.tests_passed += 1
+                print(f"✅ Passed - Status: {response.status_code}")
+                try:
+                    response_data = response.json()
+                    print(f"   Response preview: {str(response_data)[:200]}...")
+                    return True, response_data
+                except:
+                    return True, {}
+            else:
+                print(f"❌ Failed - Expected {expected_status}, got {response.status_code}")
+                try:
+                    error_data = response.json()
+                    print(f"   Error: {error_data}")
+                except:
+                    print(f"   Error text: {response.text[:200]}")
+                return False, {}
+
+        except requests.exceptions.Timeout:
+            print(f"❌ Failed - Request timed out after {timeout} seconds")
+            return False, {}
+        except Exception as e:
+            print(f"❌ Failed - Error: {str(e)}")
+            return False, {}
+
+    def test_revenue_forecasting_dashboard(self):
+        """Test revenue forecasting dashboard with AI predictions"""
+        print("\n📈 Testing Revenue Analytics Suite - Revenue Forecasting Dashboard...")
+        
+        success, response = self.run_revenue_test(
+            "Revenue Forecasting Dashboard",
+            "GET",
+            "api/revenue/revenue-forecasting",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                metrics = dashboard.get('current_metrics', {})
+                print(f"   Monthly Revenue: ${metrics.get('monthly_revenue', 0):,}")
+                print(f"   Forecast Accuracy: {metrics.get('forecast_accuracy', 0)}%")
+                print(f"   Predicted Growth: {metrics.get('predicted_growth', 0)}%")
+                
+                timeline = dashboard.get('revenue_timeline', [])
+                print(f"   Revenue Timeline Points: {len(timeline)}")
+                
+                insights = dashboard.get('ai_insights', [])
+                print(f"   AI Insights: {len(insights)}")
+                for insight in insights[:2]:
+                    print(f"   - {insight.get('insight', 'Unknown')} (Confidence: {insight.get('confidence', 0)}%)")
+        
+        return success
+
+    def test_revenue_forecasting_scenario(self):
+        """Test revenue forecasting scenario creation"""
+        print("\n🎯 Testing Revenue Forecasting Scenario Creation...")
+        
+        scenario_data = {
+            "time_horizon": 12,
+            "growth_rate": 15,
+            "market_conditions": "optimistic"
+        }
+        
+        success, response = self.run_revenue_test(
+            "Create Revenue Scenario",
+            "POST",
+            "api/revenue/revenue-forecasting/scenario",
+            200,
+            data=scenario_data,
+            timeout=45
+        )
+        
+        if success:
+            scenario_id = response.get('scenario_id', 'unknown')
+            scenarios = response.get('scenarios', [])
+            print(f"   Scenario ID: {scenario_id}")
+            print(f"   Generated Scenarios: {len(scenarios)}")
+            
+            for scenario in scenarios:
+                print(f"   - {scenario.get('scenario', 'unknown').title()}: ${scenario.get('total_projected', 0):,} (Confidence: {scenario.get('confidence', 0)}%)")
+        
+        return success
+
+    def test_revenue_trends(self):
+        """Test revenue trend analysis"""
+        print("\n📊 Testing Revenue Trend Analysis...")
+        
+        success, response = self.run_revenue_test(
+            "Revenue Trends Analysis",
+            "GET",
+            "api/revenue/revenue-forecasting/trends",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            trends = response.get('trends', {})
+            if trends:
+                short_term = trends.get('short_term', {})
+                long_term = trends.get('long_term', {})
+                print(f"   Short-term Direction: {short_term.get('direction', 'unknown')}")
+                print(f"   Short-term Strength: {short_term.get('strength', 0)}")
+                print(f"   Long-term CAGR: {long_term.get('projected_cagr', 0)}%")
+                
+                risk_factors = trends.get('risk_factors', [])
+                print(f"   Risk Factors: {len(risk_factors)}")
+        
+        return success
+
+    def test_price_optimization_dashboard(self):
+        """Test price optimization dashboard with AI recommendations"""
+        print("\n💲 Testing Revenue Analytics Suite - Price Optimization Dashboard...")
+        
+        success, response = self.run_revenue_test(
+            "Price Optimization Dashboard",
+            "GET",
+            "api/revenue/price-optimization",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                overview = dashboard.get('overview_metrics', {})
+                print(f"   Products Analyzed: {overview.get('total_products_analyzed', 0)}")
+                print(f"   Optimization Opportunities: {overview.get('optimization_opportunities', 0)}")
+                print(f"   Potential Revenue Increase: {overview.get('potential_revenue_increase', 0)}%")
+                
+                products = dashboard.get('product_optimization', [])
+                print(f"   Product Optimizations: {len(products)}")
+                for product in products[:2]:
+                    print(f"   - {product.get('name', 'Unknown')}: {product.get('price_change', 0)}% price change")
+                
+                strategies = dashboard.get('pricing_strategies', [])
+                print(f"   Pricing Strategies: {len(strategies)}")
+                
+                recommendations = dashboard.get('ai_recommendations', [])
+                print(f"   AI Recommendations: {len(recommendations)}")
+        
+        return success
+
+    def test_price_simulation(self):
+        """Test price change simulation"""
+        print("\n🧮 Testing Price Change Simulation...")
+        
+        simulation_data = {
+            "product_id": "test_product_123",
+            "current_price": 100,
+            "new_price": 115
+        }
+        
+        success, response = self.run_revenue_test(
+            "Price Change Simulation",
+            "POST",
+            "api/revenue/price-optimization/simulate",
+            200,
+            data=simulation_data,
+            timeout=45
+        )
+        
+        if success:
+            simulation_id = response.get('simulation_id', 'unknown')
+            predictions = response.get('predictions', {})
+            print(f"   Simulation ID: {simulation_id}")
+            
+            if predictions:
+                revenue_impact = predictions.get('revenue_impact', {})
+                print(f"   Revenue Change: {revenue_impact.get('revenue_change_percent', 0)}%")
+                print(f"   Current Revenue: ${revenue_impact.get('current_revenue', 0):,}")
+                print(f"   Predicted Revenue: ${revenue_impact.get('predicted_revenue', 0):,}")
+        
+        return success
+
+    def test_competitive_analysis(self):
+        """Test competitive pricing analysis"""
+        print("\n🏆 Testing Competitive Pricing Analysis...")
+        
+        success, response = self.run_revenue_test(
+            "Competitive Analysis",
+            "GET",
+            "api/revenue/price-optimization/competitive-analysis",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            landscape = response.get('competitive_landscape', {})
+            if landscape:
+                competitors = landscape.get('competitors', [])
+                print(f"   Competitors Analyzed: {len(competitors)}")
+                
+                for competitor in competitors[:2]:
+                    print(f"   - {competitor.get('name', 'Unknown')}: {competitor.get('market_share', 0)}% market share")
+                
+                opportunities = landscape.get('positioning_opportunities', [])
+                print(f"   Positioning Opportunities: {len(opportunities)}")
+        
+        return success
+
+    def test_profit_margin_dashboard(self):
+        """Test profit margin analysis dashboard"""
+        print("\n📊 Testing Revenue Analytics Suite - Profit Margin Analysis Dashboard...")
+        
+        success, response = self.run_revenue_test(
+            "Profit Margin Analysis Dashboard",
+            "GET",
+            "api/revenue/profit-margin-analysis",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                overview = dashboard.get('overview_metrics', {})
+                print(f"   Total Revenue: ${overview.get('total_revenue', 0):,}")
+                print(f"   Total Costs: ${overview.get('total_costs', 0):,}")
+                print(f"   Overall Margin: {overview.get('overall_margin_percentage', 0)}%")
+                print(f"   Optimization Score: {overview.get('cost_optimization_score', 0)}/100")
+                
+                products = dashboard.get('product_analysis', [])
+                print(f"   Product Categories: {len(products)}")
+                
+                opportunities = dashboard.get('cost_optimization', [])
+                print(f"   Cost Optimization Opportunities: {len(opportunities)}")
+                
+                recommendations = dashboard.get('ai_recommendations', [])
+                print(f"   AI Recommendations: {len(recommendations)}")
+        
+        return success
+
+    def test_cost_simulation(self):
+        """Test cost reduction simulation"""
+        print("\n💰 Testing Cost Reduction Simulation...")
+        
+        simulation_data = {
+            "cost_reduction_percentage": 12,
+            "categories": ["operations", "marketing"]
+        }
+        
+        success, response = self.run_revenue_test(
+            "Cost Reduction Simulation",
+            "POST",
+            "api/revenue/profit-margin-analysis/cost-simulation",
+            200,
+            data=simulation_data,
+            timeout=45
+        )
+        
+        if success:
+            simulation_id = response.get('simulation_id', 'unknown')
+            impact = response.get('impact_analysis', {})
+            print(f"   Simulation ID: {simulation_id}")
+            
+            if impact:
+                improvements = impact.get('improvements', {})
+                print(f"   Margin Increase: {improvements.get('margin_increase', 0)}%")
+                print(f"   Additional Profit: ${improvements.get('additional_profit', 0):,}")
+                
+                risk = response.get('risk_assessment', {})
+                print(f"   Implementation Risk: {risk.get('implementation_risk', 'unknown')}")
+        
+        return success
+
+    def test_industry_benchmarking(self):
+        """Test industry benchmarking analysis"""
+        print("\n📈 Testing Industry Benchmarking Analysis...")
+        
+        success, response = self.run_revenue_test(
+            "Industry Benchmarking",
+            "GET",
+            "api/revenue/profit-margin-analysis/benchmarking",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            benchmarking = response.get('benchmarking', {})
+            if benchmarking:
+                position = benchmarking.get('company_position', {})
+                print(f"   Current Margin: {position.get('current_margin', 0)}%")
+                print(f"   Industry Ranking: {position.get('industry_ranking', 'unknown')}")
+                print(f"   Competitive Position: {position.get('competitive_position', 'unknown')}")
+                
+                industries = benchmarking.get('industry_comparison', [])
+                print(f"   Industry Comparisons: {len(industries)}")
+                
+                practices = benchmarking.get('best_practices', [])
+                print(f"   Best Practices: {len(practices)}")
+        
+        return success
+
+    def test_subscription_analytics_dashboard(self):
+        """Test subscription analytics dashboard with churn prediction"""
+        print("\n📱 Testing Revenue Analytics Suite - Subscription Analytics Dashboard...")
+        
+        success, response = self.run_revenue_test(
+            "Subscription Analytics Dashboard",
+            "GET",
+            "api/revenue/subscription-analytics",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                metrics = dashboard.get('key_metrics', {})
+                print(f"   Total Subscribers: {metrics.get('total_subscribers', 0):,}")
+                print(f"   Monthly Recurring Revenue: ${metrics.get('monthly_recurring_revenue', 0):,}")
+                print(f"   Annual Recurring Revenue: ${metrics.get('annual_recurring_revenue', 0):,}")
+                print(f"   Average Churn Rate: {metrics.get('average_churn_rate', 0)}%")
+                print(f"   Customer Lifetime Value: ${metrics.get('customer_lifetime_value', 0):,}")
+                
+                tiers = dashboard.get('subscription_tiers', [])
+                print(f"   Subscription Tiers: {len(tiers)}")
+                
+                cohorts = dashboard.get('cohort_analysis', [])
+                print(f"   Cohort Analysis: {len(cohorts)} cohorts")
+                
+                churn_predictions = dashboard.get('churn_prediction', [])
+                print(f"   Churn Risk Segments: {len(churn_predictions)}")
+                
+                recommendations = dashboard.get('ai_recommendations', [])
+                print(f"   AI Recommendations: {len(recommendations)}")
+        
+        return success
+
+    def test_churn_prediction(self):
+        """Test individual customer churn prediction"""
+        print("\n🚨 Testing Customer Churn Prediction...")
+        
+        customer_data = {
+            "customer_id": "test_customer_456",
+            "usage_score": 65,
+            "satisfaction_score": 7.2,
+            "support_tickets": 3,
+            "subscription_length_months": 8
+        }
+        
+        success, response = self.run_revenue_test(
+            "Customer Churn Prediction",
+            "POST",
+            "api/revenue/subscription-analytics/churn-prediction",
+            200,
+            data=customer_data,
+            timeout=45
+        )
+        
+        if success:
+            customer_id = response.get('customer_id', 'unknown')
+            prediction = response.get('prediction', {})
+            print(f"   Customer ID: {customer_id}")
+            
+            if prediction:
+                print(f"   Churn Probability: {prediction.get('churn_probability', 0)}%")
+                print(f"   Risk Level: {prediction.get('risk_level', 'unknown')}")
+                print(f"   Urgency: {prediction.get('urgency', 'unknown')}")
+                print(f"   Confidence Score: {prediction.get('confidence_score', 0)}%")
+                
+                factors = response.get('contributing_factors', [])
+                print(f"   Contributing Factors: {len(factors)}")
+                
+                interventions = response.get('recommended_interventions', [])
+                print(f"   Recommended Interventions: {len(interventions)}")
+        
+        return success
+
+    def test_revenue_optimization(self):
+        """Test subscription revenue optimization insights"""
+        print("\n💡 Testing Subscription Revenue Optimization...")
+        
+        success, response = self.run_revenue_test(
+            "Revenue Optimization Insights",
+            "GET",
+            "api/revenue/subscription-analytics/revenue-optimization",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            optimization = response.get('revenue_optimization', {})
+            if optimization:
+                metrics = optimization.get('current_metrics', {})
+                print(f"   Total Subscribers: {metrics.get('total_subscribers', 0):,}")
+                print(f"   Monthly Recurring Revenue: ${metrics.get('monthly_recurring_revenue', 0):,}")
+                print(f"   Average Revenue Per User: ${metrics.get('average_revenue_per_user', 0):,}")
+                
+                strategies = optimization.get('optimization_strategies', [])
+                print(f"   Optimization Strategies: {len(strategies)}")
+                
+                segments = optimization.get('customer_segments', [])
+                print(f"   Customer Segments: {len(segments)}")
+                
+                actions = optimization.get('prioritized_actions', [])
+                print(f"   Prioritized Actions: {len(actions)}")
+        
+        return success
+
+    def test_financial_reporting_dashboard(self):
+        """Test financial reporting dashboard with executive insights"""
+        print("\n📊 Testing Revenue Analytics Suite - Financial Reporting Dashboard...")
+        
+        success, response = self.run_revenue_test(
+            "Financial Reporting Dashboard",
+            "GET",
+            "api/revenue/financial-reporting",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                summary = dashboard.get('summary_metrics', {})
+                print(f"   Total Revenue: ${summary.get('total_revenue', 0):,}")
+                print(f"   Total Expenses: ${summary.get('total_expenses', 0):,}")
+                print(f"   Net Profit: ${summary.get('net_profit', 0):,}")
+                print(f"   Average Profit Margin: {summary.get('average_profit_margin', 0)}%")
+                print(f"   Revenue Growth Rate: {summary.get('revenue_growth_rate', 0)}%")
+                
+                quarterly = dashboard.get('quarterly_performance', [])
+                print(f"   Quarterly Performance: {len(quarterly)} quarters")
+                
+                ratios = dashboard.get('financial_ratios', {})
+                print(f"   Financial Ratios Categories: {len(ratios)}")
+                
+                revenue_sources = dashboard.get('revenue_breakdown', [])
+                print(f"   Revenue Sources: {len(revenue_sources)}")
+                
+                expenses = dashboard.get('expense_analysis', [])
+                print(f"   Expense Categories: {len(expenses)}")
+                
+                insights = dashboard.get('ai_insights', [])
+                print(f"   AI Insights: {len(insights)}")
+        
+        return success
+
+    def test_custom_report_generation(self):
+        """Test custom financial report generation"""
+        print("\n📋 Testing Custom Financial Report Generation...")
+        
+        report_config = {
+            "report_type": "comprehensive",
+            "date_range": "quarterly",
+            "include_forecasts": True
+        }
+        
+        success, response = self.run_revenue_test(
+            "Custom Report Generation",
+            "POST",
+            "api/revenue/financial-reporting/custom-report",
+            200,
+            data=report_config,
+            timeout=45
+        )
+        
+        if success:
+            report_id = response.get('report_id', 'unknown')
+            print(f"   Report ID: {report_id}")
+            
+            summary = response.get('executive_summary', {})
+            if summary:
+                print(f"   Financial Health: {summary.get('financial_health', 'unknown')}")
+                print(f"   Growth Trajectory: {summary.get('growth_trajectory', 'unknown')}")
+                
+                strengths = summary.get('key_strengths', [])
+                print(f"   Key Strengths: {len(strengths)}")
+                
+                recommendations = summary.get('strategic_recommendations', [])
+                print(f"   Strategic Recommendations: {len(recommendations)}")
+            
+            sections = response.get('report_sections', [])
+            print(f"   Report Sections: {len(sections)}")
+        
+        return success
+
+    def test_kpi_dashboard(self):
+        """Test executive KPI dashboard"""
+        print("\n📈 Testing Executive KPI Dashboard...")
+        
+        success, response = self.run_revenue_test(
+            "Executive KPI Dashboard",
+            "GET",
+            "api/revenue/financial-reporting/kpi-dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                health_score = dashboard.get('financial_health_score', 0)
+                print(f"   Financial Health Score: {health_score}/100")
+                
+                components = dashboard.get('health_components', {})
+                print(f"   Health Components: {len(components)}")
+                
+                kpis = dashboard.get('executive_kpis', [])
+                print(f"   Executive KPIs: {len(kpis)}")
+                
+                alerts = dashboard.get('performance_alerts', [])
+                print(f"   Performance Alerts: {len(alerts)}")
+                
+                insights = dashboard.get('summary_insights', {})
+                if insights:
+                    strengths = insights.get('strongest_areas', [])
+                    opportunities = insights.get('improvement_opportunities', [])
+                    print(f"   Strongest Areas: {len(strengths)}")
+                    print(f"   Improvement Opportunities: {len(opportunities)}")
+        
+        return success
+
+    def test_variance_analysis(self):
+        """Test budget vs actual variance analysis"""
+        print("\n📊 Testing Budget Variance Analysis...")
+        
+        success, response = self.run_revenue_test(
+            "Variance Analysis",
+            "GET",
+            "api/revenue/financial-reporting/variance-analysis",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            analysis = response.get('variance_analysis', {})
+            if analysis:
+                summary = analysis.get('summary', {})
+                print(f"   Total Budget: ${summary.get('total_budget', 0):,}")
+                print(f"   Total Actual: ${summary.get('total_actual', 0):,}")
+                print(f"   Total Variance: ${summary.get('total_variance', 0):,}")
+                print(f"   Overall Accuracy: {summary.get('overall_accuracy', 0)}%")
+                
+                variances = analysis.get('category_variances', [])
+                print(f"   Category Variances: {len(variances)}")
+                
+                trends = analysis.get('monthly_trends', [])
+                print(f"   Monthly Trends: {len(trends)}")
+                
+                drivers = analysis.get('variance_drivers', [])
+                print(f"   Variance Drivers: {len(drivers)}")
+        
+        return success
+
+    def test_revenue_analytics_suite_dashboard(self):
+        """Test comprehensive Revenue Analytics Suite dashboard aggregation"""
+        print("\n🎯 Testing Revenue Analytics Suite - Comprehensive Dashboard...")
+        
+        success, response = self.run_revenue_test(
+            "Revenue Analytics Suite Dashboard",
+            "GET",
+            "api/revenue/dashboard",
+            200,
+            timeout=90  # All revenue services running in parallel
+        )
+        
+        if success:
+            print(f"   Service: {response.get('service', 'unknown')}")
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            modules = response.get('modules', {})
+            print(f"   Integrated {len(modules)} revenue modules:")
+            
+            for module_name, module_data in modules.items():
+                if isinstance(module_data, dict) and 'error' not in module_data:
+                    print(f"   ✅ {module_name.replace('_', ' ').title()}: Working")
+                else:
+                    print(f"   ❌ {module_name.replace('_', ' ').title()}: Error - {module_data.get('error', 'Unknown error')}")
+        
+        return success
+
+    # =====================================================
+    # END REVENUE ANALYTICS SUITE MODULE TESTS
+    # =====================================================
+
+    # =====================================================
     # LEGACY TESTS (for compatibility)
     # =====================================================
 
