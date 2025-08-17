@@ -1958,6 +1958,12 @@ def main():
     print(f"   Marketing Automation tests passed: {tester.marketing_automation_passed}")
     print(f"   Marketing Automation success rate: {(tester.marketing_automation_passed/tester.marketing_automation_tests*100):.1f}%" if tester.marketing_automation_tests > 0 else "No Marketing tests run")
     
+    # Revenue Analytics Suite specific results
+    print(f"\n💰 REVENUE ANALYTICS SUITE TEST RESULTS:")
+    print(f"   Revenue Analytics tests run: {tester.revenue_analytics_tests}")
+    print(f"   Revenue Analytics tests passed: {tester.revenue_analytics_passed}")
+    print(f"   Revenue Analytics success rate: {(tester.revenue_analytics_passed/tester.revenue_analytics_tests*100):.1f}%" if tester.revenue_analytics_tests > 0 else "No Revenue tests run")
+    
     print(f"\n🔗 ODOO Connection Status: {tester.odoo_connection_status}")
     
     if tester.real_customers_loaded:
