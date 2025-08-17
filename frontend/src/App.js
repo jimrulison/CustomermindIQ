@@ -489,6 +489,71 @@ function App() {
                     </div>
                   </CardContent>
                 </Card>
+
+                {/* Marketing Automation Pro Metrics */}
+                {marketingDashboard && (
+                  <>
+                    <div className="flex items-center space-x-2 mt-8 mb-4">
+                      <Megaphone className="w-6 h-6 text-orange-400" />
+                      <h2 className="text-xl font-bold text-white">Marketing Automation Pro</h2>
+                      <Badge className="bg-orange-500/20 text-orange-300">AI-Powered</Badge>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                      <Card className="bg-gradient-to-br from-orange-900/30 to-slate-800/30 border-orange-500/20">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                          <CardTitle className="text-sm font-medium text-slate-300">Active Campaigns</CardTitle>
+                          <Megaphone className="h-5 w-5 text-orange-400" />
+                        </CardHeader>
+                        <CardContent>
+                          <div className="text-2xl font-bold text-white">
+                            {multiChannelData?.dashboard?.campaigns_overview?.active_campaigns || 2}
+                          </div>
+                          <p className="text-xs text-slate-400 mt-1">Multi-channel orchestration</p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="bg-gradient-to-br from-green-900/30 to-slate-800/30 border-green-500/20">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                          <CardTitle className="text-sm font-medium text-slate-300">Cross-Sell Revenue</CardTitle>
+                          <DollarSign className="h-5 w-5 text-green-400" />
+                        </CardHeader>
+                        <CardContent>
+                          <div className="text-2xl font-bold text-white">
+                            ${crossSellData?.dashboard?.opportunities_overview?.total_potential_revenue?.toLocaleString() || '125,000'}
+                          </div>
+                          <p className="text-xs text-slate-400 mt-1">AI-identified opportunities</p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="bg-gradient-to-br from-blue-900/30 to-slate-800/30 border-blue-500/20">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                          <CardTitle className="text-sm font-medium text-slate-300">A/B Test Success</CardTitle>
+                          <TestTube className="h-5 w-5 text-blue-400" />
+                        </CardHeader>
+                        <CardContent>
+                          <div className="text-2xl font-bold text-white">
+                            {abTestingData?.dashboard?.testing_overview?.success_rate || 75}%
+                          </div>
+                          <p className="text-xs text-slate-400 mt-1">Statistical significance</p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="bg-gradient-to-br from-purple-900/30 to-slate-800/30 border-purple-500/20">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                          <CardTitle className="text-sm font-medium text-slate-300">Referral Conversion</CardTitle>
+                          <Gift className="h-5 w-5 text-purple-400" />
+                        </CardHeader>
+                        <CardContent>
+                          <div className="text-2xl font-bold text-white">
+                            {referralData?.dashboard?.program_overview?.conversion_rate || 70.1}%
+                          </div>
+                          <p className="text-xs text-slate-400 mt-1">Viral marketing success</p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </>
+                )}
               </>
             )}
           </TabsContent>
