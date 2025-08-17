@@ -21,6 +21,15 @@ from modules.customer_intelligence_ai import (
     JourneyMappingService
 )
 
+# Import Marketing Automation Pro Module
+from modules.marketing_automation_pro import (
+    MultiChannelOrchestrationService,
+    ABTestingService,
+    DynamicContentService,
+    CrossSellIntelligenceService,
+    ReferralProgramService
+)
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
