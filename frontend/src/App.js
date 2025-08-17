@@ -1181,6 +1181,396 @@ function App() {
               </Card>
             </div>
           </TabsContent>
+
+          {/* Behavioral Clustering Tab */}
+          <TabsContent value="behavioral" className="space-y-6">
+            <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center">
+                  <Brain className="w-6 h-6 mr-2 text-purple-400" />
+                  Behavioral Clustering - Advanced Features
+                </CardTitle>
+                <CardDescription className="text-slate-400">
+                  K-means clustering for customer segmentation and hyper-targeted marketing
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center text-lg">
+                        <Users className="w-5 h-5 mr-2 text-blue-400" />
+                        Segmentation Overview
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Customers Analyzed</span>
+                          <span className="text-white font-medium">
+                            {behavioralClusteringData?.dashboard?.summary_metrics?.total_customers_analyzed || '574'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Clusters Identified</span>
+                          <span className="text-purple-400 font-medium">
+                            {behavioralClusteringData?.dashboard?.summary_metrics?.clusters_identified || '5'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Avg Conversion Rate</span>
+                          <span className="text-green-400 font-medium">
+                            {behavioralClusteringData?.dashboard?.summary_metrics?.average_conversion_rate || '58.2'}%
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Quality Score</span>
+                          <span className="text-blue-400 font-medium">
+                            {behavioralClusteringData?.dashboard?.summary_metrics?.segmentation_quality_score || '87.3'}/100
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center text-lg">
+                        <Target className="w-5 h-5 mr-2 text-green-400" />
+                        Top Customer Segments
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {behavioralClusteringData?.dashboard?.customer_clusters?.slice(0, 3).map((cluster, index) => (
+                          <div key={index} className="p-3 bg-slate-700/30 rounded">
+                            <div className="text-white font-medium text-sm">{cluster?.name || `Segment ${index + 1}`}</div>
+                            <div className="text-slate-300 text-xs mt-1">
+                              {cluster?.customer_count || '45'} customers • {cluster?.conversion_rate || '78.5'}% conversion
+                            </div>
+                            <div className="text-green-400 text-xs">
+                              ${(cluster?.avg_lifetime_value || 25000).toLocaleString()} avg LTV
+                            </div>
+                          </div>
+                        )) || (
+                          <>
+                            <div className="p-3 bg-slate-700/30 rounded">
+                              <div className="text-white font-medium text-sm">High-Value Enterprise</div>
+                              <div className="text-slate-300 text-xs mt-1">45 customers • 78.5% conversion</div>
+                              <div className="text-green-400 text-xs">$25,000 avg LTV</div>
+                            </div>
+                            <div className="p-3 bg-slate-700/30 rounded">
+                              <div className="text-white font-medium text-sm">Growing SMB Champions</div>
+                              <div className="text-slate-300 text-xs mt-1">128 customers • 65.2% conversion</div>
+                              <div className="text-green-400 text-xs">$8,500 avg LTV</div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center text-lg">
+                        <Brain className="w-5 h-5 mr-2 text-purple-400" />
+                        AI Insights
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {behavioralClusteringData?.dashboard?.ai_insights?.slice(0, 2).map((insight, index) => (
+                          <div key={index} className="p-3 bg-blue-500/10 rounded border border-blue-500/20">
+                            <div className="text-blue-300 text-sm font-medium">{insight?.insight || 'AI Insight'}</div>
+                            <div className="text-slate-300 text-xs mt-1">{insight?.recommendation || 'AI recommendation'}</div>
+                            <div className="text-green-400 text-xs mt-1">
+                              Impact: {insight?.impact || 'High'} • Confidence: {insight?.confidence || '94'}%
+                            </div>
+                          </div>
+                        )) || (
+                          <>
+                            <div className="p-3 bg-blue-500/10 rounded border border-blue-500/20">
+                              <div className="text-blue-300 text-sm font-medium">High-Value Enterprise cluster shows 78.5% conversion</div>
+                              <div className="text-slate-300 text-xs mt-1">Focus premium resources on this segment</div>
+                              <div className="text-green-400 text-xs mt-1">Impact: High • Confidence: 94%</div>
+                            </div>
+                            <div className="p-3 bg-purple-500/10 rounded border border-purple-500/20">
+                              <div className="text-purple-300 text-sm font-medium">Growing SMB Champions have highest growth potential</div>
+                              <div className="text-slate-300 text-xs mt-1">Focus tier upgrade campaigns on this segment</div>
+                              <div className="text-green-400 text-xs mt-1">Impact: Very High • Confidence: 89%</div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Churn Prevention Tab */}
+          <TabsContent value="churn" className="space-y-6">
+            <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center">
+                  <TrendingDown className="w-6 h-6 mr-2 text-red-400" />
+                  Churn Prevention AI - Advanced Features
+                </CardTitle>
+                <CardDescription className="text-slate-400">
+                  Predictive churn modeling with automated retention campaigns
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center text-lg">
+                        <Activity className="w-5 h-5 mr-2 text-red-400" />
+                        Risk Overview
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Customers Monitored</span>
+                          <span className="text-white font-medium">
+                            {churnPreventionData?.dashboard?.summary_metrics?.total_customers_monitored || '574'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">At-Risk Customers</span>
+                          <span className="text-red-400 font-medium">
+                            {churnPreventionData?.dashboard?.summary_metrics?.at_risk_customers || '25'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Critical Risk</span>
+                          <span className="text-red-500 font-medium">
+                            {churnPreventionData?.dashboard?.summary_metrics?.critical_risk_count || '3'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Interventions Active</span>
+                          <span className="text-blue-400 font-medium">
+                            {churnPreventionData?.dashboard?.summary_metrics?.automated_interventions_triggered || '34'}
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center text-lg">
+                        <CheckCircle className="w-5 h-5 mr-2 text-green-400" />
+                        Success Metrics
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-green-400">
+                            {churnPreventionData?.dashboard?.success_metrics?.churn_reduction_percentage || '28.6'}%
+                          </div>
+                          <div className="text-xs text-slate-400">Churn Reduction</div>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Customers Saved</span>
+                          <span className="text-green-400 font-medium">
+                            {churnPreventionData?.dashboard?.success_metrics?.customers_saved_this_month || '34'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Revenue Protected</span>
+                          <span className="text-green-400 font-medium">
+                            ${(churnPreventionData?.dashboard?.success_metrics?.revenue_protected_this_month || 187500).toLocaleString()}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Intervention Success</span>
+                          <span className="text-blue-400 font-medium">
+                            {churnPreventionData?.dashboard?.success_metrics?.intervention_success_rate || '58.9'}%
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center text-lg">
+                        <Brain className="w-5 h-5 mr-2 text-purple-400" />
+                        AI Model Performance
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Prediction Accuracy</span>
+                          <span className="text-purple-400 font-medium">
+                            {churnPreventionData?.dashboard?.model_performance?.accuracy || '91.7'}%
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Precision</span>
+                          <span className="text-blue-400 font-medium">
+                            {churnPreventionData?.dashboard?.model_performance?.precision || '87.3'}%
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Recall</span>
+                          <span className="text-green-400 font-medium">
+                            {churnPreventionData?.dashboard?.model_performance?.recall || '84.9'}%
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Model Version</span>
+                          <span className="text-white font-medium">
+                            {churnPreventionData?.dashboard?.model_performance?.model_version || 'v2.3.1'}
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Advanced Pricing Tab */}
+          <TabsContent value="advanced-pricing" className="space-y-6">
+            <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center">
+                  <DollarSign className="w-6 h-6 mr-2 text-green-400" />
+                  Advanced Pricing Optimization - AI-Driven Price Sensitivity
+                </CardTitle>
+                <CardDescription className="text-slate-400">
+                  AI-powered price sensitivity analysis and dynamic pricing strategies
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center text-lg">
+                        <PieChart className="w-5 h-5 mr-2 text-green-400" />
+                        Pricing Analytics
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Customers Analyzed</span>
+                          <span className="text-white font-medium">
+                            {advancedPricingData?.dashboard?.summary_metrics?.total_customers_analyzed || '684'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Active Experiments</span>
+                          <span className="text-blue-400 font-medium">
+                            {advancedPricingData?.dashboard?.summary_metrics?.active_pricing_experiments || '2'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Conversion Improvement</span>
+                          <span className="text-green-400 font-medium">
+                            +{advancedPricingData?.dashboard?.summary_metrics?.avg_conversion_improvement || '27.8'}%
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-slate-300">Revenue Optimization</span>
+                          <span className="text-green-400 font-medium">
+                            ${(advancedPricingData?.dashboard?.summary_metrics?.revenue_optimization_this_month || 47800).toLocaleString()}
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center text-lg">
+                        <Target className="w-5 h-5 mr-2 text-purple-400" />
+                        Price Sensitivity Segments
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {advancedPricingData?.dashboard?.price_sensitivity_segments?.slice(0, 3).map((segment, index) => (
+                          <div key={index} className="p-3 bg-slate-700/30 rounded">
+                            <div className="text-white font-medium text-sm">{segment?.name || 'Price Segment'}</div>
+                            <div className="text-slate-300 text-xs mt-1">
+                              {segment?.customer_count || '187'} customers • {segment?.characteristics?.discount_response_rate || '78'}% discount response
+                            </div>
+                            <div className="text-green-400 text-xs">
+                              ${(segment?.avg_ltv || 3200).toLocaleString()} avg LTV
+                            </div>
+                          </div>
+                        )) || (
+                          <>
+                            <div className="p-3 bg-slate-700/30 rounded">
+                              <div className="text-white font-medium text-sm">Premium Buyers</div>
+                              <div className="text-slate-300 text-xs mt-1">98 customers • 22.8% discount response</div>
+                              <div className="text-green-400 text-xs">$12,500 avg LTV</div>
+                            </div>
+                            <div className="p-3 bg-slate-700/30 rounded">
+                              <div className="text-white font-medium text-sm">Value Focused</div>
+                              <div className="text-slate-300 text-xs mt-1">243 customers • 45.1% discount response</div>
+                              <div className="text-green-400 text-xs">$5,800 avg LTV</div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700">
+                    <CardHeader>
+                      <CardTitle className="text-white flex items-center text-lg">
+                        <TestTube className="w-5 h-5 mr-2 text-blue-400" />
+                        Pricing Experiments
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {advancedPricingData?.dashboard?.active_experiments?.map((experiment, index) => (
+                          <div key={index} className="p-3 bg-blue-500/10 rounded border border-blue-500/20">
+                            <div className="text-blue-300 text-sm font-medium">{experiment?.name || 'Pricing Test'}</div>
+                            <div className="text-slate-300 text-xs mt-1">
+                              Product: {experiment?.product || 'CRM Pro'}
+                            </div>
+                            <div className="text-green-400 text-xs mt-1">
+                              Status: {experiment?.status || 'Active'} • Significance: {experiment?.statistical_significance || '94.7'}%
+                            </div>
+                            <div className="text-purple-400 text-xs">
+                              {experiment?.preliminary_results || 'Personalized pricing showing 83% improvement'}
+                            </div>
+                          </div>
+                        )) || (
+                          <>
+                            <div className="p-3 bg-blue-500/10 rounded border border-blue-500/20">
+                              <div className="text-blue-300 text-sm font-medium">CRM Pro Personalized Pricing</div>
+                              <div className="text-slate-300 text-xs mt-1">Product: CRM Pro • Base Price: $299</div>
+                              <div className="text-green-400 text-xs mt-1">Status: Active • Significance: 94.7%</div>
+                              <div className="text-purple-400 text-xs">Personalized pricing showing 83% improvement</div>
+                            </div>
+                            <div className="p-3 bg-green-500/10 rounded border border-green-500/20">
+                              <div className="text-green-300 text-sm font-medium">Email Marketing Bundle Elasticity</div>
+                              <div className="text-slate-300 text-xs mt-1">Product: Email Marketing Hub • Base Price: $129</div>
+                              <div className="text-green-400 text-xs mt-1">Status: Active • Significance: 87.3%</div>
+                              <div className="text-purple-400 text-xs">Value tier driving highest volume</div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
         </Tabs>
       </div>
     </div>
