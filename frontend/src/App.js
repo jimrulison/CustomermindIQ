@@ -55,24 +55,17 @@ function App() {
   const loadData = async () => {
     try {
       setLoading(true);
-      console.log('Starting to load data from:', API_BASE_URL);
-      
-      // Configure axios with longer timeout for AI processing
-      const axiosConfig = { timeout: 60000 }; // 60 seconds timeout
-      
       const [customersRes, campaignsRes, analyticsRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/customers`, axiosConfig),
-        axios.get(`${API_BASE_URL}/api/campaigns`, axiosConfig),
-        axios.get(`${API_BASE_URL}/api/analytics`, axiosConfig)
+        axios.get(`${API_BASE_URL}/api/customers`),
+        axios.get(`${API_BASE_URL}/api/campaigns`),
+        axios.get(`${API_BASE_URL}/api/analytics`)
       ]);
       
-      console.log('Data loaded successfully');
       setCustomers(customersRes.data);
       setCampaigns(campaignsRes.data);
       setAnalytics(analyticsRes.data);
     } catch (error) {
       console.error('Error loading data:', error);
-      console.error('Error details:', error.response?.data || error.message);
     } finally {
       setLoading(false);
     }
@@ -124,21 +117,28 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading analytics...</div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
+        <div className="text-white text-xl">Loading Customer Mind IQ...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
       {/* Header */}
       <header className="border-b border-slate-700 bg-slate-800/50 backdrop-blur-xl">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Brain className="h-8 w-8 text-purple-400" />
-              <h1 className="text-2xl font-bold text-white">Software Analytics Hub</h1>
+            <div className="flex items-center space-x-4">
+              <img 
+                src="https://customer-assets.emergentagent.com/job_upsell-tracker/artifacts/a451o37y_Customer%20Mind%20IQ%20logo.png" 
+                alt="Customer Mind IQ Logo" 
+                className="h-12 w-12 object-contain"
+              />
+              <div>
+                <h1 className="text-2xl font-bold text-white">Customer Mind IQ</h1>
+                <p className="text-sm text-slate-300">AI-Powered Purchase Analytics & Email Marketing</p>
+              </div>
             </div>
             <div className="flex items-center space-x-4">
               <Badge variant="outline" className="text-green-400 border-green-400">
@@ -147,6 +147,9 @@ function App() {
               <Badge variant="outline" className="text-blue-400 border-blue-400">
                 {customers.length} Customers
               </Badge>
+              <div className="text-xs text-slate-400">
+                customermindai.com
+              </div>
             </div>
           </div>
         </div>
@@ -155,19 +158,19 @@ function App() {
       <div className="container mx-auto px-6 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-4 bg-slate-800/50 backdrop-blur-xl">
-            <TabsTrigger value="dashboard" className="text-white data-[state=active]:bg-purple-600">
+            <TabsTrigger value="dashboard" className="text-white data-[state=active]:bg-blue-600">
               <BarChart3 className="w-4 h-4 mr-2" />
               Dashboard
             </TabsTrigger>
-            <TabsTrigger value="customers" className="text-white data-[state=active]:bg-purple-600">
+            <TabsTrigger value="customers" className="text-white data-[state=active]:bg-blue-600">
               <Users className="w-4 h-4 mr-2" />
-              Customers
+              Customer Intelligence
             </TabsTrigger>  
-            <TabsTrigger value="campaigns" className="text-white data-[state=active]:bg-purple-600">
+            <TabsTrigger value="campaigns" className="text-white data-[state=active]:bg-blue-600">
               <Mail className="w-4 h-4 mr-2" />
-              Campaigns
+              Email Campaigns
             </TabsTrigger>
-            <TabsTrigger value="create" className="text-white data-[state=active]:bg-purple-600">
+            <TabsTrigger value="create" className="text-white data-[state=active]:bg-blue-600">
               <Zap className="w-4 h-4 mr-2" />
               Create Campaign
             </TabsTrigger>
@@ -177,51 +180,68 @@ function App() {
           <TabsContent value="dashboard" className="space-y-6">
             {analytics && (
               <>
+                {/* Welcome Section */}
+                <Card className="bg-gradient-to-r from-blue-900/40 to-slate-800/40 backdrop-blur-xl border-slate-700">
+                  <CardHeader>
+                    <CardTitle className="text-2xl text-white flex items-center">
+                      <Brain className="w-8 h-8 mr-3 text-blue-400" />
+                      Welcome to Customer Mind IQ
+                    </CardTitle>
+                    <CardDescription className="text-slate-300 text-lg">
+                      Unlock customer insights with AI-powered analytics and targeted marketing automation
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+
                 {/* Key Metrics */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                  <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+                  <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700 hover:bg-slate-800/70 transition-all">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                       <CardTitle className="text-sm font-medium text-slate-300">Total Customers</CardTitle>
-                      <Users className="h-4 w-4 text-purple-400" />
+                      <Users className="h-5 w-5 text-blue-400" />
                     </CardHeader>
                     <CardContent>
-                      <div className="text-2xl font-bold text-white">{analytics.total_customers}</div>
+                      <div className="text-3xl font-bold text-white">{analytics.total_customers}</div>
+                      <p className="text-xs text-slate-400 mt-1">Active customer base</p>
                     </CardContent>
                   </Card>
                   
-                  <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+                  <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700 hover:bg-slate-800/70 transition-all">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                       <CardTitle className="text-sm font-medium text-slate-300">Total Revenue</CardTitle>
-                      <DollarSign className="h-4 w-4 text-green-400" />
+                      <DollarSign className="h-5 w-5 text-green-400" />
                     </CardHeader>
                     <CardContent>
-                      <div className="text-2xl font-bold text-white">
+                      <div className="text-3xl font-bold text-white">
                         ${analytics.total_revenue.toLocaleString()}
                       </div>
+                      <p className="text-xs text-slate-400 mt-1">Lifetime customer value</p>
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+                  <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700 hover:bg-slate-800/70 transition-all">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium text-slate-300">Conversion Rate</CardTitle>
-                      <Target className="h-4 w-4 text-blue-400" />
+                      <CardTitle className="text-sm font-medium text-slate-300">AI Conversion Rate</CardTitle>
+                      <Target className="h-5 w-5 text-purple-400" />
                     </CardHeader>
                     <CardContent>
-                      <div className="text-2xl font-bold text-white">
+                      <div className="text-3xl font-bold text-white">
                         {(analytics.conversion_metrics.conversion_rate * 100).toFixed(1)}%
                       </div>
+                      <p className="text-xs text-slate-400 mt-1">Email to purchase</p>
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+                  <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700 hover:bg-slate-800/70 transition-all">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                       <CardTitle className="text-sm font-medium text-slate-300">Avg Deal Size</CardTitle>
-                      <ShoppingCart className="h-4 w-4 text-yellow-400" />
+                      <ShoppingCart className="h-5 w-5 text-yellow-400" />
                     </CardHeader>
                     <CardContent>
-                      <div className="text-2xl font-bold text-white">
+                      <div className="text-3xl font-bold text-white">
                         ${analytics.conversion_metrics.average_deal_size.toLocaleString()}
                       </div>
+                      <p className="text-xs text-slate-400 mt-1">Per customer transaction</p>
                     </CardContent>
                   </Card>
                 </div>
@@ -238,15 +258,16 @@ function App() {
                     <CardContent>
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
-                          <span className="text-slate-300">Current Rate</span>
+                          <span className="text-slate-300">Current Performance</span>
                           <span className="text-white font-medium">
                             {(analytics.conversion_metrics.email_open_rate * 100).toFixed(1)}%
                           </span>
                         </div>
                         <Progress 
                           value={analytics.conversion_metrics.email_open_rate * 100} 
-                          className="h-2"
+                          className="h-3"
                         />
+                        <p className="text-xs text-slate-400">Industry avg: 22%</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -261,15 +282,16 @@ function App() {
                     <CardContent>
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
-                          <span className="text-slate-300">Current Rate</span>
+                          <span className="text-slate-300">Current Performance</span>
                           <span className="text-white font-medium">
                             {(analytics.conversion_metrics.click_through_rate * 100).toFixed(1)}%
                           </span>
                         </div>
                         <Progress 
                           value={analytics.conversion_metrics.click_through_rate * 100} 
-                          className="h-2"
+                          className="h-3"
                         />
+                        <p className="text-xs text-slate-400">Industry avg: 3.2%</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -278,21 +300,22 @@ function App() {
                     <CardHeader>
                       <CardTitle className="text-white flex items-center">
                         <CheckCircle className="w-5 h-5 mr-2 text-green-400" />
-                        Conversion Rate
+                        Purchase Conversion
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
-                          <span className="text-slate-300">Current Rate</span>
+                          <span className="text-slate-300">AI-Optimized Rate</span>
                           <span className="text-white font-medium">
                             {(analytics.conversion_metrics.conversion_rate * 100).toFixed(1)}%
                           </span>
                         </div>
                         <Progress 
                           value={analytics.conversion_metrics.conversion_rate * 100} 
-                          className="h-2"
+                          className="h-3"
                         />
+                        <p className="text-xs text-slate-400">Industry avg: 2.1%</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -301,24 +324,32 @@ function App() {
                 {/* Top Products */}
                 <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
                   <CardHeader>
-                    <CardTitle className="text-white">Top Performing Software</CardTitle>
+                    <CardTitle className="text-white flex items-center">
+                      <TrendingUp className="w-5 h-5 mr-2 text-green-400" />
+                      Top Performing Software Products
+                    </CardTitle>
                     <CardDescription className="text-slate-400">
-                      Most purchased software by customer count
+                      Most purchased software by customer count and revenue impact
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       {analytics.top_products.map((product, index) => (
-                        <div key={index} className="flex items-center justify-between p-4 bg-slate-700/50 rounded-lg">
-                          <div>
-                            <h3 className="font-semibold text-white">{product.name}</h3>
-                            <p className="text-sm text-slate-400">{product.customers} customers</p>
+                        <div key={index} className="flex items-center justify-between p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700/70 transition-all">
+                          <div className="flex items-center space-x-4">
+                            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                              {index + 1}
+                            </div>
+                            <div>
+                              <h3 className="font-semibold text-white">{product.name}</h3>
+                              <p className="text-sm text-slate-400">{product.customers} customers • High conversion potential</p>
+                            </div>
                           </div>
                           <div className="text-right">
                             <div className="text-lg font-bold text-green-400">
                               ${product.revenue.toLocaleString()}
                             </div>
-                            <div className="text-sm text-slate-400">Revenue</div>
+                            <div className="text-sm text-slate-400">Revenue generated</div>
                           </div>
                         </div>
                       ))}
@@ -336,9 +367,12 @@ function App() {
               <div className="lg:col-span-2">
                 <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
                   <CardHeader>
-                    <CardTitle className="text-white">Customer Analytics</CardTitle>
+                    <CardTitle className="text-white flex items-center">
+                      <Brain className="w-6 h-6 mr-2 text-blue-400" />
+                      Customer Intelligence Dashboard
+                    </CardTitle>
                     <CardDescription className="text-slate-400">
-                      AI-powered insights into customer behavior and purchase patterns
+                      AI-powered insights into customer behavior, purchase patterns, and growth opportunities
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -346,41 +380,51 @@ function App() {
                       {customers.map((customer) => (
                         <div 
                           key={customer.customer_id} 
-                          className={`p-4 bg-slate-700/50 rounded-lg cursor-pointer transition-all hover:bg-slate-700/70 ${
-                            selectedCustomer?.customer_id === customer.customer_id ? 'ring-2 ring-purple-400' : ''
+                          className={`p-5 bg-slate-700/50 rounded-lg cursor-pointer transition-all hover:bg-slate-700/70 hover:scale-[1.02] ${
+                            selectedCustomer?.customer_id === customer.customer_id ? 'ring-2 ring-blue-400 bg-slate-700/70' : ''
                           }`}
                           onClick={() => {
                             setSelectedCustomer(customer);
                             loadCustomerRecommendations(customer.customer_id);
                           }}
                         >
-                          <div className="flex items-center justify-between mb-2">
-                            <h3 className="font-semibold text-white">{customer.name}</h3>
+                          <div className="flex items-center justify-between mb-3">
+                            <h3 className="font-semibold text-white text-lg">{customer.name}</h3>
                             <Badge className={getLifecycleColor(customer.lifecycle_stage)}>
-                              {customer.lifecycle_stage}
+                              {customer.lifecycle_stage.toUpperCase()}
                             </Badge>
                           </div>
                           
                           <div className="flex items-center justify-between mb-3">
                             <span className="text-sm text-slate-400">{customer.email}</span>
-                            <span className="text-sm font-medium text-green-400">
-                              ${customer.total_spent.toLocaleString()}
-                            </span>
+                            <div className="text-right">
+                              <div className="text-lg font-bold text-green-400">
+                                ${customer.total_spent.toLocaleString()}
+                              </div>
+                              <div className="text-xs text-slate-400">{customer.total_purchases} purchases</div>
+                            </div>
                           </div>
 
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm text-slate-400">Engagement Score</span>
-                            <span className="text-sm font-medium text-white">
-                              {customer.engagement_score}/100
-                            </span>
+                          <div className="mb-4">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-sm text-slate-400">AI Engagement Score</span>
+                              <span className="text-sm font-medium text-white">
+                                {customer.engagement_score}/100
+                              </span>
+                            </div>
+                            
+                            <Progress 
+                              value={customer.engagement_score} 
+                              className="h-2 mb-1"
+                            />
+                            <p className="text-xs text-slate-500">
+                              {customer.engagement_score >= 80 ? 'High value customer' :
+                               customer.engagement_score >= 60 ? 'Engaged customer' :
+                               customer.engagement_score >= 40 ? 'Moderate engagement' : 'Needs attention'}
+                            </p>
                           </div>
-                          
-                          <Progress 
-                            value={customer.engagement_score} 
-                            className="h-2 mb-3"
-                          />
 
-                          <div className="flex flex-wrap gap-1">
+                          <div className="flex flex-wrap gap-2">
                             {customer.software_owned.map((software, index) => (
                               <Badge key={index} variant="outline" className="text-xs text-blue-400 border-blue-400">
                                 {software}
@@ -404,37 +448,61 @@ function App() {
                         AI Recommendations
                       </CardTitle>
                       <CardDescription className="text-slate-400">
-                        For {selectedCustomer.name}
+                        Personalized insights for {selectedCustomer.name}
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-4">
+                        <Alert className="bg-blue-500/10 border-blue-500/20">
+                          <Brain className="h-4 w-4 text-blue-400" />
+                          <AlertDescription className="text-blue-300">
+                            AI Analysis: {selectedCustomer.engagement_score >= 70 ? 'High-value customer with strong upsell potential' : 
+                                          selectedCustomer.engagement_score >= 50 ? 'Engaged customer ready for targeted offers' : 
+                                          'Customer needs re-engagement strategy'}
+                          </AlertDescription>
+                        </Alert>
+                        
                         {recommendations.map((rec, index) => (
-                          <div key={index} className="p-3 bg-slate-700/50 rounded-lg">
+                          <div key={index} className="p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700/70 transition-all">
                             <div className="flex items-center justify-between mb-2">
                               <h4 className="font-medium text-white">{rec.product_name}</h4>
                               <Badge className="bg-green-500/20 text-green-400">
                                 {rec.confidence_score.toFixed(0)}% match
                               </Badge>
                             </div>
-                            <p className="text-sm text-slate-400 mb-2">{rec.reason}</p>
+                            <p className="text-sm text-slate-400 mb-3">{rec.reason}</p>
                             <div className="flex items-center justify-between">
                               <span className="text-xs text-slate-500">Conversion Probability</span>
-                              <span className="text-xs font-medium text-purple-400">
-                                {(rec.estimated_conversion_probability * 100).toFixed(0)}%
-                              </span>
+                              <div className="flex items-center space-x-2">
+                                <Progress value={rec.estimated_conversion_probability * 100} className="h-2 w-16" />
+                                <span className="text-xs font-medium text-purple-400">
+                                  {(rec.estimated_conversion_probability * 100).toFixed(0)}%
+                                </span>
+                              </div>
                             </div>
                           </div>
                         ))}
+                        
+                        {recommendations.length === 0 && (
+                          <div className="text-center py-8">
+                            <Brain className="w-12 h-12 text-slate-600 mx-auto mb-2" />
+                            <p className="text-slate-400">Analyzing customer data...</p>
+                          </div>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
                 ) : (
                   <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
-                    <CardContent className="flex items-center justify-center h-48">
+                    <CardContent className="flex items-center justify-center h-96">
                       <div className="text-center">
-                        <Brain className="w-12 h-12 text-slate-600 mx-auto mb-2" />
-                        <p className="text-slate-400">Select a customer to view AI recommendations</p>
+                        <img 
+                          src="https://customer-assets.emergentagent.com/job_upsell-tracker/artifacts/a451o37y_Customer%20Mind%20IQ%20logo.png" 
+                          alt="Customer Mind IQ" 
+                          className="w-24 h-24 mx-auto mb-4 opacity-50"
+                        />
+                        <p className="text-slate-400 text-lg mb-2">Select a customer to view</p>
+                        <p className="text-slate-500">AI-powered recommendations and insights</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -447,35 +515,55 @@ function App() {
           <TabsContent value="campaigns" className="space-y-6">
             <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
               <CardHeader>
-                <CardTitle className="text-white">Email Campaigns</CardTitle>
+                <CardTitle className="text-white flex items-center">
+                  <Mail className="w-6 h-6 mr-2 text-blue-400" />
+                  Email Marketing Campaigns
+                </CardTitle>
                 <CardDescription className="text-slate-400">
-                  Manage your automated email marketing campaigns
+                  AI-powered email campaigns with personalized product recommendations
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {campaigns.map((campaign, index) => (
-                    <div key={index} className="p-4 bg-slate-700/50 rounded-lg">
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="font-semibold text-white">{campaign.name}</h3>
+                    <div key={index} className="p-5 bg-slate-700/50 rounded-lg hover:bg-slate-700/70 transition-all">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="font-semibold text-white text-lg">{campaign.name}</h3>
                         <Badge className={
                           campaign.status === 'sent' ? 'bg-green-500/20 text-green-400' :
                           campaign.status === 'draft' ? 'bg-yellow-500/20 text-yellow-400' :
                           'bg-red-500/20 text-red-400'
                         }>
-                          {campaign.status}
+                          {campaign.status.toUpperCase()}
                         </Badge>
                       </div>
                       
-                      <p className="text-sm text-slate-400 mb-2">{campaign.subject}</p>
+                      <p className="text-slate-300 mb-3">{campaign.subject}</p>
                       
-                      <div className="flex items-center justify-between text-xs text-slate-500">
-                        <span>Target: {campaign.target_segment}</span>
-                        <span>{campaign.target_customers.length} customers</span>
-                        <span>{campaign.recommended_products.length} recommendations</span>
+                      <div className="grid grid-cols-3 gap-4 text-xs text-slate-400">
+                        <div className="text-center">
+                          <div className="text-white font-medium">{campaign.target_segment}</div>
+                          <div>Target Segment</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-white font-medium">{campaign.target_customers.length}</div>
+                          <div>Recipients</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-white font-medium">{campaign.recommended_products.length}</div>
+                          <div>AI Recommendations</div>
+                        </div>
                       </div>
                     </div>
                   ))}
+                  
+                  {campaigns.length === 0 && (
+                    <div className="text-center py-12">
+                      <Mail className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                      <p className="text-slate-400 text-lg">No campaigns created yet</p>
+                      <p className="text-slate-500">Create your first AI-powered campaign in the Create Campaign tab</p>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -486,14 +574,14 @@ function App() {
             <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
-                  <Zap className="w-5 h-5 mr-2 text-purple-400" />
-                  Create AI-Powered Campaign
+                  <Zap className="w-6 h-6 mr-2 text-purple-400" />
+                  Create AI-Powered Marketing Campaign
                 </CardTitle>
                 <CardDescription className="text-slate-400">
-                  Generate targeted email campaigns with AI-powered product recommendations
+                  Generate intelligent email campaigns with personalized product recommendations using Customer Mind IQ
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">
                     Campaign Name
@@ -501,14 +589,14 @@ function App() {
                   <Input
                     value={newCampaign.name}
                     onChange={(e) => setNewCampaign({...newCampaign, name: e.target.value})}
-                    placeholder="e.g., Q4 Software Upgrade Campaign"
-                    className="bg-slate-700/50 border-slate-600 text-white"
+                    placeholder="e.g., Q4 Software Upgrade Recommendations"
+                    className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Target Segment
+                    Target Customer Segment
                   </label>
                   <Select 
                     value={newCampaign.target_segment}
@@ -527,19 +615,19 @@ function App() {
 
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Email Subject
+                    Email Subject Line
                   </label>
                   <Input
                     value={newCampaign.subject}
                     onChange={(e) => setNewCampaign({...newCampaign, subject: e.target.value})}
-                    placeholder="AI will enhance this based on customer data"
-                    className="bg-slate-700/50 border-slate-600 text-white"
+                    placeholder="AI will enhance this with personalization"
+                    className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Schedule Date (Optional)
+                    Schedule Campaign (Optional)
                   </label>
                   <Input
                     type="datetime-local"
@@ -552,17 +640,17 @@ function App() {
                 <Alert className="bg-purple-500/10 border-purple-500/20">
                   <Brain className="h-4 w-4 text-purple-400" />
                   <AlertDescription className="text-purple-300">
-                    AI will automatically generate personalized content and product recommendations for each customer segment.
+                    <strong>Customer Mind IQ</strong> will automatically generate personalized email content and product recommendations for each customer segment using advanced AI analysis.
                   </AlertDescription>
                 </Alert>
 
                 <Button 
                   onClick={createCampaign}
-                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3"
                   disabled={!newCampaign.name || !newCampaign.subject}
                 >
-                  <Send className="w-4 h-4 mr-2" />
-                  Create AI-Powered Campaign
+                  <Send className="w-5 h-5 mr-2" />
+                  Launch AI-Powered Campaign
                 </Button>
               </CardContent>
             </Card>
