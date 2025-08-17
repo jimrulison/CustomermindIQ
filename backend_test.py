@@ -69,22 +69,51 @@ class SoftwareAnalyticsAPITester:
         return success
 
     def test_get_customers(self):
-        """Test getting customers with AI analysis"""
-        print("\n🧠 Testing AI-powered customer analytics (may take 10-15 seconds)...")
+        """Test getting customers with AI analysis - CRITICAL ODOO INTEGRATION TEST"""
+        print("\n🔍 CRITICAL TEST: REAL ODOO INTEGRATION")
+        print("   Expected: Real customer data from ODOO database 'Fancy Free Living LLC'")
+        print("   Fallback: Mock data if ODOO connection fails")
+        print("   🧠 Testing AI-powered customer analytics (may take 30-60 seconds for ODOO connection)...")
+        
         success, response = self.run_test(
-            "Get Customers with AI Analysis",
+            "Get Customers with ODOO Integration + AI Analysis",
             "GET", 
             "api/customers",
             200,
-            timeout=45  # AI analysis takes time
+            timeout=120  # ODOO connection + AI analysis takes time
         )
         
         if success and isinstance(response, list):
             print(f"   Found {len(response)} customers")
+            
+            # Analyze if we got real or mock data
+            mock_indicators = [
+                "TechCorp Solutions",
+                "StartupXYZ", 
+                "admin@techcorp.com",
+                "founder@startupxyz.com"
+            ]
+            
+            is_mock_data = any(
+                any(indicator in str(customer.get(field, "")) for field in ['name', 'email'])
+                for customer in response
+                for indicator in mock_indicators
+            )
+            
+            if is_mock_data:
+                self.odoo_connection_status = "FAILED - Using Mock Data"
+                print(f"   🔄 ODOO CONNECTION FAILED - Using mock data")
+                print(f"   Mock customers detected: {[c.get('name') for c in response[:3]]}")
+            else:
+                self.odoo_connection_status = "SUCCESS - Real Data Loaded"
+                self.real_customers_loaded = True
+                print(f"   🎉 ODOO CONNECTION SUCCESS! Real customers loaded from ODOO")
+                print(f"   Real customers: {[c.get('name') for c in response[:3]]}")
+            
             for customer in response:
                 if 'customer_id' in customer:
                     self.customer_ids.append(customer['customer_id'])
-                    print(f"   - {customer.get('name', 'Unknown')} (ID: {customer['customer_id']}) - Engagement: {customer.get('engagement_score', 0)}/100")
+                    print(f"   - {customer.get('name', 'Unknown')} (ID: {customer['customer_id']}) - Engagement: {customer.get('engagement_score', 0)}/100 - Spent: ${customer.get('total_spent', 0)}")
         
         return success
 
