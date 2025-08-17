@@ -869,7 +869,7 @@ class CustomerIntelligenceAITester:
         """Test A/B testing dashboard and analytics"""
         print("\n🧪 Testing Marketing Automation Pro - A/B Testing Dashboard...")
         
-        success, response = self.run_test(
+        success, response = self.run_marketing_test(
             "A/B Testing Dashboard",
             "GET",
             "api/marketing/ab-testing",
