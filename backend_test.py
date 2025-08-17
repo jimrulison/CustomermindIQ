@@ -1205,6 +1205,19 @@ def main():
         ("🔄 Universal Platform Sync", tester.test_universal_sync),
         ("📧 Universal Customer Lookup", tester.test_universal_customer_by_email),
         
+        # Marketing Automation Pro Module Tests (NEW)
+        ("🎯 Multi-Channel Orchestration Dashboard", tester.test_multi_channel_orchestration_dashboard),
+        ("📢 Create Multi-Channel Campaign", tester.test_create_multi_channel_campaign),
+        ("🧪 A/B Testing Dashboard", tester.test_ab_testing_dashboard),
+        ("🔬 Create A/B Test", tester.test_create_ab_test),
+        ("🎨 Dynamic Content Dashboard", tester.test_dynamic_content_dashboard),
+        ("📝 Create Content Template", tester.test_create_content_template),
+        ("💰 Cross-Sell Intelligence Dashboard", tester.test_cross_sell_intelligence_dashboard),
+        ("🎯 Identify Cross-Sell Opportunities", tester.test_identify_cross_sell_opportunities),
+        ("🤝 Referral Program Dashboard", tester.test_referral_program_dashboard),
+        ("🎁 Create Referral Campaign", tester.test_create_referral_campaign),
+        ("📊 Marketing Automation Pro Dashboard", tester.test_marketing_automation_dashboard),
+        
         # Legacy Customer Intelligence AI Module Tests
         ("🔥 CRITICAL: ODOO Customer Integration + AI", tester.test_get_customers),
         ("🧠 Behavioral Clustering Analysis", tester.test_behavioral_clustering),
