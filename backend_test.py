@@ -203,18 +203,22 @@ class SoftwareAnalyticsAPITester:
         return success
 
 def main():
-    print("🚀 Starting Software Purchase Analytics API Testing")
-    print("=" * 60)
+    print("🚀 CRITICAL TEST: REAL ODOO INTEGRATION FOR SOFTWARE ANALYTICS")
+    print("=" * 80)
+    print("Expected ODOO Database: Fancy Free Living LLC")
+    print("Expected ODOO URL: https://environmental-occupational-training.odoo.com/odoo")
+    print("Expected Username: jimrulison@gmail.com")
+    print("=" * 80)
     
     tester = SoftwareAnalyticsAPITester()
     
-    # Test sequence
+    # Test sequence - prioritizing ODOO integration
     tests = [
         ("Health Check", tester.test_health_check),
-        ("Customer Analytics (AI)", tester.test_get_customers),
+        ("🔥 CRITICAL: ODOO Customer Integration + AI", tester.test_get_customers),
         ("Customer Recommendations (AI)", tester.test_get_customer_recommendations),
+        ("Analytics Dashboard with Real Data", tester.test_get_analytics),
         ("Email Campaigns", tester.test_get_campaigns),
-        ("Analytics Dashboard", tester.test_get_analytics),
         ("Create AI Campaign", tester.test_create_campaign),
     ]
     
@@ -230,13 +234,25 @@ def main():
         # Small delay between tests
         time.sleep(1)
     
-    # Print final results
-    print(f"\n{'='*60}")
-    print(f"📊 FINAL RESULTS")
-    print(f"{'='*60}")
+    # Print final results with ODOO status
+    print(f"\n{'='*80}")
+    print(f"📊 COMPREHENSIVE TEST RESULTS")
+    print(f"{'='*80}")
     print(f"Tests run: {tester.tests_run}")
     print(f"Tests passed: {tester.tests_passed}")
     print(f"Success rate: {(tester.tests_passed/tester.tests_run*100):.1f}%" if tester.tests_run > 0 else "No tests run")
+    print(f"🔗 ODOO Connection Status: {tester.odoo_connection_status}")
+    
+    if tester.real_customers_loaded:
+        print("🎉 SUCCESS: Real customer data loaded from ODOO!")
+        print("   ✅ ODOO authentication successful")
+        print("   ✅ Customer data retrieved from real ODOO database")
+        print("   ✅ AI analysis working with real data")
+    else:
+        print("⚠️  Using mock data (ODOO connection failed)")
+        print("   ❌ ODOO authentication may have failed")
+        print("   ❌ Check ODOO credentials and network connectivity")
+        print("   ✅ System gracefully fell back to mock data")
     
     if tester.tests_passed == tester.tests_run:
         print("🎉 All tests passed! Backend is working correctly.")
