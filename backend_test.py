@@ -918,7 +918,7 @@ class CustomerIntelligenceAITester:
             "duration_days": 7
         }
         
-        success, response = self.run_test(
+        success, response = self.run_marketing_test(
             "Create A/B Test",
             "POST",
             "api/marketing/ab-testing/tests",
