@@ -55,17 +55,24 @@ function App() {
   const loadData = async () => {
     try {
       setLoading(true);
+      console.log('Starting to load data from:', API_BASE_URL);
+      
+      // Configure axios with longer timeout for AI processing
+      const axiosConfig = { timeout: 60000 }; // 60 seconds timeout
+      
       const [customersRes, campaignsRes, analyticsRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/customers`),
-        axios.get(`${API_BASE_URL}/api/campaigns`),
-        axios.get(`${API_BASE_URL}/api/analytics`)
+        axios.get(`${API_BASE_URL}/api/customers`, axiosConfig),
+        axios.get(`${API_BASE_URL}/api/campaigns`, axiosConfig),
+        axios.get(`${API_BASE_URL}/api/analytics`, axiosConfig)
       ]);
       
+      console.log('Data loaded successfully');
       setCustomers(customersRes.data);
       setCampaigns(campaignsRes.data);
       setAnalytics(analyticsRes.data);
     } catch (error) {
       console.error('Error loading data:', error);
+      console.error('Error details:', error.response?.data || error.message);
     } finally {
       setLoading(false);
     }
