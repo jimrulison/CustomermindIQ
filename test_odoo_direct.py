@@ -22,7 +22,7 @@ def test_odoo_connection():
     print(f"URL: {url}")
     print(f"Database: {database}")
     print(f"Username: {username}")
-    print(f"Password: {'*' * len(password)}")
+    print(f"Password: {'*' * len(password) if password else 'NOT SET'}")
     print("=" * 50)
     
     try:
