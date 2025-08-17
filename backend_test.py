@@ -1885,6 +1885,25 @@ def main():
         ("🎁 Create Referral Campaign", tester.test_create_referral_campaign),
         ("📊 Marketing Automation Pro Dashboard", tester.test_marketing_automation_dashboard),
         
+        # Revenue Analytics Suite Module Tests (NEW)
+        ("📈 Revenue Forecasting Dashboard", tester.test_revenue_forecasting_dashboard),
+        ("🎯 Revenue Forecasting Scenario", tester.test_revenue_forecasting_scenario),
+        ("📊 Revenue Trends Analysis", tester.test_revenue_trends),
+        ("💲 Price Optimization Dashboard", tester.test_price_optimization_dashboard),
+        ("🧮 Price Change Simulation", tester.test_price_simulation),
+        ("🏆 Competitive Pricing Analysis", tester.test_competitive_analysis),
+        ("📊 Profit Margin Analysis Dashboard", tester.test_profit_margin_dashboard),
+        ("💰 Cost Reduction Simulation", tester.test_cost_simulation),
+        ("📈 Industry Benchmarking", tester.test_industry_benchmarking),
+        ("📱 Subscription Analytics Dashboard", tester.test_subscription_analytics_dashboard),
+        ("🚨 Customer Churn Prediction", tester.test_churn_prediction),
+        ("💡 Subscription Revenue Optimization", tester.test_revenue_optimization),
+        ("📊 Financial Reporting Dashboard", tester.test_financial_reporting_dashboard),
+        ("📋 Custom Financial Report", tester.test_custom_report_generation),
+        ("📈 Executive KPI Dashboard", tester.test_kpi_dashboard),
+        ("📊 Budget Variance Analysis", tester.test_variance_analysis),
+        ("🎯 Revenue Analytics Suite Dashboard", tester.test_revenue_analytics_suite_dashboard),
+        
         # Legacy Customer Intelligence AI Module Tests
         ("🔥 CRITICAL: ODOO Customer Integration + AI", tester.test_get_customers),
         ("🧠 Behavioral Clustering Analysis", tester.test_behavioral_clustering),
