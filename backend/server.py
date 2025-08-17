@@ -950,6 +950,269 @@ async def get_intelligence_dashboard():
 # END CUSTOMER INTELLIGENCE AI MODULE ENDPOINTS  
 # =====================================================
 
+# =====================================================
+# UNIVERSAL CUSTOMER INTELLIGENCE PLATFORM ENDPOINTS
+# =====================================================
+
+@app.post("/api/universal/connectors/add")
+async def add_connector(request: Dict[str, Any]):
+    """Add a new platform connector"""
+    try:
+        platform_type = request.get('platform_type')  # 'stripe', 'odoo', etc.
+        credentials = request.get('credentials', {})
+        
+        if platform_type == 'stripe':
+            connector = StripeConnector(credentials)
+        elif platform_type == 'odoo':
+            connector = OdooConnector(credentials)
+        else:
+            raise HTTPException(status_code=400, detail=f"Unsupported platform: {platform_type}")
+        
+        # Test connection
+        if await connector.test_connection():
+            connectors[platform_type] = connector
+            return {
+                "success": True,
+                "platform": platform_type,
+                "connector_id": connector.connector_id,
+                "message": f"{platform_type.title()} connector added successfully"
+            }
+        else:
+            raise HTTPException(status_code=400, detail=f"Failed to connect to {platform_type}")
+            
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Connector setup error: {e}")
+
+@app.get("/api/universal/connectors/status")
+async def get_connectors_status():
+    """Get status of all connected platforms"""
+    try:
+        statuses = []
+        for platform_name, connector in connectors.items():
+            status = await connector.get_connector_status()
+            statuses.append(status.dict())
+        
+        return {
+            "connectors": statuses,
+            "total_connected": len([s for s in statuses if s['is_connected']]),
+            "total_configured": len(statuses)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Status check error: {e}")
+
+@app.post("/api/universal/sync")
+async def sync_all_platforms():
+    """Sync data from all connected platforms and generate unified intelligence"""
+    try:
+        if not connectors:
+            raise HTTPException(status_code=400, detail="No connectors configured")
+        
+        # Sync data from all platforms
+        all_customers = []
+        all_transactions = []
+        all_products = []
+        sync_results = {}
+        
+        for platform_name, connector in connectors.items():
+            try:
+                sync_result = await connector.full_sync()
+                sync_results[platform_name] = sync_result
+                
+                if sync_result['success']:
+                    all_customers.extend(sync_result['customers'])
+                    all_transactions.extend(sync_result['transactions'])
+                    all_products.extend(sync_result['products'])
+                    
+            except Exception as e:
+                sync_results[platform_name] = {
+                    "success": False,
+                    "error": str(e),
+                    "customers_synced": 0,
+                    "transactions_synced": 0,
+                    "products_synced": 0
+                }
+        
+        # Create unified customer profiles
+        unified_profiles = await customer_profile_manager.merge_customer_data(all_customers, all_transactions)
+        
+        # Generate business intelligence
+        business_intelligence = await universal_intelligence_service.analyze_business_intelligence(
+            unified_profiles, "Your Business"
+        )
+        
+        return {
+            "sync_results": sync_results,
+            "unified_profiles_created": len(unified_profiles),
+            "business_intelligence": business_intelligence.dict(),
+            "sync_timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Universal sync error: {e}")
+
+@app.get("/api/universal/customers")
+async def get_unified_customers(limit: int = 100):
+    """Get unified customer profiles from all platforms"""
+    try:
+        profiles = await customer_profile_manager.get_unified_profiles(limit)
+        
+        return {
+            "customers": [profile.dict() for profile in profiles],
+            "total_count": len(profiles),
+            "platforms_represented": list(set().union(*[p.platforms_active for p in profiles])) if profiles else []
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Unified customers error: {e}")
+
+@app.get("/api/universal/customers/{email}")
+async def get_customer_by_email(email: str):
+    """Get unified customer profile by email"""
+    try:
+        profile = await customer_profile_manager.get_profile_by_email(email)
+        
+        if not profile:
+            raise HTTPException(status_code=404, detail="Customer not found")
+        
+        # Generate customer insights
+        insights = await universal_intelligence_service.generate_customer_insights(profile)
+        
+        return {
+            "customer": profile.dict(),
+            "insights": [insight.dict() for insight in insights],
+            "platforms": profile.platforms_active
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Customer lookup error: {e}")
+
+@app.get("/api/universal/intelligence")
+async def get_universal_intelligence():
+    """Get comprehensive business intelligence across all platforms"""
+    try:
+        # Get unified customer profiles
+        profiles = await customer_profile_manager.get_unified_profiles(1000)  # Get more for analysis
+        
+        if not profiles:
+            raise HTTPException(status_code=404, detail="No customer data found. Please sync platforms first.")
+        
+        # Generate comprehensive intelligence
+        business_intelligence = await universal_intelligence_service.analyze_business_intelligence(
+            profiles, "Your Business"
+        )
+        
+        # Generate action recommendations
+        action_recommendations = await universal_intelligence_service.generate_action_recommendations(profiles)
+        
+        # Get dashboard data
+        dashboard_data = await universal_intelligence_service.get_universal_dashboard_data(profiles)
+        
+        return {
+            "business_intelligence": business_intelligence.dict(),
+            "action_recommendations": [action.dict() for action in action_recommendations[:10]],
+            "dashboard_data": dashboard_data,
+            "analysis_timestamp": datetime.now(),
+            "customers_analyzed": len(profiles)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Universal intelligence error: {e}")
+
+@app.get("/api/universal/dashboard")
+async def get_universal_dashboard():
+    """Get universal dashboard for any business"""
+    try:
+        # Get unified customer profiles
+        profiles = await customer_profile_manager.get_unified_profiles(500)
+        
+        # Get dashboard data
+        dashboard_data = await universal_intelligence_service.get_universal_dashboard_data(profiles)
+        
+        # Get connector statuses
+        connector_statuses = []
+        for platform_name, connector in connectors.items():
+            status = await connector.get_connector_status()
+            connector_statuses.append(status.dict())
+        
+        return {
+            "dashboard": dashboard_data,
+            "connectors": connector_statuses,
+            "last_updated": datetime.now(),
+            "data_health": "healthy" if profiles else "no_data"
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Universal dashboard error: {e}")
+
+@app.post("/api/universal/customers/{email}/insights")
+async def generate_customer_insights_endpoint(email: str):
+    """Generate AI-powered insights for specific customer"""
+    try:
+        profile = await customer_profile_manager.get_profile_by_email(email)
+        
+        if not profile:
+            raise HTTPException(status_code=404, detail="Customer not found")
+        
+        insights = await universal_intelligence_service.generate_customer_insights(profile)
+        
+        return {
+            "customer_email": email,
+            "insights": [insight.dict() for insight in insights],
+            "generated_at": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Customer insights error: {e}")
+
+@app.get("/api/universal/recommendations")
+async def get_action_recommendations():
+    """Get AI-powered action recommendations"""
+    try:
+        profiles = await customer_profile_manager.get_unified_profiles(200)
+        recommendations = await universal_intelligence_service.generate_action_recommendations(profiles)
+        
+        # Group by priority
+        urgent_actions = [r for r in recommendations if r.priority == "urgent"]
+        high_priority = [r for r in recommendations if r.priority == "high"]
+        medium_priority = [r for r in recommendations if r.priority == "medium"]
+        
+        return {
+            "urgent_actions": [action.dict() for action in urgent_actions],
+            "high_priority": [action.dict() for action in high_priority],
+            "medium_priority": [action.dict() for action in medium_priority[:5]],  # Limit medium priority
+            "total_recommendations": len(recommendations),
+            "generated_at": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Recommendations error: {e}")
+
+@app.get("/api/universal/platforms/{platform_name}/test")
+async def test_platform_connection(platform_name: str):
+    """Test connection to specific platform"""
+    try:
+        if platform_name not in connectors:
+            raise HTTPException(status_code=404, detail=f"Platform {platform_name} not configured")
+        
+        connector = connectors[platform_name]
+        is_connected = await connector.test_connection()
+        status = await connector.get_connector_status()
+        
+        return {
+            "platform": platform_name,
+            "connected": is_connected,
+            "status": status.dict(),
+            "test_timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Platform test error: {e}")
+
+# =====================================================
+# END UNIVERSAL CUSTOMER INTELLIGENCE PLATFORM ENDPOINTS
+# =====================================================
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8001)
