@@ -234,6 +234,13 @@ lead_scoring_service = LeadScoringService()
 sentiment_analysis_service = SentimentAnalysisService()
 journey_mapping_service = JourneyMappingService()
 
+# Initialize Marketing Automation Pro microservices
+multi_channel_orchestration_service = MultiChannelOrchestrationService()
+ab_testing_service = ABTestingService()
+dynamic_content_service = DynamicContentService()
+cross_sell_intelligence_service = CrossSellIntelligenceService()
+referral_program_service = ReferralProgramService()
+
 # Initialize Universal Intelligence System
 universal_intelligence_service = UniversalIntelligenceService()
 customer_profile_manager = CustomerProfileManager()
