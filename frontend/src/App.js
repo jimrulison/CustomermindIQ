@@ -31,7 +31,8 @@ import {
   Gift,
   Settings,
   Activity,
-  PieChart
+  PieChart,
+  ArrowRightLeft
 } from 'lucide-react';
 import axios from 'axios';
 import './App.css';
