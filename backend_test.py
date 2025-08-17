@@ -1138,7 +1138,7 @@ class CustomerIntelligenceAITester:
         """Test comprehensive Marketing Automation Pro dashboard"""
         print("\n📊 Testing Marketing Automation Pro - Comprehensive Dashboard...")
         
-        success, response = self.run_test(
+        success, response = self.run_marketing_test(
             "Marketing Automation Pro Dashboard",
             "GET",
             "api/marketing/dashboard",
