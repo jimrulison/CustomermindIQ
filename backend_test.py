@@ -1311,6 +1311,12 @@ def main():
     print(f"   Universal Platform tests passed: {tester.universal_platform_passed}")
     print(f"   Universal Platform success rate: {(tester.universal_platform_passed/tester.universal_platform_tests*100):.1f}%" if tester.universal_platform_tests > 0 else "No Universal tests run")
     
+    # Marketing Automation Pro specific results
+    print(f"\n🚀 MARKETING AUTOMATION PRO TEST RESULTS:")
+    print(f"   Marketing Automation tests run: {tester.marketing_automation_tests}")
+    print(f"   Marketing Automation tests passed: {tester.marketing_automation_passed}")
+    print(f"   Marketing Automation success rate: {(tester.marketing_automation_passed/tester.marketing_automation_tests*100):.1f}%" if tester.marketing_automation_tests > 0 else "No Marketing tests run")
+    
     print(f"\n🔗 ODOO Connection Status: {tester.odoo_connection_status}")
     
     if tester.real_customers_loaded:
