@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 
 class UniversalPlatformTester:
-    def __init__(self, base_url="https://6e53ef37-5eeb-4b6d-934c-7a7b90a8b98f.preview.emergentagent.com"):
+    def __init__(self, base_url="https://smart-customer-hub.preview.emergentagent.com"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0
