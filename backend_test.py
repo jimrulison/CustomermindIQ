@@ -847,7 +847,7 @@ class CustomerIntelligenceAITester:
             "objectives": ["brand_awareness", "lead_generation"]
         }
         
-        success, response = self.run_test(
+        success, response = self.run_marketing_test(
             "Create Multi-Channel Campaign",
             "POST",
             "api/marketing/multi-channel-orchestration/campaigns",
