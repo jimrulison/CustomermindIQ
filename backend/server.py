@@ -204,6 +204,13 @@ class CustomerAnalyticsService:
 # Initialize services
 analytics_service = CustomerAnalyticsService()
 
+# Initialize Customer Intelligence AI microservices
+behavioral_clustering_service = BehavioralClusteringService()
+churn_prevention_service = ChurnPreventionService()  
+lead_scoring_service = LeadScoringService()
+sentiment_analysis_service = SentimentAnalysisService()
+journey_mapping_service = JourneyMappingService()
+
 # Real ODOO service integration
 class OdooService:
     """Customer Mind IQ ODOO Integration Service"""
