@@ -2542,6 +2542,12 @@ def main():
     print(f"   Revenue Analytics tests passed: {tester.revenue_analytics_passed}")
     print(f"   Revenue Analytics success rate: {(tester.revenue_analytics_passed/tester.revenue_analytics_tests*100):.1f}%" if tester.revenue_analytics_tests > 0 else "No Revenue tests run")
     
+    # Advanced Features Expansion specific results
+    print(f"\n🚀 ADVANCED FEATURES EXPANSION TEST RESULTS:")
+    print(f"   Advanced Features tests run: {tester.advanced_features_tests}")
+    print(f"   Advanced Features tests passed: {tester.advanced_features_passed}")
+    print(f"   Advanced Features success rate: {(tester.advanced_features_passed/tester.advanced_features_tests*100):.1f}%" if tester.advanced_features_tests > 0 else "No Advanced Features tests run")
+    
     print(f"\n🔗 ODOO Connection Status: {tester.odoo_connection_status}")
     
     if tester.real_customers_loaded:
