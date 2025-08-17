@@ -44,7 +44,7 @@ from modules.advanced_features_expansion import (
     behavioral_clustering_router,
     churn_prevention_router,
     cross_sell_intelligence_router,
-    pricing_optimization_router,
+    pricing_optimization_router as advanced_pricing_router,
     sentiment_analysis_router
 )
 
