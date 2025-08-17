@@ -1011,7 +1011,7 @@ class CustomerIntelligenceAITester:
         """Test cross-sell intelligence dashboard"""
         print("\n💰 Testing Marketing Automation Pro - Cross-Sell Intelligence Dashboard...")
         
-        success, response = self.run_test(
+        success, response = self.run_marketing_test(
             "Cross-Sell Intelligence Dashboard",
             "GET",
             "api/marketing/cross-sell-intelligence",
