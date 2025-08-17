@@ -390,7 +390,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Universal Customer Intelligence Platform - Production Ready"
+    - "Marketing Automation Pro - Multi-Channel Orchestration Microservice"
+    - "Marketing Automation Pro - A/B Testing Microservice"
+    - "Marketing Automation Pro - Dynamic Content Microservice"
+    - "Marketing Automation Pro - Cross-Sell Intelligence Microservice"
+    - "Marketing Automation Pro - Referral Program Microservice"
+    - "Marketing Automation Pro API Endpoints Integration"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
