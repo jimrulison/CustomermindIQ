@@ -23,7 +23,15 @@ import {
   Send,
   Eye,
   MousePointer,
-  CheckCircle
+  CheckCircle,
+  Megaphone,
+  TestTube,
+  Palette,
+  TrendingDown,
+  Gift,
+  Settings,
+  Activity,
+  PieChart
 } from 'lucide-react';
 import axios from 'axios';
 import './App.css';
@@ -38,6 +46,14 @@ function App() {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
+
+  // Marketing Automation Pro state
+  const [marketingDashboard, setMarketingDashboard] = useState(null);
+  const [multiChannelData, setMultiChannelData] = useState(null);
+  const [abTestingData, setAbTestingData] = useState(null);
+  const [dynamicContentData, setDynamicContentData] = useState(null);
+  const [crossSellData, setCrossSellData] = useState(null);
+  const [referralData, setReferralData] = useState(null);
 
   // Campaign creation state
   const [newCampaign, setNewCampaign] = useState({
