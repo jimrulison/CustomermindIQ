@@ -1042,7 +1042,7 @@ class CustomerIntelligenceAITester:
         """Test identifying cross-sell opportunities"""
         print("\n🎯 Testing Cross-Sell Opportunity Identification...")
         
-        success, response = self.run_test(
+        success, response = self.run_marketing_test(
             "Identify Cross-Sell Opportunities",
             "POST",
             "api/marketing/cross-sell-intelligence/analyze",
