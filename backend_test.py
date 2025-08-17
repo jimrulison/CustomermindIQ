@@ -989,7 +989,7 @@ class CustomerIntelligenceAITester:
             "target_segments": ["high_value", "active_users"]
         }
         
-        success, response = self.run_test(
+        success, response = self.run_marketing_test(
             "Create Content Template",
             "POST",
             "api/marketing/dynamic-content/templates",
