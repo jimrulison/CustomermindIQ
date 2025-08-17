@@ -599,13 +599,7 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "Advanced Features Expansion - Behavioral Clustering"
-    - "Advanced Features Expansion - Churn Prevention AI"
-    - "Advanced Features Expansion - Cross-Sell Intelligence"
-    - "Advanced Features Expansion - Advanced Pricing Optimization"
-    - "Advanced Features Expansion - Sentiment Analysis"
-    - "Advanced Features Expansion API Endpoints Integration"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
