@@ -1069,7 +1069,7 @@ class CustomerIntelligenceAITester:
         """Test referral program dashboard and analytics"""
         print("\n🤝 Testing Marketing Automation Pro - Referral Program Dashboard...")
         
-        success, response = self.run_test(
+        success, response = self.run_marketing_test(
             "Referral Program Dashboard",
             "GET",
             "api/marketing/referral-program",
