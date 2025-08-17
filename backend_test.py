@@ -2470,6 +2470,20 @@ def main():
         ("📊 Budget Variance Analysis", tester.test_variance_analysis),
         ("🎯 Revenue Analytics Suite Dashboard", tester.test_revenue_analytics_suite_dashboard),
         
+        # Advanced Features Expansion Module Tests (NEW)
+        ("🧠 Advanced Behavioral Clustering Dashboard", tester.test_advanced_behavioral_clustering_dashboard),
+        ("🎯 Advanced Customer Behavior Analysis", tester.test_advanced_behavioral_clustering_analyze),
+        ("🚨 Advanced Churn Prevention AI Dashboard", tester.test_advanced_churn_prevention_dashboard),
+        ("🔮 Advanced Customer Churn Prediction", tester.test_advanced_churn_prevention_predict),
+        ("💰 Advanced Cross-Sell Intelligence Dashboard", tester.test_advanced_cross_sell_intelligence_dashboard),
+        ("🎯 Advanced Customer Cross-Sell Recommendations", tester.test_advanced_cross_sell_intelligence_recommend),
+        ("💲 Advanced Pricing Optimization Dashboard", tester.test_advanced_pricing_optimization_dashboard),
+        ("🔍 Advanced Customer Price Sensitivity Analysis", tester.test_advanced_pricing_optimization_analyze_customer),
+        ("😊 Advanced Sentiment Analysis Dashboard", tester.test_advanced_sentiment_analysis_dashboard),
+        ("📝 Advanced Communication Sentiment Analysis", tester.test_advanced_sentiment_analysis_analyze),
+        ("📈 Advanced Customer Sentiment Trends", tester.test_advanced_sentiment_analysis_trends),
+        ("📊 Advanced Features Expansion Dashboard", tester.test_advanced_features_dashboard),
+        
         # Legacy Customer Intelligence AI Module Tests
         ("🔥 CRITICAL: ODOO Customer Integration + AI", tester.test_get_customers),
         ("🧠 Behavioral Clustering Analysis", tester.test_behavioral_clustering),
