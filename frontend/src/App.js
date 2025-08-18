@@ -707,6 +707,16 @@ function App() {
           <IntegrationDataHub />
         )}
         
+        {/* Compliance & Governance Suite Module */}
+        {currentPage === 'compliance' && (
+          <ComplianceGovernanceSuite />
+        )}
+        
+        {/* AI Command Center Module */}
+        {currentPage === 'ai-command' && (
+          <AICommandCenter />
+        )}
+        
         {currentPage === 'create' && (
           <CreateCampaign 
             campaigns={campaigns}
