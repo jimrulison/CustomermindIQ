@@ -730,6 +730,11 @@ function App() {
           <Training />
         )}
         
+        {/* Support Center Module */}
+        {currentPage === 'support' && (
+          <Support />
+        )}
+        
         {currentPage === 'create' && (
           <CreateCampaign 
             campaigns={campaigns}
