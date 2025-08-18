@@ -27,12 +27,12 @@ const SignIn = ({ onSignIn }) => {
           subscription: 'Pro Plan'
         });
         setLoading(false);
-      }, 1000);
+      }, 300); // Reduced from 1000ms to 300ms
     } else {
       setTimeout(() => {
         setError('Invalid credentials. Use demo@customermindiq.com (any case) with password demo1234 (case-sensitive)');
         setLoading(false);
-      }, 1000);
+      }, 300); // Reduced from 1000ms to 300ms
     }
   };
 
