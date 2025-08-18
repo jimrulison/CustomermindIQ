@@ -73,6 +73,14 @@ function App() {
   const [subscriptionAnalyticsData, setSubscriptionAnalyticsData] = useState(null);
   const [financialReportingData, setFinancialReportingData] = useState(null);
 
+  // Analytics & Insights state
+  const [analyticsInsightsDashboard, setAnalyticsInsightsDashboard] = useState(null);
+  const [customerJourneyData, setCustomerJourneyData] = useState(null);
+  const [revenueAttributionData, setRevenueAttributionData] = useState(null);
+  const [cohortAnalysisData, setCohortAnalysisData] = useState(null);
+  const [competitiveIntelligenceData, setCompetitiveIntelligenceData] = useState(null);
+  const [roiForecastingData, setRoiForecastingData] = useState(null);
+
   // Campaign creation state
   const [newCampaign, setNewCampaign] = useState({
     name: '',
