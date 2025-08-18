@@ -54,7 +54,7 @@ function App() {
   const [multiChannelData, setMultiChannelData] = useState(null);
   const [abTestingData, setAbTestingData] = useState(null);
   const [dynamicContentData, setDynamicContentData] = useState(null);
-  const [crossSellData, setCrossSellData] = useState(null);
+  const [leadScoringData, setLeadScoringData] = useState(null);
   const [referralData, setReferralData] = useState(null);
 
   // Advanced Features Expansion state
