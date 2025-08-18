@@ -16,7 +16,8 @@ import {
   Shield,
   Cpu,
   Globe,
-  GraduationCap
+  GraduationCap,
+  HelpCircle
 } from 'lucide-react';
 
 const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
