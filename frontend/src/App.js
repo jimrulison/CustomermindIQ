@@ -100,6 +100,7 @@ function App() {
   const [competitiveIntelligenceData, setCompetitiveIntelligenceData] = useState(null);
   // State for announcements
   const [announcements, setAnnouncements] = useState([]);
+  const [roiForecastingData, setRoiForecastingData] = useState(null);
 
   // Load announcements
   useEffect(() => {
