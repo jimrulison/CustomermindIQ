@@ -550,6 +550,27 @@ function App() {
         user={user}
       />
       
+      {/* Announcement Banner */}
+      {announcements.filter(ann => ann.active).map(announcement => (
+        <div key={announcement.id} className={`${
+          announcement.type === 'warning' ? 'bg-yellow-600/90' :
+          announcement.type === 'error' ? 'bg-red-600/90' :
+          'bg-blue-600/90'
+        } text-white py-3 px-6 text-center relative`}>
+          <div className="container mx-auto flex items-center justify-between">
+            <div className="flex-1 text-sm">{announcement.message}</div>
+            {announcement.dismissible && (
+              <button
+                onClick={() => dismissAnnouncement(announcement.id)}
+                className="ml-4 text-white/80 hover:text-white text-lg leading-none"
+              >
+                ×
+              </button>
+            )}
+          </div>
+        </div>
+      ))}
+      
       <div className="container mx-auto px-6 py-8">
         {currentPage === 'dashboard' && (
           <Dashboard 
