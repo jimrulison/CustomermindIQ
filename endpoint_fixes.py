@@ -16,7 +16,7 @@ import json
 from datetime import datetime
 
 class EndpointFixer:
-    def __init__(self, base_url="https://marketai-pro-1.preview.emergentagent.com"):
+    def __init__(self, base_url="https://customer-mind-iq-1.preview.emergentagent.com"):
         self.base_url = base_url
         self.fixes_applied = []
 
