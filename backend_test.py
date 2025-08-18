@@ -1101,7 +1101,7 @@ class CustomerIntelligenceAITester:
         return success
 
     def test_dynamic_content_dashboard(self):
-        """Test dynamic content personalization dashboard"""
+        """Test dynamic content personalization dashboard with real-time analytics"""
         print("\n🎨 Testing Marketing Automation Pro - Dynamic Content Dashboard...")
         
         success, response = self.run_marketing_test(
@@ -1126,17 +1126,56 @@ class CustomerIntelligenceAITester:
                 
                 performance = dashboard.get('performance_metrics', {})
                 print(f"   Engagement lift: {performance.get('engagement_lift', 0):.2f}%")
+                print(f"   Real-time personalizations: {performance.get('realtime_personalizations', 0)}")
         
         return success
 
-    def test_create_content_template(self):
-        """Test creating dynamic content template"""
+    def test_track_customer_behavior(self):
+        """Test real-time customer behavior tracking for personalization"""
+        print("\n👁️ Testing Real-Time Customer Behavior Tracking...")
+        
+        behavior_data = {
+            "customer_id": "customer_123",
+            "event_type": "page_view",
+            "page_url": "/products/premium-software",
+            "duration": 45,
+            "interactions": [
+                {"type": "click", "element": "pricing_button", "timestamp": datetime.now().isoformat()},
+                {"type": "scroll", "depth": 75, "timestamp": datetime.now().isoformat()}
+            ],
+            "context": {
+                "device": "desktop",
+                "browser": "chrome",
+                "referrer": "google_ads"
+            }
+        }
+        
+        success, response = self.run_marketing_test(
+            "Track Customer Behavior",
+            "POST",
+            "api/marketing/dynamic-content/behavior/track",
+            200,
+            data=behavior_data,
+            timeout=30
+        )
+        
+        if success:
+            result = response.get('result', {})
+            print(f"   Behavior Tracked: {result.get('tracked', False)}")
+            print(f"   Customer Profile Updated: {result.get('profile_updated', False)}")
+            print(f"   Personalization Score: {result.get('personalization_score', 0)}/100")
+            print(f"   Next Action Predicted: {result.get('predicted_next_action', 'unknown')}")
+        
+        return success
+
+    def test_create_dynamic_template(self):
+        """Test creating dynamic content template with AI optimization"""
         print("\n📝 Testing Dynamic Content Template Creation...")
         
         template_data = {
-            "template_name": "Personalized Product Recommendation Email",
+            "template_name": "AI-Powered Product Recommendation Email",
             "template_type": "email",
-            "base_content": "Hi {{customer_name}}, based on your purchase history of {{previous_products}}, we recommend {{recommended_product}}.",
+            "base_content": "Hi {{customer_name}}, based on your recent activity viewing {{viewed_products}}, we have personalized recommendations for you: {{ai_recommendations}}. {{urgency_message}}",
             "personalization_rules": [
                 {
                     "field": "customer_name",
@@ -1144,16 +1183,31 @@ class CustomerIntelligenceAITester:
                     "fallback": "Valued Customer"
                 },
                 {
-                    "field": "recommended_product",
-                    "source": "ai_recommendations",
+                    "field": "viewed_products",
+                    "source": "behavior_tracking",
+                    "fallback": "our premium software"
+                },
+                {
+                    "field": "ai_recommendations",
+                    "source": "ai_engine",
                     "fallback": "Our Premium Software Suite"
+                },
+                {
+                    "field": "urgency_message",
+                    "source": "dynamic_rules",
+                    "conditions": [
+                        {"if": "high_intent", "then": "⏰ Limited time offer - 20% off!"},
+                        {"if": "returning_visitor", "then": "Welcome back! Special discount inside."},
+                        {"default": "Explore our latest features."}
+                    ]
                 }
             ],
-            "target_segments": ["high_value", "active_users"]
+            "target_segments": ["high_value", "active_users", "potential_churners"],
+            "ai_optimization": True
         }
         
         success, response = self.run_marketing_test(
-            "Create Content Template",
+            "Create Dynamic Content Template",
             "POST",
             "api/marketing/dynamic-content/templates",
             200,
@@ -1167,6 +1221,84 @@ class CustomerIntelligenceAITester:
             print(f"   Template Name: {template.get('template_name', 'unknown')}")
             print(f"   Personalization Fields: {len(template.get('personalization_rules', []))}")
             print(f"   AI Optimization Score: {template.get('ai_optimization_score', 0)}/100")
+            print(f"   Expected Engagement Lift: {template.get('expected_engagement_lift', 0):.1f}%")
+        
+        return success
+
+    def test_generate_personalized_content(self):
+        """Test generating personalized content based on customer behavior and AI"""
+        print("\n🤖 Testing AI-Powered Personalized Content Generation...")
+        
+        personalization_data = {
+            "customer_id": "customer_123",
+            "template_id": "template_ai_email_123",
+            "context": {
+                "recent_behavior": ["viewed_pricing", "downloaded_trial", "visited_features"],
+                "customer_segment": "high_intent_prospect",
+                "time_of_day": "morning",
+                "device": "mobile",
+                "previous_purchases": ["Basic CRM"],
+                "engagement_history": {
+                    "email_opens": 8,
+                    "click_rate": 0.35,
+                    "last_interaction": "2024-01-15"
+                }
+            }
+        }
+        
+        success, response = self.run_marketing_test(
+            "Generate Personalized Content",
+            "POST",
+            "api/marketing/dynamic-content/personalize",
+            200,
+            data=personalization_data,
+            timeout=45
+        )
+        
+        if success:
+            content = response.get('content', {})
+            print(f"   Content Generated: {content.get('content_generated', False)}")
+            print(f"   Personalization Level: {content.get('personalization_level', 'unknown')}")
+            print(f"   AI Confidence: {content.get('ai_confidence', 0)}/100")
+            print(f"   Expected CTR: {content.get('expected_ctr', 0):.2f}%")
+            print(f"   Content Preview: {content.get('content_preview', 'N/A')[:100]}...")
+        
+        return success
+
+    def test_get_real_time_recommendations(self):
+        """Test real-time content recommendations based on current behavior"""
+        print("\n⚡ Testing Real-Time Content Recommendations...")
+        
+        customer_id = "customer_123"
+        context = {
+            "current_page": "/products/enterprise-suite",
+            "session_duration": 180,
+            "pages_viewed": ["/pricing", "/features", "/testimonials"],
+            "cart_items": [],
+            "previous_campaigns": ["email_campaign_nov", "retargeting_dec"],
+            "real_time_signals": {
+                "mouse_movement": "active",
+                "scroll_behavior": "engaged",
+                "time_on_page": 45
+            }
+        }
+        
+        success, response = self.run_marketing_test(
+            "Get Real-Time Recommendations",
+            "GET",
+            f"api/marketing/dynamic-content/recommendations/{customer_id}",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            recommendations = response.get('recommendations', [])
+            print(f"   Real-Time Recommendations: {len(recommendations)}")
+            
+            for rec in recommendations[:3]:
+                print(f"   - {rec.get('content_type', 'unknown')}: {rec.get('title', 'unknown')}")
+                print(f"     Relevance: {rec.get('relevance_score', 0)}/100")
+                print(f"     Expected Impact: {rec.get('expected_impact', 'unknown')}")
         
         return success
 
