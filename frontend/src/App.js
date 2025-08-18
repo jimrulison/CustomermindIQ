@@ -683,6 +683,16 @@ function App() {
           <CustomerSuccessIntelligence />
         )}
         
+        {/* Executive Intelligence Dashboard Module */}
+        {currentPage === 'executive' && (
+          <ExecutiveIntelligenceDashboard />
+        )}
+        
+        {/* Growth Intelligence Suite Module */}
+        {currentPage === 'growth' && (
+          <GrowthIntelligenceSuite />
+        )}
+        
         {currentPage === 'create' && (
           <CreateCampaign 
             campaigns={campaigns}
