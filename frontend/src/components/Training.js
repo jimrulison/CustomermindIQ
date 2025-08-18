@@ -128,7 +128,7 @@ const Training = () => {
       icon: Target,
       pages: 32,
       lastUpdated: "December 2024",
-      downloadUrl: "/Website_Intelligence_Hub_Sales_Guide.md",
+      downloadUrl: "/training/documents/Website_Intelligence_Hub_Sales_Guide.md",
       sections: [
         "Market Positioning & Value Propositions",
         "Demo Scripts & Objection Handling",
