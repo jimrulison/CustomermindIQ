@@ -149,7 +149,7 @@ function App() {
         multiChannelRes,
         abTestingRes,
         dynamicContentRes,
-        crossSellRes,
+        leadScoringRes,
         referralRes
       ] = await Promise.all([
         axios.get(`${API_BASE_URL}/api/marketing/dashboard`).catch(err => {
@@ -168,8 +168,8 @@ function App() {
           console.error('Dynamic content error:', err);
           return { data: { dashboard: {} } };
         }),
-        axios.get(`${API_BASE_URL}/api/marketing/cross-sell-intelligence`).catch(err => {
-          console.error('Cross-sell error:', err);
+        axios.get(`${API_BASE_URL}/api/marketing/lead-scoring`).catch(err => {
+          console.error('Lead scoring error:', err);
           return { data: { dashboard: {} } };
         }),
         axios.get(`${API_BASE_URL}/api/marketing/referral-program`).catch(err => {
@@ -182,7 +182,7 @@ function App() {
       setMultiChannelData(multiChannelRes.data);
       setAbTestingData(abTestingRes.data);
       setDynamicContentData(dynamicContentRes.data);
-      setCrossSellData(crossSellRes.data);
+      setLeadScoringData(leadScoringRes.data);
       setReferralData(referralRes.data);
       
       console.log('Marketing Automation Pro data loaded successfully');
@@ -193,7 +193,7 @@ function App() {
       setMultiChannelData({ dashboard: {} });
       setAbTestingData({ dashboard: {} });
       setDynamicContentData({ dashboard: {} });
-      setCrossSellData({ dashboard: {} });
+      setLeadScoringData({ dashboard: {} });
       setReferralData({ dashboard: {} });
     }
   };
