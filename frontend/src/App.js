@@ -1334,19 +1334,19 @@ function App() {
                     <div className="flex justify-between">
                       <span className="text-slate-300">Analyzed</span>
                       <span className="text-purple-400 font-semibold">
-                        {advancedPricingData?.dashboard?.customers_analyzed || 684}
+                        {advancedPricingData?.dashboard?.summary_metrics?.total_customers_analyzed || 684}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-300">Experiments</span>
                       <span className="text-blue-400 font-semibold">
-                        {advancedPricingData?.dashboard?.active_experiments || 2}
+                        {advancedPricingData?.dashboard?.summary_metrics?.active_pricing_experiments || 2}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-300">Revenue Boost</span>
                       <span className="text-green-400 font-semibold">
-                        ${(advancedPricingData?.dashboard?.revenue_optimization || 47800).toLocaleString()}
+                        ${(advancedPricingData?.dashboard?.summary_metrics?.revenue_optimization_this_month || 47800).toLocaleString()}
                       </span>
                     </div>
                   </div>
