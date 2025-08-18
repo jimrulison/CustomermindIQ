@@ -78,6 +78,9 @@ from modules.compliance_governance_suite import compliance_governance_router
 # Import AI Command Center Module
 from modules.ai_command_center import ai_command_router
 
+# Import Website Intelligence Hub Module
+from modules.website_intelligence_hub import website_intelligence_router
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
