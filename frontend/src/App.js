@@ -764,10 +764,13 @@ function App() {
                   )}
                 </div>
               </CardContent>
-            </Card>
-          </TabsContent>
+        )}
+      </div>
+    </div>
+  );
+}
 
-          {/* Analytics & Insights Tab */}
+export default App;
           <TabsContent value="analytics" className="space-y-6">
             <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
               <CardHeader>
