@@ -3701,11 +3701,13 @@ class CustomerIntelligenceAITester:
                 
                 print(f"   Competitive Landscape Changes: {len(competitive_landscape)}")
             
-            predictions = response.get('market_predictions', [])
-            print(f"   Market Predictions: {len(predictions)}")
-            for pred in predictions[:2]:
-                print(f"   - {pred.get('prediction', 'No prediction')[:50]}...")
-                print(f"     Confidence: {pred.get('confidence', 0):.1%}, Timeframe: {pred.get('timeframe', 'unknown')}")
+            predictions = response.get('market_predictions', {})
+            if isinstance(predictions, dict):
+                print(f"   Market Predictions:")
+                for key, value in list(predictions.items())[:2]:
+                    print(f"   - {key}: {str(value)[:50]}...")
+            else:
+                print(f"   Market Predictions: {len(predictions) if predictions else 0}")
         
         return success
 
