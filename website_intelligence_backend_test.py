@@ -27,8 +27,8 @@ try:
             if line.startswith('REACT_APP_BACKEND_URL='):
                 BACKEND_URL = line.split('=')[1].strip()
                 break
-    else:
-        BACKEND_URL = "https://webiq-platform.preview.emergentagent.com"
+        else:
+            BACKEND_URL = "https://webiq-platform.preview.emergentagent.com"
 except:
     BACKEND_URL = "https://webiq-platform.preview.emergentagent.com"
 
