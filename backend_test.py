@@ -5,7 +5,7 @@ from datetime import datetime
 import time
 
 class CustomerIntelligenceAITester:
-    def __init__(self, base_url="https://e5d1b479-b037-48bd-8ca2-28b7e87530c9.preview.emergentagent.com"):
+    def __init__(self, base_url="https://universal-insights.preview.emergentagent.com"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0
