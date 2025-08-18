@@ -700,10 +700,8 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "Analytics & Insights Frontend Integration"
-  stuck_tasks:
-    - "Analytics & Insights Frontend Integration"
+  current_focus: []
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
