@@ -65,6 +65,12 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
       color: 'hover:bg-purple-600/20 hover:text-purple-400'
     },
     {
+      id: 'product',
+      label: 'Product Intelligence',
+      icon: Activity,
+      color: 'hover:bg-teal-600/20 hover:text-teal-400'
+    },
+    {
       id: 'create',
       label: 'Create Campaign',
       icon: Zap,
