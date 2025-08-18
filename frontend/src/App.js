@@ -694,6 +694,11 @@ function App() {
           <GrowthIntelligenceSuite />
         )}
         
+        {/* Product Intelligence Hub Module */}
+        {currentPage === 'product' && (
+          <ProductIntelligenceHub />
+        )}
+        
         {currentPage === 'create' && (
           <CreateCampaign 
             campaigns={campaigns}
