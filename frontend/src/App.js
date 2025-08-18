@@ -676,6 +676,11 @@ function App() {
           </div>
         )}
         
+        {/* Customer Success Intelligence Module */}
+        {currentPage === 'customer-success' && (
+          <CustomerSuccessIntelligence />
+        )}
+        
         {currentPage === 'create' && (
           <CreateCampaign 
             campaigns={campaigns}
