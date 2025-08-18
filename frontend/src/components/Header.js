@@ -12,7 +12,9 @@ import {
   LogOut,
   User,
   Activity,
-  Database
+  Database,
+  Shield,
+  Cpu
 } from 'lucide-react';
 
 const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
