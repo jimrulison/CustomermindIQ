@@ -613,6 +613,17 @@ backend:
         comment: "Added Analytics & Insights routers and dashboard aggregation endpoint to FastAPI server with '/api/analytics/' prefix"
 
 frontend:
+  - task: "Analytics & Insights Frontend Integration"
+    implemented: true
+    working: "NA"
+    file: "src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Added Analytics & Insights as 8th tab with comprehensive dashboard showing all 5 microservices: Customer Journey Mapping, Revenue Attribution, Cohort Analysis, Competitive Intelligence, and ROI Forecasting. Added state management and API integration for all modules."
   - task: "Customer Intelligence AI Module UI"
     implemented: true
     working: true
