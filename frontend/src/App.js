@@ -1229,19 +1229,19 @@ function App() {
                     <div className="flex justify-between">
                       <span className="text-slate-300">Customers Analyzed</span>
                       <span className="text-blue-400 font-semibold">
-                        {behavioralClusteringData?.dashboard?.customers_analyzed || 574}
+                        {behavioralClusteringData?.dashboard?.summary_metrics?.total_customers_analyzed || 574}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-300">Clusters Found</span>
                       <span className="text-green-400 font-semibold">
-                        {behavioralClusteringData?.dashboard?.clusters_identified || 5}
+                        {behavioralClusteringData?.dashboard?.summary_metrics?.clusters_identified || 5}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-300">Conversion Rate</span>
                       <span className="text-purple-400 font-semibold">
-                        {behavioralClusteringData?.dashboard?.avg_conversion_rate || '56.4%'}
+                        {behavioralClusteringData?.dashboard?.summary_metrics?.average_conversion_rate || '56.4'}%
                       </span>
                     </div>
                   </div>
