@@ -15,7 +15,7 @@ import {
   DollarSign,
   Activity,
   Link,
-  Sync,
+  RefreshCw,
   Eye,
   Target
 } from 'lucide-react';
