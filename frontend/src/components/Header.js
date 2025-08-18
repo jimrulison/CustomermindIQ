@@ -10,7 +10,8 @@ import {
   BarChart3,
   Target,
   LogOut,
-  User
+  User,
+  Activity
 } from 'lucide-react';
 
 const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
