@@ -8,6 +8,7 @@ import {
   Zap, 
   TrendingUp, 
   BarChart3,
+  Target,
   LogOut,
   User
 } from 'lucide-react';
