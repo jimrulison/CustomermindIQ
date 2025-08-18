@@ -1798,6 +1798,16 @@ app.include_router(cross_sell_intelligence_router, prefix="/api/advanced", tags=
 app.include_router(advanced_pricing_router, prefix="/api/advanced", tags=["Advanced Pricing Optimization"])
 app.include_router(sentiment_analysis_router, prefix="/api/advanced", tags=["Sentiment Analysis"])
 
+# =====================================================
+# ANALYTICS & INSIGHTS MODULE ROUTERS
+# =====================================================
+
+app.include_router(customer_journey_mapping_router, tags=["Customer Journey Mapping"])
+app.include_router(revenue_attribution_router, tags=["Revenue Attribution"])
+app.include_router(cohort_analysis_router, tags=["Cohort Analysis"])
+app.include_router(competitive_intelligence_router, tags=["Competitive Intelligence"])
+app.include_router(roi_forecasting_router, tags=["ROI Forecasting"])
+
 @app.get("/api/advanced/dashboard")
 async def get_advanced_features_dashboard():
     """Get comprehensive Advanced Features Expansion dashboard"""
