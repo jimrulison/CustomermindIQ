@@ -591,7 +591,7 @@ function App() {
                         </CardHeader>
                         <CardContent>
                           <div className="text-2xl font-bold text-white">
-                            ${crossSellData?.dashboard?.opportunities_overview?.total_potential_revenue?.toLocaleString() || '125,000'}
+                            ${crossSellIntelligenceData?.dashboard?.opportunities_overview?.total_potential_revenue?.toLocaleString() || '125,000'}
                           </div>
                           <p className="text-xs text-slate-400 mt-1">AI-identified opportunities</p>
                         </CardContent>
