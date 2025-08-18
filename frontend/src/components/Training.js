@@ -578,6 +578,83 @@ const Training = () => {
           </div>
         </TabsContent>
       </Tabs>
+
+      {/* Video Player Modal */}
+      <Dialog open={showVideoModal} onOpenChange={setShowVideoModal}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-4xl">
+          <DialogHeader>
+            <DialogTitle className="text-white flex items-center">
+              <Play className="w-5 h-5 mr-2 text-green-400" />
+              {selectedVideo?.title}
+            </DialogTitle>
+            <DialogDescription className="text-slate-400">
+              {selectedVideo?.description}
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedVideo && (
+            <div className="space-y-4">
+              {/* Video Player */}
+              <div className="relative bg-slate-900 rounded-lg overflow-hidden">
+                <video
+                  width="100%"
+                  height="400"
+                  controls
+                  className="w-full"
+                  poster={selectedVideo.thumbnail}
+                >
+                  <source src={selectedVideo.videoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              
+              {/* Video Info */}
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-3">
+                    <Badge className={getCategoryColor(selectedVideo.category)}>
+                      {selectedVideo.category}
+                    </Badge>
+                    <Badge className={getDifficultyColor(selectedVideo.difficulty)}>
+                      {selectedVideo.difficulty}
+                    </Badge>
+                    <div className="flex items-center text-xs text-slate-500">
+                      <Clock className="w-3 h-3 mr-1" />
+                      {selectedVideo.duration}
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="text-sm font-medium text-slate-300">Topics Covered:</div>
+                    <div className="flex flex-wrap gap-1">
+                      {selectedVideo.topics?.map((topic, index) => (
+                        <Badge key={index} variant="outline" className="text-xs text-slate-400 border-slate-600">
+                          {topic}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="text-sm font-medium text-slate-300">Video Actions:</div>
+                  <div className="space-y-2">
+                    <Button variant="outline" className="w-full border-slate-600 text-slate-300">
+                      Download Video
+                    </Button>
+                    <Button variant="outline" className="w-full border-slate-600 text-slate-300">
+                      Add to Favorites
+                    </Button>
+                    <Button variant="outline" className="w-full border-slate-600 text-slate-300">
+                      Share Video
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
