@@ -19,20 +19,19 @@ const SignIn = ({ onSignIn }) => {
 
     // Mock authentication - demo credentials (email case-insensitive, password case-sensitive)
     if (email.toLowerCase() === 'demo@customermindiq.com' && password === 'demo1234') {
-      setTimeout(() => {
-        onSignIn({
-          email: email,
-          name: 'Demo User',
-          company: 'CustomerMind IQ Demo',
-          subscription: 'Pro Plan'
-        });
-        setLoading(false);
-      }, 300); // Reduced from 1000ms to 300ms
+      // Immediate authentication without delay
+      onSignIn({
+        email: email,
+        name: 'Demo User',
+        company: 'CustomerMind IQ Demo',
+        subscription: 'Pro Plan'
+      });
+      setLoading(false);
     } else {
       setTimeout(() => {
         setError('Invalid credentials. Use demo@customermindiq.com (any case) with password demo1234 (case-sensitive)');
         setLoading(false);
-      }, 300); // Reduced from 1000ms to 300ms
+      }, 100); // Very minimal delay for error state
     }
   };
 
