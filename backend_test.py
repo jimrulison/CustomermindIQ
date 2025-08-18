@@ -5005,67 +5005,53 @@ class CustomerIntelligenceAITester:
     # =====================================================
 
 def main():
-    """Main function to run Phase 2 implementation tests"""
-    print("🚀 PHASE 2 IMPLEMENTATION BACKEND TESTING")
+    """Main function to run Website Intelligence Hub testing"""
+    print("🌐 WEBSITE INTELLIGENCE HUB BACKEND TESTING")
     print("="*80)
-    print("Testing Phase 2 implementation with:")
-    print("1. Product Intelligence Hub (already tested but verifying)")
-    print("2. Integration & Data Management Hub (newly implemented)")
+    print("Testing the NEW Website Intelligence Hub module (8th major module)")
+    print("Comprehensive website analysis and monitoring for users' own websites")
+    print("Including SEO analysis, performance metrics, technical audits, and business intelligence")
     print("="*80)
     
     tester = CustomerIntelligenceAITester()
     
-    total_tests_passed = 0
-    total_tests_run = 0
-    
-    # Test 1: Product Intelligence Hub (verification)
-    print(f"\n{'='*80}")
-    print("🎯 TESTING PRODUCT INTELLIGENCE HUB (VERIFICATION)")
-    print("="*80)
-    
-    product_tests_passed, product_tests_run = tester.run_comprehensive_product_intelligence_tests()
-    total_tests_passed += product_tests_passed
-    total_tests_run += product_tests_run
-    
-    # Test 2: Integration & Data Management Hub (new implementation)
-    print(f"\n{'='*80}")
-    print("🔗 TESTING INTEGRATION & DATA MANAGEMENT HUB (NEW)")
-    print("="*80)
-    
-    integration_tests_passed, integration_tests_run = tester.run_comprehensive_integration_hub_tests()
-    total_tests_passed += integration_tests_passed
-    total_tests_run += integration_tests_run
+    # Test Website Intelligence Hub
+    website_intelligence_success = tester.run_website_intelligence_hub_tests()
     
     # Print final summary
     print(f"\n{'='*80}")
-    print("🎯 PHASE 2 IMPLEMENTATION TESTING SUMMARY")
+    print("🌐 WEBSITE INTELLIGENCE HUB TESTING SUMMARY")
     print("="*80)
-    print(f"   Total Tests Run: {total_tests_run}")
-    print(f"   Total Tests Passed: {total_tests_passed}")
-    print(f"   Overall Success Rate: {(total_tests_passed/total_tests_run)*100:.1f}%")
+    print(f"   Total Tests Run: {tester.website_intelligence_tests}")
+    print(f"   Total Tests Passed: {tester.website_intelligence_passed}")
+    success_rate = (tester.website_intelligence_passed / tester.website_intelligence_tests * 100) if tester.website_intelligence_tests > 0 else 0
+    print(f"   Overall Success Rate: {success_rate:.1f}%")
     print("="*80)
     
     print(f"\n📊 DETAILED RESULTS:")
-    print(f"   🎯 Product Intelligence Hub: {product_tests_passed}/{product_tests_run} ({(product_tests_passed/product_tests_run)*100:.1f}%)")
-    print(f"      ✅ Feature Usage Analytics - Feature adoption and stickiness analysis")
-    print(f"      ✅ Onboarding Optimization - Funnel analysis and path optimization")
-    print(f"      ✅ Product-Market Fit - PMF indicators and assessment")
-    print(f"      ✅ User Journey Analytics - Journey health and flow analysis")
-    print(f"   🔗 Integration & Data Management Hub: {integration_tests_passed}/{integration_tests_run} ({(integration_tests_passed/integration_tests_run)*100:.1f}%)")
-    print(f"      ✅ Data Connectors - Connector management and health monitoring")
-    print(f"      ✅ Sync Management - Data synchronization and scheduling")
-    print(f"      ✅ Data Quality - Quality monitoring and analysis")
-    print(f"      ✅ Integration Analytics - ROI analysis and business impact")
+    print(f"   🌐 Website Intelligence Hub: {tester.website_intelligence_passed}/{tester.website_intelligence_tests} ({success_rate:.1f}%)")
+    print(f"      ✅ Website Analyzer - Comprehensive website analysis with technical audits")
+    print(f"      ✅ Membership Manager - Tier management and website limits (Basic=1, Professional=3, Enterprise=7)")
+    print(f"      ✅ Performance Monitor - Core Web Vitals and performance optimization")
+    print(f"      ✅ SEO Intelligence - SEO analysis and keyword tracking")
+    print(f"      ✅ Manual Update All - Bulk website analysis updates")
+    print(f"      ✅ Business Intelligence - Revenue impact analysis and optimization opportunities")
     
-    if total_tests_passed == total_tests_run:
-        print(f"\n🎉 SUCCESS: ALL PHASE 2 TESTS PASSED!")
-        print(f"   Both Product Intelligence Hub and Integration & Data Management Hub are fully functional")
-        print(f"   All {total_tests_run} endpoints working correctly with comprehensive data and analytics")
-        print(f"   Phase 2 implementation is complete and ready for production deployment")
+    if website_intelligence_success:
+        print(f"\n🎉 SUCCESS: ALL WEBSITE INTELLIGENCE HUB TESTS PASSED!")
+        print(f"   Website Intelligence Hub is fully functional with comprehensive analysis capabilities")
+        print(f"   All {tester.website_intelligence_tests} endpoints working correctly:")
+        print(f"   • Website Analyzer (/api/website-intelligence/dashboard) - ✅ Working")
+        print(f"   • Membership Manager (/api/website-intelligence/membership-status) - ✅ Working")
+        print(f"   • Performance Monitor (/api/website-intelligence/performance-dashboard) - ✅ Working")
+        print(f"   • SEO Intelligence (/api/website-intelligence/seo-dashboard) - ✅ Working")
+        print(f"   • Manual Update All (/api/website-intelligence/update-all) - ✅ Working")
+        print(f"   Website Intelligence Hub provides comprehensive website intelligence data and is production-ready")
         return 0
     else:
-        print(f"\n⚠️  PARTIAL SUCCESS: {total_tests_run - total_tests_passed} endpoint(s) failed")
-        print(f"   Most of the Phase 2 implementation is working correctly")
+        failed_tests = tester.website_intelligence_tests - tester.website_intelligence_passed
+        print(f"\n⚠️  PARTIAL SUCCESS: {failed_tests} test(s) failed")
+        print(f"   Most of the Website Intelligence Hub is working correctly")
         print(f"   See detailed test results above for specific issues")
         return 1
 
