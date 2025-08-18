@@ -393,7 +393,13 @@ const Training = () => {
                     className="w-full h-48 object-cover rounded-t-lg"
                   />
                   <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Button className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border-white/20">
+                    <Button 
+                      className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border-white/20"
+                      onClick={() => {
+                        setSelectedVideo(video);
+                        setShowVideoModal(true);
+                      }}
+                    >
                       <Play className="w-4 h-4 mr-2" />
                       Play Video
                     </Button>
