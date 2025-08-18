@@ -72,6 +72,12 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
       color: 'hover:bg-teal-600/20 hover:text-teal-400'
     },
     {
+      id: 'integration',
+      label: 'Integration & Data Hub',
+      icon: Database,
+      color: 'hover:bg-indigo-600/20 hover:text-indigo-400'
+    },
+    {
       id: 'create',
       label: 'Create Campaign',
       icon: Zap,
