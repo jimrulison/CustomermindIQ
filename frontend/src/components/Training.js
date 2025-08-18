@@ -29,6 +29,10 @@ import {
 const Training = () => {
   const [activeTab, setActiveTab] = useState('videos');
 
+  // State for video modal
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [showVideoModal, setShowVideoModal] = useState(false);
+
   // Video training content
   const videoContent = [
     {
@@ -39,6 +43,7 @@ const Training = () => {
       difficulty: "Beginner",
       category: "Overview",
       thumbnail: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=225&fit=crop",
+      videoUrl: "/training/videos/getting_started.mp4", // You'll upload this
       topics: ["Platform Navigation", "Adding Websites", "Dashboard Overview", "Basic Setup"]
     },
     {
