@@ -592,12 +592,11 @@ class ROIForecastingService:
         
         scenarios = []
         
-        # Best case scenario
-        best_case_params = ForecastParameters(
-            **parameters.dict(),
-            seasonal_factor=parameters.seasonal_factor * 1.3,
-            competitive_pressure="low"
-        )
+        # Best case scenario  
+        best_case_params_dict = parameters.dict()
+        best_case_params_dict['seasonal_factor'] = parameters.seasonal_factor * 1.3
+        best_case_params_dict['competitive_pressure'] = "low"
+        best_case_params = ForecastParameters(**best_case_params_dict)
         best_case_forecast = await self.forecast_campaign_roi(best_case_params)
         
         scenarios.append(ScenarioAnalysis(
