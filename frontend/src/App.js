@@ -340,6 +340,13 @@ function App() {
     try {
       console.log('Loading Analytics & Insights data...');
       
+      const axiosConfig = {
+        timeout: 60000, // 60 seconds timeout for comprehensive analytics
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      
       const [
         dashboardRes,
         journeyRes,
@@ -348,31 +355,38 @@ function App() {
         competitiveRes,
         roiRes
       ] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/analytics/dashboard`).catch(err => {
+        axios.get(`${API_BASE_URL}/api/analytics/dashboard`, axiosConfig).catch(err => {
           console.error('Analytics dashboard error:', err);
           return { data: { modules: {} } };
         }),
-        axios.get(`${API_BASE_URL}/api/analytics/customer-journey-mapping/dashboard`).catch(err => {
+        axios.get(`${API_BASE_URL}/api/analytics/customer-journey-mapping/dashboard`, axiosConfig).catch(err => {
           console.error('Customer journey error:', err);
           return { data: { dashboard_data: {} } };
         }),
-        axios.get(`${API_BASE_URL}/api/analytics/revenue-attribution/dashboard`).catch(err => {
+        axios.get(`${API_BASE_URL}/api/analytics/revenue-attribution/dashboard`, axiosConfig).catch(err => {
           console.error('Revenue attribution error:', err);
           return { data: { dashboard_data: {} } };
         }),
-        axios.get(`${API_BASE_URL}/api/analytics/cohort-analysis/dashboard`).catch(err => {
+        axios.get(`${API_BASE_URL}/api/analytics/cohort-analysis/dashboard`, axiosConfig).catch(err => {
           console.error('Cohort analysis error:', err);
           return { data: { dashboard_data: {} } };
         }),
-        axios.get(`${API_BASE_URL}/api/analytics/competitive-intelligence/dashboard`).catch(err => {
+        axios.get(`${API_BASE_URL}/api/analytics/competitive-intelligence/dashboard`, axiosConfig).catch(err => {
           console.error('Competitive intelligence error:', err);
           return { data: { dashboard_data: {} } };
         }),
-        axios.get(`${API_BASE_URL}/api/analytics/roi-forecasting/dashboard`).catch(err => {
+        axios.get(`${API_BASE_URL}/api/analytics/roi-forecasting/dashboard`, axiosConfig).catch(err => {
           console.error('ROI forecasting error:', err);
           return { data: { dashboard_data: {} } };
         })
       ]);
+      
+      console.log('Analytics dashboard response:', dashboardRes.data);
+      console.log('Customer journey response:', journeyRes.data);
+      console.log('Revenue attribution response:', attributionRes.data);
+      console.log('Cohort analysis response:', cohortRes.data);
+      console.log('Competitive intelligence response:', competitiveRes.data);
+      console.log('ROI forecasting response:', roiRes.data);
       
       setAnalyticsInsightsDashboard(dashboardRes.data);
       setCustomerJourneyData(journeyRes.data);
