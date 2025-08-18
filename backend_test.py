@@ -3180,5 +3180,735 @@ def main():
         print(f"   See detailed test results above for specific issues")
         return 1
 
+    # =====================================================
+    # ANALYTICS & INSIGHTS MODULE TESTS
+    # Comprehensive testing of all 5 advanced microservices
+    # =====================================================
+
+    def test_customer_journey_mapping_dashboard(self):
+        """Test customer journey mapping dashboard"""
+        print("\n🗺️ Testing Analytics & Insights - Customer Journey Mapping Dashboard...")
+        
+        success, response = self.run_analytics_test(
+            "Customer Journey Mapping Dashboard",
+            "GET",
+            "api/analytics/customer-journey-mapping/dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard_data', {})
+            if dashboard:
+                overview = dashboard.get('overview', {})
+                print(f"   Customers Analyzed: {overview.get('total_customers_analyzed', 0)}")
+                print(f"   Total Touchpoints: {overview.get('total_touchpoints', 0)}")
+                print(f"   Journey Paths: {overview.get('total_journey_paths', 0)}")
+                print(f"   Avg Conversion Rate: {overview.get('avg_conversion_rate', 0):.2%}")
+                
+                top_paths = dashboard.get('top_paths', [])
+                print(f"   Top Journey Paths: {len(top_paths)}")
+                for path in top_paths[:2]:
+                    print(f"   - Path: {len(path.get('path_sequence', []))} touchpoints, {path.get('customer_count', 0)} customers")
+                
+                channel_performance = dashboard.get('channel_performance', {})
+                print(f"   Channel Performance: {len(channel_performance)} channels analyzed")
+            
+            ai_insights = response.get('ai_insights', [])
+            print(f"   AI Insights Generated: {len(ai_insights)}")
+            
+            visualization = response.get('visualization', {})
+            if visualization:
+                nodes = visualization.get('nodes', [])
+                edges = visualization.get('edges', [])
+                print(f"   Journey Visualization: {len(nodes)} nodes, {len(edges)} edges")
+        
+        return success
+
+    def test_analyze_customer_path(self):
+        """Test specific customer journey path analysis"""
+        print("\n🔍 Testing Customer Path Analysis...")
+        
+        path_data = {
+            "customer_id": "test_customer_journey_123"
+        }
+        
+        success, response = self.run_analytics_test(
+            "Analyze Customer Path",
+            "POST",
+            "api/analytics/customer-journey-mapping/analyze-path",
+            200,
+            data=path_data,
+            timeout=30
+        )
+        
+        if success:
+            customer_id = response.get('customer_id', 'unknown')
+            journey_analysis = response.get('journey_analysis', {})
+            
+            print(f"   Customer ID: {customer_id}")
+            print(f"   Total Touchpoints: {journey_analysis.get('total_touchpoints', 0)}")
+            print(f"   Journey Stages: {', '.join(journey_analysis.get('journey_stages', []))}")
+            print(f"   Channels Used: {', '.join(journey_analysis.get('channels_used', []))}")
+            print(f"   Journey Time: {journey_analysis.get('total_journey_time_hours', 0):.1f} hours")
+            print(f"   Conversion Achieved: {journey_analysis.get('conversion_achieved', False)}")
+            print(f"   Path Value: ${journey_analysis.get('path_value', 0):,.2f}")
+            
+            touchpoint_sequence = response.get('touchpoint_sequence', [])
+            print(f"   Touchpoint Sequence: {len(touchpoint_sequence)} touchpoints")
+            
+            recommendations = response.get('optimization_recommendations', [])
+            print(f"   Optimization Recommendations: {len(recommendations)}")
+        
+        return success
+
+    def test_journey_optimization_opportunities(self):
+        """Test journey optimization opportunities"""
+        print("\n⚡ Testing Journey Optimization Opportunities...")
+        
+        success, response = self.run_analytics_test(
+            "Journey Optimization Opportunities",
+            "GET",
+            "api/analytics/customer-journey-mapping/optimization-opportunities",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            opportunities = response.get('optimization_opportunities', [])
+            total_opportunities = response.get('total_opportunities', 0)
+            estimated_impact = response.get('estimated_total_impact', 'unknown')
+            
+            print(f"   Total Opportunities: {total_opportunities}")
+            print(f"   Estimated Impact: {estimated_impact}")
+            
+            for opp in opportunities[:3]:
+                print(f"   - {opp.get('opportunity_type', 'unknown').title()}: {opp.get('description', 'No description')[:60]}...")
+                print(f"     Priority: {opp.get('priority', 'unknown')}, Impact: {opp.get('potential_impact', 'unknown')}")
+                print(f"     Confidence: {opp.get('confidence_score', 0):.1%}")
+            
+            implementation_priority = response.get('implementation_priority', [])
+            print(f"   Implementation Priority: {', '.join(implementation_priority)}")
+        
+        return success
+
+    def test_revenue_attribution_dashboard(self):
+        """Test revenue attribution dashboard"""
+        print("\n💰 Testing Analytics & Insights - Revenue Attribution Dashboard...")
+        
+        success, response = self.run_analytics_test(
+            "Revenue Attribution Dashboard",
+            "GET",
+            "api/analytics/revenue-attribution/dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard_data', {})
+            if dashboard:
+                overview = dashboard.get('overview', {})
+                print(f"   Total Revenue: ${overview.get('total_revenue', 0):,.2f}")
+                print(f"   Marketing Spend: ${overview.get('total_marketing_spend', 0):,.2f}")
+                print(f"   Overall ROI: {overview.get('overall_roi', 0):.2f}x")
+                print(f"   Total Customers: {overview.get('total_customers', 0)}")
+                print(f"   Average LTV: ${overview.get('average_ltv', 0):,.2f}")
+                print(f"   Total Touchpoints: {overview.get('total_touchpoints', 0)}")
+                
+                model_comparison = dashboard.get('model_comparison', {})
+                print(f"   Attribution Models Compared: {len(model_comparison)}")
+                for model_name, metrics in model_comparison.items():
+                    print(f"   - {model_name.replace('_', ' ').title()}: ${metrics.get('total_attributed_revenue', 0):,.0f} revenue")
+                
+                channel_performance = dashboard.get('channel_performance', {})
+                print(f"   Channel Performance: {len(channel_performance)} channels analyzed")
+                
+                ltv_analysis = dashboard.get('ltv_analysis', {})
+                if ltv_analysis:
+                    print(f"   LTV/CAC Ratio: {ltv_analysis.get('ltv_to_cac_ratio', 0):.1f}")
+                    print(f"   High Risk Customers: {ltv_analysis.get('high_risk_customers', 0)}")
+            
+            ai_insights = response.get('ai_insights', [])
+            print(f"   AI Insights: {len(ai_insights)}")
+            for insight in ai_insights[:2]:
+                print(f"   - {insight.get('insight', 'No insight')[:60]}...")
+        
+        return success
+
+    def test_compare_attribution_models(self):
+        """Test attribution model comparison"""
+        print("\n📊 Testing Attribution Model Comparison...")
+        
+        comparison_data = {
+            "models": ["first_touch", "last_touch", "linear", "data_driven"]
+        }
+        
+        success, response = self.run_analytics_test(
+            "Compare Attribution Models",
+            "POST",
+            "api/analytics/revenue-attribution/compare-models",
+            200,
+            data=comparison_data,
+            timeout=45
+        )
+        
+        if success:
+            model_comparison = response.get('model_comparison', {})
+            model_differences = response.get('model_differences', {})
+            recommendations = response.get('recommendations', [])
+            
+            print(f"   Models Compared: {len(model_comparison)}")
+            for model_name, metrics in model_comparison.items():
+                print(f"   - {model_name.replace('_', ' ').title()}: ${metrics.get('total_attributed_revenue', 0):,.0f}")
+                print(f"     ROI: {metrics.get('average_roi', 0):.2f}x, Top Channel: {metrics.get('top_performing_channel', 'unknown')}")
+            
+            print(f"   Model Differences: {len(model_differences)} comparisons")
+            print(f"   Recommendations: {len(recommendations)}")
+            for rec in recommendations[:2]:
+                print(f"   - {rec.get('model', 'unknown').title()}: {rec.get('reason', 'No reason')}")
+        
+        return success
+
+    def test_ltv_analysis(self):
+        """Test customer lifetime value analysis"""
+        print("\n📈 Testing LTV Analysis...")
+        
+        success, response = self.run_analytics_test(
+            "LTV Analysis",
+            "GET",
+            "api/analytics/revenue-attribution/ltv-analysis",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            ltv_analysis = response.get('ltv_analysis', {})
+            
+            if ltv_analysis:
+                overview = ltv_analysis.get('overview', {})
+                print(f"   Total Customers: {overview.get('total_customers', 0)}")
+                print(f"   Average LTV: ${overview.get('average_ltv', 0):,.2f}")
+                print(f"   Median LTV: ${overview.get('median_ltv', 0):,.2f}")
+                print(f"   Total Potential Revenue: ${overview.get('total_potential_revenue', 0):,.2f}")
+                
+                segment_breakdown = ltv_analysis.get('segment_breakdown', {})
+                print(f"   Customer Segments: {len(segment_breakdown)}")
+                for segment, data in segment_breakdown.items():
+                    print(f"   - {segment.replace('_', ' ').title()}: {data.get('customer_count', 0)} customers")
+                    print(f"     Avg LTV: ${data.get('average_ltv', 0):,.2f}, LTV/CAC: {data.get('ltv_cac_ratio', 0):.1f}")
+                
+                at_risk_analysis = ltv_analysis.get('at_risk_analysis', {})
+                if at_risk_analysis:
+                    print(f"   High-Value At-Risk: {at_risk_analysis.get('high_value_at_risk_count', 0)} customers")
+                    print(f"   Revenue At Risk: ${at_risk_analysis.get('potential_revenue_at_risk', 0):,.2f}")
+            
+            recommendations = response.get('recommendations', [])
+            print(f"   Recommendations: {len(recommendations)}")
+            for rec in recommendations[:2]:
+                print(f"   - {rec.get('type', 'unknown').title()}: {rec.get('description', 'No description')[:50]}...")
+        
+        return success
+
+    def test_cohort_analysis_dashboard(self):
+        """Test cohort analysis dashboard"""
+        print("\n👥 Testing Analytics & Insights - Cohort Analysis Dashboard...")
+        
+        success, response = self.run_analytics_test(
+            "Cohort Analysis Dashboard",
+            "GET",
+            "api/analytics/cohort-analysis/dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard_data', {})
+            if dashboard:
+                overview = dashboard.get('overview', {})
+                print(f"   Customers Analyzed: {overview.get('total_customers_analyzed', 0)}")
+                print(f"   Total Cohorts: {overview.get('total_cohorts', 0)}")
+                print(f"   Avg 1-Month Retention: {overview.get('average_retention_rate_1m', 0):.1%}")
+                print(f"   Avg Revenue per Customer: ${overview.get('average_revenue_per_customer', 0):,.2f}")
+                print(f"   Analysis Period: {overview.get('cohort_analysis_period', 'unknown')}")
+                
+                cohort_performance = dashboard.get('cohort_performance', {})
+                print(f"   Cohort Performance Data: {len(cohort_performance)} cohorts")
+                
+                retention_heatmap = dashboard.get('retention_heatmap', {})
+                if retention_heatmap:
+                    cohorts = retention_heatmap.get('cohorts', [])
+                    periods = retention_heatmap.get('periods', [])
+                    print(f"   Retention Heatmap: {len(cohorts)} cohorts x {len(periods)} periods")
+                
+                trend_analysis = dashboard.get('trend_analysis', {})
+                if trend_analysis:
+                    print(f"   Improving Cohorts: {trend_analysis.get('improving_cohorts_count', 0)}")
+                    print(f"   Declining Cohorts: {trend_analysis.get('declining_cohorts_count', 0)}")
+            
+            predictive_insights = response.get('predictive_insights', [])
+            print(f"   Predictive Insights: {len(predictive_insights)}")
+            for insight in predictive_insights[:3]:
+                print(f"   - Cohort {insight.get('cohort_id', 'unknown')}: {insight.get('health_score', 'unknown')} health")
+                print(f"     Predicted LTV: ${insight.get('predicted_ltv', 0):,.2f}")
+                print(f"     12M Retention: {insight.get('predicted_retention_12m', 0):.1%}")
+            
+            comparison_insights = response.get('comparison_insights', {})
+            if comparison_insights:
+                performance_gaps = comparison_insights.get('performance_gaps', {})
+                if performance_gaps:
+                    print(f"   Performance Gap: {performance_gaps.get('retention_gap', 0):.1%}")
+        
+        return success
+
+    def test_custom_cohort_analysis(self):
+        """Test custom cohort analysis"""
+        print("\n🔧 Testing Custom Cohort Analysis...")
+        
+        custom_analysis_data = {
+            "cohort_type": "channel",
+            "cohort_period": "monthly",
+            "months_back": 6,
+            "customer_count": 200
+        }
+        
+        success, response = self.run_analytics_test(
+            "Custom Cohort Analysis",
+            "POST",
+            "api/analytics/cohort-analysis/custom-analysis",
+            200,
+            data=custom_analysis_data,
+            timeout=45
+        )
+        
+        if success:
+            analysis_params = response.get('analysis_parameters', {})
+            cohort_results = response.get('cohort_results', {})
+            custom_metrics = response.get('custom_metrics', {})
+            
+            print(f"   Cohort Type: {analysis_params.get('cohort_type', 'unknown')}")
+            print(f"   Period: {analysis_params.get('cohort_period', 'unknown')}")
+            print(f"   Customers Analyzed: {analysis_params.get('customers_analyzed', 0)}")
+            print(f"   Months Analyzed: {analysis_params.get('months_analyzed', 0)}")
+            
+            if cohort_results:
+                cohorts = cohort_results.get('cohorts', [])
+                print(f"   Cohorts Generated: {len(cohorts)}")
+                print(f"   Total Cohorts: {cohort_results.get('total_cohorts', 0)}")
+            
+            print(f"   Custom Metrics: {len(custom_metrics)} cohorts with specific metrics")
+            
+            predictive_insights = response.get('predictive_insights', [])
+            print(f"   Predictive Insights: {len(predictive_insights)}")
+            
+            key_findings = response.get('key_findings', [])
+            print(f"   Key Findings: {len(key_findings)}")
+            for finding in key_findings[:2]:
+                print(f"   - {finding}")
+        
+        return success
+
+    def test_retention_forecast(self):
+        """Test retention forecasting"""
+        print("\n🔮 Testing Retention Forecast...")
+        
+        success, response = self.run_analytics_test(
+            "Retention Forecast",
+            "GET",
+            "api/analytics/cohort-analysis/retention-forecast",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            forecast_summary = response.get('forecast_summary', {})
+            cohort_forecasts = response.get('cohort_forecasts', {})
+            intervention_recommendations = response.get('intervention_recommendations', {})
+            
+            print(f"   Cohorts Analyzed: {forecast_summary.get('cohorts_analyzed', 0)}")
+            print(f"   Avg Predicted 12M Retention: {forecast_summary.get('average_predicted_12m_retention', 0):.1%}")
+            print(f"   At-Risk Cohorts: {forecast_summary.get('at_risk_cohorts_count', 0)}")
+            print(f"   Forecast Horizon: {forecast_summary.get('forecast_horizon_months', 0)} months")
+            
+            print(f"   Cohort Forecasts: {len(cohort_forecasts)} detailed forecasts")
+            for cohort_id, forecast in list(cohort_forecasts.items())[:3]:
+                print(f"   - {cohort_id}: {forecast.get('predicted_12m_retention', 0):.1%} retention")
+                print(f"     Trend: {forecast.get('trend', 'unknown')}, Confidence: {forecast.get('forecast_confidence', 0):.1%}")
+            
+            if intervention_recommendations:
+                immediate_attention = intervention_recommendations.get('immediate_attention', [])
+                recommended_actions = intervention_recommendations.get('recommended_actions', [])
+                print(f"   Immediate Attention Needed: {len(immediate_attention)} cohorts")
+                print(f"   Recommended Actions: {len(recommended_actions)}")
+        
+        return success
+
+    def test_competitive_intelligence_dashboard(self):
+        """Test competitive intelligence dashboard"""
+        print("\n🕵️ Testing Analytics & Insights - Competitive Intelligence Dashboard...")
+        
+        success, response = self.run_analytics_test(
+            "Competitive Intelligence Dashboard",
+            "GET",
+            "api/analytics/competitive-intelligence/dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard_data', {})
+            if dashboard:
+                overview = dashboard.get('overview', {})
+                print(f"   Competitors Monitored: {overview.get('total_competitors_monitored', 0)}")
+                print(f"   Data Points Collected: {overview.get('total_data_points_collected', 0)}")
+                print(f"   Market Movements Detected: {overview.get('market_movements_detected', 0)}")
+                print(f"   Avg Sentiment Score: {overview.get('average_sentiment_score', 0):.2f}")
+                
+                competitor_analysis = dashboard.get('competitor_analysis', [])
+                print(f"   Competitor Analysis: {len(competitor_analysis)} competitors")
+                for comp in competitor_analysis[:3]:
+                    print(f"   - {comp.get('name', 'unknown')}: {comp.get('tier', 'unknown')} tier")
+                    print(f"     Market Share: {comp.get('market_share', 0):.1%}, Sentiment: {comp.get('sentiment_score', 0):.2f}")
+                
+                market_movements = dashboard.get('recent_market_movements', [])
+                print(f"   Recent Market Movements: {len(market_movements)}")
+                
+                threat_analysis = dashboard.get('threat_analysis', {})
+                if threat_analysis:
+                    print(f"   High Priority Threats: {threat_analysis.get('high_priority_threats', 0)}")
+                    print(f"   Emerging Competitors: {threat_analysis.get('emerging_competitors', 0)}")
+            
+            ai_insights = response.get('ai_insights', [])
+            print(f"   AI Market Insights: {len(ai_insights)}")
+            for insight in ai_insights[:2]:
+                print(f"   - {insight.get('insight_type', 'unknown').title()}: {insight.get('description', 'No description')[:50]}...")
+        
+        return success
+
+    def test_competitor_analysis(self):
+        """Test specific competitor analysis"""
+        print("\n🔍 Testing Competitor Analysis...")
+        
+        competitor_data = {
+            "competitor_name": "TechRival Pro",
+            "analysis_depth": "comprehensive"
+        }
+        
+        success, response = self.run_analytics_test(
+            "Competitor Analysis",
+            "POST",
+            "api/analytics/competitive-intelligence/competitor-analysis",
+            200,
+            data=competitor_data,
+            timeout=45
+        )
+        
+        if success:
+            competitor_name = response.get('competitor_name', 'unknown')
+            analysis = response.get('competitive_analysis', {})
+            
+            print(f"   Competitor: {competitor_name}")
+            
+            if analysis:
+                strengths = analysis.get('strengths', [])
+                weaknesses = analysis.get('weaknesses', [])
+                opportunities = analysis.get('opportunities', [])
+                threats = analysis.get('threats', [])
+                
+                print(f"   Strengths: {len(strengths)}")
+                print(f"   Weaknesses: {len(weaknesses)}")
+                print(f"   Opportunities: {len(opportunities)}")
+                print(f"   Threats: {len(threats)}")
+                
+                print(f"   Market Position: {analysis.get('market_position', 'unknown')}")
+                print(f"   Pricing Strategy: {analysis.get('pricing_strategy', 'unknown')}")
+                
+                recent_activities = analysis.get('recent_activities', [])
+                print(f"   Recent Activities: {len(recent_activities)}")
+            
+            intelligence_data = response.get('intelligence_data', [])
+            print(f"   Intelligence Data Points: {len(intelligence_data)}")
+            
+            strategic_recommendations = response.get('strategic_recommendations', [])
+            print(f"   Strategic Recommendations: {len(strategic_recommendations)}")
+        
+        return success
+
+    def test_market_trends(self):
+        """Test market trends analysis"""
+        print("\n📊 Testing Market Trends Analysis...")
+        
+        success, response = self.run_analytics_test(
+            "Market Trends Analysis",
+            "GET",
+            "api/analytics/competitive-intelligence/market-trends",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            market_trends = response.get('market_trends', {})
+            trend_analysis = response.get('trend_analysis', {})
+            
+            if market_trends:
+                overall_sentiment = market_trends.get('overall_market_sentiment', 0)
+                growth_indicators = market_trends.get('growth_indicators', [])
+                emerging_technologies = market_trends.get('emerging_technologies', [])
+                
+                print(f"   Overall Market Sentiment: {overall_sentiment:.2f}")
+                print(f"   Growth Indicators: {len(growth_indicators)}")
+                print(f"   Emerging Technologies: {len(emerging_technologies)}")
+                
+                for tech in emerging_technologies[:3]:
+                    print(f"   - {tech.get('technology', 'unknown')}: {tech.get('adoption_rate', 0):.1%} adoption")
+            
+            if trend_analysis:
+                market_size_trend = trend_analysis.get('market_size_trend', {})
+                competitive_landscape = trend_analysis.get('competitive_landscape_changes', [])
+                
+                if market_size_trend:
+                    print(f"   Market Size Growth: {market_size_trend.get('growth_rate', 0):.1%}")
+                    print(f"   Market Direction: {market_size_trend.get('direction', 'unknown')}")
+                
+                print(f"   Competitive Landscape Changes: {len(competitive_landscape)}")
+            
+            predictions = response.get('market_predictions', [])
+            print(f"   Market Predictions: {len(predictions)}")
+            for pred in predictions[:2]:
+                print(f"   - {pred.get('prediction', 'No prediction')[:50]}...")
+                print(f"     Confidence: {pred.get('confidence', 0):.1%}, Timeframe: {pred.get('timeframe', 'unknown')}")
+        
+        return success
+
+    def test_roi_forecasting_dashboard(self):
+        """Test ROI forecasting dashboard"""
+        print("\n💹 Testing Analytics & Insights - ROI Forecasting Dashboard...")
+        
+        success, response = self.run_analytics_test(
+            "ROI Forecasting Dashboard",
+            "GET",
+            "api/analytics/roi-forecasting/dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard_data', {})
+            if dashboard:
+                portfolio_overview = dashboard.get('portfolio_overview', {})
+                print(f"   Total Planned Budget: ${portfolio_overview.get('total_planned_budget', 0):,.2f}")
+                print(f"   Total Predicted Revenue: ${portfolio_overview.get('total_predicted_revenue', 0):,.2f}")
+                print(f"   Portfolio ROI: {portfolio_overview.get('portfolio_roi', 0):.2f}x")
+                print(f"   Number of Campaigns: {portfolio_overview.get('number_of_campaigns', 0)}")
+                print(f"   Avg Confidence Score: {portfolio_overview.get('average_confidence_score', 0):.1%}")
+                
+                campaign_forecasts = dashboard.get('campaign_forecasts', [])
+                print(f"   Campaign Forecasts: {len(campaign_forecasts)}")
+                for forecast in campaign_forecasts[:3]:
+                    print(f"   - {forecast.get('campaign_type', 'unknown').title()}: ${forecast.get('budget', 0):,} budget")
+                    print(f"     Predicted ROI: {forecast.get('predicted_roi', 0):.2f}x, Risk: {forecast.get('risk_level', 'unknown')}")
+                
+                historical_performance = dashboard.get('historical_performance', {})
+                if historical_performance:
+                    print(f"   Historical Campaigns: {historical_performance.get('total_campaigns', 0)}")
+                    print(f"   Avg Historical ROI: {historical_performance.get('avg_historical_roi', 0):.2f}x")
+                    print(f"   Best Performing Type: {historical_performance.get('best_performing_type', 'unknown')}")
+                
+                risk_analysis = dashboard.get('risk_analysis', {})
+                if risk_analysis:
+                    print(f"   Low Risk Campaigns: {risk_analysis.get('low_risk_campaigns', 0)}")
+                    print(f"   Medium Risk Campaigns: {risk_analysis.get('medium_risk_campaigns', 0)}")
+                    print(f"   High Risk Campaigns: {risk_analysis.get('high_risk_campaigns', 0)}")
+                
+                model_performance = dashboard.get('model_performance', {})
+                if model_performance:
+                    print(f"   Model Accuracy: {model_performance.get('ensemble_accuracy', 'unknown')}")
+                    print(f"   Prediction Confidence: {model_performance.get('prediction_confidence', 'unknown')}")
+                
+                optimization_opportunities = dashboard.get('optimization_opportunities', [])
+                print(f"   Optimization Opportunities: {len(optimization_opportunities)}")
+        
+        return success
+
+    def test_predict_campaign_roi(self):
+        """Test campaign ROI prediction"""
+        print("\n🎯 Testing Campaign ROI Prediction...")
+        
+        prediction_data = {
+            "campaign_type": "email",
+            "budget": 10000,
+            "duration_days": 14,
+            "target_audience_size": 25000,
+            "seasonal_factor": 1.1,
+            "economic_conditions": "normal",
+            "competitive_pressure": "medium",
+            "model": "ensemble"
+        }
+        
+        success, response = self.run_analytics_test(
+            "Predict Campaign ROI",
+            "POST",
+            "api/analytics/roi-forecasting/predict",
+            200,
+            data=prediction_data,
+            timeout=45
+        )
+        
+        if success:
+            campaign_parameters = response.get('campaign_parameters', {})
+            roi_forecast = response.get('roi_forecast', {})
+            scenario_analysis = response.get('scenario_analysis', [])
+            sensitivity_analysis = response.get('sensitivity_analysis', [])
+            
+            print(f"   Campaign Type: {campaign_parameters.get('campaign_type', 'unknown')}")
+            print(f"   Budget: ${campaign_parameters.get('budget', 0):,}")
+            print(f"   Duration: {campaign_parameters.get('duration_days', 0)} days")
+            
+            if roi_forecast:
+                print(f"   Predicted ROI: {roi_forecast.get('predicted_roi', 0):.2f}x")
+                print(f"   Predicted Revenue: ${roi_forecast.get('predicted_revenue', 0):,.2f}")
+                print(f"   Predicted Conversions: {roi_forecast.get('predicted_conversions', 0)}")
+                print(f"   Risk Level: {roi_forecast.get('risk_level', 'unknown')}")
+                print(f"   Confidence Score: {roi_forecast.get('confidence_score', 0):.1%}")
+                print(f"   Break-even Point: {roi_forecast.get('break_even_point_days', 0)} days")
+                print(f"   Confidence Interval: {roi_forecast.get('confidence_interval_lower', 0):.2f} - {roi_forecast.get('confidence_interval_upper', 0):.2f}")
+            
+            print(f"   Scenario Analysis: {len(scenario_analysis)} scenarios")
+            for scenario in scenario_analysis:
+                print(f"   - {scenario.get('scenario_name', 'unknown')}: {scenario.get('predicted_roi', 0):.2f}x ROI")
+                print(f"     Probability: {scenario.get('probability', 0):.1%}")
+            
+            print(f"   Sensitivity Analysis: {len(sensitivity_analysis)} parameters")
+            for sensitivity in sensitivity_analysis:
+                print(f"   - {sensitivity.get('parameter', 'unknown')}: Sensitivity {sensitivity.get('sensitivity_score', 0):.2f}")
+            
+            recommendations = response.get('recommendations', [])
+            print(f"   Recommendations: {len(recommendations)}")
+            for rec in recommendations[:2]:
+                print(f"   - {rec.get('type', 'unknown').title()}: {rec.get('recommendation', 'No recommendation')}")
+        
+        return success
+
+    def test_historical_analysis(self):
+        """Test historical campaign performance analysis"""
+        print("\n📚 Testing Historical Analysis...")
+        
+        success, response = self.run_analytics_test(
+            "Historical Analysis",
+            "GET",
+            "api/analytics/roi-forecasting/historical-analysis",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            historical_analysis = response.get('historical_analysis', {})
+            
+            if historical_analysis:
+                overview = historical_analysis.get('overview', {})
+                print(f"   Total Campaigns: {overview.get('total_campaigns', 0)}")
+                print(f"   Total Spend: ${overview.get('total_spend', 0):,.2f}")
+                print(f"   Total Revenue: ${overview.get('total_revenue', 0):,.2f}")
+                print(f"   Overall ROI: {overview.get('overall_roi', 0):.2f}x")
+                
+                date_range = overview.get('date_range', {})
+                if date_range:
+                    print(f"   Date Range: {date_range.get('start', 'unknown')} to {date_range.get('end', 'unknown')}")
+                
+                performance_by_type = historical_analysis.get('performance_by_type', {})
+                print(f"   Performance by Type: {len(performance_by_type)} campaign types")
+                for campaign_type, metrics in performance_by_type.items():
+                    print(f"   - {campaign_type.replace('_', ' ').title()}: {metrics.get('campaign_count', 0)} campaigns")
+                    print(f"     Avg ROI: {metrics.get('average_roi', 0):.2f}x, Success Rate: {metrics.get('success_rate', 0):.1%}")
+                
+                seasonal_trends = historical_analysis.get('seasonal_trends', {})
+                print(f"   Seasonal Trends: {len(seasonal_trends)} months analyzed")
+                
+                budget_analysis = historical_analysis.get('budget_analysis', {})
+                print(f"   Budget Analysis: {len(budget_analysis)} budget brackets")
+                for bracket, metrics in budget_analysis.items():
+                    print(f"   - {bracket.title()} Budget: {metrics.get('campaign_count', 0)} campaigns")
+                    print(f"     Avg ROI: {metrics.get('avg_roi', 0):.2f}x, Avg Budget: ${metrics.get('avg_budget', 0):,.0f}")
+                
+                top_performers = historical_analysis.get('top_performers', [])
+                print(f"   Top Performers: {len(top_performers)} campaigns")
+                for performer in top_performers[:3]:
+                    print(f"   - {performer.get('campaign_name', 'unknown')}: {performer.get('roi', 0):.2f}x ROI")
+                    print(f"     Type: {performer.get('campaign_type', 'unknown')}, Revenue: ${performer.get('revenue', 0):,.0f}")
+                
+                key_insights = historical_analysis.get('key_insights', [])
+                print(f"   Key Insights: {len(key_insights)}")
+                for insight in key_insights:
+                    print(f"   - {insight.get('insight', 'No insight')}")
+                    print(f"     Metric: {insight.get('metric', 'No metric')}")
+        
+        return success
+
+    def test_analytics_insights_dashboard_aggregation(self):
+        """Test Analytics & Insights dashboard aggregation endpoint"""
+        print("\n🎛️ Testing Analytics & Insights Dashboard Aggregation...")
+        
+        success, response = self.run_analytics_test(
+            "Analytics & Insights Dashboard Aggregation",
+            "GET",
+            "api/analytics/dashboard",
+            200,
+            timeout=60  # Longer timeout for aggregation
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            modules = response.get('modules', {})
+            print(f"   Integrated Modules: {len(modules)}")
+            
+            for module_name, module_data in modules.items():
+                if isinstance(module_data, dict) and 'error' not in module_data:
+                    print(f"   ✅ {module_name.replace('_', ' ').title()}: Working")
+                    
+                    # Show key metrics for each module
+                    if 'dashboard_data' in module_data:
+                        dashboard = module_data['dashboard_data']
+                        if 'overview' in dashboard:
+                            overview = dashboard['overview']
+                            if module_name == 'customer_journey_mapping':
+                                print(f"      Customers: {overview.get('total_customers_analyzed', 0)}, Paths: {overview.get('total_journey_paths', 0)}")
+                            elif module_name == 'revenue_attribution':
+                                print(f"      Revenue: ${overview.get('total_revenue', 0):,.0f}, ROI: {overview.get('overall_roi', 0):.1f}x")
+                            elif module_name == 'cohort_analysis':
+                                print(f"      Cohorts: {overview.get('total_cohorts', 0)}, Retention: {overview.get('average_retention_rate_1m', 0):.1%}")
+                            elif module_name == 'competitive_intelligence':
+                                print(f"      Competitors: {overview.get('total_competitors_monitored', 0)}, Movements: {overview.get('market_movements_detected', 0)}")
+                            elif module_name == 'roi_forecasting':
+                                print(f"      Budget: ${overview.get('total_planned_budget', 0):,.0f}, Portfolio ROI: {overview.get('portfolio_roi', 0):.1f}x")
+                else:
+                    print(f"   ❌ {module_name.replace('_', ' ').title()}: Error - {module_data.get('error', 'Unknown error')}")
+            
+            # Check for aggregated insights
+            aggregated_insights = response.get('aggregated_insights', [])
+            print(f"   Aggregated Insights: {len(aggregated_insights)}")
+            
+            # Check for cross-module correlations
+            cross_module_analysis = response.get('cross_module_analysis', {})
+            if cross_module_analysis:
+                print(f"   Cross-Module Analysis: Available")
+                correlations = cross_module_analysis.get('correlations', [])
+                print(f"   Module Correlations: {len(correlations)}")
+        
+        return success
+
+    # =====================================================
+    # END ANALYTICS & INSIGHTS MODULE TESTS
+    # =====================================================
+
 if __name__ == "__main__":
     sys.exit(main())
