@@ -1486,7 +1486,7 @@ class CustomerIntelligenceAITester:
         return success
 
     def test_referral_program_dashboard(self):
-        """Test referral program dashboard and analytics"""
+        """Test referral program dashboard with viral analytics and AI optimization"""
         print("\n🤝 Testing Marketing Automation Pro - Referral Program Dashboard...")
         
         success, response = self.run_marketing_test(
@@ -1512,32 +1512,82 @@ class CustomerIntelligenceAITester:
                 performance = dashboard.get('performance_metrics', {})
                 print(f"   Viral coefficient: {performance.get('viral_coefficient', 0):.2f}")
                 print(f"   Customer acquisition cost: ${performance.get('cac_reduction', 0):.2f}")
+                print(f"   Viral loop optimization: {performance.get('viral_loop_score', 0)}/100")
+        
+        return success
+
+    def test_analyze_referral_propensity(self):
+        """Test analyzing customer referral propensity with AI"""
+        print("\n🔍 Testing AI-Powered Referral Propensity Analysis...")
+        
+        customer_id = "customer_123"
+        
+        success, response = self.run_marketing_test(
+            "Analyze Referral Propensity",
+            "POST",
+            f"api/marketing/referral-program/analyze/{customer_id}",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            analysis = response.get('analysis', {})
+            print(f"   Customer ID: {customer_id}")
+            print(f"   Referral Propensity: {analysis.get('referral_propensity', 0):.2f}%")
+            print(f"   Propensity Category: {analysis.get('propensity_category', 'unknown')}")
+            print(f"   Expected Referrals: {analysis.get('expected_referrals', 0)}")
+            
+            factors = analysis.get('influence_factors', [])
+            print(f"   Influence Factors: {len(factors)}")
+            for factor in factors[:3]:
+                print(f"   - {factor.get('factor', 'unknown')}: {factor.get('impact', 0):.1f}% impact")
+            
+            recommendations = analysis.get('optimization_recommendations', [])
+            print(f"   AI Recommendations: {len(recommendations)}")
         
         return success
 
     def test_create_referral_campaign(self):
-        """Test creating referral campaign"""
-        print("\n🎁 Testing Referral Campaign Creation...")
+        """Test creating AI-optimized referral campaign with viral loop optimization"""
+        print("\n🎁 Testing AI-Optimized Referral Campaign Creation...")
         
         campaign_data = {
-            "campaign_name": "AI-Optimized Referral Program",
-            "reward_type": "discount",
-            "referrer_reward": {
-                "type": "percentage",
-                "value": 20,
-                "description": "20% off next purchase"
-            },
+            "campaign_name": "AI-Optimized Viral Referral Program",
+            "reward_type": "tiered",
+            "referrer_rewards": [
+                {
+                    "tier": 1,
+                    "threshold": 1,
+                    "reward": {"type": "percentage", "value": 20, "description": "20% off next purchase"}
+                },
+                {
+                    "tier": 2,
+                    "threshold": 3,
+                    "reward": {"type": "cash", "value": 50, "description": "$50 cash reward"}
+                },
+                {
+                    "tier": 3,
+                    "threshold": 5,
+                    "reward": {"type": "product", "value": "premium_license", "description": "Free Premium License"}
+                }
+            ],
             "referee_reward": {
                 "type": "percentage", 
                 "value": 15,
                 "description": "15% off first purchase"
             },
-            "duration_days": 30,
-            "target_segments": ["loyal_customers", "high_value"]
+            "duration_days": 60,
+            "target_segments": ["loyal_customers", "high_value", "advocates"],
+            "viral_optimization": {
+                "enable_ai_timing": True,
+                "enable_social_amplification": True,
+                "enable_network_effects": True
+            },
+            "sharing_channels": ["email", "social_media", "sms", "in_app"]
         }
         
         success, response = self.run_marketing_test(
-            "Create Referral Campaign",
+            "Create AI-Optimized Referral Campaign",
             "POST",
             "api/marketing/referral-program/campaigns",
             200,
@@ -1549,8 +1599,75 @@ class CustomerIntelligenceAITester:
             campaign = response.get('campaign', {})
             print(f"   Campaign ID: {campaign.get('campaign_id', 'unknown')}")
             print(f"   Campaign Name: {campaign.get('campaign_name', 'unknown')}")
-            print(f"   Referrer Reward: {campaign.get('referrer_reward', {}).get('description', 'unknown')}")
+            print(f"   Reward Tiers: {len(campaign.get('referrer_rewards', []))}")
             print(f"   AI Optimization Score: {campaign.get('ai_optimization_score', 0)}/100")
+            print(f"   Predicted Viral Coefficient: {campaign.get('predicted_viral_coefficient', 0):.2f}")
+            print(f"   Expected Participants: {campaign.get('expected_participants', 0)}")
+        
+        return success
+
+    def test_get_viral_metrics(self):
+        """Test tracking viral performance metrics and loop optimization"""
+        print("\n📈 Testing Viral Performance Metrics and Loop Optimization...")
+        
+        program_id = "referral_program_123"
+        
+        success, response = self.run_marketing_test(
+            "Get Viral Metrics",
+            "GET",
+            f"api/marketing/referral-program/viral-metrics/{program_id}",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            metrics = response.get('metrics', {})
+            print(f"   Program ID: {program_id}")
+            print(f"   Viral Coefficient: {metrics.get('viral_coefficient', 0):.3f}")
+            print(f"   Viral Loop Velocity: {metrics.get('loop_velocity', 0):.1f} days")
+            print(f"   Network Effect Score: {metrics.get('network_effect_score', 0)}/100")
+            
+            performance = metrics.get('performance_breakdown', {})
+            print(f"   Total Invites Sent: {performance.get('total_invites', 0)}")
+            print(f"   Invite Acceptance Rate: {performance.get('acceptance_rate', 0):.2f}%")
+            print(f"   Conversion Rate: {performance.get('conversion_rate', 0):.2f}%")
+            
+            channels = metrics.get('channel_performance', [])
+            print(f"   Channel Performance: {len(channels)} channels")
+            for channel in channels[:3]:
+                print(f"   - {channel.get('channel', 'unknown')}: {channel.get('share_rate', 0):.1f}% share rate")
+        
+        return success
+
+    def test_optimize_referral_program(self):
+        """Test AI-powered referral program optimization"""
+        print("\n🚀 Testing AI-Powered Referral Program Optimization...")
+        
+        program_id = "referral_program_123"
+        
+        success, response = self.run_marketing_test(
+            "Optimize Referral Program",
+            "POST",
+            f"api/marketing/referral-program/optimize/{program_id}",
+            200,
+            timeout=60
+        )
+        
+        if success:
+            optimization = response.get('optimization', {})
+            print(f"   Program ID: {program_id}")
+            print(f"   Optimization Applied: {optimization.get('optimization_applied', False)}")
+            print(f"   Improvement Score: {optimization.get('improvement_score', 0)}/100")
+            
+            changes = optimization.get('optimization_changes', [])
+            print(f"   Optimization Changes: {len(changes)}")
+            for change in changes[:3]:
+                print(f"   - {change.get('area', 'unknown')}: {change.get('change', 'unknown')}")
+                print(f"     Expected Impact: {change.get('expected_impact', 0):.1f}%")
+            
+            predictions = optimization.get('performance_predictions', {})
+            print(f"   Predicted Viral Coefficient: {predictions.get('new_viral_coefficient', 0):.3f}")
+            print(f"   Expected Participation Increase: {predictions.get('participation_increase', 0):.1f}%")
         
         return success
 
