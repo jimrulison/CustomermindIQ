@@ -771,7 +771,6 @@ function App() {
 }
 
 export default App;
-          <TabsContent value="analytics" className="space-y-6">
             <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
