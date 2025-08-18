@@ -1823,6 +1823,9 @@ app.include_router(customer_success_router)
 # Include Executive Intelligence Dashboard router
 app.include_router(executive_intelligence_router)
 
+# Include Growth Intelligence Suite router
+app.include_router(growth_intelligence_router)
+
 @app.get("/api/advanced/dashboard")
 async def get_advanced_features_dashboard():
     """Get comprehensive Advanced Features Expansion dashboard"""
