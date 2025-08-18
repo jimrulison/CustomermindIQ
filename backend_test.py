@@ -1431,8 +1431,14 @@ class CustomerIntelligenceAITester:
             
             insights = lead_score.get('ai_insights', [])
             print(f"   AI Insights: {len(insights)}")
-            for insight in insights[:2]:
-                print(f"   - {insight.get('insight', 'unknown')}")
+            if isinstance(insights, list):
+                for insight in insights[:2]:
+                    if isinstance(insight, dict):
+                        print(f"   - {insight.get('insight', 'unknown')}")
+                    else:
+                        print(f"   - {insight}")
+            else:
+                print(f"   AI Insights: {insights}")
         
         return success
 
