@@ -14,7 +14,8 @@ import {
   Activity,
   Database,
   Shield,
-  Cpu
+  Cpu,
+  Globe
 } from 'lucide-react';
 
 const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
