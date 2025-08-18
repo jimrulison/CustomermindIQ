@@ -1844,6 +1844,12 @@ app.include_router(product_intelligence_router)
 # Include Integration & Data Management Hub router
 app.include_router(integration_hub_router)
 
+# Include Compliance & Governance Suite router
+app.include_router(compliance_governance_router)
+
+# Include AI Command Center router
+app.include_router(ai_command_router)
+
 @app.get("/api/advanced/dashboard")
 async def get_advanced_features_dashboard():
     """Get comprehensive Advanced Features Expansion dashboard"""
