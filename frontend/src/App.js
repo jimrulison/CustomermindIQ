@@ -764,6 +764,8 @@ function App() {
                   )}
                 </div>
               </CardContent>
+            </Card>
+          </div>
         )}
       </div>
     </div>
