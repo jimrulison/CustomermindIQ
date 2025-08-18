@@ -711,65 +711,6 @@ function App() {
       </div>
     </div>
   );
-            <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center">
-                  <Mail className="w-6 h-6 mr-2 text-blue-400" />
-                  Email Marketing Campaigns
-                </CardTitle>
-                <CardDescription className="text-slate-400">
-                  AI-powered email campaigns with personalized product recommendations
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {campaigns.map((campaign, index) => (
-                    <div key={index} className="p-5 bg-slate-700/50 rounded-lg hover:bg-slate-700/70 transition-all">
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="font-semibold text-white text-lg">{campaign.name}</h3>
-                        <Badge className={
-                          campaign.status === 'sent' ? 'bg-green-500/20 text-green-400' :
-                          campaign.status === 'draft' ? 'bg-yellow-500/20 text-yellow-400' :
-                          'bg-red-500/20 text-red-400'
-                        }>
-                          {campaign.status.toUpperCase()}
-                        </Badge>
-                      </div>
-                      
-                      <p className="text-slate-300 mb-3">{campaign.subject}</p>
-                      
-                      <div className="grid grid-cols-3 gap-4 text-xs text-slate-400">
-                        <div className="text-center">
-                          <div className="text-white font-medium">{campaign.target_segment}</div>
-                          <div>Target Segment</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-white font-medium">{campaign.target_customers.length}</div>
-                          <div>Recipients</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-white font-medium">{campaign.recommended_products.length}</div>
-                          <div>AI Recommendations</div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  
-                  {campaigns.length === 0 && (
-                    <div className="text-center py-12">
-                      <Mail className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-                      <p className="text-slate-400 text-lg">No campaigns created yet</p>
-                      <p className="text-slate-500">Create your first AI-powered campaign in the Create Campaign tab</p>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
-      </div>
-    </div>
-  );
 }
 
 export default App;
