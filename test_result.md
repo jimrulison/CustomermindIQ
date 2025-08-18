@@ -698,13 +698,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Analytics & Insights - Customer Journey Mapping"
-    - "Analytics & Insights - Revenue Attribution"
-    - "Analytics & Insights - Cohort Analysis"
-    - "Analytics & Insights - Competitive Intelligence"
-    - "Analytics & Insights - ROI Forecasting"
-    - "Analytics & Insights API Endpoints Integration"
-  stuck_tasks: []
+    - "Analytics & Insights Frontend Integration"
+  stuck_tasks:
+    - "Analytics & Insights Frontend Integration"
   test_all: false
   test_priority: "high_first"
 
