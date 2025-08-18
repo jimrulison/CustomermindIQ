@@ -700,6 +700,11 @@ function App() {
           <ProductIntelligenceHub />
         )}
         
+        {/* Integration & Data Management Hub Module */}
+        {currentPage === 'integration' && (
+          <IntegrationDataHub />
+        )}
+        
         {currentPage === 'create' && (
           <CreateCampaign 
             campaigns={campaigns}
