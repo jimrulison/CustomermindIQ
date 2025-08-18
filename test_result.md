@@ -677,8 +677,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Revenue Analytics Suite Frontend Integration"
-    - "Backend Endpoint Verification"
+    - "Analytics & Insights - Customer Journey Mapping"
+    - "Analytics & Insights - Revenue Attribution"
+    - "Analytics & Insights - Cohort Analysis"
+    - "Analytics & Insights - Competitive Intelligence"
+    - "Analytics & Insights - ROI Forecasting"
+    - "Analytics & Insights API Endpoints Integration"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
