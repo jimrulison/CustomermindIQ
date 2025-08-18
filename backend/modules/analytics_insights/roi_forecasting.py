@@ -682,7 +682,9 @@ class ROIForecastingService:
         ))
         
         # Duration sensitivity
-        duration_params_high = ForecastParameters(**parameters.dict(), duration_days=int(parameters.duration_days * 1.1))
+        duration_params_dict = parameters.dict()
+        duration_params_dict['duration_days'] = int(parameters.duration_days * 1.1)
+        duration_params_high = ForecastParameters(**duration_params_dict)
         duration_forecast_high = await self.forecast_campaign_roi(duration_params_high)
         duration_sensitivity = (duration_forecast_high.predicted_roi - base_forecast.predicted_roi) / (0.1 * base_forecast.predicted_roi) if base_forecast.predicted_roi != 0 else 0
         
