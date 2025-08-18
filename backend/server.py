@@ -21,12 +21,12 @@ from modules.customer_intelligence_ai import (
     JourneyMappingService
 )
 
-# Import Marketing Automation Pro Module
+# Import Marketing Automation Pro Module (Rebuilt)
 from modules.marketing_automation_pro import (
     MultiChannelOrchestrationService,
-    ABTestingService,
+    ABTestingService, 
     DynamicContentService,
-    CrossSellIntelligenceService,
+    LeadScoringService,
     ReferralProgramService
 )
 
