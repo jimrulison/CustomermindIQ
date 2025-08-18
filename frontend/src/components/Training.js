@@ -108,6 +108,22 @@ const Training = () => {
   const manualSections = [
     {
       id: 1,
+      title: "Quick Start Guide",
+      description: "Get up and running in 15 minutes with step-by-step instructions",
+      icon: BookOpen,
+      pages: 12,
+      lastUpdated: "December 2024",
+      downloadUrl: "/training/documents/Quick_Start_Guide.md",
+      sections: [
+        "5-Minute Essential Setup",
+        "15-Minute Complete Walkthrough", 
+        "First Week Success Plan",
+        "Common Mistakes to Avoid",
+        "Success Metrics & Tracking"
+      ]
+    },
+    {
+      id: 2,
       title: "Complete User Guide",
       description: "Comprehensive manual covering every feature and function",
       icon: BookOpen,
@@ -123,7 +139,7 @@ const Training = () => {
       ]
     },
     {
-      id: 2,
+      id: 3,
       title: "Sales & Marketing Guide", 
       description: "Training material for sales teams and business development",
       icon: Target,
@@ -139,13 +155,13 @@ const Training = () => {
       ]
     },
     {
-      id: 3,
+      id: 4,
       title: "Quick Reference Cards",
       description: "Printable cheat sheets for common tasks and workflows",
       icon: FileText,
       pages: 8,
       lastUpdated: "December 2024",
-      downloadUrl: "#",
+      downloadUrl: "/training/documents/Quick_Reference_Guide.md",
       sections: [
         "Navigation Quick Reference",
         "Performance Metrics Glossary",
@@ -155,7 +171,7 @@ const Training = () => {
       ]
     },
     {
-      id: 4,
+      id: 5,
       title: "API Documentation",
       description: "Technical documentation for developers and integrations",
       icon: ExternalLink,
