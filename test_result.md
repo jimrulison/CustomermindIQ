@@ -605,8 +605,10 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus: []
-  stuck_tasks: []
+  current_focus:
+    - "Marketing Automation Pro Frontend Integration"
+  stuck_tasks:
+    - "Marketing Automation Pro Frontend Integration"
   test_all: false
   test_priority: "high_first"
 
