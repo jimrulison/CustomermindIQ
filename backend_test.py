@@ -4552,6 +4552,407 @@ class CustomerIntelligenceAITester:
     # END PRODUCT INTELLIGENCE HUB MODULE TESTS
     # =====================================================
 
+    # =====================================================
+    # INTEGRATION & DATA MANAGEMENT HUB MODULE TESTS
+    # =====================================================
+
+    def run_integration_hub_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
+        """Run an Integration & Data Management Hub API test"""
+        url = f"{self.base_url}/{endpoint}"
+        headers = {'Content-Type': 'application/json'}
+
+        self.integration_hub_tests += 1
+        print(f"\n🔗 Testing Integration & Data Management Hub: {name}...")
+        print(f"   URL: {url}")
+        
+        try:
+            if method == 'GET':
+                response = requests.get(url, headers=headers, timeout=timeout)
+            elif method == 'POST':
+                response = requests.post(url, json=data, headers=headers, timeout=timeout)
+            elif method == 'PUT':
+                response = requests.put(url, json=data, headers=headers, timeout=timeout)
+            elif method == 'DELETE':
+                response = requests.delete(url, headers=headers, timeout=timeout)
+
+            success = response.status_code == expected_status
+            if success:
+                self.integration_hub_passed += 1
+                print(f"✅ Passed - Status: {response.status_code}")
+                try:
+                    response_data = response.json()
+                    print(f"   Response preview: {str(response_data)[:200]}...")
+                    return True, response_data
+                except:
+                    return True, {}
+            else:
+                print(f"❌ Failed - Expected {expected_status}, got {response.status_code}")
+                try:
+                    error_data = response.json()
+                    print(f"   Error: {error_data}")
+                except:
+                    print(f"   Error text: {response.text[:200]}")
+                return False, {}
+
+        except requests.exceptions.Timeout:
+            print(f"❌ Failed - Request timed out after {timeout} seconds")
+            return False, {}
+        except Exception as e:
+            print(f"❌ Failed - Error: {str(e)}")
+            return False, {}
+
+    def test_data_connectors_dashboard(self):
+        """Test Integration & Data Management Hub - Data Connectors Dashboard"""
+        print("\n🔌 Testing Integration & Data Management Hub - Data Connectors Dashboard...")
+        
+        success, response = self.run_integration_hub_test(
+            "Data Connectors Dashboard",
+            "GET",
+            "api/integration-hub/connectors-dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                health_insights = dashboard.get('health_insights', {})
+                if health_insights:
+                    print(f"   Overall System Health: {health_insights.get('overall_system_health', 0)}%")
+                    print(f"   Total Active Connectors: {health_insights.get('total_active_connectors', 0)}")
+                    print(f"   Healthy Connectors: {health_insights.get('healthy_connectors', 0)}")
+                    print(f"   Warning Connectors: {health_insights.get('warning_connectors', 0)}")
+                    print(f"   Data Volume 24h: {health_insights.get('total_data_volume_24h', 0):,} records")
+                
+                available_connectors = dashboard.get('available_connectors', [])
+                print(f"   Available Connector Types: {len(available_connectors)}")
+                for connector_type in available_connectors[:2]:  # Show first 2 types
+                    print(f"   - {connector_type.get('connector_type', 'Unknown')}: {len(connector_type.get('supported_platforms', []))} platforms")
+                
+                active_connectors = dashboard.get('active_connectors', [])
+                print(f"   Active Connectors: {len(active_connectors)}")
+                for connector in active_connectors[:3]:  # Show first 3 active connectors
+                    print(f"   - {connector.get('connector_name', 'Unknown')} ({connector.get('platform', 'Unknown')})")
+                    print(f"     Status: {connector.get('connection_status', 'unknown')}, Health: {connector.get('health_score', 0)}%")
+                    print(f"     Data Volume 24h: {connector.get('data_volume_24h', 0):,} records")
+                
+                performance_metrics = dashboard.get('performance_metrics', {})
+                if performance_metrics:
+                    print(f"   Avg Sync Latency: {performance_metrics.get('avg_sync_latency', 0)} seconds")
+                    print(f"   API Success Rate: {performance_metrics.get('api_success_rate', 0)}%")
+                    print(f"   Connector Uptime: {performance_metrics.get('connector_uptime', 0)}%")
+                
+                recommendations = dashboard.get('system_recommendations', [])
+                print(f"   System Recommendations: {len(recommendations)}")
+        
+        return success
+
+    def test_create_connector(self):
+        """Test Integration & Data Management Hub - Create New Connector"""
+        print("\n➕ Testing Integration & Data Management Hub - Create New Connector...")
+        
+        connector_data = {
+            "platform": "HubSpot",
+            "name": "Test HubSpot Connector",
+            "description": "Test connector for HubSpot CRM integration"
+        }
+        
+        success, response = self.run_integration_hub_test(
+            "Create New Connector",
+            "POST",
+            "api/integration-hub/connector",
+            200,
+            data=connector_data,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Connector ID: {response.get('connector_id', 'unknown')}")
+            
+            connector_setup = response.get('connector_setup', {})
+            if connector_setup:
+                print(f"   Platform: {connector_setup.get('platform', 'unknown')}")
+                print(f"   Connector Name: {connector_setup.get('connector_name', 'unknown')}")
+                print(f"   Estimated Setup Time: {connector_setup.get('estimated_setup_time', 0)} minutes")
+                
+                steps = connector_setup.get('configuration_steps', [])
+                print(f"   Configuration Steps: {len(steps)}")
+                for step in steps:
+                    print(f"   - Step {step.get('step', 0)}: {step.get('title', 'Unknown')}")
+                    print(f"     Time: {step.get('estimated_time', 'unknown')}")
+                
+                credentials = connector_setup.get('required_credentials', [])
+                print(f"   Required Credentials: {len(credentials)}")
+                
+                data_types = connector_setup.get('supported_data_types', [])
+                print(f"   Supported Data Types: {len(data_types)}")
+        
+        return success
+
+    def test_connector_health(self):
+        """Test Integration & Data Management Hub - Connector Health Check"""
+        print("\n🏥 Testing Integration & Data Management Hub - Connector Health Check...")
+        
+        connector_id = "test_connector_123"
+        
+        success, response = self.run_integration_hub_test(
+            f"Connector Health Check ({connector_id})",
+            "GET",
+            f"api/integration-hub/connector/{connector_id}/health",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Connector ID: {response.get('connector_id', 'unknown')}")
+            
+            overall_health = response.get('overall_health', {})
+            if overall_health:
+                print(f"   Health Score: {overall_health.get('health_score', 0):.1f}%")
+                print(f"   Status: {overall_health.get('status', 'unknown')}")
+                print(f"   Uptime: {overall_health.get('uptime_percentage', 0):.1f}%")
+            
+            connection_diagnostics = response.get('connection_diagnostics', {})
+            if connection_diagnostics:
+                print(f"   API Connectivity: {connection_diagnostics.get('api_connectivity', 'unknown')}")
+                print(f"   Authentication: {connection_diagnostics.get('authentication_status', 'unknown')}")
+                print(f"   Rate Limit Status: {connection_diagnostics.get('rate_limit_status', 'unknown')}")
+                print(f"   Network Latency: {connection_diagnostics.get('network_latency', 'unknown')}")
+            
+            data_flow_health = response.get('data_flow_health', {})
+            if data_flow_health:
+                print(f"   Sync Frequency Adherence: {data_flow_health.get('sync_frequency_adherence', 0):.1f}%")
+                print(f"   Data Quality Score: {data_flow_health.get('data_quality_score', 0):.1f}%")
+                print(f"   Error Rate 24h: {data_flow_health.get('error_rate_24h', 0):.1f}%")
+            
+            recent_issues = response.get('recent_issues', [])
+            print(f"   Recent Issues: {len(recent_issues)}")
+            
+            recommendations = response.get('recommendations', [])
+            print(f"   Health Recommendations: {len(recommendations)}")
+        
+        return success
+
+    def test_sync_management_dashboard(self):
+        """Test Integration & Data Management Hub - Sync Management Dashboard"""
+        print("\n🔄 Testing Integration & Data Management Hub - Sync Management Dashboard...")
+        
+        success, response = self.run_integration_hub_test(
+            "Sync Management Dashboard",
+            "GET",
+            "api/integration-hub/sync-dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                overview = dashboard.get('overview_metrics', {})
+                if overview:
+                    print(f"   Total Sync Jobs: {overview.get('total_sync_jobs', 0)}")
+                    print(f"   Active Syncs: {overview.get('active_syncs', 0)}")
+                    print(f"   Completed Today: {overview.get('completed_syncs_today', 0)}")
+                    print(f"   Failed Syncs: {overview.get('failed_syncs_today', 0)}")
+                    print(f"   Data Records Synced: {overview.get('total_records_synced_today', 0):,}")
+                
+                sync_schedules = dashboard.get('sync_schedules', [])
+                print(f"   Sync Schedules: {len(sync_schedules)}")
+                for schedule in sync_schedules[:3]:  # Show first 3 schedules
+                    print(f"   - {schedule.get('connector_name', 'Unknown')}: {schedule.get('frequency', 'unknown')}")
+                    print(f"     Next Run: {schedule.get('next_run_time', 'unknown')}")
+                    print(f"     Status: {schedule.get('status', 'unknown')}")
+                
+                performance_metrics = dashboard.get('performance_metrics', {})
+                if performance_metrics:
+                    print(f"   Avg Sync Duration: {performance_metrics.get('avg_sync_duration', 0)} minutes")
+                    print(f"   Success Rate: {performance_metrics.get('sync_success_rate', 0)}%")
+                    print(f"   Data Throughput: {performance_metrics.get('data_throughput_per_hour', 0):,} records/hour")
+                
+                recent_activities = dashboard.get('recent_sync_activities', [])
+                print(f"   Recent Sync Activities: {len(recent_activities)}")
+        
+        return success
+
+    def test_data_quality_dashboard(self):
+        """Test Integration & Data Management Hub - Data Quality Dashboard"""
+        print("\n✅ Testing Integration & Data Management Hub - Data Quality Dashboard...")
+        
+        success, response = self.run_integration_hub_test(
+            "Data Quality Dashboard",
+            "GET",
+            "api/integration-hub/quality-dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                overview = dashboard.get('overview_metrics', {})
+                if overview:
+                    print(f"   Overall Data Quality Score: {overview.get('overall_data_quality_score', 0)}/100")
+                    print(f"   Total Records Analyzed: {overview.get('total_records_analyzed', 0):,}")
+                    print(f"   Quality Issues Found: {overview.get('quality_issues_found', 0)}")
+                    print(f"   Data Completeness: {overview.get('data_completeness_percentage', 0)}%")
+                    print(f"   Data Accuracy: {overview.get('data_accuracy_percentage', 0)}%")
+                
+                quality_dimensions = dashboard.get('quality_dimensions', [])
+                print(f"   Quality Dimensions: {len(quality_dimensions)}")
+                for dimension in quality_dimensions[:3]:  # Show first 3 dimensions
+                    print(f"   - {dimension.get('dimension_name', 'Unknown')}: {dimension.get('score', 0)}/100")
+                    print(f"     Status: {dimension.get('status', 'unknown')}, Issues: {dimension.get('issues_count', 0)}")
+                
+                connector_quality = dashboard.get('connector_quality_scores', [])
+                print(f"   Connector Quality Scores: {len(connector_quality)}")
+                for connector in connector_quality[:3]:  # Show first 3 connectors
+                    print(f"   - {connector.get('connector_name', 'Unknown')}: {connector.get('quality_score', 0)}/100")
+                    print(f"     Records: {connector.get('total_records', 0):,}, Issues: {connector.get('issues_count', 0)}")
+                
+                data_lineage = dashboard.get('data_lineage_health', {})
+                if data_lineage:
+                    print(f"   Data Lineage Health: {data_lineage.get('lineage_completeness', 0)}%")
+                    print(f"   Tracked Data Sources: {data_lineage.get('tracked_sources', 0)}")
+                
+                recommendations = dashboard.get('quality_recommendations', [])
+                print(f"   Quality Recommendations: {len(recommendations)}")
+        
+        return success
+
+    def test_integration_analytics_dashboard(self):
+        """Test Integration & Data Management Hub - Integration Analytics Dashboard"""
+        print("\n📊 Testing Integration & Data Management Hub - Integration Analytics Dashboard...")
+        
+        success, response = self.run_integration_hub_test(
+            "Integration Analytics Dashboard",
+            "GET",
+            "api/integration-hub/analytics-dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                overview = dashboard.get('overview_metrics', {})
+                if overview:
+                    print(f"   Total Integrations: {overview.get('total_integrations', 0)}")
+                    print(f"   Data Volume This Month: {overview.get('data_volume_this_month', 0):,} records")
+                    print(f"   Integration Efficiency: {overview.get('integration_efficiency_score', 0)}/100")
+                    print(f"   Cost Savings: ${overview.get('estimated_cost_savings', 0):,}")
+                    print(f"   Time Savings: {overview.get('estimated_time_savings_hours', 0)} hours")
+                
+                usage_analytics = dashboard.get('usage_analytics', {})
+                if usage_analytics:
+                    print(f"   Most Active Integration: {usage_analytics.get('most_active_integration', 'unknown')}")
+                    print(f"   Peak Usage Hours: {usage_analytics.get('peak_usage_hours', 'unknown')}")
+                    print(f"   Data Growth Rate: {usage_analytics.get('data_growth_rate_monthly', 0)}%")
+                
+                performance_trends = dashboard.get('performance_trends', [])
+                print(f"   Performance Trends: {len(performance_trends)} data points")
+                
+                roi_analysis = dashboard.get('roi_analysis', {})
+                if roi_analysis:
+                    print(f"   Integration ROI: {roi_analysis.get('overall_roi', 0):.1f}x")
+                    print(f"   Payback Period: {roi_analysis.get('payback_period_months', 0)} months")
+                    print(f"   Annual Value: ${roi_analysis.get('annual_value_generated', 0):,}")
+                
+                business_impact = dashboard.get('business_impact', {})
+                if business_impact:
+                    print(f"   Process Automation: {business_impact.get('processes_automated', 0)}")
+                    print(f"   Manual Tasks Eliminated: {business_impact.get('manual_tasks_eliminated', 0)}")
+                    print(f"   Data Accuracy Improvement: {business_impact.get('data_accuracy_improvement', 0)}%")
+                
+                insights = dashboard.get('ai_insights', [])
+                print(f"   AI Insights: {len(insights)}")
+        
+        return success
+
+    def run_comprehensive_integration_hub_tests(self):
+        """Run comprehensive Integration & Data Management Hub module tests"""
+        print("\n" + "="*80)
+        print("🚀 INTEGRATION & DATA MANAGEMENT HUB MODULE - COMPREHENSIVE TESTING")
+        print("="*80)
+        print("Testing all 4 Integration & Data Management Hub components:")
+        print("")
+        print("1. 🔌 Data Connectors (3 endpoints)")
+        print("   - Dashboard with connector health, available platforms")
+        print("   - Create new connector with configuration steps")
+        print("   - Connector health check with diagnostics")
+        print("")
+        print("2. 🔄 Sync Management (1 endpoint)")
+        print("   - Dashboard with sync schedules, performance metrics")
+        print("")
+        print("3. ✅ Data Quality (1 endpoint)")
+        print("   - Dashboard with quality scores, dimensions analysis")
+        print("")
+        print("4. 📊 Integration Analytics (1 endpoint)")
+        print("   - Dashboard with ROI analysis, business impact")
+        print("="*80)
+        
+        # Reset counters
+        integration_hub_tests = 0
+        integration_hub_passed = 0
+        
+        # Test 1: Data Connectors (3 endpoints)
+        print(f"\n{'='*60}")
+        print("🔌 TESTING DATA CONNECTORS")
+        print("="*60)
+        
+        tests = [
+            self.test_data_connectors_dashboard,
+            self.test_create_connector,
+            self.test_connector_health
+        ]
+        
+        for test in tests:
+            integration_hub_tests += 1
+            if test():
+                integration_hub_passed += 1
+        
+        # Test 2: Sync Management (1 endpoint)
+        print(f"\n{'='*60}")
+        print("🔄 TESTING SYNC MANAGEMENT")
+        print("="*60)
+        
+        integration_hub_tests += 1
+        if self.test_sync_management_dashboard():
+            integration_hub_passed += 1
+        
+        # Test 3: Data Quality (1 endpoint)
+        print(f"\n{'='*60}")
+        print("✅ TESTING DATA QUALITY")
+        print("="*60)
+        
+        integration_hub_tests += 1
+        if self.test_data_quality_dashboard():
+            integration_hub_passed += 1
+        
+        # Test 4: Integration Analytics (1 endpoint)
+        print(f"\n{'='*60}")
+        print("📊 TESTING INTEGRATION ANALYTICS")
+        print("="*60)
+        
+        integration_hub_tests += 1
+        if self.test_integration_analytics_dashboard():
+            integration_hub_passed += 1
+        
+        return integration_hub_passed, integration_hub_tests
+
+    # =====================================================
+    # END INTEGRATION & DATA MANAGEMENT HUB MODULE TESTS
+    # =====================================================
+
 def main():
     """Main function to run Product Intelligence Hub tests"""
     print("🚀 PRODUCT INTELLIGENCE HUB BACKEND TESTING")
