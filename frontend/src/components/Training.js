@@ -108,66 +108,66 @@ const Training = () => {
   const manualSections = [
     {
       id: 1,
-      title: "Quick Start Guide",
-      description: "Get up and running in 15 minutes with step-by-step instructions",
+      title: "Professional Quick Start Guide",
+      description: "Your rapid success blueprint - from zero to website intelligence mastery in 15 minutes",
       icon: BookOpen,
-      pages: 12,
+      pages: 5,
       lastUpdated: "December 2024",
-      downloadUrl: "/training/documents/Quick_Start_Guide.md",
+      downloadUrl: "/training/documents/Professional_Quick_Start_Guide.md",
       sections: [
-        "5-Minute Essential Setup",
-        "15-Minute Complete Walkthrough", 
-        "First Week Success Plan",
-        "Common Mistakes to Avoid",
-        "Success Metrics & Tracking"
+        "5-Minute Essential Setup & Platform Access",
+        "15-Minute Complete Walkthrough & First Analysis", 
+        "First Week Success Plan & Strategic Implementation",
+        "Common Mistakes to Avoid & Troubleshooting",
+        "Success Metrics & Tracking for Maximum ROI"
       ]
     },
     {
       id: 2,
-      title: "Complete User Guide",
-      description: "Comprehensive manual covering every feature and function",
+      title: "Professional User Guide",
+      description: "Complete professional manual transforming website performance through intelligent analytics",
       icon: BookOpen,
-      pages: 47,
+      pages: 12,
       lastUpdated: "December 2024",
-      downloadUrl: "/training/documents/Website_Intelligence_Hub_User_Guide.md",
+      downloadUrl: "/training/documents/Website_Intelligence_Hub_Professional_User_Guide.md",
       sections: [
-        "Module Overview & Getting Started",
-        "Main Navigation & Dashboard Cards", 
-        "Tab-by-Tab Feature Guide",
-        "Interactive Features & Best Practices",
-        "Membership Tiers & Business Value"
+        "Executive Overview & Business Impact",
+        "Getting Started & Initial Setup", 
+        "Navigation Mastery & Dashboard Intelligence",
+        "Feature Deep Dive & Advanced Capabilities",
+        "Business Intelligence & ROI Optimization"
       ]
     },
     {
       id: 3,
-      title: "Sales & Marketing Guide", 
-      description: "Training material for sales teams and business development",
+      title: "Professional Sales & Marketing Guide", 
+      description: "Strategic sales enablement and revenue acceleration blueprint for teams",
       icon: Target,
-      pages: 32,
+      pages: 12,
       lastUpdated: "December 2024",
-      downloadUrl: "/training/documents/Website_Intelligence_Hub_Sales_Guide.md",
+      downloadUrl: "/training/documents/Website_Intelligence_Hub_Professional_Sales_Guide.md",
       sections: [
         "Market Positioning & Value Propositions",
-        "Demo Scripts & Objection Handling",
+        "Demo Scripts & Objection Handling Strategies",
         "Pricing Strategies & ROI Calculations",
-        "Case Studies & Success Stories",
-        "Competitive Analysis & Differentiation"
+        "Case Studies & Success Stories Collection",
+        "Advanced Sales Techniques & Revenue Optimization"
       ]
     },
     {
       id: 4,
-      title: "Quick Reference Cards",
-      description: "Printable cheat sheets for common tasks and workflows",
+      title: "Professional Quick Reference Guide",
+      description: "Essential daily operations reference for power users and optimization professionals",
       icon: FileText,
-      pages: 8,
+      pages: 10,
       lastUpdated: "December 2024",
-      downloadUrl: "/training/documents/Quick_Reference_Guide.md",
+      downloadUrl: "/training/documents/Professional_Quick_Reference_Guide.md",
       sections: [
-        "Navigation Quick Reference",
-        "Performance Metrics Glossary",
-        "SEO Checklist & Best Practices", 
-        "Troubleshooting Common Issues",
-        "Keyboard Shortcuts & Tips"
+        "Navigation Reference & Platform Architecture",
+        "Performance Metrics Glossary & Scoring Framework",
+        "SEO Optimization Checklist & Best Practices", 
+        "Troubleshooting Guide & Problem Resolution",
+        "Advanced Power User Techniques & Shortcuts"
       ]
     },
     {
