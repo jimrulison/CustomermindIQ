@@ -1369,19 +1369,19 @@ function App() {
                     <div className="flex justify-between">
                       <span className="text-slate-300">Communications</span>
                       <span className="text-cyan-400 font-semibold">
-                        {sentimentAnalysisData?.dashboard?.communications_analyzed || 568}
+                        {sentimentAnalysisData?.dashboard?.summary_metrics?.total_communications_analyzed || 568}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-300">Positive Sentiment</span>
                       <span className="text-green-400 font-semibold">
-                        {sentimentAnalysisData?.dashboard?.positive_sentiment || '41.2%'}
+                        {sentimentAnalysisData?.dashboard?.summary_metrics?.positive_sentiment_percentage || '41.2'}%
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-300">Active Alerts</span>
                       <span className="text-orange-400 font-semibold">
-                        {sentimentAnalysisData?.dashboard?.active_alerts || 4}
+                        {sentimentAnalysisData?.dashboard?.summary_metrics?.active_alerts || 4}
                       </span>
                     </div>
                   </div>
