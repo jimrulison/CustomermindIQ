@@ -668,7 +668,9 @@ class ROIForecastingService:
         ))
         
         # Seasonal factor sensitivity
-        seasonal_params_high = ForecastParameters(**parameters.dict(), seasonal_factor=parameters.seasonal_factor * 1.1)
+        seasonal_params_dict = parameters.dict()
+        seasonal_params_dict['seasonal_factor'] = parameters.seasonal_factor * 1.1
+        seasonal_params_high = ForecastParameters(**seasonal_params_dict)
         seasonal_forecast_high = await self.forecast_campaign_roi(seasonal_params_high)
         seasonal_sensitivity = (seasonal_forecast_high.predicted_roi - base_forecast.predicted_roi) / (0.1 * base_forecast.predicted_roi) if base_forecast.predicted_roi != 0 else 0
         
