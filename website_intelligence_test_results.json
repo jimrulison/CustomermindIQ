@@ -1,0 +1,2466 @@
+{
+  "test_summary": {
+    "total_tests": 16,
+    "passed_tests": 16,
+    "success_rate": 100.0,
+    "test_timestamp": "2025-08-18T16:07:46.244089"
+  },
+  "detailed_results": [
+    {
+      "test_name": "Website Intelligence Dashboard",
+      "method": "GET",
+      "endpoint": "/api/website-intelligence/dashboard",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/dashboard",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "dashboard": {
+          "generated_date": "2025-08-18T16:07:45.830506",
+          "websites_overview": {
+            "total_websites": 3,
+            "active_websites": 3,
+            "websites_analyzed": 3,
+            "last_update": "2025-08-18T14:07:45.830450",
+            "membership_tier": "Professional",
+            "websites_allowed": 7,
+            "websites_remaining": 4,
+            "next_auto_update": "2025-08-19T14:07:45.830461",
+            "overall_health_score": 87.4
+          },
+          "user_websites": [
+            {
+              "website_id": "web_001",
+              "domain": "myawesomestore.com",
+              "website_name": "My Awesome Store",
+              "website_type": "E-commerce",
+              "status": "active",
+              "health_score": 92.3,
+              "last_analyzed": "2025-08-18T14:07:45.830467",
+              "connected_services": [
+                "Google Analytics",
+                "Google Search Console",
+                "Shopify"
+              ],
+              "monthly_visitors": 45670,
+              "conversion_rate": 3.2,
+              "seo_score": 89.5,
+              "performance_score": 94.1,
+              "security_score": 87.8,
+              "mobile_score": 91.2,
+              "issues_count": 3,
+              "opportunities_count": 7
+            },
+            {
+              "website_id": "web_002",
+              "domain": "myblogsite.net",
+              "website_name": "My Blog Site",
+              "website_type": "Blog/Content",
+              "status": "active",
+              "health_score": 85.7,
+              "last_analyzed": "2025-08-18T13:07:45.830472",
+              "connected_services": [
+                "Google Analytics",
+                "WordPress"
+              ],
+              "monthly_visitors": 12340,
+              "conversion_rate": 1.8,
+              "seo_score": 83.2,
+              "performance_score": 88.9,
+              "security_score": 92.1,
+              "mobile_score": 79.4,
+              "issues_count": 8,
+              "opportunities_count": 12
+            },
+            {
+              "website_id": "web_003",
+              "domain": "mycorporatesite.com",
+              "website_name": "My Corporate Site",
+              "website_type": "Corporate",
+              "status": "active",
+              "health_score": 84.6,
+              "last_analyzed": "2025-08-18T15:07:45.830475",
+              "connected_services": [
+                "Google Analytics",
+                "Google Search Console"
+              ],
+              "monthly_visitors": 8950,
+              "conversion_rate": 5.7,
+              "seo_score": 91.8,
+              "performance_score": 76.2,
+              "security_score": 89.4,
+              "mobile_score": 81.5,
+              "issues_count": 5,
+              "opportunities_count": 9
+            }
+          ],
+          "analysis_summary": {
+            "total_pages_analyzed": 1247,
+            "total_issues_found": 16,
+            "critical_issues": 2,
+            "high_priority_issues": 5,
+            "medium_priority_issues": 6,
+            "low_priority_issues": 3,
+            "opportunities_identified": 28,
+            "avg_page_load_time": 2.1,
+            "avg_seo_score": 88.2,
+            "avg_mobile_score": 84.0,
+            "avg_security_score": 89.8
+          },
+          "technical_analysis": {
+            "website_technologies": [
+              {
+                "website": "myawesomestore.com",
+                "technologies": [
+                  {
+                    "name": "Shopify",
+                    "category": "E-commerce Platform",
+                    "version": "Latest"
+                  },
+                  {
+                    "name": "Google Analytics",
+                    "category": "Analytics",
+                    "version": "4"
+                  },
+                  {
+                    "name": "Cloudflare",
+                    "category": "CDN",
+                    "version": "Latest"
+                  },
+                  {
+                    "name": "React",
+                    "category": "JavaScript Framework",
+                    "version": "18.2"
+                  },
+                  {
+                    "name": "Stripe",
+                    "category": "Payment Processor",
+                    "version": "Latest"
+                  }
+                ]
+              },
+              {
+                "website": "myblogsite.net",
+                "technologies": [
+                  {
+                    "name": "WordPress",
+                    "category": "CMS",
+                    "version": "6.3"
+                  },
+                  {
+                    "name": "Elementor",
+                    "category": "Page Builder",
+                    "version": "3.15"
+                  },
+                  {
+                    "name": "Yoast SEO",
+                    "category": "SEO Plugin",
+                    "version": "21.0"
+                  },
+                  {
+                    "name": "WooCommerce",
+                    "category": "E-commerce",
+                    "version": "8.0"
+                  }
+                ]
+              }
+            ],
+            "hosting_analysis": [
+              {
+                "website": "myawesomestore.com",
+                "hosting_provider": "Shopify Hosting",
+                "server_location": "United States",
+                "ssl_certificate": "Valid",
+                "ssl_grade": "A+",
+                "cdn_enabled": true,
+                "backup_status": "Automated",
+                "uptime_percentage": 99.97
+              },
+              {
+                "website": "myblogsite.net",
+                "hosting_provider": "SiteGround",
+                "server_location": "Germany",
+                "ssl_certificate": "Valid",
+                "ssl_grade": "A",
+                "cdn_enabled": true,
+                "backup_status": "Daily",
+                "uptime_percentage": 99.89
+              }
+            ]
+          },
+          "seo_analysis": {
+            "total_keywords_tracked": 156,
+            "keywords_ranking_top_10": 23,
+            "keywords_ranking_top_50": 67,
+            "organic_traffic_trend": "increasing",
+            "backlinks_total": 2847,
+            "referring_domains": 345,
+            "domain_authority": 48.3,
+            "page_authority_avg": 32.7,
+            "seo_issues": [
+              {
+                "issue": "Missing meta descriptions",
+                "severity": "medium",
+                "pages_affected": 12,
+                "websites_affected": [
+                  "myblogsite.net"
+                ]
+              },
+              {
+                "issue": "Slow page load times",
+                "severity": "high",
+                "pages_affected": 8,
+                "websites_affected": [
+                  "mycorporatesite.com"
+                ]
+              },
+              {
+                "issue": "Mobile usability issues",
+                "severity": "medium",
+                "pages_affected": 15,
+                "websites_affected": [
+                  "myblogsite.net",
+                  "mycorporatesite.com"
+                ]
+              }
+            ]
+          },
+          "performance_metrics": {
+            "core_web_vitals": {
+              "largest_contentful_paint": 2.1,
+              "first_input_delay": 85,
+              "cumulative_layout_shift": 0.08,
+              "overall_score": "Good"
+            },
+            "page_speed_insights": [
+              {
+                "website": "myawesomestore.com",
+                "desktop_score": 94,
+                "mobile_score": 87,
+                "opportunities": [
+                  {
+                    "opportunity": "Optimize images",
+                    "savings_ms": 340
+                  },
+                  {
+                    "opportunity": "Reduce unused CSS",
+                    "savings_ms": 180
+                  }
+                ]
+              },
+              {
+                "website": "myblogsite.net",
+                "desktop_score": 89,
+                "mobile_score": 76,
+                "opportunities": [
+                  {
+                    "opportunity": "Optimize server response time",
+                    "savings_ms": 890
+                  },
+                  {
+                    "opportunity": "Eliminate render-blocking resources",
+                    "savings_ms": 450
+                  }
+                ]
+              }
+            ],
+            "uptime_monitoring": [
+              {
+                "website": "myawesomestore.com",
+                "uptime_percentage": 99.97,
+                "avg_response_time": 245,
+                "incidents_30d": 1,
+                "last_downtime": "2025-07-31T16:07:45.830491"
+              },
+              {
+                "website": "myblogsite.net",
+                "uptime_percentage": 99.89,
+                "avg_response_time": 567,
+                "incidents_30d": 3,
+                "last_downtime": "2025-08-13T16:07:45.830493"
+              }
+            ]
+          },
+          "security_analysis": {
+            "security_score_avg": 89.8,
+            "vulnerabilities_found": 2,
+            "security_headers": [
+              {
+                "website": "myawesomestore.com",
+                "https_enforced": true,
+                "hsts_enabled": true,
+                "xss_protection": true,
+                "content_security_policy": true,
+                "security_grade": "A+"
+              },
+              {
+                "website": "myblogsite.net",
+                "https_enforced": true,
+                "hsts_enabled": false,
+                "xss_protection": true,
+                "content_security_policy": false,
+                "security_grade": "B+"
+              }
+            ],
+            "ssl_analysis": [
+              {
+                "website": "myawesomestore.com",
+                "ssl_grade": "A+",
+                "certificate_valid": true,
+                "expires_in_days": 87,
+                "issuer": "Let's Encrypt"
+              },
+              {
+                "website": "myblogsite.net",
+                "ssl_grade": "A",
+                "certificate_valid": true,
+                "expires_in_days": 156,
+                "issuer": "Sectigo"
+              }
+            ]
+          },
+          "content_analysis": {
+            "total_pages": 1247,
+            "pages_with_content_issues": 34,
+            "duplicate_content_pages": 8,
+            "thin_content_pages": 12,
+            "missing_images_alt_text": 67,
+            "broken_links": 15,
+            "content_quality_score": 86.7,
+            "readability_analysis": [
+              {
+                "website": "myawesomestore.com",
+                "avg_reading_level": "Grade 8",
+                "readability_score": 78.4,
+                "avg_sentence_length": 16.2,
+                "passive_voice_percentage": 12.8
+              },
+              {
+                "website": "myblogsite.net",
+                "avg_reading_level": "Grade 10",
+                "readability_score": 71.9,
+                "avg_sentence_length": 19.8,
+                "passive_voice_percentage": 18.4
+              }
+            ]
+          },
+          "business_insights": {
+            "revenue_correlation": {
+              "website_performance_to_revenue": 0.847,
+              "seo_score_to_conversions": 0.762,
+              "page_speed_to_bounce_rate": -0.689,
+              "mobile_score_to_mobile_revenue": 0.823
+            },
+            "optimization_opportunities": [
+              {
+                "opportunity": "Improve mobile performance on myblogsite.net",
+                "potential_impact": "15-25% increase in mobile conversions",
+                "effort_required": "Medium",
+                "estimated_revenue_impact": "$2,340/month"
+              },
+              {
+                "opportunity": "Fix server response time on mycorporatesite.com",
+                "potential_impact": "10-15% reduction in bounce rate",
+                "effort_required": "High",
+                "estimated_revenue_impact": "$890/month"
+              },
+              {
+                "opportunity": "Optimize SEO meta descriptions across all sites",
+                "potential_impact": "5-10% increase in organic traffic",
+                "effort_required": "Low",
+                "estimated_revenue_impact": "$1,560/month"
+              }
+            ],
+            "competitive_insights": [
+              {
+                "insight": "Your e-commerce site loads 23% faster than industry average",
+                "advantage": "Higher conversion potential",
+                "recommendation": "Leverage speed advantage in marketing"
+              },
+              {
+                "insight": "Blog content readability is above average for your niche",
+                "advantage": "Better user engagement",
+                "recommendation": "Create more long-form content"
+              }
+            ]
+          },
+          "recent_updates": [
+            {
+              "update_id": "upd_001",
+              "timestamp": "2025-08-18T14:07:45.830501",
+              "website": "myawesomestore.com",
+              "update_type": "Full Analysis",
+              "changes_detected": [
+                "New product pages added (+15)",
+                "Core Web Vitals improved (+3.2%)",
+                "2 new keywords ranking in top 50"
+              ],
+              "status": "completed"
+            },
+            {
+              "update_id": "upd_002",
+              "timestamp": "2025-08-18T10:07:45.830504",
+              "website": "myblogsite.net",
+              "update_type": "SEO Update",
+              "changes_detected": [
+                "3 new blog posts published",
+                "Meta descriptions updated",
+                "Internal linking improved"
+              ],
+              "status": "completed"
+            }
+          ],
+          "key_insights": [
+            "myawesomestore.com performing 23% above industry average",
+            "2 critical security headers missing on myblogsite.net",
+            "Potential $4,790/month revenue increase from identified optimizations",
+            "87.4% overall website health score across all properties",
+            "Mobile optimization needed for 2 of 3 websites"
+          ],
+          "action_items": [
+            {
+              "priority": "high",
+              "action": "Fix server response time on mycorporatesite.com",
+              "impact": "$890/month potential revenue increase",
+              "effort": "2-3 days"
+            },
+            {
+              "priority": "medium",
+              "action": "Add missing security headers to myblogsite.net",
+              "impact": "Improve security grade from B+ to A",
+              "effort": "4-6 hours"
+            },
+            {
+              "priority": "low",
+              "action": "Optimize meta descriptions across all sites",
+              "impact": "5-10% organic traffic increase",
+              "effort": "1-2 days"
+            }
+          ]
+        }
+      },
+      "timestamp": "2025-08-18T16:07:45.835826"
+    },
+    {
+      "test_name": "Add New Website",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/website/add",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/website/add",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "website_id": "cb7fa4d9-5aa7-4fd2-aacd-be37349d1a26",
+        "website_details": {
+          "domain": "example.com",
+          "website_name": "Example Website",
+          "website_type": "E-commerce",
+          "added_date": "2025-08-18T16:07:45.856493",
+          "status": "pending_verification"
+        },
+        "verification_steps": [
+          {
+            "step": 1,
+            "title": "Domain Ownership Verification",
+            "description": "Verify you own this domain",
+            "methods": [
+              "DNS TXT Record",
+              "HTML File Upload",
+              "Meta Tag"
+            ]
+          },
+          {
+            "step": 2,
+            "title": "Connect Analytics Services",
+            "description": "Optional: Connect Google Analytics, Search Console",
+            "methods": [
+              "OAuth Integration",
+              "API Key"
+            ]
+          },
+          {
+            "step": 3,
+            "title": "Initial Analysis",
+            "description": "Run comprehensive website analysis",
+            "estimated_time": "5-10 minutes"
+          }
+        ],
+        "next_steps": [
+          "Complete domain verification",
+          "Configure analytics connections",
+          "Run initial website analysis",
+          "Review analysis results"
+        ]
+      },
+      "timestamp": "2025-08-18T16:07:45.860779"
+    },
+    {
+      "test_name": "Analyze Website (web_001)",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/website/web_001/analyze",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/website/web_001/analyze",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "analysis_id": "befe55bc-e115-4e98-a055-a784fa36e073",
+        "website_id": "web_001",
+        "analysis_started": "2025-08-18T16:07:45.883479",
+        "analysis_type": "full",
+        "estimated_completion": "2025-08-18T16:15:45.883487",
+        "analysis_modules": [
+          {
+            "module": "Technical Audit",
+            "status": "running",
+            "progress": 23.4,
+            "estimated_time": "2-3 minutes"
+          },
+          {
+            "module": "SEO Analysis",
+            "status": "queued",
+            "progress": 0,
+            "estimated_time": "3-4 minutes"
+          },
+          {
+            "module": "Performance Testing",
+            "status": "queued",
+            "progress": 0,
+            "estimated_time": "2-3 minutes"
+          },
+          {
+            "module": "Security Scan",
+            "status": "queued",
+            "progress": 0,
+            "estimated_time": "1-2 minutes"
+          },
+          {
+            "module": "Content Analysis",
+            "status": "queued",
+            "progress": 0,
+            "estimated_time": "2-3 minutes"
+          }
+        ],
+        "analysis_scope": {
+          "pages_to_analyze": 152,
+          "depth_level": "comprehensive",
+          "include_subdomains": true,
+          "mobile_analysis": true,
+          "competitor_comparison": true
+        }
+      },
+      "timestamp": "2025-08-18T16:07:45.887448"
+    },
+    {
+      "test_name": "Update All Websites",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/update-all",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/update-all",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "update_id": "ed3e7c19-352c-4ad1-ad1b-f5a2074f0bcf",
+        "update_started": "2025-08-18T16:07:45.905953",
+        "websites_to_update": 3,
+        "estimated_completion": "2025-08-18T16:22:45.905960",
+        "update_queue": [
+          {
+            "website_id": "web_001",
+            "domain": "myawesomestore.com",
+            "status": "running",
+            "progress": 12.3,
+            "estimated_time": "5 minutes"
+          },
+          {
+            "website_id": "web_002",
+            "domain": "myblogsite.net",
+            "status": "queued",
+            "progress": 0,
+            "estimated_time": "6 minutes"
+          },
+          {
+            "website_id": "web_003",
+            "domain": "mycorporatesite.com",
+            "status": "queued",
+            "progress": 0,
+            "estimated_time": "4 minutes"
+          }
+        ],
+        "update_types": [
+          "SEO metrics refresh",
+          "Performance testing",
+          "Security scan update",
+          "Content analysis",
+          "Technical audit",
+          "Keyword ranking check"
+        ],
+        "notification_settings": {
+          "email_on_completion": true,
+          "slack_notification": false,
+          "dashboard_update": true
+        }
+      },
+      "timestamp": "2025-08-18T16:07:45.908970"
+    },
+    {
+      "test_name": "Detailed Website Report (web_001)",
+      "method": "GET",
+      "endpoint": "/api/website-intelligence/website/web_001/detailed-report",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/website/web_001/detailed-report",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "website_id": "web_001",
+        "report_generated": "2025-08-18T16:07:45.931725",
+        "website_info": {
+          "domain": "myawesomestore.com",
+          "website_name": "My Awesome Store",
+          "website_type": "E-commerce",
+          "analysis_date": "2025-08-18T14:07:45.931732"
+        },
+        "executive_summary": {
+          "overall_health_score": 92.3,
+          "strengths": [
+            "Excellent page load speeds (94.1/100)",
+            "Strong SEO foundation (89.5/100)",
+            "Good security implementation (87.8/100)"
+          ],
+          "areas_for_improvement": [
+            "Mobile user experience optimization",
+            "Content freshness and depth",
+            "Social media integration"
+          ],
+          "business_impact": "$2,340/month potential revenue increase from optimization"
+        },
+        "detailed_analysis": {
+          "technical_details": {
+            "page_count": 247,
+            "avg_page_size": "1.2 MB",
+            "images_optimized": "78%",
+            "compression_enabled": true,
+            "minification_status": "Partial",
+            "http2_enabled": true
+          },
+          "seo_details": {
+            "title_tags_optimized": "89%",
+            "meta_descriptions_present": "76%",
+            "heading_structure_score": 87.3,
+            "internal_linking_score": 82.1,
+            "schema_markup_coverage": "45%"
+          },
+          "performance_details": {
+            "first_contentful_paint": "1.2s",
+            "largest_contentful_paint": "2.1s",
+            "cumulative_layout_shift": 0.08,
+            "time_to_interactive": "2.8s"
+          }
+        },
+        "actionable_recommendations": [
+          {
+            "category": "Performance",
+            "priority": "high",
+            "recommendation": "Optimize image compression",
+            "impact": "20% faster page loads",
+            "effort": "Medium",
+            "implementation_steps": [
+              "Audit current image formats",
+              "Convert to WebP where possible",
+              "Implement responsive image sizing",
+              "Add lazy loading"
+            ]
+          },
+          {
+            "category": "SEO",
+            "priority": "medium",
+            "recommendation": "Complete meta descriptions",
+            "impact": "5-10% increase in click-through rates",
+            "effort": "Low",
+            "implementation_steps": [
+              "Identify pages missing meta descriptions",
+              "Write compelling, keyword-rich descriptions",
+              "Ensure descriptions are 150-160 characters",
+              "Test and monitor CTR improvements"
+            ]
+          }
+        ]
+      },
+      "timestamp": "2025-08-18T16:07:45.936272"
+    },
+    {
+      "test_name": "Performance Dashboard",
+      "method": "GET",
+      "endpoint": "/api/website-intelligence/performance-dashboard",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/performance-dashboard",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "dashboard": {
+          "generated_date": "2025-08-18T16:07:45.953422",
+          "performance_overview": {
+            "overall_performance_score": 87.3,
+            "websites_monitored": 3,
+            "total_pages_tested": 1247,
+            "core_web_vitals_status": "Good",
+            "performance_trend": "improving",
+            "last_performance_scan": "2025-08-18T15:07:45.953100",
+            "issues_detected": 8,
+            "optimizations_suggested": 15
+          },
+          "core_web_vitals": {
+            "overall_status": "Good",
+            "lcp_average": 2.1,
+            "fid_average": 85,
+            "cls_average": 0.08,
+            "fcp_average": 1.4,
+            "tti_average": 2.8,
+            "vitals_by_website": [
+              {
+                "website": "myawesomestore.com",
+                "lcp": 1.9,
+                "fid": 78,
+                "cls": 0.06,
+                "overall_status": "Good",
+                "mobile_vs_desktop": {
+                  "desktop_score": 94,
+                  "mobile_score": 87
+                }
+              },
+              {
+                "website": "myblogsite.net",
+                "lcp": 2.4,
+                "fid": 92,
+                "cls": 0.11,
+                "overall_status": "Needs Improvement",
+                "mobile_vs_desktop": {
+                  "desktop_score": 89,
+                  "mobile_score": 76
+                }
+              },
+              {
+                "website": "mycorporatesite.com",
+                "lcp": 2.0,
+                "fid": 85,
+                "cls": 0.07,
+                "overall_status": "Good",
+                "mobile_vs_desktop": {
+                  "desktop_score": 91,
+                  "mobile_score": 83
+                }
+              }
+            ]
+          },
+          "performance_trends": [
+            {
+              "date": "2025-07-20",
+              "overall_score": 83.0,
+              "lcp": 2.5,
+              "fid": 84,
+              "cls": 0.08,
+              "page_load_time": 2.6
+            },
+            {
+              "date": "2025-07-21",
+              "overall_score": 85.6,
+              "lcp": 2.4,
+              "fid": 98,
+              "cls": 0.11,
+              "page_load_time": 2.7
+            },
+            {
+              "date": "2025-07-22",
+              "overall_score": 91.6,
+              "lcp": 2.3,
+              "fid": 98,
+              "cls": 0.08,
+              "page_load_time": 3.2
+            },
+            {
+              "date": "2025-07-23",
+              "overall_score": 83.0,
+              "lcp": 2.1,
+              "fid": 78,
+              "cls": 0.1,
+              "page_load_time": 2.4
+            },
+            {
+              "date": "2025-07-24",
+              "overall_score": 83.1,
+              "lcp": 2.5,
+              "fid": 89,
+              "cls": 0.12,
+              "page_load_time": 2.6
+            },
+            {
+              "date": "2025-07-25",
+              "overall_score": 89.8,
+              "lcp": 2.1,
+              "fid": 78,
+              "cls": 0.1,
+              "page_load_time": 2.9
+            },
+            {
+              "date": "2025-07-26",
+              "overall_score": 89.1,
+              "lcp": 2.3,
+              "fid": 94,
+              "cls": 0.06,
+              "page_load_time": 3.6
+            },
+            {
+              "date": "2025-07-27",
+              "overall_score": 82.6,
+              "lcp": 2.2,
+              "fid": 93,
+              "cls": 0.11,
+              "page_load_time": 2.8
+            },
+            {
+              "date": "2025-07-28",
+              "overall_score": 85.3,
+              "lcp": 2.3,
+              "fid": 74,
+              "cls": 0.06,
+              "page_load_time": 3.0
+            },
+            {
+              "date": "2025-07-29",
+              "overall_score": 91.0,
+              "lcp": 2.1,
+              "fid": 82,
+              "cls": 0.11,
+              "page_load_time": 2.5
+            },
+            {
+              "date": "2025-07-30",
+              "overall_score": 82.9,
+              "lcp": 2.1,
+              "fid": 97,
+              "cls": 0.11,
+              "page_load_time": 3.0
+            },
+            {
+              "date": "2025-07-31",
+              "overall_score": 83.4,
+              "lcp": 2.1,
+              "fid": 95,
+              "cls": 0.08,
+              "page_load_time": 2.2
+            },
+            {
+              "date": "2025-08-01",
+              "overall_score": 90.9,
+              "lcp": 2.4,
+              "fid": 79,
+              "cls": 0.09,
+              "page_load_time": 2.2
+            },
+            {
+              "date": "2025-08-02",
+              "overall_score": 82.4,
+              "lcp": 2.3,
+              "fid": 93,
+              "cls": 0.06,
+              "page_load_time": 3.6
+            },
+            {
+              "date": "2025-08-03",
+              "overall_score": 82.8,
+              "lcp": 2.1,
+              "fid": 86,
+              "cls": 0.11,
+              "page_load_time": 3.1
+            },
+            {
+              "date": "2025-08-04",
+              "overall_score": 88.9,
+              "lcp": 2.1,
+              "fid": 98,
+              "cls": 0.07,
+              "page_load_time": 2.4
+            },
+            {
+              "date": "2025-08-05",
+              "overall_score": 84.2,
+              "lcp": 2.5,
+              "fid": 76,
+              "cls": 0.1,
+              "page_load_time": 3.0
+            },
+            {
+              "date": "2025-08-06",
+              "overall_score": 85.2,
+              "lcp": 1.9,
+              "fid": 88,
+              "cls": 0.06,
+              "page_load_time": 3.6
+            },
+            {
+              "date": "2025-08-07",
+              "overall_score": 82.1,
+              "lcp": 1.9,
+              "fid": 76,
+              "cls": 0.09,
+              "page_load_time": 2.8
+            },
+            {
+              "date": "2025-08-08",
+              "overall_score": 89.5,
+              "lcp": 2.3,
+              "fid": 90,
+              "cls": 0.11,
+              "page_load_time": 2.5
+            },
+            {
+              "date": "2025-08-09",
+              "overall_score": 84.6,
+              "lcp": 2.5,
+              "fid": 91,
+              "cls": 0.06,
+              "page_load_time": 3.4
+            },
+            {
+              "date": "2025-08-10",
+              "overall_score": 87.8,
+              "lcp": 2.4,
+              "fid": 88,
+              "cls": 0.1,
+              "page_load_time": 2.2
+            },
+            {
+              "date": "2025-08-11",
+              "overall_score": 86.3,
+              "lcp": 2.3,
+              "fid": 92,
+              "cls": 0.06,
+              "page_load_time": 2.4
+            },
+            {
+              "date": "2025-08-12",
+              "overall_score": 86.7,
+              "lcp": 1.9,
+              "fid": 73,
+              "cls": 0.1,
+              "page_load_time": 3.4
+            },
+            {
+              "date": "2025-08-13",
+              "overall_score": 85.4,
+              "lcp": 2.0,
+              "fid": 96,
+              "cls": 0.05,
+              "page_load_time": 3.4
+            },
+            {
+              "date": "2025-08-14",
+              "overall_score": 91.4,
+              "lcp": 2.0,
+              "fid": 100,
+              "cls": 0.08,
+              "page_load_time": 3.2
+            },
+            {
+              "date": "2025-08-15",
+              "overall_score": 84.6,
+              "lcp": 1.9,
+              "fid": 99,
+              "cls": 0.05,
+              "page_load_time": 3.3
+            },
+            {
+              "date": "2025-08-16",
+              "overall_score": 89.2,
+              "lcp": 2.3,
+              "fid": 77,
+              "cls": 0.07,
+              "page_load_time": 3.3
+            },
+            {
+              "date": "2025-08-17",
+              "overall_score": 85.3,
+              "lcp": 2.3,
+              "fid": 90,
+              "cls": 0.07,
+              "page_load_time": 3.2
+            },
+            {
+              "date": "2025-08-18",
+              "overall_score": 88.7,
+              "lcp": 1.9,
+              "fid": 85,
+              "cls": 0.11,
+              "page_load_time": 2.6
+            }
+          ],
+          "page_speed_insights": [
+            {
+              "website": "myawesomestore.com",
+              "desktop_score": 94,
+              "mobile_score": 87,
+              "opportunities": [
+                {
+                  "opportunity": "Optimize images",
+                  "savings_ms": 340,
+                  "impact": "Medium",
+                  "effort": "Low"
+                },
+                {
+                  "opportunity": "Reduce unused CSS",
+                  "savings_ms": 180,
+                  "impact": "Low",
+                  "effort": "Medium"
+                },
+                {
+                  "opportunity": "Minify JavaScript",
+                  "savings_ms": 120,
+                  "impact": "Low",
+                  "effort": "Low"
+                }
+              ],
+              "diagnostics": [
+                {
+                  "diagnostic": "Avoid multiple page redirects",
+                  "description": "Reduce redirects to improve load time",
+                  "impact": "Medium"
+                },
+                {
+                  "diagnostic": "Use efficient cache policy",
+                  "description": "Leverage browser caching for static resources",
+                  "impact": "High"
+                }
+              ]
+            },
+            {
+              "website": "myblogsite.net",
+              "desktop_score": 89,
+              "mobile_score": 76,
+              "opportunities": [
+                {
+                  "opportunity": "Optimize server response time",
+                  "savings_ms": 890,
+                  "impact": "High",
+                  "effort": "High"
+                },
+                {
+                  "opportunity": "Eliminate render-blocking resources",
+                  "savings_ms": 450,
+                  "impact": "Medium",
+                  "effort": "Medium"
+                },
+                {
+                  "opportunity": "Compress images",
+                  "savings_ms": 670,
+                  "impact": "Medium",
+                  "effort": "Low"
+                }
+              ]
+            }
+          ],
+          "realtime_monitoring": {
+            "monitoring_active": true,
+            "check_frequency": "5 minutes",
+            "monitoring_locations": [
+              "US East",
+              "US West",
+              "Europe",
+              "Asia"
+            ],
+            "current_status": [
+              {
+                "website": "myawesomestore.com",
+                "status": "online",
+                "response_time": 245,
+                "last_check": "2025-08-18T16:05:45.953394",
+                "uptime_24h": 100.0
+              },
+              {
+                "website": "myblogsite.net",
+                "status": "online",
+                "response_time": 567,
+                "last_check": "2025-08-18T16:04:45.953397",
+                "uptime_24h": 99.8
+              },
+              {
+                "website": "mycorporatesite.com",
+                "status": "online",
+                "response_time": 389,
+                "last_check": "2025-08-18T16:06:45.953399",
+                "uptime_24h": 100.0
+              }
+            ],
+            "recent_incidents": [
+              {
+                "incident_id": "inc_001",
+                "website": "myblogsite.net",
+                "timestamp": "2025-08-18T10:07:45.953400",
+                "type": "slow_response",
+                "duration": "8 minutes",
+                "impact": "High response times detected",
+                "resolution": "Server optimization applied"
+              }
+            ]
+          },
+          "optimization_recommendations": [
+            {
+              "priority": "high",
+              "website": "myblogsite.net",
+              "recommendation": "Optimize server response time",
+              "current_metric": "890ms response time",
+              "target_improvement": "Reduce to <400ms",
+              "potential_impact": "15-25% improvement in user experience",
+              "implementation_steps": [
+                "Audit database queries for optimization",
+                "Implement server-side caching",
+                "Optimize hosting configuration",
+                "Consider CDN implementation"
+              ],
+              "estimated_effort": "4-8 hours",
+              "business_impact": "$890/month potential revenue increase"
+            },
+            {
+              "priority": "medium",
+              "website": "myawesomestore.com",
+              "recommendation": "Implement advanced image optimization",
+              "current_metric": "22% unoptimized images",
+              "target_improvement": "90%+ optimization rate",
+              "potential_impact": "10-15% faster page loads",
+              "implementation_steps": [
+                "Convert images to WebP format",
+                "Implement responsive image sizing",
+                "Add lazy loading for below-fold images",
+                "Optimize image compression settings"
+              ],
+              "estimated_effort": "2-4 hours",
+              "business_impact": "$340/month potential revenue increase"
+            },
+            {
+              "priority": "medium",
+              "website": "mycorporatesite.com",
+              "recommendation": "Eliminate render-blocking CSS",
+              "current_metric": "450ms blocking time",
+              "target_improvement": "Reduce to <100ms",
+              "potential_impact": "8-12% improvement in First Contentful Paint",
+              "implementation_steps": [
+                "Identify critical CSS",
+                "Inline critical CSS",
+                "Defer non-critical CSS loading",
+                "Minify and compress CSS files"
+              ],
+              "estimated_effort": "3-6 hours",
+              "business_impact": "$180/month potential revenue increase"
+            }
+          ],
+          "performance_alerts": [
+            {
+              "alert_id": "perf_alert_001",
+              "timestamp": "2025-08-18T15:22:45.953413",
+              "severity": "medium",
+              "website": "myblogsite.net",
+              "alert_type": "slow_response_time",
+              "message": "Response time exceeded 500ms threshold",
+              "current_value": "567ms",
+              "threshold": "500ms",
+              "status": "investigating"
+            },
+            {
+              "alert_id": "perf_alert_002",
+              "timestamp": "2025-08-18T13:07:45.953417",
+              "severity": "low",
+              "website": "myawesomestore.com",
+              "alert_type": "cls_degradation",
+              "message": "Cumulative Layout Shift increased slightly",
+              "current_value": "0.08",
+              "threshold": "0.1",
+              "status": "monitoring"
+            }
+          ],
+          "mobile_performance": {
+            "mobile_performance_avg": 82.0,
+            "mobile_vs_desktop_gap": 9.3,
+            "mobile_specific_issues": [
+              {
+                "issue": "Large tap targets needed",
+                "websites_affected": [
+                  "myblogsite.net"
+                ],
+                "impact": "User experience",
+                "fix_effort": "Low"
+              },
+              {
+                "issue": "Viewport not optimized",
+                "websites_affected": [
+                  "mycorporatesite.com"
+                ],
+                "impact": "Mobile usability",
+                "fix_effort": "Very Low"
+              }
+            ],
+            "mobile_optimization_opportunities": [
+              {
+                "opportunity": "Implement AMP pages",
+                "potential_improvement": "20-40% faster mobile load times",
+                "complexity": "Medium",
+                "applicable_to": [
+                  "myblogsite.net"
+                ]
+              },
+              {
+                "opportunity": "Optimize for mobile-first indexing",
+                "potential_improvement": "Improved mobile search rankings",
+                "complexity": "Low",
+                "applicable_to": [
+                  "mycorporatesite.com"
+                ]
+              }
+            ]
+          },
+          "key_insights": [
+            "myblogsite.net needs server response time optimization (890ms current)",
+            "Overall Core Web Vitals status is 'Good' across all websites",
+            "Mobile performance lags desktop by 9.3 percentage points on average",
+            "Potential $1,410/month revenue increase from performance optimizations",
+            "Real-time monitoring shows 99.9% uptime across all websites"
+          ],
+          "performance_score_breakdown": {
+            "excellent": 1,
+            "good": 2,
+            "needs_improvement": 0,
+            "poor": 0
+          }
+        }
+      },
+      "timestamp": "2025-08-18T16:07:45.956950"
+    },
+    {
+      "test_name": "Website Performance Report (web_001)",
+      "method": "GET",
+      "endpoint": "/api/website-intelligence/website/web_001/performance-report",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/website/web_001/performance-report",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "website_id": "web_001",
+        "report_generated": "2025-08-18T16:07:45.979540",
+        "website_info": {
+          "domain": "myawesomestore.com",
+          "website_name": "My Awesome Store",
+          "last_analyzed": "2025-08-18T15:07:45.979549"
+        },
+        "performance_summary": {
+          "overall_score": 91.2,
+          "desktop_score": 94.1,
+          "mobile_score": 87.3,
+          "performance_grade": "A",
+          "previous_score": 89.7,
+          "improvement": "+1.5 points"
+        },
+        "core_web_vitals_detailed": {
+          "lcp": {
+            "value": 1.9,
+            "status": "Good",
+            "threshold_good": 2.5,
+            "threshold_poor": 4.0,
+            "improvement_suggestions": [
+              "Optimize server response times",
+              "Remove render-blocking resources",
+              "Optimize images and videos"
+            ]
+          },
+          "fid": {
+            "value": 78,
+            "status": "Good",
+            "threshold_good": 100,
+            "threshold_poor": 300,
+            "improvement_suggestions": [
+              "Minimize main thread work",
+              "Reduce JavaScript execution time",
+              "Break up long tasks"
+            ]
+          },
+          "cls": {
+            "value": 0.06,
+            "status": "Good",
+            "threshold_good": 0.1,
+            "threshold_poor": 0.25,
+            "improvement_suggestions": [
+              "Set explicit dimensions for images",
+              "Reserve space for ads and embeds",
+              "Avoid inserting content above existing content"
+            ]
+          }
+        },
+        "detailed_metrics": {
+          "first_contentful_paint": 1.2,
+          "speed_index": 2.1,
+          "time_to_interactive": 2.8,
+          "first_meaningful_paint": 1.6,
+          "max_potential_fid": 145,
+          "total_blocking_time": 89
+        },
+        "resource_analysis": {
+          "total_page_size": "1.2 MB",
+          "total_requests": 47,
+          "resource_breakdown": [
+            {
+              "type": "Images",
+              "size": "680 KB",
+              "count": 23,
+              "percentage": 56.7
+            },
+            {
+              "type": "JavaScript",
+              "size": "245 KB",
+              "count": 8,
+              "percentage": 20.4
+            },
+            {
+              "type": "CSS",
+              "size": "156 KB",
+              "count": 4,
+              "percentage": 13.0
+            },
+            {
+              "type": "HTML",
+              "size": "89 KB",
+              "count": 1,
+              "percentage": 7.4
+            },
+            {
+              "type": "Other",
+              "size": "30 KB",
+              "count": 11,
+              "percentage": 2.5
+            }
+          ]
+        },
+        "optimization_opportunities": [
+          {
+            "category": "Images",
+            "opportunity": "Properly size images",
+            "potential_savings": "340 KB",
+            "time_savings": "0.5s",
+            "priority": "Medium"
+          },
+          {
+            "category": "JavaScript",
+            "opportunity": "Remove unused JavaScript",
+            "potential_savings": "67 KB",
+            "time_savings": "0.2s",
+            "priority": "Low"
+          },
+          {
+            "category": "CSS",
+            "opportunity": "Eliminate render-blocking resources",
+            "potential_savings": "N/A",
+            "time_savings": "0.3s",
+            "priority": "Medium"
+          }
+        ]
+      },
+      "timestamp": "2025-08-18T16:07:45.984001"
+    },
+    {
+      "test_name": "Performance Test (web_002)",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/performance-test",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/performance-test",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "test_id": "11e8f688-7c13-4460-8c9b-8c8e80cf3373",
+        "test_initiated": "2025-08-18T16:07:46.003542",
+        "test_configuration": {
+          "website_url": "",
+          "test_type": "full",
+          "test_locations": [
+            "us-east",
+            "europe"
+          ],
+          "devices": [
+            "desktop",
+            "mobile"
+          ],
+          "connection_speeds": [
+            "3G",
+            "4G",
+            "Cable"
+          ]
+        },
+        "estimated_completion": "2025-08-18T16:12:46.003552",
+        "test_progress": {
+          "current_stage": "Initiating test",
+          "progress_percentage": 0,
+          "stages": [
+            "Connection establishment",
+            "Page loading analysis",
+            "Resource optimization check",
+            "Core Web Vitals measurement",
+            "Mobile performance testing",
+            "Report generation"
+          ]
+        },
+        "real_time_updates": {
+          "updates_available": true,
+          "update_frequency": "Every 30 seconds",
+          "notification_methods": [
+            "dashboard",
+            "email"
+          ]
+        }
+      },
+      "timestamp": "2025-08-18T16:07:46.007851"
+    },
+    {
+      "test_name": "SEO Intelligence Dashboard",
+      "method": "GET",
+      "endpoint": "/api/website-intelligence/seo-dashboard",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/seo-dashboard",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "dashboard": {
+          "generated_date": "2025-08-18T16:07:46.023698",
+          "seo_overview": {
+            "overall_seo_score": 88.2,
+            "websites_analyzed": 3,
+            "total_keywords_tracked": 156,
+            "keywords_ranking_improvement": 23,
+            "organic_traffic_trend": "increasing",
+            "organic_traffic_change": "+12.4%",
+            "total_backlinks": 2847,
+            "domain_authority_avg": 48.3,
+            "seo_issues_found": 18,
+            "content_opportunities": 32
+          },
+          "keyword_rankings": {
+            "total_keywords": 156,
+            "ranking_distribution": {
+              "top_3": 12,
+              "top_10": 23,
+              "top_50": 67,
+              "top_100": 45,
+              "beyond_100": 9
+            },
+            "keyword_performance": [
+              {
+                "website": "myawesomestore.com",
+                "keyword": "premium coffee beans",
+                "current_position": 3,
+                "previous_position": 5,
+                "change": "+2",
+                "search_volume": 8900,
+                "difficulty": 67,
+                "url": "/premium-coffee-beans",
+                "traffic_value": "$890/month"
+              },
+              {
+                "website": "myawesomestore.com",
+                "keyword": "organic coffee subscription",
+                "current_position": 7,
+                "previous_position": 12,
+                "change": "+5",
+                "search_volume": 3400,
+                "difficulty": 45,
+                "url": "/subscription",
+                "traffic_value": "$340/month"
+              },
+              {
+                "website": "myblogsite.net",
+                "keyword": "coffee brewing guide",
+                "current_position": 8,
+                "previous_position": 15,
+                "change": "+7",
+                "search_volume": 5600,
+                "difficulty": 32,
+                "url": "/brewing-guide",
+                "traffic_value": "$280/month"
+              },
+              {
+                "website": "mycorporatesite.com",
+                "keyword": "enterprise coffee solutions",
+                "current_position": 12,
+                "previous_position": 18,
+                "change": "+6",
+                "search_volume": 1200,
+                "difficulty": 78,
+                "url": "/enterprise",
+                "traffic_value": "$450/month"
+              }
+            ],
+            "trending_keywords": [
+              {
+                "keyword": "sustainable coffee",
+                "trend": "+45%"
+              },
+              {
+                "keyword": "cold brew equipment",
+                "trend": "+23%"
+              },
+              {
+                "keyword": "coffee bean origin",
+                "trend": "+18%"
+              }
+            ]
+          },
+          "organic_traffic": {
+            "current_month_sessions": 45670,
+            "previous_month_sessions": 40620,
+            "month_over_month_change": "+12.4%",
+            "traffic_by_website": [
+              {
+                "website": "myawesomestore.com",
+                "sessions": 28940,
+                "change": "+8.7%",
+                "avg_session_duration": "3:24",
+                "bounce_rate": "34.2%",
+                "conversion_rate": "3.2%"
+              },
+              {
+                "website": "myblogsite.net",
+                "sessions": 12340,
+                "change": "+18.9%",
+                "avg_session_duration": "4:12",
+                "bounce_rate": "28.7%",
+                "conversion_rate": "1.8%"
+              },
+              {
+                "website": "mycorporatesite.com",
+                "sessions": 4390,
+                "change": "+15.2%",
+                "avg_session_duration": "2:45",
+                "bounce_rate": "42.1%",
+                "conversion_rate": "5.7%"
+              }
+            ],
+            "top_landing_pages": [
+              {
+                "url": "/premium-coffee-beans",
+                "sessions": 8950,
+                "bounce_rate": "21.3%",
+                "avg_time_on_page": "2:34",
+                "conversion_rate": "4.2%"
+              },
+              {
+                "url": "/brewing-guide",
+                "sessions": 6780,
+                "bounce_rate": "18.7%",
+                "avg_time_on_page": "5:12",
+                "conversion_rate": "2.1%"
+              },
+              {
+                "url": "/subscription",
+                "sessions": 4560,
+                "bounce_rate": "28.9%",
+                "avg_time_on_page": "1:58",
+                "conversion_rate": "8.7%"
+              }
+            ]
+          },
+          "technical_seo": {
+            "overall_technical_score": 87.4,
+            "crawl_errors": 5,
+            "indexing_issues": 3,
+            "site_speed_score": 91.2,
+            "mobile_usability_score": 84.7,
+            "core_web_vitals_status": "Good",
+            "technical_issues": [
+              {
+                "issue": "Missing meta descriptions",
+                "severity": "medium",
+                "pages_affected": 12,
+                "websites": [
+                  "myblogsite.net"
+                ],
+                "fix_priority": "High"
+              },
+              {
+                "issue": "Broken internal links",
+                "severity": "medium",
+                "pages_affected": 8,
+                "websites": [
+                  "myawesomestore.com",
+                  "mycorporatesite.com"
+                ],
+                "fix_priority": "Medium"
+              },
+              {
+                "issue": "Duplicate title tags",
+                "severity": "high",
+                "pages_affected": 6,
+                "websites": [
+                  "mycorporatesite.com"
+                ],
+                "fix_priority": "High"
+              },
+              {
+                "issue": "Missing alt text for images",
+                "severity": "low",
+                "pages_affected": 23,
+                "websites": [
+                  "myawesomestore.com",
+                  "myblogsite.net"
+                ],
+                "fix_priority": "Low"
+              }
+            ],
+            "robots_txt_status": [
+              {
+                "website": "myawesomestore.com",
+                "status": "Valid",
+                "issues": 0
+              },
+              {
+                "website": "myblogsite.net",
+                "status": "Valid",
+                "issues": 1
+              },
+              {
+                "website": "mycorporatesite.com",
+                "status": "Valid",
+                "issues": 0
+              }
+            ],
+            "sitemap_status": [
+              {
+                "website": "myawesomestore.com",
+                "status": "Valid",
+                "pages": 247,
+                "last_updated": "2025-08-16T16:07:46.023668"
+              },
+              {
+                "website": "myblogsite.net",
+                "status": "Valid",
+                "pages": 89,
+                "last_updated": "2025-08-17T16:07:46.023677"
+              },
+              {
+                "website": "mycorporatesite.com",
+                "status": "Valid",
+                "pages": 34,
+                "last_updated": "2025-08-13T16:07:46.023678"
+              }
+            ]
+          },
+          "content_analysis": {
+            "content_quality_score": 86.7,
+            "total_content_pieces": 370,
+            "content_gaps_identified": 15,
+            "optimization_opportunities": 28,
+            "content_performance": [
+              {
+                "content_type": "Product Pages",
+                "count": 156,
+                "avg_word_count": 340,
+                "avg_seo_score": 82.4,
+                "top_performing": "/premium-coffee-beans"
+              },
+              {
+                "content_type": "Blog Posts",
+                "count": 89,
+                "avg_word_count": 1240,
+                "avg_seo_score": 91.2,
+                "top_performing": "/brewing-guide"
+              },
+              {
+                "content_type": "Category Pages",
+                "count": 45,
+                "avg_word_count": 280,
+                "avg_seo_score": 76.8,
+                "top_performing": "/coffee-beans"
+              }
+            ],
+            "content_opportunities": [
+              {
+                "opportunity": "Create content for 'sustainable coffee farming'",
+                "keyword_volume": 4500,
+                "difficulty": 34,
+                "potential_traffic": "450 sessions/month",
+                "content_type": "Blog post"
+              },
+              {
+                "opportunity": "Optimize existing product descriptions",
+                "current_avg_length": 340,
+                "recommended_length": "500-800 words",
+                "potential_improvement": "15-25% ranking boost"
+              },
+              {
+                "opportunity": "Add FAQ sections to category pages",
+                "pages_missing_faqs": 23,
+                "potential_impact": "Featured snippet opportunities"
+              }
+            ]
+          },
+          "backlink_analysis": {
+            "total_backlinks": 2847,
+            "referring_domains": 345,
+            "new_backlinks_30d": 67,
+            "lost_backlinks_30d": 23,
+            "domain_authority": 48.3,
+            "spam_score": 2.1,
+            "backlink_quality_distribution": {
+              "high_quality": 156,
+              "medium_quality": 1234,
+              "low_quality": 890,
+              "toxic": 67
+            },
+            "top_referring_domains": [
+              {
+                "domain": "coffeeworld.com",
+                "domain_authority": 67,
+                "backlinks": 23,
+                "link_type": "editorial",
+                "first_seen": "2025-07-04T16:07:46.023685"
+              },
+              {
+                "domain": "foodblog.net",
+                "domain_authority": 54,
+                "backlinks": 18,
+                "link_type": "guest_post",
+                "first_seen": "2025-06-12T16:07:46.023686"
+              },
+              {
+                "domain": "industry-news.com",
+                "domain_authority": 72,
+                "backlinks": 12,
+                "link_type": "mention",
+                "first_seen": "2025-07-26T16:07:46.023688"
+              }
+            ],
+            "anchor_text_distribution": [
+              {
+                "anchor": "premium coffee",
+                "count": 234,
+                "percentage": 8.2
+              },
+              {
+                "anchor": "coffee beans",
+                "count": 189,
+                "percentage": 6.6
+              },
+              {
+                "anchor": "myawesomestore.com",
+                "count": 345,
+                "percentage": 12.1
+              },
+              {
+                "anchor": "click here",
+                "count": 145,
+                "percentage": 5.1
+              }
+            ]
+          },
+          "competitor_analysis": {
+            "competitors_monitored": 5,
+            "competitive_position": "2nd in organic visibility",
+            "share_of_voice": 23.4,
+            "competitor_comparison": [
+              {
+                "competitor": "competitor1.com",
+                "domain_authority": 52,
+                "organic_keywords": 1890,
+                "estimated_traffic": 67000,
+                "backlinks": 4560,
+                "competitive_advantage": "Higher domain authority"
+              },
+              {
+                "competitor": "competitor2.com",
+                "domain_authority": 41,
+                "organic_keywords": 945,
+                "estimated_traffic": 23000,
+                "backlinks": 1890,
+                "competitive_advantage": "Better content strategy"
+              }
+            ],
+            "keyword_gaps": [
+              {
+                "keyword": "artisan coffee roasting",
+                "competitor_position": 3,
+                "our_position": "Not ranking",
+                "search_volume": 2300,
+                "opportunity_score": 8.7
+              },
+              {
+                "keyword": "coffee subscription box",
+                "competitor_position": 5,
+                "our_position": 18,
+                "search_volume": 5600,
+                "opportunity_score": 9.2
+              }
+            ]
+          },
+          "seo_recommendations": [
+            {
+              "priority": "high",
+              "category": "Technical SEO",
+              "recommendation": "Fix duplicate title tags on mycorporatesite.com",
+              "impact": "Improved search visibility",
+              "effort": "Low",
+              "pages_affected": 6,
+              "estimated_time": "2-3 hours"
+            },
+            {
+              "priority": "high",
+              "category": "Content",
+              "recommendation": "Create comprehensive guide for 'sustainable coffee farming'",
+              "impact": "Target high-volume keyword gap",
+              "effort": "High",
+              "potential_traffic": "450 sessions/month",
+              "estimated_time": "1-2 days"
+            },
+            {
+              "priority": "medium",
+              "category": "On-Page SEO",
+              "recommendation": "Add meta descriptions to blog posts on myblogsite.net",
+              "impact": "Improved click-through rates",
+              "effort": "Medium",
+              "pages_affected": 12,
+              "estimated_time": "3-4 hours"
+            },
+            {
+              "priority": "medium",
+              "category": "Link Building",
+              "recommendation": "Reach out for guest posting opportunities in coffee industry",
+              "impact": "Increase domain authority and referral traffic",
+              "effort": "High",
+              "potential_backlinks": "5-10 high-quality links",
+              "estimated_time": "2-3 weeks"
+            }
+          ],
+          "key_insights": [
+            "Organic traffic increased 12.4% month-over-month across all websites",
+            "23 keywords improved in rankings, with 5 entering top 10",
+            "2,847 total backlinks with 67 new links acquired in last 30 days",
+            "Technical SEO score of 87.4% with 5 minor issues to address",
+            "Content opportunities identified for 15 high-volume keywords"
+          ],
+          "monthly_seo_summary": {
+            "keywords_improved": 23,
+            "keywords_declined": 8,
+            "new_backlinks": 67,
+            "content_pieces_optimized": 15,
+            "technical_issues_fixed": 7,
+            "organic_traffic_change": "+12.4%"
+          }
+        }
+      },
+      "timestamp": "2025-08-18T16:07:46.027753"
+    },
+    {
+      "test_name": "Keyword Research",
+      "method": "GET",
+      "endpoint": "/api/website-intelligence/keyword-research",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/keyword-research",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "research_scope": {
+          "seed_keywords": [
+            "coffee",
+            "coffee beans",
+            "premium coffee"
+          ],
+          "related_keywords_found": 234,
+          "search_volume_range": "100 - 50,000",
+          "difficulty_range": "15 - 85",
+          "research_date": "2025-08-18T16:07:46.041922"
+        },
+        "keyword_opportunities": [
+          {
+            "keyword": "single origin coffee beans",
+            "search_volume": 8900,
+            "keyword_difficulty": 45,
+            "cpc": 2.34,
+            "competition": "Medium",
+            "trend": "Growing",
+            "current_ranking": "Not ranking",
+            "opportunity_score": 8.7,
+            "recommended_action": "Create dedicated category page"
+          },
+          {
+            "keyword": "coffee bean storage tips",
+            "search_volume": 3400,
+            "keyword_difficulty": 23,
+            "cpc": 1.89,
+            "competition": "Low",
+            "trend": "Stable",
+            "current_ranking": "Not ranking",
+            "opportunity_score": 9.2,
+            "recommended_action": "Write comprehensive blog post"
+          },
+          {
+            "keyword": "best espresso beans 2024",
+            "search_volume": 12000,
+            "keyword_difficulty": 67,
+            "cpc": 3.45,
+            "competition": "High",
+            "trend": "Seasonal",
+            "current_ranking": "Not ranking",
+            "opportunity_score": 7.8,
+            "recommended_action": "Create buying guide with reviews"
+          }
+        ],
+        "keyword_clusters": [
+          {
+            "cluster_topic": "Coffee Brewing Methods",
+            "keywords_count": 23,
+            "total_search_volume": 45600,
+            "avg_difficulty": 34,
+            "content_gaps": 8,
+            "recommended_content": "Comprehensive brewing guide hub"
+          },
+          {
+            "cluster_topic": "Coffee Bean Origins",
+            "keywords_count": 18,
+            "total_search_volume": 28900,
+            "avg_difficulty": 41,
+            "content_gaps": 12,
+            "recommended_content": "Origin-specific product pages"
+          }
+        ],
+        "seasonal_trends": [
+          {
+            "keyword": "iced coffee recipes",
+            "peak_months": [
+              "June",
+              "July",
+              "August"
+            ],
+            "volume_increase": "340%",
+            "preparation_time": "2 months before peak"
+          },
+          {
+            "keyword": "hot coffee drinks",
+            "peak_months": [
+              "November",
+              "December",
+              "January"
+            ],
+            "volume_increase": "180%",
+            "preparation_time": "2 months before peak"
+          }
+        ]
+      },
+      "timestamp": "2025-08-18T16:07:46.045425"
+    },
+    {
+      "test_name": "Content Optimization",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/content-optimization",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/content-optimization",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "optimization_id": "c96e8837-7e78-4852-b1c0-8c1f0d645fda",
+        "content_analysis": {
+          "url": "https://example.com/premium-coffee",
+          "current_title": "Premium Coffee Beans",
+          "current_word_count": 340,
+          "target_keyword": "premium coffee beans",
+          "current_seo_score": 84.09310006073878
+        },
+        "optimization_recommendations": [
+          {
+            "element": "Title Tag",
+            "current": "Premium Coffee Beans",
+            "recommended": "Premium Coffee Beans - Single Origin & Organic | YourBrand",
+            "improvement": "Include target keyword and brand",
+            "impact": "High"
+          },
+          {
+            "element": "Meta Description",
+            "current": "Missing",
+            "recommended": "Discover our premium single origin coffee beans. Ethically sourced, expertly roasted. Free shipping on orders over $50.",
+            "improvement": "Add compelling meta description",
+            "impact": "High"
+          },
+          {
+            "element": "Content Length",
+            "current": "340 words",
+            "recommended": "600-800 words",
+            "improvement": "Expand content depth",
+            "impact": "Medium"
+          },
+          {
+            "element": "Internal Links",
+            "current": "2 links",
+            "recommended": "5-7 relevant links",
+            "improvement": "Add contextual internal links",
+            "impact": "Medium"
+          }
+        ],
+        "keyword_optimization": {
+          "target_keyword": "premium coffee beans",
+          "keyword_density": 1.8,
+          "recommended_density": "2-3%",
+          "related_keywords": [
+            "single origin coffee",
+            "organic coffee beans",
+            "artisan coffee"
+          ],
+          "semantic_keywords": [
+            "coffee roasting",
+            "coffee brewing",
+            "coffee origin"
+          ]
+        },
+        "competitor_comparison": {
+          "top_competitor_content_length": 850,
+          "top_competitor_internal_links": 8,
+          "top_competitor_images": 6,
+          "areas_to_improve": [
+            "Add more comprehensive product descriptions",
+            "Include customer reviews and testimonials",
+            "Add comparison tables with other products"
+          ]
+        }
+      },
+      "timestamp": "2025-08-18T16:07:46.064561"
+    },
+    {
+      "test_name": "Membership Status",
+      "method": "GET",
+      "endpoint": "/api/website-intelligence/membership-status",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/membership-status",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "membership_details": {
+          "user_id": "user_123",
+          "current_tier": "Professional",
+          "tier_level": 2,
+          "subscription_status": "active",
+          "billing_cycle": "monthly",
+          "next_billing_date": "2025-09-10T16:07:46.082576",
+          "subscription_start": "2025-04-13T16:07:46.082586"
+        },
+        "website_limits": {
+          "websites_included": 3,
+          "websites_used": 3,
+          "websites_remaining": 0,
+          "additional_websites_purchased": 0,
+          "total_websites_allowed": 3
+        },
+        "tier_comparison": [
+          {
+            "tier_name": "Basic",
+            "tier_level": 1,
+            "monthly_price": 29,
+            "yearly_price": 290,
+            "websites_included": 1,
+            "features": [
+              "1 Website Analysis",
+              "Basic SEO Audit",
+              "Performance Monitoring",
+              "Monthly Updates",
+              "Email Support"
+            ],
+            "is_current": false
+          },
+          {
+            "tier_name": "Professional",
+            "tier_level": 2,
+            "monthly_price": 79,
+            "yearly_price": 790,
+            "websites_included": 3,
+            "features": [
+              "3 Websites Analysis",
+              "Advanced SEO & Technical Audit",
+              "Real-time Performance Monitoring",
+              "Weekly Updates",
+              "Competitor Analysis",
+              "Priority Support",
+              "Custom Reports"
+            ],
+            "is_current": true
+          },
+          {
+            "tier_name": "Enterprise",
+            "tier_level": 3,
+            "monthly_price": 199,
+            "yearly_price": 1990,
+            "websites_included": 7,
+            "features": [
+              "7 Websites Analysis",
+              "Complete Website Intelligence Suite",
+              "24/7 Monitoring & Alerts",
+              "Daily Updates",
+              "Advanced Competitor Intelligence",
+              "White-label Reports",
+              "API Access",
+              "Dedicated Account Manager"
+            ],
+            "is_current": false
+          }
+        ],
+        "additional_website_pricing": {
+          "basic_tier_addon": 15,
+          "professional_tier_addon": 20,
+          "enterprise_tier_addon": 25,
+          "bulk_discount": {
+            "5_websites": 10,
+            "10_websites": 15,
+            "20_websites": 20
+          }
+        },
+        "usage_analytics": {
+          "analyses_performed_this_month": 23,
+          "updates_triggered": 8,
+          "reports_generated": 15,
+          "api_calls_used": 1247,
+          "api_calls_limit": 5000,
+          "storage_used_mb": 145.7,
+          "storage_limit_mb": 1000
+        },
+        "upgrade_benefits": {
+          "to_enterprise": {
+            "additional_websites": 4,
+            "new_features": [
+              "Daily automatic updates",
+              "Advanced competitor analysis",
+              "White-label reporting",
+              "API access",
+              "Dedicated support"
+            ],
+            "estimated_savings": "$67/month on additional websites",
+            "roi_calculation": "Break-even at 4+ websites"
+          }
+        }
+      },
+      "timestamp": "2025-08-18T16:07:46.085599"
+    },
+    {
+      "test_name": "Upgrade Membership Tier",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/upgrade-tier",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/upgrade-tier",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "upgrade_id": "9f32caf7-e3f3-48a1-b51f-a3b129ced12e",
+        "upgrade_details": {
+          "previous_tier": "Professional",
+          "new_tier": "Enterprise",
+          "billing_cycle": "yearly",
+          "price": 1990,
+          "websites_included": 7,
+          "upgrade_effective": "2025-08-18T16:07:46.103357",
+          "next_billing": "2026-08-18T16:07:46.103364"
+        },
+        "upgrade_benefits": {
+          "additional_websites": 4,
+          "new_features_unlocked": [
+            "Daily automatic updates",
+            "Advanced competitor analysis",
+            "API access",
+            "White-label reports"
+          ],
+          "immediate_benefits": [
+            "Increased website limit",
+            "Enhanced analysis features",
+            "Priority support access"
+          ]
+        },
+        "billing_summary": {
+          "prorated_charge": 1492.5,
+          "next_full_charge": 1990,
+          "annual_savings": -398
+        },
+        "confirmation_required": true,
+        "payment_method": "Credit Card ending in 4567"
+      },
+      "timestamp": "2025-08-18T16:07:46.146796"
+    },
+    {
+      "test_name": "Purchase Additional Websites",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/add-websites",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/add-websites",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "purchase_id": "7cc8c7c4-cb2b-4981-8f7f-d13c1cb37e5f",
+        "purchase_details": {
+          "additional_websites": 2,
+          "price_per_website": 20,
+          "base_price": 40,
+          "discount_percentage": 0,
+          "discount_amount": 0.0,
+          "final_price": 40.0,
+          "billing_cycle": "monthly",
+          "effective_date": "2025-08-18T16:07:46.164145"
+        },
+        "new_limits": {
+          "previous_website_limit": 3,
+          "new_website_limit": 5,
+          "websites_currently_used": 3,
+          "websites_now_available": 2
+        },
+        "billing_impact": {
+          "monthly_increase": 40.0,
+          "annual_cost": 480.0,
+          "cost_per_website_per_month": 20.0
+        },
+        "confirmation_required": true,
+        "auto_renewal": true
+      },
+      "timestamp": "2025-08-18T16:07:46.167713"
+    },
+    {
+      "test_name": "Billing History",
+      "method": "GET",
+      "endpoint": "/api/website-intelligence/billing-history",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/billing-history",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "billing_summary": {
+          "current_monthly_charge": 79.0,
+          "total_paid_ytd": 948.0,
+          "next_payment_date": "2025-09-10T16:07:46.182293",
+          "payment_method": "Credit Card ending in 4567",
+          "auto_renewal": true
+        },
+        "recent_invoices": [
+          {
+            "invoice_id": "inv_001",
+            "date": "2025-07-19T16:07:46.182304",
+            "amount": 79.0,
+            "description": "Professional Plan - Monthly",
+            "status": "paid",
+            "payment_method": "Credit Card",
+            "download_url": "/api/website-intelligence/invoice/inv_001"
+          },
+          {
+            "invoice_id": "inv_002",
+            "date": "2025-06-19T16:07:46.182307",
+            "amount": 79.0,
+            "description": "Professional Plan - Monthly",
+            "status": "paid",
+            "payment_method": "Credit Card",
+            "download_url": "/api/website-intelligence/invoice/inv_002"
+          },
+          {
+            "invoice_id": "inv_003",
+            "date": "2025-05-20T16:07:46.182308",
+            "amount": 79.0,
+            "description": "Professional Plan - Monthly",
+            "status": "paid",
+            "payment_method": "Credit Card",
+            "download_url": "/api/website-intelligence/invoice/inv_003"
+          }
+        ],
+        "usage_based_charges": [
+          {
+            "month": "2025-08",
+            "base_subscription": 79.0,
+            "additional_websites": 0.0,
+            "overage_charges": 0.0,
+            "total": 79.0
+          },
+          {
+            "month": "2025-07",
+            "base_subscription": 79.0,
+            "additional_websites": 0.0,
+            "overage_charges": 0.0,
+            "total": 79.0
+          }
+        ],
+        "payment_methods": [
+          {
+            "id": "pm_001",
+            "type": "credit_card",
+            "brand": "Visa",
+            "last_four": "4567",
+            "expires": "12/2026",
+            "is_default": true
+          }
+        ]
+      },
+      "timestamp": "2025-08-18T16:07:46.225982"
+    },
+    {
+      "test_name": "Feature Comparison",
+      "method": "GET",
+      "endpoint": "/api/website-intelligence/feature-comparison",
+      "url": "https://webiq-platform.preview.emergentagent.com/api/website-intelligence/feature-comparison",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "feature_categories": [
+          {
+            "category": "Website Analysis",
+            "features": [
+              {
+                "feature": "Number of Websites",
+                "basic": "1",
+                "professional": "3",
+                "enterprise": "7",
+                "additional_cost": "Yes"
+              },
+              {
+                "feature": "Analysis Depth",
+                "basic": "Basic",
+                "professional": "Advanced",
+                "enterprise": "Complete",
+                "additional_cost": "No"
+              },
+              {
+                "feature": "Historical Data",
+                "basic": "3 months",
+                "professional": "12 months",
+                "enterprise": "Unlimited",
+                "additional_cost": "No"
+              }
+            ]
+          },
+          {
+            "category": "Monitoring & Updates",
+            "features": [
+              {
+                "feature": "Update Frequency",
+                "basic": "Monthly",
+                "professional": "Weekly",
+                "enterprise": "Daily",
+                "additional_cost": "No"
+              },
+              {
+                "feature": "Real-time Alerts",
+                "basic": "No",
+                "professional": "Basic",
+                "enterprise": "Advanced",
+                "additional_cost": "No"
+              },
+              {
+                "feature": "Uptime Monitoring",
+                "basic": "No",
+                "professional": "Yes",
+                "enterprise": "24/7",
+                "additional_cost": "No"
+              }
+            ]
+          },
+          {
+            "category": "Reports & Export",
+            "features": [
+              {
+                "feature": "Report Types",
+                "basic": "Standard",
+                "professional": "Custom",
+                "enterprise": "White-label",
+                "additional_cost": "No"
+              },
+              {
+                "feature": "Export Formats",
+                "basic": "PDF",
+                "professional": "PDF, Excel",
+                "enterprise": "All formats",
+                "additional_cost": "No"
+              },
+              {
+                "feature": "API Access",
+                "basic": "No",
+                "professional": "Limited",
+                "enterprise": "Full",
+                "additional_cost": "No"
+              }
+            ]
+          },
+          {
+            "category": "Support & Training",
+            "features": [
+              {
+                "feature": "Support Level",
+                "basic": "Email",
+                "professional": "Priority",
+                "enterprise": "Dedicated",
+                "additional_cost": "No"
+              },
+              {
+                "feature": "Response Time",
+                "basic": "48 hours",
+                "professional": "24 hours",
+                "enterprise": "4 hours",
+                "additional_cost": "No"
+              },
+              {
+                "feature": "Training Sessions",
+                "basic": "No",
+                "professional": "Quarterly",
+                "enterprise": "Monthly",
+                "additional_cost": "No"
+              }
+            ]
+          }
+        ],
+        "most_popular_tier": "Professional",
+        "enterprise_benefits": [
+          "Best value for agencies and larger businesses",
+          "Complete website intelligence suite",
+          "Advanced competitor analysis",
+          "White-label reporting capabilities",
+          "Dedicated account management"
+        ]
+      },
+      "timestamp": "2025-08-18T16:07:46.243487"
+    }
+  ]
+}
