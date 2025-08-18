@@ -17,8 +17,8 @@ const SignIn = ({ onSignIn }) => {
     setLoading(true);
     setError('');
 
-    // Mock authentication - demo credentials
-    if (email === 'demo@customermindiq.com' && password === 'demo1234') {
+    // Mock authentication - demo credentials (email case-insensitive, password case-sensitive)
+    if (email.toLowerCase() === 'demo@customermindiq.com' && password === 'demo1234') {
       setTimeout(() => {
         onSignIn({
           email: email,
@@ -30,7 +30,7 @@ const SignIn = ({ onSignIn }) => {
       }, 1000);
     } else {
       setTimeout(() => {
-        setError('Invalid credentials. Use demo@customermindiq.com with password demo1234');
+        setError('Invalid credentials. Use demo@customermindiq.com (any case) with password demo1234 (case-sensitive)');
         setLoading(false);
       }, 1000);
     }
