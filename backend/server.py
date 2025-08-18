@@ -81,6 +81,9 @@ from modules.ai_command_center import ai_command_router
 # Import Website Intelligence Hub Module
 from modules.website_intelligence_hub import website_intelligence_router
 
+# Import Support System Module
+from modules.support_system import router as support_router
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
