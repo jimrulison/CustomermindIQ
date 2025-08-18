@@ -1299,19 +1299,19 @@ function App() {
                     <div className="flex justify-between">
                       <span className="text-slate-300">Opportunities</span>
                       <span className="text-green-400 font-semibold">
-                        {crossSellIntelligenceData?.dashboard?.opportunities_identified || 385}
+                        {crossSellIntelligenceData?.dashboard?.summary_metrics?.total_cross_sell_opportunities || 385}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-300">Potential Revenue</span>
                       <span className="text-blue-400 font-semibold">
-                        ${(crossSellIntelligenceData?.dashboard?.potential_revenue || 74575).toLocaleString()}
+                        ${(crossSellIntelligenceData?.dashboard?.summary_metrics?.total_potential_revenue || 74575).toLocaleString()}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-300">Conversion Rate</span>
                       <span className="text-purple-400 font-semibold">
-                        {crossSellIntelligenceData?.dashboard?.avg_conversion_rate || '24.6%'}
+                        {crossSellIntelligenceData?.dashboard?.summary_metrics?.avg_cross_sell_conversion_rate || '24.6'}%
                       </span>
                     </div>
                   </div>
