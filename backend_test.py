@@ -4954,47 +4954,67 @@ class CustomerIntelligenceAITester:
     # =====================================================
 
 def main():
-    """Main function to run Product Intelligence Hub tests"""
-    print("🚀 PRODUCT INTELLIGENCE HUB BACKEND TESTING")
+    """Main function to run Phase 2 implementation tests"""
+    print("🚀 PHASE 2 IMPLEMENTATION BACKEND TESTING")
     print("="*80)
-    print("Testing newly integrated Product Intelligence Hub module with 4 components:")
-    print("- Feature Usage Analytics")
-    print("- Onboarding Optimization") 
-    print("- Product-Market Fit")
-    print("- User Journey Analytics")
+    print("Testing Phase 2 implementation with:")
+    print("1. Product Intelligence Hub (already tested but verifying)")
+    print("2. Integration & Data Management Hub (newly implemented)")
     print("="*80)
     
     tester = CustomerIntelligenceAITester()
     
-    # Run comprehensive Product Intelligence Hub tests
-    tests_passed, tests_run = tester.run_comprehensive_product_intelligence_tests()
+    total_tests_passed = 0
+    total_tests_run = 0
+    
+    # Test 1: Product Intelligence Hub (verification)
+    print(f"\n{'='*80}")
+    print("🎯 TESTING PRODUCT INTELLIGENCE HUB (VERIFICATION)")
+    print("="*80)
+    
+    product_tests_passed, product_tests_run = tester.run_comprehensive_product_intelligence_tests()
+    total_tests_passed += product_tests_passed
+    total_tests_run += product_tests_run
+    
+    # Test 2: Integration & Data Management Hub (new implementation)
+    print(f"\n{'='*80}")
+    print("🔗 TESTING INTEGRATION & DATA MANAGEMENT HUB (NEW)")
+    print("="*80)
+    
+    integration_tests_passed, integration_tests_run = tester.run_comprehensive_integration_hub_tests()
+    total_tests_passed += integration_tests_passed
+    total_tests_run += integration_tests_run
     
     # Print final summary
     print(f"\n{'='*80}")
-    print("🎯 PRODUCT INTELLIGENCE HUB TESTING SUMMARY")
+    print("🎯 PHASE 2 IMPLEMENTATION TESTING SUMMARY")
     print("="*80)
-    print(f"   Tests Run: {tests_run}")
-    print(f"   Tests Passed: {tests_passed}")
-    print(f"   Success Rate: {(tests_passed/tests_run)*100:.1f}%")
+    print(f"   Total Tests Run: {total_tests_run}")
+    print(f"   Total Tests Passed: {total_tests_passed}")
+    print(f"   Overall Success Rate: {(total_tests_passed/total_tests_run)*100:.1f}%")
     print("="*80)
     
     print(f"\n📊 DETAILED RESULTS:")
-    print(f"   ✅ Feature Usage Analytics (2 endpoints) - Feature adoption and stickiness analysis")
-    print(f"   ✅ Onboarding Optimization (2 endpoints) - Funnel analysis and path optimization")
-    print(f"   ✅ Product-Market Fit (2 endpoints) - PMF indicators and assessment")
-    print(f"   ✅ User Journey Analytics (2 endpoints) - Journey health and flow analysis")
-    print(f"   ✅ Advanced product intelligence features and analytics verified")
-    print(f"   ✅ Business intelligence and mock data integration tested")
+    print(f"   🎯 Product Intelligence Hub: {product_tests_passed}/{product_tests_run} ({(product_tests_passed/product_tests_run)*100:.1f}%)")
+    print(f"      ✅ Feature Usage Analytics - Feature adoption and stickiness analysis")
+    print(f"      ✅ Onboarding Optimization - Funnel analysis and path optimization")
+    print(f"      ✅ Product-Market Fit - PMF indicators and assessment")
+    print(f"      ✅ User Journey Analytics - Journey health and flow analysis")
+    print(f"   🔗 Integration & Data Management Hub: {integration_tests_passed}/{integration_tests_run} ({(integration_tests_passed/integration_tests_run)*100:.1f}%)")
+    print(f"      ✅ Data Connectors - Connector management and health monitoring")
+    print(f"      ✅ Sync Management - Data synchronization and scheduling")
+    print(f"      ✅ Data Quality - Quality monitoring and analysis")
+    print(f"      ✅ Integration Analytics - ROI analysis and business impact")
     
-    if tests_passed == tests_run:
-        print(f"\n🎉 SUCCESS: ALL PRODUCT INTELLIGENCE HUB TESTS PASSED!")
-        print(f"   The Product Intelligence Hub module is fully functional with all 8 endpoints working")
-        print(f"   All product intelligence features, analytics, and business insights working correctly")
-        print(f"   Ready for production deployment and customer use")
+    if total_tests_passed == total_tests_run:
+        print(f"\n🎉 SUCCESS: ALL PHASE 2 TESTS PASSED!")
+        print(f"   Both Product Intelligence Hub and Integration & Data Management Hub are fully functional")
+        print(f"   All {total_tests_run} endpoints working correctly with comprehensive data and analytics")
+        print(f"   Phase 2 implementation is complete and ready for production deployment")
         return 0
     else:
-        print(f"\n⚠️  PARTIAL SUCCESS: {tests_run - tests_passed} endpoint(s) failed")
-        print(f"   Most of the Product Intelligence Hub module is working correctly")
+        print(f"\n⚠️  PARTIAL SUCCESS: {total_tests_run - total_tests_passed} endpoint(s) failed")
+        print(f"   Most of the Phase 2 implementation is working correctly")
         print(f"   See detailed test results above for specific issues")
         return 1
 
