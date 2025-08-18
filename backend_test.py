@@ -1295,10 +1295,13 @@ class CustomerIntelligenceAITester:
             recommendations = response.get('recommendations', [])
             print(f"   Real-Time Recommendations: {len(recommendations)}")
             
-            for rec in recommendations[:3]:
-                print(f"   - {rec.get('content_type', 'unknown')}: {rec.get('title', 'unknown')}")
-                print(f"     Relevance: {rec.get('relevance_score', 0)}/100")
-                print(f"     Expected Impact: {rec.get('expected_impact', 'unknown')}")
+            if isinstance(recommendations, list):
+                for rec in recommendations[:3]:
+                    print(f"   - {rec.get('content_type', 'unknown')}: {rec.get('title', 'unknown')}")
+                    print(f"     Relevance: {rec.get('relevance_score', 0)}/100")
+                    print(f"     Expected Impact: {rec.get('expected_impact', 'unknown')}")
+            else:
+                print(f"   Recommendations data: {recommendations}")
         
         return success
 
