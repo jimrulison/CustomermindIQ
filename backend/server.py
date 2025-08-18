@@ -1248,14 +1248,17 @@ async def test_platform_connection(platform_name: str):
 # =====================================================
 
 # =====================================================
-# MARKETING AUTOMATION PRO MODULE ENDPOINTS
+# MARKETING AUTOMATION PRO MODULE ENDPOINTS (REBUILT)
+# Advanced multi-channel orchestration, AI-powered A/B testing, 
+# dynamic content personalization, lead scoring, and referral programs
 # =====================================================
 
+# 1. MULTI-CHANNEL ORCHESTRATION - SMS, Push, Social Media Retargeting
 @app.get("/api/marketing/multi-channel-orchestration")
 async def get_multi_channel_dashboard():
-    """Get multi-channel orchestration dashboard"""
+    """Get comprehensive multi-channel orchestration dashboard"""
     try:
-        dashboard_data = await multi_channel_orchestration_service.get_orchestration_dashboard()
+        dashboard_data = await multi_channel_orchestration_service.get_multi_channel_dashboard()
         
         return {
             "service": "multi_channel_orchestration",
@@ -1269,9 +1272,9 @@ async def get_multi_channel_dashboard():
 
 @app.post("/api/marketing/multi-channel-orchestration/campaigns")
 async def create_multi_channel_campaign(request: Dict[str, Any]):
-    """Create a new multi-channel marketing campaign"""
+    """Create AI-optimized multi-channel marketing campaign"""
     try:
-        campaign = await multi_channel_orchestration_service.create_campaign(request)
+        campaign = await multi_channel_orchestration_service.create_multi_channel_campaign(request)
         
         return {
             "service": "multi_channel_orchestration",
@@ -1281,44 +1284,56 @@ async def create_multi_channel_campaign(request: Dict[str, Any]):
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Campaign creation error: {e}")
+        raise HTTPException(status_code=500, detail=f"Multi-channel campaign creation error: {e}")
 
 @app.post("/api/marketing/multi-channel-orchestration/campaigns/{campaign_id}/execute")
-async def execute_campaign(campaign_id: str):
-    """Execute multi-channel campaign across all channels"""
+async def execute_multi_channel_campaign(campaign_id: str):
+    """Execute multi-channel campaign with intelligent orchestration"""
     try:
-        executions = await multi_channel_orchestration_service.orchestrate_campaign_execution(campaign_id)
+        execution_results = await multi_channel_orchestration_service.execute_campaign_orchestration(campaign_id)
         
         return {
             "service": "multi_channel_orchestration",
             "action": "execute_campaign",
             "campaign_id": campaign_id,
-            "executions": [execution.dict() for execution in executions],
+            "results": execution_results,
             "timestamp": datetime.now()
         }
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Campaign execution error: {e}")
 
-@app.get("/api/marketing/multi-channel-orchestration/campaigns/{campaign_id}/performance")
-async def get_campaign_performance(campaign_id: str):
-    """Get comprehensive campaign performance across all channels"""
+@app.post("/api/marketing/multi-channel-orchestration/sms")
+async def send_sms_message(request: Dict[str, Any]):
+    """Send SMS message via Twilio integration"""
     try:
-        performance = await multi_channel_orchestration_service.get_campaign_performance(campaign_id)
+        # Mock customer profile for demo
+        from modules.marketing_automation_pro.multi_channel_orchestration import CustomerProfile
+        customer = CustomerProfile(
+            customer_id=request.get('customer_id', 'demo_customer'),
+            phone_number=request.get('phone_number', '+1234567890')
+        )
+        
+        result = await multi_channel_orchestration_service.send_sms_message(
+            customer, 
+            request.get('message', 'Test SMS from Customer Mind IQ'),
+            request.get('campaign_id', 'demo_campaign')
+        )
         
         return {
             "service": "multi_channel_orchestration",
-            "action": "performance_analysis",
-            "performance": performance,
+            "action": "send_sms",
+            "result": result,
             "timestamp": datetime.now()
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Performance analysis error: {e}")
+        raise HTTPException(status_code=500, detail=f"SMS sending error: {e}")
 
+# 2. A/B TEST AUTOMATION - AI-powered with real-time optimization
 @app.get("/api/marketing/ab-testing")
 async def get_ab_testing_dashboard():
-    """Get A/B testing dashboard and analytics"""
+    """Get comprehensive A/B testing dashboard with AI analytics"""
     try:
         dashboard_data = await ab_testing_service.get_ab_testing_dashboard()
         
@@ -1333,40 +1348,62 @@ async def get_ab_testing_dashboard():
         raise HTTPException(status_code=500, detail=f"A/B testing dashboard error: {e}")
 
 @app.post("/api/marketing/ab-testing/tests")
-async def create_ab_test(request: Dict[str, Any]):
-    """Create a new A/B test with AI optimization"""
+async def create_ai_powered_ab_test(request: Dict[str, Any]):
+    """Create A/B test with AI-generated variants and multi-armed bandit optimization"""
     try:
-        ab_test = await ab_testing_service.create_ab_test(request)
+        ab_test = await ab_testing_service.create_ai_powered_ab_test(request)
         
         return {
             "service": "ab_testing",
-            "action": "create_test",
+            "action": "create_ai_test",
             "test": ab_test.dict(),
             "timestamp": datetime.now()
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"A/B test creation error: {e}")
+        raise HTTPException(status_code=500, detail=f"AI A/B test creation error: {e}")
 
-@app.post("/api/marketing/ab-testing/tests/{test_id}/start")
-async def start_ab_test(test_id: str):
-    """Start an A/B test and begin traffic allocation"""
+@app.get("/api/marketing/ab-testing/tests/{test_id}/variant")
+async def get_optimal_variant(test_id: str, context: Dict[str, Any] = None):
+    """Get optimal variant using multi-armed bandit algorithm"""
     try:
-        result = await ab_testing_service.start_ab_test(test_id)
+        variant = await ab_testing_service.get_optimal_variant(test_id, context)
         
         return {
             "service": "ab_testing",
-            "action": "start_test",
+            "action": "get_optimal_variant",
+            "variant": variant,
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Variant selection error: {e}")
+
+@app.post("/api/marketing/ab-testing/tests/{test_id}/events")
+async def record_test_event(test_id: str, request: Dict[str, Any]):
+    """Record A/B test events (impression, click, conversion) for bandit optimization"""
+    try:
+        result = await ab_testing_service.record_test_event(
+            test_id, 
+            request.get('variant_id'),
+            request.get('event_type'),
+            request.get('value', 1.0),
+            request.get('context', {})
+        )
+        
+        return {
+            "service": "ab_testing",
+            "action": "record_event",
             "result": result,
             "timestamp": datetime.now()
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"A/B test start error: {e}")
+        raise HTTPException(status_code=500, detail=f"Event recording error: {e}")
 
 @app.get("/api/marketing/ab-testing/tests/{test_id}/results")
-async def get_ab_test_results(test_id: str):
-    """Get A/B test results with statistical analysis"""
+async def analyze_ab_test_results(test_id: str):
+    """Get comprehensive A/B test results with AI insights"""
     try:
         results = await ab_testing_service.analyze_test_results(test_id)
         
@@ -1378,13 +1415,14 @@ async def get_ab_test_results(test_id: str):
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"A/B test analysis error: {e}")
+        raise HTTPException(status_code=500, detail=f"Results analysis error: {e}")
 
+# 3. DYNAMIC CONTENT PERSONALIZATION - Real-time behavior-based adaptation
 @app.get("/api/marketing/dynamic-content")
-async def get_dynamic_content_dashboard():
-    """Get dynamic content personalization dashboard"""
+async def get_content_personalization_dashboard():
+    """Get dynamic content personalization dashboard with performance analytics"""
     try:
-        dashboard_data = await dynamic_content_service.get_dynamic_content_dashboard()
+        dashboard_data = await dynamic_content_service.get_content_performance_dashboard()
         
         return {
             "service": "dynamic_content",
@@ -1394,13 +1432,29 @@ async def get_dynamic_content_dashboard():
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Dynamic content dashboard error: {e}")
+        raise HTTPException(status_code=500, detail=f"Content personalization dashboard error: {e}")
+
+@app.post("/api/marketing/dynamic-content/behavior/track")
+async def track_customer_behavior(request: Dict[str, Any]):
+    """Track real-time customer behavior for personalization"""
+    try:
+        result = await dynamic_content_service.track_behavior_event(request)
+        
+        return {
+            "service": "dynamic_content",
+            "action": "track_behavior",
+            "result": result,
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Behavior tracking error: {e}")
 
 @app.post("/api/marketing/dynamic-content/templates")
-async def create_content_template(request: Dict[str, Any]):
+async def create_dynamic_template(request: Dict[str, Any]):
     """Create dynamic content template with AI optimization"""
     try:
-        template = await dynamic_content_service.create_content_template(request)
+        template = await dynamic_content_service.create_dynamic_template(request)
         
         return {
             "service": "dynamic_content",
@@ -1410,182 +1464,208 @@ async def create_content_template(request: Dict[str, Any]):
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Content template creation error: {e}")
+        raise HTTPException(status_code=500, detail=f"Template creation error: {e}")
 
-@app.post("/api/marketing/dynamic-content/templates/{template_id}/personalize")
-async def generate_personalized_content(template_id: str, request: Dict[str, Any]):
-    """Generate personalized content for specific customer"""
+@app.post("/api/marketing/dynamic-content/personalize")
+async def generate_personalized_content(request: Dict[str, Any]):
+    """Generate personalized content based on customer behavior and AI"""
     try:
-        personalization = await dynamic_content_service.generate_personalized_content(template_id, request)
+        personalized_content = await dynamic_content_service.generate_personalized_content(
+            request.get('customer_id'),
+            request.get('template_id'),
+            request.get('context', {})
+        )
         
         return {
             "service": "dynamic_content",
-            "action": "personalize_content",
-            "personalization": personalization.dict(),
+            "action": "generate_personalized_content",
+            "content": personalized_content.dict(),
             "timestamp": datetime.now()
         }
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Content personalization error: {e}")
 
-@app.post("/api/marketing/dynamic-content/templates/{template_id}/optimize")
-async def optimize_content_template(template_id: str):
-    """Optimize content template based on performance data"""
+@app.get("/api/marketing/dynamic-content/recommendations/{customer_id}")
+async def get_real_time_recommendations(customer_id: str, context: Dict[str, Any] = None):
+    """Get real-time content recommendations based on current behavior"""
     try:
-        optimization = await dynamic_content_service.optimize_content_performance(template_id)
+        recommendations = await dynamic_content_service.get_real_time_recommendations(customer_id, context or {})
         
         return {
-            "service": "dynamic_content", 
-            "action": "optimize_template",
-            "optimization": optimization,
+            "service": "dynamic_content",
+            "action": "get_recommendations",
+            "recommendations": recommendations,
             "timestamp": datetime.now()
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Content optimization error: {e}")
+        raise HTTPException(status_code=500, detail=f"Recommendations error: {e}")
 
-@app.get("/api/marketing/cross-sell-intelligence")
-async def get_cross_sell_dashboard():
-    """Get cross-sell intelligence dashboard"""
+# 4. LEAD SCORING ENHANCEMENT - Multi-dimensional AI scoring with website activity
+@app.get("/api/marketing/lead-scoring")
+async def get_lead_scoring_dashboard():
+    """Get comprehensive lead scoring dashboard with AI analytics"""
     try:
-        dashboard_data = await cross_sell_intelligence_service.get_cross_sell_dashboard()
+        dashboard_data = await lead_scoring_service.get_lead_scoring_dashboard()
         
         return {
-            "service": "cross_sell_intelligence",
+            "service": "lead_scoring",
             "status": "success",
             "dashboard": dashboard_data,
             "timestamp": datetime.now()
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Cross-sell dashboard error: {e}")
+        raise HTTPException(status_code=500, detail=f"Lead scoring dashboard error: {e}")
 
-@app.post("/api/marketing/cross-sell-intelligence/analyze")
-async def identify_cross_sell_opportunities():
-    """Identify cross-sell and upsell opportunities for all customers"""
+@app.post("/api/marketing/lead-scoring/activity/track")
+async def track_lead_activity(request: Dict[str, Any]):
+    """Track lead activity and calculate real-time score impact"""
     try:
-        # Get customers data
-        customers_data = await odoo_service.get_customers()
-        
-        # Identify opportunities
-        opportunities = await cross_sell_intelligence_service.identify_cross_sell_opportunities(customers_data)
+        result = await lead_scoring_service.track_lead_activity(request)
         
         return {
-            "service": "cross_sell_intelligence",
-            "action": "identify_opportunities",
-            "opportunities": [opp.dict() for opp in opportunities],
-            "total_opportunities": len(opportunities),
+            "service": "lead_scoring",
+            "action": "track_activity",
+            "result": result,
             "timestamp": datetime.now()
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Cross-sell analysis error: {e}")
+        raise HTTPException(status_code=500, detail=f"Lead activity tracking error: {e}")
 
-@app.post("/api/marketing/cross-sell-intelligence/campaigns")
-async def create_cross_sell_campaign(request: Dict[str, Any]):
-    """Create targeted cross-sell campaign for specific opportunities"""
+@app.post("/api/marketing/lead-scoring/score/{lead_id}")
+async def calculate_comprehensive_lead_score(lead_id: str, lead_data: Dict[str, Any] = None):
+    """Calculate comprehensive multi-dimensional lead score with AI insights"""
     try:
-        opportunity_ids = request.get('opportunity_ids', [])
-        campaign = await cross_sell_intelligence_service.generate_cross_sell_campaign(opportunity_ids)
+        lead_score = await lead_scoring_service.calculate_comprehensive_lead_score(lead_id, lead_data)
         
         return {
-            "service": "cross_sell_intelligence",
-            "action": "create_campaign",
-            "campaign": campaign,
+            "service": "lead_scoring",
+            "action": "calculate_score",
+            "lead_score": lead_score.dict(),
             "timestamp": datetime.now()
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Cross-sell campaign error: {e}")
+        raise HTTPException(status_code=500, detail=f"Lead scoring error: {e}")
 
+@app.post("/api/marketing/lead-scoring/model/train")
+async def train_ml_scoring_model(training_data: List[Dict[str, Any]] = None):
+    """Train machine learning model for enhanced lead scoring"""
+    try:
+        model_metrics = await lead_scoring_service.train_ml_scoring_model(training_data)
+        
+        return {
+            "service": "lead_scoring",
+            "action": "train_ml_model",
+            "model_metrics": model_metrics.dict(),
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"ML model training error: {e}")
+
+# 5. REFERRAL PROGRAM INTEGRATION - AI-powered viral loop optimization
 @app.get("/api/marketing/referral-program")
-async def get_referral_dashboard():
-    """Get referral program dashboard and analytics"""
+async def get_referral_program_dashboard():
+    """Get comprehensive referral program dashboard with viral analytics"""
     try:
         dashboard_data = await referral_program_service.get_referral_dashboard()
         
         return {
             "service": "referral_program",
-            "status": "success", 
+            "status": "success",
             "dashboard": dashboard_data,
             "timestamp": datetime.now()
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Referral dashboard error: {e}")
+        raise HTTPException(status_code=500, detail=f"Referral program dashboard error: {e}")
 
-@app.post("/api/marketing/referral-program/campaigns")
-async def create_referral_campaign(request: Dict[str, Any]):
-    """Create a new referral campaign with AI optimization"""
+@app.post("/api/marketing/referral-program/analyze/{customer_id}")
+async def analyze_referral_propensity(customer_id: str, customer_data: Dict[str, Any] = None):
+    """Analyze customer's referral propensity using AI"""
     try:
-        campaign = await referral_program_service.create_referral_campaign(request)
+        referral_profile = await referral_program_service.analyze_referral_propensity(customer_id, customer_data)
         
         return {
             "service": "referral_program",
-            "action": "create_campaign",
-            "campaign": campaign.dict(),
+            "action": "analyze_propensity",
+            "profile": referral_profile.dict(),
+            "timestamp": datetime.now()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Referral propensity analysis error: {e}")
+
+@app.post("/api/marketing/referral-program/campaigns")
+async def create_personalized_referral_campaign(request: Dict[str, Any]):
+    """Create AI-optimized personalized referral campaign"""
+    try:
+        campaign_result = await referral_program_service.create_personalized_referral_campaign(
+            request.get('program_id'),
+            request.get('target_customers', [])
+        )
+        
+        return {
+            "service": "referral_program",
+            "action": "create_personalized_campaign",
+            "campaign": campaign_result,
             "timestamp": datetime.now()
         }
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Referral campaign creation error: {e}")
 
-@app.post("/api/marketing/referral-program/campaigns/{campaign_id}/generate-link")
-async def generate_referral_link(campaign_id: str, request: Dict[str, Any]):
-    """Generate personalized referral link for customer"""
+@app.get("/api/marketing/referral-program/viral-metrics/{program_id}")
+async def track_viral_loop_performance(program_id: str):
+    """Track and analyze viral loop performance with AI insights"""
     try:
-        customer_id = request.get('customer_id')
-        if not customer_id:
-            raise HTTPException(status_code=400, detail="customer_id is required")
-        
-        referral_data = await referral_program_service.generate_referral_link(campaign_id, customer_id)
+        viral_metrics = await referral_program_service.track_viral_loop_performance(program_id)
         
         return {
             "service": "referral_program",
-            "action": "generate_link",
-            "referral_data": referral_data,
+            "action": "track_viral_performance",
+            "metrics": viral_metrics.dict(),
             "timestamp": datetime.now()
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Referral link generation error: {e}")
+        raise HTTPException(status_code=500, detail=f"Viral loop tracking error: {e}")
 
-@app.post("/api/marketing/referral-program/track-conversion")
-async def track_referral_conversion(request: Dict[str, Any]):
-    """Track referral conversion and calculate rewards"""
+@app.post("/api/marketing/referral-program/optimize/{program_id}")
+async def optimize_referral_rewards(program_id: str, performance_data: Dict[str, Any]):
+    """AI-powered referral reward optimization"""
     try:
-        referral_code = request.get('referral_code')
-        referee_data = request.get('referee_data', {})
-        
-        if not referral_code:
-            raise HTTPException(status_code=400, detail="referral_code is required")
-        
-        conversion_result = await referral_program_service.track_referral_conversion(referral_code, referee_data)
+        optimization = await referral_program_service.optimize_referral_rewards(program_id, performance_data)
         
         return {
             "service": "referral_program",
-            "action": "track_conversion", 
-            "result": conversion_result,
+            "action": "optimize_rewards",
+            "optimization": optimization,
             "timestamp": datetime.now()
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Referral tracking error: {e}")
+        raise HTTPException(status_code=500, detail=f"Reward optimization error: {e}")
 
+# UNIFIED MARKETING AUTOMATION DASHBOARD
 @app.get("/api/marketing/dashboard")
 async def get_marketing_automation_dashboard():
-    """Get comprehensive Marketing Automation Pro dashboard"""
+    """Get comprehensive Marketing Automation Pro dashboard with all modules"""
     try:
         # Get data from all marketing services in parallel
-        orchestration_task = multi_channel_orchestration_service.get_orchestration_dashboard()
+        multi_channel_task = multi_channel_orchestration_service.get_multi_channel_dashboard()
         ab_testing_task = ab_testing_service.get_ab_testing_dashboard()
-        content_task = dynamic_content_service.get_dynamic_content_dashboard()
-        cross_sell_task = cross_sell_intelligence_service.get_cross_sell_dashboard()
+        content_task = dynamic_content_service.get_content_performance_dashboard()
+        lead_scoring_task = lead_scoring_service.get_lead_scoring_dashboard()
         referral_task = referral_program_service.get_referral_dashboard()
         
         # Execute all tasks
-        orchestration_data, ab_testing_data, content_data, cross_sell_data, referral_data = await asyncio.gather(
-            orchestration_task, ab_testing_task, content_task, cross_sell_task, referral_task,
+        multi_channel_data, ab_testing_data, content_data, lead_scoring_data, referral_data = await asyncio.gather(
+            multi_channel_task, ab_testing_task, content_task, lead_scoring_task, referral_task,
             return_exceptions=True
         )
         
@@ -1593,10 +1673,10 @@ async def get_marketing_automation_dashboard():
             "service": "marketing_automation_pro",
             "status": "success",
             "modules": {
-                "multi_channel_orchestration": orchestration_data if not isinstance(orchestration_data, Exception) else {"error": str(orchestration_data)},
+                "multi_channel_orchestration": multi_channel_data if not isinstance(multi_channel_data, Exception) else {"error": str(multi_channel_data)},
                 "ab_testing": ab_testing_data if not isinstance(ab_testing_data, Exception) else {"error": str(ab_testing_data)},
                 "dynamic_content": content_data if not isinstance(content_data, Exception) else {"error": str(content_data)},
-                "cross_sell_intelligence": cross_sell_data if not isinstance(cross_sell_data, Exception) else {"error": str(cross_sell_data)},
+                "lead_scoring": lead_scoring_data if not isinstance(lead_scoring_data, Exception) else {"error": str(lead_scoring_data)},
                 "referral_program": referral_data if not isinstance(referral_data, Exception) else {"error": str(referral_data)}
             },
             "timestamp": datetime.now()
