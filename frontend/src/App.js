@@ -124,6 +124,9 @@ function App() {
       // Load Advanced Features Expansion data
       await loadAdvancedFeaturesData();
       
+      // Load Revenue Analytics Suite data
+      await loadRevenueAnalyticsData();
+      
       console.log('Customer Mind IQ data loaded successfully');
     } catch (error) {
       console.error('Error loading data:', error);
