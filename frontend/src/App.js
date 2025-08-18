@@ -283,7 +283,7 @@ function App() {
           console.error('Revenue dashboard error:', err);
           return { data: { modules: {} } };
         }),
-        axios.get(`${API_BASE_URL}/api/revenue/forecasting`).catch(err => {
+        axios.get(`${API_BASE_URL}/api/revenue/revenue-forecasting`).catch(err => {
           console.error('Revenue forecasting error:', err);
           return { data: { dashboard: {} } };
         }),
