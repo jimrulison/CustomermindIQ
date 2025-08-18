@@ -1302,14 +1302,14 @@ class CustomerIntelligenceAITester:
         
         return success
 
-    def test_cross_sell_intelligence_dashboard(self):
-        """Test cross-sell intelligence dashboard"""
-        print("\n💰 Testing Marketing Automation Pro - Cross-Sell Intelligence Dashboard...")
+    def test_lead_scoring_dashboard(self):
+        """Test comprehensive lead scoring dashboard with multi-dimensional AI analytics"""
+        print("\n🎯 Testing Marketing Automation Pro - Lead Scoring Enhancement Dashboard...")
         
         success, response = self.run_marketing_test(
-            "Cross-Sell Intelligence Dashboard",
+            "Lead Scoring Dashboard",
             "GET",
-            "api/marketing/cross-sell-intelligence",
+            "api/marketing/lead-scoring",
             200,
             timeout=45
         )
@@ -1320,43 +1320,168 @@ class CustomerIntelligenceAITester:
             
             dashboard = response.get('dashboard', {})
             if dashboard:
-                opportunities = dashboard.get('total_opportunities', 0)
-                revenue_potential = dashboard.get('revenue_potential', 0)
-                print(f"   Cross-sell opportunities: {opportunities}")
-                print(f"   Revenue potential: ${revenue_potential:,.2f}")
+                leads = dashboard.get('lead_summary', {})
+                print(f"   Total Leads: {leads.get('total_leads', 0)}")
+                print(f"   Hot Leads: {leads.get('hot_leads', 0)}")
+                print(f"   Qualified Leads: {leads.get('qualified_leads', 0)}")
                 
-                top_products = dashboard.get('top_cross_sell_products', [])
-                print(f"   Top cross-sell products: {len(top_products)}")
-                
-                success_rate = dashboard.get('success_metrics', {})
-                print(f"   Cross-sell success rate: {success_rate.get('success_rate', 0):.1f}%")
+                scoring = dashboard.get('scoring_metrics', {})
+                print(f"   Average Score: {scoring.get('average_score', 0)}/100")
+                print(f"   ML Model Accuracy: {scoring.get('ml_accuracy', 0):.1f}%")
+                print(f"   Website Activity Tracked: {scoring.get('website_activities', 0)}")
         
         return success
 
-    def test_identify_cross_sell_opportunities(self):
-        """Test identifying cross-sell opportunities"""
-        print("\n🎯 Testing Cross-Sell Opportunity Identification...")
+    def test_track_lead_activity(self):
+        """Test tracking lead activity with real-time score impact calculation"""
+        print("\n📊 Testing Lead Activity Tracking with Real-Time Scoring...")
+        
+        activity_data = {
+            "lead_id": "lead_123",
+            "activity_type": "website_visit",
+            "details": {
+                "page": "/pricing",
+                "duration": 120,
+                "actions": ["viewed_pricing", "clicked_demo", "downloaded_brochure"],
+                "referrer": "google_ads",
+                "device": "desktop"
+            },
+            "timestamp": datetime.now().isoformat(),
+            "context": {
+                "campaign_source": "paid_search",
+                "utm_medium": "cpc",
+                "utm_campaign": "enterprise_software"
+            }
+        }
         
         success, response = self.run_marketing_test(
-            "Identify Cross-Sell Opportunities",
+            "Track Lead Activity",
             "POST",
-            "api/marketing/cross-sell-intelligence/analyze",
+            "api/marketing/lead-scoring/activity/track",
             200,
-            timeout=60  # AI analysis takes time
+            data=activity_data,
+            timeout=30
         )
         
         if success:
-            opportunities = response.get('opportunities', [])
-            total_opportunities = response.get('total_opportunities', 0)
+            result = response.get('result', {})
+            print(f"   Activity Tracked: {result.get('activity_tracked', False)}")
+            print(f"   Score Impact: +{result.get('score_impact', 0)} points")
+            print(f"   New Lead Score: {result.get('new_score', 0)}/100")
+            print(f"   Score Category: {result.get('score_category', 'unknown')}")
+            print(f"   Next Best Action: {result.get('next_best_action', 'unknown')}")
+        
+        return success
+
+    def test_calculate_comprehensive_lead_score(self):
+        """Test comprehensive multi-dimensional lead score calculation with AI insights"""
+        print("\n🧠 Testing Comprehensive Multi-Dimensional Lead Scoring...")
+        
+        lead_id = "lead_123"
+        lead_data = {
+            "company_info": {
+                "company_size": "50-200",
+                "industry": "technology",
+                "revenue": "5M-10M",
+                "location": "United States"
+            },
+            "contact_info": {
+                "job_title": "CTO",
+                "seniority": "executive",
+                "department": "technology"
+            },
+            "behavioral_data": {
+                "website_visits": 8,
+                "pages_viewed": 25,
+                "content_downloads": 3,
+                "email_engagement": 0.75,
+                "social_engagement": 0.45
+            },
+            "interaction_history": {
+                "demo_requests": 1,
+                "sales_calls": 2,
+                "proposal_requests": 0,
+                "last_interaction": "2024-01-15"
+            }
+        }
+        
+        success, response = self.run_marketing_test(
+            "Calculate Comprehensive Lead Score",
+            "POST",
+            f"api/marketing/lead-scoring/score/{lead_id}",
+            200,
+            data=lead_data,
+            timeout=45
+        )
+        
+        if success:
+            lead_score = response.get('lead_score', {})
+            print(f"   Overall Score: {lead_score.get('overall_score', 0)}/100")
+            print(f"   Score Category: {lead_score.get('score_category', 'unknown')}")
+            print(f"   Conversion Probability: {lead_score.get('conversion_probability', 0):.2f}%")
             
-            print(f"   Total opportunities identified: {total_opportunities}")
+            dimensions = lead_score.get('score_dimensions', {})
+            print(f"   Demographic Score: {dimensions.get('demographic_score', 0)}/100")
+            print(f"   Behavioral Score: {dimensions.get('behavioral_score', 0)}/100")
+            print(f"   Engagement Score: {dimensions.get('engagement_score', 0)}/100")
+            print(f"   Intent Score: {dimensions.get('intent_score', 0)}/100")
             
-            # Show top opportunities
-            for opp in opportunities[:3]:
-                print(f"   - Customer: {opp.get('customer_id', 'unknown')}")
-                print(f"     Product: {opp.get('recommended_product', 'unknown')}")
-                print(f"     Confidence: {opp.get('confidence_score', 0):.1f}%")
-                print(f"     Revenue Potential: ${opp.get('revenue_potential', 0):,.2f}")
+            insights = lead_score.get('ai_insights', [])
+            print(f"   AI Insights: {len(insights)}")
+            for insight in insights[:2]:
+                print(f"   - {insight.get('insight', 'unknown')}")
+        
+        return success
+
+    def test_train_ml_scoring_model(self):
+        """Test training machine learning model for enhanced lead scoring"""
+        print("\n🤖 Testing ML Model Training for Enhanced Lead Scoring...")
+        
+        training_data = [
+            {
+                "lead_id": "lead_001",
+                "features": {
+                    "company_size": 150,
+                    "website_visits": 12,
+                    "email_opens": 8,
+                    "content_downloads": 4,
+                    "job_seniority": 0.9
+                },
+                "outcome": "converted",
+                "conversion_value": 15000
+            },
+            {
+                "lead_id": "lead_002", 
+                "features": {
+                    "company_size": 25,
+                    "website_visits": 3,
+                    "email_opens": 2,
+                    "content_downloads": 0,
+                    "job_seniority": 0.3
+                },
+                "outcome": "not_converted",
+                "conversion_value": 0
+            }
+        ]
+        
+        success, response = self.run_marketing_test(
+            "Train ML Scoring Model",
+            "POST",
+            "api/marketing/lead-scoring/model/train",
+            200,
+            data=training_data,
+            timeout=60
+        )
+        
+        if success:
+            model_metrics = response.get('model_metrics', {})
+            print(f"   Model Trained: {model_metrics.get('model_trained', False)}")
+            print(f"   Accuracy: {model_metrics.get('accuracy', 0):.2f}%")
+            print(f"   Precision: {model_metrics.get('precision', 0):.2f}")
+            print(f"   Recall: {model_metrics.get('recall', 0):.2f}")
+            print(f"   F1 Score: {model_metrics.get('f1_score', 0):.2f}")
+            print(f"   Training Samples: {model_metrics.get('training_samples', 0)}")
+            print(f"   Feature Importance: {len(model_metrics.get('feature_importance', []))} features")
         
         return success
 
