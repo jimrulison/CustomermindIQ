@@ -45,6 +45,10 @@ import './App.css';
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
 function App() {
+  // Authentication state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
+  const [currentPage, setCurrentPage] = useState('dashboard');
   const [customers, setCustomers] = useState([]);
   const [campaigns, setCampaigns] = useState([]);
   const [analytics, setAnalytics] = useState(null);
