@@ -65,6 +65,14 @@ function App() {
   const [advancedPricingData, setAdvancedPricingData] = useState(null);
   const [sentimentAnalysisData, setSentimentAnalysisData] = useState(null);
 
+  // Revenue Analytics Suite state
+  const [revenueDashboard, setRevenueDashboard] = useState(null);
+  const [revenueForecastingData, setRevenueForecastingData] = useState(null);
+  const [priceOptimizationData, setPriceOptimizationData] = useState(null);
+  const [profitMarginData, setProfitMarginData] = useState(null);
+  const [subscriptionAnalyticsData, setSubscriptionAnalyticsData] = useState(null);
+  const [financialReportingData, setFinancialReportingData] = useState(null);
+
   // Campaign creation state
   const [newCampaign, setNewCampaign] = useState({
     name: '',
