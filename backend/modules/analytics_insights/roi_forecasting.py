@@ -813,11 +813,16 @@ async def predict_campaign_roi(parameters: Dict):
             campaign_type=CampaignType(parameters.get('campaign_type', 'email')),
             budget=parameters.get('budget', 5000),
             duration_days=parameters.get('duration_days', 30),
-            target_audience_size=parameters.get('target_audience_size', 10000),
-            seasonal_factor=parameters.get('seasonal_factor', 1.0),
-            economic_conditions=parameters.get('economic_conditions', 'normal'),
-            competitive_pressure=parameters.get('competitive_pressure', 'medium')
+            target_audience_size=parameters.get('target_audience_size', 10000)
         )
+        
+        # Override defaults if provided
+        if 'seasonal_factor' in parameters:
+            forecast_params.seasonal_factor = parameters['seasonal_factor']
+        if 'economic_conditions' in parameters:
+            forecast_params.economic_conditions = parameters['economic_conditions']
+        if 'competitive_pressure' in parameters:
+            forecast_params.competitive_pressure = parameters['competitive_pressure']
         
         model = ForecastModel(parameters.get('model', 'ensemble'))
         
