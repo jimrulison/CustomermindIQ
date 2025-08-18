@@ -786,6 +786,11 @@ function App() {
           <Support />
         )}
         
+        {/* Admin Panel Module */}
+        {currentPage === 'admin' && (
+          <Admin />
+        )}
+        
         {currentPage === 'create' && (
           <CreateCampaign 
             campaigns={campaigns}
