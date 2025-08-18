@@ -5996,5 +5996,462 @@ def main():
         
         return self.website_intelligence_passed == self.website_intelligence_tests
 
+    # =====================================================
+    # SUPPORT SYSTEM MODULE TESTS
+    # =====================================================
+
+    def test_submit_contact_form(self):
+        """Test Support System - Submit Contact Form"""
+        print("\n📧 Testing Support System - Submit Contact Form...")
+        
+        contact_data = {
+            "email": "test@example.com",
+            "name": "Test User",
+            "subject": "Test Subject",
+            "comments": "Test message for support system"
+        }
+        
+        success, response = self.run_support_test(
+            "Submit Contact Form",
+            "POST",
+            "api/support/contact",
+            200,
+            data=contact_data,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Success: {response.get('success', False)}")
+            print(f"   Message: {response.get('message', 'No message')}")
+            print(f"   Request ID: {response.get('request_id', 'No ID')}")
+        
+        return success
+
+    def test_get_contact_requests(self):
+        """Test Support System - Get Contact Requests (Admin)"""
+        print("\n📋 Testing Support System - Get Contact Requests (Admin)...")
+        
+        success, response = self.run_support_test(
+            "Get Contact Requests",
+            "GET",
+            "api/support/contact/requests",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Success: {response.get('success', False)}")
+            requests_data = response.get('requests', [])
+            print(f"   Total Requests: {len(requests_data)}")
+            
+            for req in requests_data[:3]:  # Show first 3 requests
+                print(f"   - Request ID: {req.get('id', 'unknown')}")
+                print(f"     From: {req.get('name', 'unknown')} ({req.get('email', 'unknown')})")
+                print(f"     Subject: {req.get('subject', 'unknown')}")
+                print(f"     Status: {req.get('status', 'unknown')}")
+        
+        return success
+
+    def test_get_community_posts(self):
+        """Test Support System - Get Community Posts"""
+        print("\n💬 Testing Support System - Get Community Posts...")
+        
+        success, response = self.run_support_test(
+            "Get Community Posts",
+            "GET",
+            "api/support/community/posts",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Success: {response.get('success', False)}")
+            posts = response.get('posts', [])
+            print(f"   Total Posts: {len(posts)}")
+            
+            for post in posts[:3]:  # Show first 3 posts
+                print(f"   - Post ID: {post.get('id', 'unknown')}")
+                print(f"     Title: {post.get('title', 'unknown')}")
+                print(f"     Type: {post.get('type', 'unknown')}")
+                print(f"     Author: {post.get('author', 'unknown')}")
+                print(f"     Replies: {post.get('replies', 0)}, Likes: {post.get('likes', 0)}")
+                print(f"     Pinned: {post.get('isPinned', False)}")
+        
+        return success
+
+    def test_create_community_post(self):
+        """Test Support System - Create Community Post"""
+        print("\n✍️ Testing Support System - Create Community Post...")
+        
+        post_data = {
+            "title": "Test Post from API",
+            "content": "This is a test post created via API testing",
+            "type": "question",
+            "author": "Test User"
+        }
+        
+        success, response = self.run_support_test(
+            "Create Community Post",
+            "POST",
+            "api/support/community/posts",
+            200,
+            data=post_data,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Success: {response.get('success', False)}")
+            print(f"   Message: {response.get('message', 'No message')}")
+            
+            post = response.get('post', {})
+            if post:
+                print(f"   Created Post ID: {post.get('id', 'unknown')}")
+                print(f"   Title: {post.get('title', 'unknown')}")
+                print(f"   Type: {post.get('type', 'unknown')}")
+                print(f"   Author: {post.get('author', 'unknown')}")
+        
+        return success
+
+    def test_update_community_post(self):
+        """Test Support System - Update Community Post (Admin)"""
+        print("\n✏️ Testing Support System - Update Community Post (Admin)...")
+        
+        # Use post ID 1 (should exist from demo data)
+        post_id = 1
+        update_data = {
+            "isPinned": True,
+            "likes": 10
+        }
+        
+        success, response = self.run_support_test(
+            "Update Community Post",
+            "PUT",
+            f"api/support/community/posts/{post_id}",
+            200,
+            data=update_data,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Success: {response.get('success', False)}")
+            print(f"   Message: {response.get('message', 'No message')}")
+            
+            post = response.get('post', {})
+            if post:
+                print(f"   Updated Post ID: {post.get('id', 'unknown')}")
+                print(f"   Title: {post.get('title', 'unknown')}")
+                print(f"   Pinned: {post.get('isPinned', False)}")
+                print(f"   Likes: {post.get('likes', 0)}")
+        
+        return success
+
+    def test_delete_community_post(self):
+        """Test Support System - Delete Community Post (Admin)"""
+        print("\n🗑️ Testing Support System - Delete Community Post (Admin)...")
+        
+        # Use a non-existent post ID to avoid deleting demo data
+        post_id = 999
+        
+        success, response = self.run_support_test(
+            "Delete Community Post",
+            "DELETE",
+            f"api/support/community/posts/{post_id}",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Success: {response.get('success', False)}")
+            print(f"   Message: {response.get('message', 'No message')}")
+        
+        return success
+
+    def test_get_announcements(self):
+        """Test Support System - Get Admin Announcements"""
+        print("\n📢 Testing Support System - Get Admin Announcements...")
+        
+        success, response = self.run_support_test(
+            "Get Admin Announcements",
+            "GET",
+            "api/support/admin/announcements",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Success: {response.get('success', False)}")
+            announcements = response.get('announcements', [])
+            print(f"   Total Announcements: {len(announcements)}")
+            
+            for announcement in announcements[:3]:  # Show first 3 announcements
+                print(f"   - Announcement ID: {announcement.get('id', 'unknown')}")
+                print(f"     Message: {announcement.get('message', 'unknown')[:50]}...")
+                print(f"     Type: {announcement.get('type', 'unknown')}")
+                print(f"     Active: {announcement.get('active', False)}")
+                print(f"     Dismissible: {announcement.get('dismissible', False)}")
+        
+        return success
+
+    def test_create_announcement(self):
+        """Test Support System - Create Admin Announcement"""
+        print("\n📣 Testing Support System - Create Admin Announcement...")
+        
+        announcement_data = {
+            "message": "Test announcement created via API testing",
+            "type": "info",
+            "active": True,
+            "dismissible": True
+        }
+        
+        success, response = self.run_support_test(
+            "Create Admin Announcement",
+            "POST",
+            "api/support/admin/announcements",
+            200,
+            data=announcement_data,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Success: {response.get('success', False)}")
+            print(f"   Message: {response.get('message', 'No message')}")
+            
+            announcement = response.get('announcement', {})
+            if announcement:
+                print(f"   Created Announcement ID: {announcement.get('id', 'unknown')}")
+                print(f"   Message: {announcement.get('message', 'unknown')[:50]}...")
+                print(f"   Type: {announcement.get('type', 'unknown')}")
+                print(f"   Active: {announcement.get('active', False)}")
+        
+        return success
+
+    def test_update_announcement(self):
+        """Test Support System - Update Admin Announcement"""
+        print("\n📝 Testing Support System - Update Admin Announcement...")
+        
+        # Use announcement ID 1 (should exist from demo data)
+        announcement_id = 1
+        update_data = {
+            "active": False,
+            "type": "warning"
+        }
+        
+        success, response = self.run_support_test(
+            "Update Admin Announcement",
+            "PUT",
+            f"api/support/admin/announcements/{announcement_id}",
+            200,
+            data=update_data,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Success: {response.get('success', False)}")
+            print(f"   Message: {response.get('message', 'No message')}")
+            
+            announcement = response.get('announcement', {})
+            if announcement:
+                print(f"   Updated Announcement ID: {announcement.get('id', 'unknown')}")
+                print(f"   Type: {announcement.get('type', 'unknown')}")
+                print(f"   Active: {announcement.get('active', False)}")
+        
+        return success
+
+    def test_delete_announcement(self):
+        """Test Support System - Delete Admin Announcement"""
+        print("\n🗑️ Testing Support System - Delete Admin Announcement...")
+        
+        # Use a non-existent announcement ID to avoid deleting demo data
+        announcement_id = 999
+        
+        success, response = self.run_support_test(
+            "Delete Admin Announcement",
+            "DELETE",
+            f"api/support/admin/announcements/{announcement_id}",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Success: {response.get('success', False)}")
+            print(f"   Message: {response.get('message', 'No message')}")
+        
+        return success
+
+    def test_admin_stats(self):
+        """Test Support System - Get Admin Dashboard Statistics"""
+        print("\n📊 Testing Support System - Get Admin Dashboard Statistics...")
+        
+        success, response = self.run_support_test(
+            "Get Admin Dashboard Statistics",
+            "GET",
+            "api/support/admin/stats",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Success: {response.get('success', False)}")
+            
+            stats = response.get('stats', {})
+            if stats:
+                print(f"   Total Announcements: {stats.get('total_announcements', 0)}")
+                print(f"   Active Announcements: {stats.get('active_announcements', 0)}")
+                print(f"   Total Community Posts: {stats.get('total_community_posts', 0)}")
+                print(f"   Pinned Posts: {stats.get('pinned_posts', 0)}")
+                print(f"   Total Contact Requests: {stats.get('total_contact_requests', 0)}")
+                print(f"   Recent Contact Requests: {stats.get('recent_contact_requests', 0)}")
+        
+        return success
+
+    def test_faq_data(self):
+        """Test Support System - Get FAQ Data"""
+        print("\n❓ Testing Support System - Get FAQ Data...")
+        
+        success, response = self.run_support_test(
+            "Get FAQ Data",
+            "GET",
+            "api/support/faq",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Success: {response.get('success', False)}")
+            
+            faq = response.get('faq', [])
+            print(f"   Total FAQ Items: {len(faq)}")
+            
+            for item in faq[:3]:  # Show first 3 FAQ items
+                print(f"   - FAQ ID: {item.get('id', 'unknown')}")
+                print(f"     Category: {item.get('category', 'unknown')}")
+                print(f"     Question: {item.get('question', 'unknown')[:50]}...")
+                print(f"     Manual Ref: {item.get('manualRef', 'unknown')}")
+        
+        return success
+
+    def run_comprehensive_support_system_tests(self):
+        """Run comprehensive Support System module tests"""
+        print("\n" + "="*80)
+        print("🎧 SUPPORT SYSTEM MODULE - COMPREHENSIVE TESTING")
+        print("="*80)
+        print("Testing all Support System endpoints:")
+        print("")
+        print("1. 📧 Contact Form Endpoints (2 endpoints)")
+        print("   - Submit support request")
+        print("   - Get all requests (admin)")
+        print("")
+        print("2. 💬 Community Posts Endpoints (4 endpoints)")
+        print("   - Get visible community posts")
+        print("   - Create new community post")
+        print("   - Update post (admin)")
+        print("   - Delete post (admin)")
+        print("")
+        print("3. 📢 Admin Announcements Endpoints (4 endpoints)")
+        print("   - Get all announcements")
+        print("   - Create new announcement")
+        print("   - Update announcement")
+        print("   - Delete announcement")
+        print("")
+        print("4. 📊 Additional Endpoints (2 endpoints)")
+        print("   - Admin dashboard statistics")
+        print("   - FAQ data")
+        print("="*80)
+        
+        # Reset counters
+        self.support_system_tests = 0
+        self.support_system_passed = 0
+        
+        # Test 1: Contact Form Endpoints
+        print(f"\n{'='*60}")
+        print("📧 TESTING CONTACT FORM ENDPOINTS")
+        print("="*60)
+        
+        tests = [
+            self.test_submit_contact_form,
+            self.test_get_contact_requests
+        ]
+        
+        for test in tests:
+            if test():
+                pass  # Counter already incremented in run_support_test
+        
+        # Test 2: Community Posts Endpoints
+        print(f"\n{'='*60}")
+        print("💬 TESTING COMMUNITY POSTS ENDPOINTS")
+        print("="*60)
+        
+        tests = [
+            self.test_get_community_posts,
+            self.test_create_community_post,
+            self.test_update_community_post,
+            self.test_delete_community_post
+        ]
+        
+        for test in tests:
+            if test():
+                pass  # Counter already incremented in run_support_test
+        
+        # Test 3: Admin Announcements Endpoints
+        print(f"\n{'='*60}")
+        print("📢 TESTING ADMIN ANNOUNCEMENTS ENDPOINTS")
+        print("="*60)
+        
+        tests = [
+            self.test_get_announcements,
+            self.test_create_announcement,
+            self.test_update_announcement,
+            self.test_delete_announcement
+        ]
+        
+        for test in tests:
+            if test():
+                pass  # Counter already incremented in run_support_test
+        
+        # Test 4: Additional Endpoints
+        print(f"\n{'='*60}")
+        print("📊 TESTING ADDITIONAL ENDPOINTS")
+        print("="*60)
+        
+        tests = [
+            self.test_admin_stats,
+            self.test_faq_data
+        ]
+        
+        for test in tests:
+            if test():
+                pass  # Counter already incremented in run_support_test
+        
+        # Calculate results
+        success_rate = (self.support_system_passed / self.support_system_tests * 100) if self.support_system_tests > 0 else 0
+        
+        print(f"\n" + "="*80)
+        print(f"🎧 SUPPORT SYSTEM TESTING COMPLETE")
+        print(f"="*80)
+        print(f"✅ Tests Passed: {self.support_system_passed}/{self.support_system_tests}")
+        print(f"📊 Success Rate: {success_rate:.1f}%")
+        
+        if self.support_system_passed == self.support_system_tests:
+            print(f"🎉 SUCCESS: ALL SUPPORT SYSTEM TESTS PASSED!")
+            print(f"   Support System is fully functional with comprehensive support capabilities")
+            print(f"   All {self.support_system_tests} endpoints working correctly:")
+            print(f"   ✅ Contact Forms - Support request submission and management")
+            print(f"   ✅ Community Posts - User-generated content and discussions")
+            print(f"   ✅ Admin Announcements - System-wide notifications and updates")
+            print(f"   ✅ Admin Dashboard - Statistics and management tools")
+            print(f"   ✅ FAQ System - Knowledge base and help documentation")
+            print(f"   Support System is production-ready for customer support operations")
+        else:
+            failed_tests = self.support_system_tests - self.support_system_passed
+            print(f"⚠️  PARTIAL SUCCESS: {failed_tests} test(s) failed")
+            print(f"   Most of the Support System is working correctly")
+            print(f"   See detailed test results above for specific issues")
+        
+        return self.support_system_passed == self.support_system_tests
+
+    # =====================================================
+    # END SUPPORT SYSTEM MODULE TESTS
+    # =====================================================
+
 if __name__ == "__main__":
     sys.exit(main())
