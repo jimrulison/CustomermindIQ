@@ -98,7 +98,35 @@ function App() {
   const [revenueAttributionData, setRevenueAttributionData] = useState(null);
   const [cohortAnalysisData, setCohortAnalysisData] = useState(null);
   const [competitiveIntelligenceData, setCompetitiveIntelligenceData] = useState(null);
-  const [roiForecastingData, setRoiForecastingData] = useState(null);
+  // State for announcements
+  const [announcements, setAnnouncements] = useState([]);
+
+  // Load announcements
+  useEffect(() => {
+    const loadAnnouncements = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/admin/announcements`);
+        setAnnouncements(response.data.announcements || []);
+      } catch (error) {
+        console.error('Error loading announcements:', error);
+        // Set demo announcement
+        setAnnouncements([
+          {
+            id: 1,
+            message: "🎓 New Training Session: Advanced SEO Strategies - December 20, 2PM EST. Register now!",
+            type: "info",
+            active: true,
+            dismissible: true
+          }
+        ]);
+      }
+    };
+    loadAnnouncements();
+  }, []);
+
+  const dismissAnnouncement = (id) => {
+    setAnnouncements(prev => prev.filter(ann => ann.id !== id));
+  };
 
   // Campaign creation state
   const [newCampaign, setNewCampaign] = useState({
