@@ -135,6 +135,9 @@ function App() {
       // Load Revenue Analytics Suite data
       await loadRevenueAnalyticsData();
       
+      // Load Analytics & Insights data
+      await loadAnalyticsInsightsData();
+      
       console.log('Customer Mind IQ data loaded successfully');
     } catch (error) {
       console.error('Error loading data:', error);
