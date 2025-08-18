@@ -718,6 +718,11 @@ function App() {
           <AICommandCenter />
         )}
         
+        {/* Website Intelligence Hub Module */}
+        {currentPage === 'website-intelligence' && (
+          <WebsiteIntelligenceHub />
+        )}
+        
         {currentPage === 'create' && (
           <CreateCampaign 
             campaigns={campaigns}
