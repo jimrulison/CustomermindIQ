@@ -11,7 +11,8 @@ import {
   Target,
   LogOut,
   User,
-  Activity
+  Activity,
+  Database
 } from 'lucide-react';
 
 const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
