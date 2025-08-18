@@ -927,7 +927,7 @@ class CustomerIntelligenceAITester:
         return success
 
     def test_ab_testing_dashboard(self):
-        """Test A/B testing dashboard and analytics"""
+        """Test A/B testing dashboard with AI analytics and multi-armed bandit algorithms"""
         print("\n🧪 Testing Marketing Automation Pro - A/B Testing Dashboard...")
         
         success, response = self.run_marketing_test(
@@ -952,15 +952,16 @@ class CustomerIntelligenceAITester:
                 insights = dashboard.get('testing_insights', {})
                 print(f"   Average lift: {insights.get('average_lift', 0):.2f}%")
                 print(f"   Statistical confidence: {insights.get('avg_confidence', 0):.1f}%")
+                print(f"   Multi-armed bandit tests: {insights.get('bandit_tests', 0)}")
         
         return success
 
-    def test_create_ab_test(self):
-        """Test creating A/B test with AI optimization"""
-        print("\n🔬 Testing A/B Test Creation with AI Optimization...")
+    def test_create_ai_powered_ab_test(self):
+        """Test creating A/B test with AI-generated variants and multi-armed bandit optimization"""
+        print("\n🔬 Testing AI-Powered A/B Test Creation with Multi-Armed Bandit...")
         
         ab_test_data = {
-            "test_name": "Email Subject Line Optimization",
+            "test_name": "AI Email Subject Line Optimization",
             "test_type": "email_campaign",
             "variants": [
                 {
@@ -972,15 +973,22 @@ class CustomerIntelligenceAITester:
                     "name": "AI Optimized",
                     "subject_line": "🚀 Exclusive Software Features Just for You!",
                     "content": "Personalized AI-generated content"
+                },
+                {
+                    "name": "Urgency Focused",
+                    "subject_line": "⏰ Limited Time: Premium Features Unlocked",
+                    "content": "Urgency-driven AI content"
                 }
             ],
-            "traffic_split": 50,
+            "traffic_split": 33,
             "success_metric": "open_rate",
-            "duration_days": 7
+            "duration_days": 7,
+            "use_multi_armed_bandit": True,
+            "confidence_threshold": 95
         }
         
         success, response = self.run_marketing_test(
-            "Create A/B Test",
+            "Create AI-Powered A/B Test",
             "POST",
             "api/marketing/ab-testing/tests",
             200,
@@ -995,6 +1003,100 @@ class CustomerIntelligenceAITester:
             print(f"   Variants: {len(test.get('variants', []))}")
             print(f"   AI Confidence: {test.get('ai_confidence_score', 0)}/100")
             print(f"   Expected Lift: {test.get('expected_lift', 0):.2f}%")
+            print(f"   Multi-Armed Bandit: {test.get('uses_bandit_algorithm', False)}")
+        
+        return success
+
+    def test_get_optimal_variant(self):
+        """Test getting optimal variant using multi-armed bandit algorithm"""
+        print("\n🎯 Testing Multi-Armed Bandit Optimal Variant Selection...")
+        
+        test_id = "test_ab_123"
+        context = {
+            "customer_segment": "high_value",
+            "time_of_day": "morning",
+            "device_type": "mobile"
+        }
+        
+        success, response = self.run_marketing_test(
+            "Get Optimal Variant (Multi-Armed Bandit)",
+            "GET",
+            f"api/marketing/ab-testing/tests/{test_id}/variant",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            variant = response.get('variant', {})
+            print(f"   Selected Variant: {variant.get('variant_name', 'unknown')}")
+            print(f"   Confidence Score: {variant.get('confidence_score', 0):.2f}")
+            print(f"   Expected Performance: {variant.get('expected_performance', 0):.2f}%")
+            print(f"   Bandit Algorithm: {variant.get('algorithm_used', 'unknown')}")
+        
+        return success
+
+    def test_record_ab_test_event(self):
+        """Test recording A/B test events for bandit optimization"""
+        print("\n📊 Testing A/B Test Event Recording for Bandit Learning...")
+        
+        test_id = "test_ab_123"
+        event_data = {
+            "variant_id": "variant_ai_optimized",
+            "event_type": "conversion",
+            "value": 1.0,
+            "context": {
+                "customer_id": "customer_123",
+                "timestamp": datetime.now().isoformat(),
+                "revenue": 299.99
+            }
+        }
+        
+        success, response = self.run_marketing_test(
+            "Record A/B Test Event",
+            "POST",
+            f"api/marketing/ab-testing/tests/{test_id}/events",
+            200,
+            data=event_data,
+            timeout=30
+        )
+        
+        if success:
+            result = response.get('result', {})
+            print(f"   Event Recorded: {result.get('event_recorded', False)}")
+            print(f"   Variant Updated: {result.get('variant_id', 'unknown')}")
+            print(f"   New Performance: {result.get('updated_performance', 0):.2f}%")
+            print(f"   Bandit Learning: {result.get('bandit_updated', False)}")
+        
+        return success
+
+    def test_analyze_ab_test_results(self):
+        """Test comprehensive A/B test results analysis with AI insights"""
+        print("\n📈 Testing A/B Test Results Analysis with AI Insights...")
+        
+        test_id = "test_ab_123"
+        
+        success, response = self.run_marketing_test(
+            "Analyze A/B Test Results",
+            "GET",
+            f"api/marketing/ab-testing/tests/{test_id}/results",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            results = response.get('results', {})
+            print(f"   Test Status: {results.get('test_status', 'unknown')}")
+            print(f"   Statistical Significance: {results.get('statistical_significance', False)}")
+            print(f"   Confidence Level: {results.get('confidence_level', 0):.1f}%")
+            
+            variants = results.get('variant_performance', [])
+            print(f"   Variants Analyzed: {len(variants)}")
+            for variant in variants:
+                print(f"   - {variant.get('name', 'unknown')}: {variant.get('conversion_rate', 0):.2f}% conversion")
+            
+            winner = results.get('winning_variant', {})
+            if winner:
+                print(f"   Winner: {winner.get('name', 'unknown')} (+{winner.get('lift', 0):.2f}% lift)")
         
         return success
 
