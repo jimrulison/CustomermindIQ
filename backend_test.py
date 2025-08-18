@@ -806,7 +806,8 @@ class CustomerIntelligenceAITester:
         return success
 
     # =====================================================
-    # MARKETING AUTOMATION PRO MODULE TESTS
+    # MARKETING AUTOMATION PRO MODULE TESTS (REBUILT)
+    # Comprehensive testing of all 5 advanced microservices
     # =====================================================
 
     def test_multi_channel_orchestration_dashboard(self):
@@ -845,10 +846,11 @@ class CustomerIntelligenceAITester:
         campaign_data = {
             "name": "AI-Powered Cross-Channel Campaign",
             "target_audience": "high_value_customers",
-            "channels": ["email", "social_media", "push_notifications"],
+            "channels": ["email", "sms", "push_notifications", "social_media"],
             "budget": 5000,
             "duration_days": 14,
-            "objectives": ["brand_awareness", "lead_generation"]
+            "objectives": ["brand_awareness", "lead_generation"],
+            "message": "Exclusive software offer just for you!"
         }
         
         success, response = self.run_marketing_test(
@@ -866,6 +868,61 @@ class CustomerIntelligenceAITester:
             print(f"   Campaign Name: {campaign.get('name', 'unknown')}")
             print(f"   Channels: {', '.join(campaign.get('channels', []))}")
             print(f"   AI Optimization Score: {campaign.get('ai_optimization_score', 0)}/100")
+        
+        return success
+
+    def test_execute_multi_channel_campaign(self):
+        """Test executing multi-channel campaign with intelligent orchestration"""
+        print("\n🚀 Testing Multi-Channel Campaign Execution...")
+        
+        # Use a test campaign ID
+        test_campaign_id = "test_campaign_123"
+        
+        success, response = self.run_marketing_test(
+            "Execute Multi-Channel Campaign",
+            "POST",
+            f"api/marketing/multi-channel-orchestration/campaigns/{test_campaign_id}/execute",
+            200,
+            timeout=60
+        )
+        
+        if success:
+            results = response.get('results', {})
+            print(f"   Campaign ID: {response.get('campaign_id', 'unknown')}")
+            print(f"   Execution Status: {results.get('status', 'unknown')}")
+            
+            channel_results = results.get('channel_results', {})
+            for channel, result in channel_results.items():
+                print(f"   {channel.title()}: {result.get('status', 'unknown')} - {result.get('sent', 0)} sent")
+        
+        return success
+
+    def test_send_sms_message(self):
+        """Test SMS message sending via Twilio integration"""
+        print("\n📱 Testing SMS Message Sending (Twilio Integration)...")
+        
+        sms_data = {
+            "customer_id": "test_customer_123",
+            "phone_number": "+1234567890",
+            "message": "🚀 Exclusive software offer from Customer Mind IQ! Limited time 20% off. Reply STOP to opt out.",
+            "campaign_id": "sms_campaign_123"
+        }
+        
+        success, response = self.run_marketing_test(
+            "Send SMS Message",
+            "POST",
+            "api/marketing/multi-channel-orchestration/sms",
+            200,
+            data=sms_data,
+            timeout=30
+        )
+        
+        if success:
+            result = response.get('result', {})
+            print(f"   SMS Status: {result.get('status', 'unknown')}")
+            print(f"   Message ID: {result.get('message_id', 'unknown')}")
+            print(f"   Provider: {result.get('provider', 'unknown')}")
+            print(f"   Cost: ${result.get('cost', 0):.4f}")
         
         return success
 
