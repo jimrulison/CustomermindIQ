@@ -33,7 +33,8 @@ import {
   Activity,
   PieChart,
   ArrowRightLeft,
-  MessageSquare
+  MessageSquare,
+  AlertTriangle
 } from 'lucide-react';
 import axios from 'axios';
 import SignIn from './components/SignIn';
