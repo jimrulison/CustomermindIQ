@@ -520,6 +520,7 @@ function App() {
         )}
         
         {currentPage === 'customers' && (
+          <div className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Customer List */}
               <div className="lg:col-span-2">
@@ -667,10 +668,49 @@ function App() {
                 )}
               </div>
             </div>
-          </TabsContent>
-
-          {/* Campaigns Tab */}
-          <TabsContent value="campaigns" className="space-y-6">
+          </div>
+        )}
+        
+        {currentPage === 'create' && (
+          <CreateCampaign 
+            campaigns={campaigns}
+            newCampaign={newCampaign}
+            setNewCampaign={setNewCampaign}
+            handleCreateCampaign={createCampaign}
+          />
+        )}
+        
+        {/* Placeholder pages for other modules - these would be separate components */}
+        {currentPage === 'marketing' && (
+          <div className="space-y-6">
+            <h1 className="text-3xl font-bold text-white">Marketing Automation</h1>
+            <p className="text-slate-400">Marketing Automation Pro module coming soon...</p>
+          </div>
+        )}
+        
+        {currentPage === 'revenue' && (
+          <div className="space-y-6">
+            <h1 className="text-3xl font-bold text-white">Revenue Analytics</h1>
+            <p className="text-slate-400">Revenue Analytics module coming soon...</p>
+          </div>
+        )}
+        
+        {currentPage === 'advanced' && (
+          <div className="space-y-6">
+            <h1 className="text-3xl font-bold text-white">Advanced Features</h1>
+            <p className="text-slate-400">Advanced Features module coming soon...</p>
+          </div>
+        )}
+        
+        {currentPage === 'analytics' && (
+          <div className="space-y-6">
+            <h1 className="text-3xl font-bold text-white">Analytics & Insights</h1>
+            <p className="text-slate-400">Analytics & Insights module coming soon...</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
             <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
