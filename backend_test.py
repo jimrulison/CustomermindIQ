@@ -1672,11 +1672,11 @@ class CustomerIntelligenceAITester:
         return success
 
     def test_marketing_automation_dashboard(self):
-        """Test comprehensive Marketing Automation Pro dashboard"""
-        print("\n📊 Testing Marketing Automation Pro - Comprehensive Dashboard...")
+        """Test comprehensive Marketing Automation Pro unified dashboard"""
+        print("\n📊 Testing Marketing Automation Pro - Unified Dashboard...")
         
         success, response = self.run_marketing_test(
-            "Marketing Automation Pro Dashboard",
+            "Marketing Automation Pro Unified Dashboard",
             "GET",
             "api/marketing/dashboard",
             200,
@@ -1693,13 +1693,32 @@ class CustomerIntelligenceAITester:
             for module_name, module_data in modules.items():
                 if isinstance(module_data, dict) and 'error' not in module_data:
                     print(f"   ✅ {module_name.replace('_', ' ').title()}: Working")
+                    
+                    # Show key metrics for each module
+                    if 'dashboard' in module_data:
+                        dashboard = module_data['dashboard']
+                        if module_name == 'multi_channel_orchestration':
+                            campaigns = dashboard.get('active_campaigns', [])
+                            print(f"      Active Campaigns: {len(campaigns)}")
+                        elif module_name == 'ab_testing':
+                            tests = dashboard.get('active_tests', [])
+                            print(f"      Active A/B Tests: {len(tests)}")
+                        elif module_name == 'dynamic_content':
+                            templates = dashboard.get('active_templates', [])
+                            print(f"      Active Templates: {len(templates)}")
+                        elif module_name == 'lead_scoring':
+                            leads = dashboard.get('lead_summary', {})
+                            print(f"      Total Leads: {leads.get('total_leads', 0)}")
+                        elif module_name == 'referral_program':
+                            referrals = dashboard.get('referral_stats', {})
+                            print(f"      Total Referrals: {referrals.get('total_referrals', 0)}")
                 else:
                     print(f"   ❌ {module_name.replace('_', ' ').title()}: Error - {module_data.get('error', 'Unknown error')}")
         
         return success
 
     # =====================================================
-    # END MARKETING AUTOMATION PRO MODULE TESTS
+    # END MARKETING AUTOMATION PRO MODULE TESTS (REBUILT)
     # =====================================================
 
     # =====================================================
