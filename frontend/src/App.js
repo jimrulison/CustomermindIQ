@@ -333,6 +333,64 @@ function App() {
     }
   };
 
+  const loadAnalyticsInsightsData = async () => {
+    try {
+      console.log('Loading Analytics & Insights data...');
+      
+      const [
+        dashboardRes,
+        journeyRes,
+        attributionRes,
+        cohortRes,
+        competitiveRes,
+        roiRes
+      ] = await Promise.all([
+        axios.get(`${API_BASE_URL}/api/analytics/dashboard`).catch(err => {
+          console.error('Analytics dashboard error:', err);
+          return { data: { modules: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/analytics/customer-journey-mapping/dashboard`).catch(err => {
+          console.error('Customer journey error:', err);
+          return { data: { dashboard_data: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/analytics/revenue-attribution/dashboard`).catch(err => {
+          console.error('Revenue attribution error:', err);
+          return { data: { dashboard_data: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/analytics/cohort-analysis/dashboard`).catch(err => {
+          console.error('Cohort analysis error:', err);
+          return { data: { dashboard_data: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/analytics/competitive-intelligence/dashboard`).catch(err => {
+          console.error('Competitive intelligence error:', err);
+          return { data: { dashboard_data: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/analytics/roi-forecasting/dashboard`).catch(err => {
+          console.error('ROI forecasting error:', err);
+          return { data: { dashboard_data: {} } };
+        })
+      ]);
+      
+      setAnalyticsInsightsDashboard(dashboardRes.data);
+      setCustomerJourneyData(journeyRes.data);
+      setRevenueAttributionData(attributionRes.data);
+      setCohortAnalysisData(cohortRes.data);
+      setCompetitiveIntelligenceData(competitiveRes.data);
+      setRoiForecastingData(roiRes.data);
+      
+      console.log('Analytics & Insights data loaded successfully');
+    } catch (error) {
+      console.error('Error loading analytics insights data:', error);
+      // Set default values
+      setAnalyticsInsightsDashboard({ modules: {} });
+      setCustomerJourneyData({ dashboard_data: {} });
+      setRevenueAttributionData({ dashboard_data: {} });
+      setCohortAnalysisData({ dashboard_data: {} });
+      setCompetitiveIntelligenceData({ dashboard_data: {} });
+      setRoiForecastingData({ dashboard_data: {} });
+    }
+  };
+
   const loadCustomerRecommendations = async (customerId) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/api/customers/${customerId}/recommendations`);
