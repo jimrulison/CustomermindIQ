@@ -57,6 +57,9 @@ from modules.analytics_insights import (
     roi_forecasting_router
 )
 
+# Import Customer Success Intelligence Module
+from modules.customer_success_intelligence import customer_success_router
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
