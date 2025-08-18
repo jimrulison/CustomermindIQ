@@ -134,7 +134,7 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
             </button>
           </div>
 
-          {/* User Info & Training & Sign Out */}
+          {/* User Info & Training & Support & Sign Out */}
           <div className="flex items-center space-x-4">
             {/* Training Button */}
             <button
@@ -147,6 +147,19 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
             >
               <GraduationCap className="w-4 h-4 mr-2" />
               Training
+            </button>
+
+            {/* Support Button */}
+            <button
+              onClick={() => onNavigate('support')}
+              className={`flex items-center px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
+                currentPage === 'support'
+                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg'
+                  : 'bg-slate-800/50 text-slate-300 hover:bg-blue-600/20 hover:text-blue-400 border border-slate-600'
+              }`}
+            >
+              <HelpCircle className="w-4 h-4 mr-2" />
+              Support
             </button>
             
             <div className="hidden sm:flex items-center space-x-2 text-slate-300">
