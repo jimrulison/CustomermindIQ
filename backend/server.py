@@ -63,6 +63,9 @@ from modules.customer_success_intelligence import customer_success_router
 # Import Executive Intelligence Dashboard Module  
 from modules.executive_intelligence_dashboard import executive_intelligence_router
 
+# Import Growth Intelligence Suite Module
+from modules.growth_intelligence_suite import growth_intelligence_router
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
