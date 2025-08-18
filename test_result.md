@@ -609,9 +609,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Marketing Automation Pro Frontend Integration"
-  stuck_tasks:
-    - "Marketing Automation Pro Frontend Integration"
+    - "Revenue Analytics Suite Frontend Integration"
+    - "Backend Endpoint Verification"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
