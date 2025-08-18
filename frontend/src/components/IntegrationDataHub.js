@@ -127,7 +127,7 @@ const IntegrationDataHub = () => {
             <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30">
               <CardContent className="p-4">
                 <div className="text-center">
-                  <Sync className="h-8 w-8 text-blue-400 mx-auto mb-2" />
+                  <RefreshCw className="h-8 w-8 text-blue-400 mx-auto mb-2" />
                   <div className="text-2xl font-bold text-white">
                     {syncData?.dashboard?.sync_overview?.sync_success_rate || '0'}%
                   </div>
