@@ -724,6 +724,11 @@ function App() {
           <WebsiteIntelligenceHub />
         )}
         
+        {/* Training Center Module */}
+        {currentPage === 'training' && (
+          <Training />
+        )}
+        
         {currentPage === 'create' && (
           <CreateCampaign 
             campaigns={campaigns}
