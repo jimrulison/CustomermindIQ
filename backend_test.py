@@ -32,6 +32,8 @@ class CustomerIntelligenceAITester:
         self.ai_command_passed = 0
         self.website_intelligence_tests = 0
         self.website_intelligence_passed = 0
+        self.support_system_tests = 0
+        self.support_system_passed = 0
 
     def run_website_intelligence_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
         """Run a Website Intelligence Hub API test"""
