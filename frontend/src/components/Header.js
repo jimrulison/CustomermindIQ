@@ -93,6 +93,12 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
       color: 'hover:bg-cyan-600/20 hover:text-cyan-400'
     },
     {
+      id: 'website-intelligence',
+      label: 'Website Intelligence',
+      icon: Globe,
+      color: 'hover:bg-emerald-600/20 hover:text-emerald-400'
+    },
+    {
       id: 'create',
       label: 'Create Campaign',
       icon: Zap,
