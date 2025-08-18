@@ -41,6 +41,7 @@ import SignIn from './components/SignIn';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import CreateCampaign from './components/CreateCampaign';
+import CustomerSuccessIntelligence from './components/CustomerSuccessIntelligence';
 import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
