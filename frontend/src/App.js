@@ -45,6 +45,7 @@ import CustomerSuccessIntelligence from './components/CustomerSuccessIntelligenc
 import ExecutiveIntelligenceDashboard from './components/ExecutiveIntelligenceDashboard';
 import GrowthIntelligenceSuite from './components/GrowthIntelligenceSuite';
 import ProductIntelligenceHub from './components/ProductIntelligenceHub';
+import IntegrationDataHub from './components/IntegrationDataHub';
 import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
