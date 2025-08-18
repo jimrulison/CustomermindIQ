@@ -353,7 +353,7 @@ function App() {
 
       <div className="container mx-auto px-6 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-7 bg-slate-800/50 backdrop-blur-xl">
+          <TabsList className="grid w-full grid-cols-6 bg-slate-800/50 backdrop-blur-xl">
             <TabsTrigger value="dashboard" className="text-white data-[state=active]:bg-blue-600">
               <BarChart3 className="w-4 h-4 mr-2" />
               Dashboard
@@ -368,11 +368,7 @@ function App() {
             </TabsTrigger>
             <TabsTrigger value="marketing" className="text-white data-[state=active]:bg-blue-600">
               <Megaphone className="w-4 h-4 mr-2" />
-              Marketing Automation
-            </TabsTrigger>
-            <TabsTrigger value="testing" className="text-white data-[state=active]:bg-blue-600">
-              <TestTube className="w-4 h-4 mr-2" />
-              A/B Testing
+              Marketing Automation Pro
             </TabsTrigger>
             <TabsTrigger value="advanced" className="text-white data-[state=active]:bg-blue-600">
               <Brain className="w-4 h-4 mr-2" />
