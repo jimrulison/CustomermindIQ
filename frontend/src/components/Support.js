@@ -308,7 +308,7 @@ const Support = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-2xl font-bold text-white">< 24h</div>
+                <div className="text-2xl font-bold text-white">&lt; 24h</div>
                 <div className="text-xs text-green-200">Response Time</div>
               </div>
               <Mail className="h-8 w-8 text-green-400" />
