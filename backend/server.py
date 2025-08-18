@@ -69,6 +69,9 @@ from modules.growth_intelligence_suite import growth_intelligence_router
 # Import Product Intelligence Hub Module
 from modules.product_intelligence_hub import product_intelligence_router
 
+# Import Integration & Data Management Hub Module
+from modules.integration_data_management_hub import integration_hub_router
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
