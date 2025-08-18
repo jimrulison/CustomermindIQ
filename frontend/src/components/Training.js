@@ -54,6 +54,7 @@ const Training = () => {
       difficulty: "Intermediate",
       category: "Performance",
       thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=225&fit=crop",
+      videoUrl: "/training/videos/performance_metrics.mp4", // You'll upload this
       topics: ["Core Web Vitals", "Load Times", "Performance Scoring", "Optimization Tips"]
     },
     {
@@ -64,6 +65,7 @@ const Training = () => {
       difficulty: "Advanced",
       category: "SEO",
       thumbnail: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=400&h=225&fit=crop",
+      videoUrl: "/training/videos/seo_mastery.mp4", // You'll upload this
       topics: ["Keyword Research", "Technical SEO", "Content Optimization", "Competitor Analysis"]
     },
     {
@@ -74,6 +76,7 @@ const Training = () => {
       difficulty: "Intermediate",
       category: "Management",
       thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=225&fit=crop",
+      videoUrl: "/training/videos/multi_website_management.mp4", // You'll upload this
       topics: ["Website Organization", "Bulk Operations", "Client Reporting", "Workflow Optimization"]
     },
     {
@@ -84,6 +87,7 @@ const Training = () => {
       difficulty: "Beginner",
       category: "Account",
       thumbnail: "https://images.unsplash.com/photo-1553028826-f4804151e0b2?w=400&h=225&fit=crop",
+      videoUrl: "/training/videos/membership_scaling.mp4", // You'll upload this
       topics: ["Plan Comparison", "Upgrade Benefits", "Usage Tracking", "ROI Calculation"]
     },
     {
@@ -94,6 +98,7 @@ const Training = () => {
       difficulty: "Advanced",
       category: "Analytics",
       thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=225&fit=crop",
+      videoUrl: "/training/videos/advanced_analytics.mp4", // You'll upload this
       topics: ["Custom Reports", "ROI Tracking", "Client Dashboards", "Performance Trends"]
     }
   ];
