@@ -1011,7 +1011,7 @@ function App() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {analyticsInsightsDashboard && (
+                {analyticsInsightsDashboard && analyticsInsightsDashboard.status === 'success' && (
                   <>
                     {/* Analytics & Insights Overview Cards */}
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
