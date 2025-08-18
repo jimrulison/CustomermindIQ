@@ -1264,19 +1264,19 @@ function App() {
                     <div className="flex justify-between">
                       <span className="text-slate-300">At-Risk Customers</span>
                       <span className="text-red-400 font-semibold">
-                        {churnPreventionData?.dashboard?.at_risk_customers || 25}
+                        {churnPreventionData?.dashboard?.summary_metrics?.at_risk_customers || 25}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-300">Prevention Rate</span>
                       <span className="text-green-400 font-semibold">
-                        {churnPreventionData?.dashboard?.prevention_success_rate || '78.4%'}
+                        {churnPreventionData?.dashboard?.success_metrics?.retention_success_rate || '78.4'}%
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-300">Critical Cases</span>
                       <span className="text-orange-400 font-semibold">
-                        {churnPreventionData?.dashboard?.critical_risk || 7}
+                        {churnPreventionData?.dashboard?.summary_metrics?.critical_risk_count || 7}
                       </span>
                     </div>
                   </div>
