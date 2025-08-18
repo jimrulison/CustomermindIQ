@@ -1155,7 +1155,9 @@ function App() {
                     <div className="flex justify-between">
                       <span className="text-slate-300">Budget Variance</span>
                       <span className="text-green-400 font-semibold">
-                        {financialReportingData?.dashboard?.budget_variance || '+12.8%'}
+                        {financialReportingData?.dashboard?.budget_variance?.overall_variance_score ? 
+                          `${financialReportingData.dashboard.budget_variance.overall_variance_score}/100` : 
+                          '85.2/100'}
                       </span>
                     </div>
                   </div>
