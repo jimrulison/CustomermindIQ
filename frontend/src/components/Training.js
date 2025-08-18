@@ -112,7 +112,7 @@ const Training = () => {
       icon: BookOpen,
       pages: 47,
       lastUpdated: "December 2024",
-      downloadUrl: "/Website_Intelligence_Hub_User_Guide.md",
+      downloadUrl: "/training/documents/Website_Intelligence_Hub_User_Guide.md",
       sections: [
         "Module Overview & Getting Started",
         "Main Navigation & Dashboard Cards", 
