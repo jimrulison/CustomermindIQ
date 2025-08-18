@@ -66,6 +66,9 @@ from modules.executive_intelligence_dashboard import executive_intelligence_rout
 # Import Growth Intelligence Suite Module
 from modules.growth_intelligence_suite import growth_intelligence_router
 
+# Import Product Intelligence Hub Module
+from modules.product_intelligence_hub import product_intelligence_router
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
