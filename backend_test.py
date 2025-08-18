@@ -30,6 +30,8 @@ class CustomerIntelligenceAITester:
         self.compliance_governance_passed = 0
         self.ai_command_tests = 0
         self.ai_command_passed = 0
+        self.website_intelligence_tests = 0
+        self.website_intelligence_passed = 0
 
     def run_marketing_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
         """Run a Marketing Automation Pro API test"""
