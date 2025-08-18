@@ -48,6 +48,15 @@ from modules.advanced_features_expansion import (
     sentiment_analysis_router
 )
 
+# Import Analytics & Insights Module
+from modules.analytics_insights import (
+    customer_journey_mapping_router,
+    revenue_attribution_router,
+    cohort_analysis_router,
+    competitive_intelligence_router,
+    roi_forecasting_router
+)
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
