@@ -72,6 +72,12 @@ from modules.product_intelligence_hub import product_intelligence_router
 # Import Integration & Data Management Hub Module
 from modules.integration_data_management_hub import integration_hub_router
 
+# Import Compliance & Governance Suite Module
+from modules.compliance_governance_suite import compliance_governance_router
+
+# Import AI Command Center Module
+from modules.ai_command_center import ai_command_router
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
