@@ -52,6 +52,18 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
       color: 'hover:bg-cyan-600/20 hover:text-cyan-400'
     },
     {
+      id: 'executive',
+      label: 'Executive Dashboard',
+      icon: BarChart3,
+      color: 'hover:bg-gold-600/20 hover:text-gold-400'
+    },
+    {
+      id: 'growth',
+      label: 'Growth Intelligence',
+      icon: TrendingUp,
+      color: 'hover:bg-purple-600/20 hover:text-purple-400'
+    },
+    {
       id: 'create',
       label: 'Create Campaign',
       icon: Zap,
