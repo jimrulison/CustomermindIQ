@@ -44,6 +44,7 @@ import CreateCampaign from './components/CreateCampaign';
 import CustomerSuccessIntelligence from './components/CustomerSuccessIntelligence';
 import ExecutiveIntelligenceDashboard from './components/ExecutiveIntelligenceDashboard';
 import GrowthIntelligenceSuite from './components/GrowthIntelligenceSuite';
+import ProductIntelligenceHub from './components/ProductIntelligenceHub';
 import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
