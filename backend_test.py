@@ -3118,7 +3118,7 @@ class CustomerIntelligenceAITester:
         
         return success
 
-def run_comprehensive_analytics_insights_tests(self):
+    def run_comprehensive_analytics_insights_tests(self):
         """Run comprehensive Analytics & Insights module tests"""
         print("\n" + "="*80)
         print("🚀 ANALYTICS & INSIGHTS MODULE - COMPREHENSIVE TESTING")
