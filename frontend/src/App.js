@@ -117,16 +117,10 @@ function App() {
 
   // Data loading on authentication
   useEffect(() => {
-    loadData();
-    
-    // Fallback timeout to prevent infinite loading
-    const timeoutId = setTimeout(() => {
-      console.log('Customer Mind IQ: Timeout reached, forcing load completion');
-      setLoading(false);
-    }, 10000); // 10 second timeout
-    
-    return () => clearTimeout(timeoutId);
-  }, []);
+    if (isAuthenticated) {
+      loadData();
+    }
+  }, [isAuthenticated]);
 
   const loadData = async () => {
     try {
