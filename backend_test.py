@@ -20,6 +20,8 @@ class CustomerIntelligenceAITester:
         self.revenue_analytics_passed = 0
         self.advanced_features_tests = 0
         self.advanced_features_passed = 0
+        self.analytics_insights_tests = 0
+        self.analytics_insights_passed = 0
 
     def run_marketing_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
         """Run a Marketing Automation Pro API test"""
