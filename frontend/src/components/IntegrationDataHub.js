@@ -58,7 +58,7 @@ const IntegrationDataHub = () => {
   const tabs = [
     { id: 'overview', name: 'Overview', icon: BarChart3 },
     { id: 'connectors', name: 'Data Connectors', icon: Link },
-    { id: 'sync', name: 'Sync Management', icon: Sync },
+    { id: 'sync', name: 'Sync Management', icon: RefreshCw },
     { id: 'quality', name: 'Data Quality', icon: Shield },
     { id: 'analytics', name: 'Integration Analytics', icon: TrendingUp }
   ];
