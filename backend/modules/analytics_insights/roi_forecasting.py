@@ -808,21 +808,23 @@ async def get_roi_forecasting_dashboard():
 async def predict_campaign_roi(parameters: Dict):
     """Predict ROI for a specific campaign"""
     try:
-        # Parse parameters
-        forecast_params = ForecastParameters(
-            campaign_type=CampaignType(parameters.get('campaign_type', 'email')),
-            budget=parameters.get('budget', 5000),
-            duration_days=parameters.get('duration_days', 30),
-            target_audience_size=parameters.get('target_audience_size', 10000)
-        )
+        # Parse parameters - avoid conflicts with default values
+        params_dict = {
+            'campaign_type': CampaignType(parameters.get('campaign_type', 'email')),
+            'budget': parameters.get('budget', 5000),
+            'duration_days': parameters.get('duration_days', 30),
+            'target_audience_size': parameters.get('target_audience_size', 10000),
+        }
         
-        # Override defaults if provided
+        # Add optional parameters only if provided
         if 'seasonal_factor' in parameters:
-            forecast_params.seasonal_factor = parameters['seasonal_factor']
+            params_dict['seasonal_factor'] = parameters['seasonal_factor']
         if 'economic_conditions' in parameters:
-            forecast_params.economic_conditions = parameters['economic_conditions']
+            params_dict['economic_conditions'] = parameters['economic_conditions']
         if 'competitive_pressure' in parameters:
-            forecast_params.competitive_pressure = parameters['competitive_pressure']
+            params_dict['competitive_pressure'] = parameters['competitive_pressure']
+            
+        forecast_params = ForecastParameters(**params_dict)
         
         model = ForecastModel(parameters.get('model', 'ensemble'))
         
