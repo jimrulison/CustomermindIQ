@@ -98,6 +98,24 @@ function App() {
     scheduled_date: ''
   });
 
+  // Authentication functions
+  const handleSignIn = (userData) => {
+    setUser(userData);
+    setIsAuthenticated(true);
+    setCurrentPage('dashboard');
+  };
+
+  const handleSignOut = () => {
+    setUser(null);
+    setIsAuthenticated(false);
+    setCurrentPage('dashboard');
+  };
+
+  const handleNavigate = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Data loading on authentication
   useEffect(() => {
     loadData();
     
