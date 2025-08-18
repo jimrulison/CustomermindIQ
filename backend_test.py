@@ -1717,9 +1717,138 @@ class CustomerIntelligenceAITester:
         
         return success
 
-    # =====================================================
-    # END MARKETING AUTOMATION PRO MODULE TESTS (REBUILT)
-    # =====================================================
+    def run_comprehensive_marketing_automation_tests(self):
+        """Run comprehensive Marketing Automation Pro module tests"""
+        print("\n" + "="*80)
+        print("🚀 COMPREHENSIVE MARKETING AUTOMATION PRO MODULE TESTING")
+        print("Testing all 5 advanced microservices with AI-powered features")
+        print("="*80)
+        
+        # Track test results
+        tests_run = 0
+        tests_passed = 0
+        
+        # 1. Multi-Channel Orchestration Tests (4 endpoints)
+        print("\n🎯 1. MULTI-CHANNEL ORCHESTRATION MICROSERVICE")
+        print("-" * 50)
+        
+        tests = [
+            self.test_multi_channel_orchestration_dashboard,
+            self.test_create_multi_channel_campaign,
+            self.test_execute_multi_channel_campaign,
+            self.test_send_sms_message
+        ]
+        
+        for test in tests:
+            tests_run += 1
+            if test():
+                tests_passed += 1
+        
+        # 2. A/B Testing with AI & Multi-Armed Bandits Tests (5 endpoints)
+        print("\n🧪 2. A/B TESTING WITH AI & MULTI-ARMED BANDITS MICROSERVICE")
+        print("-" * 60)
+        
+        tests = [
+            self.test_ab_testing_dashboard,
+            self.test_create_ai_powered_ab_test,
+            self.test_get_optimal_variant,
+            self.test_record_ab_test_event,
+            self.test_analyze_ab_test_results
+        ]
+        
+        for test in tests:
+            tests_run += 1
+            if test():
+                tests_passed += 1
+        
+        # 3. Dynamic Content Personalization Tests (5 endpoints)
+        print("\n🎨 3. DYNAMIC CONTENT PERSONALIZATION MICROSERVICE")
+        print("-" * 50)
+        
+        tests = [
+            self.test_dynamic_content_dashboard,
+            self.test_track_customer_behavior,
+            self.test_create_dynamic_template,
+            self.test_generate_personalized_content,
+            self.test_get_real_time_recommendations
+        ]
+        
+        for test in tests:
+            tests_run += 1
+            if test():
+                tests_passed += 1
+        
+        # 4. Lead Scoring Enhancement Tests (4 endpoints)
+        print("\n🎯 4. LEAD SCORING ENHANCEMENT MICROSERVICE")
+        print("-" * 45)
+        
+        tests = [
+            self.test_lead_scoring_dashboard,
+            self.test_track_lead_activity,
+            self.test_calculate_comprehensive_lead_score,
+            self.test_train_ml_scoring_model
+        ]
+        
+        for test in tests:
+            tests_run += 1
+            if test():
+                tests_passed += 1
+        
+        # 5. Referral Program Integration Tests (5 endpoints)
+        print("\n🤝 5. REFERRAL PROGRAM INTEGRATION MICROSERVICE")
+        print("-" * 45)
+        
+        tests = [
+            self.test_referral_program_dashboard,
+            self.test_analyze_referral_propensity,
+            self.test_create_referral_campaign,
+            self.test_get_viral_metrics,
+            self.test_optimize_referral_program
+        ]
+        
+        for test in tests:
+            tests_run += 1
+            if test():
+                tests_passed += 1
+        
+        # 6. Unified Dashboard Test (1 endpoint)
+        print("\n📊 6. UNIFIED MARKETING AUTOMATION DASHBOARD")
+        print("-" * 45)
+        
+        tests_run += 1
+        if self.test_marketing_automation_dashboard():
+            tests_passed += 1
+        
+        # Final Results
+        print("\n" + "="*80)
+        print("🎉 MARKETING AUTOMATION PRO TESTING COMPLETE")
+        print("="*80)
+        print(f"📊 COMPREHENSIVE TEST RESULTS:")
+        print(f"   Total Tests Run: {tests_run}")
+        print(f"   Tests Passed: {tests_passed}")
+        print(f"   Success Rate: {(tests_passed/tests_run)*100:.1f}%")
+        print(f"   Failed Tests: {tests_run - tests_passed}")
+        
+        # Detailed breakdown
+        print(f"\n📋 MICROSERVICE BREAKDOWN:")
+        print(f"   1. Multi-Channel Orchestration: 4 endpoints tested")
+        print(f"   2. A/B Testing with AI & Multi-Armed Bandits: 5 endpoints tested")
+        print(f"   3. Dynamic Content Personalization: 5 endpoints tested")
+        print(f"   4. Lead Scoring Enhancement: 4 endpoints tested")
+        print(f"   5. Referral Program Integration: 5 endpoints tested")
+        print(f"   6. Unified Dashboard: 1 endpoint tested")
+        print(f"   TOTAL: {tests_run} endpoints tested across 5 advanced microservices")
+        
+        if tests_passed == tests_run:
+            print(f"\n✅ ALL MARKETING AUTOMATION PRO TESTS PASSED!")
+            print(f"   The completely rebuilt Marketing Automation Pro module is fully functional")
+            print(f"   All AI-powered features, mock integrations, and analytics are working correctly")
+        else:
+            print(f"\n⚠️  {tests_run - tests_passed} tests failed - see details above")
+        
+        print("="*80)
+        
+        return tests_passed, tests_run
 
     # =====================================================
     # REVENUE ANALYTICS SUITE MODULE TESTS
