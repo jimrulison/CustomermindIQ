@@ -503,7 +503,7 @@ const Admin = () => {
                         onClick={() => togglePostPin(post.id)}
                         className={`${post.isPinned ? 'text-yellow-400 border-yellow-600' : 'text-slate-400 border-slate-600'}`}
                       >
-                        {post.isPinned ? <Unpin className="w-3 h-3" /> : <Pin className="w-3 h-3" />}
+                        {post.isPinned ? <PinOff className="w-3 h-3" /> : <Pin className="w-3 h-3" />}
                       </Button>
                       <Button
                         variant="outline"
