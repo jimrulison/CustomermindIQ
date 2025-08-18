@@ -5069,5 +5069,626 @@ def main():
         print(f"   See detailed test results above for specific issues")
         return 1
 
+    # =====================================================
+    # WEBSITE INTELLIGENCE HUB MODULE TESTS
+    # Comprehensive testing of website analysis, SEO intelligence,
+    # performance monitoring, and membership management
+    # =====================================================
+
+    def test_website_intelligence_dashboard(self):
+        """Test comprehensive website intelligence dashboard"""
+        print("\n🌐 Testing Website Intelligence Hub - Main Dashboard...")
+        
+        success, response = self.run_website_intelligence_test(
+            "Website Intelligence Dashboard",
+            "GET",
+            "api/website-intelligence/dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                overview = dashboard.get('websites_overview', {})
+                print(f"   Total Websites: {overview.get('total_websites', 0)}")
+                print(f"   Membership Tier: {overview.get('membership_tier', 'unknown')}")
+                print(f"   Overall Health Score: {overview.get('overall_health_score', 0)}/100")
+                print(f"   Websites Allowed: {overview.get('websites_allowed', 0)}")
+                
+                user_websites = dashboard.get('user_websites', [])
+                print(f"   User Websites Analyzed: {len(user_websites)}")
+                for website in user_websites[:2]:  # Show first 2 websites
+                    print(f"   - {website.get('domain', 'unknown')}: Health {website.get('health_score', 0)}/100")
+                    print(f"     SEO: {website.get('seo_score', 0)}/100, Performance: {website.get('performance_score', 0)}/100")
+                
+                analysis_summary = dashboard.get('analysis_summary', {})
+                print(f"   Total Pages Analyzed: {analysis_summary.get('total_pages_analyzed', 0)}")
+                print(f"   Issues Found: {analysis_summary.get('total_issues_found', 0)}")
+                print(f"   Opportunities: {analysis_summary.get('opportunities_identified', 0)}")
+                
+                business_insights = dashboard.get('business_insights', {})
+                opportunities = business_insights.get('optimization_opportunities', [])
+                print(f"   Business Optimization Opportunities: {len(opportunities)}")
+                for opp in opportunities[:2]:  # Show first 2 opportunities
+                    print(f"   - {opp.get('opportunity', 'unknown')}: {opp.get('estimated_revenue_impact', 'unknown')}")
+        
+        return success
+
+    def test_membership_status(self):
+        """Test membership status and website limits"""
+        print("\n👤 Testing Website Intelligence Hub - Membership Status...")
+        
+        success, response = self.run_website_intelligence_test(
+            "Membership Status",
+            "GET",
+            "api/website-intelligence/membership-status",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            membership = response.get('membership_details', {})
+            print(f"   Current Tier: {membership.get('current_tier', 'unknown')}")
+            print(f"   Subscription Status: {membership.get('subscription_status', 'unknown')}")
+            print(f"   Billing Cycle: {membership.get('billing_cycle', 'unknown')}")
+            
+            limits = response.get('website_limits', {})
+            print(f"   Websites Used: {limits.get('websites_used', 0)}/{limits.get('total_websites_allowed', 0)}")
+            print(f"   Websites Remaining: {limits.get('websites_remaining', 0)}")
+            
+            tier_comparison = response.get('tier_comparison', [])
+            print(f"   Available Tiers: {len(tier_comparison)}")
+            for tier in tier_comparison:
+                current_indicator = " (CURRENT)" if tier.get('is_current') else ""
+                print(f"   - {tier.get('tier_name', 'unknown')}: ${tier.get('monthly_price', 0)}/month, {tier.get('websites_included', 0)} websites{current_indicator}")
+            
+            usage = response.get('usage_analytics', {})
+            print(f"   Analyses This Month: {usage.get('analyses_performed_this_month', 0)}")
+            print(f"   API Calls: {usage.get('api_calls_used', 0)}/{usage.get('api_calls_limit', 0)}")
+        
+        return success
+
+    def test_performance_dashboard(self):
+        """Test performance monitoring dashboard with Core Web Vitals"""
+        print("\n⚡ Testing Website Intelligence Hub - Performance Dashboard...")
+        
+        success, response = self.run_website_intelligence_test(
+            "Performance Dashboard",
+            "GET",
+            "api/website-intelligence/performance-dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                overview = dashboard.get('performance_overview', {})
+                print(f"   Average Performance Score: {overview.get('avg_performance_score', 0)}/100")
+                print(f"   Websites Monitored: {overview.get('websites_monitored', 0)}")
+                print(f"   Performance Grade: {overview.get('overall_grade', 'unknown')}")
+                
+                core_vitals = dashboard.get('core_web_vitals', {})
+                print(f"   Core Web Vitals Status: {core_vitals.get('overall_status', 'unknown')}")
+                print(f"   LCP: {core_vitals.get('lcp_avg', 0)}s, FID: {core_vitals.get('fid_avg', 0)}ms, CLS: {core_vitals.get('cls_avg', 0)}")
+                
+                trends = dashboard.get('performance_trends', {})
+                print(f"   Performance Trend: {trends.get('trend_direction', 'unknown')} ({trends.get('trend_percentage', 0):+.1f}%)")
+                
+                page_speed = dashboard.get('page_speed_insights', [])
+                print(f"   Page Speed Insights: {len(page_speed)} websites analyzed")
+                for insight in page_speed[:2]:  # Show first 2 websites
+                    print(f"   - {insight.get('website', 'unknown')}: Desktop {insight.get('desktop_score', 0)}, Mobile {insight.get('mobile_score', 0)}")
+                
+                monitoring = dashboard.get('realtime_monitoring', {})
+                uptime_data = monitoring.get('uptime_status', [])
+                print(f"   Real-time Monitoring: {len(uptime_data)} websites")
+                for site in uptime_data:
+                    print(f"   - {site.get('website', 'unknown')}: {site.get('status', 'unknown')} ({site.get('response_time', 0)}ms)")
+                
+                recommendations = dashboard.get('optimization_recommendations', [])
+                print(f"   Optimization Recommendations: {len(recommendations)}")
+                for rec in recommendations[:2]:  # Show first 2 recommendations
+                    print(f"   - {rec.get('priority', 'unknown').upper()}: {rec.get('recommendation', 'unknown')}")
+                    print(f"     Impact: {rec.get('business_impact', 'unknown')}")
+        
+        return success
+
+    def test_seo_dashboard(self):
+        """Test SEO intelligence dashboard with keyword tracking"""
+        print("\n🔍 Testing Website Intelligence Hub - SEO Dashboard...")
+        
+        success, response = self.run_website_intelligence_test(
+            "SEO Dashboard",
+            "GET",
+            "api/website-intelligence/seo-dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            dashboard = response.get('dashboard', {})
+            if dashboard:
+                overview = dashboard.get('seo_overview', {})
+                print(f"   Overall SEO Score: {overview.get('overall_seo_score', 0)}/100")
+                print(f"   Keywords Tracked: {overview.get('total_keywords_tracked', 0)}")
+                print(f"   Organic Traffic Trend: {overview.get('organic_traffic_trend', 'unknown')} ({overview.get('organic_traffic_change', 'unknown')})")
+                print(f"   Total Backlinks: {overview.get('total_backlinks', 0)}")
+                print(f"   Domain Authority: {overview.get('domain_authority_avg', 0)}")
+                
+                keywords = dashboard.get('keyword_rankings', {})
+                ranking_dist = keywords.get('ranking_distribution', {})
+                print(f"   Keyword Rankings - Top 10: {ranking_dist.get('top_10', 0)}, Top 50: {ranking_dist.get('top_50', 0)}")
+                
+                keyword_performance = keywords.get('keyword_performance', [])
+                print(f"   Top Performing Keywords: {len(keyword_performance)}")
+                for kw in keyword_performance[:3]:  # Show first 3 keywords
+                    print(f"   - '{kw.get('keyword', 'unknown')}': Position {kw.get('current_position', 0)} ({kw.get('change', 'no change')})")
+                    print(f"     Traffic Value: {kw.get('traffic_value', 'unknown')}")
+                
+                traffic = dashboard.get('organic_traffic', {})
+                print(f"   Organic Sessions: {traffic.get('current_month_sessions', 0):,} ({traffic.get('month_over_month_change', 'unknown')})")
+                
+                technical = dashboard.get('technical_seo', {})
+                print(f"   Technical SEO Score: {technical.get('overall_technical_score', 0)}/100")
+                print(f"   Technical Issues: {technical.get('crawl_errors', 0)} crawl errors, {technical.get('indexing_issues', 0)} indexing issues")
+                
+                content = dashboard.get('content_analysis', {})
+                print(f"   Content Quality Score: {content.get('content_quality_score', 0)}/100")
+                print(f"   Content Pieces: {content.get('total_content_pieces', 0)}")
+                print(f"   Content Gaps: {content.get('content_gaps_identified', 0)}")
+                
+                backlinks = dashboard.get('backlink_analysis', {})
+                print(f"   Backlink Profile: {backlinks.get('total_backlinks', 0)} links from {backlinks.get('referring_domains', 0)} domains")
+                print(f"   New Backlinks (30d): {backlinks.get('new_backlinks_30d', 0)}")
+                
+                competitors = dashboard.get('competitor_analysis', {})
+                print(f"   Competitive Position: {competitors.get('competitive_position', 'unknown')}")
+                print(f"   Share of Voice: {competitors.get('share_of_voice', 0)}%")
+                
+                recommendations = dashboard.get('seo_recommendations', [])
+                print(f"   SEO Recommendations: {len(recommendations)}")
+                for rec in recommendations[:2]:  # Show first 2 recommendations
+                    print(f"   - {rec.get('priority', 'unknown').upper()}: {rec.get('recommendation', 'unknown')}")
+                    print(f"     Category: {rec.get('category', 'unknown')}, Impact: {rec.get('impact', 'unknown')}")
+        
+        return success
+
+    def test_update_all_websites(self):
+        """Test manual 'Update All' functionality"""
+        print("\n🔄 Testing Website Intelligence Hub - Update All Websites...")
+        
+        success, response = self.run_website_intelligence_test(
+            "Update All Websites",
+            "POST",
+            "api/website-intelligence/update-all",
+            200,
+            timeout=60
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Update ID: {response.get('update_id', 'unknown')}")
+            print(f"   Websites to Update: {response.get('websites_to_update', 0)}")
+            
+            queue = response.get('update_queue', [])
+            print(f"   Update Queue: {len(queue)} websites")
+            for website in queue:
+                print(f"   - {website.get('domain', 'unknown')}: {website.get('status', 'unknown')} ({website.get('progress', 0):.1f}%)")
+                print(f"     Estimated Time: {website.get('estimated_time', 'unknown')}")
+            
+            update_types = response.get('update_types', [])
+            print(f"   Update Types: {', '.join(update_types)}")
+            
+            notifications = response.get('notification_settings', {})
+            print(f"   Notifications: Email: {notifications.get('email_on_completion', False)}, Dashboard: {notifications.get('dashboard_update', False)}")
+        
+        return success
+
+    def test_add_website(self):
+        """Test adding a new website for analysis"""
+        print("\n➕ Testing Website Intelligence Hub - Add Website...")
+        
+        website_data = {
+            "domain": "mynewsite.com",
+            "name": "My New Site",
+            "type": "E-commerce",
+            "membership_tier": "professional",
+            "current_websites": 3
+        }
+        
+        success, response = self.run_website_intelligence_test(
+            "Add New Website",
+            "POST",
+            "api/website-intelligence/website/add",
+            200,
+            data=website_data,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Website ID: {response.get('website_id', 'unknown')}")
+            
+            details = response.get('website_details', {})
+            print(f"   Domain: {details.get('domain', 'unknown')}")
+            print(f"   Website Name: {details.get('website_name', 'unknown')}")
+            print(f"   Status: {details.get('status', 'unknown')}")
+            
+            verification = response.get('verification_steps', [])
+            print(f"   Verification Steps: {len(verification)}")
+            for step in verification:
+                print(f"   - Step {step.get('step', 0)}: {step.get('title', 'unknown')}")
+            
+            next_steps = response.get('next_steps', [])
+            print(f"   Next Steps: {len(next_steps)} actions required")
+        
+        return success
+
+    def test_website_analysis(self):
+        """Test triggering comprehensive website analysis"""
+        print("\n🔍 Testing Website Intelligence Hub - Website Analysis...")
+        
+        analysis_options = {
+            "type": "full",
+            "depth": "comprehensive",
+            "subdomains": True,
+            "competitor_analysis": True
+        }
+        
+        success, response = self.run_website_intelligence_test(
+            "Trigger Website Analysis",
+            "POST",
+            "api/website-intelligence/website/web_001/analyze",
+            200,
+            data=analysis_options,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Analysis ID: {response.get('analysis_id', 'unknown')}")
+            print(f"   Website ID: {response.get('website_id', 'unknown')}")
+            print(f"   Analysis Type: {response.get('analysis_type', 'unknown')}")
+            
+            modules = response.get('analysis_modules', [])
+            print(f"   Analysis Modules: {len(modules)}")
+            for module in modules:
+                print(f"   - {module.get('module', 'unknown')}: {module.get('status', 'unknown')} ({module.get('progress', 0):.1f}%)")
+                print(f"     Estimated Time: {module.get('estimated_time', 'unknown')}")
+            
+            scope = response.get('analysis_scope', {})
+            print(f"   Analysis Scope: {scope.get('pages_to_analyze', 0)} pages")
+            print(f"   Depth Level: {scope.get('depth_level', 'unknown')}")
+            print(f"   Include Subdomains: {scope.get('include_subdomains', False)}")
+            print(f"   Competitor Analysis: {scope.get('competitor_comparison', False)}")
+        
+        return success
+
+    def test_detailed_website_report(self):
+        """Test getting detailed website report"""
+        print("\n📊 Testing Website Intelligence Hub - Detailed Website Report...")
+        
+        success, response = self.run_website_intelligence_test(
+            "Detailed Website Report",
+            "GET",
+            "api/website-intelligence/website/web_001/detailed-report",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Website ID: {response.get('website_id', 'unknown')}")
+            
+            website_info = response.get('website_info', {})
+            print(f"   Domain: {website_info.get('domain', 'unknown')}")
+            print(f"   Website Name: {website_info.get('website_name', 'unknown')}")
+            print(f"   Website Type: {website_info.get('website_type', 'unknown')}")
+            
+            summary = response.get('executive_summary', {})
+            print(f"   Overall Health Score: {summary.get('overall_health_score', 0)}/100")
+            print(f"   Business Impact: {summary.get('business_impact', 'unknown')}")
+            
+            strengths = summary.get('strengths', [])
+            print(f"   Strengths: {len(strengths)}")
+            for strength in strengths[:2]:
+                print(f"   - {strength}")
+            
+            improvements = summary.get('areas_for_improvement', [])
+            print(f"   Areas for Improvement: {len(improvements)}")
+            for improvement in improvements[:2]:
+                print(f"   - {improvement}")
+            
+            detailed = response.get('detailed_analysis', {})
+            technical = detailed.get('technical_details', {})
+            print(f"   Technical Analysis: {technical.get('page_count', 0)} pages, {technical.get('avg_page_size', 'unknown')} avg size")
+            
+            seo_details = detailed.get('seo_details', {})
+            print(f"   SEO Analysis: {seo_details.get('title_tags_optimized', 'unknown')} title tags optimized")
+            
+            performance = detailed.get('performance_details', {})
+            print(f"   Performance: FCP {performance.get('first_contentful_paint', 'unknown')}, LCP {performance.get('largest_contentful_paint', 'unknown')}")
+            
+            recommendations = response.get('actionable_recommendations', [])
+            print(f"   Actionable Recommendations: {len(recommendations)}")
+            for rec in recommendations[:2]:
+                print(f"   - {rec.get('priority', 'unknown').upper()}: {rec.get('recommendation', 'unknown')}")
+                print(f"     Impact: {rec.get('impact', 'unknown')}, Effort: {rec.get('effort', 'unknown')}")
+        
+        return success
+
+    def test_website_performance_report(self):
+        """Test getting detailed performance report for specific website"""
+        print("\n⚡ Testing Website Intelligence Hub - Website Performance Report...")
+        
+        success, response = self.run_website_intelligence_test(
+            "Website Performance Report",
+            "GET",
+            "api/website-intelligence/website/web_001/performance-report",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Website ID: {response.get('website_id', 'unknown')}")
+            
+            website_info = response.get('website_info', {})
+            print(f"   Domain: {website_info.get('domain', 'unknown')}")
+            
+            summary = response.get('performance_summary', {})
+            print(f"   Overall Score: {summary.get('overall_score', 0)}/100")
+            print(f"   Desktop Score: {summary.get('desktop_score', 0)}/100")
+            print(f"   Mobile Score: {summary.get('mobile_score', 0)}/100")
+            print(f"   Performance Grade: {summary.get('performance_grade', 'unknown')}")
+            print(f"   Improvement: {summary.get('improvement', 'unknown')}")
+            
+            core_vitals = response.get('core_web_vitals_detailed', {})
+            lcp = core_vitals.get('lcp', {})
+            fid = core_vitals.get('fid', {})
+            cls = core_vitals.get('cls', {})
+            print(f"   Core Web Vitals:")
+            print(f"   - LCP: {lcp.get('value', 0)}s ({lcp.get('status', 'unknown')})")
+            print(f"   - FID: {fid.get('value', 0)}ms ({fid.get('status', 'unknown')})")
+            print(f"   - CLS: {cls.get('value', 0)} ({cls.get('status', 'unknown')})")
+            
+            detailed_metrics = response.get('detailed_metrics', {})
+            print(f"   Detailed Metrics:")
+            print(f"   - First Contentful Paint: {detailed_metrics.get('first_contentful_paint', 0)}s")
+            print(f"   - Speed Index: {detailed_metrics.get('speed_index', 0)}s")
+            print(f"   - Time to Interactive: {detailed_metrics.get('time_to_interactive', 0)}s")
+            
+            resource_analysis = response.get('resource_analysis', {})
+            print(f"   Resource Analysis: {resource_analysis.get('total_page_size', 'unknown')}, {resource_analysis.get('total_requests', 0)} requests")
+            
+            breakdown = resource_analysis.get('resource_breakdown', [])
+            print(f"   Resource Breakdown: {len(breakdown)} categories")
+            for resource in breakdown[:3]:  # Show first 3 resource types
+                print(f"   - {resource.get('type', 'unknown')}: {resource.get('size', 'unknown')} ({resource.get('percentage', 0):.1f}%)")
+            
+            opportunities = response.get('optimization_opportunities', [])
+            print(f"   Optimization Opportunities: {len(opportunities)}")
+            for opp in opportunities[:2]:  # Show first 2 opportunities
+                print(f"   - {opp.get('category', 'unknown')}: {opp.get('opportunity', 'unknown')}")
+                print(f"     Savings: {opp.get('potential_savings', 'unknown')}, Time: {opp.get('time_savings', 'unknown')}")
+        
+        return success
+
+    def test_keyword_research(self):
+        """Test keyword research and opportunities"""
+        print("\n🔍 Testing Website Intelligence Hub - Keyword Research...")
+        
+        success, response = self.run_website_intelligence_test(
+            "Keyword Research",
+            "GET",
+            "api/website-intelligence/keyword-research",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            scope = response.get('research_scope', {})
+            print(f"   Research Scope: {scope.get('related_keywords_found', 0)} keywords found")
+            print(f"   Search Volume Range: {scope.get('search_volume_range', 'unknown')}")
+            print(f"   Difficulty Range: {scope.get('difficulty_range', 'unknown')}")
+            
+            opportunities = response.get('keyword_opportunities', [])
+            print(f"   Keyword Opportunities: {len(opportunities)}")
+            for kw in opportunities[:3]:  # Show first 3 opportunities
+                print(f"   - '{kw.get('keyword', 'unknown')}': {kw.get('search_volume', 0):,} volume, {kw.get('keyword_difficulty', 0)} difficulty")
+                print(f"     Opportunity Score: {kw.get('opportunity_score', 0)}/10")
+                print(f"     Recommended Action: {kw.get('recommended_action', 'unknown')}")
+            
+            clusters = response.get('keyword_clusters', [])
+            print(f"   Keyword Clusters: {len(clusters)}")
+            for cluster in clusters:
+                print(f"   - {cluster.get('cluster_topic', 'unknown')}: {cluster.get('keywords_count', 0)} keywords")
+                print(f"     Total Volume: {cluster.get('total_search_volume', 0):,}, Avg Difficulty: {cluster.get('avg_difficulty', 0)}")
+            
+            seasonal = response.get('seasonal_trends', [])
+            print(f"   Seasonal Trends: {len(seasonal)} identified")
+            for trend in seasonal:
+                print(f"   - '{trend.get('keyword', 'unknown')}': Peak in {', '.join(trend.get('peak_months', []))}")
+                print(f"     Volume Increase: {trend.get('volume_increase', 'unknown')}")
+        
+        return success
+
+    def test_content_optimization(self):
+        """Test content optimization recommendations"""
+        print("\n📝 Testing Website Intelligence Hub - Content Optimization...")
+        
+        optimization_data = {
+            "url": "/premium-coffee-beans",
+            "title": "Premium Coffee Beans",
+            "word_count": 340,
+            "keyword": "premium coffee beans"
+        }
+        
+        success, response = self.run_website_intelligence_test(
+            "Content Optimization",
+            "POST",
+            "api/website-intelligence/content-optimization",
+            200,
+            data=optimization_data,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Optimization ID: {response.get('optimization_id', 'unknown')}")
+            
+            analysis = response.get('content_analysis', {})
+            print(f"   Content Analysis:")
+            print(f"   - URL: {analysis.get('url', 'unknown')}")
+            print(f"   - Current Title: {analysis.get('current_title', 'unknown')}")
+            print(f"   - Word Count: {analysis.get('current_word_count', 0)}")
+            print(f"   - Target Keyword: {analysis.get('target_keyword', 'unknown')}")
+            print(f"   - Current SEO Score: {analysis.get('current_seo_score', 0):.1f}/100")
+            
+            recommendations = response.get('optimization_recommendations', [])
+            print(f"   Optimization Recommendations: {len(recommendations)}")
+            for rec in recommendations[:3]:  # Show first 3 recommendations
+                print(f"   - {rec.get('element', 'unknown')}: {rec.get('improvement', 'unknown')}")
+                print(f"     Impact: {rec.get('impact', 'unknown')}")
+                print(f"     Current: {rec.get('current', 'unknown')}")
+                print(f"     Recommended: {rec.get('recommended', 'unknown')[:100]}...")
+            
+            keyword_opt = response.get('keyword_optimization', {})
+            print(f"   Keyword Optimization:")
+            print(f"   - Target: {keyword_opt.get('target_keyword', 'unknown')}")
+            print(f"   - Current Density: {keyword_opt.get('keyword_density', 0)}%")
+            print(f"   - Recommended Density: {keyword_opt.get('recommended_density', 'unknown')}")
+            
+            related_kw = keyword_opt.get('related_keywords', [])
+            print(f"   - Related Keywords: {', '.join(related_kw[:3])}")
+            
+            competitor = response.get('competitor_comparison', {})
+            print(f"   Competitor Comparison:")
+            print(f"   - Top Competitor Content Length: {competitor.get('top_competitor_content_length', 0)} words")
+            print(f"   - Top Competitor Internal Links: {competitor.get('top_competitor_internal_links', 0)}")
+            
+            improvements = competitor.get('areas_to_improve', [])
+            print(f"   - Areas to Improve: {len(improvements)}")
+            for improvement in improvements[:2]:
+                print(f"     • {improvement}")
+        
+        return success
+
+    def test_performance_test_trigger(self):
+        """Test triggering comprehensive performance test"""
+        print("\n🚀 Testing Website Intelligence Hub - Performance Test Trigger...")
+        
+        test_data = {
+            "url": "https://myawesomestore.com",
+            "type": "comprehensive",
+            "locations": ["US East", "Europe", "Asia"],
+            "devices": ["desktop", "mobile", "tablet"],
+            "speeds": ["3G", "4G", "Cable", "Fiber"]
+        }
+        
+        success, response = self.run_website_intelligence_test(
+            "Trigger Performance Test",
+            "POST",
+            "api/website-intelligence/performance-test",
+            200,
+            data=test_data,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Test ID: {response.get('test_id', 'unknown')}")
+            
+            config = response.get('test_configuration', {})
+            print(f"   Test Configuration:")
+            print(f"   - URL: {config.get('website_url', 'unknown')}")
+            print(f"   - Type: {config.get('test_type', 'unknown')}")
+            print(f"   - Locations: {', '.join(config.get('test_locations', []))}")
+            print(f"   - Devices: {', '.join(config.get('devices', []))}")
+            print(f"   - Connection Speeds: {', '.join(config.get('connection_speeds', []))}")
+            
+            progress = response.get('test_progress', {})
+            print(f"   Test Progress:")
+            print(f"   - Current Stage: {progress.get('current_stage', 'unknown')}")
+            print(f"   - Progress: {progress.get('progress_percentage', 0)}%")
+            
+            stages = progress.get('stages', [])
+            print(f"   - Test Stages: {len(stages)} stages planned")
+            for stage in stages[:3]:  # Show first 3 stages
+                print(f"     • {stage}")
+            
+            updates = response.get('real_time_updates', {})
+            print(f"   Real-time Updates: {updates.get('updates_available', False)}")
+            print(f"   Update Frequency: {updates.get('update_frequency', 'unknown')}")
+        
+        return success
+
+    def run_website_intelligence_hub_tests(self):
+        """Run all Website Intelligence Hub tests"""
+        print("\n" + "="*80)
+        print("🌐 WEBSITE INTELLIGENCE HUB MODULE TESTING")
+        print("="*80)
+        print("Testing comprehensive website analysis and monitoring for users' own websites")
+        print("Including SEO analysis, performance metrics, technical audits, and business intelligence")
+        
+        # Core Dashboard Tests
+        self.test_website_intelligence_dashboard()
+        self.test_membership_status()
+        
+        # Performance Monitoring Tests
+        self.test_performance_dashboard()
+        self.test_website_performance_report()
+        self.test_performance_test_trigger()
+        
+        # SEO Intelligence Tests
+        self.test_seo_dashboard()
+        self.test_keyword_research()
+        self.test_content_optimization()
+        
+        # Website Management Tests
+        self.test_update_all_websites()
+        self.test_add_website()
+        self.test_website_analysis()
+        self.test_detailed_website_report()
+        
+        # Calculate results
+        success_rate = (self.website_intelligence_passed / self.website_intelligence_tests * 100) if self.website_intelligence_tests > 0 else 0
+        
+        print(f"\n" + "="*80)
+        print(f"🌐 WEBSITE INTELLIGENCE HUB TESTING COMPLETE")
+        print(f"="*80)
+        print(f"✅ Tests Passed: {self.website_intelligence_passed}/{self.website_intelligence_tests}")
+        print(f"📊 Success Rate: {success_rate:.1f}%")
+        
+        if self.website_intelligence_passed == self.website_intelligence_tests:
+            print(f"🎉 SUCCESS: ALL WEBSITE INTELLIGENCE HUB TESTS PASSED!")
+            print(f"   Website Intelligence Hub is fully functional with comprehensive analysis capabilities")
+            print(f"   All {self.website_intelligence_tests} endpoints working correctly:")
+            print(f"   ✅ Website Analyzer - Comprehensive website analysis and technical audits")
+            print(f"   ✅ Membership Manager - Tier management and website limits")
+            print(f"   ✅ Performance Monitor - Core Web Vitals and performance optimization")
+            print(f"   ✅ SEO Intelligence - Keyword tracking and content optimization")
+            print(f"   ✅ Manual Update All - Bulk website analysis updates")
+            print(f"   Website Intelligence Hub is production-ready for website monitoring and optimization")
+        else:
+            failed_tests = self.website_intelligence_tests - self.website_intelligence_passed
+            print(f"⚠️  PARTIAL SUCCESS: {failed_tests} test(s) failed")
+            print(f"   Most of the Website Intelligence Hub is working correctly")
+            print(f"   See detailed test results above for specific issues")
+        
+        return self.website_intelligence_passed == self.website_intelligence_tests
+
 if __name__ == "__main__":
     sys.exit(main())
