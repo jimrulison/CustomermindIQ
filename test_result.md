@@ -540,20 +540,77 @@ backend:
         agent: "testing"
         comment: "✅ TESTED SUCCESSFULLY: Sentiment Analysis dashboard working perfectly with 568 communications analyzed, 0.23 overall sentiment score, 41.2% positive sentiment, 4 active alerts. Communication sentiment analysis endpoint tested with realistic positive feedback - successfully analyzes sentiment (score: 1.0, category: positive) with high accuracy. All NLP analysis and automated response trigger features operational."
 
-  - task: "Advanced Features Expansion API Endpoints Integration"
+  - task: "Analytics & Insights - Customer Journey Mapping"
     implemented: true
-    working: true
-    file: "server.py"
+    working: "NA"
+    file: "modules/analytics_insights/customer_journey_mapping.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Added Advanced Features Expansion routers and dashboard aggregation endpoint to FastAPI server"
-      - working: true
-        agent: "testing"
-        comment: "✅ TESTED SUCCESSFULLY: All Advanced Features Expansion API endpoints integrated perfectly. Dashboard aggregation endpoint (/api/advanced/dashboard) working with all 5 modules: Behavioral Clustering, Churn Prevention, Cross Sell Intelligence, Advanced Pricing Optimization, and Sentiment Analysis. All individual endpoints tested and operational. Complete API integration confirmed."
+        comment: "Created customer journey mapping microservice with AI-powered journey visualization, path analysis, and optimization insights"
+
+  - task: "Analytics & Insights - Revenue Attribution"
+    implemented: true
+    working: "NA"
+    file: "modules/analytics_insights/revenue_attribution.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Created revenue attribution microservice with multi-touch attribution models, LTV analysis, and channel performance tracking"
+
+  - task: "Analytics & Insights - Cohort Analysis"
+    implemented: true
+    working: "NA"
+    file: "modules/analytics_insights/cohort_analysis.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Created cohort analysis microservice with retention forecasting, predictive insights, and performance comparisons"
+
+  - task: "Analytics & Insights - Competitive Intelligence"
+    implemented: true
+    working: "NA"
+    file: "modules/analytics_insights/competitive_intelligence.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Created competitive intelligence microservice with market monitoring, competitor analysis, and trend detection (mock data)"
+
+  - task: "Analytics & Insights - ROI Forecasting"
+    implemented: true
+    working: "NA"
+    file: "modules/analytics_insights/roi_forecasting.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Created ROI forecasting microservice with ML-powered campaign predictions, scenario analysis, and sensitivity testing"
+
+  - task: "Analytics & Insights API Endpoints Integration"
+    implemented: true
+    working: "NA"
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Added Analytics & Insights routers and dashboard aggregation endpoint to FastAPI server with '/api/analytics/' prefix"
 
 frontend:
   - task: "Customer Intelligence AI Module UI"
