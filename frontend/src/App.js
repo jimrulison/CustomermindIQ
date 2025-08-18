@@ -472,6 +472,12 @@ function App() {
     return colors[stage] || 'bg-gray-100 text-gray-800';
   };
 
+  // Show sign-in page if not authenticated
+  if (!isAuthenticated) {
+    return <SignIn onSignIn={handleSignIn} />;
+  }
+
+  // Show loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
