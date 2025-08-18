@@ -119,6 +119,9 @@ function App() {
   useEffect(() => {
     if (isAuthenticated) {
       loadData();
+    } else {
+      // Set loading to false for unauthenticated users so SignIn page can show
+      setLoading(false);
     }
   }, [isAuthenticated]);
 
