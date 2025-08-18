@@ -267,6 +267,64 @@ function App() {
     }
   };
 
+  const loadRevenueAnalyticsData = async () => {
+    try {
+      console.log('Loading Revenue Analytics Suite data...');
+      
+      const [
+        revenueRes,
+        forecastingRes,
+        priceOptRes,
+        profitMarginRes,
+        subscriptionRes,
+        financialRes
+      ] = await Promise.all([
+        axios.get(`${API_BASE_URL}/api/revenue/dashboard`).catch(err => {
+          console.error('Revenue dashboard error:', err);
+          return { data: { modules: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/revenue/forecasting`).catch(err => {
+          console.error('Revenue forecasting error:', err);
+          return { data: { dashboard: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/revenue/price-optimization`).catch(err => {
+          console.error('Price optimization error:', err);
+          return { data: { dashboard: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/revenue/profit-margin-analysis`).catch(err => {
+          console.error('Profit margin error:', err);
+          return { data: { dashboard: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/revenue/subscription-analytics`).catch(err => {
+          console.error('Subscription analytics error:', err);
+          return { data: { dashboard: {} } };
+        }),
+        axios.get(`${API_BASE_URL}/api/revenue/financial-reporting`).catch(err => {
+          console.error('Financial reporting error:', err);
+          return { data: { dashboard: {} } };
+        })
+      ]);
+      
+      setRevenueDashboard(revenueRes.data);
+      setRevenueForecastingData(forecastingRes.data);
+      setPriceOptimizationData(priceOptRes.data);
+      setProfitMarginData(profitMarginRes.data);
+      setSubscriptionAnalyticsData(subscriptionRes.data);
+      setFinancialReportingData(financialRes.data);
+      
+      console.log('Revenue Analytics Suite data loaded successfully');
+    } catch (error) {
+      console.error('Error loading revenue analytics data:', error);
+      // Set default values
+      setRevenueDashboard({ modules: {} });
+      setRevenueForecastingData({ dashboard: {} });
+      setPriceOptimizationData({ dashboard: {} });
+      setProfitMarginData({ dashboard: {} });
+      setSubscriptionAnalyticsData({ dashboard: {} });
+      setFinancialReportingData({ dashboard: {} });
+    }
+  };
+
   const loadCustomerRecommendations = async (customerId) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/api/customers/${customerId}/recommendations`);
