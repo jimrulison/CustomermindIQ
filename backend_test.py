@@ -3118,39 +3118,123 @@ class CustomerIntelligenceAITester:
         
         return success
 
+def run_comprehensive_analytics_insights_tests(self):
+        """Run comprehensive Analytics & Insights module tests"""
+        print("\n" + "="*80)
+        print("🚀 ANALYTICS & INSIGHTS MODULE - COMPREHENSIVE TESTING")
+        print("="*80)
+        print("Testing all 5 advanced Analytics & Insights microservices:")
+        print("")
+        print("1. 🗺️  Customer Journey Mapping (3 endpoints)")
+        print("   - Dashboard, Path Analysis, Optimization Opportunities")
+        print("")
+        print("2. 💰 Revenue Attribution (3 endpoints)")
+        print("   - Dashboard, Model Comparison, LTV Analysis")
+        print("")
+        print("3. 👥 Cohort Analysis (3 endpoints)")
+        print("   - Dashboard, Custom Analysis, Retention Forecast")
+        print("")
+        print("4. 🕵️  Competitive Intelligence (3 endpoints)")
+        print("   - Dashboard, Competitor Analysis, Market Trends")
+        print("")
+        print("5. 💹 ROI Forecasting (3 endpoints)")
+        print("   - Dashboard, Campaign Prediction, Historical Analysis")
+        print("")
+        print("6. 🎛️  Dashboard Aggregation (1 endpoint)")
+        print("   - Unified dashboard combining all 5 modules")
+        print("="*80)
+        
+        # Reset counters
+        self.analytics_insights_tests = 0
+        self.analytics_insights_passed = 0
+        
+        # Test 1: Customer Journey Mapping (3 endpoints)
+        print(f"\n{'='*60}")
+        print("🗺️  TESTING CUSTOMER JOURNEY MAPPING MICROSERVICE")
+        print("="*60)
+        
+        self.test_customer_journey_mapping_dashboard()
+        self.test_analyze_customer_path()
+        self.test_journey_optimization_opportunities()
+        
+        # Test 2: Revenue Attribution (3 endpoints)
+        print(f"\n{'='*60}")
+        print("💰 TESTING REVENUE ATTRIBUTION MICROSERVICE")
+        print("="*60)
+        
+        self.test_revenue_attribution_dashboard()
+        self.test_compare_attribution_models()
+        self.test_ltv_analysis()
+        
+        # Test 3: Cohort Analysis (3 endpoints)
+        print(f"\n{'='*60}")
+        print("👥 TESTING COHORT ANALYSIS MICROSERVICE")
+        print("="*60)
+        
+        self.test_cohort_analysis_dashboard()
+        self.test_custom_cohort_analysis()
+        self.test_retention_forecast()
+        
+        # Test 4: Competitive Intelligence (3 endpoints)
+        print(f"\n{'='*60}")
+        print("🕵️  TESTING COMPETITIVE INTELLIGENCE MICROSERVICE")
+        print("="*60)
+        
+        self.test_competitive_intelligence_dashboard()
+        self.test_competitor_analysis()
+        self.test_market_trends()
+        
+        # Test 5: ROI Forecasting (3 endpoints)
+        print(f"\n{'='*60}")
+        print("💹 TESTING ROI FORECASTING MICROSERVICE")
+        print("="*60)
+        
+        self.test_roi_forecasting_dashboard()
+        self.test_predict_campaign_roi()
+        self.test_historical_analysis()
+        
+        # Test 6: Dashboard Aggregation (1 endpoint)
+        print(f"\n{'='*60}")
+        print("🎛️  TESTING DASHBOARD AGGREGATION")
+        print("="*60)
+        
+        self.test_analytics_insights_dashboard_aggregation()
+        
+        return self.analytics_insights_passed, self.analytics_insights_tests
+
 def main():
-    print("🚀 MARKETING AUTOMATION PRO - COMPREHENSIVE TESTING")
+    print("📊 ANALYTICS & INSIGHTS MODULE - COMPREHENSIVE TESTING")
     print("=" * 80)
-    print("Testing the completely rebuilt Marketing Automation Pro module")
+    print("Testing the newly implemented Analytics & Insights module")
     print("with all 5 advanced microservices as requested:")
     print("")
-    print("1. 🎯 Multi-Channel Orchestration (SMS, Push, Social Media Retargeting)")
-    print("   - Dashboard, Campaign Creation, Execution, SMS Integration")
+    print("1. 🗺️  Customer Journey Mapping - AI-powered journey visualization and optimization")
+    print("   - Dashboard, Path Analysis, Optimization Opportunities")
     print("")
-    print("2. 🧪 A/B Testing with AI & Multi-Armed Bandits")
-    print("   - Dashboard, AI Test Creation, Variant Selection, Event Recording, Results")
+    print("2. 💰 Revenue Attribution - Multi-touch attribution models and LTV analysis")
+    print("   - Dashboard, Model Comparison, LTV Analysis")
     print("")
-    print("3. 🎨 Dynamic Content Personalization")
-    print("   - Dashboard, Behavior Tracking, Templates, Content Generation, Recommendations")
+    print("3. 👥 Cohort Analysis - Retention forecasting and predictive insights")
+    print("   - Dashboard, Custom Analysis, Retention Forecast")
     print("")
-    print("4. 🎯 Lead Scoring Enhancement")
-    print("   - Dashboard, Activity Tracking, Score Calculation, ML Model Training")
+    print("4. 🕵️  Competitive Intelligence - Market monitoring with mock competitor data")
+    print("   - Dashboard, Competitor Analysis, Market Trends")
     print("")
-    print("5. 🤝 Referral Program Integration")
-    print("   - Dashboard, Propensity Analysis, Campaign Creation, Viral Metrics, Optimization")
+    print("5. 💹 ROI Forecasting - ML-powered campaign predictions and scenario analysis")
+    print("   - Dashboard, Campaign Prediction, Historical Analysis")
     print("")
-    print("6. 📊 Unified Dashboard")
-    print("   - Comprehensive dashboard aggregating all 5 microservices")
+    print("6. 🎛️  Dashboard Aggregation - Unified dashboard combining all modules")
+    print("   - Single endpoint aggregating data from all 5 microservices")
     print("=" * 80)
     
     tester = CustomerIntelligenceAITester()
     
-    # Run comprehensive Marketing Automation Pro tests
-    tests_passed, tests_run = tester.run_comprehensive_marketing_automation_tests()
+    # Run comprehensive Analytics & Insights tests
+    tests_passed, tests_run = tester.run_comprehensive_analytics_insights_tests()
     
     # Print final summary
     print(f"\n{'='*80}")
-    print(f"🎯 FINAL MARKETING AUTOMATION PRO TEST SUMMARY")
+    print(f"🎯 FINAL ANALYTICS & INSIGHTS TEST SUMMARY")
     print(f"{'='*80}")
     print(f"📊 OVERALL RESULTS:")
     print(f"   Total Endpoints Tested: {tests_run}")
@@ -3159,24 +3243,24 @@ def main():
     print(f"   Failed Endpoints: {tests_run - tests_passed}")
     
     print(f"\n🔍 TESTING SCOPE COVERED:")
-    print(f"   ✅ Multi-Channel Orchestration (SMS via Twilio, Push via Firebase, Social Media)")
-    print(f"   ✅ A/B Testing with AI & Multi-Armed Bandit algorithms")
-    print(f"   ✅ Dynamic Content Personalization with real-time behavior tracking")
-    print(f"   ✅ Lead Scoring Enhancement with multi-dimensional AI scoring")
-    print(f"   ✅ Referral Program Integration with viral loop optimization")
-    print(f"   ✅ Mock integrations (Twilio, Firebase, Facebook) tested")
-    print(f"   ✅ AI-powered features and analytics verified")
-    print(f"   ✅ Advanced features like multi-armed bandits and viral optimization")
+    print(f"   ✅ Customer Journey Mapping (3 endpoints) - Journey visualization and optimization")
+    print(f"   ✅ Revenue Attribution (3 endpoints) - Multi-touch attribution and LTV analysis")
+    print(f"   ✅ Cohort Analysis (3 endpoints) - Retention forecasting and predictive insights")
+    print(f"   ✅ Competitive Intelligence (3 endpoints) - Market monitoring and competitor analysis")
+    print(f"   ✅ ROI Forecasting (3 endpoints) - ML-powered campaign predictions")
+    print(f"   ✅ Dashboard Aggregation (1 endpoint) - Unified analytics dashboard")
+    print(f"   ✅ Advanced AI/ML features and statistical analysis verified")
+    print(f"   ✅ Business intelligence and mock data integration tested")
     
     if tests_passed == tests_run:
-        print(f"\n🎉 SUCCESS: ALL MARKETING AUTOMATION PRO TESTS PASSED!")
-        print(f"   The completely rebuilt Marketing Automation Pro module is fully functional")
-        print(f"   All AI-powered features, mock integrations, and analytics are working correctly")
+        print(f"\n🎉 SUCCESS: ALL ANALYTICS & INSIGHTS TESTS PASSED!")
+        print(f"   The Analytics & Insights module is fully functional with all 16 endpoints working")
+        print(f"   All AI/ML features, statistical analysis, and business intelligence working correctly")
         print(f"   Ready for production deployment and customer use")
         return 0
     else:
         print(f"\n⚠️  PARTIAL SUCCESS: {tests_run - tests_passed} endpoint(s) failed")
-        print(f"   Most of the Marketing Automation Pro module is working correctly")
+        print(f"   Most of the Analytics & Insights module is working correctly")
         print(f"   See detailed test results above for specific issues")
         return 1
 
