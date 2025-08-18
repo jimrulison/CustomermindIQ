@@ -497,11 +497,14 @@ const Training = () => {
                         className="w-full bg-blue-600 hover:bg-blue-700"
                         onClick={() => {
                           if (manual.downloadUrl.startsWith('/')) {
-                            // For actual files, trigger download
+                            // Create download link
                             const link = document.createElement('a');
                             link.href = manual.downloadUrl;
                             link.download = manual.title.replace(/\s+/g, '_') + '.md';
+                            link.target = '_blank';
+                            document.body.appendChild(link);
                             link.click();
+                            document.body.removeChild(link);
                           } else {
                             // For placeholder links
                             alert('This manual will be available for download soon!');
