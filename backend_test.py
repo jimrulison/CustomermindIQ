@@ -3202,68 +3202,6 @@ class CustomerIntelligenceAITester:
         
         return self.analytics_insights_passed, self.analytics_insights_tests
 
-def main():
-    print("📊 ANALYTICS & INSIGHTS MODULE - COMPREHENSIVE TESTING")
-    print("=" * 80)
-    print("Testing the newly implemented Analytics & Insights module")
-    print("with all 5 advanced microservices as requested:")
-    print("")
-    print("1. 🗺️  Customer Journey Mapping - AI-powered journey visualization and optimization")
-    print("   - Dashboard, Path Analysis, Optimization Opportunities")
-    print("")
-    print("2. 💰 Revenue Attribution - Multi-touch attribution models and LTV analysis")
-    print("   - Dashboard, Model Comparison, LTV Analysis")
-    print("")
-    print("3. 👥 Cohort Analysis - Retention forecasting and predictive insights")
-    print("   - Dashboard, Custom Analysis, Retention Forecast")
-    print("")
-    print("4. 🕵️  Competitive Intelligence - Market monitoring with mock competitor data")
-    print("   - Dashboard, Competitor Analysis, Market Trends")
-    print("")
-    print("5. 💹 ROI Forecasting - ML-powered campaign predictions and scenario analysis")
-    print("   - Dashboard, Campaign Prediction, Historical Analysis")
-    print("")
-    print("6. 🎛️  Dashboard Aggregation - Unified dashboard combining all modules")
-    print("   - Single endpoint aggregating data from all 5 microservices")
-    print("=" * 80)
-    
-    tester = CustomerIntelligenceAITester()
-    
-    # Run comprehensive Analytics & Insights tests
-    tests_passed, tests_run = tester.run_comprehensive_analytics_insights_tests()
-    
-    # Print final summary
-    print(f"\n{'='*80}")
-    print(f"🎯 FINAL ANALYTICS & INSIGHTS TEST SUMMARY")
-    print(f"{'='*80}")
-    print(f"📊 OVERALL RESULTS:")
-    print(f"   Total Endpoints Tested: {tests_run}")
-    print(f"   Endpoints Passed: {tests_passed}")
-    print(f"   Success Rate: {(tests_passed/tests_run)*100:.1f}%")
-    print(f"   Failed Endpoints: {tests_run - tests_passed}")
-    
-    print(f"\n🔍 TESTING SCOPE COVERED:")
-    print(f"   ✅ Customer Journey Mapping (3 endpoints) - Journey visualization and optimization")
-    print(f"   ✅ Revenue Attribution (3 endpoints) - Multi-touch attribution and LTV analysis")
-    print(f"   ✅ Cohort Analysis (3 endpoints) - Retention forecasting and predictive insights")
-    print(f"   ✅ Competitive Intelligence (3 endpoints) - Market monitoring and competitor analysis")
-    print(f"   ✅ ROI Forecasting (3 endpoints) - ML-powered campaign predictions")
-    print(f"   ✅ Dashboard Aggregation (1 endpoint) - Unified analytics dashboard")
-    print(f"   ✅ Advanced AI/ML features and statistical analysis verified")
-    print(f"   ✅ Business intelligence and mock data integration tested")
-    
-    if tests_passed == tests_run:
-        print(f"\n🎉 SUCCESS: ALL ANALYTICS & INSIGHTS TESTS PASSED!")
-        print(f"   The Analytics & Insights module is fully functional with all 16 endpoints working")
-        print(f"   All AI/ML features, statistical analysis, and business intelligence working correctly")
-        print(f"   Ready for production deployment and customer use")
-        return 0
-    else:
-        print(f"\n⚠️  PARTIAL SUCCESS: {tests_run - tests_passed} endpoint(s) failed")
-        print(f"   Most of the Analytics & Insights module is working correctly")
-        print(f"   See detailed test results above for specific issues")
-        return 1
-
     # =====================================================
     # ANALYTICS & INSIGHTS MODULE TESTS
     # Comprehensive testing of all 5 advanced microservices
