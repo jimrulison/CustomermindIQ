@@ -348,7 +348,7 @@ const Training = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-2xl font-bold text-white">4</div>
+                <div className="text-2xl font-bold text-white">5</div>
                 <div className="text-xs text-blue-200">Documentation Guides</div>
               </div>
               <BookOpen className="h-8 w-8 text-blue-400" />
