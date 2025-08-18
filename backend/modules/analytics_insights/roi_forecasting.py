@@ -654,7 +654,9 @@ class ROIForecastingService:
         sensitivities = []
         
         # Budget sensitivity
-        budget_params_high = ForecastParameters(**parameters.dict(), budget=parameters.budget * 1.1)
+        budget_params_dict = parameters.dict()
+        budget_params_dict['budget'] = parameters.budget * 1.1
+        budget_params_high = ForecastParameters(**budget_params_dict)
         budget_forecast_high = await self.forecast_campaign_roi(budget_params_high)
         budget_sensitivity = (budget_forecast_high.predicted_roi - base_forecast.predicted_roi) / (0.1 * base_forecast.predicted_roi) if base_forecast.predicted_roi != 0 else 0
         
