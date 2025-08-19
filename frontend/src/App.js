@@ -631,6 +631,12 @@ function App() {
           />
         )}
         
+        {currentPage === 'competitive-intelligence' && (
+          <CompetitiveIntelligenceDashboard 
+            onNavigate={handleNavigate}
+          />
+        )}
+        
         {currentPage === 'website-analytics-dashboard' && (
           <WebsiteAnalyticsDashboard 
             analyticsInsightsDashboard={analyticsInsightsDashboard}
