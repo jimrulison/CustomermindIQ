@@ -578,14 +578,21 @@ function App() {
       ))}
       
       <div className="container mx-auto px-6 py-8">
-        {currentPage === 'dashboard' && (
-          <Dashboard 
+        {currentPage === 'customer-analytics-dashboard' && (
+          <CustomerAnalyticsDashboard 
             dashboardData={analytics}
             customerData={{ dashboard_data: { total_customers: customers.length } }}
             marketingData={{ leadScoringData, campaigns_count: campaigns.length }}
-            advancedFeaturesData={advancedDashboard}
             revenueAnalyticsData={{ revenueForecastingData, roi: 3.4 }}
+            advancedFeaturesData={advancedDashboard}
+            onNavigate={handleNavigate}
+          />
+        )}
+        
+        {currentPage === 'website-analytics-dashboard' && (
+          <WebsiteAnalyticsDashboard 
             analyticsInsightsDashboard={analyticsInsightsDashboard}
+            onNavigate={handleNavigate}
           />
         )}
         
