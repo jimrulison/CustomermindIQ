@@ -34,7 +34,8 @@ import {
   Award,
   Sparkles,
   Heart,
-  Route
+  Route,
+  Sword
 } from 'lucide-react';
 
 const CustomerAnalyticsDashboard = ({ 
