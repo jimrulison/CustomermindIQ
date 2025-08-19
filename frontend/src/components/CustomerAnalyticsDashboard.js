@@ -32,7 +32,8 @@ import {
   AlertTriangle,
   Star,
   Award,
-  Sparkles
+  Sparkles,
+  Heart
 } from 'lucide-react';
 
 const CustomerAnalyticsDashboard = ({ 
