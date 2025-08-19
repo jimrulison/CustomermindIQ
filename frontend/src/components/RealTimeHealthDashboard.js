@@ -211,7 +211,7 @@ const RealTimeHealthDashboard = ({ onNavigate }) => {
         </div>
         <div className="flex items-center space-x-3">
           <Badge className={`text-sm px-3 py-1 ${isRealTimeActive ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
-            <Pulse className="w-4 h-4 mr-1" />
+            <Activity className="w-4 h-4 mr-1" />
             {isRealTimeActive ? 'Live Monitoring' : 'Disconnected'}
           </Badge>
           {lastUpdate && (
