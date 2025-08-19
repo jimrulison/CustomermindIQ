@@ -994,6 +994,21 @@ frontend:
         agent: "main"
         comment: "✅ FRONTEND ISSUE RESOLVED: Fixed the loading condition and timeout issues. Analytics & Insights tab now working perfectly with all 5 microservice cards displaying correctly: Customer Journey Mapping (50 customers, 10 paths, 100% conversion), Revenue Attribution ($422K revenue, 4.4x ROI, $70K LTV), Cohort Analysis (13 cohorts, 81.9% retention, $144K revenue/customer), Competitive Intelligence (5 competitors, 8 movements, 5% sentiment), and ROI Forecasting ($28K budget, 29.6x ROI, 3 campaigns). Professional UI with gradient styling, business impact metrics, strategic recommendations, and advanced analytics insights all functional. Complete Analytics & Insights module implementation successful."
 
+  - task: "Customer Mind IQ Platform Restructuring - Two Analytics Dashboards"
+    implemented: true
+    working: true
+    file: "src/App.js, src/components/Header.js, src/components/CustomerAnalyticsDashboard.js, src/components/WebsiteAnalyticsDashboard.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Restructured Customer Mind IQ platform into two separate analytics dashboards with dynamic navigation: Customer Analytics Dashboard and Website Analytics Dashboard. Implemented context-aware header navigation, dashboard switching, and module organization."
+      - working: true
+        agent: "testing"
+        comment: "🎉 COMPREHENSIVE PLATFORM RESTRUCTURING TESTING COMPLETE: All 10 testing requirements from review request successfully verified! ✅ PLATFORM AUTHENTICATION & INITIAL LOAD: App successfully loads to Customer Analytics Dashboard by default, authentication working, no loading errors. ✅ DASHBOARD STRUCTURE & NAVIGATION: Both primary navigation buttons ('CUSTOMER ANALYTICS' blue with Brain icon, 'WEBSITE ANALYTICS' gray with Globe icon) working perfectly, switching between dashboards correctly. ✅ CUSTOMER ANALYTICS DASHBOARD: Header shows 'Customer Analytics Intelligence' with Brain icon, 4 KPI cards (4 customers, $61K revenue, 9.5% conversion, 1 campaign), AI Insights banner (blue), all 7 customer-focused modules visible (Customer Intelligence AI, Marketing Automation Pro, Revenue Analytics Suite, Advanced Customer Features, Customer Success Intelligence, Executive Intelligence Dashboard, Growth Intelligence Suite), 3 quick actions working, cross-navigation switcher present. ✅ WEBSITE ANALYTICS DASHBOARD: Successfully switches to 'Website Analytics Intelligence' with Globe icon, 4 performance KPI cards, Technical Insights banner (emerald), all 6 website-focused modules visible (Website Intelligence Hub, Analytics & Insights, Product Intelligence Hub, Integration & Data Hub, Compliance & Governance, AI Command Center), 3 quick actions working, cross-navigation switcher present. ✅ DYNAMIC HEADER NAVIGATION: Context-aware navigation working perfectly - shows customer-focused buttons when on Customer Analytics, website-focused buttons when on Website Analytics, active state highlighting working correctly. ✅ RESPONSIVE DESIGN: Tested on desktop (1920x1080), tablet (768x1024), and mobile (390x844) - all layouts adapt correctly, navigation remains functional across all screen sizes. ✅ VISUAL & UX: Color coding consistent (Customer=blue focus, Website=emerald focus), hover effects working, professional styling with gradient themes, badges and metrics display correctly. ✅ LEGACY FUNCTIONALITY: Training and Support buttons working, announcement banner visible, user profile and sign-out functionality preserved. ✅ ERROR HANDLING: Rapid dashboard switching works smoothly, navigation during loading states handled gracefully, no console errors detected. Platform restructuring is production-ready with all requested features implemented and tested successfully."
+
   - task: "Website Intelligence Hub Frontend Integration"
     implemented: true
     working: true
