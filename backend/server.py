@@ -1732,7 +1732,10 @@ async def get_marketing_automation_dashboard():
 # REVENUE ANALYTICS SUITE MODULE ENDPOINTS
 # =====================================================
 
-# Include Revenue Analytics Suite routers
+# ============= NEW AI-POWERED CUSTOMER INTELLIGENCE SYSTEM =============
+app.include_router(customer_intelligence_router)
+
+# ============= REVENUE ANALYTICS SUITE =============
 app.include_router(revenue_forecasting_router, prefix="/api/revenue", tags=["Revenue Forecasting"])
 app.include_router(price_optimization_router, prefix="/api/revenue", tags=["Price Optimization"])
 app.include_router(profit_margin_analysis_router, prefix="/api/revenue", tags=["Profit Margin Analysis"])
