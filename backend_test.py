@@ -90,6 +90,51 @@ class CustomerIntelligenceAITester:
             print(f"❌ Failed - Error: {str(e)}")
             return False, {}
 
+    def run_customer_journey_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
+        """Run a Customer Journey Visualization API test"""
+        url = f"{self.base_url}/{endpoint}"
+        headers = {'Content-Type': 'application/json'}
+
+        self.customer_journey_tests += 1
+        print(f"\n🗺️ Testing Customer Journey Visualization: {name}...")
+        print(f"   URL: {url}")
+        
+        try:
+            if method == 'GET':
+                response = requests.get(url, headers=headers, timeout=timeout)
+            elif method == 'POST':
+                response = requests.post(url, json=data, headers=headers, timeout=timeout)
+            elif method == 'PUT':
+                response = requests.put(url, json=data, headers=headers, timeout=timeout)
+            elif method == 'DELETE':
+                response = requests.delete(url, headers=headers, timeout=timeout)
+
+            success = response.status_code == expected_status
+            if success:
+                self.customer_journey_passed += 1
+                print(f"✅ Passed - Status: {response.status_code}")
+                try:
+                    response_data = response.json()
+                    print(f"   Response preview: {str(response_data)[:200]}...")
+                    return True, response_data
+                except:
+                    return True, {}
+            else:
+                print(f"❌ Failed - Expected {expected_status}, got {response.status_code}")
+                try:
+                    error_data = response.json()
+                    print(f"   Error: {error_data}")
+                except:
+                    print(f"   Error text: {response.text[:200]}")
+                return False, {}
+
+        except requests.exceptions.Timeout:
+            print(f"❌ Failed - Request timed out after {timeout} seconds")
+            return False, {}
+        except Exception as e:
+            print(f"❌ Failed - Error: {str(e)}")
+            return False, {}
+
     def run_customer_health_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
         """Run a Real-Time Customer Health Monitoring API test"""
         url = f"{self.base_url}/{endpoint}"
