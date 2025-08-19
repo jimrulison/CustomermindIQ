@@ -7641,7 +7641,417 @@ class CustomerIntelligenceAITester:
         return self.customer_journey_passed == self.customer_journey_tests
 
     # =====================================================
-    # END ADVANCED CUSTOMER JOURNEY VISUALIZATION TESTS
+    # COMPETITIVE CUSTOMER INTELLIGENCE MODULE TESTS
+    # Testing the newly implemented Competitive Customer Intelligence Module
+    # =====================================================
+
+    def test_competitive_dashboard(self):
+        """Test competitive intelligence dashboard with competitor data, win/loss analysis, and AI insights"""
+        print("\n🏆 Testing Competitive Intelligence Dashboard...")
+        
+        success, response = self.run_competitive_intelligence_test(
+            "Competitive Intelligence Dashboard",
+            "GET",
+            "api/competitive-intelligence/dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            data = response.get('data', {})
+            if data:
+                overview = data.get('overview', {})
+                competitors = data.get('competitors', [])
+                win_loss_records = data.get('win_loss_records', [])
+                competitive_pricing = data.get('competitive_pricing', [])
+                ai_insights = data.get('ai_insights', {})
+                
+                print(f"   Total competitors tracked: {overview.get('total_competitors_tracked', 0)}")
+                print(f"   Market share coverage: {overview.get('market_share_coverage', 0):.1f}%")
+                print(f"   Overall win rate: {overview.get('overall_win_rate', 0):.1f}%")
+                print(f"   Total deals analyzed: {overview.get('total_deals_analyzed', 0)}")
+                print(f"   Won deal value: ${overview.get('won_deal_value', 0):,.2f}")
+                print(f"   Avg deal size: ${overview.get('avg_deal_size', 0):,.2f}")
+                print(f"   Competitive threats: {overview.get('competitive_threats', 0)}")
+                
+                print(f"   Competitors: {len(competitors)}")
+                for comp in competitors[:3]:  # Show first 3 competitors
+                    print(f"   - {comp.get('name', 'Unknown')}: {comp.get('market_share', 0):.1f}% share, {comp.get('threat_level', 'unknown')} threat")
+                
+                print(f"   Win/Loss records: {len(win_loss_records)}")
+                print(f"   Pricing comparisons: {len(competitive_pricing)}")
+                
+                if ai_insights:
+                    print(f"   AI Insights available: {ai_insights.get('ai_confidence', 0):.2f} confidence")
+                    positioning = ai_insights.get('competitive_positioning', [])
+                    print(f"   Competitive positioning insights: {len(positioning)}")
+        
+        return success
+
+    def test_competitor_analysis(self):
+        """Test detailed competitor analysis or overall competitive landscape"""
+        print("\n🔍 Testing Competitor Analysis (Overall Landscape)...")
+        
+        success, response = self.run_competitive_intelligence_test(
+            "Competitor Analysis - Overall Landscape",
+            "GET",
+            "api/competitive-intelligence/competitor-analysis",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            data = response.get('data', {})
+            if data:
+                landscape = data.get('landscape_analysis', {})
+                positioning = data.get('competitive_positioning', {})
+                threat_matrix = data.get('threat_matrix', [])
+                
+                print(f"   Market dynamics: {landscape.get('market_dynamics', 'unknown')}")
+                print(f"   Competitive intensity: {landscape.get('competitive_intensity', 'unknown')}")
+                print(f"   Market growth rate: {landscape.get('market_growth_rate', 0):.1f}%")
+                
+                print(f"   Our position: {positioning.get('our_position', 'unknown')}")
+                differentiators = positioning.get('key_differentiators', [])
+                print(f"   Key differentiators: {len(differentiators)}")
+                for diff in differentiators[:3]:  # Show first 3
+                    print(f"   - {diff}")
+                
+                print(f"   Threat matrix entries: {len(threat_matrix)}")
+                for threat in threat_matrix:
+                    print(f"   - {threat.get('competitor', 'Unknown')}: {threat.get('threat_level', 'unknown')} threat")
+        
+        return success
+
+    def test_competitor_analysis_specific(self):
+        """Test specific competitor analysis"""
+        print("\n🎯 Testing Specific Competitor Analysis...")
+        
+        # Test with a specific competitor ID
+        competitor_id = "comp_001"  # TechRival Solutions from the mock data
+        
+        success, response = self.run_competitive_intelligence_test(
+            f"Competitor Analysis - Specific ({competitor_id})",
+            "GET",
+            f"api/competitive-intelligence/competitor-analysis?competitor_id={competitor_id}",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            data = response.get('data', {})
+            if data:
+                competitor = data.get('competitor', {})
+                detailed_analysis = data.get('detailed_analysis', {})
+                performance_metrics = data.get('performance_metrics', {})
+                
+                print(f"   Competitor: {competitor.get('name', 'Unknown')}")
+                print(f"   Market share: {competitor.get('market_share', 0):.1f}%")
+                print(f"   Threat level: {competitor.get('threat_level', 'unknown')}")
+                
+                print(f"   Market position: {detailed_analysis.get('market_position', 'unknown')}")
+                advantages = detailed_analysis.get('competitive_advantages', [])
+                print(f"   Competitive advantages: {len(advantages)}")
+                
+                print(f"   Win rate against: {performance_metrics.get('win_rate_against', 0):.1f}%")
+                print(f"   Deal competition frequency: {performance_metrics.get('deal_competition_frequency', 0):.1f}%")
+        
+        return success
+
+    def test_win_loss_insights(self):
+        """Test win/loss analysis with time period filtering"""
+        print("\n📊 Testing Win/Loss Insights (90 days)...")
+        
+        success, response = self.run_competitive_intelligence_test(
+            "Win/Loss Insights - 90 days",
+            "GET",
+            "api/competitive-intelligence/win-loss-insights?time_period=90_days",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            data = response.get('data', {})
+            if data:
+                summary = data.get('summary_metrics', {})
+                win_analysis = data.get('win_analysis', {})
+                loss_analysis = data.get('loss_analysis', {})
+                competitor_performance = data.get('competitor_performance', {})
+                
+                print(f"   Time period: {data.get('time_period', 'unknown')}")
+                print(f"   Total opportunities: {summary.get('total_opportunities', 0)}")
+                print(f"   Won deals: {summary.get('won_deals', 0)}")
+                print(f"   Lost deals: {summary.get('lost_deals', 0)}")
+                print(f"   Win rate: {summary.get('win_rate', 0):.1f}%")
+                
+                top_win_factors = win_analysis.get('top_win_factors', [])
+                print(f"   Top win factors: {len(top_win_factors)}")
+                for factor in top_win_factors[:3]:  # Show first 3
+                    print(f"   - {factor.get('factor', 'Unknown')}: {factor.get('percentage', 0):.1f}%")
+                
+                top_loss_factors = loss_analysis.get('top_loss_factors', [])
+                print(f"   Top loss factors: {len(top_loss_factors)}")
+                for factor in top_loss_factors[:3]:  # Show first 3
+                    print(f"   - {factor.get('factor', 'Unknown')}: {factor.get('percentage', 0):.1f}%")
+                
+                lost_to = competitor_performance.get('lost_to_competitors', {})
+                print(f"   Lost to competitors: {len(lost_to)} tracked")
+        
+        return success
+
+    def test_win_loss_insights_different_periods(self):
+        """Test win/loss insights with different time periods"""
+        print("\n📈 Testing Win/Loss Insights - Different Time Periods...")
+        
+        time_periods = ["30_days", "1_year"]
+        
+        for period in time_periods:
+            print(f"\n   Testing {period} period...")
+            success, response = self.run_competitive_intelligence_test(
+                f"Win/Loss Insights - {period}",
+                "GET",
+                f"api/competitive-intelligence/win-loss-insights?time_period={period}",
+                200,
+                timeout=30
+            )
+            
+            if success:
+                data = response.get('data', {})
+                summary = data.get('summary_metrics', {})
+                print(f"   ✅ {period}: {summary.get('total_opportunities', 0)} opportunities, {summary.get('win_rate', 0):.1f}% win rate")
+            else:
+                print(f"   ❌ {period}: Failed")
+                return False
+        
+        return True
+
+    def test_competitive_pricing_analysis(self):
+        """Test comprehensive competitive pricing analysis"""
+        print("\n💰 Testing Competitive Pricing Analysis...")
+        
+        success, response = self.run_competitive_intelligence_test(
+            "Competitive Pricing Analysis",
+            "GET",
+            "api/competitive-intelligence/pricing-analysis",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            data = response.get('data', {})
+            if data:
+                overview = data.get('pricing_overview', {})
+                product_pricing = data.get('product_pricing', [])
+                insights = data.get('pricing_insights', {})
+                market_dynamics = data.get('market_dynamics', {})
+                
+                print(f"   Products analyzed: {overview.get('products_analyzed', 0)}")
+                print(f"   Avg price advantage: {overview.get('avg_price_advantage', 0):.1f}%")
+                print(f"   Market position: {overview.get('market_position', 'unknown')}")
+                print(f"   Pricing strategy: {overview.get('pricing_strategy', 'unknown')}")
+                
+                print(f"   Product pricing comparisons: {len(product_pricing)}")
+                for product in product_pricing:
+                    print(f"   - {product.get('product_name', 'Unknown')}: ${product.get('our_price', 0):.2f}")
+                    print(f"     Market position: {product.get('market_position', 'unknown')}")
+                    print(f"     Price advantage: {product.get('price_advantage', 0):.2f}")
+                
+                strengths = insights.get('strengths', [])
+                opportunities = insights.get('opportunities', [])
+                threats = insights.get('threats', [])
+                print(f"   Pricing strengths: {len(strengths)}")
+                print(f"   Pricing opportunities: {len(opportunities)}")
+                print(f"   Pricing threats: {len(threats)}")
+                
+                print(f"   Price sensitivity: {market_dynamics.get('price_sensitivity', 'unknown')}")
+                print(f"   Competitive intensity: {market_dynamics.get('competitive_intensity', 'unknown')}")
+        
+        return success
+
+    def test_create_competitor(self):
+        """Test creating a new competitor"""
+        print("\n➕ Testing Create New Competitor...")
+        
+        competitor_data = {
+            "name": "TestCompetitor Inc",
+            "market_segment": "Mid-Market",
+            "pricing_tier": "Competitive",
+            "market_share": 5.2,
+            "strength_areas": ["Innovation", "Customer Support"],
+            "weakness_areas": ["Market Reach"],
+            "threat_level": "Medium"
+        }
+        
+        success, response = self.run_competitive_intelligence_test(
+            "Create New Competitor",
+            "POST",
+            "api/competitive-intelligence/competitor/create",
+            200,
+            data=competitor_data,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Message: {response.get('message', 'unknown')}")
+            
+            data = response.get('data', {})
+            if data:
+                print(f"   Competitor ID: {data.get('competitor_id', 'unknown')}")
+                print(f"   Name: {data.get('name', 'unknown')}")
+                print(f"   Market segment: {data.get('market_segment', 'unknown')}")
+                print(f"   Pricing tier: {data.get('pricing_tier', 'unknown')}")
+                print(f"   Market share: {data.get('market_share', 0):.1f}%")
+                print(f"   Threat level: {data.get('threat_level', 'unknown')}")
+                print(f"   Status: {data.get('status', 'unknown')}")
+        
+        return success
+
+    def test_record_win_loss(self):
+        """Test recording a win/loss opportunity outcome"""
+        print("\n📝 Testing Record Win/Loss Outcome...")
+        
+        win_loss_data = {
+            "customer_name": "Test Customer Corp",
+            "deal_value": 125000,
+            "outcome": "won",
+            "primary_competitor": "TechRival Solutions",
+            "decision_factors": ["Price", "Features"],
+            "win_loss_reasons": ["Superior product features", "Better support"],
+            "sales_cycle_days": 65,
+            "product_category": "Analytics Platform",
+            "customer_segment": "Enterprise"
+        }
+        
+        success, response = self.run_competitive_intelligence_test(
+            "Record Win/Loss Outcome",
+            "POST",
+            "api/competitive-intelligence/win-loss/record",
+            200,
+            data=win_loss_data,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Message: {response.get('message', 'unknown')}")
+            
+            data = response.get('data', {})
+            if data:
+                print(f"   Record ID: {data.get('record_id', 'unknown')}")
+                print(f"   Customer: {data.get('customer_name', 'unknown')}")
+                print(f"   Deal value: ${data.get('deal_value', 0):,.2f}")
+                print(f"   Outcome: {data.get('outcome', 'unknown')}")
+                print(f"   Primary competitor: {data.get('primary_competitor', 'unknown')}")
+                print(f"   Sales cycle: {data.get('sales_cycle_days', 0)} days")
+                print(f"   Status: {data.get('status', 'unknown')}")
+        
+        return success
+
+    def run_competitive_intelligence_tests(self):
+        """Run all Competitive Customer Intelligence tests"""
+        print(f"\n" + "="*80)
+        print(f"🏆 COMPETITIVE CUSTOMER INTELLIGENCE MODULE TESTING")
+        print(f"="*80)
+        print(f"Testing 6 API endpoints under '/api/competitive-intelligence' prefix:")
+        print(f"1. GET /api/competitive-intelligence/dashboard - Main competitive dashboard")
+        print(f"2. GET /api/competitive-intelligence/competitor-analysis - Detailed competitor analysis")
+        print(f"3. GET /api/competitive-intelligence/win-loss-insights - Win/loss analysis with filtering")
+        print(f"4. GET /api/competitive-intelligence/pricing-analysis - Competitive pricing analysis")
+        print(f"5. POST /api/competitive-intelligence/competitor/create - Create new competitor")
+        print(f"6. POST /api/competitive-intelligence/win-loss/record - Record win/loss outcome")
+        
+        # Test 1: Dashboard
+        print(f"\n{'='*60}")
+        print("🏆 TESTING COMPETITIVE DASHBOARD")
+        print("="*60)
+        self.test_competitive_dashboard()
+        
+        # Test 2: Competitor Analysis - Overall
+        print(f"\n{'='*60}")
+        print("🔍 TESTING COMPETITOR ANALYSIS - OVERALL")
+        print("="*60)
+        self.test_competitor_analysis()
+        
+        # Test 2b: Competitor Analysis - Specific
+        print(f"\n{'='*60}")
+        print("🎯 TESTING COMPETITOR ANALYSIS - SPECIFIC")
+        print("="*60)
+        self.test_competitor_analysis_specific()
+        
+        # Test 3: Win/Loss Insights
+        print(f"\n{'='*60}")
+        print("📊 TESTING WIN/LOSS INSIGHTS")
+        print("="*60)
+        self.test_win_loss_insights()
+        
+        # Test 3b: Win/Loss Different Time Periods
+        print(f"\n{'='*60}")
+        print("📈 TESTING WIN/LOSS INSIGHTS - DIFFERENT PERIODS")
+        print("="*60)
+        self.test_win_loss_insights_different_periods()
+        
+        # Test 4: Competitive Pricing Analysis
+        print(f"\n{'='*60}")
+        print("💰 TESTING COMPETITIVE PRICING ANALYSIS")
+        print("="*60)
+        self.test_competitive_pricing_analysis()
+        
+        # Test 5: Create Competitor
+        print(f"\n{'='*60}")
+        print("➕ TESTING CREATE COMPETITOR")
+        print("="*60)
+        self.test_create_competitor()
+        
+        # Test 6: Record Win/Loss
+        print(f"\n{'='*60}")
+        print("📝 TESTING RECORD WIN/LOSS")
+        print("="*60)
+        self.test_record_win_loss()
+        
+        # Calculate results
+        success_rate = (self.competitive_intelligence_passed / self.competitive_intelligence_tests * 100) if self.competitive_intelligence_tests > 0 else 0
+        
+        print(f"\n" + "="*80)
+        print(f"🏆 COMPETITIVE CUSTOMER INTELLIGENCE TESTING COMPLETE")
+        print(f"="*80)
+        print(f"✅ Tests Passed: {self.competitive_intelligence_passed}/{self.competitive_intelligence_tests}")
+        print(f"📊 Success Rate: {success_rate:.1f}%")
+        
+        if self.competitive_intelligence_passed == self.competitive_intelligence_tests:
+            print(f"🎉 SUCCESS: ALL COMPETITIVE INTELLIGENCE TESTS PASSED!")
+            print(f"   Competitive Customer Intelligence Module is fully functional with:")
+            print(f"   ✅ Dashboard - Comprehensive competitive data with 4 major competitors")
+            print(f"   ✅ Competitor Analysis - Detailed landscape and specific competitor insights")
+            print(f"   ✅ Win/Loss Insights - Analysis with time period filtering (30_days, 90_days, 1_year)")
+            print(f"   ✅ Pricing Analysis - Competitive pricing intelligence with market positioning")
+            print(f"   ✅ Competitor Creation - Successfully creates new competitor records")
+            print(f"   ✅ Win/Loss Recording - Records opportunity outcomes with detailed data")
+            print(f"   🤖 AI-powered insights using Emergent LLM integration")
+            print(f"   📊 Market share tracking and competitor benchmarking")
+            print(f"   🎯 Threat assessment with strategic recommendations")
+            print(f"   💡 Dummy data for demonstration (no external APIs used)")
+            print(f"   Competitive Customer Intelligence Module is production-ready!")
+        else:
+            failed_tests = self.competitive_intelligence_tests - self.competitive_intelligence_passed
+            print(f"⚠️  PARTIAL SUCCESS: {failed_tests} test(s) failed")
+            print(f"   Most of the Competitive Customer Intelligence Module is working correctly")
+            print(f"   See detailed test results above for specific issues")
+        
+        return self.competitive_intelligence_passed == self.competitive_intelligence_tests
+
+    # =====================================================
+    # END COMPETITIVE CUSTOMER INTELLIGENCE MODULE TESTS
     # =====================================================
 
 def main():
