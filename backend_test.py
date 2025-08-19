@@ -5468,58 +5468,8 @@ class CustomerIntelligenceAITester:
     # =====================================================
     # END INTEGRATION & DATA MANAGEMENT HUB MODULE TESTS
     # =====================================================
-
-def main():
-    """Main function to run Real-Time Customer Health Monitoring testing"""
-    print("💚 REAL-TIME CUSTOMER HEALTH MONITORING BACKEND TESTING")
-    print("="*80)
-    print("Testing the NEW Real-Time Customer Health Monitoring system")
-    print("AI-powered health scoring, automatic alerts, and real-time monitoring")
-    print("Including health dashboard, alerts management, AI analysis, and WebSocket support")
-    print("="*80)
-    
-    tester = CustomerIntelligenceAITester()
-    
-    # Test Real-Time Customer Health Monitoring
-    customer_health_success = tester.run_customer_health_monitoring_tests()
-    
-    # Print final summary
-    print(f"\n{'='*80}")
-    print("💚 REAL-TIME CUSTOMER HEALTH MONITORING TESTING SUMMARY")
-    print("="*80)
-    print(f"   Total Tests Run: {tester.customer_health_tests}")
-    print(f"   Total Tests Passed: {tester.customer_health_passed}")
-    success_rate = (tester.customer_health_passed / tester.customer_health_tests * 100) if tester.customer_health_tests > 0 else 0
-    print(f"   Overall Success Rate: {success_rate:.1f}%")
-    print("="*80)
-    
-    print(f"\n📊 DETAILED RESULTS:")
-    print(f"   💚 Customer Health Monitoring: {tester.customer_health_passed}/{tester.customer_health_tests} ({success_rate:.1f}%)")
-    print(f"      ✅ Health Dashboard - Real-time customer health metrics and summary")
-    print(f"      ✅ Active Alerts - Health alerts with severity levels and escalation")
-    print(f"      ✅ Individual Health - Customer-specific health score retrieval")
-    print(f"      ✅ AI Health Calculation - Emergent LLM powered health analysis")
-    print(f"      ✅ Alert Resolution - Alert management and resolution system")
-    print(f"      ✅ WebSocket Support - Real-time monitoring capabilities")
-    
-    if customer_health_success:
-        print(f"\n🎉 SUCCESS: ALL CUSTOMER HEALTH MONITORING TESTS PASSED!")
-        print(f"   Real-Time Customer Health Monitoring System is fully functional")
-        print(f"   All {tester.customer_health_tests} endpoints working correctly:")
-        print(f"   • Health Dashboard (/api/customer-health/dashboard) - ✅ Working")
-        print(f"   • Active Alerts (/api/customer-health/alerts) - ✅ Working")
-        print(f"   • Individual Health (/api/customer-health/customer/{{id}}/health) - ✅ Working")
-        print(f"   • AI Health Calculation (/api/customer-health/customer/{{id}}/calculate-health) - ✅ Working")
-        print(f"   • Alert Resolution (/api/customer-health/alerts/{{id}}/resolve) - ✅ Working")
-        print(f"   • WebSocket Monitoring (/api/customer-health/ws/health-monitoring) - ✅ Working")
-        print(f"   Customer Health Monitoring provides comprehensive real-time health intelligence and is production-ready")
-        return 0
-    else:
-        failed_tests = tester.customer_health_tests - tester.customer_health_passed
-        print(f"\n⚠️  PARTIAL SUCCESS: {failed_tests} test(s) failed")
-        print(f"   Most of the Customer Health Monitoring System is working correctly")
-        print(f"   See detailed test results above for specific issues")
-        return 1
+    # END INTEGRATION & DATA MANAGEMENT HUB MODULE TESTS
+    # =====================================================
 
     # =====================================================
     # WEBSITE INTELLIGENCE HUB MODULE TESTS
