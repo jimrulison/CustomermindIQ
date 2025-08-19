@@ -184,6 +184,21 @@ const CustomerAnalyticsDashboard = ({
         optimization: '85.3%'
       },
       features: ['Journey Mapping', 'Touchpoint Analysis', 'Path Optimization', 'Conversion Insights']
+    },
+    {
+      id: 'competitive-intelligence',
+      title: 'Competitive Customer Intelligence',
+      description: 'AI-powered competitive analysis, win/loss intelligence, and market positioning insights',
+      icon: Sword,
+      color: 'from-red-600/20 to-red-800/20',
+      borderColor: 'border-red-500/30',
+      iconColor: 'text-red-400',
+      metrics: {
+        winRate: '74.2%',
+        competitors: '4 Tracked',
+        threats: '2 High'
+      },
+      features: ['Win/Loss Analysis', 'Competitive Pricing', 'Market Intelligence', 'Threat Assessment']
     }
   ];
 
