@@ -39,7 +39,8 @@ import {
 import axios from 'axios';
 import SignIn from './components/SignIn';
 import Header from './components/Header';
-import Dashboard from './components/Dashboard';
+import CustomerAnalyticsDashboard from './components/CustomerAnalyticsDashboard';
+import WebsiteAnalyticsDashboard from './components/WebsiteAnalyticsDashboard';
 import CreateCampaign from './components/CreateCampaign';
 import CustomerSuccessIntelligence from './components/CustomerSuccessIntelligence';
 import ExecutiveIntelligenceDashboard from './components/ExecutiveIntelligenceDashboard';
