@@ -20,7 +20,6 @@ import {
   RefreshCw,
   Zap,
   Target,
-  Activity,
   Phone,
   Mail,
   MessageSquare,
