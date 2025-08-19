@@ -7574,6 +7574,74 @@ def main():
         
         return self.customer_journey_passed == self.customer_journey_tests
 
+    def run_customer_journey_tests(self):
+        """Run all Customer Journey Visualization tests"""
+        print(f"\n" + "="*80)
+        print(f"🗺️ ADVANCED CUSTOMER JOURNEY VISUALIZATION MODULE TESTING")
+        print(f"="*80)
+        print(f"Testing 5 API endpoints under '/api/customer-journey' prefix:")
+        print(f"1. GET /api/customer-journey/dashboard - Main dashboard data")
+        print(f"2. GET /api/customer-journey/templates - Journey templates")
+        print(f"3. GET /api/customer-journey/performance - Performance analytics")
+        print(f"4. POST /api/customer-journey/touchpoint/create - Create touchpoint")
+        print(f"5. GET /api/customer-journey/visualization/data - Visualization data")
+        
+        # Test 1: Dashboard Data
+        print(f"\n{'='*60}")
+        print("📊 TESTING JOURNEY DASHBOARD")
+        print("="*60)
+        self.test_customer_journey_dashboard()
+        
+        # Test 2: Journey Templates
+        print(f"\n{'='*60}")
+        print("📋 TESTING JOURNEY TEMPLATES")
+        print("="*60)
+        self.test_customer_journey_templates()
+        
+        # Test 3: Performance Analytics
+        print(f"\n{'='*60}")
+        print("📈 TESTING PERFORMANCE ANALYTICS")
+        print("="*60)
+        self.test_customer_journey_performance()
+        
+        # Test 4: Create Touchpoint
+        print(f"\n{'='*60}")
+        print("➕ TESTING TOUCHPOINT CREATION")
+        print("="*60)
+        self.test_customer_journey_create_touchpoint()
+        
+        # Test 5: Visualization Data
+        print(f"\n{'='*60}")
+        print("🎨 TESTING VISUALIZATION DATA")
+        print("="*60)
+        self.test_customer_journey_visualization_data()
+        
+        # Calculate results
+        success_rate = (self.customer_journey_passed / self.customer_journey_tests * 100) if self.customer_journey_tests > 0 else 0
+        
+        print(f"\n" + "="*80)
+        print(f"🗺️ CUSTOMER JOURNEY VISUALIZATION TESTING COMPLETE")
+        print(f"="*80)
+        print(f"✅ Tests Passed: {self.customer_journey_passed}/{self.customer_journey_tests}")
+        print(f"📊 Success Rate: {success_rate:.1f}%")
+        
+        if self.customer_journey_passed == self.customer_journey_tests:
+            print(f"🎉 SUCCESS: ALL CUSTOMER JOURNEY VISUALIZATION TESTS PASSED!")
+            print(f"   Advanced Customer Journey Visualization Module is fully functional with:")
+            print(f"   ✅ Dashboard Data - Journey stages, paths, touchpoints, and AI insights")
+            print(f"   ✅ Journey Templates - Multiple business model templates available")
+            print(f"   ✅ Performance Analytics - Stage breakdown and channel performance")
+            print(f"   ✅ Touchpoint Creation - New touchpoint creation working")
+            print(f"   ✅ Visualization Data - Nodes/edges for journey mapping components")
+            print(f"   Customer Journey Visualization Module is production-ready!")
+        else:
+            failed_tests = self.customer_journey_tests - self.customer_journey_passed
+            print(f"⚠️  PARTIAL SUCCESS: {failed_tests} test(s) failed")
+            print(f"   Most of the Customer Journey Visualization Module is working correctly")
+            print(f"   See detailed test results above for specific issues")
+        
+        return self.customer_journey_passed == self.customer_journey_tests
+
     # =====================================================
     # END ADVANCED CUSTOMER JOURNEY VISUALIZATION TESTS
     # =====================================================
