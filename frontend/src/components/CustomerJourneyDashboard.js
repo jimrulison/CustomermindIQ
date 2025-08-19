@@ -34,7 +34,7 @@ const CustomerJourneyDashboard = () => {
   const [performance, setPerformance] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  const backendUrl = import.meta.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customeriq-saas.preview.emergentagent.com';
 
   // Load journey data
   const loadJourneyData = async () => {
