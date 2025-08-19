@@ -624,6 +624,12 @@ function App() {
           />
         )}
         
+        {currentPage === 'customer-journey' && (
+          <CustomerJourneyDashboard 
+            onNavigate={handleNavigate}
+          />
+        )}
+        
         {currentPage === 'website-analytics-dashboard' && (
           <WebsiteAnalyticsDashboard 
             analyticsInsightsDashboard={analyticsInsightsDashboard}
