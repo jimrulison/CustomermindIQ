@@ -34,6 +34,9 @@ class CustomerIntelligenceAITester:
         self.website_intelligence_passed = 0
         self.support_system_tests = 0
         self.support_system_passed = 0
+        # NEW: Customer Intelligence System Tests
+        self.customer_intelligence_tests = 0
+        self.customer_intelligence_passed = 0
 
     def run_support_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
         """Run a Support System API test"""
