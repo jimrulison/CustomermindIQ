@@ -153,6 +153,21 @@ const CustomerAnalyticsDashboard = ({
       },
       features: ['Live Health Scoring', 'Automatic Alerts', 'Intervention Workflows', 'Escalation Management']
     },
+    {
+      id: 'growth',
+      title: 'Growth Intelligence Suite',
+      description: 'Customer acquisition, expansion, and growth optimization strategies',
+      icon: TrendingUp,
+      color: 'from-emerald-600/20 to-emerald-800/20',
+      borderColor: 'border-emerald-500/30',
+      iconColor: 'text-emerald-400',
+      metrics: {
+        acquisition: '+45%',
+        expansion: '$156K',
+        opportunities: '23 Active'
+      },
+      features: ['Acquisition Analysis', 'Expansion Tracking', 'Growth Opportunities', 'Market Intelligence']
+    }
   ];
 
   return (
