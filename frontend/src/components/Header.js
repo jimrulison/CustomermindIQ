@@ -154,19 +154,33 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
             <h1 className="text-xl font-bold text-white">CustomerMind IQ</h1>
           </div>
 
-          {/* Dashboard Button - Center */}
+          {/* Primary Dashboard Selector - Center */}
           <div className="flex-1 flex justify-center">
-            <button
-              onClick={() => onNavigate('dashboard')}
-              className={`px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ${
-                currentPage === 'dashboard'
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-slate-800/50 text-slate-300 hover:bg-blue-600/20 hover:text-blue-400 border border-slate-600'
-              }`}
-            >
-              <BarChart3 className="w-4 h-4 inline mr-2" />
-              DASHBOARD
-            </button>
+            <div className="flex space-x-2">
+              <button
+                onClick={() => onNavigate('customer-analytics-dashboard')}
+                className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ${
+                  currentPage === 'customer-analytics-dashboard' || customerAnalyticsModules.some(m => m.id === currentPage)
+                    ? 'bg-blue-600 text-white shadow-lg'
+                    : 'bg-slate-800/50 text-slate-300 hover:bg-blue-600/20 hover:text-blue-400 border border-slate-600'
+                }`}
+              >
+                <Brain className="w-4 h-4 inline mr-2" />
+                CUSTOMER ANALYTICS
+              </button>
+              
+              <button
+                onClick={() => onNavigate('website-analytics-dashboard')}
+                className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ${
+                  currentPage === 'website-analytics-dashboard' || websiteAnalyticsModules.some(m => m.id === currentPage)
+                    ? 'bg-emerald-600 text-white shadow-lg'
+                    : 'bg-slate-800/50 text-slate-300 hover:bg-emerald-600/20 hover:text-emerald-400 border border-slate-600'
+                }`}
+              >
+                <Globe className="w-4 h-4 inline mr-2" />
+                WEBSITE ANALYTICS
+              </button>
+            </div>
           </div>
 
           {/* User Info & Training & Support & Sign Out */}
