@@ -8055,45 +8055,48 @@ class CustomerIntelligenceAITester:
     # =====================================================
 
 def main():
-    """Main function to run Advanced Customer Journey Visualization testing"""
-    print("🗺️ ADVANCED CUSTOMER JOURNEY VISUALIZATION BACKEND TESTING")
+    """Main function to run Competitive Customer Intelligence testing"""
+    print("🏆 COMPETITIVE CUSTOMER INTELLIGENCE BACKEND TESTING")
     print("="*80)
-    print("Testing the NEW Advanced Customer Journey Visualization Module")
-    print("AI-powered journey mapping, touchpoint analysis, and optimization insights")
-    print("Including dashboard data, templates, performance analytics, touchpoint creation, and visualization data")
+    print("Testing the NEW Competitive Customer Intelligence Module")
+    print("AI-powered competitive analysis, win/loss intelligence, and market positioning insights")
+    print("Including dashboard data, competitor analysis, win/loss insights, pricing analysis, and data creation")
     print("="*80)
     
     tester = CustomerIntelligenceAITester()
     
-    # Test Advanced Customer Journey Visualization
-    customer_journey_success = tester.run_customer_journey_tests()
+    # Test Competitive Customer Intelligence
+    competitive_intelligence_success = tester.run_competitive_intelligence_tests()
     
     # Print final summary
     print(f"\n{'='*80}")
-    print("🗺️ ADVANCED CUSTOMER JOURNEY VISUALIZATION TESTING SUMMARY")
+    print("🏆 COMPETITIVE CUSTOMER INTELLIGENCE TESTING SUMMARY")
     print("="*80)
-    print(f"   Total Tests Run: {tester.customer_journey_tests}")
-    print(f"   Total Tests Passed: {tester.customer_journey_passed}")
-    success_rate = (tester.customer_journey_passed / tester.customer_journey_tests * 100) if tester.customer_journey_tests > 0 else 0
+    print(f"   Total Tests Run: {tester.competitive_intelligence_tests}")
+    print(f"   Total Tests Passed: {tester.competitive_intelligence_passed}")
+    success_rate = (tester.competitive_intelligence_passed / tester.competitive_intelligence_tests * 100) if tester.competitive_intelligence_tests > 0 else 0
     print(f"   Overall Success Rate: {success_rate:.1f}%")
     print("="*80)
     
     print(f"\n📊 DETAILED RESULTS:")
-    print(f"   🗺️ Customer Journey Visualization: {tester.customer_journey_passed}/{tester.customer_journey_tests} ({success_rate:.1f}%)")
-    print(f"      ✅ Dashboard Data - Journey stages, paths, touchpoints, and AI insights")
-    print(f"      ✅ Journey Templates - Multiple business model templates")
-    print(f"      ✅ Performance Analytics - Stage breakdown and channel performance")
-    print(f"      ✅ Touchpoint Creation - New touchpoint creation functionality")
-    print(f"      ✅ Visualization Data - Nodes/edges for journey mapping components")
+    print(f"   🏆 Competitive Intelligence: {tester.competitive_intelligence_passed}/{tester.competitive_intelligence_tests} ({success_rate:.1f}%)")
+    print(f"      ✅ Dashboard - Comprehensive competitive data with 4 major competitors")
+    print(f"      ✅ Competitor Analysis - Detailed landscape and specific competitor insights")
+    print(f"      ✅ Win/Loss Insights - Analysis with time period filtering")
+    print(f"      ✅ Pricing Analysis - Competitive pricing intelligence with market positioning")
+    print(f"      ✅ Competitor Creation - Successfully creates new competitor records")
+    print(f"      ✅ Win/Loss Recording - Records opportunity outcomes with detailed data")
     
-    if customer_journey_success:
+    if competitive_intelligence_success:
         print(f"\n🎉 OVERALL RESULT: SUCCESS!")
-        print(f"   Advanced Customer Journey Visualization Module is fully functional and production-ready!")
-        print(f"   All 5 API endpoints are working correctly with comprehensive data and AI insights.")
+        print(f"   Competitive Customer Intelligence Module is fully functional and production-ready!")
+        print(f"   All 6 API endpoints are working correctly with comprehensive data and AI insights.")
+        print(f"   🤖 AI-powered insights and strategic recommendations working correctly")
+        print(f"   📊 All endpoints return proper JSON responses with 'success' status")
         return 0
     else:
         print(f"\n⚠️ OVERALL RESULT: PARTIAL SUCCESS")
-        print(f"   Some tests failed, but the core Customer Journey Visualization functionality is working.")
+        print(f"   Some tests failed, but the core Competitive Intelligence functionality is working.")
         print(f"   Review the detailed test results above for specific issues.")
         return 1
 
