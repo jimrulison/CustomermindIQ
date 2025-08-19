@@ -138,20 +138,20 @@ const CustomerAnalyticsDashboard = ({
       features: ['Executive KPIs', 'Performance Summaries', 'Strategic Insights', 'Board Reports']
     },
     {
-      id: 'growth',
-      title: 'Growth Intelligence Suite',
-      description: 'Customer acquisition, expansion, and growth optimization strategies',
-      icon: TrendingUp,
-      color: 'from-emerald-600/20 to-emerald-800/20',
-      borderColor: 'border-emerald-500/30',
-      iconColor: 'text-emerald-400',
+      id: 'real-time-health',
+      title: 'Real-Time Customer Health',
+      description: 'Live customer health monitoring with AI-powered alerts and intervention automation',
+      icon: Heart,
+      color: 'from-red-600/20 to-red-800/20',
+      borderColor: 'border-red-500/30',
+      iconColor: 'text-red-400',
       metrics: {
-        acquisition: '+45%',
-        expansion: '$156K',
-        opportunities: '23 Active'
+        monitored: '24/7',
+        alerts: '3 Active',
+        interventions: '94.2%'
       },
-      features: ['Acquisition Analysis', 'Expansion Tracking', 'Growth Opportunities', 'Market Intelligence']
-    }
+      features: ['Live Health Scoring', 'Automatic Alerts', 'Intervention Workflows', 'Escalation Management']
+    },
   ];
 
   return (
