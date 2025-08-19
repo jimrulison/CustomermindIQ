@@ -57,7 +57,7 @@ class CustomerHealthScore(BaseModel):
     risk_factors: List[str] = []
     positive_indicators: List[str] = []
     last_updated: datetime
-    trend: str = Field(..., regex="^(improving|stable|declining)$")
+    trend: str = Field(..., pattern="^(improving|stable|declining)$")
     confidence: float = Field(..., ge=0, le=100)
 
 class HealthAlert(BaseModel):
