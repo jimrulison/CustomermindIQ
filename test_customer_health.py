@@ -7,7 +7,7 @@ from datetime import datetime
 import time
 
 class CustomerHealthTester:
-    def __init__(self, base_url="https://4421b7a3-3066-41eb-9869-176a11831160.preview.emergentagent.com"):
+    def __init__(self, base_url="https://customeriq-saas.preview.emergentagent.com"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0
