@@ -168,6 +168,21 @@ const CustomerAnalyticsDashboard = ({
         opportunities: '23 Active'
       },
       features: ['Acquisition Analysis', 'Expansion Tracking', 'Growth Opportunities', 'Market Intelligence']
+    },
+    {
+      id: 'customer-journey',
+      title: 'Advanced Customer Journey Visualization',
+      description: 'AI-powered journey mapping with touchpoint analysis and optimization insights',
+      icon: Route,
+      color: 'from-violet-600/20 to-violet-800/20',
+      borderColor: 'border-violet-500/30',
+      iconColor: 'text-violet-400',
+      metrics: {
+        journeys: '8 Paths',
+        touchpoints: '12 Active',
+        optimization: '85.3%'
+      },
+      features: ['Journey Mapping', 'Touchpoint Analysis', 'Path Optimization', 'Conversion Insights']
     }
   ];
 
