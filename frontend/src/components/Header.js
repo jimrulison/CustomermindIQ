@@ -21,7 +21,26 @@ import {
 } from 'lucide-react';
 
 const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
-  const navigationButtons = [
+  // Primary navigation - separated by analytics type
+  const primaryNavigation = [
+    {
+      id: 'customer-analytics-dashboard',
+      label: 'Customer Analytics',
+      icon: Brain,
+      color: 'hover:bg-blue-600/20 hover:text-blue-400',
+      description: 'Customer behavior, marketing automation, revenue optimization'
+    },
+    {
+      id: 'website-analytics-dashboard', 
+      label: 'Website Analytics',
+      icon: Globe,
+      color: 'hover:bg-emerald-600/20 hover:text-emerald-400',
+      description: 'Website performance, SEO, technical optimization'
+    }
+  ];
+
+  // Customer Analytics modules
+  const customerAnalyticsModules = [
     {
       id: 'customers',
       label: 'Customer Intelligence',
@@ -43,14 +62,8 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
     {
       id: 'advanced',
       label: 'Advanced Features',
-      icon: Brain,
+      icon: Zap,
       color: 'hover:bg-orange-600/20 hover:text-orange-400'
-    },
-    {
-      id: 'analytics',
-      label: 'Analytics & Insights',
-      icon: TrendingUp,
-      color: 'hover:bg-indigo-600/20 hover:text-indigo-400'
     },
     {
       id: 'customer-success',
@@ -62,13 +75,35 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
       id: 'executive',
       label: 'Executive Dashboard',
       icon: BarChart3,
-      color: 'hover:bg-gold-600/20 hover:text-gold-400'
+      color: 'hover:bg-indigo-600/20 hover:text-indigo-400'
     },
     {
       id: 'growth',
       label: 'Growth Intelligence',
       icon: TrendingUp,
-      color: 'hover:bg-purple-600/20 hover:text-purple-400'
+      color: 'hover:bg-emerald-600/20 hover:text-emerald-400'
+    },
+    {
+      id: 'create',
+      label: 'Create Campaign',
+      icon: Cpu,
+      color: 'hover:bg-yellow-600/20 hover:text-yellow-400'
+    }
+  ];
+
+  // Website Analytics modules  
+  const websiteAnalyticsModules = [
+    {
+      id: 'website-intelligence',
+      label: 'Website Intelligence',
+      icon: Globe,
+      color: 'hover:bg-emerald-600/20 hover:text-emerald-400'
+    },
+    {
+      id: 'analytics',
+      label: 'Analytics & Insights',
+      icon: TrendingUp,
+      color: 'hover:bg-indigo-600/20 hover:text-indigo-400'
     },
     {
       id: 'product',
@@ -80,33 +115,33 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
       id: 'integration',
       label: 'Integration & Data Hub',
       icon: Database,
-      color: 'hover:bg-indigo-600/20 hover:text-indigo-400'
+      color: 'hover:bg-blue-600/20 hover:text-blue-400'
     },
     {
       id: 'compliance',
       label: 'Compliance & Governance',
       icon: Shield,
-      color: 'hover:bg-emerald-600/20 hover:text-emerald-400'
+      color: 'hover:bg-purple-600/20 hover:text-purple-400'
     },
     {
       id: 'ai-command',
       label: 'AI Command Center',
       icon: Cpu,
       color: 'hover:bg-cyan-600/20 hover:text-cyan-400'
-    },
-    {
-      id: 'website-intelligence',
-      label: 'Website Intelligence',
-      icon: Globe,
-      color: 'hover:bg-emerald-600/20 hover:text-emerald-400'
-    },
-    {
-      id: 'create',
-      label: 'Create Campaign',
-      icon: Zap,
-      color: 'hover:bg-yellow-600/20 hover:text-yellow-400'
     }
   ];
+
+  // Determine which modules to show based on current context
+  const getActiveModules = () => {
+    if (currentPage === 'customer-analytics-dashboard' || customerAnalyticsModules.some(m => m.id === currentPage)) {
+      return customerAnalyticsModules;
+    } else if (currentPage === 'website-analytics-dashboard' || websiteAnalyticsModules.some(m => m.id === currentPage)) {
+      return websiteAnalyticsModules;
+    }
+    return customerAnalyticsModules; // Default to customer analytics
+  };
+
+  const activeModules = getActiveModules();
 
   return (
     <header className="bg-slate-900/95 backdrop-blur-xl border-b border-slate-700 sticky top-0 z-50">
