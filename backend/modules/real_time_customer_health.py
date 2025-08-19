@@ -13,13 +13,14 @@ import uuid
 import logging
 from enum import Enum
 import smtplib
-try:
-    from email.mime.text import MimeText
-    from email.mime.multipart import MimeMultipart
-except ImportError:
-    # Fallback for email functionality
-    MimeText = None
-    MimeMultipart = None
+# Email functionality disabled due to import issues
+# try:
+#     from email.mime.text import MimeText
+#     from email.mime.multipart import MimeMultipart
+# except ImportError:
+#     # Fallback for email functionality
+#     MimeText = None
+#     MimeMultipart = None
 
 # Load environment variables
 load_dotenv()
