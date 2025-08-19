@@ -37,6 +37,7 @@ class CustomerIntelligenceAITester:
         # NEW: Customer Intelligence System Tests
         self.customer_intelligence_tests = 0
         self.customer_intelligence_passed = 0
+        self.customer_ids = []  # Store customer IDs for testing
 
     def run_customer_intelligence_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
         """Run a Customer Intelligence API test"""
