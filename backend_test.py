@@ -5422,53 +5422,54 @@ class CustomerIntelligenceAITester:
     # =====================================================
 
 def main():
-    """Main function to run Website Intelligence Hub testing"""
-    print("🌐 WEBSITE INTELLIGENCE HUB BACKEND TESTING")
+    """Main function to run Real-Time Customer Health Monitoring testing"""
+    print("💚 REAL-TIME CUSTOMER HEALTH MONITORING BACKEND TESTING")
     print("="*80)
-    print("Testing the NEW Website Intelligence Hub module (8th major module)")
-    print("Comprehensive website analysis and monitoring for users' own websites")
-    print("Including SEO analysis, performance metrics, technical audits, and business intelligence")
+    print("Testing the NEW Real-Time Customer Health Monitoring system")
+    print("AI-powered health scoring, automatic alerts, and real-time monitoring")
+    print("Including health dashboard, alerts management, AI analysis, and WebSocket support")
     print("="*80)
     
     tester = CustomerIntelligenceAITester()
     
-    # Test Website Intelligence Hub
-    website_intelligence_success = tester.run_website_intelligence_hub_tests()
+    # Test Real-Time Customer Health Monitoring
+    customer_health_success = tester.run_customer_health_monitoring_tests()
     
     # Print final summary
     print(f"\n{'='*80}")
-    print("🌐 WEBSITE INTELLIGENCE HUB TESTING SUMMARY")
+    print("💚 REAL-TIME CUSTOMER HEALTH MONITORING TESTING SUMMARY")
     print("="*80)
-    print(f"   Total Tests Run: {tester.website_intelligence_tests}")
-    print(f"   Total Tests Passed: {tester.website_intelligence_passed}")
-    success_rate = (tester.website_intelligence_passed / tester.website_intelligence_tests * 100) if tester.website_intelligence_tests > 0 else 0
+    print(f"   Total Tests Run: {tester.customer_health_tests}")
+    print(f"   Total Tests Passed: {tester.customer_health_passed}")
+    success_rate = (tester.customer_health_passed / tester.customer_health_tests * 100) if tester.customer_health_tests > 0 else 0
     print(f"   Overall Success Rate: {success_rate:.1f}%")
     print("="*80)
     
     print(f"\n📊 DETAILED RESULTS:")
-    print(f"   🌐 Website Intelligence Hub: {tester.website_intelligence_passed}/{tester.website_intelligence_tests} ({success_rate:.1f}%)")
-    print(f"      ✅ Website Analyzer - Comprehensive website analysis with technical audits")
-    print(f"      ✅ Membership Manager - Tier management and website limits (Basic=1, Professional=3, Enterprise=7)")
-    print(f"      ✅ Performance Monitor - Core Web Vitals and performance optimization")
-    print(f"      ✅ SEO Intelligence - SEO analysis and keyword tracking")
-    print(f"      ✅ Manual Update All - Bulk website analysis updates")
-    print(f"      ✅ Business Intelligence - Revenue impact analysis and optimization opportunities")
+    print(f"   💚 Customer Health Monitoring: {tester.customer_health_passed}/{tester.customer_health_tests} ({success_rate:.1f}%)")
+    print(f"      ✅ Health Dashboard - Real-time customer health metrics and summary")
+    print(f"      ✅ Active Alerts - Health alerts with severity levels and escalation")
+    print(f"      ✅ Individual Health - Customer-specific health score retrieval")
+    print(f"      ✅ AI Health Calculation - Emergent LLM powered health analysis")
+    print(f"      ✅ Alert Resolution - Alert management and resolution system")
+    print(f"      ✅ WebSocket Support - Real-time monitoring capabilities")
     
-    if website_intelligence_success:
-        print(f"\n🎉 SUCCESS: ALL WEBSITE INTELLIGENCE HUB TESTS PASSED!")
-        print(f"   Website Intelligence Hub is fully functional with comprehensive analysis capabilities")
-        print(f"   All {tester.website_intelligence_tests} endpoints working correctly:")
-        print(f"   • Website Analyzer (/api/website-intelligence/dashboard) - ✅ Working")
-        print(f"   • Membership Manager (/api/website-intelligence/membership-status) - ✅ Working")
-        print(f"   • Performance Monitor (/api/website-intelligence/performance-dashboard) - ✅ Working")
-        print(f"   • SEO Intelligence (/api/website-intelligence/seo-dashboard) - ✅ Working")
-        print(f"   • Manual Update All (/api/website-intelligence/update-all) - ✅ Working")
-        print(f"   Website Intelligence Hub provides comprehensive website intelligence data and is production-ready")
+    if customer_health_success:
+        print(f"\n🎉 SUCCESS: ALL CUSTOMER HEALTH MONITORING TESTS PASSED!")
+        print(f"   Real-Time Customer Health Monitoring System is fully functional")
+        print(f"   All {tester.customer_health_tests} endpoints working correctly:")
+        print(f"   • Health Dashboard (/api/customer-health/dashboard) - ✅ Working")
+        print(f"   • Active Alerts (/api/customer-health/alerts) - ✅ Working")
+        print(f"   • Individual Health (/api/customer-health/customer/{{id}}/health) - ✅ Working")
+        print(f"   • AI Health Calculation (/api/customer-health/customer/{{id}}/calculate-health) - ✅ Working")
+        print(f"   • Alert Resolution (/api/customer-health/alerts/{{id}}/resolve) - ✅ Working")
+        print(f"   • WebSocket Monitoring (/api/customer-health/ws/health-monitoring) - ✅ Working")
+        print(f"   Customer Health Monitoring provides comprehensive real-time health intelligence and is production-ready")
         return 0
     else:
-        failed_tests = tester.website_intelligence_tests - tester.website_intelligence_passed
+        failed_tests = tester.customer_health_tests - tester.customer_health_passed
         print(f"\n⚠️  PARTIAL SUCCESS: {failed_tests} test(s) failed")
-        print(f"   Most of the Website Intelligence Hub is working correctly")
+        print(f"   Most of the Customer Health Monitoring System is working correctly")
         print(f"   See detailed test results above for specific issues")
         return 1
 
