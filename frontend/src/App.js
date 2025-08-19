@@ -42,6 +42,7 @@ import Header from './components/Header';
 import CustomerAnalyticsDashboard from './components/CustomerAnalyticsDashboard';
 import WebsiteAnalyticsDashboard from './components/WebsiteAnalyticsDashboard';
 import RealTimeHealthDashboard from './components/RealTimeHealthDashboard';
+import CustomerJourneyDashboard from './components/CustomerJourneyDashboard';
 import CreateCampaign from './components/CreateCampaign';
 import CustomerSuccessIntelligence from './components/CustomerSuccessIntelligence';
 import ExecutiveIntelligenceDashboard from './components/ExecutiveIntelligenceDashboard';
