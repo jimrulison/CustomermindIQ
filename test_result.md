@@ -1139,7 +1139,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Advanced Customer Journey Visualization Module"
+    - "Competitive Customer Intelligence Module"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
