@@ -76,7 +76,7 @@ const RealTimeHealthDashboard = ({ onNavigate }) => {
   // Fetch health dashboard data
   const fetchHealthData = async () => {
     try {
-      const response = await fetch(`${import.meta.env.REACT_APP_BACKEND_URL}/api/customer-health/dashboard`);
+      const response = await fetch(`${API_BASE_URL}/api/customer-health/dashboard`);
       if (!response.ok) throw new Error('Failed to fetch health data');
       
       const data = await response.json();
@@ -90,7 +90,7 @@ const RealTimeHealthDashboard = ({ onNavigate }) => {
   // Fetch active alerts
   const fetchAlerts = async () => {
     try {
-      const response = await fetch(`${import.meta.env.REACT_APP_BACKEND_URL}/api/customer-health/alerts`);
+      const response = await fetch(`${API_BASE_URL}/api/customer-health/alerts`);
       if (!response.ok) throw new Error('Failed to fetch alerts');
       
       const data = await response.json();
@@ -103,7 +103,7 @@ const RealTimeHealthDashboard = ({ onNavigate }) => {
   // Resolve alert
   const resolveAlert = async (alertId) => {
     try {
-      const response = await fetch(`${import.meta.env.REACT_APP_BACKEND_URL}/api/customer-health/alerts/${alertId}/resolve`, {
+      const response = await fetch(`${API_BASE_URL}/api/customer-health/alerts/${alertId}/resolve`, {
         method: 'POST'
       });
       
@@ -119,7 +119,7 @@ const RealTimeHealthDashboard = ({ onNavigate }) => {
   const setupWebSocket = () => {
     if (wsRef.current) return;
 
-    const wsUrl = `${import.meta.env.REACT_APP_BACKEND_URL}/api/customer-health/ws/health-monitoring`.replace('http', 'ws');
+    const wsUrl = `${API_BASE_URL}/api/customer-health/ws/health-monitoring`.replace('http', 'ws');
     wsRef.current = new WebSocket(wsUrl);
 
     wsRef.current.onopen = () => {
