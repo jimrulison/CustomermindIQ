@@ -1744,6 +1744,9 @@ app.include_router(customer_intelligence_router)
 # ============= NEW REAL-TIME CUSTOMER HEALTH MONITORING =============
 app.include_router(customer_health_router)
 
+# Advanced Customer Journey Visualization System
+app.include_router(customer_journey_router, prefix="/api/customer-journey", tags=["Customer Journey Visualization"])
+
 # ============= REVENUE ANALYTICS SUITE =============
 app.include_router(revenue_forecasting_router, prefix="/api/revenue", tags=["Revenue Forecasting"])
 app.include_router(price_optimization_router, prefix="/api/revenue", tags=["Price Optimization"])
