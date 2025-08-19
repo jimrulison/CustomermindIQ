@@ -176,7 +176,13 @@ function App() {
       setLoading(true);
       console.log('Loading Customer Mind IQ data...');
       
-      const [customersRes, campaignsRes, analyticsRes] = await Promise.all([
+      // Add timeout wrapper for all API calls
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Loading timeout after 30 seconds')), 30000)
+      );
+      
+      // Load basic data with timeout protection
+      const basicDataPromise = Promise.all([
         axios.get(`${API_BASE_URL}/api/customers`).catch(err => {
           console.error('Customers API error:', err);
           return { data: [] };
@@ -191,21 +197,42 @@ function App() {
         })
       ]);
       
+      const [customersRes, campaignsRes, analyticsRes] = await Promise.race([basicDataPromise, timeoutPromise]);
+      
       setCustomers(customersRes.data);
       setCampaigns(campaignsRes.data);
       setAnalytics(analyticsRes.data);
       
-      // Load Marketing Automation Pro data
-      await loadMarketingData();
+      console.log('Basic data loaded, loading additional modules...');
       
-      // Load Advanced Features Expansion data
-      await loadAdvancedFeaturesData();
+      // Load additional data with individual timeout protection
+      try {
+        console.log('Loading Marketing Automation Pro data...');
+        await Promise.race([loadMarketingData(), timeoutPromise]);
+      } catch (err) {
+        console.error('Marketing data load failed:', err);
+      }
       
-      // Load Revenue Analytics Suite data
-      await loadRevenueAnalyticsData();
+      try {
+        console.log('Loading Advanced Features data...');
+        await Promise.race([loadAdvancedFeaturesData(), timeoutPromise]);
+      } catch (err) {
+        console.error('Advanced features data load failed:', err);
+      }
       
-      // Load Analytics & Insights data
-      await loadAnalyticsInsightsData();
+      try {
+        console.log('Loading Revenue Analytics data...');
+        await Promise.race([loadRevenueAnalyticsData(), timeoutPromise]);
+      } catch (err) {
+        console.error('Revenue analytics data load failed:', err);
+      }
+      
+      try {
+        console.log('Loading Analytics & Insights data...');
+        await Promise.race([loadAnalyticsInsightsData(), timeoutPromise]);
+      } catch (err) {
+        console.error('Analytics insights data load failed:', err);
+      }
       
       console.log('Customer Mind IQ data loaded successfully');
     } catch (error) {
