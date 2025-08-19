@@ -18,6 +18,9 @@ from modules.customer_intelligence_api import router as customer_intelligence_ro
 # Import NEW Real-Time Customer Health Monitoring System  
 from modules.real_time_customer_health import router as customer_health_router
 
+# Import NEW Advanced Customer Journey Visualization System
+from modules.customer_journey_visualization import router as customer_journey_router
+
 # Import Customer Intelligence AI Module (Legacy - for backward compatibility)
 from modules.customer_intelligence_ai import (
     BehavioralClusteringService,
