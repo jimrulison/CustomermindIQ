@@ -144,13 +144,15 @@ function App() {
   const handleSignIn = (userData) => {
     setUser(userData);
     setIsAuthenticated(true);
-    setCurrentPage('dashboard');
+    setCurrentPage('customer-analytics-dashboard');
+    setAnalyticsSection('customer');
   };
 
   const handleSignOut = () => {
     setUser(null);
     setIsAuthenticated(false);
-    setCurrentPage('dashboard');
+    setCurrentPage('customer-analytics-dashboard');
+    setAnalyticsSection('customer');
   };
 
   const handleNavigate = (page) => {
