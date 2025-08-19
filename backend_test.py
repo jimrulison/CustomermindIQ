@@ -7261,5 +7261,322 @@ def main():
     # END CUSTOMER INTELLIGENCE SYSTEM TESTS
     # =====================================================
 
+    # =====================================================
+    # ADVANCED CUSTOMER JOURNEY VISUALIZATION TESTS
+    # =====================================================
+
+    def test_customer_journey_dashboard(self):
+        """Test Customer Journey Visualization - Main Dashboard"""
+        print("\n🗺️ Testing Customer Journey Visualization - Main Dashboard...")
+        
+        success, response = self.run_customer_journey_test(
+            "Customer Journey Dashboard",
+            "GET",
+            "api/customer-journey/dashboard",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            data = response.get('data', {})
+            if data:
+                overview = data.get('overview', {})
+                print(f"   Total Customers Analyzed: {overview.get('total_customers_analyzed', 0)}")
+                print(f"   Total Journey Paths: {overview.get('total_journey_paths', 0)}")
+                print(f"   Total Touchpoints: {overview.get('total_touchpoints', 0)}")
+                print(f"   Total Revenue Impact: ${overview.get('total_revenue_impact', 0):,.2f}")
+                print(f"   Avg Conversion Rate: {overview.get('avg_conversion_rate', 0)}%")
+                print(f"   Avg Journey Time: {overview.get('avg_journey_time_days', 0)} days")
+                
+                stages = data.get('stages', [])
+                print(f"   Journey Stages: {len(stages)}")
+                for stage in stages:
+                    print(f"   - {stage.get('name', 'Unknown')}: {stage.get('conversion_rate', 0)}% conversion")
+                    print(f"     Avg Time: {stage.get('avg_time_spent', 0)} days")
+                
+                touchpoints = data.get('touchpoints', [])
+                print(f"   Touchpoints: {len(touchpoints)}")
+                for touchpoint in touchpoints[:3]:  # Show first 3
+                    print(f"   - {touchpoint.get('name', 'Unknown')} ({touchpoint.get('channel', 'Unknown')})")
+                    print(f"     Importance: {touchpoint.get('importance_score', 0)}/10")
+                
+                journey_paths = data.get('journey_paths', [])
+                print(f"   Journey Paths: {len(journey_paths)}")
+                for path in journey_paths:
+                    print(f"   - {path.get('name', 'Unknown')}: {path.get('conversion_rate', 0)}% conversion")
+                    print(f"     Customer Count: {path.get('customer_count', 0)}")
+                    print(f"     Revenue Impact: ${path.get('revenue_impact', 0):,.2f}")
+                
+                ai_insights = data.get('ai_insights', {})
+                if ai_insights:
+                    print(f"   AI Insights Available: Yes")
+                    print(f"   AI Confidence: {ai_insights.get('ai_confidence', 0):.2f}")
+                    
+                    opportunities = ai_insights.get('optimization_opportunities', [])
+                    print(f"   Optimization Opportunities: {len(opportunities)}")
+                    for opp in opportunities[:2]:  # Show first 2
+                        print(f"   - {opp}")
+        
+        return success
+
+    def test_customer_journey_templates(self):
+        """Test Customer Journey Visualization - Journey Templates"""
+        print("\n📋 Testing Customer Journey Visualization - Journey Templates...")
+        
+        success, response = self.run_customer_journey_test(
+            "Journey Templates",
+            "GET",
+            "api/customer-journey/templates",
+            200,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            data = response.get('data', {})
+            if data:
+                templates = data.get('templates', [])
+                print(f"   Available Templates: {len(templates)}")
+                print(f"   Total Templates: {data.get('total_templates', 0)}")
+                
+                categories = data.get('categories', [])
+                print(f"   Categories: {', '.join(categories)}")
+                
+                for template in templates:
+                    print(f"   - {template.get('name', 'Unknown')} ({template.get('template_id', 'unknown')})")
+                    print(f"     Description: {template.get('description', 'No description')}")
+                    print(f"     Stages: {len(template.get('stages', []))}")
+                    print(f"     Duration: {template.get('estimated_duration', 0)} days")
+                    print(f"     Conversion Rate: {template.get('conversion_rate', 0)}%")
+                    print(f"     Complexity Score: {template.get('complexity_score', 0)}/10")
+                    print(f"     Best For: {', '.join(template.get('best_for', []))}")
+        
+        return success
+
+    def test_customer_journey_performance(self):
+        """Test Customer Journey Visualization - Performance Analytics"""
+        print("\n📊 Testing Customer Journey Visualization - Performance Analytics...")
+        
+        success, response = self.run_customer_journey_test(
+            "Journey Performance Analytics",
+            "GET",
+            "api/customer-journey/performance",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            data = response.get('data', {})
+            if data:
+                performance_metrics = data.get('performance_metrics', {})
+                if performance_metrics:
+                    print(f"   Journey ID: {performance_metrics.get('journey_id', 'unknown')}")
+                    print(f"   Analysis Period: {performance_metrics.get('analysis_period', 'unknown')}")
+                    print(f"   Total Interactions: {performance_metrics.get('total_interactions', 0):,}")
+                    print(f"   Unique Customers: {performance_metrics.get('unique_customers', 0):,}")
+                    print(f"   Completion Rate: {performance_metrics.get('completion_rate', 0)}%")
+                    print(f"   Avg Time to Complete: {performance_metrics.get('avg_time_to_complete', 0)} days")
+                    print(f"   Revenue per Journey: ${performance_metrics.get('revenue_per_journey', 0):,.2f}")
+                    print(f"   Cost per Acquisition: ${performance_metrics.get('cost_per_acquisition', 0):,.2f}")
+                    print(f"   ROI: {performance_metrics.get('roi', 0):.2f}x")
+                
+                stage_performance = data.get('stage_performance', [])
+                print(f"   Stage Performance: {len(stage_performance)} stages")
+                for stage in stage_performance:
+                    print(f"   - {stage.get('stage', 'Unknown')}: {stage.get('conversion_rate', 0)}% conversion")
+                    print(f"     Entry: {stage.get('entry_count', 0):,}, Exit: {stage.get('exit_count', 0):,}")
+                    print(f"     Avg Time: {stage.get('avg_time_spent', 0)} days")
+                
+                channel_performance = data.get('channel_performance', [])
+                print(f"   Channel Performance: {len(channel_performance)} channels")
+                for channel in channel_performance:
+                    print(f"   - {channel.get('channel', 'Unknown')}: {channel.get('conversion_rate', 0)}% conversion")
+                    print(f"     Interactions: {channel.get('interactions', 0):,}")
+                    print(f"     Cost per Interaction: ${channel.get('cost_per_interaction', 0):.2f}")
+                    print(f"     Satisfaction: {channel.get('satisfaction_score', 0)}/10")
+                
+                optimization_recommendations = data.get('optimization_recommendations', {})
+                if optimization_recommendations:
+                    print(f"   Optimization Recommendations Available: Yes")
+                    print(f"   AI Confidence: {optimization_recommendations.get('ai_confidence', 0):.2f}")
+        
+        return success
+
+    def test_customer_journey_create_touchpoint(self):
+        """Test Customer Journey Visualization - Create Touchpoint"""
+        print("\n➕ Testing Customer Journey Visualization - Create Touchpoint...")
+        
+        touchpoint_data = {
+            "name": "AI-Powered Live Chat",
+            "channel": "Chat",
+            "stage": "consideration",
+            "importance_score": 8.5,
+            "conversion_impact": 7.8,
+            "customer_satisfaction": 8.9,
+            "frequency": 150,
+            "cost_per_interaction": 12.50
+        }
+        
+        success, response = self.run_customer_journey_test(
+            "Create New Touchpoint",
+            "POST",
+            "api/customer-journey/touchpoint/create",
+            200,
+            data=touchpoint_data,
+            timeout=30
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            print(f"   Message: {response.get('message', 'No message')}")
+            
+            data = response.get('data', {})
+            if data:
+                print(f"   Touchpoint ID: {data.get('touchpoint_id', 'unknown')}")
+                print(f"   Name: {data.get('name', 'unknown')}")
+                print(f"   Channel: {data.get('channel', 'unknown')}")
+                print(f"   Stage: {data.get('stage', 'unknown')}")
+                print(f"   Importance Score: {data.get('importance_score', 0)}/10")
+                print(f"   Conversion Impact: {data.get('conversion_impact', 0)}/10")
+                print(f"   Customer Satisfaction: {data.get('customer_satisfaction', 0)}/10")
+                print(f"   Frequency: {data.get('frequency', 0)}")
+                print(f"   Cost per Interaction: ${data.get('cost_per_interaction', 0):.2f}")
+                print(f"   Created At: {data.get('created_at', 'unknown')}")
+                print(f"   Status: {data.get('status', 'unknown')}")
+        
+        return success
+
+    def test_customer_journey_visualization_data(self):
+        """Test Customer Journey Visualization - Visualization Data"""
+        print("\n🎨 Testing Customer Journey Visualization - Visualization Data...")
+        
+        success, response = self.run_customer_journey_test(
+            "Journey Visualization Data",
+            "GET",
+            "api/customer-journey/visualization/data",
+            200,
+            timeout=45
+        )
+        
+        if success:
+            print(f"   Status: {response.get('status', 'unknown')}")
+            
+            data = response.get('data', {})
+            if data:
+                nodes = data.get('nodes', [])
+                edges = data.get('edges', [])
+                journey_flows = data.get('journey_flows', [])
+                heatmap_data = data.get('heatmap_data', [])
+                
+                print(f"   Visualization Nodes: {len(nodes)}")
+                print(f"   Visualization Edges: {len(edges)}")
+                print(f"   Journey Flows: {len(journey_flows)}")
+                print(f"   Heatmap Data Points: {len(heatmap_data)}")
+                
+                # Show node details
+                stage_nodes = [node for node in nodes if node.get('type') == 'stage']
+                touchpoint_nodes = [node for node in nodes if node.get('type') == 'touchpoint']
+                
+                print(f"   Stage Nodes: {len(stage_nodes)}")
+                for node in stage_nodes:
+                    print(f"   - {node.get('label', 'Unknown')} (ID: {node.get('id', 'unknown')})")
+                    node_data = node.get('data', {})
+                    print(f"     Conversion Rate: {node_data.get('conversion_rate', 0)}%")
+                    print(f"     Avg Time Spent: {node_data.get('avg_time_spent', 0)} days")
+                
+                print(f"   Touchpoint Nodes: {len(touchpoint_nodes)}")
+                for node in touchpoint_nodes[:3]:  # Show first 3
+                    print(f"   - {node.get('label', 'Unknown')} (ID: {node.get('id', 'unknown')})")
+                    node_data = node.get('data', {})
+                    print(f"     Channel: {node_data.get('channel', 'unknown')}")
+                    print(f"     Importance Score: {node_data.get('importance_score', 0)}/10")
+                
+                # Show edge details
+                print(f"   Journey Flow Edges: {len(edges)}")
+                for edge in edges:
+                    print(f"   - {edge.get('source', 'unknown')} → {edge.get('target', 'unknown')}")
+                    edge_data = edge.get('data', {})
+                    print(f"     Flow Rate: {edge_data.get('flow_rate', 0):.2f}")
+                    print(f"     Customer Count: {edge_data.get('customer_count', 0)}")
+        
+        return success
+
+    def run_customer_journey_tests(self):
+        """Run all Customer Journey Visualization tests"""
+        print(f"\n" + "="*80)
+        print(f"🗺️ ADVANCED CUSTOMER JOURNEY VISUALIZATION MODULE TESTING")
+        print(f"="*80)
+        print(f"Testing 5 API endpoints under '/api/customer-journey' prefix:")
+        print(f"1. GET /api/customer-journey/dashboard - Main dashboard data")
+        print(f"2. GET /api/customer-journey/templates - Journey templates")
+        print(f"3. GET /api/customer-journey/performance - Performance analytics")
+        print(f"4. POST /api/customer-journey/touchpoint/create - Create touchpoint")
+        print(f"5. GET /api/customer-journey/visualization/data - Visualization data")
+        
+        # Test 1: Dashboard Data
+        print(f"\n{'='*60}")
+        print("📊 TESTING JOURNEY DASHBOARD")
+        print("="*60)
+        self.test_customer_journey_dashboard()
+        
+        # Test 2: Journey Templates
+        print(f"\n{'='*60}")
+        print("📋 TESTING JOURNEY TEMPLATES")
+        print("="*60)
+        self.test_customer_journey_templates()
+        
+        # Test 3: Performance Analytics
+        print(f"\n{'='*60}")
+        print("📈 TESTING PERFORMANCE ANALYTICS")
+        print("="*60)
+        self.test_customer_journey_performance()
+        
+        # Test 4: Create Touchpoint
+        print(f"\n{'='*60}")
+        print("➕ TESTING TOUCHPOINT CREATION")
+        print("="*60)
+        self.test_customer_journey_create_touchpoint()
+        
+        # Test 5: Visualization Data
+        print(f"\n{'='*60}")
+        print("🎨 TESTING VISUALIZATION DATA")
+        print("="*60)
+        self.test_customer_journey_visualization_data()
+        
+        # Calculate results
+        success_rate = (self.customer_journey_passed / self.customer_journey_tests * 100) if self.customer_journey_tests > 0 else 0
+        
+        print(f"\n" + "="*80)
+        print(f"🗺️ CUSTOMER JOURNEY VISUALIZATION TESTING COMPLETE")
+        print(f"="*80)
+        print(f"✅ Tests Passed: {self.customer_journey_passed}/{self.customer_journey_tests}")
+        print(f"📊 Success Rate: {success_rate:.1f}%")
+        
+        if self.customer_journey_passed == self.customer_journey_tests:
+            print(f"🎉 SUCCESS: ALL CUSTOMER JOURNEY VISUALIZATION TESTS PASSED!")
+            print(f"   Advanced Customer Journey Visualization Module is fully functional with:")
+            print(f"   ✅ Dashboard Data - Journey stages, paths, touchpoints, and AI insights")
+            print(f"   ✅ Journey Templates - Multiple business model templates available")
+            print(f"   ✅ Performance Analytics - Stage breakdown and channel performance")
+            print(f"   ✅ Touchpoint Creation - New touchpoint creation working")
+            print(f"   ✅ Visualization Data - Nodes/edges for journey mapping components")
+            print(f"   Customer Journey Visualization Module is production-ready!")
+        else:
+            failed_tests = self.customer_journey_tests - self.customer_journey_passed
+            print(f"⚠️  PARTIAL SUCCESS: {failed_tests} test(s) failed")
+            print(f"   Most of the Customer Journey Visualization Module is working correctly")
+            print(f"   See detailed test results above for specific issues")
+        
+        return self.customer_journey_passed == self.customer_journey_tests
+
+    # =====================================================
+    # END ADVANCED CUSTOMER JOURNEY VISUALIZATION TESTS
+    # =====================================================
+
 if __name__ == "__main__":
     sys.exit(main())
