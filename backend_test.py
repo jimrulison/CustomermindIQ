@@ -40,6 +40,9 @@ class CustomerIntelligenceAITester:
         # NEW: Real-Time Customer Health Monitoring Tests
         self.customer_health_tests = 0
         self.customer_health_passed = 0
+        # NEW: Advanced Customer Journey Visualization Tests
+        self.customer_journey_tests = 0
+        self.customer_journey_passed = 0
         self.customer_ids = []  # Store customer IDs for testing
 
     def run_customer_intelligence_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
