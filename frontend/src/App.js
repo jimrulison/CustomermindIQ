@@ -590,6 +590,12 @@ function App() {
           />
         )}
         
+        {currentPage === 'real-time-health' && (
+          <RealTimeHealthDashboard 
+            onNavigate={handleNavigate}
+          />
+        )}
+        
         {currentPage === 'website-analytics-dashboard' && (
           <WebsiteAnalyticsDashboard 
             analyticsInsightsDashboard={analyticsInsightsDashboard}
