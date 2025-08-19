@@ -60,7 +60,8 @@ function App() {
   // Authentication state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
-  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [currentPage, setCurrentPage] = useState('customer-analytics-dashboard');
+  const [analyticsSection, setAnalyticsSection] = useState('customer'); // 'customer' or 'website'
   const [customers, setCustomers] = useState([]);
   const [campaigns, setCampaigns] = useState([]);
   const [analytics, setAnalytics] = useState(null);
