@@ -12,6 +12,9 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 import json
 
+# Import NEW AI-Powered Customer Intelligence System
+from modules.customer_intelligence_api import router as customer_intelligence_router
+
 # Import Customer Intelligence AI Module (Legacy - for backward compatibility)
 from modules.customer_intelligence_ai import (
     BehavioralClusteringService,
