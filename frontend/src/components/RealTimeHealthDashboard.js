@@ -20,7 +20,7 @@ import {
   RefreshCw,
   Zap,
   Target,
-  Pulse,
+  Activity,
   Phone,
   Mail,
   MessageSquare,
