@@ -229,7 +229,7 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
         {/* Navigation Buttons Row */}
         <div className="pb-4">
           <div className="flex flex-wrap gap-2 justify-center">
-            {navigationButtons.map((button) => {
+            {activeModules.map((button) => {
               const Icon = button.icon;
               const isActive = currentPage === button.id;
               
