@@ -15,6 +15,9 @@ import json
 # Import NEW AI-Powered Customer Intelligence System
 from modules.customer_intelligence_api import router as customer_intelligence_router
 
+# Import NEW Real-Time Customer Health Monitoring System  
+from modules.real_time_customer_health import router as customer_health_router
+
 # Import Customer Intelligence AI Module (Legacy - for backward compatibility)
 from modules.customer_intelligence_ai import (
     BehavioralClusteringService,
