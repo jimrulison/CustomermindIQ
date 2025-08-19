@@ -48,6 +48,12 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
       color: 'hover:bg-blue-600/20 hover:text-blue-400'
     },
     {
+      id: 'real-time-health',
+      label: 'Real-Time Health',
+      icon: Heart,
+      color: 'hover:bg-red-600/20 hover:text-red-400'
+    },
+    {
       id: 'marketing',
       label: 'Marketing Automation',
       icon: Megaphone,
