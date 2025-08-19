@@ -32,6 +32,9 @@ import {
 } from 'lucide-react';
 
 const RealTimeHealthDashboard = ({ onNavigate }) => {
+  // API Configuration
+  const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+  
   const [healthData, setHealthData] = useState(null);
   const [alerts, setAlerts] = useState([]);
   const [loading, setLoading] = useState(true);
