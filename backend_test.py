@@ -43,6 +43,9 @@ class CustomerIntelligenceAITester:
         # NEW: Advanced Customer Journey Visualization Tests
         self.customer_journey_tests = 0
         self.customer_journey_passed = 0
+        # NEW: Competitive Customer Intelligence Tests
+        self.competitive_intelligence_tests = 0
+        self.competitive_intelligence_passed = 0
         self.customer_ids = []  # Store customer IDs for testing
 
     def run_customer_intelligence_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
