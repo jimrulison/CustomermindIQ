@@ -33,7 +33,8 @@ import {
   Star,
   Award,
   Sparkles,
-  Heart
+  Heart,
+  Route
 } from 'lucide-react';
 
 const CustomerAnalyticsDashboard = ({ 
