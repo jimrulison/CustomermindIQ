@@ -553,6 +553,7 @@ function App() {
         onNavigate={handleNavigate}
         onSignOut={handleSignOut}
         user={user}
+        analyticsSection={analyticsSection}
       />
       
       {/* Announcement Banner */}
