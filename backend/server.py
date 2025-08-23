@@ -96,6 +96,9 @@ from modules.website_intelligence_hub import website_intelligence_router
 # Import Support System Module
 from modules.support_system import router as support_router
 
+# Import Payment System Module
+from modules.payment_system import router as payment_router
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
