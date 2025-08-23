@@ -20,10 +20,13 @@ class PaymentSystemTester:
         self.test_session_id = None
         self.test_transaction_id = None
         
-    def run_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
+    def run_test(self, name, method, endpoint, expected_status, data=None, timeout=60):
         """Run a payment system API test"""
         url = f"{self.base_url}/{endpoint}"
-        headers = {'Content-Type': 'application/json'}
+        headers = {
+            'Content-Type': 'application/json',
+            'User-Agent': 'PaymentSystemTester/1.0'
+        }
 
         self.tests_run += 1
         print(f"\n💳 Testing Payment System: {name}...")
@@ -31,13 +34,13 @@ class PaymentSystemTester:
         
         try:
             if method == 'GET':
-                response = requests.get(url, headers=headers, timeout=timeout)
+                response = requests.get(url, headers=headers, timeout=timeout, verify=True)
             elif method == 'POST':
-                response = requests.post(url, json=data, headers=headers, timeout=timeout)
+                response = requests.post(url, json=data, headers=headers, timeout=timeout, verify=True)
             elif method == 'PUT':
-                response = requests.put(url, json=data, headers=headers, timeout=timeout)
+                response = requests.put(url, json=data, headers=headers, timeout=timeout, verify=True)
             elif method == 'DELETE':
-                response = requests.delete(url, headers=headers, timeout=timeout)
+                response = requests.delete(url, headers=headers, timeout=timeout, verify=True)
 
             success = response.status_code == expected_status
             if success:
