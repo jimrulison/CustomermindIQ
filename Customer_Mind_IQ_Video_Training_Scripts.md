@@ -287,9 +287,9 @@ Usage limits increase to 100,000 monthly page views, and you get access to custo
 
 The Professional tier typically pays for itself through improved marketing efficiency and better customer retention – most customers see ROI within 60 days."
 
-### **Enterprise Tier - $799/month (4:45-6:15)**
+### **🔥 LIMITED TIME SALE: Enterprise Tier - $399/month (4:45-6:15)**
 
-"Our Enterprise tier at $799 per month serves established companies with complex needs, regulatory requirements, and unlimited scale requirements.
+"Our Enterprise tier is normally $799 per month, but during this limited-time sale, it's available for just $399 monthly - that's 50% savings! This tier serves established companies with complex needs, regulatory requirements, and unlimited scale requirements.
 
 You get everything from Professional, plus enterprise-grade features:
 
