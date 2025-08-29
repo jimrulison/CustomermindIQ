@@ -79,9 +79,9 @@
         
   - task: "Advanced Admin Features - Banner Management"
     implemented: true
-    working: true
+    working: false
     file: "backend/modules/admin_system.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
@@ -94,6 +94,9 @@
       - working: true
         agent: "testing"
         comment: "✅ BANNER MANAGEMENT TESTED: Core functionality working. WORKING: Admin banner creation with targeting, priority, and scheduling features. Minor: Get active banners endpoint has 500 error (likely authentication issue). Banner creation and admin management fully functional for system announcements."
+      - working: false
+        agent: "testing"
+        comment: "❌ ADMIN ENDPOINTS NOT ACCESSIBLE (Jan 29, 2025): All admin endpoints return 404 Not Found. Routes exist in code (/api/admin/banners, /api/admin/discounts, /api/admin/analytics/dashboard) but are not accessible. Issue appears to be with routing configuration or prefix setup. Admin functionality implemented but not reachable via API."
 
   - task: "Advanced Admin Features - Discount Management"
     implemented: true
