@@ -266,6 +266,31 @@
             margin: 15px 0;
         }
 
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1.8rem;
+            display: block;
+        }
+
+        .sale-price {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 2.5rem;
+            display: block;
+        }
+
+        .sale-badge {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
         .warning {
             background: linear-gradient(145deg, #fff3e0, #ffe0b2);
             border-left: 5px solid #ff9800;
@@ -571,13 +596,18 @@
                 <h2 class="section-title">3. Subscription Tiers & Pricing</h2>
 
                 <div class="subsection">
-                    <h3 class="subsection-title">Updated Pricing Structure</h3>
-                    <p>Our competitive 4-tier structure is designed to scale with your business needs:</p>
+                    <h3 class="subsection-title">🔥 LIMITED TIME SALE - 50% OFF ALL PLANS!</h3>
+                    <p>Our competitive 4-tier structure is designed to scale with your business needs. <strong>Take advantage of our limited-time sale with 50% savings on all subscription tiers!</strong></p>
 
                     <div class="pricing-grid">
                         <div class="pricing-card">
+                            <div class="sale-badge">🔥 LIMITED TIME ONLY</div>
                             <h4>Starter</h4>
-                            <div class="price">$99<small>/month</small></div>
+                            <div class="price">
+                                <span class="original-price">$99</span>
+                                <span class="sale-price">$49</span>
+                                <small>/month</small>
+                            </div>
                             <p style="margin: 15px 0; font-size: 0.9rem; color: #666;">Perfect for small businesses</p>
                             <ul class="feature-list">
                                 <li>Website Intelligence (3 sites)</li>
@@ -592,8 +622,13 @@
                         </div>
 
                         <div class="pricing-card featured">
+                            <div class="sale-badge">🔥 LIMITED TIME ONLY</div>
                             <h4>Professional</h4>
-                            <div class="price">$299<small>/month</small></div>
+                            <div class="price">
+                                <span class="original-price" style="color: #ddd;">$299</span>
+                                <span class="sale-price" style="color: #fff;">$149</span>
+                                <small style="color: #ddd;">/month</small>
+                            </div>
                             <p style="margin: 15px 0; font-size: 0.9rem;">Ideal for growing companies</p>
                             <ul class="feature-list">
                                 <li>Everything in Starter, plus:</li>
@@ -611,8 +646,13 @@
                         </div>
 
                         <div class="pricing-card">
+                            <div class="sale-badge">🔥 LIMITED TIME ONLY</div>
                             <h4>Enterprise</h4>
-                            <div class="price">$799<small>/month</small></div>
+                            <div class="price">
+                                <span class="original-price">$799</span>
+                                <span class="sale-price">$399</span>
+                                <small>/month</small>
+                            </div>
                             <p style="margin: 15px 0; font-size: 0.9rem; color: #666;">For established companies</p>
                             <ul class="feature-list">
                                 <li>Everything in Professional, plus:</li>
@@ -631,7 +671,7 @@
 
                         <div class="pricing-card">
                             <h4>Custom Enterprise</h4>
-                            <div class="price">Contact Sales</div>
+                            <div class="price">Contact Sales<br><small style="font-size: 0.8rem; color: #e74c3c; font-weight: bold;">Special Sale Pricing Available</small></div>
                             <p style="margin: 15px 0; font-size: 0.9rem; color: #666;">Large organizations</p>
                             <ul class="feature-list">
                                 <li>Everything in Enterprise, plus:</li>
@@ -888,75 +928,24 @@
                             <ul class="feature-list">
                                 <li><strong>Trial expired:</strong> Upgrade to continue access</li>
                                 <li><strong>Billing questions:</strong> Contact billing@customermindiq.com</li>
-                                <li><strong>Feature limits:</strong> Check subscription tier in account settings</li>
-                                <li><strong>Upgrade issues:</strong> Clear browser cache and retry</li>
+                                <li><strong>Feature limits reached:</strong> Consider upgrading your plan</li>
+                                <li><strong>Payment failed:</strong> Update payment method in account settings</li>
                             </ul>
                         </div>
                         
                         <div class="feature-card">
                             <h4>📊 Data & Analytics Issues</h4>
                             <ul class="feature-list">
-                                <li><strong>Missing data:</strong> Verify data source connections</li>
-                                <li><strong>Slow loading:</strong> Check internet connection and retry</li>
-                                <li><strong>Incorrect metrics:</strong> Review data integration settings</li>
-                                <li><strong>Export problems:</strong> Try different browser or format</li>
+                                <li><strong>Data not syncing:</strong> Check connector status in Integration Hub</li>
+                                <li><strong>Slow dashboard loading:</strong> Reduce date range or filter data</li>
+                                <li><strong>Missing metrics:</strong> Verify data source configuration</li>
+                                <li><strong>Export problems:</strong> Try smaller data sets or contact support</li>
                             </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="subsection">
-                    <h3 class="subsection-title">📞 Getting Support</h3>
-                    
-                    <div class="step-by-step">
-                        <div class="step-item">
-                            <h4>Self-Service Resources</h4>
-                            <p>Check training materials, FAQ, and knowledge base first.</p>
-                        </div>
-
-                        <div class="step-item">
-                            <h4>Email Support (All Tiers)</h4>
-                            <p>Submit detailed support tickets through the platform or email support@customermindiq.com</p>
-                        </div>
-
-                        <div class="step-item">
-                            <h4>Chat Support (Professional+)</h4>
-                            <p>Access live chat support during business hours for faster assistance.</p>
-                        </div>
-
-                        <div class="step-item">
-                            <h4>Phone + SLA (Enterprise+)</h4>
-                            <p>Direct phone support with guaranteed response times and dedicated account management.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div style="text-align: center; margin-top: 30px;">
-            <button class="button" onclick="window.print()">📄 Download as PDF</button>
-            <a href="/training_portal.html" class="button" style="margin-left: 15px;">📚 Back to Training Portal</a>
-        </div>
     </div>
-
-    <script>
-        // Smooth scrolling for table of contents
-        document.addEventListener('DOMContentLoaded', function() {
-            const tocLinks = document.querySelectorAll('.toc a');
-            tocLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetSection = document.getElementById(targetId);
-                    if (targetSection) {
-                        targetSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
-
-            // Track manual usage
-            console.log('CustomerMind IQ Training Manual loaded');
-        });
-    </script>
 </body>
 </html>
