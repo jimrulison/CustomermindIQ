@@ -129,15 +129,25 @@ const Admin = () => {
   const handleCreateAnnouncement = async (e) => {
     e.preventDefault();
     try {
-      const announcementData = {
-        ...newAnnouncement,
-        id: Date.now(),
-        created: new Date().toISOString().split('T')[0],
-        author: 'Admin'
+      const bannerData = {
+        title: `System Announcement - ${new Date().toLocaleDateString()}`,
+        message: newAnnouncement.message,
+        banner_type: newAnnouncement.type === 'error' ? 'error' : 
+                    newAnnouncement.type === 'warning' ? 'warning' :
+                    newAnnouncement.type === 'success' ? 'success' : 'info',
+        is_dismissible: newAnnouncement.dismissible,
+        priority: 5
       };
 
-      const response = await axios.post(`${API_BASE_URL}/api/admin/announcements`, announcementData);
-      setAnnouncements([announcementData, ...announcements]);
+      const response = await axios.post(`${API_BASE_URL}/api/admin/banners`, bannerData, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      // Reload announcements to get the latest data
+      loadAnnouncements();
       setNewAnnouncement({ message: '', type: 'info', active: true, dismissible: true });
       setShowNewAnnouncement(false);
       alert('Announcement created successfully!');
