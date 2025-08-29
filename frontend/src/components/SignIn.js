@@ -331,7 +331,7 @@ const SignIn = ({ onSignIn }) => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="demo@customermindiq.com"
+                    placeholder="admin@customermindiq.com"
                     className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400 pl-10"
                     required
                   />
