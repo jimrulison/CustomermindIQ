@@ -850,6 +850,11 @@ function AppContent() {
           <Training />
         )}
         
+        {/* Knowledge Base Module */}
+        {currentPage === 'knowledge-base' && (
+          <KnowledgeBase />
+        )}
+        
         {/* Support Center Module */}
         {currentPage === 'support' && (
           <Support />
