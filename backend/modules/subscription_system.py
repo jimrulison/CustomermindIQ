@@ -140,7 +140,7 @@ class SubscriptionInfo(BaseModel):
     
 class SubscriptionUpgrade(BaseModel):
     target_tier: NewSubscriptionTier
-    billing_cycle: str = Field(default="monthly", regex="^(monthly|annual)$")
+    billing_cycle: str = Field(default="monthly", pattern="^(monthly|annual)$")
     promo_code: Optional[str] = None
     
 class FeatureUsage(BaseModel):
