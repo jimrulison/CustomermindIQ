@@ -138,6 +138,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.on_event("startup")
+async def startup_event():
+    """Initialize application on startup"""
+    try:
+        # Initialize default admin user if none exists
+        admin_id = await create_default_admin()
+        if admin_id:
+            print(f"✅ Default admin created with ID: {admin_id}")
+            print("🔐 Login credentials - Email: admin@customermindiq.com, Password: CustomerMindIQ2025!")
+        else:
+            print("✅ Admin user already exists")
+    except Exception as e:
+        print(f"❌ Startup initialization error: {e}")
+
 # Pydantic models
 class CustomerBehavior(BaseModel):
     customer_id: str
