@@ -28,9 +28,9 @@ try:
                 BACKEND_URL = line.split('=')[1].strip()
                 break
         else:
-            BACKEND_URL = "https://mindiq-auth.preview.emergentagent.com"
+            BACKEND_URL = "https://cmind-saas.preview.emergentagent.com"
 except:
-    BACKEND_URL = "https://mindiq-auth.preview.emergentagent.com"
+    BACKEND_URL = "https://cmind-saas.preview.emergentagent.com"
 
 print(f"🔗 Testing Website Intelligence Hub Backend at: {BACKEND_URL}")
 
