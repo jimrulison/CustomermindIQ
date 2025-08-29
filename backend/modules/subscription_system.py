@@ -563,10 +563,17 @@ async def upgrade_subscription(
 
 @router.post("/subscriptions/cancel")
 async def cancel_subscription(
-    reason: str = Field(..., max_length=500),
+    cancel_data: dict,
     current_user: UserProfile = Depends(get_current_user)
 ):
     """Cancel subscription (keeps access until end of billing period)"""
+    
+    reason = cancel_data.get("reason", "No reason provided")
+    if len(reason) > 500:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Reason must be less than 500 characters"
+        )
     
     subscription = await db.subscriptions.find_one({"user_id": current_user.user_id})
     
