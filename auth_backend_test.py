@@ -10,7 +10,7 @@ import sys
 from datetime import datetime
 
 class AuthenticationTester:
-    def __init__(self, base_url="https://cmind-saas.preview.emergentagent.com"):
+    def __init__(self, base_url="http://localhost:8001"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0
