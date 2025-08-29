@@ -1895,6 +1895,9 @@ app.include_router(support_router, prefix="/api/support", tags=["Support System"
 # Include Payment System routes
 app.include_router(payment_router, prefix="/api/payments", tags=["Payment System"])
 
+# Include Authentication System routes
+app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
+
 @app.get("/api/advanced/dashboard")
 async def get_advanced_features_dashboard():
     """Get comprehensive Advanced Features Expansion dashboard"""
