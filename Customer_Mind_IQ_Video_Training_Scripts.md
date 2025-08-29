@@ -331,9 +331,9 @@ Premium Add-Ons available for all tiers include Extra Websites at $25 monthly pe
 
 These add-ons let you customize any plan to match your exact requirements without upgrading to the next tier."
 
-### **ROI & Value Calculation (8:00-9:00)**
+### **🔥 SALE PRICING: ROI & Value Calculation (8:00-9:00)**
 
-"Let's talk return on investment. The average Professional tier customer invests $299 monthly – $3,588 annually with our annual discount.
+"Let's talk return on investment with our current sale pricing. The average Professional tier customer normally invests $299 monthly, but with our 50% discount, that's just $149 monthly – only $1,788 annually with our annual discount.
 
 Typical benefits include 34% improvement in customer retention, 25% increase in marketing efficiency, and 15% boost in conversion rates.
 
@@ -342,9 +342,9 @@ For a company with $1 million in annual revenue, this translates to approximatel
 - $75,000 in cost savings from marketing efficiency  
 - $120,000 in additional revenue from better conversions
 
-Total annual benefit: $375,000 on a $3,588 investment – that's over 10,000% ROI.
+Total annual benefit: $375,000 on just a $1,788 investment with sale pricing – that's over 20,000% ROI!
 
-Even conservative estimates show 300-500% ROI within the first year for most Professional and Enterprise customers."
+Even conservative estimates show 1,000-2,000% ROI within the first year for most Professional and Enterprise customers during this promotional period."
 
 ### **Choosing Your Plan & Next Steps (9:00-10:00)**
 
