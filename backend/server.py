@@ -102,6 +102,12 @@ from modules.payment_system import router as payment_router
 # Import Authentication System
 from auth.auth_system import router as auth_router, create_default_admin
 
+# Import Advanced Admin System
+from modules.admin_system import router as admin_router
+
+# Import Updated Subscription System  
+from modules.subscription_system import router as subscription_router
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
