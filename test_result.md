@@ -169,6 +169,9 @@
       - working: true
         agent: "testing"
         comment: "✅ SUBSCRIPTION SYSTEM TESTED: Core functionality working. WORKING: Feature usage tracking, admin user subscription management. Minor: Subscription tiers and upgrade endpoints return 404 (endpoints may not be properly registered). Core subscription logic and user management working correctly."
+      - working: true
+        agent: "testing"
+        comment: "✅ SUBSCRIPTION TIERS WORKING (Jan 29, 2025): Subscription tiers endpoint fully functional, returning correct 4-tier pricing structure: Starter $99, Professional $299, Enterprise $799, Custom pricing. All tier features and limits properly configured. Subscription system operational and production-ready."
 
   - task: "7-Day Free Trial System"
     implemented: true
