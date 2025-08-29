@@ -39,7 +39,7 @@ const CompetitiveIntelligenceDashboard = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [selectedTimePeriod, setSelectedTimePeriod] = useState('90_days');
 
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://edutech-creator.preview.emergentagent.com';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customer-mind-iq-2.preview.emergentagent.com';
 
   // Load competitive intelligence data
   const loadCompetitiveData = async () => {
