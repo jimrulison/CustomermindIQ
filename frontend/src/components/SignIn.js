@@ -385,7 +385,7 @@ const SignIn = ({ onSignIn }) => {
                   onClick={() => setShowSignUp(true)}
                   className="text-blue-400 hover:text-blue-300 text-sm"
                 >
-                  Don't have an account? Sign Up
+                  Start 7-Day Free Trial - No Credit Card Required
                 </button>
               </div>
             </form>
