@@ -590,7 +590,7 @@ class AuthAdminSystemTester:
             "description": "20% off all subscription tiers for new customers",
             "discount_type": "percentage",
             "value": 20.0,
-            "target_tiers": ["starter", "professional"],
+            "target_tiers": ["professional", "enterprise"],
             "target_users": [],
             "usage_limit": 100,
             "per_user_limit": 1,
