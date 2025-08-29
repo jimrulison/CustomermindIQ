@@ -99,6 +99,9 @@ from modules.support_system import router as support_router
 # Import Payment System Module
 from modules.payment_system import router as payment_router
 
+# Import Authentication System
+from auth.auth_system import router as auth_router, create_default_admin
+
 # Import Universal Intelligence System
 from universal_intelligence import (
     UniversalIntelligenceService,
