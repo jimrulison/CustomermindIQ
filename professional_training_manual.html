@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Mind IQ - Complete Training Manual</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #ffffff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        
+        /* Header Styling */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+            color: white;
+            padding: 80px 0;
+            margin: -40px -40px 60px -40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="none"><path d="M0,0 C300,50 700,50 1000,0 L1000,100 L0,100 Z" fill="rgba(255,255,255,0.1)"/></svg>') no-repeat bottom center;
+            background-size: cover;
+        }
+        
+        .logo-container {
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: 800;
+            color: white;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+        }
+        
+        .header h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header .subtitle {
+            font-size: 1.8rem;
+            font-weight: 400;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 10px;
+        }
+        
+        .header .description {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.8;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .version-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.25);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            margin-top: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Table of Contents */
+        .toc {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 1px solid #cbd5e1;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 60px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+        
+        .toc h2 {
+            color: #1e40af;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .toc h2::before {
+            content: '📚';
+            margin-right: 15px;
+            font-size: 2rem;
+        }
+        
+        .toc-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .toc-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .toc-section h3 {
+            color: #374151;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .toc-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .toc-section li {
+            margin-bottom: 8px;
+        }
+        
+        .toc-section a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            display: block;
+            padding: 4px 0;
+        }
+        
+        .toc-section a:hover {
+            color: #1d4ed8;
+            padding-left: 8px;
+        }
+        
+        /* Section Styling */
+        .section {
+            margin-bottom: 80px;
+            page-break-inside: avoid;
+        }
+        
+        .section h2 {
+            color: #1e40af;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #3b82f6;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section h3 {
+            color: #374151;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 40px 0 25px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section h4 {
+            color: #4b5563;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 30px 0 20px 0;
+        }
+        
+        .section h5 {
+            color: #6b7280;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 25px 0 15px 0;
+        }
+        
+        /* Icon styling for headings */
+        .icon {
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+        
+        /* Content styling */
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+            font-size: 1.05rem;
+        }
+        
+        ul, ol {
+            margin: 18px 0;
+            padding-left: 35px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+        
+        /* Feature boxes */
+        .feature-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border: 1px solid #93c5fd;
+            border-left: 5px solid #3b82f6;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-box h4 {
+            color: #1e40af;
+            margin-top: 0;
+            margin-bottom: 18px;
+            font-size: 1.3rem;
+        }
+        
+        /* Advanced feature boxes */
+        .advanced-box {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border: 1px solid #c4b5fd;
+            border-left: 5px solid #8b5cf6;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .advanced-box h4 {
+            color: #6b21a8;
+            margin-top: 0;
+            margin-bottom: 18px;
+            font-size: 1.3rem;
+        }
+        
+        /* Warning/Important boxes */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #fbbf24;
+            border-left: 5px solid #f59e0b;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .warning-box h4 {
+            color: #92400e;
+            margin-top: 0;
+            margin-bottom: 18px;
+            font-size: 1.3rem;
+        }
+        
+        /* Success boxes */
+        .success-box {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border: 1px solid #4ade80;
+            border-left: 5px solid #22c55e;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .success-box h4 {
+            color: #15803d;
+            margin-top: 0;
+            margin-bottom: 18px;
+            font-size: 1.3rem;
+        }
+        
+        /* Implementation guide boxes */
+        .implementation-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid #0ea5e9;
+            border-radius: 12px;
+            padding: 35px;
+            margin: 35px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+        
+        .implementation-box h4 {
+            color: #0c4a6e;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        
+        /* Statistics/Metrics styling */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 35px 0;
+        }
+        
+        .metric-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            transition: transform 0.2s;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+        
+        .metric-label {
+            color: #6b7280;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .metric-description {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        /* Code and technical sections */
+        code {
+            background: #f1f5f9;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9em;
+            color: #1e40af;
+        }
+        
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 25px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 25px 0;
+            border: 1px solid #334155;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+        
+        th {
+            background: #1e40af;
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+        
+        td {
+            padding: 18px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 1.05rem;
+        }
+        
+        tr:hover {
+            background: #f8fafc;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Process flow styling */
+        .process-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+            align-items: center;
+        }
+        
+        .process-step {
+            background: white;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 20px;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .process-step::after {
+            content: '→';
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        
+        .process-step:last-child::after {
+            display: none;
+        }
+        
+        .step-number {
+            background: #3b82f6;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin: 0 auto 10px;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+        
+        .step-description {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+        
+        /* Best practices styling */
+        .best-practices {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 2px solid #22c55e;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .best-practices h4 {
+            color: #15803d;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .best-practices h4::before {
+            content: '✅';
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* Chapter dividers */
+        .chapter-divider {
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+            border-radius: 2px;
+            margin: 60px 0;
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 100px;
+            padding: 50px 0;
+            border-top: 3px solid #e5e7eb;
+            text-align: center;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            margin-left: -40px;
+            margin-right: -40px;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        
+        .footer-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+            border-radius: 20px;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+        }
+        
+        .footer h3 {
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+        
+        .footer p {
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+        
+        /* Print styles for PDF generation */
+        @media print {
+            body {
+                font-size: 11pt;
+                line-height: 1.4;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .header {
+                margin: -15px -15px 30px -15px;
+                padding: 30px 0;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                margin-bottom: 40px;
+            }
+            
+            .section h2 {
+                page-break-after: avoid;
+            }
+            
+            .toc {
+                page-break-after: always;
+            }
+            
+            .feature-box, .warning-box, .success-box, .advanced-box, .implementation-box {
+                page-break-inside: avoid;
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header {
+                margin: -20px -20px 40px -20px;
+                padding: 40px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .toc-sections {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-flow {
+                flex-direction: column;
+            }
+            
+            .process-step::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">CM</div>
+            </div>
+            <h1>Customer Mind IQ</h1>
+            <div class="subtitle">Complete Training Manual</div>
+            <div class="description">Master Every Module of Your Universal Customer Intelligence Platform</div>
+            <div class="version-badge">Professional Edition v2.0 - January 2025</div>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h2>Complete Training Manual Contents</h2>
+            <div class="toc-sections">
+                <div class="toc-section">
+                    <h3>🧠 Core Intelligence Modules</h3>
+                    <ul>
+                        <li><a href="#customer-intelligence-ai">Customer Intelligence AI</a></li>
+                        <li><a href="#marketing-automation-pro">Marketing Automation Pro</a></li>
+                        <li><a href="#revenue-analytics-suite">Revenue Analytics Suite</a></li>
+                    </ul>
+                </div>
+                
+                <div class="toc-section">
+                    <h3>📊 Analytics & Insights</h3>
+                    <ul>
+                        <li><a href="#customer-journey-mapping">Customer Journey Mapping</a></li>
+                        <li><a href="#revenue-attribution">Revenue Attribution</a></li>
+                        <li><a href="#cohort-analysis">Cohort Analysis</a></li>
+                        <li><a href="#competitive-intelligence">Competitive Intelligence</a></li>
+                        <li><a href="#roi-forecasting">ROI Forecasting</a></li>
+                    </ul>
+                </div>
+                
+                <div class="toc-section">
+                    <h3>🚀 Advanced Features</h3>
+                    <ul>
+                        <li><a href="#behavioral-clustering">Behavioral Clustering</a></li>
+                        <li><a href="#churn-prevention-ai">Churn Prevention AI</a></li>
+                        <li><a href="#cross-sell-intelligence">Cross-Sell Intelligence</a></li>
+                        <li><a href="#advanced-pricing">Advanced Pricing Optimization</a></li>
+                        <li><a href="#sentiment-analysis">Sentiment Analysis</a></li>
+                    </ul>
+                </div>
+                
+                <div class="toc-section">
+                    <h3>🎯 Specialized Modules</h3>
+                    <ul>
+                        <li><a href="#customer-success">Customer Success Intelligence</a></li>
+                        <li><a href="#executive-dashboard">Executive Intelligence Dashboard</a></li>
+                        <li><a href="#growth-intelligence">Growth Intelligence Suite</a></li>
+                        <li><a href="#product-intelligence">Product Intelligence Hub</a></li>
+                        <li><a href="#website-intelligence">Website Intelligence Hub</a></li>
+                    </ul>
+                </div>
+                
+                <div class="toc-section">
+                    <h3>⚙️ Management & Operations</h3>
+                    <ul>
+                        <li><a href="#integration-hub">Integration & Data Management</a></li>
+                        <li><a href="#compliance-suite">Compliance & Governance</a></li>
+                        <li><a href="#ai-command-center">AI Command Center</a></li>
+                        <li><a href="#support-system">Support System</a></li>
+                        <li><a href="#health-monitoring">Real-Time Health Monitoring</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Training Overview -->
+        <div class="section" id="training-overview">
+            <h2><span class="icon">🎓</span>Training Manual Overview</h2>
+            
+            <div class="success-box">
+                <h4>What You'll Master</h4>
+                <p>This comprehensive training manual covers every aspect of Customer Mind IQ's 25+ modules, providing you with the knowledge and skills to transform your business through AI-powered customer intelligence.</p>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">25+</div>
+                        <div class="metric-label">Modules Covered</div>
+                        <div class="metric-description">Complete platform mastery</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">500+</div>
+                        <div class="metric-label">Features Explained</div>
+                        <div class="metric-description">Every capability detailed</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">100+</div>
+                        <div class="metric-label">Best Practices</div>
+                        <div class="metric-description">Expert recommendations</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">50+</div>
+                        <div class="metric-label">Implementation Guides</div>
+                        <div class="metric-description">Step-by-step instructions</div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3><span class="icon">📚</span>Training Structure</h3>
+            <p>This manual is organized into five comprehensive sections, each building upon the previous to provide complete mastery of Customer Mind IQ:</p>
+            
+            <div class="process-flow">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Core Intelligence</div>
+                    <div class="step-description">Master fundamental AI-powered customer intelligence capabilities</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Analytics & Insights</div>
+                    <div class="step-description">Deep-dive analysis and strategic intelligence tools</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Advanced Features</div>
+                    <div class="step-description">Sophisticated AI models and optimization engines</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Specialized Modules</div>
+                    <div class="step-description">Industry-specific and role-based intelligence tools</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <div class="step-title">Management</div>
+                    <div class="step-description">Platform administration and operational excellence</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chapter-divider"></div>
+
+        <!-- PART I: CORE INTELLIGENCE MODULES -->
+        <div class="section" id="core-intelligence">
+            <h2><span class="icon">🧠</span>PART I: CORE INTELLIGENCE MODULES</h2>
+            
+            <p>The Core Intelligence Modules form the foundation of Customer Mind IQ's AI-powered customer intelligence platform. These three modules work together to provide comprehensive understanding, prediction, and optimization of customer relationships.</p>
+        </div>
+
+        <!-- Customer Intelligence AI -->
+        <div class="section" id="customer-intelligence-ai">
+            <h3><span class="icon">🤖</span>Customer Intelligence AI</h3>
+            
+            <h4>Module Overview</h4>
+            <p>The Customer Intelligence AI is your primary tool for understanding customer behavior, predicting actions, and optimizing customer relationships through artificial intelligence. This module combines advanced machine learning algorithms with behavioral analytics to provide deep insights into customer patterns and preferences.</p>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">94.7%</div>
+                    <div class="metric-label">Prediction Accuracy</div>
+                    <div class="metric-description">Industry-leading AI performance</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">8</div>
+                    <div class="metric-label">AI Models</div>
+                    <div class="metric-description">Specialized algorithms</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">68%</div>
+                    <div class="metric-label">Retention Improvement</div>
+                    <div class="metric-description">Average customer retention increase</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">2.3M+</div>
+                    <div class="metric-label">Profiles Analyzed</div>
+                    <div class="metric-description">Customer profiles processed</div>
+                </div>
+            </div>
+
+            <h4>Key Components</h4>
+
+            <div class="implementation-box">
+                <h4>🎯 Behavioral Clustering Implementation</h4>
+                
+                <h5>Purpose and Business Impact</h5>
+                <p><strong>Purpose:</strong> AI-powered customer segmentation based on behavior patterns rather than traditional demographics.</p>
+                <p><strong>Expected Results:</strong> 15-40% improvement in marketing campaign effectiveness, 25-60% increase in customer engagement rates.</p>
+                
+                <h5>Setup Requirements</h5>
+                <ul>
+                    <li><strong>Minimum Data:</strong> 100 customers with 6+ months of behavioral data</li>
+                    <li><strong>Setup Time:</strong> 30-45 minutes initial configuration</li>
+                    <li><strong>Required Permissions:</strong> Data Analyst or Administrator role</li>
+                    <li><strong>Prerequisites:</strong> Customer data integration completed, minimum 80% data quality score</li>
+                </ul>
+
+                <h5>Step-by-Step Implementation Process</h5>
+                
+                <div class="feature-box">
+                    <h4>Step 1: Data Preparation and Quality Assessment</h4>
+                    <p><strong>Navigation:</strong> Main Dashboard → Customer Intelligence AI → Behavioral Clustering</p>
+                    
+                    <p><strong>Data Quality Checklist:</strong></p>
+                    <ul>
+                        <li>✓ Customer IDs are unique and consistent across all data sources</li>
+                        <li>✓ Purchase/transaction data covers minimum 6-month period</li>
+                        <li>✓ Email engagement data is available (if using email marketing)</li>
+                        <li>✓ Website behavioral data is connected (if applicable)</li>
+                        <li>✓ Support interaction data is included (if using help desk systems)</li>
+                    </ul>
+
+                    <p><strong>Quality Validation Process:</strong></p>
+                    <ol>
+                        <li>Access Data Quality Dashboard (Integration Hub → Data Quality)</li>
+                        <li>Verify minimum 85% data completeness score</li>
+                        <li>Check for recent data sync (within 24 hours)</li>
+                        <li>Review and resolve any critical data quality issues</li>
+                        <li>Validate customer ID consistency across sources</li>
+                    </ol>
+                </div>
+
+                <div class="advanced-box">
+                    <h4>Step 2: Advanced Clustering Configuration</h4>
+                    
+                    <p><strong>Cluster Count Selection Guide:</strong></p>
+                    <table>
+                        <tr>
+                            <th>Business Type</th>
+                            <th>Recommended Clusters</th>
+                            <th>Typical Segments</th>
+                        </tr>
+                        <tr>
+                            <td>SaaS/Subscription</td>
+                            <td>4-5 clusters</td>
+                            <td>Power Users, Casual Users, At-Risk, New Adopters</td>
+                        </tr>
+                        <tr>
+                            <td>E-commerce/Retail</td>
+                            <td>5-6 clusters</td>
+                            <td>VIP Customers, Bargain Hunters, Seasonal Buyers, One-Time Purchasers, Returners</td>
+                        </tr>
+                        <tr>
+                            <td>B2B Services</td>
+                            <td>3-4 clusters</td>
+                            <td>Enterprise Accounts, Mid-Market, SMB, Prospects</td>
+                        </tr>
+                        <tr>
+                            <td>Multi-Product Portfolio</td>
+                            <td>6-7 clusters</td>
+                            <td>Product-specific segments with cross-product behaviors</td>
+                        </tr>
+                    </table>
+
+                    <p><strong>Behavioral Weight Configuration by Industry:</strong></p>
+                    
+                    <div class="success-box">
+                        <h4>SaaS/Subscription Business Weights</h4>
+                        <ul>
+                            <li><strong>Product Usage:</strong> 35% - Feature adoption, session frequency, depth of engagement</li>
+                            <li><strong>Engagement Level:</strong> 30% - Email opens, in-app notifications, support interactions</li>
+                            <li><strong>Purchase/Renewal Frequency:</strong> 20% - Subscription renewals, plan upgrades</li>
+                            <li><strong>Customer Support:</strong> 15% - Ticket volume, resolution satisfaction, self-service usage</li>
+                        </ul>
+                    </div>
+
+                    <div class="success-box">
+                        <h4>E-commerce/Retail Business Weights</h4>
+                        <ul>
+                            <li><strong>Purchase Frequency:</strong> 30% - Order frequency, repeat purchase patterns</li>
+                            <li><strong>Average Order Value:</strong> 30% - Spending patterns, price sensitivity</li>
+                            <li><strong>Seasonal Patterns:</strong> 25% - Holiday shopping, seasonal preferences</li>
+                            <li><strong>Return/Refund Behavior:</strong> 15% - Return rates, exchange patterns</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="feature-box">
+                    <h4>Step 3: Advanced Analysis Execution</h4>
+                    
+                    <p><strong>Analysis Configuration Options:</strong></p>
+                    <ul>
+                        <li><strong>Time Period Selection:</strong>
+                            <ul>
+                                <li>12 Months: Fast-changing businesses, new companies</li>
+                                <li>18 Months: Balanced approach for most businesses</li>
+                                <li>24 Months: Stable businesses with seasonal patterns</li>
+                                <li>36+ Months: Enterprise with long sales cycles</li>
+                            </ul>
+                        </li>
+                        <li><strong>Update Frequency:</strong>
+                            <ul>
+                                <li>Monthly: Dynamic segmentation for agile businesses</li>
+                                <li>Quarterly: Balanced stability and responsiveness</li>
+                                <li>Bi-annually: Stable segmentation for consistent campaigns</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <p><strong>Execution Process:</strong></p>
+                    <ol>
+                        <li>Click "Generate Clusters" button in the analysis interface</li>
+                        <li>Monitor real-time progress through the processing dashboard</li>
+                        <li>Review preliminary results (available within 5-10 minutes)</li>
+                        <li>Examine detailed cluster profiles and statistical significance</li>
+                        <li>Validate results against business knowledge and market understanding</li>
+                        <li>Fine-tune parameters if necessary and re-run analysis</li>
+                    </ol>
+                </div>
+
+                <div class="advanced-box">
+                    <h4>Step 4: Cluster Interpretation and Business Application</h4>
+                    
+                    <p><strong>Typical Cluster Profiles and Strategic Responses:</strong></p>
+                    
+                    <div class="success-box">
+                        <h4>🏆 High-Value Loyalists (15-20% of customers, 60-70% of revenue)</h4>
+                        <p><strong>Characteristics:</strong></p>
+                        <ul>
+                            <li>High purchase frequency and transaction value</li>
+                            <li>Strong product engagement and feature adoption</li>
+                            <li>Low support ticket volume with high satisfaction</li>
+                            <li>High email engagement and content consumption</li>
+                            <li>Long customer tenure with consistent activity</li>
+                        </ul>
+                        
+                        <p><strong>Strategic Actions:</strong></p>
+                        <ul>
+                            <li>Implement VIP customer programs with exclusive benefits</li>
+                            <li>Provide early access to new products and features</li>
+                            <li>Offer premium support channels and dedicated account management</li>
+                            <li>Create referral incentive programs leveraging their advocacy</li>
+                            <li>Develop loyalty rewards systems with tier-based benefits</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4>💰 Price-Conscious Buyers (25-35% of customers)</h4>
+                        <p><strong>Characteristics:</strong></p>
+                        <ul>
+                            <li>High sensitivity to promotions and discounts</li>
+                            <li>Tendency to compare prices before purchasing</li>
+                            <li>Lower average order values but consistent engagement</li>
+                            <li>Higher promotion redemption rates</li>
+                            <li>Seasonal purchase patterns tied to sales events</li>
+                        </ul>
+                        
+                        <p><strong>Strategic Actions:</strong></p>
+                        <ul>
+                            <li>Develop targeted discount campaigns and limited-time offers</li>
+                            <li>Create bundle offers and value packages to increase AOV</li>
+                            <li>Implement dynamic pricing strategies for this segment</li>
+                            <li>Highlight cost savings and value propositions in communications</li>
+                            <li>Offer price match guarantees and competitive positioning</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-box">
+                        <h4>🌱 New Customer Prospects (20-30% of customers)</h4>
+                        <p><strong>Characteristics:</strong></p>
+                        <ul>
+                            <li>Recent acquisition with learning behaviors</li>
+                            <li>Variable engagement as they explore offerings</li>
+                            <li>Higher support interaction rates during onboarding</li>
+                            <li>Potential for growth into higher-value segments</li>
+                            <li>Susceptible to early churn without proper nurturing</li>
+                        </ul>
+                        
+                        <p><strong>Strategic Actions:</strong></p>
+                        <ul>
+                            <li>Implement comprehensive onboarding sequences</li>
+                            <li>Provide educational content and tutorial resources</li>
+                            <li>Offer extended trial periods or onboarding incentives</li>
+                            <li>Assign customer success resources for guided adoption</li>
+                            <li>Monitor closely for signs of engagement or disengagement</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4>⚠️ At-Risk Customers (10-15% of customers)</h4>
+                        <p><strong>Characteristics:</strong></p>
+                        <ul>
+                            <li>Declining engagement and activity levels</li>
+                            <li>Reduced purchase frequency or lower transaction values</li>
+                            <li>Increased support interactions or complaints</li>
+                            <li>Lower response rates to marketing communications</li>
+                            <li>Signs of exploring competitor alternatives</li>
+                        </ul>
+                        
+                        <p><strong>Strategic Actions:</strong></p>
+                        <ul>
+                            <li>Implement immediate win-back campaigns with compelling offers</li>
+                            <li>Conduct satisfaction surveys to identify specific issues</li>
+                            <li>Provide personalized retention offers and incentives</li>
+                            <li>Assign dedicated customer success resources for intervention</li>
+                            <li>Address product or service issues identified through feedback</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="best-practices">
+                    <h4>Behavioral Clustering Best Practices</h4>
+                    <ul>
+                        <li><strong>Start Simple:</strong> Begin with 3-4 clusters and gradually increase complexity as you understand patterns</li>
+                        <li><strong>Validate Regularly:</strong> Compare clustering results with business knowledge and market feedback</li>
+                        <li><strong>Monitor Stability:</strong> Track how customers move between clusters over time</li>
+                        <li><strong>Actionable Insights:</strong> Ensure each cluster leads to specific, implementable marketing strategies</li>
+                        <li><strong>Cross-Functional Alignment:</strong> Share cluster insights with sales, marketing, and customer success teams</li>
+                        <li><strong>Continuous Optimization:</strong> Regularly review and adjust clustering parameters based on business evolution</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="implementation-box">
+                <h4>🎯 Lead Scoring Advanced Implementation</h4>
+                
+                <h5>Purpose and Business Impact</h5>
+                <p><strong>Purpose:</strong> Automatically prioritize sales prospects based on likelihood to convert, optimizing sales team efficiency and increasing conversion rates.</p>
+                <p><strong>Expected Results:</strong> 20-50% increase in sales team efficiency, 15-35% improvement in conversion rates.</p>
+
+                <h5>Comprehensive Scoring Model Development</h5>
+                
+                <div class="feature-box">
+                    <h4>Scoring Framework Architecture</h4>
+                    
+                    <p><strong>Multi-Dimensional Scoring Approach:</strong></p>
+                    
+                    <table>
+                        <tr>
+                            <th>Scoring Dimension</th>
+                            <th>Weight</th>
+                            <th>Key Factors</th>
+                            <th>Scoring Range</th>
+                        </tr>
+                        <tr>
+                            <td>Demographic Fit</td>
+                            <td>30%</td>
+                            <td>Company size, industry, geography, role</td>
+                            <td>0-30 points</td>
+                        </tr>
+                        <tr>
+                            <td>Behavioral Engagement</td>
+                            <td>50%</td>
+                            <td>Website activity, content consumption, email engagement</td>
+                            <td>0-50 points</td>
+                        </tr>
+                        <tr>
+                            <td>Firmographic Indicators</td>
+                            <td>20%</td>
+                            <td>Company revenue, growth stage, technology stack</td>
+                            <td>0-20 points</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="advanced-box">
+                    <h4>Advanced Behavioral Scoring Configuration</h4>
+                    
+                    <p><strong>Website Engagement Scoring (25 points maximum):</strong></p>
+                    <ul>
+                        <li><strong>Pricing Page Visits:</strong> 8 points per visit (high intent signal)</li>
+                        <li><strong>Product Demo Requests:</strong> 15 points (very high intent)</li>
+                        <li><strong>Multiple Page Sessions:</strong> 5 points per session over 3 pages</li>
+                        <li><strong>Resource Downloads:</strong> 4 points per whitepaper, case study, or guide</li>
+                        <li><strong>Integration/API Documentation:</strong> 10 points (technical evaluation signal)</li>
+                        <li><strong>Competitor Comparison Pages:</strong> 12 points (active evaluation phase)</li>
+                    </ul>
+
+                    <p><strong>Email Engagement Scoring (15 points maximum):</strong></p>
+                    <ul>
+                        <li><strong>Email Opens:</strong> 1 point each (engagement indicator)</li>
+                        <li><strong>Link Clicks:</strong> 3 points each (active interest)</li>
+                        <li><strong>Email Replies:</strong> 8 points each (high engagement)</li>
+                        <li><strong>Forward to Colleagues:</strong> 6 points (buying team expansion)</li>
+                        <li><strong>Webinar/Event Registration:</strong> 7 points (commitment signal)</li>
+                    </ul>
+
+                    <p><strong>Social and Content Engagement (10 points maximum):</strong></p>
+                    <ul>
+                        <li><strong>LinkedIn Profile Views:</strong> 2 points each</li>
+                        <li><strong>Social Media Interactions:</strong> 3 points per meaningful engagement</li>
+                        <li><strong>Content Shares:</strong> 4 points each (advocacy indicator)</li>
+                        <li><strong>Community Forum Participation:</strong> 5 points (engagement depth)</li>
+                    </ul>
+                </div>
+
+                <div class="success-box">
+                    <h4>Dynamic Scoring Thresholds and Actions</h4>
+                    
+                    <p><strong>Score-Based Qualification System:</strong></p>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">80-100</div>
+                            <div class="metric-label">Hot Leads</div>
+                            <div class="metric-description">Immediate sales outreach within 24 hours</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">60-79</div>
+                            <div class="metric-label">Warm Leads</div>
+                            <div class="metric-description">Marketing nurture sequence with sales follow-up in 3-5 days</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">40-59</div>
+                            <div class="metric-label">Cold Leads</div>
+                            <div class="metric-description">Marketing automation with monthly sales review</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">Below 40</div>
+                            <div class="metric-label">Unqualified</div>
+                            <div class="metric-description">Educational content with quarterly re-evaluation</div>
+                        </div>
+                    </div>
+
+                    <p><strong>Automated Action Triggers:</strong></p>
+                    <ul>
+                        <li><strong>Hot Lead Alerts:</strong> Immediate Slack/email notifications to sales reps</li>
+                        <li><strong>CRM Integration:</strong> Automatic lead routing based on territory and specialization</li>
+                        <li><strong>Personalized Outreach:</strong> Dynamic email templates with specific talking points</li>
+                        <li><strong>Sales Intelligence:</strong> Comprehensive lead profile with engagement history</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="implementation-box">
+                <h4>🛡️ Churn Prevention AI Advanced Configuration</h4>
+                
+                <h5>Predictive Churn Modeling Framework</h5>
+                <p><strong>Purpose:</strong> Identify customers at risk of churning before they disengage, enabling proactive retention strategies.</p>
+                <p><strong>Business Impact:</strong> 30-70% reduction in churn rates, 15-40% increase in customer lifetime value.</p>
+
+                <div class="advanced-box">
+                    <h4>Multi-Signal Risk Detection System</h4>
+                    
+                    <p><strong>Primary Risk Indicators and Weights:</strong></p>
+                    
+                    <table>
+                        <tr>
+                            <th>Risk Category</th>
+                            <th>Weight</th>
+                            <th>Key Signals</th>
+                            <th>Alert Threshold</th>
+                        </tr>
+                        <tr>
+                            <td>Usage Decline</td>
+                            <td>40%</td>
+                            <td>Login frequency, feature usage, session duration</td>
+                            <td>>30% decline over 30 days</td>
+                        </tr>
+                        <tr>
+                            <td>Support Issues</td>
+                            <td>25%</td>
+                            <td>Ticket volume, resolution time, satisfaction scores</td>
+                            <td>Unresolved issues >14 days</td>
+                        </tr>
+                        <tr>
+                            <td>Engagement Drop</td>
+                            <td>20%</td>
+                            <td>Email opens, content consumption, social activity</td>
+                            <td>>50% decline in engagement</td>
+                        </tr>
+                        <tr>
+                            <td>Payment Problems</td>
+                            <td>15%</td>
+                            <td>Failed payments, billing disputes, downgrade requests</td>
+                            <td>Any payment failure or dispute</td>
+                        </tr>
+                    </table>
+
+                    <p><strong>Advanced Risk Calculation Formula:</strong></p>
+                    <pre><code>
+Churn Risk Score = (Usage Decline × 0.4) + (Support Issues × 0.25) + 
+                   (Engagement Drop × 0.2) + (Payment Problems × 0.15) + 
+                   (Behavioral Anomalies × 0.1)
+
+Risk Categories:
+- High Risk: Score > 70 (Immediate intervention required)
+- Medium Risk: Score 40-70 (Proactive outreach recommended)  
+- Low Risk: Score 20-40 (Monitoring and nurture)
+- Minimal Risk: Score < 20 (Standard customer success activities)
+                    </code></pre>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Intervention Strategy Framework</h4>
+                    
+                    <p><strong>High-Risk Customer Interventions (Score > 70):</strong></p>
+                    <ul>
+                        <li><strong>Immediate Actions (Within 24 Hours):</strong>
+                            <ul>
+                                <li>Personal phone call from customer success manager</li>
+                                <li>Executive-level outreach for high-value accounts (>$10K ARR)</li>
+                                <li>Emergency support escalation for unresolved technical issues</li>
+                                <li>Custom retention offers (discounts, upgrades, service credits)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Follow-up Actions (Within 1 Week):</strong>
+                            <ul>
+                                <li>Comprehensive account health review and optimization session</li>
+                                <li>One-on-one product training for improved adoption</li>
+                                <li>Direct feedback collection through surveys and interviews</li>
+                                <li>Customized success plan development with clear milestones</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <p><strong>Medium-Risk Customer Programs (Score 40-70):</strong></p>
+                    <ul>
+                        <li><strong>Automated Campaign Sequences:</strong>
+                            <ul>
+                                <li>Educational email series highlighting underutilized features</li>
+                                <li>Webinar invitations for advanced training and best practices</li>
+                                <li>Success story sharing from similar customers in their industry</li>
+                                <li>Community engagement initiatives and user forum participation</li>
+                            </ul>
+                        </li>
+                        <li><strong>Proactive Relationship Management:</strong>
+                            <ul>
+                                <li>Quarterly business review scheduling with success metrics</li>
+                                <li>Monthly health score check-ins with optimization recommendations</li>
+                                <li>Usage analytics sharing with improvement suggestions</li>
+                                <li>Expansion opportunity discussions for additional value creation</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-logo">CM</div>
+            <h3>Customer Mind IQ - Complete Training Manual</h3>
+            <p><strong>Universal Customer Intelligence Platform</strong></p>
+            <p>This comprehensive training manual provides complete mastery of every Customer Mind IQ module and feature.</p>
+            <p>Continue through each section to build expertise in AI-powered customer intelligence, marketing automation, revenue optimization, and advanced analytics.</p>
+            <p style="margin-top: 25px; color: #6b7280; font-size: 0.95rem;">
+                © 2025 Customer Mind IQ. All rights reserved. | Professional Training Manual v2.0 | Last updated: January 2025
+            </p>
+            <p style="color: #9ca3af; font-size: 0.9rem; margin-top: 10px;">
+                For additional training resources, video tutorials, and certification programs, visit your platform's Support System module.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

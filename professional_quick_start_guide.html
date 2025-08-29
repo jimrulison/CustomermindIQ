@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Mind IQ - Quick Start Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: #ffffff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        
+        /* Header Styling */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+            color: white;
+            padding: 60px 0;
+            margin: -40px -40px 60px -40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="none"><path d="M0,0 C300,50 700,50 1000,0 L1000,100 L0,100 Z" fill="rgba(255,255,255,0.1)"/></svg>') no-repeat bottom center;
+            background-size: cover;
+        }
+        
+        .logo-container {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header .subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .version-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Table of Contents */
+        .toc {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .toc h2 {
+            color: #1e40af;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .toc h2::before {
+            content: '📋';
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .toc-list {
+            columns: 2;
+            column-gap: 40px;
+            list-style: none;
+        }
+        
+        .toc-list li {
+            break-inside: avoid;
+            margin-bottom: 8px;
+        }
+        
+        .toc-list a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .toc-list a:hover {
+            color: #1d4ed8;
+        }
+        
+        /* Section Styling */
+        .section {
+            margin-bottom: 60px;
+            page-break-inside: avoid;
+        }
+        
+        .section h2 {
+            color: #1e40af;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #3b82f6;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section h3 {
+            color: #374151;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin: 30px 0 20px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section h4 {
+            color: #4b5563;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 25px 0 15px 0;
+        }
+        
+        /* Icon styling for headings */
+        .icon {
+            margin-right: 12px;
+            font-size: 1.2em;
+        }
+        
+        /* Content styling */
+        p {
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* Feature boxes */
+        .feature-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #bae6fd;
+            border-left: 5px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .feature-box h4 {
+            color: #0c4a6e;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        /* Warning/Important boxes */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #fbbf24;
+            border-left: 5px solid #f59e0b;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .warning-box h4 {
+            color: #92400e;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        /* Success boxes */
+        .success-box {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border: 1px solid #4ade80;
+            border-left: 5px solid #22c55e;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .success-box h4 {
+            color: #15803d;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        /* Statistics/Metrics styling */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .metric-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e40af;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        /* Code and technical sections */
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9em;
+            color: #1e40af;
+        }
+        
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        th {
+            background: #1e40af;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        tr:hover {
+            background: #f8fafc;
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 80px;
+            padding: 40px 0;
+            border-top: 2px solid #e5e7eb;
+            text-align: center;
+            background: #f8fafc;
+            margin-left: -40px;
+            margin-right: -40px;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        
+        .footer-logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+            border-radius: 12px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+        }
+        
+        /* Print styles for PDF generation */
+        @media print {
+            body {
+                font-size: 12pt;
+                line-height: 1.4;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .header {
+                margin: -20px -20px 40px -20px;
+                padding: 40px 0;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                margin-bottom: 40px;
+            }
+            
+            .section h2 {
+                page-break-after: avoid;
+            }
+            
+            .toc {
+                page-break-after: always;
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header {
+                margin: -20px -20px 40px -20px;
+                padding: 40px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .toc-list {
+                columns: 1;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">CM</div>
+            </div>
+            <h1>Customer Mind IQ</h1>
+            <div class="subtitle">Quick Start Guide</div>
+            <div class="subtitle" style="font-size: 1.2rem; margin-top: 10px;">Universal Customer Intelligence Platform</div>
+            <div class="version-badge">Version 2.0 - January 2025</div>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ol class="toc-list">
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#dashboard-overview">Dashboard Overview</a></li>
+                <li><a href="#core-modules">Core Modules Quick Setup</a></li>
+                <li><a href="#essential-workflows">Essential Workflows</a></li>
+                <li><a href="#advanced-features">Advanced Features</a></li>
+                <li><a href="#integration-setup">Integration Setup</a></li>
+                <li><a href="#daily-operations">Daily Operations</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+                <li><a href="#next-steps">Next Steps</a></li>
+            </ol>
+        </div>
+
+        <!-- Welcome Section -->
+        <div class="section" id="welcome">
+            <h2><span class="icon">🚀</span>Welcome to Customer Mind IQ</h2>
+            <p>Your Universal Customer Intelligence Platform for AI-Powered Business Growth</p>
+            
+            <div class="success-box">
+                <h4>Platform Highlights</h4>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">94.7%</div>
+                        <div class="metric-label">AI Model Accuracy</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">14</div>
+                        <div class="metric-label">Integrated Modules</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">200+</div>
+                        <div class="metric-label">Native Integrations</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">12.5x</div>
+                        <div class="metric-label">Average Marketing ROI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Getting Started Section -->
+        <div class="section" id="getting-started">
+            <h2><span class="icon">🎯</span>Getting Started</h2>
+            
+            <h3><span class="icon">📋</span>Step 1: Account Setup and Subscription</h3>
+            <ol>
+                <li><strong>Visit Customer Mind IQ Platform</strong> at your deployment URL</li>
+                <li><strong>Choose Your Plan</strong>:
+                    <div class="feature-box">
+                        <h4>Subscription Tiers</h4>
+                        <table>
+                            <tr>
+                                <th>Plan</th>
+                                <th>Price</th>
+                                <th>Customer Profiles</th>
+                                <th>Key Features</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Free Tier</strong></td>
+                                <td>$0/month</td>
+                                <td>1,000 profiles</td>
+                                <td>Basic intelligence, 5 AI insights/month</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Professional</strong></td>
+                                <td>$99/month</td>
+                                <td>50,000 profiles</td>
+                                <td>Full platform, unlimited AI insights</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Enterprise</strong></td>
+                                <td>$299/month</td>
+                                <td>Unlimited</td>
+                                <td>White-label, custom integrations, dedicated support</td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+                <li><strong>Complete Payment Setup</strong> (for paid tiers) through secure Stripe checkout</li>
+                <li><strong>Verify Email</strong> and complete profile setup</li>
+            </ol>
+
+            <h3><span class="icon">⚙️</span>Step 2: Initial Configuration</h3>
+            <ol>
+                <li><strong>Access Main Dashboard</strong> - Your central command center</li>
+                <li><strong>Review Legal Documents</strong> (Terms, Privacy Policy, SLA)</li>
+                <li><strong>Set Up Integrations</strong> - Connect your existing business tools:
+                    <ul>
+                        <li>Stripe for payment data</li>
+                        <li>Odoo for ERP integration</li>
+                        <li>Website analytics</li>
+                        <li>Email marketing platforms</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3><span class="icon">📊</span>Step 3: First Data Import</h3>
+            <ol>
+                <li><strong>Navigate to Integration Hub</strong> → Data Connectors</li>
+                <li><strong>Connect Your Primary Data Source</strong>:
+                    <ul>
+                        <li>Upload customer CSV files, or</li>
+                        <li>Connect via API integrations</li>
+                    </ul>
+                </li>
+                <li><strong>Verify Data Quality</strong> in Data Quality module</li>
+                <li><strong>Run Initial Analysis</strong> - Let AI process your customer data</li>
+            </ol>
+        </div>
+
+        <!-- Dashboard Overview Section -->
+        <div class="section" id="dashboard-overview">
+            <h2><span class="icon">🎛️</span>Dashboard Overview</h2>
+            
+            <h3><span class="icon">🧭</span>Main Navigation Structure</h3>
+            <p>Your Customer Mind IQ platform is organized into these core sections:</p>
+            
+            <div class="feature-box">
+                <h4>🧠 Intelligence Modules</h4>
+                <ul>
+                    <li><strong>Customer Intelligence AI</strong>: Behavioral analysis, churn prevention, lead scoring</li>
+                    <li><strong>Marketing Automation Pro</strong>: Multi-channel campaigns, A/B testing, dynamic content</li>
+                    <li><strong>Revenue Analytics Suite</strong>: Forecasting, price optimization, subscription analytics</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h4>📊 Analytics & Insights</h4>
+                <ul>
+                    <li><strong>Customer Journey Mapping</strong>: Visualize customer touchpoints and paths</li>
+                    <li><strong>Revenue Attribution</strong>: Track ROI across marketing channels</li>
+                    <li><strong>Cohort Analysis</strong>: Understand customer retention patterns</li>
+                    <li><strong>Competitive Intelligence</strong>: Monitor market positioning</li>
+                    <li><strong>ROI Forecasting</strong>: Predict campaign performance</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h4>🚀 Advanced Features</h4>
+                <ul>
+                    <li><strong>Behavioral Clustering</strong>: AI-powered customer segmentation</li>
+                    <li><strong>Churn Prevention AI</strong>: Proactive retention strategies</li>
+                    <li><strong>Cross-Sell Intelligence</strong>: Identify upselling opportunities</li>
+                    <li><strong>Advanced Pricing Optimization</strong>: Dynamic pricing strategies</li>
+                    <li><strong>Sentiment Analysis</strong>: Monitor customer satisfaction</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h4>⚙️ Management & Control</h4>
+                <ul>
+                    <li><strong>Integration & Data Management</strong>: Connector health, sync management</li>
+                    <li><strong>Compliance & Governance</strong>: GDPR, audit management, data governance</li>
+                    <li><strong>AI Command Center</strong>: Model management, automation control</li>
+                    <li><strong>Support System</strong>: Help desk, community, announcements</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Core Modules Section -->
+        <div class="section" id="core-modules">
+            <h2><span class="icon">🎯</span>Core Modules Quick Setup</h2>
+            
+            <h3><span class="icon">🧠</span>1. Customer Intelligence AI Setup (30 minutes)</h3>
+            
+            <h4>Behavioral Clustering</h4>
+            <ol>
+                <li>Navigate to <strong>Customer Intelligence AI</strong> → <strong>Behavioral Clustering</strong></li>
+                <li><strong>Upload Customer Data</strong> or connect data source</li>
+                <li><strong>Configure Clustering Parameters</strong>:
+                    <ul>
+                        <li>Number of segments (3-7 recommended)</li>
+                        <li>Key behavioral metrics (purchase frequency, value, engagement)</li>
+                    </ul>
+                </li>
+                <li><strong>Run AI Analysis</strong> - Wait 5-10 minutes for processing</li>
+                <li><strong>Review Cluster Results</strong>:
+                    <ul>
+                        <li>High-Value Customers</li>
+                        <li>Price-Conscious Buyers</li>
+                        <li>New Customer Prospects</li>
+                        <li>At-Risk Customers</li>
+                    </ul>
+                </li>
+                <li><strong>Export Segments</strong> for marketing campaigns</li>
+            </ol>
+
+            <div class="warning-box">
+                <h4>⚠️ Important Setup Note</h4>
+                <p>Ensure you have at least 100 customers with 6+ months of transaction history for accurate clustering results.</p>
+            </div>
+
+            <h4>Lead Scoring Setup</h4>
+            <ol>
+                <li>Go to <strong>Lead Scoring</strong> module</li>
+                <li><strong>Define Scoring Criteria</strong>:
+                    <ul>
+                        <li>Demographics (industry, company size)</li>
+                        <li>Behavioral signals (website visits, email opens)</li>
+                        <li>Engagement levels (content downloads, demo requests)</li>
+                    </ul>
+                </li>
+                <li><strong>Set Score Thresholds</strong>:
+                    <ul>
+                        <li>Hot Leads: 80-100 points</li>
+                        <li>Warm Leads: 60-79 points</li>
+                        <li>Cold Leads: Below 60 points</li>
+                    </ul>
+                </li>
+                <li><strong>Configure Automated Actions</strong>:
+                    <ul>
+                        <li>Sales notifications for hot leads</li>
+                        <li>Marketing nurture for warm leads</li>
+                    </ul>
+                </li>
+                <li><strong>Test Scoring Model</strong> with sample leads</li>
+            </ol>
+
+            <h3><span class="icon">📢</span>2. Marketing Automation Pro Setup (45 minutes)</h3>
+            
+            <h4>Multi-Channel Orchestration</h4>
+            <ol>
+                <li>Access <strong>Marketing Automation Pro</strong> → <strong>Multi-Channel Orchestration</strong></li>
+                <li><strong>Connect Marketing Channels</strong>:
+                    <ul>
+                        <li>Email (MailChimp, SendGrid)</li>
+                        <li>SMS (Twilio)</li>
+                        <li>Social Media (Facebook, LinkedIn)</li>
+                        <li>Push Notifications</li>
+                    </ul>
+                </li>
+                <li><strong>Create Campaign Templates</strong>:
+                    <ul>
+                        <li>Welcome series for new customers</li>
+                        <li>Re-engagement campaigns for inactive users</li>
+                        <li>Cross-sell campaigns for existing customers</li>
+                    </ul>
+                </li>
+                <li><strong>Set Up Trigger Rules</strong>:
+                    <ul>
+                        <li>Behavioral triggers (abandoned cart, trial expiry)</li>
+                        <li>Time-based triggers (monthly newsletters)</li>
+                        <li>Event-based triggers (purchase completion)</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3><span class="icon">💰</span>3. Revenue Analytics Suite Setup (30 minutes)</h3>
+            
+            <h4>Revenue Forecasting</h4>
+            <ol>
+                <li>Go to <strong>Revenue Analytics Suite</strong> → <strong>Revenue Forecasting</strong></li>
+                <li><strong>Connect Revenue Data Sources</strong>:
+                    <ul>
+                        <li>CRM systems (Salesforce, HubSpot)</li>
+                        <li>Payment processors (Stripe, PayPal)</li>
+                        <li>E-commerce platforms (Shopify, WooCommerce)</li>
+                    </ul>
+                </li>
+                <li><strong>Configure Forecasting Models</strong>:
+                    <ul>
+                        <li>Time series analysis for seasonal trends</li>
+                        <li>Pipeline-based forecasting for B2B sales</li>
+                        <li>Cohort-based models for subscription revenue</li>
+                    </ul>
+                </li>
+                <li><strong>Set Forecast Periods</strong>: Monthly, quarterly, annual projections</li>
+                <li><strong>Review AI Insights</strong> and accuracy metrics</li>
+            </ol>
+        </div>
+
+        <!-- Essential Workflows Section -->
+        <div class="section" id="essential-workflows">
+            <h2><span class="icon">⚡</span>Essential Workflows</h2>
+            
+            <h3><span class="icon">👋</span>Workflow 1: New Customer Onboarding Intelligence</h3>
+            <p><strong>Goal</strong>: Maximize new customer success and reduce early churn</p>
+            
+            <ol>
+                <li><strong>Customer Journey Mapping</strong> (5 minutes)
+                    <ul>
+                        <li>Navigate to Analytics & Insights → Customer Journey Mapping</li>
+                        <li>Review new customer onboarding paths</li>
+                        <li>Identify drop-off points and friction areas</li>
+                    </ul>
+                </li>
+                <li><strong>Real-Time Health Monitoring</strong> (10 minutes)
+                    <ul>
+                        <li>Go to Real-Time Customer Health Monitoring</li>
+                        <li>Set up health score alerts for new customers</li>
+                        <li>Configure intervention triggers for low health scores</li>
+                    </ul>
+                </li>
+                <li><strong>Automated Marketing Campaigns</strong> (15 minutes)
+                    <ul>
+                        <li>Use Marketing Automation Pro → Dynamic Content</li>
+                        <li>Create personalized onboarding sequences</li>
+                        <li>Set up milestone celebration campaigns</li>
+                    </ul>
+                </li>
+                <li><strong>Success Measurement</strong> (5 minutes)
+                    <ul>
+                        <li>Monitor Customer Success Intelligence metrics</li>
+                        <li>Track onboarding completion rates</li>
+                        <li>Measure time-to-value for new customers</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3><span class="icon">🛡️</span>Workflow 2: Churn Prevention and Retention</h3>
+            <p><strong>Goal</strong>: Identify at-risk customers and implement retention strategies</p>
+            
+            <ol>
+                <li><strong>Churn Risk Assessment</strong> (10 minutes)
+                    <ul>
+                        <li>Access Advanced Features → Churn Prevention AI</li>
+                        <li>Review at-risk customer list</li>
+                        <li>Analyze churn probability factors</li>
+                    </ul>
+                </li>
+                <li><strong>Behavioral Analysis</strong> (15 minutes)
+                    <ul>
+                        <li>Use Customer Intelligence AI → Behavioral Clustering</li>
+                        <li>Identify patterns in churning customer segments</li>
+                        <li>Create targeted retention personas</li>
+                    </ul>
+                </li>
+                <li><strong>Intervention Campaigns</strong> (20 minutes)
+                    <ul>
+                        <li>Design retention campaigns in Marketing Automation Pro</li>
+                        <li>Set up personalized offers and incentives</li>
+                        <li>Configure multi-channel outreach sequences</li>
+                    </ul>
+                </li>
+                <li><strong>Success Tracking</strong> (10 minutes)
+                    <ul>
+                        <li>Monitor retention rates in Revenue Analytics Suite</li>
+                        <li>Track campaign effectiveness</li>
+                        <li>Adjust strategies based on AI recommendations</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3><span class="icon">📈</span>Workflow 3: Revenue Growth Optimization</h3>
+            <p><strong>Goal</strong>: Identify and execute revenue expansion opportunities</p>
+            
+            <ol>
+                <li><strong>Cross-Sell Intelligence</strong> (15 minutes)
+                    <ul>
+                        <li>Navigate to Advanced Features → Cross-Sell Intelligence</li>
+                        <li>Review product recommendation engine results</li>
+                        <li>Identify high-potential cross-sell opportunities</li>
+                    </ul>
+                </li>
+                <li><strong>Pricing Strategy</strong> (20 minutes)
+                    <ul>
+                        <li>Use Revenue Analytics Suite → Price Optimization</li>
+                        <li>Analyze competitive pricing landscape</li>
+                        <li>Implement dynamic pricing recommendations</li>
+                    </ul>
+                </li>
+                <li><strong>Campaign Execution</strong> (25 minutes)
+                    <ul>
+                        <li>Create targeted upsell campaigns</li>
+                        <li>Use A/B testing for offer optimization</li>
+                        <li>Deploy multi-channel marketing sequences</li>
+                    </ul>
+                </li>
+                <li><strong>Performance Analysis</strong> (15 minutes)
+                    <ul>
+                        <li>Track revenue attribution across channels</li>
+                        <li>Monitor ROI and campaign effectiveness</li>
+                        <li>Optimize based on performance data</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Integration Setup Section -->
+        <div class="section" id="integration-setup">
+            <h2><span class="icon">🔗</span>Integration Setup</h2>
+            
+            <h3><span class="icon">💳</span>Stripe Integration (Payment Data)</h3>
+            <ol>
+                <li><strong>Navigate to Integration Hub</strong> → Data Connectors</li>
+                <li><strong>Add Stripe Connector</strong>:
+                    <ul>
+                        <li>Enter Stripe API keys (test/live)</li>
+                        <li>Configure data sync frequency</li>
+                        <li>Select data types (customers, transactions, subscriptions)</li>
+                    </ul>
+                </li>
+                <li><strong>Data Mapping</strong>:
+                    <ul>
+                        <li>Map Stripe customer fields to Customer Mind IQ profiles</li>
+                        <li>Configure transaction categorization</li>
+                        <li>Set up subscription lifecycle tracking</li>
+                    </ul>
+                </li>
+                <li><strong>Sync Verification</strong>:
+                    <ul>
+                        <li>Test connection and data flow</li>
+                        <li>Verify data accuracy and completeness</li>
+                        <li>Monitor sync performance</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <div class="success-box">
+                <h4>✅ Integration Best Practices</h4>
+                <ul>
+                    <li>Always test integrations in a staging environment first</li>
+                    <li>Monitor data quality scores after each new integration</li>
+                    <li>Set up alerts for integration failures or data quality issues</li>
+                    <li>Regular review of integration performance and data flow</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Daily Operations Section -->
+        <div class="section" id="daily-operations">
+            <h2><span class="icon">📅</span>Essential Daily Operations</h2>
+            
+            <h3><span class="icon">🌅</span>Morning Dashboard Review (15 minutes)</h3>
+            <ol>
+                <li><strong>Executive Intelligence Dashboard</strong> check:
+                    <ul>
+                        <li>Revenue metrics and trends</li>
+                        <li>Customer acquisition numbers</li>
+                        <li>Critical KPI status</li>
+                        <li>Urgent alert review</li>
+                    </ul>
+                </li>
+                <li><strong>Real-Time Customer Health Monitoring</strong>:
+                    <ul>
+                        <li>At-risk customer alerts</li>
+                        <li>Health score trends</li>
+                        <li>Intervention recommendations</li>
+                    </ul>
+                </li>
+                <li><strong>Marketing Campaign Performance</strong>:
+                    <ul>
+                        <li>Active campaign status</li>
+                        <li>A/B test results</li>
+                        <li>Channel performance metrics</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3><span class="icon">📊</span>Weekly Deep Dive Analysis (2 hours)</h3>
+            <ol>
+                <li><strong>Customer Intelligence Review</strong> (30 minutes):
+                    <ul>
+                        <li>Behavioral clustering updates</li>
+                        <li>Churn risk assessment</li>
+                        <li>Lead scoring effectiveness</li>
+                    </ul>
+                </li>
+                <li><strong>Revenue Analytics Deep Dive</strong> (45 minutes):
+                    <ul>
+                        <li>Forecasting accuracy review</li>
+                        <li>Subscription metrics analysis</li>
+                        <li>Revenue attribution assessment</li>
+                    </ul>
+                </li>
+                <li><strong>Marketing Optimization</strong> (30 minutes):
+                    <ul>
+                        <li>Campaign performance analysis</li>
+                        <li>Cross-sell opportunity identification</li>
+                        <li>Content personalization effectiveness</li>
+                    </ul>
+                </li>
+                <li><strong>Data Quality and Compliance</strong> (15 minutes):
+                    <ul>
+                        <li>Data governance metrics</li>
+                        <li>Compliance score monitoring</li>
+                        <li>Integration health checks</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Troubleshooting Section -->
+        <div class="section" id="troubleshooting">
+            <h2><span class="icon">🔧</span>Troubleshooting</h2>
+            
+            <h3><span class="icon">⚠️</span>Common Issues and Solutions</h3>
+            
+            <h4>Data Integration Problems</h4>
+            <div class="warning-box">
+                <h4>Issue: Connector not syncing data</h4>
+                <p><strong>Solutions:</strong></p>
+                <ol>
+                    <li>Check API credentials and permissions</li>
+                    <li>Verify network connectivity and firewall settings</li>
+                    <li>Review data mapping configuration</li>
+                    <li>Check sync logs in Integration Hub</li>
+                    <li>Contact support if authentication fails repeatedly</li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <h4>Issue: Data quality warnings</h4>
+                <p><strong>Solutions:</strong></p>
+                <ol>
+                    <li>Review Data Quality dashboard for specific issues</li>
+                    <li>Validate source data format and completeness</li>
+                    <li>Update data mapping rules if necessary</li>
+                    <li>Implement data cleaning procedures</li>
+                    <li>Schedule regular quality assessments</li>
+                </ol>
+            </div>
+
+            <h4>Performance Issues</h4>
+            <div class="warning-box">
+                <h4>Issue: Slow dashboard loading</h4>
+                <p><strong>Solutions:</strong></p>
+                <ol>
+                    <li>Check internet connection stability</li>
+                    <li>Clear browser cache and cookies</li>
+                    <li>Disable browser extensions temporarily</li>
+                    <li>Try different browser or incognito mode</li>
+                    <li>Contact support if issues persist</li>
+                </ol>
+            </div>
+
+            <h3><span class="icon">📞</span>Getting Help</h3>
+            
+            <div class="feature-box">
+                <h4>Support Channels</h4>
+                <ul>
+                    <li><strong>Email Support</strong>: support@customermindiq.com</li>
+                    <li><strong>Live Chat</strong>: Available in platform (Professional/Enterprise)</li>
+                    <li><strong>Phone Support</strong>: Enterprise customers only</li>
+                    <li><strong>Community Forum</strong>: Access through Support System</li>
+                    <li><strong>Knowledge Base</strong>: Comprehensive help articles</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <h4>Response Times (by subscription tier)</h4>
+                <ul>
+                    <li><strong>Free Tier</strong>: 72 hours via email</li>
+                    <li><strong>Professional</strong>: 24-48 hours via email/chat, 4 hours for critical issues</li>
+                    <li><strong>Enterprise</strong>: 1 hour for critical, 8 hours for high priority, 24 hours for normal</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Next Steps Section -->
+        <div class="section" id="next-steps">
+            <h2><span class="icon">🎓</span>Next Steps and Advanced Training</h2>
+            
+            <h3><span class="icon">📚</span>Recommended Learning Path</h3>
+            <ol>
+                <li><strong>Week 1</strong>: Master dashboard navigation and basic customer intelligence</li>
+                <li><strong>Week 2</strong>: Set up marketing automation and A/B testing</li>
+                <li><strong>Week 3</strong>: Implement revenue analytics and forecasting</li>
+                <li><strong>Week 4</strong>: Configure advanced features and AI models</li>
+                <li><strong>Month 2</strong>: Optimize integrations and data quality</li>
+                <li><strong>Month 3</strong>: Advanced analytics and strategic planning</li>
+            </ol>
+
+            <h3><span class="icon">📖</span>Advanced Training Resources</h3>
+            <ul>
+                <li><strong>Video Training Library</strong>: Step-by-step module tutorials</li>
+                <li><strong>Webinar Series</strong>: Monthly feature deep-dives</li>
+                <li><strong>Certification Program</strong>: Customer Mind IQ expert certification</li>
+                <li><strong>Best Practices Guide</strong>: Industry-specific recommendations</li>
+                <li><strong>API Documentation</strong>: For custom integrations</li>
+            </ul>
+
+            <h3><span class="icon">🎯</span>Success Metrics to Track</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">68%</div>
+                    <div class="metric-label">Improved Customer Retention</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">245%</div>
+                    <div class="metric-label">Cross-Sell Revenue Increase</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">12.5x</div>
+                    <div class="metric-label">Marketing ROI Improvement</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">94.7%</div>
+                    <div class="metric-label">AI Prediction Accuracy</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-logo">CM</div>
+            <p><strong>Customer Mind IQ - Universal Customer Intelligence Platform</strong></p>
+            <p>This Quick Start Guide provides the foundation for maximizing your Customer Mind IQ investment.</p>
+            <p>For detailed module-specific training, refer to the comprehensive training manual and video series.</p>
+            <p style="margin-top: 20px; color: #6b7280; font-size: 0.9rem;">
+                © 2025 Customer Mind IQ. All rights reserved. | Version 2.0 | Last updated: January 2025
+            </p>
+        </div>
+    </div>
+</body>
+</html>
