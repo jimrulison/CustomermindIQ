@@ -62,9 +62,11 @@ import './App.css';
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
 function AppContent() {
-  // Authentication state
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
+function AppContent() {
+  // Get authentication state from context
+  const { user, isAuthenticated, logout, apiCall } = useAuth();
+
+  // Application state
   const [currentPage, setCurrentPage] = useState('customer-analytics-dashboard');
   const [analyticsSection, setAnalyticsSection] = useState('customer'); // 'customer' or 'website'
   const [customers, setCustomers] = useState([]);
@@ -113,8 +115,9 @@ function AppContent() {
   useEffect(() => {
     const loadAnnouncements = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/admin/announcements`);
-        setAnnouncements(response.data.announcements || []);
+        const response = await apiCall('/api/banners/active');
+        const data = await response.json();
+        setAnnouncements(data.banners || []);
       } catch (error) {
         console.error('Error loading announcements:', error);
         // Set demo announcement
@@ -122,15 +125,18 @@ function AppContent() {
           {
             id: 1,
             message: "🎓 New Training Session: Advanced SEO Strategies - December 20, 2PM EST. Register now!",
-            type: "info",
-            active: true,
-            dismissible: true
+            banner_type: "info",
+            is_active: true,
+            is_dismissible: true
           }
         ]);
       }
     };
-    loadAnnouncements();
-  }, []);
+    
+    if (isAuthenticated) {
+      loadAnnouncements();
+    }
+  }, [isAuthenticated, apiCall]);
 
   const dismissAnnouncement = (id) => {
     setAnnouncements(prev => prev.filter(ann => ann.id !== id));
@@ -147,17 +153,19 @@ function AppContent() {
 
   // Authentication functions
   const handleSignIn = (userData) => {
-    setUser(userData);
-    setIsAuthenticated(true);
+    // The AuthContext will handle the authentication state
     setCurrentPage('customer-analytics-dashboard');
     setAnalyticsSection('customer');
   };
 
-  const handleSignOut = () => {
-    setUser(null);
-    setIsAuthenticated(false);
-    setCurrentPage('customer-analytics-dashboard');
-    setAnalyticsSection('customer');
+  const handleSignOut = async () => {
+    try {
+      await logout();
+      setCurrentPage('customer-analytics-dashboard');
+      setAnalyticsSection('customer');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   const handleNavigate = (page) => {
