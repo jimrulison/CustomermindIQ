@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomerMind IQ - Admin Training Manual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #e91e63, #f06292);
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #e91e63, #f06292);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .admin-badge {
+            background: linear-gradient(45deg, #e91e63, #f06292);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e91e63;
+        }
+
+        .subsection-title {
+            font-size: 1.3rem;
+            color: #e91e63;
+            margin: 25px 0 15px 0;
+            font-weight: 600;
+        }
+
+        .admin-highlight {
+            background: linear-gradient(145deg, #fce4ec, #f8bbd9);
+            border: 2px solid #e91e63;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .credentials {
+            background: linear-gradient(145deg, #e8f5e8, #d4f1d4);
+            border: 2px solid #4caf50;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .credentials h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .cred-item {
+            background: white;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #1565c0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, #f8f9ff, #e8ecff);
+            border: 2px solid #e1e8ff;
+            border-radius: 15px;
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card.admin-card {
+            border-color: #e91e63;
+            background: linear-gradient(145deg, #fce4ec, #f8bbd9);
+        }
+
+        .feature-card h4 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: "🛡️";
+            position: absolute;
+            left: 0;
+            top: 8px;
+        }
+
+        .step-by-step {
+            counter-reset: step-counter;
+        }
+
+        .step-item {
+            counter-increment: step-counter;
+            background: linear-gradient(145deg, #f8f9ff, #e8ecff);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            position: relative;
+            padding-left: 60px;
+        }
+
+        .step-item::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(45deg, #e91e63, #f06292);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .warning {
+            background: linear-gradient(145deg, #fff3e0, #ffe0b2);
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .tip {
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .button {
+            background: linear-gradient(45deg, #e91e63, #f06292);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .screenshot-placeholder {
+            background: linear-gradient(145deg, #f5f5f5, #e0e0e0);
+            border: 2px dashed #bdbdbd;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .container {
+                max-width: none;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .header, .content {
+                background: white;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .header, .content {
+                padding: 20px;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">A</div>
+            <h1 class="main-title">Admin Training Manual</h1>
+            <p class="subtitle">CustomerMind IQ - Advanced Administration Guide</p>
+            <span class="admin-badge">🛡️ Administrator Access Required</span>
+        </div>
+
+        <div class="content">
+            <div class="admin-highlight">
+                <h3>⚠️ Admin Access Requirements</h3>
+                <p>This manual covers advanced administrative features that require Administrator or Super Administrator role permissions. Regular users will not have access to these features.</p>
+            </div>
+
+            <div class="credentials">
+                <h4>🔐 Admin Login Credentials</h4>
+                <div class="cred-item">Email: admin@customermindiq.com</div>
+                <div class="cred-item">Password: CustomerMindIQ2025!</div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">1. Admin Panel Overview</h2>
+
+                <p>The Admin Panel provides comprehensive management capabilities for the CustomerMind IQ platform. Access is restricted to users with Administrator or Super Administrator roles.</p>
+
+                <div class="subsection-title">Accessing the Admin Panel</div>
+                <div class="step-by-step">
+                    <div class="step-item">
+                        <h4>Login with Admin Credentials</h4>
+                        <p>Use the admin credentials provided above to log into the CustomerMind IQ platform.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Locate Admin Panel Button</h4>
+                        <p>After successful login, you'll see an "Admin Panel" button in the header navigation (only visible to administrators).</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Access Admin Features</h4>
+                        <p>Click the Admin Panel button to access banner management, discount system, user management, and analytics dashboard.</p>
+                    </div>
+                </div>
+
+                <div class="screenshot-placeholder">
+                    <p>📸 Screenshot: Admin Panel button location in header navigation</p>
+                </div>
+
+                <div class="subsection-title">Admin Dashboard Overview</div>
+                <p>The admin dashboard provides at-a-glance metrics and quick access to management features:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card admin-card">
+                        <h4>📊 Key Metrics</h4>
+                        <ul class="feature-list">
+                            <li>Total active announcements</li>
+                            <li>Community posts requiring moderation</li>
+                            <li>Active user count</li>
+                            <li>Recent admin activities</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card admin-card">
+                        <h4>🎛️ Quick Actions</h4>
+                        <ul class="feature-list">
+                            <li>Create new announcement</li>
+                            <li>Moderate community content</li>
+                            <li>Access user management</li>
+                            <li>View analytics reports</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">2. Banner Management System</h2>
+
+                <p>The Banner Management system allows administrators to create targeted announcements that appear at the top of user dashboards. This is perfect for training announcements, maintenance notifications, and feature updates.</p>
+
+                <div class="subsection-title">Creating Announcements</div>
+                <div class="step-by-step">
+                    <div class="step-item">
+                        <h4>Access Banner Management</h4>
+                        <p>In the Admin Panel, click on the "Announcements" tab to view existing banners and create new ones.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Create New Banner</h4>
+                        <p>Click "New Announcement" button to open the banner creation form.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Configure Banner Settings</h4>
+                        <ul class="feature-list">
+                            <li><strong>Title:</strong> Brief, attention-grabbing headline (max 200 characters)</li>
+                            <li><strong>Message:</strong> Detailed announcement text (max 1000 characters)</li>
+                            <li><strong>Type:</strong> Info, Warning, Success, Error, Announcement, Training, Maintenance</li>
+                            <li><strong>Priority:</strong> 0-10 (higher numbers appear first)</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Set Targeting Options</h4>
+                        <ul class="feature-list">
+                            <li><strong>Target Users:</strong> Leave empty for all users, or specify email addresses</li>
+                            <li><strong>Target Tiers:</strong> Select specific subscription tiers (Starter, Professional, Enterprise)</li>
+                            <li><strong>Schedule:</strong> Set start and end dates for automatic display control</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Advanced Options</h4>
+                        <ul class="feature-list">
+                            <li><strong>Dismissible:</strong> Allow users to close the banner</li>
+                            <li><strong>Call to Action:</strong> Optional button text and URL</li>
+                            <li><strong>Status:</strong> Draft, Active, Scheduled, Paused</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    <strong>💡 Best Practices for Announcements:</strong>
+                    <ul class="feature-list">
+                        <li>Use "Training" type for educational content announcements</li>
+                        <li>Use "Maintenance" type for scheduled system updates</li>
+                        <li>Keep messages concise and action-oriented</li>
+                        <li>Target specific tiers for tier-relevant announcements</li>
+                        <li>Set appropriate priority levels to avoid banner overload</li>
+                    </ul>
+                </div>
+
+                <div class="subsection-title">Managing Existing Banners</div>
+                <p>View and manage all created banners through the banner management interface:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>📊 Banner Analytics</h4>
+                        <ul class="feature-list">
+                            <li>View count (how many users saw the banner)</li>
+                            <li>Click count (if call-to-action is used)</li>
+                            <li>Dismissal count (how many users closed it)</li>
+                            <li>Engagement rate calculation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>⚙️ Banner Actions</h4>
+                        <ul class="feature-list">
+                            <li>Edit banner content and settings</li>
+                            <li>Toggle active/inactive status</li>
+                            <li>Delete banners (with confirmation)</li>
+                            <li>Clone banners for similar announcements</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    Example Banner Creation:
+                    Title: "🎓 New Training Session Available"
+                    Message: "Advanced SEO Strategies training session scheduled for December 20, 2PM EST. Register now to secure your spot!"
+                    Type: Training
+                    Target Tiers: Professional, Enterprise
+                    Call to Action: "Register Now" → https://training.customermindiq.com/seo-advanced
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">3. Discount Management System</h2>
+
+                <p>The Discount Management system provides flexible tools for creating and applying discounts to drive user acquisition, retention, and tier upgrades.</p>
+
+                <div class="subsection-title">Types of Discounts</div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>💰 Percentage Discounts</h4>
+                        <ul class="feature-list">
+                            <li>Example: 25% off first 3 months</li>
+                            <li>Best for: Broad marketing campaigns</li>
+                            <li>Value: 1-100 (represents percentage)</li>
+                            <li>Use case: General promotions, seasonal sales</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🎯 Fixed Amount Discounts</h4>
+                        <ul class="feature-list">
+                            <li>Example: $50 off annual subscription</li>
+                            <li>Best for: High-value customer retention</li>
+                            <li>Value: Dollar amount (e.g., 50.00)</li>
+                            <li>Use case: Upgrade incentives, retention offers</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🎁 Free Months</h4>
+                        <ul class="feature-list">
+                            <li>Example: 2 months free with annual plan</li>
+                            <li>Best for: Annual subscription conversion</li>
+                            <li>Value: Number of free months</li>
+                            <li>Use case: Trial to paid conversion</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>📈 Upgrade Discounts</h4>
+                        <ul class="feature-list">
+                            <li>Example: 40% off upgrade to Professional</li>
+                            <li>Best for: Tier migration campaigns</li>
+                            <li>Value: Percentage off upgrade difference</li>
+                            <li>Use case: Feature adoption drives</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Creating Discount Campaigns</div>
+                <div class="step-by-step">
+                    <div class="step-item">
+                        <h4>Access Discount Management</h4>
+                        <p>In the Admin Panel, navigate to "Settings" → "Discount Management" or use the dedicated discount section.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Define Discount Parameters</h4>
+                        <ul class="feature-list">
+                            <li><strong>Name:</strong> Internal reference name</li>
+                            <li><strong>Description:</strong> Detailed explanation of the discount</li>
+                            <li><strong>Discount Type:</strong> Choose from available types</li>
+                            <li><strong>Value:</strong> Numeric value (percentage, amount, or months)</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Set Targeting Rules</h4>
+                        <ul class="feature-list">
+                            <li><strong>Target Tiers:</strong> Select which subscription tiers are eligible</li>
+                            <li><strong>Target Users:</strong> Specify individual users by email (optional)</li>
+                            <li><strong>Minimum Purchase:</strong> Set minimum spending requirement</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Configure Usage Limits</h4>
+                        <ul class="feature-list">
+                            <li><strong>Usage Limit:</strong> Maximum total uses of discount</li>
+                            <li><strong>Per User Limit:</strong> Maximum uses per individual user</li>
+                            <li><strong>Start/End Dates:</strong> Schedule discount availability window</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Apply Discount to Users</h4>
+                        <p>Use the "Apply to User" function to manually assign discounts to specific customers for retention or support purposes.</p>
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <strong>⚠️ Important Notes:</strong>
+                    <ul class="feature-list">
+                        <li>All discount applications are logged for financial auditing</li>
+                        <li>Revenue impact is tracked and reported in analytics</li>
+                        <li>Expired discounts are automatically deactivated</li>
+                        <li>Users can only see discounts they're eligible for</li>
+                    </ul>
+                </div>
+
+                <div class="subsection-title">Discount Analytics & Reporting</div>
+                <p>Monitor discount performance through comprehensive analytics:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>📈 Usage Metrics</h4>
+                        <ul class="feature-list">
+                            <li>Total discount applications</li>
+                            <li>Unique users who used discount</li>
+                            <li>Conversion rate from discount to subscription</li>
+                            <li>Average order value with discount applied</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>💰 Revenue Impact</h4>
+                        <ul class="feature-list">
+                            <li>Total revenue generated from discounted sales</li>
+                            <li>Revenue lost due to discount amount</li>
+                            <li>Net revenue impact (positive/negative)</li>
+                            <li>ROI calculation for discount campaigns</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">4. User Management & Account Impersonation</h2>
+
+                <p>Comprehensive user account management with secure impersonation capabilities for customer support.</p>
+
+                <div class="subsection-title">User Account Overview</div>
+                <p>The user management interface provides detailed insights into all platform users:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>👥 User Information</h4>
+                        <ul class="feature-list">
+                            <li>Complete user profile details</li>
+                            <li>Subscription tier and status</li>
+                            <li>Account creation and last login dates</li>
+                            <li>Trial status and conversion history</li>
+                            <li>Feature usage statistics</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>📊 User Analytics</h4>
+                        <ul class="feature-list">
+                            <li>Login frequency and patterns</li>
+                            <li>Feature adoption rates</li>
+                            <li>Support ticket history</li>
+                            <li>Engagement scores</li>
+                            <li>Churn risk indicators</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Account Impersonation for Support</div>
+                <p>Safely impersonate user accounts to provide efficient customer support:</p>
+
+                <div class="step-by-step">
+                    <div class="step-item">
+                        <h4>Initiate Impersonation Session</h4>
+                        <ul class="feature-list">
+                            <li>Navigate to User Management</li>
+                            <li>Find the target user account</li>
+                            <li>Click "Impersonate User" button</li>
+                            <li>Provide reason for impersonation</li>
+                            <li>Set session duration (5 minutes to 8 hours)</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Active Impersonation Session</h4>
+                        <ul class="feature-list">
+                            <li>Clear indicator showing impersonation mode</li>
+                            <li>Access user's view of the platform</li>
+                            <li>Ability to navigate all user-accessible features</li>
+                            <li>Session timer visible in interface</li>
+                            <li>Option to end session early</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Security & Audit Features</h4>
+                        <ul class="feature-list">
+                            <li>All actions during impersonation are logged</li>
+                            <li>Session automatically expires at set time</li>
+                            <li>Cannot impersonate other admin accounts</li>
+                            <li>Full audit trail for compliance</li>
+                            <li>Reason for impersonation recorded</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <strong>🔒 Impersonation Security Guidelines:</strong>
+                    <ul class="feature-list">
+                        <li>Only impersonate when necessary for customer support</li>
+                        <li>Always provide a clear, detailed reason</li>
+                        <li>Use minimum session time required</li>
+                        <li>Never modify user data without explicit permission</li>
+                        <li>End sessions immediately when support is complete</li>
+                        <li>All impersonation activities are audited and logged</li>
+                    </ul>
+                </div>
+
+                <div class="subsection-title">User Role & Subscription Management</div>
+                <p>Modify user permissions and subscription details:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🔧 User Modifications</h4>
+                        <ul class="feature-list">
+                            <li>Update user role (User, Admin, Super Admin)</li>
+                            <li>Change subscription tier</li>
+                            <li>Activate/deactivate accounts</li>
+                            <li>Reset passwords</li>
+                            <li>Modify profile information</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>📈 Subscription Actions</h4>
+                        <ul class="feature-list">
+                            <li>Force trial extensions</li>
+                            <li>Apply subscription upgrades/downgrades</li>
+                            <li>Apply discounts to specific users</li>
+                            <li>Handle billing issue resolutions</li>
+                            <li>Process refunds and credits</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">5. Admin Analytics Dashboard</h2>
+
+                <p>Comprehensive analytics and reporting for platform performance, user behavior, and business metrics.</p>
+
+                <div class="subsection-title">Dashboard Overview</div>
+                <p>The admin analytics dashboard provides real-time insights into platform performance:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>👥 User Analytics</h4>
+                        <ul class="feature-list">
+                            <li>Total users by subscription tier</li>
+                            <li>Active vs. inactive users</li>
+                            <li>Monthly user growth rates</li>
+                            <li>User login frequency analysis</li>
+                            <li>Feature adoption statistics</li>
+                            <li>Churn rate calculations</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>💰 Revenue Analytics</h4>
+                        <ul class="feature-list">
+                            <li>Monthly Recurring Revenue (MRR)</li>
+                            <li>Annual Recurring Revenue (ARR)</li>
+                            <li>Average Revenue Per User (ARPU)</li>
+                            <li>Revenue by subscription tier</li>
+                            <li>Trial conversion rates</li>
+                            <li>Discount impact on revenue</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>📊 Platform Analytics</h4>
+                        <ul class="feature-list">
+                            <li>Banner engagement rates</li>
+                            <li>Discount usage statistics</li>
+                            <li>Support ticket volume</li>
+                            <li>Feature usage patterns</li>
+                            <li>API usage and rate limits</li>
+                            <li>System performance metrics</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>📈 Growth Metrics</h4>
+                        <ul class="feature-list">
+                            <li>Customer Acquisition Cost (CAC)</li>
+                            <li>Customer Lifetime Value (CLV)</li>
+                            <li>Net Promoter Score (NPS) tracking</li>
+                            <li>Expansion revenue from upgrades</li>
+                            <li>Cohort retention analysis</li>
+                            <li>Funnel conversion metrics</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Historical Data & Trends</div>
+                <p>Access comprehensive historical data for trend analysis:</p>
+
+                <div class="step-by-step">
+                    <div class="step-item">
+                        <h4>Time Period Selection</h4>
+                        <p>Choose from predefined periods (last 7 days, 30 days, 90 days, 1 year) or set custom date ranges for analysis.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Trend Visualization</h4>
+                        <p>Interactive charts and graphs showing growth trends, seasonal patterns, and performance changes over time.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Comparative Analysis</h4>
+                        <p>Compare current metrics with previous periods to identify growth patterns and performance improvements.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Export & Reporting</h4>
+                        <p>Export analytics data in various formats (CSV, PDF, Excel) for external reporting and presentation purposes.</p>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    <strong>💡 Analytics Best Practices:</strong>
+                    <ul class="feature-list">
+                        <li>Review user analytics weekly to identify engagement trends</li>
+                        <li>Monitor trial conversion rates to optimize onboarding</li>
+                        <li>Track banner engagement to improve communication effectiveness</li>
+                        <li>Use cohort analysis to understand long-term user behavior</li>
+                        <li>Set up alerts for significant metric changes</li>
+                        <li>Regular analysis of churn reasons for retention improvement</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">6. Security & Compliance</h2>
+
+                <div class="subsection-title">Admin Security Features</div>
+                <p>CustomerMind IQ implements enterprise-grade security measures for administrative access:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card admin-card">
+                        <h4>🔐 Authentication Security</h4>
+                        <ul class="feature-list">
+                            <li>JWT token-based authentication</li>
+                            <li>Automatic token refresh mechanism</li>
+                            <li>Account lockout after failed attempts</li>
+                            <li>Password complexity requirements</li>
+                            <li>Session timeout management</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card admin-card">
+                        <h4>📋 Audit Logging</h4>
+                        <ul class="feature-list">
+                            <li>All admin actions logged with timestamps</li>
+                            <li>User impersonation session tracking</li>
+                            <li>Banner and discount modification history</li>
+                            <li>Login/logout activity monitoring</li>
+                            <li>Failed authentication attempt logs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Data Privacy & Compliance</div>
+                <p>Administrative features comply with major data protection regulations:</p>
+
+                <div class="warning">
+                    <strong>🛡️ Compliance Requirements:</strong>
+                    <ul class="feature-list">
+                        <li>GDPR compliance for EU user data handling</li>
+                        <li>CCPA compliance for California residents</li>
+                        <li>SOX compliance for financial data (Enterprise tier)</li>
+                        <li>Regular security audits and penetration testing</li>
+                        <li>Data encryption in transit and at rest</li>
+                        <li>User consent management and data portability</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">7. Advanced Admin Workflows</h2>
+
+                <div class="subsection-title">Common Administrative Tasks</div>
+                
+                <div class="step-by-step">
+                    <div class="step-item">
+                        <h4>Weekly User Review</h4>
+                        <ul class="feature-list">
+                            <li>Review new user registrations and trial conversions</li>
+                            <li>Check for users approaching trial expiration</li>
+                            <li>Identify high-value users for retention outreach</li>
+                            <li>Monitor support tickets for common issues</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Monthly Analytics Review</h4>
+                        <ul class="feature-list">
+                            <li>Analyze MRR growth and churn trends</li>
+                            <li>Review banner engagement and effectiveness</li>
+                            <li>Assess discount campaign performance</li>
+                            <li>Prepare executive summary reports</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Quarterly Business Reviews</h4>
+                        <ul class="feature-list">
+                            <li>Comprehensive user growth analysis</li>
+                            <li>Revenue trend evaluation</li>
+                            <li>Feature adoption and usage patterns</li>
+                            <li>Competitive analysis and market positioning</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Emergency Procedures</div>
+                <p>Guidelines for handling critical situations:</p>
+
+                <div class="warning">
+                    <strong>🚨 Emergency Response Procedures:</strong>
+                    <ul class="feature-list">
+                        <li><strong>System Outage:</strong> Use maintenance banners to communicate status</li>
+                        <li><strong>Security Incident:</strong> Immediately revoke affected user sessions</li>
+                        <li><strong>Data Breach:</strong> Follow incident response protocol and user notification</li>
+                        <li><strong>Billing Issues:</strong> Apply appropriate discounts or credits while investigating</li>
+                        <li><strong>Mass User Issues:</strong> Create targeted banners with solutions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">8. Support & Escalation</h2>
+
+                <div class="subsection-title">Admin Support Channels</div>
+                <p>When administrators need assistance with platform management:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>📧 Internal Support</h4>
+                        <ul class="feature-list">
+                            <li>admin-support@customermindiq.com</li>
+                            <li>Platform engineering team</li>
+                            <li>Priority response for critical issues</li>
+                            <li>Dedicated admin documentation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🔧 Technical Escalation</h4>
+                        <ul class="feature-list">
+                            <li>System architecture questions</li>
+                            <li>Database query assistance</li>
+                            <li>Integration troubleshooting</li>
+                            <li>Performance optimization</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    <strong>💡 When to Escalate Issues:</strong>
+                    <ul class="feature-list">
+                        <li>User data corruption or loss</li>
+                        <li>Billing or payment processing errors</li>
+                        <li>Security vulnerabilities or breaches</li>
+                        <li>System performance degradation</li>
+                        <li>Integration failures affecting multiple users</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="button" onclick="window.print()">📄 Download Admin Manual PDF</button>
+            <a href="/training_portal.html" class="button" style="margin-left: 15px;">📚 Training Portal</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('CustomerMind IQ Admin Training Manual loaded');
+            
+            // Add admin-specific tracking
+            const adminActions = document.querySelectorAll('.button, .feature-card');
+            adminActions.forEach(element => {
+                element.addEventListener('click', function() {
+                    console.log('Admin Training - Element clicked:', this.textContent?.substring(0, 50));
+                });
+            });
+        });
+    </script>
+</body>
+</html>
