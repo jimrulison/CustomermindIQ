@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // Get backend URL from environment
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customer-mind-iq-2.preview.emergentagent.com';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://mindiq-auth.preview.emergentagent.com';
 
   // Check for stored authentication on app start
   useEffect(() => {
