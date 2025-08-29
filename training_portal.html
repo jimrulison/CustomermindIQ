@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Mind IQ - Training Portal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+            border-radius: 25px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.3);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: #64748b;
+            margin-bottom: 40px;
+        }
+        
+        .training-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .training-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .training-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+        
+        .card-description {
+            color: #64748b;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .card-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 5px;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            color: #334155;
+        }
+        
+        .features-section {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 60px;
+        }
+        
+        .features-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 40px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 25px;
+            background: #f8fafc;
+            border-radius: 15px;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+        
+        .feature-description {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #64748b;
+        }
+        
+        .footer-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+            border-radius: 15px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .training-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-section {
+                padding: 30px 20px;
+            }
+            
+            .card-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">CM</div>
+            <h1>Customer Mind IQ</h1>
+            <div class="subtitle">Training Portal & Documentation Center</div>
+        </div>
+        
+        <div class="training-grid">
+            <div class="training-card">
+                <div class="card-icon">🚀</div>
+                <div class="card-title">Quick Start Guide</div>
+                <div class="card-description">
+                    Get up and running with Customer Mind IQ in minutes. This comprehensive quick start guide covers platform navigation, initial setup, core workflows, and essential daily operations.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">30+</div>
+                        <div class="stat-label">Pages</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Min Read</div>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="professional_quick_start_guide.html" class="btn btn-primary" target="_blank">Open Guide</a>
+                    <button class="btn btn-secondary" onclick="downloadPDF('professional_quick_start_guide.html', 'Customer-Mind-IQ-Quick-Start-Guide.pdf')">Download PDF</button>
+                </div>
+            </div>
+            
+            <div class="training-card">
+                <div class="card-icon">📚</div>
+                <div class="card-title">Complete Training Manual</div>
+                <div class="card-description">
+                    Master every module and feature with our comprehensive training manual. Covers all 25+ modules with step-by-step instructions, best practices, and advanced configuration options.
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Features</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">60</div>
+                        <div class="stat-label">Min Read</div>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="professional_training_manual.html" class="btn btn-primary" target="_blank">Open Manual</a>
+                    <button class="btn btn-secondary" onclick="downloadPDF('professional_training_manual.html', 'Customer-Mind-IQ-Training-Manual.pdf')">Download PDF</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="features-section">
+            <div class="features-title">What's Included in Your Training Materials</div>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🧠</div>
+                    <div class="feature-title">AI Intelligence Modules</div>
+                    <div class="feature-description">Complete coverage of behavioral clustering, churn prevention, and lead scoring</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📢</div>
+                    <div class="feature-title">Marketing Automation</div>
+                    <div class="feature-description">Multi-channel orchestration, A/B testing, and personalization strategies</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💰</div>
+                    <div class="feature-title">Revenue Analytics</div>
+                    <div class="feature-description">Forecasting, price optimization, and subscription analytics mastery</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">Advanced Features</div>
+                    <div class="feature-description">Cross-sell intelligence, sentiment analysis, and competitive intelligence</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚙️</div>
+                    <div class="feature-title">Management Tools</div>
+                    <div class="feature-description">AI Command Center, compliance suite, and integration management</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Analytics & Insights</div>
+                    <div class="feature-description">Journey mapping, cohort analysis, and ROI forecasting</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="features-section">
+            <div class="features-title">Training Resources Available</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; text-align: left;">
+                <div>
+                    <h3 style="color: #1f2937; margin-bottom: 15px;">📖 Documentation</h3>
+                    <ul style="color: #64748b; line-height: 1.8;">
+                        <li>Quick Start Guide (HTML & PDF)</li>
+                        <li>Complete Training Manual (HTML & PDF)</li>
+                        <li>Module-specific Implementation Guides</li>
+                        <li>Best Practices and Optimization Tips</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #1f2937; margin-bottom: 15px;">🎥 Video Training</h3>
+                    <ul style="color: #64748b; line-height: 1.8;">
+                        <li>25+ Professional Training Videos</li>
+                        <li>Step-by-step Feature Walkthroughs</li>
+                        <li>Advanced Configuration Tutorials</li>
+                        <li>Real-world Implementation Examples</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #1f2937; margin-bottom: 15px;">🛠️ Implementation Support</h3>
+                    <ul style="color: #64748b; line-height: 1.8;">
+                        <li>Configuration Checklists</li>
+                        <li>Troubleshooting Guides</li>
+                        <li>Performance Optimization Tips</li>
+                        <li>Success Metrics and KPIs</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #1f2937; margin-bottom: 15px;">📞 Ongoing Support</h3>
+                    <ul style="color: #64748b; line-height: 1.8;">
+                        <li>Email Support (All Tiers)</li>
+                        <li>Live Chat (Professional/Enterprise)</li>
+                        <li>Phone Support (Enterprise Only)</li>
+                        <li>Community Forum Access</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-logo">CM</div>
+            <p><strong>Customer Mind IQ Training Portal</strong></p>
+            <p>Your comprehensive resource for mastering AI-powered customer intelligence</p>
+            <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">
+                © 2025 Customer Mind IQ. All rights reserved. | Training Portal v2.0
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Function to download HTML as PDF (requires browser's print to PDF functionality)
+        function downloadPDF(htmlFile, filename) {
+            // Open the HTML file in a new window
+            const newWindow = window.open(htmlFile, '_blank');
+            
+            // Wait for the document to load, then trigger print
+            newWindow.onload = function() {
+                // Add a slight delay to ensure content is fully rendered
+                setTimeout(function() {
+                    // Trigger the browser's print dialog
+                    newWindow.print();
+                }, 500);
+            };
+            
+            // Show user instruction
+            alert('The document will open in a new tab. Use your browser\'s Print function and select "Save as PDF" or "Print to PDF" to download the PDF version.');
+        }
+        
+        // Alternative function using modern Web APIs (if supported)
+        async function downloadPDFModern(htmlFile, filename) {
+            try {
+                // This is a more advanced approach that would require additional libraries
+                // For now, we'll use the simpler print approach above
+                console.log('PDF download requested for:', filename);
+            } catch (error) {
+                console.error('PDF download failed:', error);
+                // Fallback to print method
+                downloadPDF(htmlFile, filename);
+            }
+        }
+    </script>
+</body>
+</html>
