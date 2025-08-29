@@ -19,7 +19,8 @@ import {
   GraduationCap,
   HelpCircle,
   Heart,
-  Settings
+  Settings,
+  BookOpen
 } from 'lucide-react';
 
 const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
