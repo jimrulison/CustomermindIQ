@@ -194,6 +194,18 @@
         agent: "testing"
         comment: "✅ 7-DAY TRIAL CONFIRMED WORKING (Jan 29, 2025): Trial registration endpoint fully functional. Successfully registered trial user with 7-day duration, Starter tier access, proper start/end dates, and all trial features enabled. No credit card required. Trial system is production-ready and working perfectly."
 
+  - task: "Admin Endpoint Routing Issue"
+    implemented: true
+    working: false
+    file: "backend/server.py"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ROUTING ISSUE DISCOVERED (Jan 29, 2025): All admin endpoints return 404 Not Found despite routes being defined in admin_system.py. Routes like /api/admin/banners, /api/admin/discounts, /api/admin/analytics/dashboard exist in code but are not accessible. Router is included with prefix='/api' but endpoints still return 404. This prevents access to banner management, discount system, user management, and admin analytics. Requires investigation of FastAPI router configuration."
+
 frontend:
   - task: "Frontend Authentication Integration"
     implemented: true
