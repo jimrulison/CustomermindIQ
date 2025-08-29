@@ -47,6 +47,18 @@ class CustomerIntelligenceAITester:
         self.competitive_intelligence_tests = 0
         self.competitive_intelligence_passed = 0
         self.customer_ids = []  # Store customer IDs for testing
+        # NEW: Authentication and Admin System Tests
+        self.auth_tests = 0
+        self.auth_passed = 0
+        self.admin_tests = 0
+        self.admin_passed = 0
+        self.subscription_tests = 0
+        self.subscription_passed = 0
+        # Store authentication tokens for testing
+        self.access_token = None
+        self.admin_token = None
+        self.test_user_id = None
+        self.test_admin_id = None
 
     def run_customer_intelligence_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
         """Run a Customer Intelligence API test"""
