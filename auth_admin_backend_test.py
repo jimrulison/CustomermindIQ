@@ -471,9 +471,8 @@ class AuthAdminSystemTester:
         success, response = self.run_admin_test(
             "Admin Update User Role",
             "PUT",
-            f"api/auth/admin/users/{self.test_user_id}/role",
+            f"api/auth/admin/users/{self.test_user_id}/role?new_role=analyst",
             200,
-            data="analyst",  # New role
             headers=headers,
             timeout=30
         )
@@ -497,9 +496,8 @@ class AuthAdminSystemTester:
         success, response = self.run_admin_test(
             "Admin Update User Subscription",
             "PUT",
-            f"api/auth/admin/users/{self.test_user_id}/subscription",
+            f"api/auth/admin/users/{self.test_user_id}/subscription?new_tier=professional",
             200,
-            data="professional",  # New subscription tier
             headers=headers,
             timeout=30
         )
