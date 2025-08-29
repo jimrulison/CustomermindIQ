@@ -366,8 +366,8 @@ const SignIn = ({ onSignIn }) => {
               <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
                 <p className="text-green-300 text-sm">
                   <strong>Demo Credentials:</strong><br />
-                  Email: demo@customermindiq.com<br />
-                  Password: demo1234
+                  Admin: admin@customermindiq.com<br />
+                  Password: CustomerMindIQ2025!
                 </p>
               </div>
 
