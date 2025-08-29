@@ -256,7 +256,7 @@ class AuthenticationTester:
         """Test subscription system endpoints"""
         try:
             # Test subscription tiers endpoint
-            response = requests.get(f"{self.base_url}/api/subscriptions/tiers", timeout=10)
+            response = requests.get(f"{self.base_url}/api/subscriptions/subscriptions/tiers", timeout=10)
             
             success = response.status_code == 200
             details = f"(Status: {response.status_code})"
