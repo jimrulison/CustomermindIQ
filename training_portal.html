@@ -231,6 +231,45 @@
             color: #666;
         }
 
+        .sale-banner {
+            background: linear-gradient(45deg, #e53e3e, #ff6b6b);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 25px 0;
+            box-shadow: 0 10px 25px rgba(229, 62, 62, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .sale-banner h3 {
+            margin-bottom: 10px;
+        }
+
+        .price-highlight {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: rgba(255, 255, 255, 0.7);
+            margin-right: 10px;
+        }
+
+        .sale-price {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
         .update-banner {
             background: linear-gradient(45deg, #4caf50, #66bb6a);
             color: white;
@@ -311,9 +350,19 @@
         </div>
 
         <div class="content">
+            <div class="sale-banner">
+                <h3>🔥 LIMITED TIME SALE - 50% OFF ALL PLANS! 🔥</h3>
+                <div class="price-highlight">
+                    <span class="original-price">Starter: $99/mo</span> → <span class="sale-price">$49/mo</span><br>
+                    <span class="original-price">Professional: $299/mo</span> → <span class="sale-price">$149/mo</span><br>
+                    <span class="original-price">Enterprise: $799/mo</span> → <span class="sale-price">$399/mo</span>
+                </div>
+                <p>Lock in these prices now - sale ends without notice!</p>
+            </div>
+
             <div class="update-banner">
                 <h3>🎉 New: Enterprise Authentication & Admin Features!</h3>
-                <p>Our training materials have been updated to reflect the new authentication system, 7-day free trial, updated pricing tiers ($99/$299/$799/Custom), and comprehensive admin features including banner management, discount system, and user analytics.</p>
+                <p>Our training materials have been updated to reflect the new authentication system, 7-day free trial, limited-time sale pricing, and comprehensive admin features including banner management, discount system, and user analytics.</p>
             </div>
 
             <div class="stats-grid">
@@ -326,8 +375,8 @@
                     <div class="stat-label">Updated Content</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Skill Levels</div>
+                    <div class="stat-number">50%</div>
+                    <div class="stat-label">SALE DISCOUNT</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">∞</div>
@@ -347,12 +396,12 @@
                         <span>👤 Beginner</span>
                     </div>
                     <p class="card-description">
-                        Get up and running quickly with CustomerMind IQ. Perfect for new users who want immediate access to core features and updated pricing information.
+                        Get up and running quickly with CustomerMind IQ. Perfect for new users who want immediate access to core features and updated sale pricing information.
                     </p>
                     <ul class="feature-list">
                         <li>New authentication system walkthrough</li>
                         <li>7-day free trial signup process</li>
-                        <li>Updated subscription tiers ($99/$299/$799/Custom)</li>
+                        <li>LIMITED TIME: 50% off sale pricing</li>
                         <li>Essential navigation and features</li>
                     </ul>
                     <div style="margin-top: 20px;">
@@ -418,10 +467,10 @@
                         <span>🎯 Presenters</span>
                     </div>
                     <p class="card-description">
-                        Ready-to-use presentation materials for training sessions, client demonstrations, and team onboarding with updated pricing and features.
+                        Ready-to-use presentation materials for training sessions, client demonstrations, and team onboarding with updated sale pricing and features.
                     </p>
                     <ul class="feature-list">
-                        <li>Updated slides with new pricing</li>
+                        <li>Updated slides with sale pricing</li>
                         <li>Authentication system demos</li>
                         <li>Feature showcase presentations</li>
                         <li>Client onboarding materials</li>
@@ -441,11 +490,11 @@
                         <span>🎬 Content Creators</span>
                     </div>
                     <p class="card-description">
-                        Professional narration scripts for creating training videos, including updated authentication flows, pricing explanations, and feature demonstrations.
+                        Professional narration scripts for creating training videos, including updated authentication flows, sale pricing explanations, and feature demonstrations.
                     </p>
                     <ul class="feature-list">
                         <li>Updated authentication walkthroughs</li>
-                        <li>New pricing tier explanations</li>
+                        <li>Sale pricing tier explanations</li>
                         <li>Admin feature demonstrations</li>
                         <li>Professional video narration</li>
                     </ul>
@@ -482,8 +531,8 @@
             <div style="background: linear-gradient(145deg, #e3f2fd, #bbdefb); border-left: 5px solid #2196f3; padding: 20px; margin: 30px 0; border-radius: 8px;">
                 <h3 style="color: #1565c0; margin-bottom: 15px;">📋 What's New in v2.0 Enterprise Edition</h3>
                 <ul class="feature-list">
+                    <li><strong>LIMITED TIME SALE:</strong> 50% off all plans - Starter $49, Professional $149, Enterprise $399</li>
                     <li><strong>Enterprise Authentication:</strong> JWT token-based system with role-based access control</li>
-                    <li><strong>Updated Pricing:</strong> New 4-tier structure - Starter ($99), Professional ($299), Enterprise ($799), Custom</li>
                     <li><strong>7-Day Free Trial:</strong> No credit card required, instant Starter tier access</li>
                     <li><strong>Admin Panel:</strong> Banner management, discount system, user impersonation, analytics dashboard</li>
                     <li><strong>Enhanced Security:</strong> Account locking, audit logging, session management</li>
@@ -492,10 +541,10 @@
             </div>
 
             <div style="background: linear-gradient(145deg, #fff3e0, #ffe0b2); border-left: 5px solid #ff9800; padding: 20px; margin: 30px 0; border-radius: 8px;">
-                <h3 style="color: #ef6c00; margin-bottom: 15px;">⚠️ Important Updates for Existing Users</h3>
-                <p><strong>Login Credentials Changed:</strong> Admin access is now <code>admin@customermindiq.com</code> with password <code>CustomerMindIQ2025!</code></p>
-                <p><strong>New User Registration:</strong> Users can now sign up for a 7-day free trial without providing credit card information.</p>
-                <p><strong>Subscription Changes:</strong> Previous pricing has been updated to be more competitive in the market.</p>
+                <h3 style="color: #ef6c00; margin-bottom: 15px;">🔥 Limited Time Sale - Act Now!</h3>
+                <p><strong>50% OFF ALL PLANS:</strong> This incredible discount won't last long!</p>
+                <p><strong>Sale Pricing:</strong> Starter $49/mo (was $99), Professional $149/mo (was $299), Enterprise $399/mo (was $799)</p>
+                <p><strong>New User Registration:</strong> Still get 7-day free trial, then upgrade at sale prices!</p>
             </div>
 
             <h3 style="text-align: center; margin: 40px 0 20px 0; color: #333;">Need Help?</h3>

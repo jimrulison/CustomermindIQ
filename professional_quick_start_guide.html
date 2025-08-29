@@ -164,6 +164,7 @@
             padding: 25px;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
 
         .pricing-card:hover {
@@ -177,10 +178,43 @@
             color: white;
         }
 
-        .price {
+        .price-container {
+            margin: 15px 0;
+        }
+
+        .original-price {
+            font-size: 1.8rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-bottom: 5px;
+        }
+
+        .sale-price {
             font-size: 2.5rem;
             font-weight: bold;
-            margin: 15px 0;
+            color: #e53e3e;
+        }
+
+        .pricing-card.featured .sale-price {
+            color: #ffd700;
+        }
+
+        .limited-time {
+            background: linear-gradient(45deg, #e53e3e, #ff6b6b);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         .trial-banner {
@@ -254,6 +288,16 @@
             display: block;
         }
 
+        .sale-banner {
+            background: linear-gradient(45deg, #e53e3e, #ff6b6b);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 25px 0;
+            box-shadow: 0 10px 25px rgba(229, 62, 62, 0.3);
+        }
+
         @media print {
             .print-hidden {
                 display: none;
@@ -301,6 +345,11 @@
         </div>
 
         <div class="content">
+            <div class="sale-banner">
+                <h3>🔥 LIMITED TIME SALE - 50% OFF ALL PLANS! 🔥</h3>
+                <p>Get enterprise-grade customer intelligence at startup prices. Sale ends soon!</p>
+            </div>
+
             <div class="trial-banner">
                 <h3>🎉 New: 7-Day Free Trial - No Credit Card Required!</h3>
                 <p>Get full Starter tier access instantly. Upgrade anytime to unlock advanced features.</p>
@@ -349,13 +398,17 @@
 
             <div class="step">
                 <span class="step-number">3</span>
-                <h3>Updated Subscription Tiers</h3>
-                <p>Choose the plan that fits your business needs:</p>
+                <h3>Limited-Time Sale Pricing! 🔥</h3>
+                <p>Choose the plan that fits your business needs with our exclusive 50% off promotion:</p>
                 
                 <div class="pricing-grid">
                     <div class="pricing-card">
                         <h4>Starter</h4>
-                        <div class="price">$99<small>/month</small></div>
+                        <div class="price-container">
+                            <div class="original-price">$99<small>/month</small></div>
+                            <div class="sale-price">$49<small>/month</small></div>
+                        </div>
+                        <div class="limited-time">LIMITED TIME ONLY</div>
                         <ul class="feature-list">
                             <li>3 websites monitored</li>
                             <li>50 keywords tracked</li>
@@ -367,7 +420,11 @@
                     
                     <div class="pricing-card featured">
                         <h4>Professional</h4>
-                        <div class="price">$299<small>/month</small></div>
+                        <div class="price-container">
+                            <div class="original-price">$299<small>/month</small></div>
+                            <div class="sale-price">$149<small>/month</small></div>
+                        </div>
+                        <div class="limited-time">LIMITED TIME ONLY</div>
                         <ul class="feature-list">
                             <li>10 websites monitored</li>
                             <li>200 keywords tracked</li>
@@ -380,7 +437,11 @@
                     
                     <div class="pricing-card">
                         <h4>Enterprise</h4>
-                        <div class="price">$799<small>/month</small></div>
+                        <div class="price-container">
+                            <div class="original-price">$799<small>/month</small></div>
+                            <div class="sale-price">$399<small>/month</small></div>
+                        </div>
+                        <div class="limited-time">LIMITED TIME ONLY</div>
                         <ul class="feature-list">
                             <li>Unlimited websites</li>
                             <li>500+ keywords</li>
@@ -393,7 +454,10 @@
                     
                     <div class="pricing-card">
                         <h4>Custom Enterprise</h4>
-                        <div class="price">Contact Sales</div>
+                        <div class="price-container">
+                            <div class="sale-price" style="font-size: 1.8rem;">Contact Sales</div>
+                        </div>
+                        <div class="limited-time">CUSTOM PRICING</div>
                         <ul class="feature-list">
                             <li>Everything in Enterprise</li>
                             <li>On-premise deployment</li>
@@ -403,6 +467,11 @@
                             <li>24/7 priority support</li>
                         </ul>
                     </div>
+                </div>
+
+                <div class="sale-banner">
+                    <h3>⚡ Don't Miss Out - Sale Ends Soon!</h3>
+                    <p>Lock in these incredible prices now. Regular pricing returns without notice!</p>
                 </div>
             </div>
 
@@ -504,7 +573,7 @@
 
                 <div class="trial-banner">
                     <h3>🚀 Ready to Scale?</h3>
-                    <p>Upgrade anytime to unlock advanced features, more data sources, and priority support!</p>
+                    <p>Upgrade now with 50% off sale pricing to unlock advanced features, more data sources, and priority support!</p>
                 </div>
             </div>
         </div>
