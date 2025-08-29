@@ -18,7 +18,8 @@ import {
   Globe,
   GraduationCap,
   HelpCircle,
-  Heart
+  Heart,
+  Settings
 } from 'lucide-react';
 
 const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
