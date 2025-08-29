@@ -191,8 +191,23 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
             </div>
           </div>
 
-          {/* User Info & Training & Support & Sign Out */}
+          {/* User Info & Admin & Training & Support & Sign Out */}
           <div className="flex items-center space-x-4">
+            {/* Admin Panel Button (only show for admin users) */}
+            {user && (user.role === 'admin' || user.role === 'super_admin') && (
+              <button
+                onClick={() => onNavigate('admin')}
+                className={`flex items-center px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
+                  currentPage === 'admin'
+                    ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg'
+                    : 'bg-slate-800/50 text-slate-300 hover:bg-red-600/20 hover:text-red-400 border border-slate-600'
+                }`}
+              >
+                <Settings className="w-4 h-4 mr-2" />
+                Admin Panel
+              </button>
+            )}
+
             {/* Training Button */}
             <button
               onClick={() => onNavigate('training')}
