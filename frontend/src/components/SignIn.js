@@ -127,23 +127,40 @@ const SignIn = ({ onSignIn }) => {
 
           <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
             <CardHeader className="text-center">
-              <CardTitle className="text-white text-2xl">Create Account</CardTitle>
+              <CardTitle className="text-white text-2xl">Start Your Free Trial</CardTitle>
               <CardDescription className="text-slate-400">
-                Join the Universal Customer Intelligence Platform
+                7 days free - No credit card required
               </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSignUp} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Full Name
-                  </label>
-                  <Input
-                    type="text"
-                    placeholder="John Doe"
-                    className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400"
-                    required
-                  />
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">
+                      First Name
+                    </label>
+                    <Input
+                      type="text"
+                      value={signUpData.first_name}
+                      onChange={(e) => handleInputChange('first_name', e.target.value)}
+                      placeholder="John"
+                      className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">
+                      Last Name
+                    </label>
+                    <Input
+                      type="text"
+                      value={signUpData.last_name}
+                      onChange={(e) => handleInputChange('last_name', e.target.value)}
+                      placeholder="Doe"
+                      className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400"
+                      required
+                    />
+                  </div>
                 </div>
                 
                 <div>
@@ -152,9 +169,10 @@ const SignIn = ({ onSignIn }) => {
                   </label>
                   <Input
                     type="text"
+                    value={signUpData.company_name}
+                    onChange={(e) => handleInputChange('company_name', e.target.value)}
                     placeholder="Your Company"
                     className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400"
-                    required
                   />
                 </div>
                 
@@ -166,6 +184,8 @@ const SignIn = ({ onSignIn }) => {
                     <Mail className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
                     <Input
                       type="email"
+                      value={signUpData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
                       placeholder="you@company.com"
                       className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400 pl-10"
                       required
@@ -181,6 +201,8 @@ const SignIn = ({ onSignIn }) => {
                     <Lock className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
                     <Input
                       type="password"
+                      value={signUpData.password}
+                      onChange={(e) => handleInputChange('password', e.target.value)}
                       placeholder="Create a strong password"
                       className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400 pl-10"
                       required
@@ -196,32 +218,69 @@ const SignIn = ({ onSignIn }) => {
                   </Alert>
                 )}
 
-                <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-                  <h3 className="text-blue-300 font-semibold mb-2">Subscription Plans</h3>
+                {/* 7-Day Free Trial Highlight */}
+                <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-4">
+                  <div className="flex items-center mb-2">
+                    <Gift className="w-5 h-5 text-green-400 mr-2" />
+                    <h3 className="text-green-300 font-semibold">7-Day Free Trial</h3>
+                  </div>
                   <div className="space-y-2 text-sm text-slate-300">
-                    <div className="flex justify-between">
-                      <span>• Starter Plan</span>
-                      <span className="text-green-400">$49/month</span>
+                    <div className="flex items-center">
+                      <CheckCircle className="w-4 h-4 text-green-400 mr-2" />
+                      <span>No credit card required</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span>• Pro Plan</span>
-                      <span className="text-green-400">$99/month</span>
+                    <div className="flex items-center">
+                      <CheckCircle className="w-4 h-4 text-green-400 mr-2" />
+                      <span>Full Starter tier access</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span>• Enterprise Plan</span>
-                      <span className="text-green-400">$199/month</span>
+                    <div className="flex items-center">
+                      <CheckCircle className="w-4 h-4 text-green-400 mr-2" />
+                      <span>Cancel anytime</span>
                     </div>
                   </div>
-                  <p className="text-xs text-slate-400 mt-2">
-                    Payment integration coming soon! All plans include 14-day free trial.
-                  </p>
+                </div>
+
+                {/* Updated Subscription Plans */}
+                <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+                  <h3 className="text-blue-300 font-semibold mb-3">Choose Your Plan After Trial</h3>
+                  <div className="space-y-3 text-sm">
+                    <div className="bg-slate-700/30 rounded-lg p-3">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-white font-medium">Starter</span>
+                        <span className="text-green-400 font-semibold">$99/month</span>
+                      </div>
+                      <p className="text-slate-400 text-xs">3 websites • 50 keywords • Basic analytics</p>
+                    </div>
+                    <div className="bg-slate-700/30 rounded-lg p-3">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-white font-medium">Professional</span>
+                        <span className="text-green-400 font-semibold">$299/month</span>
+                      </div>
+                      <p className="text-slate-400 text-xs">10 websites • 200 keywords • Full analytics</p>
+                    </div>
+                    <div className="bg-slate-700/30 rounded-lg p-3">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-white font-medium">Enterprise</span>
+                        <span className="text-green-400 font-semibold">$799/month</span>
+                      </div>
+                      <p className="text-slate-400 text-xs">Unlimited • Advanced features • Priority support</p>
+                    </div>
+                    <div className="bg-slate-700/30 rounded-lg p-3">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-white font-medium">Custom</span>
+                        <span className="text-blue-400 font-semibold">Contact Sales</span>
+                      </div>
+                      <p className="text-slate-400 text-xs">Enterprise + Custom solutions</p>
+                    </div>
+                  </div>
                 </div>
 
                 <Button
                   type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white"
                 >
-                  Create Account & Choose Plan
+                  {loading ? 'Starting Trial...' : 'Start 7-Day Free Trial'}
                 </Button>
                 
                 <div className="text-center">
