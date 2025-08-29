@@ -617,7 +617,7 @@ async def cancel_subscription(
     }
 
 # Feature Usage Tracking
-@router.post("/usage/track")
+@router.post("/usage/track/{feature_name}")
 async def track_feature_usage(
     feature_name: str,
     usage_amount: int = 1,
