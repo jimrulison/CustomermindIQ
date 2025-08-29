@@ -48,8 +48,13 @@ const Admin = () => {
 
   const loadAnnouncements = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/admin/announcements`);
-      setAnnouncements(response.data.announcements || []);
+      // Fix: Use the correct backend endpoint for admin banners
+      const response = await axios.get(`${API_BASE_URL}/api/admin/banners`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
+      });
+      setAnnouncements(response.data.banners || []);
     } catch (error) {
       console.error('Error loading announcements:', error);
       // Set demo data
