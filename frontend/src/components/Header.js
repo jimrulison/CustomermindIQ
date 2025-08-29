@@ -222,6 +222,19 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
               Training
             </button>
 
+            {/* Knowledge Base Button */}
+            <button
+              onClick={() => onNavigate('knowledge-base')}
+              className={`flex items-center px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
+                currentPage === 'knowledge-base'
+                  ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg'
+                  : 'bg-slate-800/50 text-slate-300 hover:bg-purple-600/20 hover:text-purple-400 border border-slate-600'
+              }`}
+            >
+              <BookOpen className="w-4 h-4 mr-2" />
+              Knowledge Base
+            </button>
+
             {/* Support Button */}
             <button
               onClick={() => onNavigate('support')}
