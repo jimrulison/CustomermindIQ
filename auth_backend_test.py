@@ -263,11 +263,11 @@ class AuthenticationTester:
             
             if success:
                 data = response.json()
-                if isinstance(data, list):
-                    details += f" {len(data)} tiers available"
-                    if data:
-                        tier_names = [tier.get('name', 'Unknown') for tier in data]
-                        details += f" ({', '.join(tier_names)})"
+                if "tiers" in data:
+                    tiers = data["tiers"]
+                    details += f" {len(tiers)} tiers available"
+                    tier_names = list(tiers.keys())
+                    details += f" ({', '.join(tier_names)})"
                 else:
                     details += " Invalid response format"
             else:
