@@ -1834,4 +1834,13 @@ function AppContent() {
   );
 }
 
+// Main App component wrapped with AuthProvider
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
+}
+
 export default App;
