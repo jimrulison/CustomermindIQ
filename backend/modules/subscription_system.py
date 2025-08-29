@@ -290,8 +290,9 @@ async def get_trial_status(current_user: UserProfile = Depends(get_current_user)
 
 @router.post("/trial/extend")
 async def extend_trial(
-    days: int = Field(..., ge=1, le=14),
-    reason: str = Field(..., max_length=500),
+    target_user_id: str,
+    days: int,
+    reason: str,
     current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
 ):
     """Extend trial period (admin only)"""
