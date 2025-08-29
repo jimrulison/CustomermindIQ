@@ -3,7 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Alert, AlertDescription } from './ui/alert';
-import { Mail, Lock, Brain, TrendingUp, Users, BarChart3 } from 'lucide-react';
+import { Mail, Lock, Brain, TrendingUp, Users, BarChart3, Gift, CheckCircle } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 const SignIn = ({ onSignIn }) => {
   const [email, setEmail] = useState('');
@@ -11,37 +12,104 @@ const SignIn = ({ onSignIn }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+  const [signUpData, setSignUpData] = useState({
+    first_name: '',
+    last_name: '',
+    company_name: '',
+    email: '',
+    password: ''
+  });
+
+  const { login, register } = useAuth();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    // Mock authentication - demo credentials (email case-insensitive, password case-sensitive)
-    if (email.toLowerCase() === 'demo@customermindiq.com' && password === 'demo1234') {
-      // Immediate authentication without delay
-      onSignIn({
-        email: email,
-        name: 'Demo User',
-        company: 'CustomerMind IQ Demo',
-        subscription: 'Pro Plan'
-      });
+    try {
+      const result = await login(email, password, false);
+      
+      if (result.success) {
+        onSignIn(result.user);
+      } else {
+        setError(result.error);
+      }
+    } catch (error) {
+      setError('Unable to connect to server. Please try again.');
+    } finally {
       setLoading(false);
-    } else {
-      setTimeout(() => {
-        setError('Invalid credentials. Use demo@customermindiq.com (any case) with password demo1234 (case-sensitive)');
-        setLoading(false);
-      }, 100); // Very minimal delay for error state
     }
   };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setError('');
     
-    // Mock sign-up flow
-    setError('Sign-up functionality coming soon! Payment integration will be added. For now, use demo@customermindiq.com / demo1234');
-    setShowSignUp(false);
+    try {
+      const result = await register({
+        ...signUpData,
+        role: 'user',
+        subscription_tier: 'free'
+      });
+      
+      if (result.success) {
+        onSignIn(result.data.user_profile);
+      } else {
+        setError(result.error);
+      }
+    } catch (error) {
+      setError('Unable to connect to server. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleTrialSignUp = async () => {
+    setLoading(true);
+    setError('');
+    
+    try {
+      // Register for 7-day free trial
+      const trialResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/subscriptions/trial/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: signUpData.email,
+          first_name: signUpData.first_name,
+          last_name: signUpData.last_name,
+          company_name: signUpData.company_name,
+        }),
+      });
+
+      const trialData = await trialResponse.json();
+
+      if (trialResponse.ok) {
+        // Auto-login the trial user
+        const loginResult = await login(signUpData.email, 'trial_password_temp', false);
+        if (loginResult.success) {
+          onSignIn(loginResult.user);
+        } else {
+          setError('Trial created but login failed. Please contact support.');
+        }
+      } else {
+        setError(trialData.detail || 'Failed to start trial');
+      }
+    } catch (error) {
+      setError('Unable to connect to server. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleInputChange = (field, value) => {
+    setSignUpData(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
 
   if (showSignUp) {
