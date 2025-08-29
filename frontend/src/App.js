@@ -187,68 +187,142 @@ function AppContent() {
       setLoading(true);
       console.log('Loading Customer Mind IQ data...');
       
-      // Add timeout wrapper for all API calls
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Loading timeout after 30 seconds')), 30000)
-      );
-      
-      // Load basic data with timeout protection
-      const basicDataPromise = Promise.all([
-        axios.get(`${API_BASE_URL}/api/customers`).catch(err => {
-          console.error('Customers API error:', err);
-          return { data: [] };
-        }),
-        axios.get(`${API_BASE_URL}/api/campaigns`).catch(err => {
-          console.error('Campaigns API error:', err);
-          return { data: [] };
-        }),
-        axios.get(`${API_BASE_URL}/api/analytics`).catch(err => {
-          console.error('Analytics API error:', err);
-          return { data: { total_customers: 0, total_revenue: 0, top_products: [], conversion_metrics: {}, segment_distribution: {} } };
-        })
-      ]);
-      
-      const [customersRes, campaignsRes, analyticsRes] = await Promise.race([basicDataPromise, timeoutPromise]);
-      
-      setCustomers(customersRes.data);
-      setCampaigns(campaignsRes.data);
-      setAnalytics(analyticsRes.data);
-      
-      console.log('Basic data loaded, loading additional modules...');
-      
-      // Load additional data with individual timeout protection
+      // Load basic data first - essential for dashboard
       try {
-        console.log('Loading Marketing Automation Pro data...');
-        await Promise.race([loadMarketingData(), timeoutPromise]);
-      } catch (err) {
-        console.error('Marketing data load failed:', err);
+        console.log('Loading basic dashboard data...');
+        const basicDataPromise = Promise.all([
+          axios.get(`${API_BASE_URL}/api/customers`).catch(err => {
+            console.error('Customers API error:', err);
+            return { data: [] };
+          }),
+          axios.get(`${API_BASE_URL}/api/campaigns`).catch(err => {
+            console.error('Campaigns API error:', err);
+            return { data: [] };
+          }),
+          axios.get(`${API_BASE_URL}/api/analytics`).catch(err => {
+            console.error('Analytics API error:', err);
+            return { data: { total_customers: 0, total_revenue: 0, top_products: [], conversion_metrics: {}, segment_distribution: {} } };
+          })
+        ]);
+        
+        // Add timeout for basic data (reduced to 10 seconds)
+        const basicTimeout = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Basic data timeout after 10 seconds')), 10000)
+        );
+        
+        const [customersRes, campaignsRes, analyticsRes] = await Promise.race([basicDataPromise, basicTimeout]);
+        
+        setCustomers(customersRes.data);
+        setCampaigns(campaignsRes.data);
+        setAnalytics(analyticsRes.data);
+        
+        console.log('Basic data loaded successfully');
+      } catch (error) {
+        console.error('Basic data loading failed:', error);
+        // Set fallback data for core functionality
+        setCustomers([]);
+        setCampaigns([]);
+        setAnalytics({
+          total_customers: 0,
+          total_revenue: 0,
+          top_products: [],
+          conversion_metrics: {
+            email_open_rate: 0.28,
+            click_through_rate: 0.15,
+            conversion_rate: 0.095,
+            average_deal_size: 4200.0
+          },
+          segment_distribution: {}
+        });
       }
       
-      try {
-        console.log('Loading Advanced Features data...');
-        await Promise.race([loadAdvancedFeaturesData(), timeoutPromise]);
-      } catch (err) {
-        console.error('Advanced features data load failed:', err);
-      }
+      // Load additional modules in background (non-blocking)
+      // These failures won't prevent the dashboard from loading
+      const loadModulesInBackground = async () => {
+        const moduleTimeout = 5000; // 5 second timeout per module
+        
+        // Marketing Automation Pro
+        try {
+          console.log('Loading Marketing Automation Pro data...');
+          const marketingTimeout = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Marketing timeout')), moduleTimeout)
+          );
+          await Promise.race([loadMarketingData(), marketingTimeout]);
+        } catch (err) {
+          console.error('Marketing data load failed:', err);
+          // Set default marketing data
+          setMarketingDashboard({ modules: {} });
+          setMultiChannelData({ dashboard: {} });
+          setAbTestingData({ dashboard: {} });
+          setDynamicContentData({ dashboard: {} });
+          setLeadScoringData({ dashboard: {} });
+          setReferralData({ dashboard: {} });
+        }
+        
+        // Advanced Features
+        try {
+          console.log('Loading Advanced Features data...');
+          const advancedTimeout = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Advanced features timeout')), moduleTimeout)
+          );
+          await Promise.race([loadAdvancedFeaturesData(), advancedTimeout]);
+        } catch (err) {
+          console.error('Advanced features data load failed:', err);
+          // Set default advanced data
+          setAdvancedDashboard({ modules: {} });
+          setBehavioralClusteringData({ dashboard: {} });
+          setChurnPreventionData({ dashboard: {} });
+          setCrossSellIntelligenceData({ dashboard: {} });
+          setAdvancedPricingData({ dashboard: {} });
+          setSentimentAnalysisData({ dashboard: {} });
+        }
+        
+        // Revenue Analytics Suite
+        try {
+          console.log('Loading Revenue Analytics data...');
+          const revenueTimeout = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Revenue analytics timeout')), moduleTimeout)
+          );
+          await Promise.race([loadRevenueAnalyticsData(), revenueTimeout]);
+        } catch (err) {
+          console.error('Revenue analytics data load failed:', err);
+          // Set default revenue data
+          setRevenueDashboard({ modules: {} });
+          setRevenueForecastingData({ dashboard: {} });
+          setPriceOptimizationData({ dashboard: {} });
+          setProfitMarginData({ dashboard: {} });
+          setSubscriptionAnalyticsData({ dashboard: {} });
+          setFinancialReportingData({ dashboard: {} });
+        }
+        
+        // Analytics & Insights
+        try {
+          console.log('Loading Analytics & Insights data...');
+          const analyticsTimeout = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Analytics insights timeout')), moduleTimeout)
+          );
+          await Promise.race([loadAnalyticsInsightsData(), analyticsTimeout]);
+        } catch (err) {
+          console.error('Analytics insights data load failed:', err);
+          // Set default analytics insights data
+          setAnalyticsInsightsDashboard({ modules: {} });
+          setCustomerJourneyData({ dashboard_data: {} });
+          setRevenueAttributionData({ dashboard_data: {} });
+          setCohortAnalysisData({ dashboard_data: {} });
+          setCompetitiveIntelligenceData({ dashboard_data: {} });
+          setRoiForecastingData({ dashboard_data: {} });
+        }
+        
+        console.log('Background module loading completed');
+      };
       
-      try {
-        console.log('Loading Revenue Analytics data...');
-        await Promise.race([loadRevenueAnalyticsData(), timeoutPromise]);
-      } catch (err) {
-        console.error('Revenue analytics data load failed:', err);
-      }
+      // Start background loading but don't wait for it
+      loadModulesInBackground();
       
-      try {
-        console.log('Loading Analytics & Insights data...');
-        await Promise.race([loadAnalyticsInsightsData(), timeoutPromise]);
-      } catch (err) {
-        console.error('Analytics insights data load failed:', err);
-      }
-      
-      console.log('Customer Mind IQ data loaded successfully');
+      console.log('Customer Mind IQ core data loaded successfully');
     } catch (error) {
-      console.error('Error loading data:', error);
-      // Set default values to prevent hanging
+      console.error('Critical error loading data:', error);
+      // Ensure we have minimum viable data
       setCustomers([]);
       setCampaigns([]);
       setAnalytics({
@@ -264,8 +338,9 @@ function AppContent() {
         segment_distribution: {}
       });
     } finally {
+      // Always set loading to false to prevent hanging
       setLoading(false);
-      console.log('Customer Mind IQ loading complete');
+      console.log('Customer Mind IQ loading complete - dashboard ready');
     }
   };
 
