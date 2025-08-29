@@ -249,11 +249,11 @@ During your trial, you get full access to our Starter tier features – not a li
 
 After 7 days, if you choose not to upgrade, your account is simply placed on hold. No automatic charges, no hidden fees, no pressure tactics. When you're ready, upgrading is seamless and maintains all your configurations and data."
 
-### **Starter Tier - $99/month (2:00-3:15)**
+### **🔥 LIMITED TIME SALE: Starter Tier - $49/month (2:00-3:15)**
 
-"Our Starter tier at $99 per month is perfect for small businesses, startups, and individual professionals who need solid customer intelligence without enterprise complexity.
+"Our Starter tier is normally $99 per month, but for a limited time, we're offering 50% off - that's just $49 monthly! This makes professional customer intelligence accessible to small businesses, startups, and individual professionals.
 
-For $99 monthly – or $990 annually with 2 months free – you get:
+For just $49 monthly during this special sale – or $490 annually with 2 months free – you get:
 
 Website Intelligence for up to 3 websites with basic performance monitoring and SEO tracking for 50 keywords. This covers most small business needs perfectly.
 
