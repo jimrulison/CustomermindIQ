@@ -37,6 +37,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import axios from 'axios';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import SignIn from './components/SignIn';
 import Header from './components/Header';
 import CustomerAnalyticsDashboard from './components/CustomerAnalyticsDashboard';
@@ -60,7 +61,7 @@ import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
-function App() {
+function AppContent() {
   // Authentication state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
