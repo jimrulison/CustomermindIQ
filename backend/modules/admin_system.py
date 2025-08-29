@@ -663,10 +663,9 @@ async def get_admin_analytics_dashboard(
         
         # Mock pricing for revenue calculation
         tier_prices = {
-            SubscriptionTier.STARTER: 99,
+            SubscriptionTier.FREE: 0,
             SubscriptionTier.PROFESSIONAL: 299,
-            SubscriptionTier.ENTERPRISE: 799,
-            SubscriptionTier.FREE: 0
+            SubscriptionTier.ENTERPRISE: 799
         }
         
         tier_revenue = count * tier_prices.get(tier, 0)
