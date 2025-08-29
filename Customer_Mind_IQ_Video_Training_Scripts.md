@@ -267,9 +267,9 @@ Usage limits include 10,000 monthly page views, which accommodates most small to
 
 The Starter tier is ideal for businesses with straightforward customer intelligence needs who want professional-grade analytics without complexity."
 
-### **Professional Tier - $299/month (3:15-4:45)**
+### **🔥 LIMITED TIME SALE: Professional Tier - $149/month (3:15-4:45)**
 
-"Our Professional tier at $299 per month is designed for growing companies, marketing agencies, and established businesses with more sophisticated analytics needs.
+"Our Professional tier is normally $299 per month, but with our current 50% off promotion, it's available for just $149 monthly! This tier is designed for growing companies, marketing agencies, and established businesses with more sophisticated analytics needs.
 
 You get everything from Starter, plus significantly enhanced capabilities:
 
