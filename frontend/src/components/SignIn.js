@@ -119,7 +119,11 @@ const SignIn = ({ onSignIn }) => {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center mb-4">
-              <Brain className="w-12 h-12 text-blue-400 mr-3" />
+              <img 
+                src="https://customer-assets.emergentagent.com/job_mindiq-auth/artifacts/bi9l7mag_Customer%20Mind%20IQ%20logo.png" 
+                alt="CustomerMind IQ Logo" 
+                className="w-16 h-16 mr-3"
+              />
               <h1 className="text-3xl font-bold text-white">CustomerMind IQ</h1>
             </div>
             <p className="text-slate-300">Universal Customer Intelligence Platform</p>
