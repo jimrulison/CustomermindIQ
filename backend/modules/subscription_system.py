@@ -297,8 +297,21 @@ async def extend_trial(
 ):
     """Extend trial period (admin only)"""
     
-    # This would typically be called by customer success team
-    trial = await db.trials.find_one({"user_id": current_user.user_id})
+    # Validate inputs
+    if days < 1 or days > 14:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Days must be between 1 and 14"
+        )
+    
+    if len(reason) > 500:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Reason must be less than 500 characters"
+        )
+    
+    # Get the trial to extend
+    trial = await db.trials.find_one({"user_id": target_user_id})
     
     if not trial:
         raise HTTPException(
