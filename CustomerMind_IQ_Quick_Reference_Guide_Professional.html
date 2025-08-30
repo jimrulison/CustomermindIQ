@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomerMind IQ - Professional Quick Reference Guide</title>
+    <style>
+        /* PDF-Optimized Professional Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 2cm 2cm 2cm 2cm;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            font-size: 11pt;
+            background: white;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styling */
+        .header {
+            text-align: center;
+            padding: 20pt 0 30pt 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30pt;
+            page-break-after: avoid;
+        }
+
+        .logo-text {
+            font-size: 28pt;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8pt;
+        }
+
+        .main-title {
+            font-size: 24pt;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8pt;
+        }
+
+        .subtitle {
+            font-size: 14pt;
+            color: #666;
+            margin-bottom: 15pt;
+        }
+
+        .version {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 6pt 12pt;
+            border-radius: 15pt;
+            font-size: 10pt;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        /* Content Sections */
+        .section {
+            margin-bottom: 30pt;
+            padding-bottom: 15pt;
+            border-bottom: 1px solid #eee;
+            page-break-inside: avoid;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15pt;
+            padding-bottom: 8pt;
+            border-bottom: 2px solid #667eea;
+            page-break-after: avoid;
+        }
+
+        .subsection-title {
+            font-size: 13pt;
+            color: #667eea;
+            margin: 15pt 0 8pt 0;
+            font-weight: 600;
+        }
+
+        /* Reference Tables */
+        .ref-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15pt 0;
+            page-break-inside: avoid;
+        }
+
+        .ref-table th {
+            background: #667eea;
+            color: white;
+            padding: 8pt 10pt;
+            text-align: left;
+            font-size: 10pt;
+            font-weight: 600;
+        }
+
+        .ref-table td {
+            padding: 6pt 10pt;
+            border-bottom: 1px solid #ddd;
+            font-size: 9pt;
+        }
+
+        .ref-table tr:nth-child(even) {
+            background: #f8f9ff;
+        }
+
+        /* Quick Reference Cards */
+        .ref-card {
+            background: #f8f9ff;
+            border: 1px solid #e1e8ff;
+            border-radius: 8pt;
+            padding: 12pt;
+            margin: 10pt 0;
+            page-break-inside: avoid;
+        }
+
+        .ref-card-title {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 8pt;
+            font-size: 11pt;
+        }
+
+        /* Lists */
+        .ref-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ref-list li {
+            padding: 3pt 0;
+            padding-left: 15pt;
+            position: relative;
+            font-size: 10pt;
+        }
+
+        .ref-list li::before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            top: 3pt;
+            color: #667eea;
+            font-size: 8pt;
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 4pt 0;
+            padding-left: 20pt;
+            position: relative;
+            font-size: 10pt;
+        }
+
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            top: 4pt;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Code/Commands */
+        .code {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 8pt 12pt;
+            border-radius: 4pt;
+            font-family: 'Courier New', monospace;
+            font-size: 9pt;
+            margin: 8pt 0;
+            page-break-inside: avoid;
+        }
+
+        /* Metrics */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10pt;
+            margin: 15pt 0;
+        }
+
+        .metric-card {
+            background: #f0f4ff;
+            border: 1px solid #c7d2fe;
+            border-radius: 6pt;
+            padding: 10pt;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 14pt;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .metric-label {
+            font-size: 9pt;
+            color: #666;
+            margin-top: 3pt;
+        }
+
+        /* Warning boxes */
+        .warning {
+            background: #fff3e0;
+            border-left: 4pt solid #ff9800;
+            padding: 10pt;
+            margin: 10pt 0;
+            border-radius: 4pt;
+            font-size: 10pt;
+            page-break-inside: avoid;
+        }
+
+        .tip {
+            background: #e3f2fd;
+            border-left: 4pt solid #2196f3;
+            padding: 10pt;
+            margin: 10pt 0;
+            border-radius: 4pt;
+            font-size: 10pt;
+            page-break-inside: avoid;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                font-size: 10pt;
+            }
+            
+            .metric-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8pt;
+            }
+            
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-text">CustomerMind IQ</div>
+            <h1 class="main-title">Quick Reference Guide</h1>
+            <p class="subtitle">Essential Power User Reference & Daily Operations Guide</p>
+            <span class="version">Professional v2.0</span>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">1. Navigation Reference & Platform Architecture</h2>
+
+            <div class="ref-card">
+                <div class="ref-card-title">🏗️ Platform Architecture Overview</div>
+                <p>CustomerMind IQ operates on a dual-dashboard architecture with 14 specialized intelligence modules:</p>
+                <ul class="ref-list">
+                    <li><strong>Customer Analytics Dashboard:</strong> 9 modules focused on customer behavior and business intelligence</li>
+                    <li><strong>Website Analytics Dashboard:</strong> 6 modules for technical performance and optimization</li>
+                </ul>
+            </div>
+
+            <h3 class="subsection-title">Navigation Shortcuts</h3>
+            <table class="ref-table">
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Shortcut</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Switch to Customer Analytics</td>
+                        <td>Click "CUSTOMER ANALYTICS"</td>
+                        <td>Access 9 customer-focused modules</td>
+                    </tr>
+                    <tr>
+                        <td>Switch to Website Analytics</td>
+                        <td>Click "WEBSITE ANALYTICS"</td>
+                        <td>Access 6 technical optimization modules</td>
+                    </tr>
+                    <tr>
+                        <td>Access Training Materials</td>
+                        <td>Header → "Training"</td>
+                        <td>PDF guides and video tutorials</td>
+                    </tr>
+                    <tr>
+                        <td>Access Knowledge Base</td>
+                        <td>Header → "Knowledge Base"</td>
+                        <td>Educational articles and FAQs</td>
+                    </tr>
+                    <tr>
+                        <td>Admin Panel</td>
+                        <td>Header → "Admin Panel"</td>
+                        <td>Admin users only - platform management</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">Quick Module Access</h3>
+            <div class="ref-card">
+                <div class="ref-card-title">Customer Analytics Modules</div>
+                <ul class="ref-list">
+                    <li><strong>Customer Intelligence:</strong> AI-powered insights and segmentation</li>
+                    <li><strong>Real-Time Health:</strong> Live monitoring and alerts</li>
+                    <li><strong>Marketing Automation:</strong> Campaign orchestration</li>
+                    <li><strong>Revenue Analytics:</strong> Financial forecasting</li>
+                    <li><strong>Advanced Features:</strong> ML-powered analytics</li>
+                    <li><strong>Customer Success:</strong> Retention optimization</li>
+                    <li><strong>Executive Dashboard:</strong> C-level insights</li>
+                    <li><strong>Growth Intelligence:</strong> Expansion opportunities</li>
+                    <li><strong>Create Campaign:</strong> Marketing workflow builder</li>
+                </ul>
+            </div>
+
+            <div class="ref-card">
+                <div class="ref-card-title">Website Analytics Modules</div>
+                <ul class="ref-list">
+                    <li><strong>Website Intelligence:</strong> Performance monitoring</li>
+                    <li><strong>Analytics & Insights:</strong> Traffic and behavior analysis</li>
+                    <li><strong>Product Intelligence:</strong> Feature usage analytics</li>
+                    <li><strong>Integration & Data Hub:</strong> API and data management</li>
+                    <li><strong>Compliance & Governance:</strong> Regulatory monitoring</li>
+                    <li><strong>AI Command Center:</strong> Model operations and automation</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">2. Performance Metrics Glossary & Scoring Framework</h2>
+
+            <h3 class="subsection-title">Key Performance Indicators (KPIs)</h3>
+            <table class="ref-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Good Range</th>
+                        <th>Excellent Range</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Customer Acquisition Cost (CAC)</td>
+                        <td>&lt; $100</td>
+                        <td>&lt; $50</td>
+                        <td>Lower is better, industry-dependent</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Lifetime Value (CLV)</td>
+                        <td>3x CAC</td>
+                        <td>5x+ CAC</td>
+                        <td>CLV:CAC ratio is critical</td>
+                    </tr>
+                    <tr>
+                        <td>Monthly Churn Rate</td>
+                        <td>&lt; 5%</td>
+                        <td>&lt; 2%</td>
+                        <td>Industry benchmark: 3-5%</td>
+                    </tr>
+                    <tr>
+                        <td>Net Promoter Score (NPS)</td>
+                        <td>30-50</td>
+                        <td>70+</td>
+                        <td>Scale: -100 to +100</td>
+                    </tr>
+                    <tr>
+                        <td>Email Open Rate</td>
+                        <td>20-25%</td>
+                        <td>30%+</td>
+                        <td>Varies by industry</td>
+                    </tr>
+                    <tr>
+                        <td>Conversion Rate</td>
+                        <td>2-5%</td>
+                        <td>10%+</td>
+                        <td>Highly context-dependent</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">Scoring Framework</h3>
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-value">0-30</div>
+                    <div class="metric-label">Needs Attention</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">31-60</div>
+                    <div class="metric-label">Below Average</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">61-80</div>
+                    <div class="metric-label">Good Performance</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">81-100</div>
+                    <div class="metric-label">Excellent</div>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Pro Tip:</strong> Focus on trends rather than absolute values. A consistently improving score of 65 is better than a fluctuating score averaging 75.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">3. SEO Optimization Checklist & Best Practices</h2>
+
+            <h3 class="subsection-title">Technical SEO Checklist</h3>
+            <ul class="checklist">
+                <li>Core Web Vitals: LCP &lt; 2.5s, FID &lt; 100ms, CLS &lt; 0.1</li>
+                <li>Mobile-first responsive design implementation</li>
+                <li>SSL certificate installed and HTTPS redirect active</li>
+                <li>XML sitemap generated and submitted to search engines</li>
+                <li>Robots.txt file properly configured</li>
+                <li>Schema markup implemented for rich snippets</li>
+                <li>Internal linking structure optimized</li>
+                <li>404 errors identified and resolved</li>
+                <li>Canonical URLs properly set to avoid duplicate content</li>
+                <li>Image alt tags and file names optimized</li>
+            </ul>
+
+            <h3 class="subsection-title">Content Optimization</h3>
+            <div class="ref-card">
+                <div class="ref-card-title">Keyword Strategy</div>
+                <ul class="ref-list">
+                    <li><strong>Primary Keywords:</strong> 1-2 per page, high search volume</li>
+                    <li><strong>Secondary Keywords:</strong> 3-5 related terms</li>
+                    <li><strong>Long-tail Keywords:</strong> Lower volume, higher conversion</li>
+                    <li><strong>Keyword Density:</strong> 1-2%, natural integration</li>
+                </ul>
+            </div>
+
+            <div class="ref-card">
+                <div class="ref-card-title">Content Structure</div>
+                <ul class="ref-list">
+                    <li><strong>H1 Tag:</strong> One per page, include primary keyword</li>
+                    <li><strong>H2-H6 Tags:</strong> Logical hierarchy, include keywords naturally</li>
+                    <li><strong>Meta Title:</strong> 50-60 characters, compelling and keyword-rich</li>
+                    <li><strong>Meta Description:</strong> 150-160 characters, call-to-action included</li>
+                </ul>
+            </div>
+
+            <h3 class="subsection-title">Performance Optimization Commands</h3>
+            <div class="code">
+# Check Core Web Vitals
+lighthouse --only-categories=performance [URL]
+
+# Analyze page speed
+pagespeed-insights [URL]
+
+# Bulk SEO analysis
+screaming-frog-crawl [domain]
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">4. Troubleshooting Guide & Problem Resolution</h2>
+
+            <h3 class="subsection-title">Common Issues & Solutions</h3>
+            <table class="ref-table">
+                <thead>
+                    <tr>
+                        <th>Issue</th>
+                        <th>Likely Cause</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dashboard not loading</td>
+                        <td>Authentication expired</td>
+                        <td>Refresh page, re-login if needed</td>
+                    </tr>
+                    <tr>
+                        <td>Data not updating</td>
+                        <td>Integration sync issue</td>
+                        <td>Check Integration & Data Hub status</td>
+                    </tr>
+                    <tr>
+                        <td>PDF downloads failing</td>
+                        <td>Browser blocking downloads</td>
+                        <td>Check browser download settings</td>
+                    </tr>
+                    <tr>
+                        <td>Slow report generation</td>
+                        <td>Large dataset processing</td>
+                        <td>Reduce date range, apply filters</td>
+                    </tr>
+                    <tr>
+                        <td>Missing admin features</td>
+                        <td>Insufficient permissions</td>
+                        <td>Verify user role and subscription tier</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">Emergency Procedures</h3>
+            <div class="warning">
+                <strong>⚠️ Data Sync Failure:</strong>
+                <ol style="margin: 8pt 0; padding-left: 20pt;">
+                    <li>Navigate to Integration & Data Hub</li>
+                    <li>Check "Sync Status" column for failed connections</li>
+                    <li>Click "Retry Sync" for failed integrations</li>
+                    <li>If issue persists, check API credentials</li>
+                    <li>Contact support if problem continues beyond 24 hours</li>
+                </ol>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Performance Degradation:</strong>
+                <ol style="margin: 8pt 0; padding-left: 20pt;">
+                    <li>Clear browser cache and cookies</li>
+                    <li>Disable browser extensions temporarily</li>
+                    <li>Check internet connection stability</li>
+                    <li>Try different browser or incognito mode</li>
+                    <li>Report persistent issues with browser details</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">5. Advanced Power User Techniques & Shortcuts</h2>
+
+            <h3 class="subsection-title">Data Export & Analysis</h3>
+            <div class="ref-card">
+                <div class="ref-card-title">Export Formats Available</div>
+                <ul class="ref-list">
+                    <li><strong>CSV:</strong> Raw data for spreadsheet analysis</li>
+                    <li><strong>PDF:</strong> Formatted reports for presentations</li>
+                    <li><strong>JSON:</strong> API-compatible format for integrations</li>
+                    <li><strong>Excel:</strong> Advanced formatting and formulas preserved</li>
+                </ul>
+            </div>
+
+            <h3 class="subsection-title">Advanced Filtering Techniques</h3>
+            <table class="ref-table">
+                <thead>
+                    <tr>
+                        <th>Filter Type</th>
+                        <th>Syntax</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Date Range</td>
+                        <td>YYYY-MM-DD to YYYY-MM-DD</td>
+                        <td>2024-01-01 to 2024-12-31</td>
+                    </tr>
+                    <tr>
+                        <td>Contains Text</td>
+                        <td>*text*</td>
+                        <td>*marketing* (finds all marketing-related items)</td>
+                    </tr>
+                    <tr>
+                        <td>Exact Match</td>
+                        <td>"exact phrase"</td>
+                        <td>"customer acquisition"</td>
+                    </tr>
+                    <tr>
+                        <td>Numeric Range</td>
+                        <td>min-max</td>
+                        <td>100-500 (values between 100 and 500)</td>
+                    </tr>
+                    <tr>
+                        <td>Exclude</td>
+                        <td>NOT term</td>
+                        <td>NOT test (excludes test data)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">Automation Shortcuts</h3>
+            <div class="ref-card">
+                <div class="ref-card-title">Recurring Reports Setup</div>
+                <ol style="margin: 8pt 0; padding-left: 20pt; font-size: 10pt;">
+                    <li>Navigate to desired analytics module</li>
+                    <li>Configure filters and date range</li>
+                    <li>Click "Schedule Report" in top-right corner</li>
+                    <li>Set frequency: Daily, Weekly, Monthly, Quarterly</li>
+                    <li>Add recipient email addresses</li>
+                    <li>Choose export format (PDF recommended for executives)</li>
+                    <li>Save automation rule</li>
+                </ol>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Power User Secret:</strong> Use browser bookmarks with filtered URLs to instantly access your most important reports. The URL parameters preserve all your filter settings.
+            </div>
+
+            <h3 class="subsection-title">Integration Power Features</h3>
+            <div class="code">
+# API Authentication Example
+curl -H "Authorization: Bearer YOUR_TOKEN" \
+  https://cmind-saas.preview.emergentagent.com/api/analytics
+
+# Webhook URL Format
+POST https://your-domain.com/webhook
+Content-Type: application/json
+{"event": "metric_threshold", "value": 85, "timestamp": "..."}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">6. Support & Contact Information</h2>
+
+            <div class="ref-card">
+                <div class="ref-card-title">📞 Support Channels by Subscription Tier</div>
+                <table class="ref-table">
+                    <thead>
+                        <tr>
+                            <th>Tier</th>
+                            <th>Email</th>
+                            <th>Chat</th>
+                            <th>Phone</th>
+                            <th>SLA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Starter ($49/mo)</td>
+                            <td>✓</td>
+                            <td>✗</td>
+                            <td>✗</td>
+                            <td>48 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Professional ($149/mo)</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✗</td>
+                            <td>24 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Enterprise ($399/mo)</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>4 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Custom Enterprise</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>1 hour</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="ref-card">
+                <div class="ref-card-title">🎓 Training Resources</div>
+                <ul class="ref-list">
+                    <li><strong>Quick Start Guide:</strong> 30-minute platform orientation</li>
+                    <li><strong>Complete Training Manual:</strong> Comprehensive feature documentation</li>
+                    <li><strong>Admin Training Manual:</strong> Administrative feature guides</li>
+                    <li><strong>Video Tutorials:</strong> Step-by-step visual guides</li>
+                    <li><strong>Knowledge Base:</strong> Searchable help articles</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Critical Issues:</strong> For system outages, security incidents, or data loss issues, contact support immediately with "URGENT" in the subject line. Enterprise customers can call the emergency support line.
+            </div>
+        </div>
+
+        <div class="no-print" style="text-align: center; margin-top: 30pt; padding: 20pt;">
+            <button style="background: #667eea; color: white; padding: 12pt 24pt; border: none; border-radius: 6pt; font-size: 12pt; cursor: pointer; margin: 0 10pt;" onclick="window.print()">📄 Download as PDF</button>
+        </div>
+    </div>
+</body>
+</html>
