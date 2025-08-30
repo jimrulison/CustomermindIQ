@@ -146,6 +146,62 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Static files for serving assets
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# PDF Training Materials Download Endpoints
+@app.get("/api/download/quick-start-guide")
+async def download_quick_start_guide():
+    """Download Quick Start Guide PDF"""
+    pdf_path = "/app/pdfs/CustomerMind_IQ_Quick_Start_Guide.pdf"
+    if not os.path.exists(pdf_path):
+        raise HTTPException(status_code=404, detail="Quick Start Guide PDF not found")
+    
+    return FileResponse(
+        path=pdf_path,
+        filename="CustomerMind_IQ_Quick_Start_Guide.pdf",
+        media_type="application/pdf"
+    )
+
+@app.get("/api/download/complete-training-manual")
+async def download_complete_manual():
+    """Download Complete Training Manual PDF"""
+    pdf_path = "/app/pdfs/CustomerMind_IQ_Complete_Training_Manual.pdf"
+    if not os.path.exists(pdf_path):
+        raise HTTPException(status_code=404, detail="Complete Training Manual PDF not found")
+    
+    return FileResponse(
+        path=pdf_path,
+        filename="CustomerMind_IQ_Complete_Training_Manual.pdf",
+        media_type="application/pdf"
+    )
+
+@app.get("/api/download/admin-training-manual")
+async def download_admin_manual():
+    """Download Admin Training Manual PDF"""
+    pdf_path = "/app/pdfs/CustomerMind_IQ_Admin_Training_Manual.pdf"
+    if not os.path.exists(pdf_path):
+        raise HTTPException(status_code=404, detail="Admin Training Manual PDF not found")
+    
+    return FileResponse(
+        path=pdf_path,
+        filename="CustomerMind_IQ_Admin_Training_Manual.pdf",
+        media_type="application/pdf"
+    )
+
+@app.get("/api/download/training-portal")
+async def download_training_portal():
+    """Download Training Portal Overview PDF"""
+    pdf_path = "/app/pdfs/CustomerMind_IQ_Training_Portal.pdf"
+    if not os.path.exists(pdf_path):
+        raise HTTPException(status_code=404, detail="Training Portal PDF not found")
+    
+    return FileResponse(
+        path=pdf_path,
+        filename="CustomerMind_IQ_Training_Portal.pdf",
+        media_type="application/pdf"
+    )
+
 @app.on_event("startup")
 async def startup_event():
     """Initialize application on startup"""
