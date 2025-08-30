@@ -599,7 +599,7 @@ const Training = () => {
                         ) : (
                           <>
                             <Download className="w-4 h-4 mr-2" />
-                            Download {manual.size ? `PDF (${manual.size})` : 'Guide'}
+                            Download {manual.size ? `Guide (${manual.size})` : 'Guide'}
                           </>
                         )}
                       </Button>
