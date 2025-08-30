@@ -218,8 +218,8 @@ const Training = () => {
       lastUpdated: "January 2025",
       downloadUrl: "/api/download/quick-reference-guide",
       pdfType: "quick-reference-guide",
-      filename: "CustomerMind_IQ_Quick_Reference_Guide.pdf",
-      size: "180KB",
+      filename: "CustomerMind_IQ_Quick_Reference_Guide.html",
+      size: "HTML",
       sections: [
         "Navigation Reference & Platform Architecture",
         "Performance Metrics Glossary & Scoring Framework",
