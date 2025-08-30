@@ -73,6 +73,8 @@ export const AuthProvider = ({ children }) => {
   // Login user
   const login = async (email, password, rememberMe = false) => {
     try {
+      console.log('Attempting login to:', `${backendUrl}/api/auth/login`);
+      
       const response = await fetch(`${backendUrl}/api/auth/login`, {
         method: 'POST',
         headers: {
@@ -85,9 +87,11 @@ export const AuthProvider = ({ children }) => {
         }),
       });
 
+      console.log('Login response status:', response.status);
       const data = await response.json();
 
       if (response.ok) {
+        console.log('Login successful');
         // Store tokens and user info
         localStorage.setItem('access_token', data.access_token);
         localStorage.setItem('refresh_token', data.refresh_token);
@@ -98,6 +102,7 @@ export const AuthProvider = ({ children }) => {
         
         return { success: true, user: data.user_profile };
       } else {
+        console.log('Login failed:', data);
         return { success: false, error: data.detail || 'Invalid email or password' };
       }
     } catch (error) {
