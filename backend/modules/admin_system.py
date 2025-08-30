@@ -250,11 +250,11 @@ async def get_active_banners(
     filtered_banners = []
     for banner in banners:
         # Check if banner targets this user specifically
-        if banner["target_users"] and current_user.email not in banner["target_users"]:
+        if banner.get("target_users") and current_user.email not in banner["target_users"]:
             continue
         
         # Check if banner targets this user's tier
-        if banner["target_tiers"] and current_user.subscription_tier not in banner["target_tiers"]:
+        if banner.get("target_tiers") and current_user.subscription_tier not in banner["target_tiers"]:
             continue
         
         filtered_banners.append(banner)
