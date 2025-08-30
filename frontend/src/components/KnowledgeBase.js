@@ -738,7 +738,47 @@ A successful CustomerMind IQ implementation transforms your organization's relat
           </div>
 
           <div className="articles-grid">
-            {filteredArticles.map(article => (
+            {/* Show Training Materials if training category is selected */}
+            {selectedCategory === 'training' && (
+              <>
+                <div className="training-materials-header">
+                  <h3>📚 Professional PDF Training Materials</h3>
+                  <p>Download comprehensive training guides for CustomerMind IQ platform mastery</p>
+                </div>
+                
+                <div className="training-materials-grid">
+                  {trainingMaterials.map(material => (
+                    <div key={material.id} className="training-material-card">
+                      <div className="material-header">
+                        <h4 className="material-title">{material.title}</h4>
+                        <span className="material-size">{material.size}</span>
+                      </div>
+                      
+                      <p className="material-description">{material.description}</p>
+                      
+                      <div className="material-features">
+                        <h5>What's Included:</h5>
+                        <ul>
+                          {material.features.map((feature, index) => (
+                            <li key={index}>{feature}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <button
+                        onClick={() => downloadPDF(material.pdfType, material.filename)}
+                        className="download-pdf-btn"
+                      >
+                        📄 Download PDF
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* Show regular articles if not training category */}
+            {selectedCategory !== 'training' && filteredArticles.map(article => (
               <div key={article.id} className="article-card">
                 <div className="article-card-header">
                   <span className="category-badge">{article.categoryLabel}</span>
@@ -764,7 +804,7 @@ A successful CustomerMind IQ implementation transforms your organization's relat
             ))}
           </div>
 
-          {filteredArticles.length === 0 && (
+          {selectedCategory !== 'training' && filteredArticles.length === 0 && (
             <div className="no-results">
               <h3>No articles found</h3>
               <p>Try adjusting your search terms or browse different categories.</p>
