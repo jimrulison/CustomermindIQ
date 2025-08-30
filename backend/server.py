@@ -227,6 +227,19 @@ async def download_training_portal():
         media_type="application/pdf"
     )
 
+@app.get("/api/download/quick-reference-guide")
+async def download_quick_reference_guide():
+    """Download Professional Quick Reference Guide PDF"""
+    pdf_path = "/app/pdfs/CustomerMind_IQ_Quick_Reference_Guide.pdf"
+    if not os.path.exists(pdf_path):
+        raise HTTPException(status_code=404, detail="Quick Reference Guide PDF not found")
+    
+    return FileResponse(
+        path=pdf_path,
+        filename="CustomerMind_IQ_Quick_Reference_Guide.pdf",
+        media_type="application/pdf"
+    )
+
 @app.on_event("startup")
 async def startup_event():
     """Initialize application on startup"""
