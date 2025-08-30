@@ -664,6 +664,31 @@ class OdooService:
 odoo_service = OdooService()
 
 # API Endpoints
+@app.get("/api/debug-auth")
+async def debug_auth():
+    """Debug endpoint to check auth system"""
+    try:
+        import os
+        from backend.auth.auth_system import get_db
+        
+        # Check MongoDB connection
+        db = get_db()
+        users = db.users.find().limit(1)
+        user_count = db.users.count_documents({})
+        
+        return {
+            "mongodb_connected": True,
+            "user_count": user_count,
+            "mongo_url": os.environ.get('MONGO_URL'),
+            "sample_user_exists": user_count > 0
+        }
+    except Exception as e:
+        return {
+            "error": str(e),
+            "mongodb_connected": False,
+            "mongo_url": os.environ.get('MONGO_URL')
+        }
+
 @app.get("/api/health")
 async def health_check():
     return {
