@@ -669,27 +669,33 @@ async def debug_auth():
     """Debug endpoint to check auth system"""
     try:
         import os
-        from auth.auth_system import get_db
+        from auth.auth_system import db
         
-        # Check MongoDB connection
-        db = get_db()
-        user_count = db.users.count_documents({})
+        # Check MongoDB connection and users
+        user_count = await db.users.count_documents({})
         
         # Check if admin user exists
-        admin_user = db.users.find_one({"email": "admin@customermindiq.com"})
+        admin_user = await db.users.find_one({"email": "admin@customermindiq.com"})
+        
+        # List all users (for debugging)
+        all_users = []
+        async for user in db.users.find({}, {"email": 1, "role": 1}):
+            all_users.append({"email": user.get("email"), "role": user.get("role")})
         
         return {
             "mongodb_connected": True,
             "user_count": user_count,
-            "mongo_url": os.environ.get('MONGO_URL')[:50] + "...",  # Truncate for security
+            "mongo_url": os.environ.get('MONGO_URL', 'Not set')[:50] + "...",
             "admin_user_exists": admin_user is not None,
+            "all_users": all_users,
             "database_name": db.name
         }
     except Exception as e:
         return {
             "error": str(e),
+            "error_type": type(e).__name__,
             "mongodb_connected": False,
-            "mongo_url": os.environ.get('MONGO_URL')[:50] + "..." if os.environ.get('MONGO_URL') else None
+            "mongo_url": os.environ.get('MONGO_URL', 'Not set')[:50] + "..."
         }
 
 @app.get("/api/health")
