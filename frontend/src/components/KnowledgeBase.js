@@ -1160,6 +1160,137 @@ A successful CustomerMind IQ implementation transforms your organization's relat
           font-weight: 600;
         }
 
+        /* Training Materials Styles */
+        .training-materials-header {
+          grid-column: 1 / -1;
+          text-align: center;
+          margin-bottom: 30px;
+          padding: 30px;
+          background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 255, 0.95));
+          border-radius: 15px;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .training-materials-header h3 {
+          color: #333;
+          font-size: 1.8rem;
+          font-weight: 700;
+          margin-bottom: 10px;
+        }
+
+        .training-materials-header p {
+          color: #666;
+          font-size: 1.1rem;
+        }
+
+        .training-materials-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: 25px;
+          grid-column: 1 / -1;
+        }
+
+        .training-material-card {
+          background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 255, 0.95));
+          backdrop-filter: blur(10px);
+          border: 2px solid rgba(102, 126, 234, 0.2);
+          border-radius: 15px;
+          padding: 25px;
+          transition: all 0.3s ease;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .training-material-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+          border-color: rgba(102, 126, 234, 0.4);
+        }
+
+        .material-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 15px;
+        }
+
+        .material-title {
+          color: #333;
+          font-size: 1.3rem;
+          font-weight: 700;
+          margin: 0;
+        }
+
+        .material-size {
+          background: linear-gradient(45deg, #667eea, #764ba2);
+          color: white;
+          padding: 4px 12px;
+          border-radius: 15px;
+          font-size: 0.8rem;
+          font-weight: 600;
+        }
+
+        .material-description {
+          color: #666;
+          margin-bottom: 20px;
+          line-height: 1.6;
+        }
+
+        .material-features {
+          margin-bottom: 25px;
+        }
+
+        .material-features h5 {
+          color: #333;
+          font-size: 1rem;
+          font-weight: 600;
+          margin-bottom: 10px;
+        }
+
+        .material-features ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        .material-features li {
+          padding: 5px 0;
+          padding-left: 20px;
+          position: relative;
+          color: #666;
+          font-size: 0.9rem;
+        }
+
+        .material-features li::before {
+          content: "✓";
+          position: absolute;
+          left: 0;
+          top: 5px;
+          color: #4caf50;
+          font-weight: bold;
+        }
+
+        .download-pdf-btn {
+          background: linear-gradient(45deg, #667eea, #764ba2);
+          color: white;
+          border: none;
+          padding: 12px 24px;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          width: 100%;
+        }
+
+        .download-pdf-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .download-pdf-btn:active {
+          transform: translateY(0);
+        }
+
         @media (max-width: 768px) {
           .kb-content {
             flex-direction: column;
