@@ -152,50 +152,61 @@ const Training = () => {
   const manualSections = [
     {
       id: 1,
-      title: "Professional Quick Start Guide",
-      description: "Your rapid success blueprint - from zero to website intelligence mastery in 15 minutes",
+      title: "Quick Start Guide",
+      description: "Get up and running with CustomerMind IQ in under 30 minutes - complete setup and navigation",
       icon: BookOpen,
-      pages: 5,
-      lastUpdated: "December 2024",
-      downloadUrl: "/training/documents/Professional_Quick_Start_Guide.md",
+      pages: 7,
+      lastUpdated: "January 2025",
+      downloadUrl: "/api/download/quick-start-guide",
+      pdfType: "quick-start-guide",
+      filename: "CustomerMind_IQ_Quick_Start_Guide.pdf",
+      size: "200KB",
       sections: [
-        "5-Minute Essential Setup & Platform Access",
-        "15-Minute Complete Walkthrough & First Analysis", 
-        "First Week Success Plan & Strategic Implementation",
-        "Common Mistakes to Avoid & Troubleshooting",
-        "Success Metrics & Tracking for Maximum ROI"
+        "Authentication & Login Setup",
+        "7-Day Free Trial Registration", 
+        "Subscription Plans & Pricing Overview",
+        "Dashboard Navigation & Basic Features",
+        "Essential Features Walkthrough & First Steps"
       ]
     },
     {
       id: 2,
-      title: "Professional User Guide",
-      description: "Complete professional manual transforming website performance through intelligent analytics",
-      icon: BookOpen,
-      pages: 12,
-      lastUpdated: "December 2024",
-      downloadUrl: "/training/documents/Website_Intelligence_Hub_Professional_User_Guide.md",
+      title: "Complete Training Manual",
+      description: "Comprehensive guide covering all 14 AI modules and advanced platform capabilities",
+      icon: GraduationCap,
+      pages: 42,
+      lastUpdated: "January 2025",
+      downloadUrl: "/api/download/complete-training-manual",
+      pdfType: "complete-training-manual", 
+      filename: "CustomerMind_IQ_Complete_Training_Manual.pdf",
+      size: "320KB",
       sections: [
-        "Executive Overview & Business Impact",
-        "Getting Started & Initial Setup", 
-        "Navigation Mastery & Dashboard Intelligence",
-        "Feature Deep Dive & Advanced Capabilities",
-        "Business Intelligence & ROI Optimization"
+        "Authentication & Security Systems",
+        "Customer Analytics & Intelligence Modules", 
+        "Website Analytics & Performance Monitoring",
+        "Marketing Automation & Revenue Analytics",
+        "Data Integrations & Best Practices",
+        "Troubleshooting Guide & Advanced Features"
       ]
     },
     {
       id: 3,
-      title: "Professional Sales & Marketing Guide", 
-      description: "Strategic sales enablement and revenue acceleration blueprint for teams",
+      title: "Admin Training Manual", 
+      description: "Advanced administrative features, user management, and platform administration guide",
       icon: Target,
-      pages: 12,
-      lastUpdated: "December 2024",
-      downloadUrl: "/training/documents/Website_Intelligence_Hub_Professional_Sales_Guide.md",
+      pages: 28,
+      lastUpdated: "January 2025",
+      downloadUrl: "/api/download/admin-training-manual",
+      pdfType: "admin-training-manual",
+      filename: "CustomerMind_IQ_Admin_Training_Manual.pdf", 
+      size: "270KB",
       sections: [
-        "Market Positioning & Value Propositions",
-        "Demo Scripts & Objection Handling Strategies",
-        "Pricing Strategies & ROI Calculations",
-        "Case Studies & Success Stories Collection",
-        "Advanced Sales Techniques & Revenue Optimization"
+        "Banner & Announcement Management",
+        "Discount & Promotion System Administration",
+        "User Account Impersonation & Support Tools",
+        "Analytics Dashboard & Reporting Features",
+        "Security & Compliance Management",
+        "Support & Escalation Procedures"
       ]
     },
     {
