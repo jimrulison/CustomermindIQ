@@ -178,8 +178,8 @@ const Training = () => {
       lastUpdated: "January 2025",
       downloadUrl: "/api/download/complete-training-manual",
       pdfType: "complete-training-manual", 
-      filename: "CustomerMind_IQ_Complete_Training_Manual.pdf",
-      size: "320KB",
+      filename: "CustomerMind_IQ_Complete_Training_Manual.html",
+      size: "HTML",
       sections: [
         "Authentication & Security Systems",
         "Customer Analytics & Intelligence Modules", 
