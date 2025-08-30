@@ -150,6 +150,14 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory="/app/backend/static"), name="static")
 
 # Training Materials Static Serving
+@app.get("/training-test")
+async def serve_training_test():
+    """Serve Training Materials Test Page"""
+    return FileResponse(
+        path="/app/training_download_test.html",
+        media_type="text/html"
+    )
+
 @app.get("/training")
 async def serve_training_index():
     """Serve Training Materials Index"""
