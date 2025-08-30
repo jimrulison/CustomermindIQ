@@ -5,6 +5,94 @@ const KnowledgeBase = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedArticle, setSelectedArticle] = useState(null);
 
+  // PDF Download function
+  const downloadPDF = async (pdfType, filename) => {
+    try {
+      console.log(`Downloading ${filename}...`);
+      
+      // Get backend URL from environment
+      const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || window.location.origin;
+      
+      // Make API request
+      const response = await fetch(`${API_BASE_URL}/api/download/${pdfType}`);
+      
+      if (!response.ok) {
+        throw new Error(`Download failed: ${response.status} ${response.statusText}`);
+      }
+      
+      // Get the PDF blob
+      const blob = await response.blob();
+      
+      // Create download link
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      
+      // Cleanup
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      
+      console.log(`✅ Successfully downloaded: ${filename}`);
+      
+    } catch (error) {
+      console.error('PDF Download Error:', error);
+      alert(`Sorry, there was an error downloading the PDF. Please try again.\n\nError: ${error.message}`);
+    }
+  };
+
+  const trainingMaterials = [
+    {
+      id: 'quick-start',
+      title: '📋 Quick Start Guide',
+      description: 'Get up and running with CustomerMind IQ in under 30 minutes',
+      size: '200KB',
+      pdfType: 'quick-start-guide',
+      filename: 'CustomerMind_IQ_Quick_Start_Guide.pdf',
+      features: [
+        'Authentication & login setup',
+        '7-day free trial registration',
+        'Subscription plans overview',
+        'Dashboard navigation basics',
+        'Essential features walkthrough'
+      ]
+    },
+    {
+      id: 'complete-manual',
+      title: '📚 Complete Training Manual',
+      description: 'In-depth guide covering all platform features and advanced capabilities',
+      size: '320KB',
+      pdfType: 'complete-training-manual',
+      filename: 'CustomerMind_IQ_Complete_Training_Manual.pdf',
+      features: [
+        'Comprehensive feature documentation',
+        'Customer & website analytics',
+        'Marketing automation tutorials',
+        'Revenue analytics & forecasting',
+        'Integration setup guides',
+        'Troubleshooting & best practices'
+      ]
+    },
+    {
+      id: 'admin-manual',
+      title: '🛡️ Admin Training Manual',
+      description: 'Advanced administrative features and platform management',
+      size: '270KB',
+      pdfType: 'admin-training-manual',
+      filename: 'CustomerMind_IQ_Admin_Training_Manual.pdf',
+      features: [
+        'Banner & announcement management',
+        'Discount & promotion system',
+        'User account impersonation',
+        'Analytics dashboard & reporting',
+        'Security & compliance features',
+        'Support & escalation procedures'
+      ]
+    }
+  ];
+
   const articles = [
     {
       id: 1,
