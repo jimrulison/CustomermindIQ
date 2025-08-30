@@ -34,6 +34,50 @@ const Training = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [showVideoModal, setShowVideoModal] = useState(false);
 
+  // State for downloads
+  const [downloading, setDownloading] = useState({});
+
+  // PDF Download function
+  const downloadPDF = async (pdfType, filename) => {
+    try {
+      setDownloading({ ...downloading, [pdfType]: true });
+      console.log(`Downloading ${filename}...`);
+      
+      // Get backend URL from environment
+      const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || window.location.origin;
+      
+      // Make API request
+      const response = await fetch(`${API_BASE_URL}/api/download/${pdfType}`);
+      
+      if (!response.ok) {
+        throw new Error(`Download failed: ${response.status} ${response.statusText}`);
+      }
+      
+      // Get the PDF blob
+      const blob = await response.blob();
+      
+      // Create download link
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      
+      // Cleanup
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      
+      console.log(`✅ Successfully downloaded: ${filename}`);
+      
+    } catch (error) {
+      console.error('PDF Download Error:', error);
+      alert(`Sorry, there was an error downloading the PDF. Please try again.\n\nError: ${error.message}`);
+    } finally {
+      setDownloading({ ...downloading, [pdfType]: false });
+    }
+  };
+
   // Video training content
   const videoContent = [
     {
