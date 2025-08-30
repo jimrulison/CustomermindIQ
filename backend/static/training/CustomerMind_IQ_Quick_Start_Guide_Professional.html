@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomerMind IQ - Professional Quick Start Guide</title>
+    <style>
+        /* PDF-Optimized Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 2cm 2cm 2cm 2cm;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            font-size: 11pt;
+            background: white;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styling */
+        .header {
+            text-align: center;
+            padding: 20pt 0 30pt 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30pt;
+            page-break-after: avoid;
+        }
+
+        .logo-text {
+            font-size: 28pt;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8pt;
+        }
+
+        .main-title {
+            font-size: 24pt;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8pt;
+        }
+
+        .subtitle {
+            font-size: 14pt;
+            color: #666;
+            margin-bottom: 15pt;
+        }
+
+        .version {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 6pt 12pt;
+            border-radius: 15pt;
+            font-size: 10pt;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        /* Table of Contents */
+        .toc {
+            margin-bottom: 40pt;
+            padding: 20pt;
+            border: 2px solid #e1e8ff;
+            border-radius: 8pt;
+            background: #f8f9ff;
+            page-break-inside: avoid;
+        }
+
+        .toc h2 {
+            color: #667eea;
+            font-size: 18pt;
+            margin-bottom: 15pt;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8pt;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8pt 0;
+            border-bottom: 1px dotted #ccc;
+        }
+
+        .toc-item:last-child {
+            border-bottom: none;
+        }
+
+        .toc-number {
+            background: #667eea;
+            color: white;
+            width: 20pt;
+            height: 20pt;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9pt;
+            font-weight: bold;
+        }
+
+        /* Content Sections */
+        .section {
+            margin-bottom: 30pt;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15pt;
+            padding-bottom: 8pt;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .step {
+            margin-bottom: 20pt;
+            padding: 15pt;
+            border-left: 4px solid #667eea;
+            background: #f8f9ff;
+            border-radius: 4pt;
+            page-break-inside: avoid;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 24pt;
+            height: 24pt;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24pt;
+            font-weight: bold;
+            margin-right: 10pt;
+            margin-bottom: 10pt;
+            font-size: 11pt;
+        }
+
+        .step h3 {
+            font-size: 14pt;
+            color: #333;
+            margin-bottom: 10pt;
+            display: inline-block;
+        }
+
+        .step p {
+            margin-bottom: 10pt;
+        }
+
+        /* Credentials Box */
+        .credentials {
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            border-radius: 8pt;
+            padding: 15pt;
+            margin: 15pt 0;
+            text-align: center;
+            page-break-inside: avoid;
+        }
+
+        .credentials h4 {
+            color: #2e7d32;
+            margin-bottom: 10pt;
+            font-size: 12pt;
+        }
+
+        .cred-item {
+            background: white;
+            padding: 8pt 12pt;
+            margin: 6pt 0;
+            border-radius: 4pt;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #1565c0;
+        }
+
+        /* Pricing Grid */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15pt;
+            margin: 20pt 0;
+            page-break-inside: avoid;
+        }
+
+        .pricing-card {
+            border: 2px solid #e1e8ff;
+            border-radius: 8pt;
+            padding: 15pt;
+            text-align: center;
+            background: white;
+        }
+
+        .pricing-card.featured {
+            border-color: #667eea;
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .pricing-card h4 {
+            font-size: 14pt;
+            margin-bottom: 10pt;
+            font-weight: bold;
+        }
+
+        .original-price {
+            font-size: 12pt;
+            color: #999;
+            text-decoration: line-through;
+            margin-bottom: 3pt;
+        }
+
+        .sale-price {
+            font-size: 18pt;
+            font-weight: bold;
+            color: #e53e3e;
+            margin-bottom: 8pt;
+        }
+
+        .pricing-card.featured .sale-price {
+            color: #ffd700;
+        }
+
+        .limited-time {
+            background: #e53e3e;
+            color: white;
+            padding: 3pt 8pt;
+            border-radius: 10pt;
+            font-size: 8pt;
+            font-weight: 600;
+            display: inline-block;
+            margin: 6pt 0;
+        }
+
+        /* Feature Lists */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            padding: 4pt 0;
+            padding-left: 20pt;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 4pt;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        /* Alert Boxes */
+        .sale-banner {
+            background: linear-gradient(45deg, #e53e3e, #ff6b6b);
+            color: white;
+            padding: 15pt;
+            border-radius: 8pt;
+            text-align: center;
+            margin: 20pt 0;
+            page-break-inside: avoid;
+        }
+
+        .sale-banner h3 {
+            margin-bottom: 8pt;
+            font-size: 14pt;
+        }
+
+        .trial-banner {
+            background: linear-gradient(45deg, #4caf50, #66bb6a);
+            color: white;
+            padding: 15pt;
+            border-radius: 8pt;
+            text-align: center;
+            margin: 20pt 0;
+            page-break-inside: avoid;
+        }
+
+        .trial-banner h3 {
+            margin-bottom: 8pt;
+            font-size: 14pt;
+        }
+
+        .warning {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15pt;
+            margin: 15pt 0;
+            border-radius: 4pt;
+            page-break-inside: avoid;
+        }
+
+        .admin-highlight {
+            background: #fce4ec;
+            border: 2px solid #e91e63;
+            border-radius: 8pt;
+            padding: 15pt;
+            margin: 15pt 0;
+            page-break-inside: avoid;
+        }
+
+        .admin-highlight h4 {
+            color: #e91e63;
+            margin-bottom: 10pt;
+            font-size: 12pt;
+        }
+
+        /* Page Breaks */
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* Print-specific styles */
+        @media print {
+            body {
+                font-size: 10pt;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10pt;
+            }
+            
+            .no-print {
+                display: none;
+            }
+        }
+
+        /* Responsive for screen viewing */
+        @media screen and (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-text">CustomerMind IQ</div>
+            <h1 class="main-title">Quick Start Guide</h1>
+            <p class="subtitle">Universal Customer Intelligence SaaS Platform</p>
+            <span class="version">Professional Edition v2.0</span>
+        </div>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <div class="toc-item">
+                <span>Authentication & Login</span>
+                <span class="toc-number">1</span>
+            </div>
+            <div class="toc-item">
+                <span>7-Day Free Trial Registration</span>
+                <span class="toc-number">2</span>
+            </div>
+            <div class="toc-item">
+                <span>Subscription Plans & Pricing</span>
+                <span class="toc-number">3</span>
+            </div>
+            <div class="toc-item">
+                <span>Dashboard Navigation</span>
+                <span class="toc-number">4</span>
+            </div>
+            <div class="toc-item">
+                <span>Admin Panel Access</span>
+                <span class="toc-number">5</span>
+            </div>
+            <div class="toc-item">
+                <span>Support & Help Resources</span>
+                <span class="toc-number">6</span>
+            </div>
+            <div class="toc-item">
+                <span>Next Steps & Best Practices</span>
+                <span class="toc-number">7</span>
+            </div>
+        </div>
+
+        <div class="sale-banner">
+            <h3>🔥 LIMITED TIME SALE - 50% OFF ALL PLANS! 🔥</h3>
+            <p>Get enterprise-grade customer intelligence at startup prices. Sale ends soon!</p>
+        </div>
+
+        <div class="trial-banner">
+            <h3>🎉 New: 7-Day Free Trial - No Credit Card Required!</h3>
+            <p>Get full Starter tier access instantly. Upgrade anytime to unlock advanced features.</p>
+        </div>
+
+        <div class="section">
+            <div class="step">
+                <span class="step-number">1</span>
+                <h3>Authentication & Login</h3>
+                <p>CustomerMind IQ now features enterprise-grade authentication with role-based access control and JWT token security.</p>
+                
+                <div class="credentials">
+                    <h4>🔐 Admin Login Credentials</h4>
+                    <div class="cred-item">Email: admin@customermindiq.com</div>
+                    <div class="cred-item">Password: CustomerMindIQ2025!</div>
+                </div>
+
+                <div class="admin-highlight">
+                    <h4>🛡️ Admin Features Available</h4>
+                    <ul class="feature-list">
+                        <li>Banner Management - Create targeted announcements</li>
+                        <li>Discount Management - Apply discounts to any user/tier</li>
+                        <li>User Account Impersonation - Customer support access</li>
+                        <li>Analytics Dashboard - Real-time user and revenue metrics</li>
+                        <li>User Management - Full CRUD operations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <h3>7-Day Free Trial Registration</h3>
+                <p>New users can sign up for a 7-day free trial with no credit card required. The trial provides full access to Starter tier features.</p>
+                
+                <ul class="feature-list">
+                    <li>Click "Start 7-Day Free Trial - No Credit Card Required"</li>
+                    <li>Enter your name, company, and email address</li>
+                    <li>Create a secure password</li>
+                    <li>Get instant access to all Starter tier features</li>
+                    <li>Upgrade anytime during or after trial</li>
+                </ul>
+
+                <div class="warning">
+                    <strong>⏰ Important:</strong> After 7 days, your account will be placed on hold until you choose a subscription plan. No automatic charges!
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <h3>Limited-Time Sale Pricing! 🔥</h3>
+                <p>Choose the plan that fits your business needs with our exclusive 50% off promotion:</p>
+                
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h4>Starter</h4>
+                        <div class="original-price">$99<small>/month</small></div>
+                        <div class="sale-price">$49<small>/month</small></div>
+                        <div class="limited-time">LIMITED TIME ONLY</div>
+                        <ul class="feature-list">
+                            <li>3 websites monitored</li>
+                            <li>50 keywords tracked</li>
+                            <li>Basic analytics</li>
+                            <li>2 team members</li>
+                            <li>Email support</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pricing-card featured">
+                        <h4>Professional</h4>
+                        <div class="original-price">$299<small>/month</small></div>
+                        <div class="sale-price">$149<small>/month</small></div>
+                        <div class="limited-time">LIMITED TIME ONLY</div>
+                        <ul class="feature-list">
+                            <li>10 websites monitored</li>
+                            <li>200 keywords tracked</li>
+                            <li>Full analytics suite</li>
+                            <li>10 team members</li>
+                            <li>Product intelligence</li>
+                            <li>Priority support</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h4>Enterprise</h4>
+                        <div class="original-price">$799<small>/month</small></div>
+                        <div class="sale-price">$399<small>/month</small></div>
+                        <div class="limited-time">LIMITED TIME ONLY</div>
+                        <ul class="feature-list">
+                            <li>Unlimited websites</li>
+                            <li>500+ keywords</li>
+                            <li>Advanced compliance</li>
+                            <li>Unlimited team</li>
+                            <li>AI Command Center</li>
+                            <li>Phone support + SLA</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h4>Custom Enterprise</h4>
+                        <div class="sale-price" style="font-size: 14pt;">Contact Sales</div>
+                        <div class="limited-time">CUSTOM PRICING</div>
+                        <ul class="feature-list">
+                            <li>Everything in Enterprise</li>
+                            <li>On-premise deployment</li>
+                            <li>Custom integrations</li>
+                            <li>Dedicated support team</li>
+                            <li>Custom ML models</li>
+                            <li>24/7 priority support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <h3>Dashboard Navigation</h3>
+                <p>The platform is organized into two main analytics dashboards with comprehensive feature sets:</p>
+                
+                <div style="margin: 15pt 0;">
+                    <h4 style="color: #667eea; font-size: 12pt; margin-bottom: 8pt;">🧠 Customer Analytics Dashboard</h4>
+                    <ul class="feature-list">
+                        <li>Customer Intelligence - AI-powered customer insights</li>
+                        <li>Real-Time Health - Live platform monitoring</li>
+                        <li>Marketing Automation - Multi-channel campaigns</li>
+                        <li>Revenue Analytics - Financial forecasting</li>
+                        <li>Advanced Features - Behavioral clustering & churn prevention</li>
+                        <li>Customer Success - Retention optimization</li>
+                        <li>Executive Dashboard - C-level insights</li>
+                        <li>Growth Intelligence - Expansion opportunities</li>
+                        <li>Create Campaign - Marketing automation</li>
+                    </ul>
+                </div>
+
+                <div style="margin: 15pt 0;">
+                    <h4 style="color: #667eea; font-size: 12pt; margin-bottom: 8pt;">🌐 Website Analytics Dashboard</h4>
+                    <ul class="feature-list">
+                        <li>Website Intelligence - Performance monitoring</li>
+                        <li>Analytics & Insights - Traffic analysis</li>
+                        <li>Product Intelligence - Feature usage analytics</li>
+                        <li>Integration & Data Hub - API management</li>
+                        <li>Compliance & Governance - Regulatory monitoring</li>
+                        <li>AI Command Center - Model management</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <h3>Admin Panel Access</h3>
+                <p>Administrators can access advanced management features for platform control:</p>
+                
+                <div style="margin: 15pt 0;">
+                    <h4 style="color: #667eea; font-size: 12pt; margin-bottom: 8pt;">📢 Banner Management</h4>
+                    <ul class="feature-list">
+                        <li>Create targeted announcements for training sessions</li>
+                        <li>Schedule maintenance notifications</li>
+                        <li>Target specific user groups or subscription tiers</li>
+                        <li>Track engagement analytics</li>
+                    </ul>
+                </div>
+
+                <div style="margin: 15pt 0;">
+                    <h4 style="color: #667eea; font-size: 12pt; margin-bottom: 8pt;">💰 Discount Management</h4>
+                    <ul class="feature-list">
+                        <li>Create percentage or fixed-amount discounts</li>
+                        <li>Apply to specific users or subscription tiers</li>
+                        <li>Set usage limits and expiration dates</li>
+                        <li>Track discount performance and revenue impact</li>
+                    </ul>
+                </div>
+
+                <div style="margin: 15pt 0;">
+                    <h4 style="color: #667eea; font-size: 12pt; margin-bottom: 8pt;">👥 User Management</h4>
+                    <ul class="feature-list">
+                        <li>View all user accounts and subscription status</li>
+                        <li>Update user roles and permissions</li>
+                        <li>Impersonate user accounts for support</li>
+                        <li>Track user activity and engagement</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+
+            <div class="step">
+                <span class="step-number">6</span>
+                <h3>Support & Help Resources</h3>
+                <p>Multiple support channels are available based on your subscription tier:</p>
+                
+                <ul class="feature-list">
+                    <li><strong>Training Portal:</strong> Access comprehensive training materials and guides</li>
+                    <li><strong>Knowledge Base:</strong> Searchable help articles and tutorials</li>
+                    <li><strong>Support Center:</strong> Submit tickets and browse FAQ</li>
+                    <li><strong>Email Support:</strong> All tiers include email support</li>
+                    <li><strong>Priority Support:</strong> Professional tier gets chat support</li>
+                    <li><strong>Phone + SLA:</strong> Enterprise tier gets dedicated phone support</li>
+                    <li><strong>Dedicated Team:</strong> Custom Enterprise gets 24/7 support</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <span class="step-number">7</span>
+                <h3>Next Steps & Best Practices</h3>
+                <p>Ready to maximize your CustomerMind IQ experience:</p>
+                
+                <ul class="feature-list">
+                    <li>Complete your profile setup and company information</li>
+                    <li>Connect your first data sources and integrations</li>
+                    <li>Set up your team members and permissions</li>
+                    <li>Explore the training materials for advanced features</li>
+                    <li>Schedule a demo call with our customer success team</li>
+                    <li>Consider upgrading to unlock advanced AI features</li>
+                </ul>
+
+                <div class="trial-banner">
+                    <h3>🚀 Ready to Scale?</h3>
+                    <p>Upgrade now with 50% off sale pricing to unlock advanced features, more data sources, and priority support!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="sale-banner">
+            <h3>⚡ Don't Miss Out - Sale Ends Soon!</h3>
+            <p>Lock in these incredible prices now. Regular pricing returns without notice!</p>
+        </div>
+
+        <div class="no-print" style="text-align: center; margin-top: 30pt; padding: 20pt;">
+            <button style="background: #667eea; color: white; padding: 12pt 24pt; border: none; border-radius: 6pt; font-size: 12pt; cursor: pointer; margin: 0 10pt;" onclick="downloadCurrentPDF()">📄 Download as PDF</button>
+            <a href="/CustomerMind_IQ_Training_Portal_Professional.html" style="background: #4caf50; color: white; padding: 12pt 24pt; border: none; border-radius: 6pt; font-size: 12pt; text-decoration: none; display: inline-block; margin: 0 10pt;">📚 Training Portal</a>
+        </div>
+    </div>
+
+    <script>
+        // Get backend URL from environment or use default
+        const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://cmind-saas.preview.emergentagent.com';
+        
+        // Function to download current PDF
+        async function downloadCurrentPDF() {
+            try {
+                console.log('Downloading Quick Start Guide PDF...');
+                
+                // Show loading indicator
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = '⏳ Downloading...';
+                button.disabled = true;
+                
+                // Make API request
+                const response = await fetch(`${API_BASE_URL}/api/download/quick-start-guide`);
+                
+                if (!response.ok) {
+                    throw new Error(`Download failed: ${response.status} ${response.statusText}`);
+                }
+                
+                // Get the PDF blob
+                const blob = await response.blob();
+                
+                // Create download link
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'CustomerMind_IQ_Quick_Start_Guide.pdf';
+                document.body.appendChild(a);
+                a.click();
+                
+                // Cleanup
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                console.log('✅ Successfully downloaded Quick Start Guide PDF');
+                
+                // Reset button
+                button.textContent = originalText;
+                button.disabled = false;
+                
+            } catch (error) {
+                console.error('PDF Download Error:', error);
+                
+                // Show error and reset button
+                button.textContent = '❌ Download Failed';
+                button.disabled = false;
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 3000);
+                
+                // Show user-friendly error message
+                alert(`Sorry, there was an error downloading the PDF. Please try again or contact support if the problem persists.\n\nError: ${error.message}`);
+            }
+        }
+        
+        // Fallback for browser print functionality
+        function printPage() {
+            window.print();
+        }
+    </script>
