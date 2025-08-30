@@ -159,8 +159,8 @@ const Training = () => {
       lastUpdated: "January 2025",
       downloadUrl: "/api/download/quick-start-guide",
       pdfType: "quick-start-guide",
-      filename: "CustomerMind_IQ_Quick_Start_Guide.pdf",
-      size: "200KB",
+      filename: "CustomerMind_IQ_Quick_Start_Guide.html",
+      size: "HTML",
       sections: [
         "Authentication & Login Setup",
         "7-Day Free Trial Registration", 
