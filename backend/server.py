@@ -154,7 +154,7 @@ app.mount("/static", StaticFiles(directory="/app/backend/static"), name="static"
 async def serve_quick_start_guide():
     """Serve Quick Start Guide HTML"""
     return FileResponse(
-        path="/app/CustomerMind_IQ_Quick_Start_Guide_Professional.html",
+        path="/app/backend/static/training/CustomerMind_IQ_Quick_Start_Guide_Professional.html",
         media_type="text/html"
     )
 
@@ -162,7 +162,7 @@ async def serve_quick_start_guide():
 async def serve_complete_manual():
     """Serve Complete Training Manual HTML"""
     return FileResponse(
-        path="/app/CustomerMind_IQ_Complete_Training_Manual_Professional.html",
+        path="/app/backend/static/training/CustomerMind_IQ_Complete_Training_Manual_Professional.html",
         media_type="text/html"
     )
 
@@ -170,7 +170,7 @@ async def serve_complete_manual():
 async def serve_admin_manual():
     """Serve Admin Training Manual HTML"""
     return FileResponse(
-        path="/app/CustomerMind_IQ_Admin_Training_Manual_Professional.html",
+        path="/app/backend/static/training/CustomerMind_IQ_Admin_Training_Manual_Professional.html",
         media_type="text/html"
     )
 
@@ -178,7 +178,7 @@ async def serve_admin_manual():
 async def serve_training_portal():
     """Serve Training Portal HTML"""
     return FileResponse(
-        path="/app/CustomerMind_IQ_Training_Portal_Professional.html",
+        path="/app/backend/static/training/CustomerMind_IQ_Training_Portal_Professional.html",
         media_type="text/html"
     )
 
