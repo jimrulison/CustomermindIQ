@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomerMind IQ - Training Materials Download Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .download-grid {
+            display: grid;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .download-card {
+            border: 2px solid #e1e8ff;
+            border-radius: 10px;
+            padding: 20px;
+            background: #f8f9ff;
+        }
+        .download-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .download-card p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .download-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+        .download-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 CustomerMind IQ Training Materials</h1>
+        <p class="subtitle">Test the PDF download functionality</p>
+        
+        <div class="download-grid">
+            <div class="download-card">
+                <h3>📋 Quick Start Guide</h3>
+                <p>Get up and running with CustomerMind IQ in under 30 minutes (200KB PDF)</p>
+                <button class="download-btn" onclick="downloadPDF('quick-start-guide', 'CustomerMind_IQ_Quick_Start_Guide.pdf', this)">
+                    📄 Download Quick Start Guide
+                </button>
+                <div id="status-quick-start-guide" class="status" style="display: none;"></div>
+            </div>
+
+            <div class="download-card">
+                <h3>📚 Complete Training Manual</h3>
+                <p>Comprehensive guide covering all platform features and capabilities (320KB PDF)</p>
+                <button class="download-btn" onclick="downloadPDF('complete-training-manual', 'CustomerMind_IQ_Complete_Training_Manual.pdf', this)">
+                    📖 Download Complete Manual
+                </button>
+                <div id="status-complete-training-manual" class="status" style="display: none;"></div>
+            </div>
+
+            <div class="download-card">
+                <h3>🛡️ Admin Training Manual</h3>
+                <p>Advanced administrative features and platform management (270KB PDF)</p>
+                <button class="download-btn" onclick="downloadPDF('admin-training-manual', 'CustomerMind_IQ_Admin_Training_Manual.pdf', this)">
+                    🔐 Download Admin Manual
+                </button>
+                <div id="status-admin-training-manual" class="status" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; text-align: center; padding: 20px; background: #e3f2fd; border-radius: 10px;">
+            <h3 style="color: #1976d2; margin-bottom: 10px;">ℹ️ How it works</h3>
+            <p style="color: #555; margin: 0;">
+                Click any download button above to test the PDF download functionality. 
+                The files are served directly from the backend API endpoints and should download automatically.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        async function downloadPDF(pdfType, filename, button) {
+            const statusDiv = document.getElementById(`status-${pdfType}`);
+            
+            try {
+                // Show loading state
+                button.disabled = true;
+                button.innerHTML = '⏳ Downloading...';
+                statusDiv.style.display = 'block';
+                statusDiv.className = 'status';
+                statusDiv.textContent = 'Starting download...';
+                
+                console.log(`Downloading ${filename}...`);
+                
+                // Get the current origin (should work for both local and deployed)
+                const API_BASE_URL = window.location.origin;
+                
+                // Make API request
+                const response = await fetch(`${API_BASE_URL}/api/download/${pdfType}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Download failed: ${response.status} ${response.statusText}`);
+                }
+                
+                // Get the PDF blob
+                const blob = await response.blob();
+                
+                // Create download link
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                
+                // Cleanup
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                console.log(`✅ Successfully downloaded: ${filename}`);
+                
+                // Show success
+                statusDiv.className = 'status success';
+                statusDiv.textContent = `✅ Successfully downloaded ${filename} (${Math.round(blob.size / 1024)}KB)`;
+                
+            } catch (error) {
+                console.error('PDF Download Error:', error);
+                
+                // Show error
+                statusDiv.className = 'status error';
+                statusDiv.textContent = `❌ Download failed: ${error.message}`;
+            } finally {
+                // Reset button
+                button.disabled = false;
+                button.innerHTML = button.innerHTML.replace('⏳ Downloading...', button.getAttribute('data-original') || '📄 Download PDF');
+            }
+        }
+
+        // Store original button text
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.download-btn');
+            buttons.forEach(button => {
+                button.setAttribute('data-original', button.innerHTML);
+            });
+        });
+    </script>
+</body>
+</html>
