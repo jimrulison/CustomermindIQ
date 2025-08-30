@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomerMind IQ - Professional Training Portal</title>
+    <style>
+        /* PDF-Optimized Professional Training Portal Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 2cm 2cm 2cm 2cm;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            font-size: 11pt;
+            background: white;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styling */
+        .header {
+            text-align: center;
+            padding: 20pt 0 30pt 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30pt;
+            page-break-after: avoid;
+        }
+
+        .logo-text {
+            font-size: 28pt;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8pt;
+        }
+
+        .main-title {
+            font-size: 24pt;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8pt;
+        }
+
+        .subtitle {
+            font-size: 14pt;
+            color: #666;
+            margin-bottom: 15pt;
+        }
+
+        .version {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 6pt 12pt;
+            border-radius: 15pt;
+            font-size: 10pt;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        /* Training Materials Grid */
+        .training-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20pt;
+            margin: 30pt 0;
+        }
+
+        .training-card {
+            border: 2px solid #e1e8ff;
+            border-radius: 12pt;
+            padding: 20pt;
+            background: #f8f9ff;
+            transition: transform 0.3s ease;
+            page-break-inside: avoid;
+        }
+
+        .training-card:hover {
+            transform: translateY(-2pt);
+            box-shadow: 0 8pt 20pt rgba(0, 0, 0, 0.1);
+        }
+
+        .training-card.featured {
+            border-color: #667eea;
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .training-card.admin-card {
+            border-color: #e91e63;
+            background: linear-gradient(145deg, #e91e63, #f06292);
+            color: white;
+        }
+
+        .card-icon {
+            font-size: 24pt;
+            margin-bottom: 12pt;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 10pt;
+            text-align: center;
+        }
+
+        .card-description {
+            font-size: 10pt;
+            margin-bottom: 15pt;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .card-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card-features li {
+            padding: 3pt 0;
+            padding-left: 15pt;
+            position: relative;
+            font-size: 9pt;
+        }
+
+        .card-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 3pt;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .training-card.featured .card-features li::before,
+        .training-card.admin-card .card-features li::before {
+            color: #ffd700;
+        }
+
+        /* Download Buttons */
+        .download-section {
+            background: #f0f4ff;
+            border: 2px solid #667eea;
+            border-radius: 12pt;
+            padding: 20pt;
+            margin: 30pt 0;
+            text-align: center;
+            page-break-inside: avoid;
+        }
+
+        .download-title {
+            color: #667eea;
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 15pt;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15pt;
+            margin-top: 20pt;
+        }
+
+        .download-btn {
+            background: #667eea;
+            color: white;
+            padding: 10pt 15pt;
+            border: none;
+            border-radius: 6pt;
+            font-size: 10pt;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #5a67d8;
+        }
+
+        .download-btn.admin {
+            background: #e91e63;
+        }
+
+        .download-btn.admin:hover {
+            background: #d81b60;
+        }
+
+        /* Learning Path Section */
+        .learning-path {
+            margin: 30pt 0;
+            padding: 20pt;
+            border: 2px solid #4caf50;
+            border-radius: 12pt;
+            background: #f1f8e9;
+            page-break-inside: avoid;
+        }
+
+        .path-title {
+            color: #2e7d32;
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 15pt;
+            text-align: center;
+        }
+
+        .path-steps {
+            counter-reset: step-counter;
+        }
+
+        .path-step {
+            counter-increment: step-counter;
+            background: white;
+            border-radius: 8pt;
+            padding: 12pt;
+            margin: 10pt 0;
+            position: relative;
+            padding-left: 40pt;
+            border-left: 4pt solid #4caf50;
+        }
+
+        .path-step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 12pt;
+            top: 12pt;
+            width: 18pt;
+            height: 18pt;
+            background: #4caf50;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 9pt;
+        }
+
+        .step-title {
+            font-weight: bold;
+            margin-bottom: 5pt;
+            color: #2e7d32;
+        }
+
+        .step-description {
+            font-size: 10pt;
+            color: #666;
+        }
+
+        /* Quick Reference Section */
+        .quick-ref {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            border-radius: 12pt;
+            padding: 20pt;
+            margin: 30pt 0;
+            page-break-inside: avoid;
+        }
+
+        .ref-title {
+            color: #f57c00;
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 15pt;
+            text-align: center;
+        }
+
+        .ref-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15pt;
+        }
+
+        .ref-item {
+            background: white;
+            padding: 12pt;
+            border-radius: 6pt;
+            border-left: 4pt solid #ff9800;
+        }
+
+        .ref-item-title {
+            font-weight: bold;
+            color: #f57c00;
+            margin-bottom: 5pt;
+        }
+
+        .ref-item-content {
+            font-size: 9pt;
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+
+        /* Support Section */
+        .support-section {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 12pt;
+            padding: 20pt;
+            margin: 30pt 0;
+            page-break-inside: avoid;
+        }
+
+        .support-title {
+            color: #1976d2;
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 15pt;
+            text-align: center;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15pt;
+        }
+
+        .support-item {
+            background: white;
+            padding: 12pt;
+            border-radius: 6pt;
+            text-align: center;
+            border-left: 4pt solid #2196f3;
+        }
+
+        .support-item h4 {
+            color: #1976d2;
+            margin-bottom: 8pt;
+            font-size: 11pt;
+        }
+
+        .support-item ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .support-item li {
+            font-size: 9pt;
+            margin: 3pt 0;
+        }
+
+        /* Print-specific styles */
+        @media print {
+            body {
+                font-size: 10pt;
+            }
+            
+            .training-grid, .download-grid, .ref-grid, .support-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10pt;
+            }
+            
+            .no-print {
+                display: none;
+            }
+        }
+
+        /* Screen responsive */
+        @media screen and (max-width: 768px) {
+            .training-grid, .download-grid, .ref-grid, .support-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-text">CustomerMind IQ</div>
+            <h1 class="main-title">Training Portal</h1>
+            <p class="subtitle">Comprehensive Learning Resources & Documentation</p>
+            <span class="version">Professional Training Hub v2.0</span>
+        </div>
+
+        <div class="training-grid">
+            <div class="training-card featured">
+                <div class="card-icon">🚀</div>
+                <h3 class="card-title">Quick Start Guide</h3>
+                <p class="card-description">Get up and running with CustomerMind IQ in under 30 minutes</p>
+                <ul class="card-features">
+                    <li>Authentication & login setup</li>
+                    <li>7-day free trial registration</li>
+                    <li>Subscription plans overview</li>
+                    <li>Dashboard navigation basics</li>
+                    <li>Essential features walkthrough</li>
+                    <li>First steps & best practices</li>
+                </ul>
+            </div>
+
+            <div class="training-card">
+                <div class="card-icon">📚</div>
+                <h3 class="card-title">Complete Training Manual</h3>
+                <p class="card-description">In-depth guide covering all platform features and advanced capabilities</p>
+                <ul class="card-features">
+                    <li>Comprehensive feature documentation</li>
+                    <li>Customer & website analytics</li>
+                    <li>Marketing automation tutorials</li>
+                    <li>Revenue analytics & forecasting</li>
+                    <li>Integration setup guides</li>
+                    <li>Troubleshooting & best practices</li>
+                </ul>
+            </div>
+
+            <div class="training-card admin-card">
+                <div class="card-icon">🛡️</div>
+                <h3 class="card-title">Admin Training Manual</h3>
+                <p class="card-description">Advanced administrative features and platform management</p>
+                <ul class="card-features">
+                    <li>Banner & announcement management</li>
+                    <li>Discount & promotion system</li>
+                    <li>User account impersonation</li>
+                    <li>Analytics dashboard & reporting</li>
+                    <li>Security & compliance features</li>
+                    <li>Support & escalation procedures</li>
+                </ul>
+            </div>
+
+            <div class="training-card">
+                <div class="card-icon">🎬</div>
+                <h3 class="card-title">Video Training Library</h3>
+                <p class="card-description">Step-by-step video tutorials and interactive demonstrations</p>
+                <ul class="card-features">
+                    <li>Module-specific video tutorials</li>
+                    <li>Feature demonstration walkthroughs</li>
+                    <li>Best practices & use cases</li>
+                    <li>Integration setup videos</li>
+                    <li>Troubleshooting guides</li>
+                    <li>Advanced tips & tricks</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="download-section">
+            <h2 class="download-title">📄 Professional PDF Training Materials</h2>
+            <p>Download high-quality, professional PDF versions for offline viewing and team distribution</p>
+            
+            <div class="download-grid">
+                <a href="/CustomerMind_IQ_Quick_Start_Guide_Professional.html" class="download-btn" target="_blank">
+                    📋 Quick Start Guide PDF
+                </a>
+                <a href="/CustomerMind_IQ_Complete_Training_Manual_Professional.html" class="download-btn" target="_blank">
+                    📚 Complete Manual PDF
+                </a>
+                <a href="/CustomerMind_IQ_Admin_Training_Manual_Professional.html" class="download-btn admin" target="_blank">
+                    🛡️ Admin Manual PDF
+                </a>
+            </div>
+        </div>
+
+        <div class="learning-path">
+            <h2 class="path-title">📈 Recommended Learning Path</h2>
+            
+            <div class="path-steps">
+                <div class="path-step">
+                    <div class="step-title">Start with Quick Start Guide</div>
+                    <div class="step-description">Begin with the Quick Start Guide to set up your account, understand basic navigation, and access your 7-day free trial.</div>
+                </div>
+
+                <div class="path-step">
+                    <div class="step-title">Explore Customer Analytics</div>
+                    <div class="step-description">Dive into Customer Intelligence, Marketing Automation, and Revenue Analytics modules to understand core platform capabilities.</div>
+                </div>
+
+                <div class="path-step">
+                    <div class="step-title">Configure Integrations</div>
+                    <div class="step-description">Connect your existing tools and data sources using the Integration & Data Hub for comprehensive analytics.</div>
+                </div>
+
+                <div class="path-step">
+                    <div class="step-title">Advanced Features Training</div>
+                    <div class="step-description">Master advanced features like behavioral clustering, churn prevention, and predictive analytics using the Complete Manual.</div>
+                </div>
+
+                <div class="path-step">
+                    <div class="step-title">Admin Capabilities (If Applicable)</div>
+                    <div class="step-description">For administrators: Learn banner management, discount systems, user impersonation, and analytics dashboard features.</div>
+                </div>
+
+                <div class="path-step">
+                    <div class="step-title">Optimization & Best Practices</div>
+                    <div class="step-description">Implement best practices, optimize dashboards, and establish regular review cycles for maximum platform value.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-ref">
+            <h2 class="ref-title">⚡ Quick Reference</h2>
+            
+            <div class="ref-grid">
+                <div class="ref-item">
+                    <div class="ref-item-title">Admin Login</div>
+                    <div class="ref-item-content">
+                        Email: admin@customermindiq.com<br>
+                        Password: CustomerMindIQ2025!
+                    </div>
+                </div>
+
+                <div class="ref-item">
+                    <div class="ref-item-title">Current Pricing (50% Off Sale)</div>
+                    <div class="ref-item-content">
+                        Starter: $49/month (reg. $99)<br>
+                        Professional: $149/month (reg. $299)<br>
+                        Enterprise: $399/month (reg. $799)
+                    </div>
+                </div>
+
+                <div class="ref-item">
+                    <div class="ref-item-title">Free Trial</div>
+                    <div class="ref-item-content">
+                        Duration: 7 days<br>
+                        Credit Card: Not required<br>
+                        Access: Full Starter tier features
+                    </div>
+                </div>
+
+                <div class="ref-item">
+                    <div class="ref-item-title">Key Navigation</div>
+                    <div class="ref-item-content">
+                        Customer Analytics Dashboard<br>
+                        Website Analytics Dashboard<br>
+                        Admin Panel (admin only)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="support-section">
+            <h2 class="support-title">🆘 Training Support</h2>
+            
+            <div class="support-grid">
+                <div class="support-item">
+                    <h4>📧 Email Support</h4>
+                    <ul>
+                        <li>training@customermindiq.com</li>
+                        <li>Response within 24 hours</li>
+                        <li>Include account email</li>
+                        <li>Available to all tiers</li>
+                    </ul>
+                </div>
+
+                <div class="support-item">
+                    <h4>💬 Live Chat</h4>
+                    <ul>
+                        <li>Professional tier+</li>
+                        <li>Business hours support</li>
+                        <li>Real-time assistance</li>
+                        <li>Training questions</li>
+                    </ul>
+                </div>
+
+                <div class="support-item">
+                    <h4>📞 Phone Support</h4>
+                    <ul>
+                        <li>Enterprise tier+</li>
+                        <li>Dedicated training line</li>
+                        <li>Screen sharing available</li>
+                        <li>SLA guarantees</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #f8f9ff; border: 2px solid #667eea; border-radius: 12pt; padding: 20pt; margin: 30pt 0; text-align: center;">
+            <h3 style="color: #667eea; margin-bottom: 15pt;">🎯 Training Objectives</h3>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15pt; text-align: left;">
+                <div>
+                    <h4 style="color: #333; margin-bottom: 8pt;">For New Users:</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 2pt 0; padding-left: 15pt; position: relative; font-size: 10pt;">
+                            <span style="position: absolute; left: 0; color: #4caf50;">✓</span>
+                            Complete platform orientation in under 1 hour
+                        </li>
+                        <li style="padding: 2pt 0; padding-left: 15pt; position: relative; font-size: 10pt;">
+                            <span style="position: absolute; left: 0; color: #4caf50;">✓</span>
+                            Successfully navigate all dashboard sections
+                        </li>
+                        <li style="padding: 2pt 0; padding-left: 15pt; position: relative; font-size: 10pt;">
+                            <span style="position: absolute; left: 0; color: #4caf50;">✓</span>
+                            Connect first data integration within 30 minutes
+                        </li>
+                        <li style="padding: 2pt 0; padding-left: 15pt; position: relative; font-size: 10pt;">
+                            <span style="position: absolute; left: 0; color: #4caf50;">✓</span>
+                            Generate first analytical insights
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: #333; margin-bottom: 8pt;">For Advanced Users:</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 2pt 0; padding-left: 15pt; position: relative; font-size: 10pt;">
+                            <span style="position: absolute; left: 0; color: #4caf50;">✓</span>
+                            Master all 14 intelligence modules
+                        </li>
+                        <li style="padding: 2pt 0; padding-left: 15pt; position: relative; font-size: 10pt;">
+                            <span style="position: absolute; left: 0; color: #4caf50;">✓</span>
+                            Implement advanced automation workflows
+                        </li>
+                        <li style="padding: 2pt 0; padding-left: 15pt; position: relative; font-size: 10pt;">
+                            <span style="position: absolute; left: 0; color: #4caf50;">✓</span>
+                            Optimize performance and ROI metrics
+                        </li>
+                        <li style="padding: 2pt 0; padding-left: 15pt; position: relative; font-size: 10pt;">
+                            <span style="position: absolute; left: 0; color: #4caf50;">✓</span>
+                            Establish review cycles and best practices
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="no-print" style="text-align: center; margin-top: 40pt; padding: 20pt; border-top: 2px solid #eee;">
+            <h3 style="color: #667eea; margin-bottom: 15pt;">📄 Download Complete Training Portfolio</h3>
+            <button style="background: #667eea; color: white; padding: 15pt 30pt; border: none; border-radius: 8pt; font-size: 14pt; cursor: pointer; margin: 0 15pt;" onclick="window.print()">📦 Download Training Portal PDF</button>
+            <a href="/professional_quick_start_guide.html" style="background: #4caf50; color: white; padding: 15pt 30pt; border: none; border-radius: 8pt; font-size: 14pt; text-decoration: none; display: inline-block; margin: 0 15pt;">🚀 Start Training Now</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add training progress tracking
+            console.log('CustomerMind IQ Professional Training Portal loaded');
+            
+            // Track download interactions
+            const downloadButtons = document.querySelectorAll('.download-btn');
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    console.log('Training material downloaded:', this.textContent);
+                });
+            });
+
+            // Add smooth scroll behavior for better user experience
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
