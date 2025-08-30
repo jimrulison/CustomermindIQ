@@ -149,6 +149,39 @@ app.add_middleware(
 # Static files for serving assets
 app.mount("/static", StaticFiles(directory="/app/backend/static"), name="static")
 
+# Training Materials Static Serving
+@app.get("/training/quick-start-guide")
+async def serve_quick_start_guide():
+    """Serve Quick Start Guide HTML"""
+    return FileResponse(
+        path="/app/CustomerMind_IQ_Quick_Start_Guide_Professional.html",
+        media_type="text/html"
+    )
+
+@app.get("/training/complete-manual")
+async def serve_complete_manual():
+    """Serve Complete Training Manual HTML"""
+    return FileResponse(
+        path="/app/CustomerMind_IQ_Complete_Training_Manual_Professional.html",
+        media_type="text/html"
+    )
+
+@app.get("/training/admin-manual")
+async def serve_admin_manual():
+    """Serve Admin Training Manual HTML"""
+    return FileResponse(
+        path="/app/CustomerMind_IQ_Admin_Training_Manual_Professional.html",
+        media_type="text/html"
+    )
+
+@app.get("/training/portal")
+async def serve_training_portal():
+    """Serve Training Portal HTML"""
+    return FileResponse(
+        path="/app/CustomerMind_IQ_Training_Portal_Professional.html",
+        media_type="text/html"
+    )
+
 # PDF Training Materials Download Endpoints
 @app.get("/api/download/quick-start-guide")
 async def download_quick_start_guide():
