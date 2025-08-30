@@ -215,14 +215,18 @@ const Training = () => {
       description: "Essential daily operations reference for power users and optimization professionals",
       icon: FileText,
       pages: 10,
-      lastUpdated: "December 2024",
-      downloadUrl: "/training/documents/Professional_Quick_Reference_Guide.md",
+      lastUpdated: "January 2025",
+      downloadUrl: "/api/download/quick-reference-guide",
+      pdfType: "quick-reference-guide",
+      filename: "CustomerMind_IQ_Quick_Reference_Guide.pdf",
+      size: "180KB",
       sections: [
         "Navigation Reference & Platform Architecture",
         "Performance Metrics Glossary & Scoring Framework",
         "SEO Optimization Checklist & Best Practices", 
         "Troubleshooting Guide & Problem Resolution",
-        "Advanced Power User Techniques & Shortcuts"
+        "Advanced Power User Techniques & Shortcuts",
+        "Support & Contact Information"
       ]
     },
     {
