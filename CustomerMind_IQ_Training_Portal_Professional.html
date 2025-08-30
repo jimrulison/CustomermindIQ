@@ -631,6 +631,62 @@
     </div>
 
     <script>
+        // Get backend URL from environment or use default
+        const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://cmind-saas.preview.emergentagent.com';
+        
+        // Function to download PDF files
+        async function downloadPDF(pdfType, filename) {
+            try {
+                console.log(`Downloading ${filename}...`);
+                
+                // Show loading indicator
+                const originalText = event.target.textContent;
+                event.target.textContent = '⏳ Downloading...';
+                event.target.style.pointerEvents = 'none';
+                
+                // Make API request
+                const response = await fetch(`${API_BASE_URL}/api/download/${pdfType}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Download failed: ${response.status} ${response.statusText}`);
+                }
+                
+                // Get the PDF blob
+                const blob = await response.blob();
+                
+                // Create download link
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                
+                // Cleanup
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                console.log(`✅ Successfully downloaded: ${filename}`);
+                
+                // Reset button
+                event.target.textContent = originalText;
+                event.target.style.pointerEvents = 'auto';
+                
+            } catch (error) {
+                console.error('PDF Download Error:', error);
+                
+                // Show error and reset button
+                event.target.textContent = '❌ Download Failed';
+                setTimeout(() => {
+                    event.target.textContent = originalText;
+                    event.target.style.pointerEvents = 'auto';
+                }, 3000);
+                
+                // Show user-friendly error message
+                alert(`Sorry, there was an error downloading the PDF. Please try again or contact support if the problem persists.\n\nError: ${error.message}`);
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Add training progress tracking
             console.log('CustomerMind IQ Professional Training Portal loaded');
@@ -638,8 +694,9 @@
             // Track download interactions
             const downloadButtons = document.querySelectorAll('.download-btn');
             downloadButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    console.log('Training material downloaded:', this.textContent);
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Training material download initiated:', this.textContent);
                 });
             });
 
