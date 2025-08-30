@@ -555,10 +555,14 @@ const Training = () => {
                       
                       {/* Download Button */}
                       <Button 
-                        className="w-full bg-blue-600 hover:bg-blue-700"
+                        className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50"
+                        disabled={downloading[manual.pdfType]}
                         onClick={() => {
-                          if (manual.downloadUrl.startsWith('/')) {
-                            // Create download link
+                          if (manual.pdfType && manual.filename) {
+                            // Use our PDF download function
+                            downloadPDF(manual.pdfType, manual.filename);
+                          } else if (manual.downloadUrl.startsWith('/')) {
+                            // Create download link for other files
                             const link = document.createElement('a');
                             link.href = manual.downloadUrl;
                             link.download = manual.title.replace(/\s+/g, '_') + '.md';
@@ -572,8 +576,17 @@ const Training = () => {
                           }
                         }}
                       >
-                        <Download className="w-4 h-4 mr-2" />
-                        Download Guide
+                        {downloading[manual.pdfType] ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                            Downloading...
+                          </>
+                        ) : (
+                          <>
+                            <Download className="w-4 h-4 mr-2" />
+                            Download {manual.size ? `PDF (${manual.size})` : 'Guide'}
+                          </>
+                        )}
                       </Button>
                     </div>
                   </CardContent>
