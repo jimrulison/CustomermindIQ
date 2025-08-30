@@ -198,8 +198,8 @@ const Training = () => {
       lastUpdated: "January 2025",
       downloadUrl: "/api/download/admin-training-manual",
       pdfType: "admin-training-manual",
-      filename: "CustomerMind_IQ_Admin_Training_Manual.pdf", 
-      size: "270KB",
+      filename: "CustomerMind_IQ_Admin_Training_Manual.html", 
+      size: "HTML",
       sections: [
         "Banner & Announcement Management",
         "Discount & Promotion System Administration",
