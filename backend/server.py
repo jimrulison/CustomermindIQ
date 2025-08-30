@@ -669,24 +669,27 @@ async def debug_auth():
     """Debug endpoint to check auth system"""
     try:
         import os
-        from backend.auth.auth_system import get_db
+        from auth.auth_system import get_db
         
         # Check MongoDB connection
         db = get_db()
-        users = db.users.find().limit(1)
         user_count = db.users.count_documents({})
+        
+        # Check if admin user exists
+        admin_user = db.users.find_one({"email": "admin@customermindiq.com"})
         
         return {
             "mongodb_connected": True,
             "user_count": user_count,
-            "mongo_url": os.environ.get('MONGO_URL'),
-            "sample_user_exists": user_count > 0
+            "mongo_url": os.environ.get('MONGO_URL')[:50] + "...",  # Truncate for security
+            "admin_user_exists": admin_user is not None,
+            "database_name": db.name
         }
     except Exception as e:
         return {
             "error": str(e),
             "mongodb_connected": False,
-            "mongo_url": os.environ.get('MONGO_URL')
+            "mongo_url": os.environ.get('MONGO_URL')[:50] + "..." if os.environ.get('MONGO_URL') else None
         }
 
 @app.get("/api/health")
