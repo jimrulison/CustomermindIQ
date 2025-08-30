@@ -147,7 +147,7 @@ app.add_middleware(
 )
 
 # Static files for serving assets
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="/app/backend/static"), name="static")
 
 # PDF Training Materials Download Endpoints
 @app.get("/api/download/quick-start-guide")
