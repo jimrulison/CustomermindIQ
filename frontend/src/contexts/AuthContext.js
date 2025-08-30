@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // Get backend URL from environment
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://cmind-saas.preview.emergentagent.com';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || window.location.origin;
 
   // Check for stored authentication on app start
   useEffect(() => {
