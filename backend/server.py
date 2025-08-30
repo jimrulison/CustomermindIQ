@@ -174,70 +174,75 @@ async def serve_training_portal():
         media_type="text/html"
     )
 
-# PDF Training Materials Download Endpoints
+# Training Materials Download Endpoints (HTML versions for deployment)
 @app.get("/api/download/quick-start-guide")
 async def download_quick_start_guide():
-    """Download Quick Start Guide PDF"""
-    pdf_path = "/app/pdfs/CustomerMind_IQ_Quick_Start_Guide.pdf"
-    if not os.path.exists(pdf_path):
-        raise HTTPException(status_code=404, detail="Quick Start Guide PDF not found")
+    """Download Quick Start Guide as HTML"""
+    html_path = "/app/CustomerMind_IQ_Quick_Start_Guide_Professional.html"
+    if not os.path.exists(html_path):
+        raise HTTPException(status_code=404, detail="Quick Start Guide not found")
     
     return FileResponse(
-        path=pdf_path,
-        filename="CustomerMind_IQ_Quick_Start_Guide.pdf",
-        media_type="application/pdf"
+        path=html_path,
+        filename="CustomerMind_IQ_Quick_Start_Guide.html",
+        media_type="text/html",
+        headers={"Content-Disposition": "attachment; filename=CustomerMind_IQ_Quick_Start_Guide.html"}
     )
 
 @app.get("/api/download/complete-training-manual")
 async def download_complete_manual():
-    """Download Complete Training Manual PDF"""
-    pdf_path = "/app/pdfs/CustomerMind_IQ_Complete_Training_Manual.pdf"
-    if not os.path.exists(pdf_path):
-        raise HTTPException(status_code=404, detail="Complete Training Manual PDF not found")
+    """Download Complete Training Manual as HTML"""
+    html_path = "/app/CustomerMind_IQ_Complete_Training_Manual_Professional.html"
+    if not os.path.exists(html_path):
+        raise HTTPException(status_code=404, detail="Complete Training Manual not found")
     
     return FileResponse(
-        path=pdf_path,
-        filename="CustomerMind_IQ_Complete_Training_Manual.pdf",
-        media_type="application/pdf"
+        path=html_path,
+        filename="CustomerMind_IQ_Complete_Training_Manual.html",
+        media_type="text/html",
+        headers={"Content-Disposition": "attachment; filename=CustomerMind_IQ_Complete_Training_Manual.html"}
     )
 
 @app.get("/api/download/admin-training-manual")
 async def download_admin_manual():
-    """Download Admin Training Manual PDF"""
-    pdf_path = "/app/pdfs/CustomerMind_IQ_Admin_Training_Manual.pdf"
-    if not os.path.exists(pdf_path):
-        raise HTTPException(status_code=404, detail="Admin Training Manual PDF not found")
+    """Download Admin Training Manual as HTML"""
+    html_path = "/app/CustomerMind_IQ_Admin_Training_Manual_Professional.html"
+    if not os.path.exists(html_path):
+        raise HTTPException(status_code=404, detail="Admin Training Manual not found")
     
     return FileResponse(
-        path=pdf_path,
-        filename="CustomerMind_IQ_Admin_Training_Manual.pdf",
-        media_type="application/pdf"
+        path=html_path,
+        filename="CustomerMind_IQ_Admin_Training_Manual.html",
+        media_type="text/html",
+        headers={"Content-Disposition": "attachment; filename=CustomerMind_IQ_Admin_Training_Manual.html"}
     )
 
 @app.get("/api/download/training-portal")
 async def download_training_portal():
-    """Download Training Portal Overview PDF"""
-    pdf_path = "/app/pdfs/CustomerMind_IQ_Training_Portal.pdf"
-    if not os.path.exists(pdf_path):
-        raise HTTPException(status_code=404, detail="Training Portal PDF not found")
+    """Download Training Portal Overview as HTML"""
+    html_path = "/app/CustomerMind_IQ_Training_Portal_Professional.html"
+    if not os.path.exists(html_path):
+        raise HTTPException(status_code=404, detail="Training Portal not found")
     
     return FileResponse(
-        path=pdf_path,
-        filename="CustomerMind_IQ_Training_Portal.pdf",
-        media_type="application/pdf"
+        path=html_path,
+        filename="CustomerMind_IQ_Training_Portal.html",
+        media_type="text/html",
+        headers={"Content-Disposition": "attachment; filename=CustomerMind_IQ_Training_Portal.html"}
     )
 
 @app.get("/api/download/quick-reference-guide")
 async def download_quick_reference_guide():
-    """Download Professional Quick Reference Guide PDF"""
-    pdf_path = "/app/pdfs/CustomerMind_IQ_Quick_Reference_Guide.pdf"
-    if not os.path.exists(pdf_path):
-        raise HTTPException(status_code=404, detail="Quick Reference Guide PDF not found")
+    """Download Professional Quick Reference Guide as HTML"""
+    html_path = "/app/CustomerMind_IQ_Quick_Reference_Guide_Professional.html"
+    if not os.path.exists(html_path):
+        raise HTTPException(status_code=404, detail="Quick Reference Guide not found")
     
     return FileResponse(
-        path=pdf_path,
-        filename="CustomerMind_IQ_Quick_Reference_Guide.pdf",
-        media_type="application/pdf"
+        path=html_path,
+        filename="CustomerMind_IQ_Quick_Reference_Guide.html",
+        media_type="text/html",
+        headers={"Content-Disposition": "attachment; filename=CustomerMind_IQ_Quick_Reference_Guide.html"}
     )
 
 @app.on_event("startup")
