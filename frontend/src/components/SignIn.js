@@ -79,14 +79,14 @@ const SignIn = ({ onSignIn }) => {
     setError('');
     
     try {
-      // Register for 7-day free trial
+      // Register for 7-day free trial with case-insensitive email
       const trialResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/subscriptions/trial/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: signUpData.email,
+          email: signUpData.email.trim().toLowerCase(),
           first_name: signUpData.first_name,
           last_name: signUpData.last_name,
           company_name: signUpData.company_name,
@@ -97,7 +97,7 @@ const SignIn = ({ onSignIn }) => {
 
       if (trialResponse.ok) {
         // Auto-login the trial user
-        const loginResult = await login(signUpData.email, 'trial_password_temp', false);
+        const loginResult = await login(signUpData.email.trim().toLowerCase(), 'trial_password_temp', false);
         if (loginResult.success) {
           onSignIn(loginResult.user);
         } else {
