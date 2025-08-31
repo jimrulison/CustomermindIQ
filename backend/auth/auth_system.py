@@ -317,7 +317,9 @@ async def register_user(user_data: UserRegistration):
     """Register new user"""
     
     # Check if user already exists (case-insensitive)
-    existing_user = await db.users.find_one({"email": {"$regex": f"^{user_data.email}$", "$options": "i"}})
+    import re
+    escaped_email = re.escape(user_data.email)
+    existing_user = await db.users.find_one({"email": {"$regex": f"^{escaped_email}$", "$options": "i"}})
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
