@@ -354,7 +354,7 @@ async def register_user(user_data: UserRegistration):
     await db.users.insert_one(user_doc)
     
     # Create tokens
-    token_data = {"user_id": user_id, "email": user_data.email}
+    token_data = {"user_id": user_id, "email": user_data.email.lower()}
     access_token = create_access_token(token_data)
     refresh_token = create_refresh_token(token_data)
     
