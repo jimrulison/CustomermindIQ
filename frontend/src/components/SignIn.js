@@ -30,7 +30,9 @@ const SignIn = ({ onSignIn }) => {
     setError('');
 
     try {
-      const result = await login(email, password, false);
+      // Make email case-insensitive by converting to lowercase
+      const normalizedEmail = email.trim().toLowerCase();
+      const result = await login(normalizedEmail, password, false);
       
       if (result.success) {
         onSignIn(result.user);
