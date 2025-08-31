@@ -664,6 +664,45 @@ class OdooService:
 odoo_service = OdooService()
 
 # API Endpoints
+@app.get("/api/setup-admin")
+async def setup_admin():
+    """One-time setup endpoint to create admin user in new database"""
+    try:
+        from auth.auth_system import db, hash_password
+        import asyncio
+        from datetime import datetime
+        
+        # Check if admin already exists
+        existing_admin = await db.users.find_one({"email": "admin@customermindiq.com"})
+        if existing_admin:
+            return {"status": "Admin user already exists"}
+        
+        # Create admin user
+        admin_user = {
+            "user_id": "admin",
+            "email": "admin@customermindiq.com",
+            "password": hash_password("CustomerMindIQ2025!"),
+            "role": "admin",
+            "subscription_tier": "enterprise",
+            "is_active": True,
+            "created_at": datetime.utcnow(),
+            "last_login": None,
+            "profile_picture": None
+        }
+        
+        result = await db.users.insert_one(admin_user)
+        
+        return {
+            "status": "Admin user created successfully",
+            "user_id": str(result.inserted_id)
+        }
+        
+    except Exception as e:
+        return {
+            "error": str(e),
+            "status": "Failed to create admin user"
+        }
+
 @app.get("/api/health")
 async def health_check():
     return {
