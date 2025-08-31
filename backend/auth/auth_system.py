@@ -333,7 +333,7 @@ async def register_user(user_data: UserRegistration):
     # Create user document
     user_doc = {
         "user_id": user_id,
-        "email": user_data.email,
+        "email": user_data.email.lower(),
         "password_hash": hashed_password,
         "first_name": user_data.first_name,
         "last_name": user_data.last_name,
