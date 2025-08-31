@@ -379,7 +379,9 @@ async def login_user(login_data: UserLogin, request: Request):
     """User login"""
     
     # Find user (case-insensitive email lookup)
-    user = await db.users.find_one({"email": {"$regex": f"^{login_data.email}$", "$options": "i"}})
+    import re
+    escaped_email = re.escape(login_data.email)
+    user = await db.users.find_one({"email": {"$regex": f"^{escaped_email}$", "$options": "i"}})
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
