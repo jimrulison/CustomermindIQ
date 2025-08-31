@@ -715,26 +715,63 @@ async def health_check():
 
 @app.get("/api/test-db")
 async def test_database_connection():
-    """Test database connectivity from external requests"""
+    """Test database connectivity and permissions from external requests"""
     try:
         # Test MongoDB connection
         from motor.motor_asyncio import AsyncIOMotorClient
         client = AsyncIOMotorClient(os.getenv("MONGO_URL", "mongodb://localhost:27017"))
         db = client.customer_mind_iq
         
-        # Try to count users
-        user_count = await db.users.count_documents({})
-        
-        return {
-            "status": "success",
-            "database_connection": "working",
-            "user_count": user_count,
-            "mongo_url": os.getenv("MONGO_URL", "not_set")[:50] + "..." if os.getenv("MONGO_URL") else "not_set"
+        test_results = {
+            "mongo_url": os.getenv("MONGO_URL", "not_set")[:50] + "..." if os.getenv("MONGO_URL") else "not_set",
+            "database_name": "customer_mind_iq"
         }
+        
+        # Test 1: Connection
+        try:
+            await client.admin.command('ping')
+            test_results["connection"] = "✅ SUCCESS"
+        except Exception as e:
+            test_results["connection"] = f"❌ FAILED: {str(e)}"
+            
+        # Test 2: Read permissions - count users
+        try:
+            user_count = await db.users.count_documents({})
+            test_results["read_permission"] = f"✅ SUCCESS - Found {user_count} users"
+        except Exception as e:
+            test_results["read_permission"] = f"❌ FAILED: {str(e)}"
+            
+        # Test 3: Write permissions - try to update a test document
+        try:
+            # Try to upsert a test document
+            result = await db.test_permissions.update_one(
+                {"_id": "permission_test"}, 
+                {"$set": {"last_test": datetime.utcnow().isoformat(), "test_type": "write_permission"}}, 
+                upsert=True
+            )
+            test_results["write_permission"] = f"✅ SUCCESS - Updated/created document (matched: {result.matched_count}, modified: {result.modified_count})"
+        except Exception as e:
+            test_results["write_permission"] = f"❌ FAILED: {str(e)}"
+            
+        # Test 4: Database admin permissions - try to list collections
+        try:
+            collections = await db.list_collection_names()
+            test_results["admin_permission"] = f"✅ SUCCESS - Found {len(collections)} collections: {', '.join(collections[:5])}"
+        except Exception as e:
+            test_results["admin_permission"] = f"❌ FAILED: {str(e)}"
+        
+        # Determine overall status
+        failed_tests = [k for k, v in test_results.items() if isinstance(v, str) and "❌ FAILED" in v]
+        if not failed_tests:
+            test_results["overall_status"] = "✅ ALL TESTS PASSED"
+        else:
+            test_results["overall_status"] = f"❌ {len(failed_tests)} TESTS FAILED: {', '.join(failed_tests)}"
+            
+        return test_results
+        
     except Exception as e:
         return {
-            "status": "error",
-            "database_connection": "failed",
+            "overall_status": "❌ CRITICAL ERROR",
             "error": str(e),
             "mongo_url": os.getenv("MONGO_URL", "not_set")[:50] + "..." if os.getenv("MONGO_URL") else "not_set"
         }
