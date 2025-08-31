@@ -316,10 +316,8 @@ def check_module_access(user: UserProfile, module_name: str) -> bool:
 async def register_user(user_data: UserRegistration):
     """Register new user"""
     
-    # Check if user already exists (case-insensitive)
-    import re
-    escaped_email = re.escape(user_data.email)
-    existing_user = await db.users.find_one({"email": {"$regex": f"^{escaped_email}$", "$options": "i"}})
+    # Check if user already exists (case-insensitive using lowercased email)
+    existing_user = await db.users.find_one({"email": user_data.email.lower()})
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
