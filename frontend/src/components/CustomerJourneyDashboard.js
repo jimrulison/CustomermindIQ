@@ -34,7 +34,7 @@ const CustomerJourneyDashboard = () => {
   const [performance, setPerformance] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://cmind-saas.preview.emergentagent.com';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://mindiq-saas.preview.emergentagent.com';
 
   // Load journey data
   const loadJourneyData = async () => {
