@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Alert, AlertDescription } from './ui/alert';
-import { Mail, Lock, Brain, TrendingUp, Users, BarChart3, Gift, CheckCircle } from 'lucide-react';
+import { Mail, Lock, Brain, TrendingUp, Users, BarChart3, Gift, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const SignIn = ({ onSignIn }) => {
