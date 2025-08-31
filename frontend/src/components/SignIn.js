@@ -212,13 +212,20 @@ const SignIn = ({ onSignIn }) => {
                   <div className="relative">
                     <Lock className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
                     <Input
-                      type="password"
+                      type={showSignUpPassword ? "text" : "password"}
                       value={signUpData.password}
                       onChange={(e) => handleInputChange('password', e.target.value)}
                       placeholder="Create a strong password"
-                      className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400 pl-10"
+                      className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400 pl-10 pr-10"
                       required
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowSignUpPassword(!showSignUpPassword)}
+                      className="absolute right-3 top-3 text-slate-400 hover:text-slate-300"
+                    >
+                      {showSignUpPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
                   </div>
                 </div>
 
