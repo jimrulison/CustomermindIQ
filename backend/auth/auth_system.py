@@ -378,8 +378,8 @@ async def register_user(user_data: UserRegistration):
 async def login_user(login_data: UserLogin, request: Request):
     """User login"""
     
-    # Find user
-    user = await db.users.find_one({"email": login_data.email})
+    # Find user (case-insensitive email lookup)
+    user = await db.users.find_one({"email": {"$regex": f"^{login_data.email}$", "$options": "i"}})
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
