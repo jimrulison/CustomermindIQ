@@ -664,33 +664,6 @@ class OdooService:
 odoo_service = OdooService()
 
 # API Endpoints
-@app.get("/api/debug-auth")
-async def debug_auth():
-    """Debug endpoint to check auth system"""
-    try:
-        import os
-        from auth.auth_system import client
-        
-        # Try to list databases the user has access to
-        db_list = await client.list_database_names()
-        
-        # Try the test database
-        test_db = client.test
-        collections = await test_db.list_collection_names()
-        
-        return {
-            "mongodb_connected": True,
-            "available_databases": db_list,
-            "test_db_collections": collections,
-            "can_access_test_db": True
-        }
-    except Exception as e:
-        return {
-            "error": str(e),
-            "error_type": type(e).__name__,
-            "mongodb_connected": False
-        }
-
 @app.get("/api/health")
 async def health_check():
     return {
