@@ -52,11 +52,15 @@ const SignIn = ({ onSignIn }) => {
     setError('');
     
     try {
-      const result = await register({
+      // Make email case-insensitive by converting to lowercase
+      const registrationData = {
         ...signUpData,
+        email: signUpData.email.trim().toLowerCase(),
         role: 'user',
         subscription_tier: 'free'
-      });
+      };
+      
+      const result = await register(registrationData);
       
       if (result.success) {
         onSignIn(result.data.user_profile);
