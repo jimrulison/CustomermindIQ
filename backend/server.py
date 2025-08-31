@@ -705,12 +705,39 @@ async def setup_admin():
 
 @app.get("/api/health")
 async def health_check():
+    """Health check endpoint"""
     return {
-        "status": "healthy", 
+        "status": "healthy",
         "service": "Customer Mind IQ",
         "version": "1.0.0",
-        "timestamp": datetime.now()
+        "timestamp": datetime.utcnow().isoformat()
     }
+
+@app.get("/api/test-db")
+async def test_database_connection():
+    """Test database connectivity from external requests"""
+    try:
+        # Test MongoDB connection
+        from motor.motor_asyncio import AsyncIOMotorClient
+        client = AsyncIOMotorClient(os.getenv("MONGO_URL", "mongodb://localhost:27017"))
+        db = client.customer_mind_iq
+        
+        # Try to count users
+        user_count = await db.users.count_documents({})
+        
+        return {
+            "status": "success",
+            "database_connection": "working",
+            "user_count": user_count,
+            "mongo_url": os.getenv("MONGO_URL", "not_set")[:50] + "..." if os.getenv("MONGO_URL") else "not_set"
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "database_connection": "failed",
+            "error": str(e),
+            "mongo_url": os.getenv("MONGO_URL", "not_set")[:50] + "..." if os.getenv("MONGO_URL") else "not_set"
+        }
 
 @app.get("/api/customers", response_model=List[CustomerBehavior])
 async def get_customers():
