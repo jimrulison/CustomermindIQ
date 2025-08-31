@@ -669,33 +669,26 @@ async def debug_auth():
     """Debug endpoint to check auth system"""
     try:
         import os
-        from auth.auth_system import db
+        from auth.auth_system import client
         
-        # Check MongoDB connection and users
-        user_count = await db.users.count_documents({})
+        # Try to list databases the user has access to
+        db_list = await client.list_database_names()
         
-        # Check if admin user exists
-        admin_user = await db.users.find_one({"email": "admin@customermindiq.com"})
-        
-        # List all users (for debugging)
-        all_users = []
-        async for user in db.users.find({}, {"email": 1, "role": 1}):
-            all_users.append({"email": user.get("email"), "role": user.get("role")})
+        # Try the test database
+        test_db = client.test
+        collections = await test_db.list_collection_names()
         
         return {
             "mongodb_connected": True,
-            "user_count": user_count,
-            "mongo_url": os.environ.get('MONGO_URL', 'Not set')[:50] + "...",
-            "admin_user_exists": admin_user is not None,
-            "all_users": all_users,
-            "database_name": db.name
+            "available_databases": db_list,
+            "test_db_collections": collections,
+            "can_access_test_db": True
         }
     except Exception as e:
         return {
             "error": str(e),
             "error_type": type(e).__name__,
-            "mongodb_connected": False,
-            "mongo_url": os.environ.get('MONGO_URL', 'Not set')[:50] + "..."
+            "mongodb_connected": False
         }
 
 @app.get("/api/health")
