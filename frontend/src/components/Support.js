@@ -96,7 +96,7 @@ const Support = () => {
       id: 7,
       category: "Troubleshooting",
       question: "My website analysis is stuck or not updating",
-      answer: "If analysis appears stuck, first try the 'Update All' button. If the issue persists, check that your website is publicly accessible and not blocking our crawlers. Contact support if problems continue.",
+      answer: "If analysis appears stuck, navigate to 'WEBSITE ANALYTICS' in the header and click the 'UPDATE ALL' button on the Website Analytics Dashboard. This refreshes all website data and may take up to 15 minutes. If the issue persists, check that your website is publicly accessible and not blocking our crawlers. Contact support if problems continue.",
       manualRef: "Quick Reference Cards - Troubleshooting Common Issues"
     },
     {
