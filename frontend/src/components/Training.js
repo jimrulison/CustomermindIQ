@@ -780,7 +780,7 @@ const Training = () => {
               <div className="text-center space-y-2">
                 <h2 className="text-3xl font-bold text-white flex items-center justify-center">
                   <img 
-                    src="https://customer-assets.emergentagent.com/job_mongodb-fix-1/artifacts/qr1tdbbk_Customer%20Mind%20IQ%20logo.png" 
+                    src="https://customer-assets.emergentagent.com/job_mind-iq-dashboard/artifacts/blwfaa7a_Customer%20Mind%20IQ%20logo.png" 
                     alt="CustomerMind IQ" 
                     className="w-8 h-8 mr-3"
                   />
