@@ -119,6 +119,13 @@ const Support = () => {
       question: "What should I do about technical SEO issues?",
       answer: "Prioritize high-severity issues first, especially those affecting multiple pages. Common fixes include adding missing meta descriptions, fixing broken links, and optimizing page titles. Follow the fix priority recommendations.",
       manualRef: "Educational Content - Technical SEO Fundamentals"
+    },
+    {
+      id: 11,
+      category: "Platform Features",
+      question: "Where is the UPDATE ALL button and what does it do?",
+      answer: "The UPDATE ALL button is located on the Website Analytics Dashboard. To access it: 1) Click 'WEBSITE ANALYTICS' in the header, 2) Look for the green 'UPDATE ALL' button in the top-right area next to the badges. This button refreshes ALL website data including SEO metrics, performance scores, security scans, and content analysis for all your monitored websites. The update process may take up to 15 minutes to complete, but you can continue using other platform features while it runs in the background. Note: This only updates Website Analytics data, not Customer Analytics data.",
+      manualRef: "Complete User Guide - Section 3: UPDATE ALL Button"
     }
   ];
 
