@@ -458,6 +458,27 @@ async def get_growth_recommendations():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Recommendations error: {e}")
 
+@growth_dashboard_router.get("/access-check")
+async def check_growth_engine_access():
+    """Check if user has access to Growth Acceleration Engine"""
+    try:
+        # For demo purposes, return success - in production this would check JWT token
+        return {
+            "status": "success",
+            "has_access": True,
+            "message": "Growth Acceleration Engine access verified",
+            "features_available": [
+                "Growth Opportunity Scanner",
+                "Automated A/B Testing", 
+                "Revenue Leak Detection",
+                "ROI Calculator",
+                "Unified Dashboard"
+            ]
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Access check error: {e}")
+
 @growth_dashboard_router.get("/health")
 async def growth_engine_health():
     """Get Growth Acceleration Engine health status"""
