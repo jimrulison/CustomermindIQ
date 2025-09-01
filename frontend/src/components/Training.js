@@ -28,7 +28,9 @@ import {
   AlertTriangle,
   Calculator,
   Award,
-  Lock
+  Lock,
+  RefreshCw,
+  Sparkles
 } from 'lucide-react';
 
 const Training = () => {
