@@ -213,6 +213,11 @@ async def get_all_banners(
     
     banners = await db.banners.find(query).sort("priority", -1).to_list(length=100)
     
+    # Convert ObjectId to string for JSON serialization
+    for banner in banners:
+        if "_id" in banner:
+            del banner["_id"]  # Remove MongoDB ObjectId
+    
     return {
         "banners": banners,
         "total": len(banners)
