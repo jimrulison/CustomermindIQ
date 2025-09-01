@@ -1,96 +1,85 @@
 <analysis>
-The AI engineer's trajectory involved enhancing the Customer Mind IQ platform from MVP to production readiness, focusing on functional and content updates, followed by extensive debugging of deployment and infrastructure issues. Initially, the work addressed a frontend loading state after login, integrated a knowledge base, branded the login page with a logo, and transformed a marketing slideshow into a training guide. Subsequent user requests led to professional PDF training manuals (initially server-generated, then client-side HTML due to build failures), addition of a new quick reference guide, and placing the logo on all platform pages. The latter half of the interaction was dominated by persistent deployment problems, including  build failures, domain registration issues, frontend-backend URL mismatches, CORS errors, and, critically, recurring MongoDB connection and user permission failures in the deployed Atlas environment. Despite numerous code adjustments to , ,  files, and , the core blocking issue at the trajectory's end remains the inability of the deployed application to interact with MongoDB due to user authorization, indicating an infrastructure configuration problem beyond code.
+The AI engineer's trajectory commenced with functional and content enhancements, including integrating a knowledge base, branding the login page, and refining training materials. A significant portion of the work then shifted to persistent deployment and infrastructure debugging. Initial attempts addressed frontend loading states, PDF generation (later converted to HTML due to build failures), and logo placement. The core challenge became resolving  during login on the custom domain. The AI systematically debugged frontend URL mismatches, implemented case-insensitive login and password visibility, and updated backend logic. Despite these code fixes and user-reported MongoDB permission updates, the deployed application continued to exhibit MongoDB authorization errors and later, data loading timeouts. The trajectory concluded with the AI diagnosing a recurring infrastructure/routing issue on the custom domain, directing the user to deployment specialists for resolution.
 </analysis>
 
 <product_requirements>
-The Customer Mind IQ platform is a SaaS product with 14 AI-powered modules. The user's goal is to deploy and enhance this platform.
+The Customer Mind IQ platform is a SaaS product with 14 AI-powered modules. The primary goal is to deploy and enhance this platform for production readiness. Initially, the platform included legal documents, Stripe-integrated payment processing for 3-tier subscriptions, and basic HTML training materials (Quick Start Guide, Training Manual, Training Portal).
 
-**Initially Implemented Features (pre-trajectory):**
-*   Legal Documentation: GDPR/CCPA compliant Terms, Privacy, DPA, SLA, Cookie, AUP.
-*   Payment Processing: Stripe integration for 3-tier subscriptions (Starter, Professional, Enterprise).
-*   Training Materials: Quick Start Guide, Training Manual (HTML), and a central Training Portal.
+Current explicit requirements include:
+*   Developing an Admin Authentication System with user management, RBAC, session handling, and a default admin user.
+*   Implementing Advanced Admin Features: banner management, discount system, account impersonation, and analytics.
+*   Enhancing Subscriptions with a 7-day free trial (no credit card for Starter tier) and updated promotional pricing.
+*   Updating all Training Materials to reflect new auth, pricing, admin features, and sales.
+*   Integrating a Knowledge Base for user-provided educational articles.
+*   Branding the platform with the CustomerMind IQ logo on the login page and all platform pages.
+*   Generating a comprehensive list of features and benefits.
+*   User-driven requests for professional PDF-like training manuals (shifted to HTML downloads), a Professional Quick Reference Guide, case-insensitive login, and password visibility toggle.
 
-**New Requirements & Current Focus (during trajectory):**
-*   **Admin Authentication System:** Full auth, user management, RBAC, session handling, default admin.
-*   **Advanced Admin Features:** Banner management, discount system, account impersonation, analytics.
-*   **Subscription Enhancements:** 7-day free trial (no credit card, Starter), updated pricing (9/9 sale Starter, 99/49 sale Professional, 99/99 sale Enterprise).
-*   **Training Material Updates:** All guides to reflect new auth, pricing, admin features, and promotional sales.
-*   **Knowledge Base Integration:** User-provided educational articles in frontend.
-*   **Branding:** CustomerMind IQ logo on login page.
-*   **Features & Benefits List:** Generate a factual, comprehensive list.
-*   **User-driven requests:** Professional-looking PDF training manuals (auto-download), Logo on all platform pages, Professional Quick Reference Guide PDF.
-
-**Implementation Status:** Most features were addressed in code, but deployment-specific issues (DNS, CORS, MongoDB permissions) currently prevent full functionality on the custom domain.
+The immediate focus has been resolving critical deployment issues preventing the application from functioning correctly on the custom domain, specifically persistent login failures and data loading timeouts in the Customer Intelligence dashboard.
 </product_requirements>
 
 <key_technical_concepts>
 -   **Full-Stack Architecture:** React (frontend), FastAPI (backend), MongoDB (database).
--   **Deployment:** Kubernetes, Supervisor,  prefix for backend routing, environment variables.
--   **Third-Party Integrations:** Stripe for payments.
--   **Core Technologies:** Python (FastAPI, Pydantic), JavaScript (React, JSX), HTML/CSS.
--   **Security:** JWT, RBAC, bcrypt password hashing.
--   **Frontend State Management:** React Context API for authentication.
--   **Database Access:** MongoDB client (Pymongo), MongoDB Atlas.
--   **Networking:** CORS (Cross-Origin Resource Sharing).
--   **DevOps:** Kaniko (for container builds), DNS configuration.
+-   **Deployment:** Kubernetes, Supervisor,  prefix routing, environment variables, Kaniko.
+-   **Authentication:** JWT, RBAC, bcrypt, React Context API.
+-   **Third-Party Integrations:** Stripe.
+-   **Networking:** CORS, WebSocket.
+-   **Language/Frameworks:** Python, JavaScript, HTML/CSS.
 </key_technical_concepts>
 
 <code_architecture>
 
 
 **Key Files & Changes:**
--   : Main FastAPI app.
-    -   Importance: Central routing, CORS configuration, startup events.
-    -   Changes: Added endpoints for downloading training materials (HTML files), temporary debug and setup-admin endpoints were added then removed.  was configured to serve a  directory, and later direct file serving routes were attempted and simplified.
+-   : The main FastAPI application.
+    -   Importance: Handles routing, CORS, and application startup.
+    -   Changes: Temporary debug endpoints and a  endpoint were added to diagnose database connectivity from the backend. Auth router inclusion was verified.
 -   : Backend environment variables.
-    -   Importance: Holds  and API keys.
-    -   Changes:  updated from  to , and finally to a user-provided MongoDB Atlas connection string .
--   : Python dependencies.
-    -   Importance: Manages backend library versions.
-    -   Changes:  and  were added for PDF generation, then removed due to build failures.
+    -   Importance: Stores .
+    -   Changes:  was updated to the user-provided MongoDB Atlas connection string ().
+-   : Contains backend authentication logic.
+    -   Importance: Manages user registration, login, and token generation.
+    -   Changes: Modified  and  functions to handle case-insensitive email lookups and store emails in lowercase for consistency. MongoDB interactions (find and update) were identified as requiring write permissions.
 -   : Frontend environment variables.
-    -   Importance: Holds .
-    -   Changes:  updated to point to  to resolve CORS issues.
--   : React Context for authentication.
-    -   Importance: Manages user login state and API calls.
-    -   Changes:  function updated to use a relative URL approach () and debugging logs were added to trace connection issues.
--   : Login/Signup component.
-    -   Importance: Entry point for user authentication.
-    -   Changes: Integrated the CustomerMind IQ logo, replacing a placeholder.
--   : Application navigation bar.
-    -   Importance: Provides navigation to various app sections and now displays the logo.
-    -   Changes: Replaced text-based logo with the CustomerMind IQ image logo, ensuring consistent branding across all platform pages.
--   : Displays educational articles.
-    -   Importance: Provides self-service support content.
-    -   Changes: Enhanced to include a dedicated section for training materials with download links for the HTML guides.
--   : Main training content display.
+    -   Importance: Stores .
+    -   Changes:  was updated from  to  to match the desired custom domain.
+-   : Login/Signup UI component.
+    -   Importance: User authentication interface.
+    -   Changes: Implemented password visibility toggles (eye/eye-off icons) for password fields and ensured email input is normalized to lowercase for case-insensitive login.
+-   : Application-wide header.
+    -   Importance: Navigation and branding.
+    -   Changes: Displays the CustomerMind IQ logo, ensuring consistent branding across all pages.
+-   : Displays training content.
     -   Importance: Central hub for user training materials.
-    -   Changes: Significantly updated to include download functionality for various training HTML files (originally intended for PDF, shifted to HTML), added the Professional Quick Reference Guide, and updated  array to link to backend download endpoints.
--    (and other  files):
-    -   Importance: New/updated HTML versions of training documents.
-    -   Changes: These files were created as professional, PDF-optimized HTML versions of the training content and configured for download through the application.
-
+    -   Changes: Updated to include download functionality for various HTML training files, replacing an earlier PDF generation attempt.
+-   : Supervisor configuration for services.
+    -   Importance: Defines how backend and frontend services are run and their environment.
+    -   Changes: An attempt was made to update  to  to resolve routing issues, but the file was noted as read-only.
 </code_architecture>
 
 <pending_tasks>
--   Resolve the  during login on the custom domain (). This error is caused by the deployed MongoDB user () lacking  permissions to the  database in the user's MongoDB Atlas cluster. This is an infrastructure/database administration issue.
--   Confirm successful admin user creation/initialization in the deployed MongoDB Atlas database after permissions are granted.
+-   **Resolve External Deployment Infrastructure/Routing Issues**: The primary blocking issue is that backend endpoints (especially  and some data loading endpoints for Customer Intelligence) are not correctly routed or are timing out on the custom domain (), despite working locally. This requires investigation by a deployment specialist.
+-   **MongoDB User Permissions Confirmation**: While the user stated updating  permissions, persistent MongoDB authorization errors () indicate a need to re-verify/confirm specific  permissions for the  database in MongoDB Atlas.
 </pending_tasks>
 
 <current_work>
-Immediately before this summary, the AI engineer had focused on resolving a critical  that occurred during login on the custom domain (). This error manifested as Internal Server Error and SyntaxError: Unexpected token I, Internal S... is not valid JSON, indicating a backend crash.
+Immediately before this summary, the AI engineer was addressing the Unable to connect to server error on the custom domain, which manifested as a  during login and later as data loading timeouts within the Customer Intelligence dashboard.
 
-Through systematic debugging, including adding temporary debug endpoints, the issue was narrowed down to a **MongoDB user permission problem** within the deployed environment's MongoDB Atlas cluster. Specifically, the  user, despite being able to connect to the new user-provided Atlas cluster, lacks the necessary  permissions for the  database. This prevents the application from performing basic database operations, such as checking for or creating the default admin user.
+The AI engineer has completed the following:
+1.  **Fixed Frontend URL**: Updated  in  to .
+2.  **Implemented Case-Insensitive Login**: Modified  to normalize email input to lowercase and  to store and lookup emails case-insensitively.
+3.  **Added Password Visibility Toggle**: Integrated eye icons into password fields in  for user convenience.
+4.  **Backend MongoDB Configuration**: Confirmed  in  points to the user-provided MongoDB Atlas connection string.
+5.  **Initial Troubleshooting**: Added and removed debug endpoints, confirmed local backend functionality (including database connectivity and admin user creation), and verified that  works on the custom domain.
 
-The AI engineer has already:
-1.  Updated the  in  to  to resolve CORS issues.
-2.  Updated the  in  to the user-provided MongoDB Atlas connection string ().
-3.  Removed debug endpoints to prevent build failures.
-4.  Ensured the logo is present on all pages () and HTML training guides are downloadable from the  component.
+The current state is that while the frontend loads correctly, and authentication works perfectly on , the deployed application on  still faces:
+*    for .
+*   MongoDB authorization errors () when  is called externally, indicating a permissions problem.
+*   Timeout errors for Basic dashboard data in the Customer Intelligence module, preventing the display of detailed analytics, although other modules like Revenue Analytics load successfully.
 
-The current state is that the deployed application, after several redeployments, is still hitting an Unauthorized error from MongoDB when attempting to create or find users, even after the user stated they updated permissions to  in MongoDB Atlas. This implies a propagation delay or a disconnect between the reported Atlas configuration and the actual permissions seen by the deployed application's MongoDB user.
+The core problem has shifted from code-level fixes to an external infrastructure or routing issue on the custom domain, potentially compounded by specific MongoDB Atlas user permissions not fully propagating or being misconfigured. The user has been directed to contact deployment specialists on Discord for further assistance, as this appears to be beyond typical code-based fixes.
 </current_work>
 
 <optional_next_step>
-Instruct the user to redeploy the application again, as the updated MongoDB connection string and permissions from Atlas may not have propagated to the deployed instance yet. After redeployment, re-test the  endpoint.
+Wait for the user to engage with deployment specialists on Discord to resolve the external routing and MongoDB permission issues.
 </optional_next_step>
