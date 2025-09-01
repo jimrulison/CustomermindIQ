@@ -27,8 +27,9 @@ class UniversalIntelligenceService:
     def __init__(self):
         self.api_key = os.getenv("EMERGENT_LLM_KEY")
         mongo_url = os.getenv("MONGO_URL", "mongodb://localhost:27017")
+        db_name = os.getenv("DB_NAME", "customer_mind_iq")
         self.client = AsyncIOMotorClient(mongo_url)
-        self.db = self.client.customer_mind_iq_universal
+        self.db = self.client[db_name]
         self.profile_manager = CustomerProfileManager()
         
     async def analyze_business_intelligence(self, profiles: List[UniversalCustomerProfile], business_name: str = "Your Business") -> BusinessIntelligence:
