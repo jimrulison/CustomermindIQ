@@ -257,10 +257,32 @@ class GrowthEngineOpportunityTester:
         print("🔍 TESTING FULL GROWTH SCAN")
         print("="*80)
         
+        # Sample data for full scan
+        full_scan_data = {
+            "customer_data": {
+                "total_revenue": 750000,
+                "total_customers": 400,
+                "monthly_growth_rate": 0.12,
+                "churn_rate": 0.04,
+                "average_order_value": 1875,
+                "customer_acquisition_cost": 200,
+                "lifetime_value": 9000,
+                "industry": "SaaS",
+                "company_size": "enterprise"
+            },
+            "funnel_data": [
+                {"stage": "awareness", "users": 10000, "conversion_rate": 0.15},
+                {"stage": "interest", "users": 1500, "conversion_rate": 0.25},
+                {"stage": "consideration", "users": 375, "conversion_rate": 0.40},
+                {"stage": "purchase", "users": 150, "conversion_rate": 1.0}
+            ]
+        }
+        
         success, data = self.run_test(
             "Full Growth Scan",
-            "GET",
-            "api/growth/full-scan"
+            "POST",
+            "api/growth/full-scan",
+            data=full_scan_data
         )
         
         if success and data.get('status') == 'success':
