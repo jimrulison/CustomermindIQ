@@ -31,6 +31,37 @@ const WebsiteAnalyticsDashboard = ({
   onNavigate 
 }) => {
 
+  const [updating, setUpdating] = useState(false);
+  const [updateMessage, setUpdateMessage] = useState('');
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+
+  // Handle UPDATE ALL button click
+  const handleUpdateAll = async () => {
+    try {
+      setUpdating(true);
+      setUpdateMessage('Initiating comprehensive website analysis...');
+      
+      const response = await axios.post(`${backendUrl}/api/website-intelligence/update-all`);
+      console.log('Update initiated:', response.data);
+      
+      setUpdateMessage('✅ Update started! This may take up to 15 minutes to complete. You can continue using other features while the analysis runs in the background.');
+      
+      // Clear message after 8 seconds
+      setTimeout(() => {
+        setUpdateMessage('');
+        setUpdating(false);
+      }, 8000);
+      
+    } catch (error) {
+      console.error('Error updating websites:', error);
+      setUpdateMessage('❌ Update failed. Please try again or contact support.');
+      setTimeout(() => {
+        setUpdateMessage('');
+        setUpdating(false);
+      }, 5000);
+    }
+  };
+
   // Website Analytics focused modules
   const websiteModules = [
     {
