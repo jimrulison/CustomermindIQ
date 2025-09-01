@@ -39,7 +39,7 @@ const CompetitiveIntelligenceDashboard = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [selectedTimePeriod, setSelectedTimePeriod] = useState('90_days');
 
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://mongodb-fix-1.preview.emergentagent.com';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
   // Load competitive intelligence data
   const loadCompetitiveData = async () => {
