@@ -5,6 +5,7 @@ from .growth_opportunity_scanner import GrowthOpportunityScanner, growth_opportu
 from .automated_ab_testing import AutomatedABTestingService, ab_testing_router  
 from .revenue_leak_detector import RevenueLeakDetector, revenue_leak_router
 from .roi_calculator import ROICalculator, roi_calculator_router
+from .growth_engine_dashboard import growth_dashboard_router
 from .models import *
 
 __version__ = "1.0.0"
