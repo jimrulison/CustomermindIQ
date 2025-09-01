@@ -147,9 +147,11 @@ class AdminSystemTester:
         if success and response:
             self.admin_token = response.get('access_token')
             user_info = response.get('user_profile', {})  # Changed from 'user' to 'user_profile'
+            self.admin_user_id = user_info.get('user_id')  # Store the actual user ID
             print(f"   ✅ Admin token obtained: {self.admin_token[:50]}...")
             print(f"   User role: {user_info.get('role', 'unknown')}")
             print(f"   User email: {user_info.get('email', 'unknown')}")
+            print(f"   User ID: {self.admin_user_id}")
             return True
         else:
             print("   ❌ Failed to obtain admin token")
