@@ -414,7 +414,11 @@ class AdminSystemTester:
             return False
         
         # First, get a test user ID (we'll use admin user for testing)
-        test_user_id = "admin"  # Using admin user ID for testing
+        test_user_id = self.admin_user_id  # Using actual admin user ID for testing
+        
+        if not test_user_id:
+            print("❌ No admin user ID available for discount application testing")
+            return False
         
         # Test applying percentage discount
         if self.test_percentage_discount_id:
