@@ -62,7 +62,7 @@ const AdminPortal = () => {
     );
   }
 
-  // Admin Dashboard
+  // Admin Dashboard - only shows if user has admin access
   return (
     <div className="min-h-screen bg-slate-900">
       {/* Header */}
@@ -73,13 +73,9 @@ const AdminPortal = () => {
               <Shield className="w-8 h-8 text-red-400 mr-3" />
               <h1 className="text-2xl font-bold text-white">CustomerMind IQ Admin Portal</h1>
             </div>
-            <button
-              onClick={handleLogout}
-              className="flex items-center px-4 py-2 bg-red-600/20 text-red-400 rounded-lg hover:bg-red-600/30 transition-colors"
-            >
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
-            </button>
+            <div className="text-sm text-slate-300">
+              Welcome, {user?.email} ({user?.role})
+            </div>
           </div>
         </div>
       </div>
