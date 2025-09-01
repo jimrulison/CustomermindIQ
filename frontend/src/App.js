@@ -891,6 +891,11 @@ function AppContent() {
           <ExecutiveIntelligenceDashboard />
         )}
         
+        {/* Growth Acceleration Engine Module */}
+        {currentPage === 'growth-acceleration' && (
+          <GrowthAccelerationEngine />
+        )}
+        
         {/* Growth Intelligence Suite Module */}
         {currentPage === 'growth' && (
           <GrowthIntelligenceSuite />
