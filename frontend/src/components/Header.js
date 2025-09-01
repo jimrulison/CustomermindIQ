@@ -89,8 +89,10 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
     {
       id: 'growth-acceleration',
       label: 'Growth Acceleration Engine',
+      subtitle: 'Annual Subscribers Only',
       icon: Zap,
-      color: 'hover:bg-yellow-600/20 hover:text-yellow-400'
+      color: 'hover:bg-yellow-600/20 hover:text-yellow-400',
+      requiresAnnual: true
     },
     {
       id: 'growth',
