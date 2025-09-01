@@ -455,6 +455,10 @@ const Training = () => {
             <Lightbulb className="w-4 h-4 mr-2" />
             Educational
           </TabsTrigger>
+          <TabsTrigger value="growth-engine" className="flex items-center">
+            <Zap className="w-4 h-4 mr-2" />
+            Growth Engine
+          </TabsTrigger>
         </TabsList>
 
         {/* Videos Tab */}
