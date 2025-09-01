@@ -140,7 +140,7 @@ class AdminSystemTester:
         
         if success and response:
             self.admin_token = response.get('access_token')
-            user_info = response.get('user', {})
+            user_info = response.get('user_profile', {})  # Changed from 'user' to 'user_profile'
             print(f"   ✅ Admin token obtained: {self.admin_token[:50]}...")
             print(f"   User role: {user_info.get('role', 'unknown')}")
             print(f"   User email: {user_info.get('email', 'unknown')}")
