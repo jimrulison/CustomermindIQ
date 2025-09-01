@@ -189,6 +189,16 @@ const WebsiteAnalyticsDashboard = ({
         </div>
       </div>
 
+      {/* Update Status Message */}
+      {updateMessage && (
+        <Alert className="bg-emerald-500/10 border-emerald-500/30">
+          <Clock className="h-4 w-4 text-emerald-400" />
+          <AlertDescription className="text-emerald-300">
+            {updateMessage}
+          </AlertDescription>
+        </Alert>
+      )}
+
       {/* Key Performance Indicators */}
       <div className="grid gap-4 md:grid-cols-4">
         <Card className="bg-gradient-to-br from-emerald-600/20 to-emerald-800/20 border-emerald-500/30">
