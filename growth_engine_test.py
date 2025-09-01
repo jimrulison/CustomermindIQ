@@ -375,6 +375,7 @@ class GrowthEngineOpportunityTester:
         # Run main tests
         diversity_ok = self.test_opportunity_scan_diversity()
         dashboard_ok = self.test_dashboard_endpoint()
+        opportunities_dashboard_ok = self.test_opportunities_dashboard_endpoint()
         full_scan_ok = self.test_full_scan_endpoint()
         
         # Summary
