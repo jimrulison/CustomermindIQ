@@ -255,6 +255,10 @@ async def get_active_banners(
     # Filter by user and tier targeting
     filtered_banners = []
     for banner in banners:
+        # Remove ObjectId
+        if "_id" in banner:
+            del banner["_id"]
+            
         # Check if banner targets this user specifically
         if banner.get("target_users") and current_user.email not in banner["target_users"]:
             continue
