@@ -387,6 +387,11 @@ async def get_all_discounts(
     
     discounts = await db.discounts.find(query).sort("created_at", -1).to_list(length=100)
     
+    # Convert ObjectId to string for JSON serialization
+    for discount in discounts:
+        if "_id" in discount:
+            del discount["_id"]  # Remove MongoDB ObjectId
+    
     return {
         "discounts": discounts,
         "total": len(discounts)
