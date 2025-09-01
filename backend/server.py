@@ -98,6 +98,15 @@ from modules.website_intelligence_hub import website_intelligence_router
 # Import Support System Module
 from modules.support_system import router as support_router
 
+# Import Growth Acceleration Engine Module
+from modules.growth_acceleration_engine import (
+    growth_opportunity_router,
+    ab_testing_router,
+    revenue_leak_router,
+    roi_calculator_router,
+    growth_dashboard_router
+)
+
 # Import Payment System Module
 from modules.payment_system import router as payment_router
 
