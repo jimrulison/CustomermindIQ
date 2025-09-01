@@ -677,6 +677,337 @@ const Training = () => {
             })}
           </div>
         </TabsContent>
+
+        {/* Growth Acceleration Engine Tab */}
+        <TabsContent value="growth-engine" className="space-y-6">
+          <div className="grid gap-6">
+            {/* Overview Section */}
+            <Card className="bg-gradient-to-r from-emerald-900/30 to-blue-900/30 backdrop-blur-xl border-emerald-500/30">
+              <CardHeader>
+                <div className="flex items-center space-x-3">
+                  <div className="p-3 bg-emerald-500/20 rounded-lg">
+                    <Zap className="w-8 h-8 text-emerald-400" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-2xl text-white">Growth Acceleration Engine</CardTitle>
+                    <CardDescription className="text-slate-300 text-lg">
+                      AI-Powered Growth Intelligence for Annual Subscribers
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <h3 className="text-lg font-semibold text-emerald-400">What It Does</h3>
+                    <p className="text-slate-300">
+                      Turn your customer data into actionable growth strategies. Our AI continuously analyzes 
+                      your business to identify the top growth opportunities, automatically test optimizations, 
+                      detect revenue leaks, and track ROI for every initiative.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <h3 className="text-lg font-semibold text-blue-400">Value & Access</h3>
+                    <p className="text-slate-300">
+                      Worth $249/month as a standalone product, completely <strong>FREE</strong> for 
+                      CustomerMindIQ annual subscribers. Access requires annual Professional or Enterprise plan.
+                    </p>
+                    <Badge className="bg-emerald-500/20 text-emerald-400">
+                      Annual Subscribers Only
+                    </Badge>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Core Features */}
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Growth Opportunity Scanner */}
+              <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+                <CardHeader>
+                  <div className="flex items-center space-x-3">
+                    <Target className="w-6 h-6 text-emerald-400" />
+                    <CardTitle className="text-emerald-400">Growth Opportunity Scanner</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-slate-300">
+                    AI identifies your top 3 monthly growth opportunities ranked by revenue impact and 
+                    implementation difficulty.
+                  </p>
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-white">Key Features:</h4>
+                    <ul className="space-y-1 text-sm text-slate-300">
+                      <li>• Analyzes 50+ growth factors automatically</li>
+                      <li>• Prioritizes by projected revenue impact</li>
+                      <li>• Provides step-by-step action plans</li>
+                      <li>• Shows confidence scores and timelines</li>
+                      <li>• Covers acquisition, retention, and expansion</li>
+                    </ul>
+                  </div>
+                  <div className="p-3 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
+                    <p className="text-xs text-emerald-300">
+                      <strong>Example:</strong> "Increase email marketing spend on Segment A for $12,000 monthly impact"
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Automated A/B Testing */}
+              <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+                <CardHeader>
+                  <div className="flex items-center space-x-3">
+                    <BarChart3 className="w-6 h-6 text-blue-400" />
+                    <CardTitle className="text-blue-400">Automated A/B Testing</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-slate-300">
+                    AI generates, runs, and analyzes A/B tests automatically. Set it and forget it growth optimization.
+                  </p>
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-white">Automation Features:</h4>
+                    <ul className="space-y-1 text-sm text-slate-300">
+                      <li>• AI creates test variants automatically</li>
+                      <li>• Statistical significance calculations</li>
+                      <li>• Auto-deploys winning variants</li>
+                      <li>• Continuous optimization cycles</li>
+                      <li>• Landing pages, emails, pricing tests</li>
+                    </ul>
+                  </div>
+                  <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                    <p className="text-xs text-blue-300">
+                      <strong>Result:</strong> Average 15-25% improvement in tested elements
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Revenue Leak Detection */}
+              <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+                <CardHeader>
+                  <div className="flex items-center space-x-3">
+                    <AlertTriangle className="w-6 h-6 text-orange-400" />
+                    <CardTitle className="text-orange-400">Revenue Leak Detection</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-slate-300">
+                    Find hidden money in your sales funnel. Identifies exactly where you're losing potential revenue.
+                  </p>
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-white">Leak Types Detected:</h4>
+                    <ul className="space-y-1 text-sm text-slate-300">
+                      <li>• Conversion funnel bottlenecks</li>
+                      <li>• Customer onboarding dropoffs</li>
+                      <li>• Retention and churn issues</li>
+                      <li>• Pricing optimization gaps</li>
+                      <li>• Feature adoption problems</li>
+                    </ul>
+                  </div>
+                  <div className="p-3 bg-orange-500/10 rounded-lg border border-orange-500/20">
+                    <p className="text-xs text-orange-300">
+                      <strong>Impact:</strong> Average recovery of $30,000+ monthly revenue from top leaks
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* ROI Calculator */}
+              <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+                <CardHeader>
+                  <div className="flex items-center space-x-3">
+                    <Calculator className="w-6 h-6 text-purple-400" />
+                    <CardTitle className="text-purple-400">ROI Calculator & Tracking</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-slate-300">
+                    Measure financial impact of every growth initiative with comprehensive ROI tracking and projections.
+                  </p>
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-white">Financial Analytics:</h4>
+                    <ul className="space-y-1 text-sm text-slate-300">
+                      <li>• Projected vs actual performance tracking</li>
+                      <li>• Payback period calculations</li>
+                      <li>• 12-month and 24-month ROI projections</li>
+                      <li>• Risk-adjusted return analysis</li>
+                      <li>• Continuous prediction improvements</li>
+                    </ul>
+                  </div>
+                  <div className="p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                    <p className="text-xs text-purple-300">
+                      <strong>Typical ROI:</strong> 300-600% return within 12 months
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* How to Use Section */}
+            <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+              <CardHeader>
+                <CardTitle className="text-xl text-white flex items-center">
+                  <BookOpen className="w-6 h-6 mr-3 text-blue-400" />
+                  How to Use the Growth Acceleration Engine
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-8 h-8 bg-emerald-500/20 rounded-full flex items-center justify-center">
+                        <span className="text-emerald-400 font-bold">1</span>
+                      </div>
+                      <h3 className="font-semibold text-emerald-400">Access & Setup</h3>
+                    </div>
+                    <ul className="space-y-2 text-sm text-slate-300 ml-10">
+                      <li>• Upgrade to Annual Professional or Enterprise plan</li>
+                      <li>• Navigate to "Growth Acceleration Engine" in header</li>
+                      <li>• Click "Full Growth Scan" to begin analysis</li>
+                      <li>• Wait 5-15 minutes for AI to analyze your data</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
+                        <span className="text-blue-400 font-bold">2</span>
+                      </div>
+                      <h3 className="font-semibold text-blue-400">Review Opportunities</h3>
+                    </div>
+                    <ul className="space-y-2 text-sm text-slate-300 ml-10">
+                      <li>• Review top 3 monthly growth opportunities</li>
+                      <li>• Check projected revenue impact and confidence scores</li>
+                      <li>• Read detailed action plans and timelines</li>
+                      <li>• Prioritize by implementation difficulty vs impact</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
+                        <span className="text-purple-400 font-bold">3</span>
+                      </div>
+                      <h3 className="font-semibold text-purple-400">Implement & Track</h3>
+                    </div>
+                    <ul className="space-y-2 text-sm text-slate-300 ml-10">
+                      <li>• Generate A/B tests for top opportunities</li>
+                      <li>• Fix identified revenue leaks first</li>
+                      <li>• Monitor ROI dashboard for results</li>
+                      <li>• Run monthly scans for new opportunities</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Best Practices */}
+            <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+              <CardHeader>
+                <CardTitle className="text-xl text-white flex items-center">
+                  <Award className="w-6 h-6 mr-3 text-yellow-400" />
+                  Best Practices for Maximum Results
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <h3 className="font-semibold text-yellow-400">🎯 Getting Started Right</h3>
+                    <ul className="space-y-1 text-sm text-slate-300">
+                      <li>• Start with revenue leak fixes (quickest wins)</li>
+                      <li>• Focus on "high impact, low effort" opportunities first</li>
+                      <li>• Implement one opportunity fully before starting the next</li>
+                      <li>• Allow 2-4 weeks to see measurable results</li>
+                      <li>• Run new growth scans monthly for fresh insights</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <h3 className="font-semibold text-yellow-400">📊 Maximizing ROI</h3>
+                    <ul className="space-y-1 text-sm text-slate-300">
+                      <li>• Trust the AI confidence scores - they improve over time</li>
+                      <li>• Let A/B tests run to statistical significance</li>
+                      <li>• Track actual vs projected results to teach the AI</li>
+                      <li>• Use the 80/20 rule: focus on top opportunities</li>
+                      <li>• Compound wins by reinvesting returns into new opportunities</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Success Story */}
+            <Card className="bg-gradient-to-r from-green-900/20 to-emerald-900/20 backdrop-blur-xl border-green-500/30">
+              <CardHeader>
+                <CardTitle className="text-xl text-white flex items-center">
+                  <TrendingUp className="w-6 h-6 mr-3 text-green-400" />
+                  Real Success Story
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid md:grid-cols-3 gap-4">
+                  <div className="text-center p-4 bg-green-500/10 rounded-lg">
+                    <div className="text-2xl font-bold text-green-400">$55K</div>
+                    <div className="text-sm text-slate-300">Additional MRR</div>
+                  </div>
+                  <div className="text-center p-4 bg-green-500/10 rounded-lg">
+                    <div className="text-2xl font-bold text-green-400">34%</div>
+                    <div className="text-sm text-slate-300">Revenue Growth</div>
+                  </div>
+                  <div className="text-center p-4 bg-green-500/10 rounded-lg">
+                    <div className="text-2xl font-bold text-green-400">6</div>
+                    <div className="text-sm text-slate-300">Months to Result</div>
+                  </div>
+                </div>
+                <p className="text-slate-300 text-sm">
+                  <strong>B2B SaaS Company ($2M ARR):</strong> Growth Engine identified three key opportunities: 
+                  optimizing LinkedIn vs Google Ads (28% better conversion), launching at-risk customer retention 
+                  sequences, and adding social proof to pricing pages. Result: $55K additional MRR within 6 months.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Access Information */}
+            <Card className="bg-yellow-900/20 backdrop-blur-xl border-yellow-500/30">
+              <CardHeader>
+                <CardTitle className="text-xl text-white flex items-center">
+                  <Lock className="w-6 h-6 mr-3 text-yellow-400" />
+                  Access Requirements
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <h3 className="font-semibold text-yellow-400">✅ Who Has Access</h3>
+                    <ul className="space-y-1 text-sm text-slate-300">
+                      <li>• Annual Professional plan subscribers</li>
+                      <li>• Annual Enterprise plan subscribers</li>
+                      <li>• All admin and super admin users</li>
+                      <li>• 7-day free trial includes full access</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <h3 className="font-semibold text-yellow-400">❌ Access Restrictions</h3>
+                    <ul className="space-y-1 text-sm text-slate-300">
+                      <li>• Monthly plan subscribers (upgrade required)</li>
+                      <li>• Free tier users</li>
+                      <li>• Starter plan subscribers</li>
+                      <li>• Shows upgrade prompt with pricing details</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                  <p className="text-sm text-yellow-300">
+                    <strong>💡 Tip:</strong> The Growth Acceleration Engine typically pays for itself within 2-4 months 
+                    through identified opportunities. Annual plans also save 20% compared to monthly billing.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
       </Tabs>
 
       {/* Video Player Modal */}
