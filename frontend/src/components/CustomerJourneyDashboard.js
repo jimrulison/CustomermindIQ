@@ -34,7 +34,7 @@ const CustomerJourneyDashboard = () => {
   const [performance, setPerformance] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://mongodb-fix-1.preview.emergentagent.com';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
   // Load journey data
   const loadJourneyData = async () => {
