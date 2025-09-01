@@ -237,6 +237,32 @@ class GrowthEngineOpportunityTester:
         
         if success and data.get('status') == 'success':
             dashboard = data.get('dashboard', {})
+            metrics = dashboard.get('metrics', {})
+            
+            print(f"   Total opportunities: {metrics.get('total_opportunities_identified', 0)}")
+            print(f"   Projected revenue: ${metrics.get('total_projected_revenue', 0):,}")
+            print(f"   Active tests: {metrics.get('active_tests_count', 0)}")
+            print(f"   Revenue leaks fixed: {metrics.get('revenue_leaks_fixed', 0)}")
+            print(f"   Average ROI: {metrics.get('average_roi', 0):.2f}x")
+            
+            return True
+        else:
+            return False
+    
+    def test_opportunities_dashboard_endpoint(self):
+        """Test the opportunities-specific dashboard endpoint"""
+        print("\n" + "="*80)
+        print("📈 TESTING OPPORTUNITIES DASHBOARD")
+        print("="*80)
+        
+        success, data = self.run_test(
+            "Opportunities Dashboard",
+            "GET",
+            "api/growth/opportunities/dashboard"
+        )
+        
+        if success and data.get('status') == 'success':
+            dashboard = data.get('dashboard', {})
             opportunities = dashboard.get('opportunities', {})
             
             print(f"   Total opportunities: {opportunities.get('total', 0)}")
