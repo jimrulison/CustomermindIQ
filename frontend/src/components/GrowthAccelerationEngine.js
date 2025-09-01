@@ -580,6 +580,8 @@ const GrowthAccelerationEngine = () => {
             )}
           </div>
         )}
+        </>
+        )}
       </div>
     </div>
   );
