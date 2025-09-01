@@ -697,6 +697,11 @@ const Training = () => {
                       />
                     </div>
                     <div>
+                      <div className="mb-2">
+                        <div className="text-sm font-bold text-red-300 bg-red-900/40 px-3 py-1 rounded-full border border-red-500/50 inline-block mb-2">
+                          🔥 AVAILABLE ONLY TO ANNUAL SUBSCRIBERS
+                        </div>
+                      </div>
                       <CardTitle className="text-3xl text-white mb-2">Growth Acceleration Engine</CardTitle>
                       <CardDescription className="text-xl text-orange-200 font-medium">
                         AI-Powered Growth Intelligence • Worth $249/month
