@@ -1,581 +1,335 @@
-"""
-Customer Mind IQ - Payment Processing System
-Stripe integration for SaaS subscription management
-"""
-
-from fastapi import APIRouter, HTTPException, Request, BackgroundTasks, Depends
-from pydantic import BaseModel, Field
-from typing import Dict, Optional, Any, List
-from datetime import datetime, timedelta
+# Payment System with Stripe Integration
 import os
-import uuid
-import asyncio
+from fastapi import APIRouter, HTTPException, Depends
 from motor.motor_asyncio import AsyncIOMotorClient
-from emergentintegrations.payments.stripe.checkout import StripeCheckout, CheckoutSessionResponse, CheckoutStatusResponse, CheckoutSessionRequest
+from typing import List, Dict, Any, Optional
+from datetime import datetime, timedelta
+from pydantic import BaseModel, Field
+import stripe
+import secrets
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # MongoDB setup
 MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
+DB_NAME = os.getenv("DB_NAME", "customer_mind_iq")
 client = AsyncIOMotorClient(MONGO_URL)
-db = client.customer_mind_iq
+db = client[DB_NAME]
 
-router = APIRouter()
+# Stripe configuration
+stripe.api_key = os.getenv("STRIPE_API_KEY", "sk_test_emergent")
 
-# Subscription Plans Configuration (Server-side defined for security)
+router = APIRouter(prefix="/api/payments", tags=["Payments"])
+
+# Models
+class PaymentRequest(BaseModel):
+    plan_type: str  # 'starter', 'professional', 'enterprise'
+    billing_cycle: str  # 'monthly', 'annual'
+    discount_code: Optional[str] = None
+
+class PaymentMethodRequest(BaseModel):
+    payment_method_id: str
+    customer_email: str
+
+# Subscription Plans Configuration
 SUBSCRIPTION_PLANS = {
-    "free": {
-        "name": "Free Tier",
-        "price": 0.0,
-        "currency": "usd",
-        "billing_cycle": "monthly",
+    "starter": {
+        "name": "Starter Plan",
+        "monthly_price": 4900,  # $49 in cents
+        "annual_price": 39900,  # $399 in cents (2 months free)
         "features": [
-            "Basic customer intelligence",
-            "Up to 1,000 customer profiles",
-            "5 AI insights per month",
-            "Email support",
-            "Basic dashboard"
-        ],
-        "limits": {
-            "customer_profiles": 1000,
-            "ai_insights": 5,
-            "api_calls": 1000,
-            "data_storage": 1,  # GB
-            "support_channels": ["email"],
-            "modules": ["basic_intelligence"]
-        }
+            "Basic customer analytics",
+            "Email marketing automation",
+            "Up to 1,000 contacts",
+            "Standard support"
+        ]
     },
     "professional": {
-        "name": "Professional Tier",
-        "price": 99.0,
-        "currency": "usd",
-        "billing_cycle": "monthly",
+        "name": "Professional Plan", 
+        "monthly_price": 9900,  # $99 in cents
+        "annual_price": 79900,  # $799 in cents (2 months free)
         "features": [
-            "Full customer intelligence suite",
-            "Up to 50,000 customer profiles",
-            "Unlimited AI insights",
-            "Marketing automation",
-            "Revenue analytics",
-            "Website intelligence",
+            "Advanced customer intelligence",
+            "AI-powered insights", 
+            "Up to 10,000 contacts",
+            "A/B testing capabilities",
             "Priority support",
-            "Advanced dashboard",
-            "API access"
-        ],
-        "limits": {
-            "customer_profiles": 50000,
-            "ai_insights": -1,  # Unlimited
-            "api_calls": 10000,
-            "data_storage": 50,  # GB
-            "support_channels": ["email", "chat"],
-            "modules": ["all"]
-        }
+            "Growth Acceleration Engine"  # Exclusive to annual
+        ]
     },
     "enterprise": {
-        "name": "Enterprise Tier",
-        "price": 299.0,
-        "currency": "usd",
-        "billing_cycle": "monthly",
+        "name": "Enterprise Plan",
+        "monthly_price": 19900,  # $199 in cents
+        "annual_price": 159900,  # $1,599 in cents (2 months free)
         "features": [
-            "Everything in Professional",
-            "Unlimited customer profiles",
-            "White-label options",
+            "Unlimited contacts",
             "Custom integrations",
             "Dedicated account manager",
-            "Phone support",
-            "Custom onboarding",
-            "SLA guarantees",
-            "Advanced security",
-            "Custom reporting"
-        ],
-        "limits": {
-            "customer_profiles": -1,  # Unlimited
-            "ai_insights": -1,  # Unlimited
-            "api_calls": 100000,
-            "data_storage": 500,  # GB
-            "support_channels": ["email", "chat", "phone"],
-            "modules": ["all", "white_label", "custom"]
-        }
+            "White-label options",
+            "Advanced analytics",
+            "Growth Acceleration Engine",  # Exclusive to annual
+            "Custom AI models"
+        ]
     }
 }
 
-# Pydantic Models
-class SubscriptionRequest(BaseModel):
-    plan_id: str = Field(..., description="Subscription plan ID (free, professional, enterprise)")
-    origin_url: str = Field(..., description="Frontend origin URL for redirect URLs")
-    metadata: Optional[Dict[str, str]] = Field(default_factory=dict, description="Additional metadata")
-
-class PaymentTransaction(BaseModel):
-    transaction_id: str
-    session_id: Optional[str] = None
-    user_id: Optional[str] = None
-    email: Optional[str] = None
-    plan_id: str
-    amount: float
-    currency: str
-    payment_status: str = "pending"
-    checkout_status: str = "initiated"
-    metadata: Dict[str, str] = Field(default_factory=dict)
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
-    success_url: Optional[str] = None
-    cancel_url: Optional[str] = None
-
-class SubscriptionStatus(BaseModel):
-    user_id: Optional[str] = None
-    email: Optional[str] = None
-    current_plan: str = "free"
-    subscription_id: Optional[str] = None
-    status: str = "active"
-    start_date: datetime = Field(default_factory=datetime.utcnow)
-    end_date: Optional[datetime] = None
-    auto_renewal: bool = True
-    usage_stats: Dict[str, int] = Field(default_factory=dict)
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
-
-class WebhookEvent(BaseModel):
-    event_type: str
-    event_id: str
-    session_id: Optional[str] = None
-    payment_status: str
-    metadata: Dict[str, str] = Field(default_factory=dict)
-    processed_at: datetime = Field(default_factory=datetime.utcnow)
-
-# Initialize Stripe Checkout
-def get_stripe_checkout(request: Request) -> StripeCheckout:
-    """Initialize Stripe checkout with dynamic webhook URL"""
-    api_key = os.getenv("STRIPE_API_KEY")
-    if not api_key:
-        raise HTTPException(status_code=500, detail="Stripe API key not configured")
-    
-    # Use request base URL to construct webhook URL
-    host_url = str(request.base_url).rstrip('/')
-    webhook_url = f"{host_url}/api/webhook/stripe"
-    
-    return StripeCheckout(api_key=api_key, webhook_url=webhook_url)
-
-# Payment Processing Endpoints
-
-@router.post("/subscription/checkout")
-async def create_subscription_checkout(
-    request: SubscriptionRequest,
-    http_request: Request,
-    background_tasks: BackgroundTasks
-):
-    """Create a Stripe checkout session for subscription"""
-    
-    # Validate plan exists
-    if request.plan_id not in SUBSCRIPTION_PLANS:
-        raise HTTPException(status_code=400, detail="Invalid subscription plan")
-    
-    plan = SUBSCRIPTION_PLANS[request.plan_id]
-    
-    # Free tier doesn't require payment
-    if request.plan_id == "free":
-        # Create free subscription record
-        subscription = SubscriptionStatus(
-            current_plan="free",
-            status="active"
-        )
-        
-        result = await db.subscriptions.insert_one(subscription.dict())
-        
-        return {
-            "success": True,
-            "message": "Free subscription activated",
-            "plan": plan,
-            "subscription_id": str(result.inserted_id)
-        }
-    
-    # For paid plans, create Stripe checkout
+# Helper Functions
+async def get_or_create_stripe_customer(email: str, name: str = None):
+    """Get or create Stripe customer"""
     try:
-        stripe_checkout = get_stripe_checkout(http_request)
+        # Check if customer already exists in our database
+        existing_customer = await db.stripe_customers.find_one({"email": email})
+        if existing_customer:
+            return existing_customer["stripe_customer_id"]
         
-        # Generate transaction ID
-        transaction_id = str(uuid.uuid4())
+        # Create new Stripe customer
+        customer_data = {"email": email}
+        if name:
+            customer_data["name"] = name
+            
+        stripe_customer = stripe.Customer.create(**customer_data)
         
-        # Construct success and cancel URLs
-        origin_url = request.origin_url.rstrip('/')
-        success_url = f"{origin_url}/subscription/success?session_id={{CHECKOUT_SESSION_ID}}"
-        cancel_url = f"{origin_url}/subscription/cancel"
+        # Store in our database
+        await db.stripe_customers.insert_one({
+            "email": email,
+            "stripe_customer_id": stripe_customer.id,
+            "created_at": datetime.utcnow()
+        })
         
-        # Prepare metadata
-        metadata = {
-            "plan_id": request.plan_id,
-            "transaction_id": transaction_id,
-            "source": "subscription_checkout",
-            **request.metadata
-        }
-        
-        # Create checkout session
-        checkout_request = CheckoutSessionRequest(
-            amount=plan["price"],
-            currency=plan["currency"],
-            success_url=success_url,
-            cancel_url=cancel_url,
-            metadata=metadata
-        )
-        
-        session: CheckoutSessionResponse = await stripe_checkout.create_checkout_session(checkout_request)
-        
-        # Create payment transaction record
-        transaction = PaymentTransaction(
-            transaction_id=transaction_id,
-            session_id=session.session_id,
-            plan_id=request.plan_id,
-            amount=plan["price"],
-            currency=plan["currency"],
-            payment_status="pending",
-            checkout_status="initiated",
-            metadata=metadata,
-            success_url=success_url,
-            cancel_url=cancel_url
-        )
-        
-        # Store in database
-        await db.payment_transactions.insert_one(transaction.dict())
-        
-        return {
-            "success": True,
-            "checkout_url": session.url,
-            "session_id": session.session_id,
-            "transaction_id": transaction_id,
-            "plan": plan
-        }
+        return stripe_customer.id
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to create checkout session: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Customer creation failed: {str(e)}")
 
-@router.get("/checkout/status/{session_id}")
-async def get_checkout_status(session_id: str, http_request: Request):
-    """Check the status of a checkout session and update database"""
+async def apply_discount(amount: int, discount_code: str) -> tuple:
+    """Apply discount code and return new amount and discount info"""
+    if not discount_code:
+        return amount, None
     
+    # Get discount from database
+    discount = await db.discounts.find_one({
+        "code": discount_code.upper(),
+        "is_active": True,
+        "valid_until": {"$gte": datetime.utcnow()}
+    })
+    
+    if not discount:
+        raise HTTPException(status_code=400, detail="Invalid or expired discount code")
+    
+    if discount["current_uses"] >= discount["max_uses"]:
+        raise HTTPException(status_code=400, detail="Discount code usage limit exceeded")
+    
+    # Calculate discounted amount
+    discount_amount = int(amount * (discount["discount_percentage"] / 100))
+    final_amount = amount - discount_amount
+    
+    return final_amount, discount
+
+# Payment Endpoints
+@router.post("/create-payment-intent")
+async def create_payment_intent(payment_request: PaymentRequest):
+    """Create Stripe payment intent"""
     try:
-        stripe_checkout = get_stripe_checkout(http_request)
+        plan = SUBSCRIPTION_PLANS.get(payment_request.plan_type)
+        if not plan:
+            raise HTTPException(status_code=400, detail="Invalid plan type")
         
-        # Get status from Stripe
-        checkout_status: CheckoutStatusResponse = await stripe_checkout.get_checkout_status(session_id)
+        # Get amount based on billing cycle
+        if payment_request.billing_cycle == "monthly":
+            amount = plan["monthly_price"]
+        elif payment_request.billing_cycle == "annual":
+            amount = plan["annual_price"]
+        else:
+            raise HTTPException(status_code=400, detail="Invalid billing cycle")
         
-        # Find transaction in database
-        transaction = await db.payment_transactions.find_one({"session_id": session_id})
+        # Apply discount if provided
+        final_amount, discount_info = await apply_discount(amount, payment_request.discount_code)
         
-        if not transaction:
-            raise HTTPException(status_code=404, detail="Transaction not found")
-        
-        # Check if already processed to prevent double processing
-        if transaction.get("payment_status") == "paid" and checkout_status.payment_status == "paid":
-            return {
-                "success": True,
-                "status": checkout_status.status,
-                "payment_status": checkout_status.payment_status,
-                "amount_total": checkout_status.amount_total,
-                "currency": checkout_status.currency,
-                "message": "Payment already processed"
+        # Create payment intent
+        intent = stripe.PaymentIntent.create(
+            amount=final_amount,
+            currency='usd',
+            metadata={
+                'plan_type': payment_request.plan_type,
+                'billing_cycle': payment_request.billing_cycle,
+                'original_amount': amount,
+                'discount_code': payment_request.discount_code or '',
+                'discount_applied': str(amount - final_amount) if discount_info else '0'
             }
+        )
         
-        # Update transaction status
-        update_data = {
-            "payment_status": checkout_status.payment_status,
-            "checkout_status": checkout_status.status,
+        return {
+            "status": "success",
+            "client_secret": intent.client_secret,
+            "amount": final_amount,
+            "original_amount": amount,
+            "discount_applied": amount - final_amount if discount_info else 0,
+            "plan_details": plan
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Payment intent creation failed: {str(e)}")
+
+@router.post("/confirm-payment")
+async def confirm_payment(payment_data: dict):
+    """Confirm payment and activate subscription"""
+    try:
+        payment_intent_id = payment_data.get("payment_intent_id")
+        user_email = payment_data.get("user_email")
+        
+        if not payment_intent_id or not user_email:
+            raise HTTPException(status_code=400, detail="Missing required payment data")
+        
+        # Retrieve payment intent from Stripe
+        intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+        
+        if intent.status != "succeeded":
+            raise HTTPException(status_code=400, detail="Payment not successful")
+        
+        # Extract metadata
+        metadata = intent.metadata
+        plan_type = metadata.get("plan_type")
+        billing_cycle = metadata.get("billing_cycle")
+        discount_code = metadata.get("discount_code")
+        
+        # Update user subscription in database
+        subscription_data = {
+            "plan_type": plan_type,
+            "billing_cycle": billing_cycle,
+            "subscription_tier": "annual" if billing_cycle == "annual" else "monthly",
+            "payment_intent_id": payment_intent_id,
+            "amount_paid": intent.amount,
+            "subscription_start": datetime.utcnow(),
+            "subscription_end": datetime.utcnow() + timedelta(
+                days=365 if billing_cycle == "annual" else 30
+            ),
+            "is_active": True,
             "updated_at": datetime.utcnow()
         }
         
-        await db.payment_transactions.update_one(
-            {"session_id": session_id},
-            {"$set": update_data}
+        # Update user record
+        result = await db.users.update_one(
+            {"email": user_email},
+            {"$set": subscription_data}
         )
         
-        # If payment successful, create/update subscription
-        if checkout_status.payment_status == "paid" and transaction.get("payment_status") != "paid":
-            await activate_subscription(transaction, checkout_status)
+        if result.matched_count == 0:
+            raise HTTPException(status_code=404, detail="User not found")
         
-        return {
-            "success": True,
-            "status": checkout_status.status,
-            "payment_status": checkout_status.payment_status,
-            "amount_total": checkout_status.amount_total,
-            "currency": checkout_status.currency,
-            "transaction_id": transaction.get("transaction_id"),
-            "plan_id": transaction.get("plan_id")
+        # Update discount usage if applied
+        if discount_code:
+            await db.discounts.update_one(
+                {"code": discount_code.upper()},
+                {"$inc": {"current_uses": 1}}
+            )
+        
+        # Record payment in payments collection
+        payment_record = {
+            "id": secrets.token_urlsafe(16),
+            "user_email": user_email,
+            "payment_intent_id": payment_intent_id,
+            "plan_type": plan_type,
+            "billing_cycle": billing_cycle,
+            "amount": intent.amount,
+            "currency": intent.currency,
+            "discount_code": discount_code,
+            "payment_date": datetime.utcnow(),
+            "status": "completed"
         }
         
+        await db.payments.insert_one(payment_record)
+        
+        return {
+            "status": "success",
+            "message": "Payment confirmed and subscription activated",
+            "subscription": subscription_data
+        }
+        
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to check checkout status: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Payment confirmation failed: {str(e)}")
 
-@router.post("/webhook/stripe")
-async def stripe_webhook(request: Request, background_tasks: BackgroundTasks):
-    """Handle Stripe webhook events"""
-    
-    try:
-        stripe_checkout = get_stripe_checkout(request)
-        
-        # Get request body and signature
-        body = await request.body()
-        signature = request.headers.get("Stripe-Signature")
-        
-        if not signature:
-            raise HTTPException(status_code=400, detail="Missing Stripe signature")
-        
-        # Handle webhook
-        webhook_response = await stripe_checkout.handle_webhook(body, signature)
-        
-        # Log webhook event
-        webhook_event = WebhookEvent(
-            event_type=webhook_response.event_type,
-            event_id=webhook_response.event_id,
-            session_id=webhook_response.session_id,
-            payment_status=webhook_response.payment_status,
-            metadata=webhook_response.metadata
-        )
-        
-        await db.webhook_events.insert_one(webhook_event.dict())
-        
-        # Process webhook based on event type
-        if webhook_response.event_type == "checkout.session.completed":
-            background_tasks.add_task(process_successful_payment, webhook_response)
-        elif webhook_response.event_type == "invoice.payment_failed":
-            background_tasks.add_task(process_failed_payment, webhook_response)
-        
-        return {"success": True, "event_processed": webhook_response.event_type}
-        
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Webhook processing failed: {str(e)}")
-
-# Helper Functions
-
-async def activate_subscription(transaction: dict, checkout_status: CheckoutStatusResponse):
-    """Activate subscription after successful payment"""
-    
-    plan_id = transaction.get("plan_id")
-    if not plan_id:
-        return
-    
-    # Calculate subscription end date (monthly billing)
-    end_date = datetime.utcnow() + timedelta(days=30)
-    
-    # Create or update subscription
-    subscription_data = {
-        "current_plan": plan_id,
-        "subscription_id": checkout_status.metadata.get("transaction_id"),
-        "status": "active",
-        "start_date": datetime.utcnow(),
-        "end_date": end_date,
-        "auto_renewal": True,
-        "usage_stats": {},
-        "updated_at": datetime.utcnow()
-    }
-    
-    # If user_id or email available, link subscription
-    if transaction.get("email"):
-        subscription_data["email"] = transaction.get("email")
-    if transaction.get("user_id"):
-        subscription_data["user_id"] = transaction.get("user_id")
-    
-    # Upsert subscription
-    filter_query = {}
-    if transaction.get("email"):
-        filter_query["email"] = transaction.get("email")
-    elif transaction.get("user_id"):
-        filter_query["user_id"] = transaction.get("user_id")
-    else:
-        filter_query["subscription_id"] = checkout_status.metadata.get("transaction_id")
-    
-    await db.subscriptions.update_one(
-        filter_query,
-        {"$set": subscription_data},
-        upsert=True
-    )
-
-async def process_successful_payment(webhook_response):
-    """Background task to process successful payment"""
-    
-    if not webhook_response.session_id:
-        return
-    
-    # Find and update transaction
-    transaction = await db.payment_transactions.find_one({"session_id": webhook_response.session_id})
-    
-    if transaction and transaction.get("payment_status") != "paid":
-        # Update payment status
-        await db.payment_transactions.update_one(
-            {"session_id": webhook_response.session_id},
-            {"$set": {
-                "payment_status": "paid",
-                "updated_at": datetime.utcnow()
-            }}
-        )
-        
-        # Activate subscription
-        checkout_status = CheckoutStatusResponse(
-            status="complete",
-            payment_status="paid",
-            amount_total=int(transaction.get("amount", 0) * 100),  # Convert to cents
-            currency=transaction.get("currency", "usd"),
-            metadata=webhook_response.metadata
-        )
-        
-        await activate_subscription(transaction, checkout_status)
-
-async def process_failed_payment(webhook_response):
-    """Background task to process failed payment"""
-    
-    if webhook_response.session_id:
-        # Update transaction status
-        await db.payment_transactions.update_one(
-            {"session_id": webhook_response.session_id},
-            {"$set": {
-                "payment_status": "failed",
-                "updated_at": datetime.utcnow()
-            }}
-        )
-
-# Subscription Management Endpoints
-
-@router.get("/subscription/plans")
+@router.get("/subscription-plans")
 async def get_subscription_plans():
     """Get available subscription plans"""
-    
     return {
-        "success": True,
+        "status": "success",
         "plans": SUBSCRIPTION_PLANS
     }
 
-@router.get("/subscription/current")
-async def get_current_subscription(email: Optional[str] = None, user_id: Optional[str] = None):
-    """Get current subscription status"""
-    
-    if not email and not user_id:
-        raise HTTPException(status_code=400, detail="Email or user_id required")
-    
-    # Find subscription
-    filter_query = {}
-    if email:
-        filter_query["email"] = email
-    elif user_id:
-        filter_query["user_id"] = user_id
-    
-    subscription = await db.subscriptions.find_one(filter_query)
-    
-    if not subscription:
-        # Return default free subscription
-        return {
-            "success": True,
-            "subscription": {
-                "current_plan": "free",
-                "status": "active",
-                "features": SUBSCRIPTION_PLANS["free"]["features"],
-                "limits": SUBSCRIPTION_PLANS["free"]["limits"]
-            }
-        }
-    
-    # Add plan details
-    plan_id = subscription.get("current_plan", "free")
-    plan_details = SUBSCRIPTION_PLANS.get(plan_id, SUBSCRIPTION_PLANS["free"])
-    
-    return {
-        "success": True,
-        "subscription": {
-            **subscription,
-            "features": plan_details["features"],
-            "limits": plan_details["limits"],
-            "_id": str(subscription.get("_id"))
-        }
-    }
-
-@router.get("/transactions/history")
-async def get_transaction_history(email: Optional[str] = None, user_id: Optional[str] = None, limit: int = 10):
-    """Get payment transaction history"""
-    
-    filter_query = {}
-    if email:
-        filter_query["email"] = email
-    elif user_id:
-        filter_query["user_id"] = user_id
-    
-    transactions = await db.payment_transactions.find(filter_query).sort("created_at", -1).limit(limit).to_list(length=limit)
-    
-    # Convert ObjectId to string
-    for transaction in transactions:
-        transaction["_id"] = str(transaction.get("_id"))
-    
-    return {
-        "success": True,
-        "transactions": transactions,
-        "total": len(transactions)
-    }
-
-@router.post("/subscription/cancel")
-async def cancel_subscription(email: Optional[str] = None, user_id: Optional[str] = None):
-    """Cancel current subscription"""
-    
-    if not email and not user_id:
-        raise HTTPException(status_code=400, detail="Email or user_id required")
-    
-    filter_query = {}
-    if email:
-        filter_query["email"] = email
-    elif user_id:
-        filter_query["user_id"] = user_id
-    
-    # Update subscription to cancelled
-    result = await db.subscriptions.update_one(
-        filter_query,
-        {"$set": {
-            "status": "cancelled",
-            "auto_renewal": False,
-            "updated_at": datetime.utcnow()
-        }}
-    )
-    
-    if result.matched_count == 0:
-        raise HTTPException(status_code=404, detail="Subscription not found")
-    
-    return {
-        "success": True,
-        "message": "Subscription cancelled successfully"
-    }
-
-# Analytics and Admin Endpoints
-
-@router.get("/admin/dashboard")
-async def get_admin_dashboard():
-    """Get payment and subscription analytics dashboard"""
-    
+@router.get("/user-subscription/{user_email}")
+async def get_user_subscription(user_email: str):
+    """Get user's current subscription"""
     try:
-        # Payment statistics
-        total_transactions = await db.payment_transactions.count_documents({})
-        successful_payments = await db.payment_transactions.count_documents({"payment_status": "paid"})
-        total_revenue = await db.payment_transactions.aggregate([
-            {"$match": {"payment_status": "paid"}},
-            {"$group": {"_id": None, "total": {"$sum": "$amount"}}}
-        ]).to_list(length=1)
+        user = await db.users.find_one(
+            {"email": user_email},
+            {
+                "plan_type": 1,
+                "billing_cycle": 1,
+                "subscription_tier": 1,
+                "subscription_start": 1,
+                "subscription_end": 1,
+                "is_active": 1
+            }
+        )
         
-        # Subscription statistics
-        active_subscriptions = await db.subscriptions.count_documents({"status": "active"})
-        subscription_breakdown = await db.subscriptions.aggregate([
-            {"$group": {"_id": "$current_plan", "count": {"$sum": 1}}}
-        ]).to_list(length=10)
-        
-        # Recent transactions
-        recent_transactions = await db.payment_transactions.find({}).sort("created_at", -1).limit(5).to_list(length=5)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
         
         return {
-            "success": True,
-            "analytics": {
-                "payments": {
-                    "total_transactions": total_transactions,
-                    "successful_payments": successful_payments,
-                    "success_rate": successful_payments / total_transactions * 100 if total_transactions > 0 else 0,
-                    "total_revenue": total_revenue[0]["total"] if total_revenue else 0
-                },
-                "subscriptions": {
-                    "active_subscriptions": active_subscriptions,
-                    "plan_breakdown": subscription_breakdown
-                },
-                "recent_transactions": recent_transactions
+            "status": "success",
+            "subscription": {
+                "plan_type": user.get("plan_type"),
+                "billing_cycle": user.get("billing_cycle"),
+                "subscription_tier": user.get("subscription_tier"),
+                "subscription_start": user.get("subscription_start"),
+                "subscription_end": user.get("subscription_end"),
+                "is_active": user.get("is_active", False),
+                "has_annual_access": user.get("subscription_tier") == "annual"
             }
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to generate dashboard: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Subscription fetch failed: {str(e)}")
 
-# Export router
-__all__ = ["router"]
+@router.post("/validate-discount")
+async def validate_discount_code(discount_data: dict):
+    """Validate discount code"""
+    try:
+        code = discount_data.get("code", "").upper()
+        
+        if not code:
+            raise HTTPException(status_code=400, detail="Discount code required")
+        
+        discount = await db.discounts.find_one({
+            "code": code,
+            "is_active": True,
+            "valid_until": {"$gte": datetime.utcnow()}
+        })
+        
+        if not discount:
+            return {"status": "error", "message": "Invalid or expired discount code"}
+        
+        if discount["current_uses"] >= discount["max_uses"]:
+            return {"status": "error", "message": "Discount code usage limit exceeded"}
+        
+        return {
+            "status": "success",
+            "discount": {
+                "code": discount["code"],
+                "discount_percentage": discount["discount_percentage"],
+                "remaining_uses": discount["max_uses"] - discount["current_uses"]
+            }
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Discount validation failed: {str(e)}")
