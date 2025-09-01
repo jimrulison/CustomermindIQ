@@ -138,7 +138,10 @@ class GrowthOpportunityScanner:
                 )
                 opportunities.append(opportunity)
             
-            # Store opportunities in database
+            # Clear previous opportunities for this customer before storing new ones
+            await self.db.growth_opportunities.delete_many({"customer_id": customer_id})
+            
+            # Store new opportunities in database
             for opportunity in opportunities:
                 await self.db.growth_opportunities.update_one(
                     {"id": opportunity.id},
