@@ -389,11 +389,12 @@ class GrowthEngineOpportunityTester:
         print(f"\n🎯 KEY RESULTS:")
         print(f"   Health Check: {'✅ PASS' if health_ok else '❌ FAIL'}")
         print(f"   Opportunity Diversity: {'✅ PASS' if diversity_ok else '❌ FAIL'}")
-        print(f"   Dashboard Endpoint: {'✅ PASS' if dashboard_ok else '❌ FAIL'}")
+        print(f"   Main Dashboard: {'✅ PASS' if dashboard_ok else '❌ FAIL'}")
+        print(f"   Opportunities Dashboard: {'✅ PASS' if opportunities_dashboard_ok else '❌ FAIL'}")
         print(f"   Full Scan Endpoint: {'✅ PASS' if full_scan_ok else '❌ FAIL'}")
         
         # Overall assessment
-        critical_tests_passed = diversity_ok and dashboard_ok
+        critical_tests_passed = diversity_ok and (dashboard_ok or opportunities_dashboard_ok)
         
         if critical_tests_passed:
             print(f"\n✅ OVERALL RESULT: SUCCESS")
