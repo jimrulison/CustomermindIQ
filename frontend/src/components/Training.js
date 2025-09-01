@@ -681,40 +681,93 @@ const Training = () => {
         {/* Growth Acceleration Engine Tab */}
         <TabsContent value="growth-engine" className="space-y-6">
           <div className="grid gap-6">
-            {/* Overview Section */}
-            <Card className="bg-gradient-to-r from-emerald-900/30 to-blue-900/30 backdrop-blur-xl border-emerald-500/30">
-              <CardHeader>
-                <div className="flex items-center space-x-3">
-                  <div className="p-3 bg-emerald-500/20 rounded-lg">
-                    <Zap className="w-8 h-8 text-emerald-400" />
+            {/* Premium Feature Header with Logo */}
+            <Card className="bg-gradient-to-r from-red-900/40 via-orange-900/40 to-yellow-900/40 backdrop-blur-xl border-red-500/50 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-yellow-500/10"></div>
+              <CardHeader className="relative">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-4 bg-white/10 backdrop-blur-xl rounded-lg border border-white/20">
+                      <img 
+                        src="https://customer-assets.emergentagent.com/job_mongodb-fix-1/artifacts/qr1tdbbk_Customer%20Mind%20IQ%20logo.png" 
+                        alt="CustomerMind IQ" 
+                        className="w-12 h-12 object-contain"
+                      />
+                    </div>
+                    <div>
+                      <CardTitle className="text-3xl text-white mb-2">Growth Acceleration Engine</CardTitle>
+                      <CardDescription className="text-xl text-orange-200 font-medium">
+                        AI-Powered Growth Intelligence • Worth $249/month
+                      </CardDescription>
+                    </div>
                   </div>
-                  <div>
-                    <CardTitle className="text-2xl text-white">Growth Acceleration Engine</CardTitle>
-                    <CardDescription className="text-slate-300 text-lg">
-                      AI-Powered Growth Intelligence for Annual Subscribers
-                    </CardDescription>
+                  <div className="text-right">
+                    <div className="px-6 py-3 bg-red-600/80 backdrop-blur-xl rounded-lg border border-red-400/50 shadow-lg">
+                      <div className="text-lg font-bold text-white">AVAILABLE ONLY TO</div>
+                      <div className="text-xl font-black text-yellow-300">ANNUAL SUBSCRIBERS</div>
+                    </div>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-3">
-                    <h3 className="text-lg font-semibold text-emerald-400">What It Does</h3>
-                    <p className="text-slate-300">
-                      Turn your customer data into actionable growth strategies. Our AI continuously analyzes 
+              <CardContent className="relative space-y-6">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-bold text-orange-300 flex items-center">
+                      <Zap className="w-6 h-6 mr-2" />
+                      What This Premium Module Does
+                    </h3>
+                    <p className="text-white text-lg leading-relaxed">
+                      Transform your customer data into <strong>actionable growth strategies</strong>. Our AI continuously analyzes 
                       your business to identify the top growth opportunities, automatically test optimizations, 
                       detect revenue leaks, and track ROI for every initiative.
                     </p>
+                    <div className="space-y-2">
+                      <div className="flex items-center text-emerald-300">
+                        <CheckCircle className="w-5 h-5 mr-2" />
+                        <span>Identifies $10K-$50K+ monthly opportunities</span>
+                      </div>
+                      <div className="flex items-center text-emerald-300">
+                        <CheckCircle className="w-5 h-5 mr-2" />
+                        <span>Automates A/B testing and optimization</span>
+                      </div>
+                      <div className="flex items-center text-emerald-300">
+                        <CheckCircle className="w-5 h-5 mr-2" />
+                        <span>Finds hidden revenue leaks in your funnel</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="space-y-3">
-                    <h3 className="text-lg font-semibold text-blue-400">Value & Access</h3>
-                    <p className="text-slate-300">
-                      Worth $249/month as a standalone product, completely <strong>FREE</strong> for 
-                      CustomerMindIQ annual subscribers. Access requires annual Professional or Enterprise plan.
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-bold text-yellow-300 flex items-center">
+                      <Award className="w-6 h-6 mr-2" />
+                      Exclusive Annual Subscriber Value
+                    </h3>
+                    <div className="p-6 bg-gradient-to-br from-green-900/50 to-emerald-900/50 rounded-lg border border-green-400/30">
+                      <div className="text-center space-y-3">
+                        <div className="text-3xl font-black text-green-300">$249/month</div>
+                        <div className="text-lg text-white font-semibold">Standalone Value</div>
+                        <div className="text-2xl font-bold text-yellow-300">100% FREE</div>
+                        <div className="text-white">for Annual Professional & Enterprise</div>
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <Badge className="bg-red-500/80 text-white text-lg px-4 py-2 font-bold">
+                        🔒 PREMIUM FEATURE
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Upgrade CTA for Non-Annual Users */}
+                <div className="p-6 bg-gradient-to-r from-blue-900/50 to-purple-900/50 rounded-lg border border-blue-400/30">
+                  <div className="text-center space-y-4">
+                    <h3 className="text-2xl font-bold text-white">🚀 Ready to Accelerate Your Growth?</h3>
+                    <p className="text-blue-200 text-lg">
+                      Upgrade to an Annual plan today and unlock the Growth Acceleration Engine 
+                      plus save 20% on your subscription.
                     </p>
-                    <Badge className="bg-emerald-500/20 text-emerald-400">
-                      Annual Subscribers Only
-                    </Badge>
+                    <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 text-lg">
+                      Upgrade to Annual Plan →
+                    </Button>
                   </div>
                 </div>
               </CardContent>
