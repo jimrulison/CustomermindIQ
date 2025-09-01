@@ -59,12 +59,15 @@ The **Website Intelligence Hub** is a comprehensive website analysis and monitor
   - Gold: Enterprise Plan
 
 #### 3. Update All Button
-- **Location**: Top-right, next to membership badge
-- **Function**: Refreshes data for all monitored websites
+- **Location**: Website Analytics Dashboard - Top-right, next to "Website Focus" badges
+- **Function**: Refreshes data for all monitored websites (SEO, Performance, Security, Content)
+- **Duration**: May take up to 15 minutes to complete comprehensive analysis
 - **Visual States**:
-  - Normal: "Update All" with refresh icon
+  - Normal: "UPDATE ALL" with refresh icon
   - Loading: "Updating..." with spinning icon
 - **Usage**: Click to trigger a comprehensive re-analysis of all your websites
+- **Scope**: Updates only Website Analytics data (not Customer Analytics)
+- **Background Processing**: You can continue using other platform features while updates run
 
 ---
 
