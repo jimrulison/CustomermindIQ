@@ -49,9 +49,10 @@ Get up and running in **15 minutes** with this step-by-step guide. Transform you
 4. **Priority Action Items**: What to fix first
 
 #### **Quick Dashboard Tour**:
+- **Location**: Click "WEBSITE ANALYTICS" button in header, then navigate to Website Analytics Dashboard
 - **Top Cards**: Websites Monitored, Health Score, Keywords Tracked, Performance Score
 - **Membership Badge**: Shows your current plan (Basic, Professional, Enterprise)
-- **Update All Button**: Refreshes data for all websites
+- **UPDATE ALL Button**: Located on Website Analytics Dashboard - refreshes all website data (takes up to 15 minutes)
 
 ### **Phase 2: Explore All Features** (7 minutes)
 
