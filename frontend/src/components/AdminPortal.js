@@ -603,20 +603,178 @@ const AdminPortal = () => {
 
         {activeTab === 'banners' && (
           <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
-            <h2 className="text-xl font-bold text-white mb-4">Banner Management</h2>
-            <p className="text-slate-400 mb-6">Create and manage system-wide announcements and banners.</p>
-            <div className="text-center py-8">
-              <p className="text-slate-400">Banner management interface coming soon...</p>
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h2 className="text-xl font-bold text-white">Banner Management</h2>
+                <p className="text-slate-400">Create and manage system-wide announcements and banners.</p>
+              </div>
+              <button
+                onClick={() => setShowBannerForm(true)}
+                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Create Banner
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {banners.length === 0 ? (
+                <div className="text-center py-8">
+                  <Megaphone className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+                  <p className="text-slate-400">No banners created yet. Create your first banner!</p>
+                </div>
+              ) : (
+                banners.map((banner) => (
+                  <div key={banner.banner_id} className="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3 mb-2">
+                          <h3 className="font-semibold text-white">{banner.title}</h3>
+                          <span className={`px-2 py-1 rounded text-xs font-medium ${
+                            banner.status === 'active' ? 'bg-green-500/20 text-green-400' :
+                            banner.status === 'scheduled' ? 'bg-yellow-500/20 text-yellow-400' :
+                            banner.status === 'expired' ? 'bg-red-500/20 text-red-400' :
+                            'bg-slate-500/20 text-slate-400'
+                          }`}>
+                            {banner.status}
+                          </span>
+                          <span className={`px-2 py-1 rounded text-xs font-medium ${
+                            banner.banner_type === 'info' ? 'bg-blue-500/20 text-blue-400' :
+                            banner.banner_type === 'success' ? 'bg-green-500/20 text-green-400' :
+                            banner.banner_type === 'warning' ? 'bg-yellow-500/20 text-yellow-400' :
+                            banner.banner_type === 'error' ? 'bg-red-500/20 text-red-400' :
+                            'bg-purple-500/20 text-purple-400'
+                          }`}>
+                            {banner.banner_type}
+                          </span>
+                        </div>
+                        <p className="text-slate-300 text-sm mb-2">{banner.message}</p>
+                        <div className="flex items-center space-x-4 text-xs text-slate-500">
+                          <span>Priority: {banner.priority}</span>
+                          <span>Views: {banner.views}</span>
+                          <span>Clicks: {banner.clicks}</span>
+                          {banner.start_date && <span>Start: {new Date(banner.start_date).toLocaleDateString()}</span>}
+                          {banner.end_date && <span>End: {new Date(banner.end_date).toLocaleDateString()}</span>}
+                        </div>
+                      </div>
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() => {
+                            setEditingItem(banner);
+                            setShowBannerForm(true);
+                          }}
+                          className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
+                        >
+                          <Edit className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={async () => {
+                            if (window.confirm('Are you sure you want to delete this banner?')) {
+                              try {
+                                await axios.delete(`${backendUrl}/api/admin/banners/${banner.banner_id}`, {
+                                  headers: getAuthHeaders()
+                                });
+                                loadBanners();
+                              } catch (error) {
+                                console.error('Failed to delete banner:', error);
+                              }
+                            }
+                          }}
+                          className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-600 rounded"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         )}
 
         {activeTab === 'discounts' && (
           <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
-            <h2 className="text-xl font-bold text-white mb-4">Discount Management</h2>
-            <p className="text-slate-400 mb-6">Create and manage discount codes and promotional offers.</p>
-            <div className="text-center py-8">
-              <p className="text-slate-400">Discount management interface coming soon...</p>
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h2 className="text-xl font-bold text-white">Discount Management</h2>
+                <p className="text-slate-400">Create and manage discount codes and promotional offers for all users.</p>
+              </div>
+              <button
+                onClick={() => setShowDiscountForm(true)}
+                className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Create Discount
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {discounts.length === 0 ? (
+                <div className="text-center py-8">
+                  <DollarSign className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+                  <p className="text-slate-400">No discounts created yet. Create your first discount!</p>
+                </div>
+              ) : (
+                discounts.map((discount) => (
+                  <div key={discount.discount_id} className="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3 mb-2">
+                          <h3 className="font-semibold text-white">{discount.name}</h3>
+                          <span className={`px-2 py-1 rounded text-xs font-medium ${
+                            discount.is_active ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                          }`}>
+                            {discount.is_active ? 'Active' : 'Inactive'}
+                          </span>
+                          <span className="px-2 py-1 rounded text-xs font-medium bg-blue-500/20 text-blue-400">
+                            {discount.discount_type === 'percentage' ? `${discount.value}%` :
+                             discount.discount_type === 'fixed_amount' ? `$${discount.value}` :
+                             `${discount.value} months`}
+                          </span>
+                        </div>
+                        <p className="text-slate-300 text-sm mb-2">{discount.description}</p>
+                        <div className="flex items-center space-x-4 text-xs text-slate-500">
+                          <span>Uses: {discount.total_uses}</span>
+                          {discount.usage_limit && <span>Limit: {discount.usage_limit}</span>}
+                          <span>Per User: {discount.per_user_limit}</span>
+                          {discount.target_users?.length > 0 && <span>Targeted Users: {discount.target_users.length}</span>}
+                          {discount.start_date && <span>Start: {new Date(discount.start_date).toLocaleDateString()}</span>}
+                          {discount.end_date && <span>End: {new Date(discount.end_date).toLocaleDateString()}</span>}
+                        </div>
+                      </div>
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() => {
+                            setEditingItem(discount);
+                            setShowDiscountForm(true);
+                          }}
+                          className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
+                        >
+                          <Edit className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={async () => {
+                            if (window.confirm('Are you sure you want to delete this discount?')) {
+                              try {
+                                await axios.delete(`${backendUrl}/api/admin/discounts/${discount.discount_id}`, {
+                                  headers: getAuthHeaders()
+                                });
+                                loadDiscounts();
+                              } catch (error) {
+                                console.error('Failed to delete discount:', error);
+                              }
+                            }
+                          }}
+                          className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-600 rounded"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         )}
@@ -661,6 +819,33 @@ const AdminPortal = () => {
               <p className="text-slate-400">System settings interface coming soon...</p>
             </div>
           </div>
+        )}
+
+        {/* Show forms */}
+        {showBannerForm && (
+          <BannerForm
+            banner={editingItem}
+            onClose={() => {
+              setShowBannerForm(false);
+              setEditingItem(null);
+            }}
+            onSuccess={() => {
+              setEditingItem(null);
+            }}
+          />
+        )}
+
+        {showDiscountForm && (
+          <DiscountForm
+            discount={editingItem}
+            onClose={() => {
+              setShowDiscountForm(false);
+              setEditingItem(null);
+            }}
+            onSuccess={() => {
+              setEditingItem(null);
+            }}
+          />
         )}
       </div>
     </div>
