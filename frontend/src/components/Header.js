@@ -248,6 +248,16 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
             <div className="hidden sm:flex items-center space-x-2 text-slate-300">
               <User className="w-4 h-4" />
               <span className="text-sm">{user?.name || 'Demo User'}</span>
+              {/* Admin Portal Access - Only for admin users */}
+              {(user?.role === 'admin' || user?.role === 'super_admin') && (
+                <button
+                  onClick={() => onNavigate('admin-portal')}
+                  className="px-2 py-1 text-xs bg-red-600/20 text-red-400 rounded border border-red-600/30 hover:bg-red-600/30 transition-colors"
+                  title="Admin Portal"
+                >
+                  <Settings className="w-3 h-3" />
+                </button>
+              )}
             </div>
             <Button
               onClick={onSignOut}
