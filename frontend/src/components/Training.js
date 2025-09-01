@@ -1036,7 +1036,7 @@ const Training = () => {
                   <div className="flex items-center space-x-4">
                     <div className="p-3 bg-white/10 backdrop-blur-xl rounded-lg border border-white/20">
                       <img 
-                        src="https://customer-assets.emergentagent.com/job_mongodb-fix-1/artifacts/qr1tdbbk_Customer%20Mind%20IQ%20logo.png" 
+                        src="https://customer-assets.emergentagent.com/job_mind-iq-dashboard/artifacts/blwfaa7a_Customer%20Mind%20IQ%20logo.png" 
                         alt="CustomerMind IQ" 
                         className="w-8 h-8 object-contain"
                       />
