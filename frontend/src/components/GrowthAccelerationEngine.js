@@ -107,14 +107,28 @@ const GrowthAccelerationEngine = () => {
         ]
       };
 
-      const response = await axios.post(`${backendUrl}/api/growth/full-scan`, sampleData);
+      // Add timeout for long-running requests
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Scan timeout - taking longer than expected')), 60000)
+      );
+
+      const scanPromise = axios.post(`${backendUrl}/api/growth/full-scan`, sampleData, {
+        timeout: 45000 // 45 second timeout
+      });
+
+      const response = await Promise.race([scanPromise, timeoutPromise]);
+      
       if (response.data.status === 'success') {
-        alert(`Full scan completed! Found ${response.data.scan_results.opportunities_found} opportunities and ${response.data.scan_results.revenue_leaks_found} revenue leaks.`);
-        loadDashboard();
+        alert(`✅ Full scan completed successfully!\n\n📊 Results:\n• ${response.data.scan_results.opportunities_found} growth opportunities identified\n• ${response.data.scan_results.revenue_leaks_found} revenue leaks detected\n• $${response.data.scan_results.total_projected_impact?.toLocaleString() || '0'} total projected impact\n\nRefreshing dashboard...`);
+        await loadDashboard();
       }
     } catch (error) {
       console.error('Full scan error:', error);
-      alert('Full scan failed. Please try again.');
+      if (error.message.includes('timeout')) {
+        alert('⏱️ Scan is taking longer than expected. The analysis is still running in the background. Please check back in a few minutes and refresh the dashboard.');
+      } else {
+        alert('❌ Full scan encountered an error. Please try again or contact support if the issue persists.');
+      }
     } finally {
       setLoading(false);
     }
