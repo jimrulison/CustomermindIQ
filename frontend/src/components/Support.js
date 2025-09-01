@@ -68,7 +68,7 @@ const Support = () => {
       id: 3,
       category: "SEO",
       question: "How often should I update my keyword tracking?",
-      answer: "We recommend updating keyword data weekly for active optimization campaigns, or monthly for maintenance monitoring. Use the 'Update All' button to refresh all data across your websites.",
+      answer: "We recommend updating keyword data weekly for active optimization campaigns, or monthly for maintenance monitoring. Click 'WEBSITE ANALYTICS' in the header, then use the 'UPDATE ALL' button on the Website Analytics Dashboard to refresh all website data (takes up to 15 minutes).",
       manualRef: "Complete User Guide - Section 3.4: SEO Intelligence Tab"
     },
     {
