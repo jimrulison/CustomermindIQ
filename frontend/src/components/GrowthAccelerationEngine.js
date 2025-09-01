@@ -425,8 +425,12 @@ const GrowthAccelerationEngine = () => {
           <>
             {loading && (
               <div className="text-center py-12">
-                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                <p className="mt-2 text-gray-600">Loading...</p>
+                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 border-t-2 border-transparent"></div>
+                <p className="mt-4 text-gray-600 text-lg font-medium">Performing Growth Analysis...</p>
+                <p className="mt-2 text-gray-500 text-sm">AI is analyzing your business data to identify opportunities</p>
+                <div className="mt-4 w-64 mx-auto bg-gray-200 rounded-full h-2">
+                  <div className="bg-blue-600 h-2 rounded-full animate-pulse" style={{width: '60%'}}></div>
+                </div>
               </div>
             )}
 
