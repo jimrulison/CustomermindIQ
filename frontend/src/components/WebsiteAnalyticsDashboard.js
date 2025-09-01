@@ -178,6 +178,14 @@ const WebsiteAnalyticsDashboard = ({
             <Zap className="w-4 h-4 mr-1" />
             Performance Optimized
           </Badge>
+          <Button
+            onClick={handleUpdateAll}
+            disabled={updating}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold"
+          >
+            <RefreshCw className={`w-4 h-4 mr-2 ${updating ? 'animate-spin' : ''}`} />
+            {updating ? 'Updating...' : 'UPDATE ALL'}
+          </Button>
         </div>
       </div>
 
