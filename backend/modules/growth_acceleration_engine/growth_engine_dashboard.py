@@ -123,13 +123,27 @@ class GrowthEngineDashboard:
             )
     
     async def _get_top_opportunities(self, customer_id: str) -> List[GrowthOpportunity]:
-        """Get top growth opportunities"""
+        """Get top growth opportunities from most recent scan"""
         try:
+            # Get opportunities from the most recent scan (last 24 hours)
+            recent_cutoff = datetime.utcnow() - timedelta(hours=24)
             cursor = self.db.growth_opportunities.find(
-                {"customer_id": customer_id, "status": "identified"}
-            ).sort("projected_revenue_impact", -1).limit(5)
+                {
+                    "customer_id": customer_id, 
+                    "status": "identified",
+                    "created_at": {"$gte": recent_cutoff}
+                }
+            ).sort([("created_at", -1), ("projected_revenue_impact", -1)]).limit(5)
             
             opportunities_data = await cursor.to_list(length=5)
+            
+            # If no recent opportunities, get the latest ones regardless of time
+            if not opportunities_data:
+                cursor = self.db.growth_opportunities.find(
+                    {"customer_id": customer_id, "status": "identified"}
+                ).sort([("created_at", -1), ("projected_revenue_impact", -1)]).limit(3)
+                opportunities_data = await cursor.to_list(length=3)
+            
             return [GrowthOpportunity(**opp) for opp in opportunities_data]
         except:
             return []
