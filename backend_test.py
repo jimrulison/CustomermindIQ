@@ -59,6 +59,9 @@ class CustomerIntelligenceAITester:
         self.admin_token = None
         self.test_user_id = None
         self.test_admin_id = None
+        # NEW: Growth Acceleration Engine Tests
+        self.growth_engine_tests = 0
+        self.growth_engine_passed = 0
 
     def run_customer_intelligence_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
         """Run a Customer Intelligence API test"""
