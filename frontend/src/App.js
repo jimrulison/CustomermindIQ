@@ -49,6 +49,7 @@ import CreateCampaign from './components/CreateCampaign';
 import CustomerSuccessIntelligence from './components/CustomerSuccessIntelligence';
 import ExecutiveIntelligenceDashboard from './components/ExecutiveIntelligenceDashboard';
 import GrowthAccelerationEngine from './components/GrowthAccelerationEngine';
+import AdminPortal from './components/AdminPortal';
 import GrowthIntelligenceSuite from './components/GrowthIntelligenceSuite';
 import ProductIntelligenceHub from './components/ProductIntelligenceHub';
 import IntegrationDataHub from './components/IntegrationDataHub';
