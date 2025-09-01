@@ -6,6 +6,7 @@ Analyzes customer data to identify untapped growth opportunities using advanced 
 import asyncio
 import json
 import os
+import random
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 from fastapi import APIRouter, HTTPException, Depends
