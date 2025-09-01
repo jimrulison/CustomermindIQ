@@ -895,6 +895,11 @@ function AppContent() {
           <GrowthAccelerationEngine />
         )}
         
+        {/* Secure Admin Portal Module - Requires Admin Role */}
+        {currentPage === 'admin-portal' && (
+          <AdminPortal />
+        )}
+        
         {/* Growth Intelligence Suite Module */}
         {currentPage === 'growth' && (
           <GrowthIntelligenceSuite />
