@@ -24,7 +24,11 @@ import {
   Globe,
   Search,
   BarChart3,
-  Zap
+  Zap,
+  AlertTriangle,
+  Calculator,
+  Award,
+  Lock
 } from 'lucide-react';
 
 const Training = () => {
