@@ -281,19 +281,29 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
             {activeModules.map((button) => {
               const Icon = button.icon;
               const isActive = currentPage === button.id;
+              const hasAnnualSubscription = user && (user.subscription_tier === 'annual' || user.role === 'admin' || user.role === 'super_admin');
+              const canAccess = !button.requiresAnnual || hasAnnualSubscription;
               
               return (
                 <button
                   key={button.id}
-                  onClick={() => onNavigate(button.id)}
-                  className={`flex items-center px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
+                  onClick={() => canAccess ? onNavigate(button.id) : alert('This feature is available for Annual Subscribers only. Upgrade your subscription to access the Growth Acceleration Engine.')}
+                  className={`flex flex-col items-center px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
                     isActive
                       ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg transform scale-105'
-                      : `bg-slate-800/50 text-slate-300 border border-slate-600 ${button.color}`
+                      : `bg-slate-800/50 text-slate-300 border border-slate-600 ${canAccess ? button.color : 'opacity-75 cursor-not-allowed'}`
                   }`}
+                  disabled={!canAccess}
                 >
-                  <Icon className="w-4 h-4 mr-2" />
-                  {button.label}
+                  <div className="flex items-center">
+                    <Icon className="w-4 h-4 mr-2" />
+                    {button.label}
+                  </div>
+                  {button.requiresAnnual && (
+                    <div className="text-xs text-red-400 mt-1 font-semibold">
+                      {hasAnnualSubscription ? '✓ Annual Access' : 'Annual Subscribers Only'}
+                    </div>
+                  )}
                 </button>
               );
             })}
