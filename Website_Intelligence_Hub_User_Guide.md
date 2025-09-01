@@ -366,10 +366,13 @@ Each monitored website displays as an individual card:
 
 #### Loading States
 **Update All Button**:
-- Spinner animation during processing
-- Text change to "Updating..."
-- Disabled state prevents multiple clicks
+- Located on Website Analytics Dashboard (main dashboard)
+- Spinner animation during processing (up to 15 minutes)
+- Text changes to "Updating..." with spinning refresh icon
+- Disabled state prevents multiple clicks during processing
+- Shows progress message: "Update started! This may take up to 15 minutes to complete"
 - Automatic re-enable upon completion
+- Background processing allows continued use of other features
 
 ---
 
