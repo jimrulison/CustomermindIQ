@@ -376,12 +376,45 @@ const GrowthAccelerationEngine = () => {
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {loading && (
-          <div className="text-center py-12">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <p className="mt-2 text-gray-600">Loading...</p>
+        {/* Access Control - Show upgrade message for non-annual subscribers */}
+        {!hasAnnualAccess && (
+          <div className="text-center py-16">
+            <div className="max-w-md mx-auto">
+              <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-8 rounded-lg shadow-xl">
+                <h2 className="text-2xl font-bold mb-4">🚀 Growth Acceleration Engine</h2>
+                <p className="text-lg mb-6">
+                  This premium AI-powered growth acceleration system is available exclusively for Annual Subscribers.
+                </p>
+                <div className="bg-white/20 rounded-lg p-4 mb-6">
+                  <h3 className="font-semibold mb-2">What you'll get:</h3>
+                  <ul className="text-sm space-y-1">
+                    <li>• AI-powered growth opportunity identification</li>
+                    <li>• Automated A/B testing with smart recommendations</li>
+                    <li>• Revenue leak detection and fixes</li>
+                    <li>• Comprehensive ROI analysis and tracking</li>
+                    <li>• Unified growth dashboard with AI insights</li>
+                  </ul>
+                </div>
+                <button className="bg-white text-orange-600 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors">
+                  Upgrade to Annual Subscription
+                </button>
+                <p className="text-xs mt-4 opacity-90">
+                  Standalone value: $249/month • Included with Annual Plan
+                </p>
+              </div>
+            </div>
           </div>
         )}
+
+        {/* Main content - only show for annual subscribers */}
+        {hasAnnualAccess && (
+          <>
+            {loading && (
+              <div className="text-center py-12">
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                <p className="mt-2 text-gray-600">Loading...</p>
+              </div>
+            )}
 
         {/* Dashboard Tab */}
         {activeTab === 'dashboard' && dashboardData && (
