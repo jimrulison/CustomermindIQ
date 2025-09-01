@@ -87,6 +87,12 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
       color: 'hover:bg-indigo-600/20 hover:text-indigo-400'
     },
     {
+      id: 'growth-acceleration',
+      label: 'Growth Acceleration Engine',
+      icon: Zap,
+      color: 'hover:bg-yellow-600/20 hover:text-yellow-400'
+    },
+    {
       id: 'growth',
       label: 'Growth Intelligence',
       icon: TrendingUp,
