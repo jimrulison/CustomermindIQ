@@ -206,20 +206,6 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
 
           {/* User Info & Admin & Training & Support & Sign Out */}
           <div className="flex items-center space-x-4">
-            {/* Admin Portal Link - Opens in new tab (Updated 2025-09-01) */}
-            {(user?.role === 'admin' || user?.role === 'super_admin') && (
-              <a
-                href="/admin.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 bg-slate-800/50 text-slate-300 hover:bg-red-600/20 hover:text-red-400 border border-slate-600"
-              >
-                <Settings className="w-4 h-4 mr-2" />
-                Admin Portal
-                <span className="ml-1 text-xs">↗</span>
-              </a>
-            )}
-
             {/* Training Button */}
             <button
               onClick={() => onNavigate('training')}
