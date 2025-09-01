@@ -730,11 +730,12 @@ async def test_database_connection():
         # Test MongoDB connection
         from motor.motor_asyncio import AsyncIOMotorClient
         client = AsyncIOMotorClient(os.getenv("MONGO_URL", "mongodb://localhost:27017"))
-        db = client.customer_mind_iq
+        db_name = os.getenv("DB_NAME", "customer_mind_iq")
+        db = client[db_name]
         
         test_results = {
             "mongo_url": os.getenv("MONGO_URL", "not_set")[:50] + "..." if os.getenv("MONGO_URL") else "not_set",
-            "database_name": "customer_mind_iq"
+            "database_name": db_name
         }
         
         # Test 1: Connection
