@@ -461,9 +461,12 @@ const Training = () => {
             <Lightbulb className="w-4 h-4 mr-2" />
             Educational
           </TabsTrigger>
-          <TabsTrigger value="growth-engine" className="flex items-center">
+          <TabsTrigger value="growth-engine" className="flex items-center relative">
             <Zap className="w-4 h-4 mr-2" />
             Growth Engine
+            <Badge className="ml-2 bg-red-500/80 text-white text-xs px-2 py-0.5 font-bold">
+              ANNUAL ONLY
+            </Badge>
           </TabsTrigger>
         </TabsList>
 
