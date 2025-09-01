@@ -57,7 +57,6 @@ import AICommandCenter from './components/AICommandCenter';
 import WebsiteIntelligenceHub from './components/WebsiteIntelligenceHub';
 import Training from './components/Training';
 import Support from './components/Support';
-import Admin from './components/Admin';
 import KnowledgeBase from './components/KnowledgeBase';
 import './App.css';
 
