@@ -206,7 +206,7 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
 
           {/* User Info & Admin & Training & Support & Sign Out */}
           <div className="flex items-center space-x-4">
-            {/* Admin Portal Link - Opens in new tab */}
+            {/* Admin Portal Link - Opens in new tab (Updated 2025-09-01) */}
             {(user?.role === 'admin' || user?.role === 'super_admin') && (
               <a
                 href="/admin.html"
