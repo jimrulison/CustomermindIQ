@@ -35,6 +35,10 @@ class AdminSystemTester:
         print(f"   URL: {url}")
         
         try:
+            print(f"   Making {method} request...")
+            if data:
+                print(f"   Request data: {json.dumps(data, indent=2)}")
+            
             if method == 'GET':
                 response = requests.get(url, headers=headers, timeout=timeout)
             elif method == 'POST':
@@ -44,6 +48,7 @@ class AdminSystemTester:
             elif method == 'DELETE':
                 response = requests.delete(url, headers=headers, timeout=timeout)
 
+            print(f"   Response status: {response.status_code}")
             success = response.status_code == expected_status
             if success:
                 self.auth_passed += 1
@@ -52,7 +57,8 @@ class AdminSystemTester:
                     response_data = response.json()
                     print(f"   Response preview: {str(response_data)[:200]}...")
                     return True, response_data
-                except:
+                except Exception as json_error:
+                    print(f"   JSON parse error: {json_error}")
                     return True, {}
             else:
                 print(f"❌ Failed - Expected {expected_status}, got {response.status_code}")
