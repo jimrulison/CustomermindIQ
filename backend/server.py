@@ -2125,6 +2125,15 @@ app.include_router(website_intelligence_router, prefix="/api/website-intelligenc
 # Include Support System routes  
 app.include_router(support_router, prefix="/api/support", tags=["Support System"])
 
+# =====================================================
+# GROWTH ACCELERATION ENGINE MODULE ROUTERS
+# =====================================================
+app.include_router(growth_opportunity_router)
+app.include_router(ab_testing_router)
+app.include_router(revenue_leak_router)
+app.include_router(roi_calculator_router)
+app.include_router(growth_dashboard_router)
+
 # Include Payment System routes
 app.include_router(payment_router, prefix="/api/payments", tags=["Payment System"])
 
