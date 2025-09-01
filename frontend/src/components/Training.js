@@ -1026,59 +1026,184 @@ const Training = () => {
               </div>
             </div>
 
-            {/* How to Use Section */}
-            <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+            {/* How to Use Section - Premium Design */}
+            <Card className="bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-xl border-slate-600/50 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400"></div>
               <CardHeader>
-                <CardTitle className="text-xl text-white flex items-center">
-                  <BookOpen className="w-6 h-6 mr-3 text-blue-400" />
-                  How to Use the Growth Acceleration Engine
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-white/10 backdrop-blur-xl rounded-lg border border-white/20">
+                      <img 
+                        src="https://customer-assets.emergentagent.com/job_mongodb-fix-1/artifacts/qr1tdbbk_Customer%20Mind%20IQ%20logo.png" 
+                        alt="CustomerMind IQ" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
+                    <div>
+                      <CardTitle className="text-2xl text-white flex items-center">
+                        <BookOpen className="w-7 h-7 mr-3 text-blue-400" />
+                        How to Use the Growth Acceleration Engine
+                      </CardTitle>
+                      <p className="text-slate-300 text-lg mt-1">Professional implementation guide for maximum ROI</p>
+                    </div>
+                  </div>
+                  <Badge className="bg-red-500/80 text-white text-sm px-3 py-2 font-bold border border-red-400/50">
+                    ANNUAL ONLY
+                  </Badge>
+                </div>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-8 h-8 bg-emerald-500/20 rounded-full flex items-center justify-center">
-                        <span className="text-emerald-400 font-bold">1</span>
+              <CardContent className="space-y-8">
+                <div className="grid md:grid-cols-3 gap-8">
+                  <div className="space-y-4 group">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-emerald-500/25 transition-all duration-300">
+                        <span className="text-white font-bold text-lg">1</span>
                       </div>
-                      <h3 className="font-semibold text-emerald-400">Access & Setup</h3>
+                      <div>
+                        <h3 className="font-bold text-emerald-400 text-lg">Access & Setup</h3>
+                        <p className="text-slate-400 text-sm">Quick activation process</p>
+                      </div>
                     </div>
-                    <ul className="space-y-2 text-sm text-slate-300 ml-10">
-                      <li>• Upgrade to Annual Professional or Enterprise plan</li>
-                      <li>• Navigate to "Growth Acceleration Engine" in header</li>
-                      <li>• Click "Full Growth Scan" to begin analysis</li>
-                      <li>• Wait 5-15 minutes for AI to analyze your data</li>
-                    </ul>
+                    <div className="ml-15 space-y-3">
+                      <div className="flex items-start space-x-3">
+                        <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Upgrade to Annual Professional or Enterprise plan</p>
+                          <p className="text-slate-400 text-sm">Unlock immediate access + save 20%</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Navigate to "Growth Acceleration Engine" in header</p>
+                          <p className="text-slate-400 text-sm">Look for the ⚡ icon with "Annual Access" badge</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Click "Full Growth Scan" to begin analysis</p>
+                          <p className="text-slate-400 text-sm">AI starts analyzing your business data</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <Clock className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Wait 5-15 minutes for AI analysis</p>
+                          <p className="text-slate-400 text-sm">Continue using other features while scanning</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
-                        <span className="text-blue-400 font-bold">2</span>
+                  <div className="space-y-4 group">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300">
+                        <span className="text-white font-bold text-lg">2</span>
                       </div>
-                      <h3 className="font-semibold text-blue-400">Review Opportunities</h3>
+                      <div>
+                        <h3 className="font-bold text-blue-400 text-lg">Review Opportunities</h3>
+                        <p className="text-slate-400 text-sm">Smart prioritization</p>
+                      </div>
                     </div>
-                    <ul className="space-y-2 text-sm text-slate-300 ml-10">
-                      <li>• Review top 3 monthly growth opportunities</li>
-                      <li>• Check projected revenue impact and confidence scores</li>
-                      <li>• Read detailed action plans and timelines</li>
-                      <li>• Prioritize by implementation difficulty vs impact</li>
-                    </ul>
+                    <div className="ml-15 space-y-3">
+                      <div className="flex items-start space-x-3">
+                        <Target className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Review top 3 monthly growth opportunities</p>
+                          <p className="text-slate-400 text-sm">AI-ranked by impact and feasibility</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <BarChart3 className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Check projected revenue impact and confidence scores</p>
+                          <p className="text-slate-400 text-sm">Understand potential returns before investing</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Read detailed action plans and timelines</p>
+                          <p className="text-slate-400 text-sm">Step-by-step implementation guides</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <Award className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Prioritize by implementation difficulty vs impact</p>
+                          <p className="text-slate-400 text-sm">Focus on quick wins first</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
-                        <span className="text-purple-400 font-bold">3</span>
+                  <div className="space-y-4 group">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-purple-500/25 transition-all duration-300">
+                        <span className="text-white font-bold text-lg">3</span>
                       </div>
-                      <h3 className="font-semibold text-purple-400">Implement & Track</h3>
+                      <div>
+                        <h3 className="font-bold text-purple-400 text-lg">Implement & Track</h3>
+                        <p className="text-slate-400 text-sm">Execute & measure</p>
+                      </div>
                     </div>
-                    <ul className="space-y-2 text-sm text-slate-300 ml-10">
-                      <li>• Generate A/B tests for top opportunities</li>
-                      <li>• Fix identified revenue leaks first</li>
-                      <li>• Monitor ROI dashboard for results</li>
-                      <li>• Run monthly scans for new opportunities</li>
-                    </ul>
+                    <div className="ml-15 space-y-3">
+                      <div className="flex items-start space-x-3">
+                        <Zap className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Generate A/B tests for top opportunities</p>
+                          <p className="text-slate-400 text-sm">AI creates and runs tests automatically</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <AlertTriangle className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Fix identified revenue leaks first</p>
+                          <p className="text-slate-400 text-sm">Quickest path to immediate revenue recovery</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <TrendingUp className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Monitor ROI dashboard for results</p>
+                          <p className="text-slate-400 text-sm">Track actual vs projected performance</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <RefreshCw className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Run monthly scans for new opportunities</p>
+                          <p className="text-slate-400 text-sm">Continuous growth optimization</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Professional Implementation Timeline */}
+                <div className="mt-8 p-6 bg-gradient-to-r from-slate-800/80 to-slate-700/80 rounded-lg border border-slate-600/50">
+                  <h4 className="text-xl font-bold text-white mb-4 flex items-center">
+                    <Clock className="w-6 h-6 mr-2 text-yellow-400" />
+                    Professional Implementation Timeline
+                  </h4>
+                  <div className="grid md:grid-cols-4 gap-4">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-emerald-400">Week 1</div>
+                      <div className="text-sm text-slate-300">Setup & First Scan</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-blue-400">Week 2-3</div>
+                      <div className="text-sm text-slate-300">Fix Revenue Leaks</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-purple-400">Week 4-6</div>
+                      <div className="text-sm text-slate-300">Launch A/B Tests</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-yellow-400">Month 2+</div>
+                      <div className="text-sm text-slate-300">Scale Winners</div>
+                    </div>
                   </div>
                 </div>
               </CardContent>
