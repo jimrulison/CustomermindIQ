@@ -773,128 +773,257 @@ const Training = () => {
               </CardContent>
             </Card>
 
-            {/* Core Features */}
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Growth Opportunity Scanner */}
-              <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
-                <CardHeader>
-                  <div className="flex items-center space-x-3">
-                    <Target className="w-6 h-6 text-emerald-400" />
-                    <CardTitle className="text-emerald-400">Growth Opportunity Scanner</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-slate-300">
-                    AI identifies your top 3 monthly growth opportunities ranked by revenue impact and 
-                    implementation difficulty.
-                  </p>
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-white">Key Features:</h4>
-                    <ul className="space-y-1 text-sm text-slate-300">
-                      <li>• Analyzes 50+ growth factors automatically</li>
-                      <li>• Prioritizes by projected revenue impact</li>
-                      <li>• Provides step-by-step action plans</li>
-                      <li>• Shows confidence scores and timelines</li>
-                      <li>• Covers acquisition, retention, and expansion</li>
-                    </ul>
-                  </div>
-                  <div className="p-3 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
-                    <p className="text-xs text-emerald-300">
-                      <strong>Example:</strong> "Increase email marketing spend on Segment A for $12,000 monthly impact"
+            {/* Core Features - Premium Design */}
+            <div className="space-y-4">
+              <div className="text-center space-y-2">
+                <h2 className="text-3xl font-bold text-white flex items-center justify-center">
+                  <img 
+                    src="https://customer-assets.emergentagent.com/job_mongodb-fix-1/artifacts/qr1tdbbk_Customer%20Mind%20IQ%20logo.png" 
+                    alt="CustomerMind IQ" 
+                    className="w-8 h-8 mr-3"
+                  />
+                  Four Powerful AI-Driven Modules
+                </h2>
+                <p className="text-slate-300 text-lg">Each module delivers enterprise-level growth intelligence</p>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Growth Opportunity Scanner */}
+                <Card className="bg-gradient-to-br from-emerald-900/60 to-green-900/60 backdrop-blur-xl border-emerald-400/40 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-400/10 rounded-bl-full"></div>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="p-3 bg-emerald-500/20 rounded-lg border border-emerald-400/30">
+                          <Target className="w-8 h-8 text-emerald-300" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-xl text-emerald-300">Growth Opportunity Scanner</CardTitle>
+                          <p className="text-emerald-200 text-sm">AI-Powered Opportunity Detection</p>
+                        </div>
+                      </div>
+                      <Badge className="bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                        Module 1
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p className="text-white text-lg leading-relaxed">
+                      AI identifies your <strong>top 3 monthly growth opportunities</strong> ranked by revenue impact and implementation difficulty.
                     </p>
-                  </div>
-                </CardContent>
-              </Card>
+                    <div className="space-y-3">
+                      <h4 className="font-bold text-emerald-300 flex items-center">
+                        <Sparkles className="w-4 h-4 mr-2" />
+                        Premium Features:
+                      </h4>
+                      <div className="grid gap-2">
+                        <div className="flex items-center text-emerald-100">
+                          <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                          <span>Analyzes 50+ growth factors automatically</span>
+                        </div>
+                        <div className="flex items-center text-emerald-100">
+                          <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                          <span>Prioritizes by projected revenue impact</span>
+                        </div>
+                        <div className="flex items-center text-emerald-100">
+                          <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                          <span>Provides step-by-step action plans</span>
+                        </div>
+                        <div className="flex items-center text-emerald-100">
+                          <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                          <span>Shows confidence scores and timelines</span>
+                        </div>
+                        <div className="flex items-center text-emerald-100">
+                          <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                          <span>Covers acquisition, retention, and expansion</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4 bg-emerald-500/10 rounded-lg border border-emerald-400/20">
+                      <div className="text-sm text-emerald-200">
+                        <strong className="text-emerald-300">Success Example:</strong> "Increase email marketing spend on Segment A for $12,000 monthly impact"
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
-              {/* Automated A/B Testing */}
-              <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
-                <CardHeader>
-                  <div className="flex items-center space-x-3">
-                    <BarChart3 className="w-6 h-6 text-blue-400" />
-                    <CardTitle className="text-blue-400">Automated A/B Testing</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-slate-300">
-                    AI generates, runs, and analyzes A/B tests automatically. Set it and forget it growth optimization.
-                  </p>
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-white">Automation Features:</h4>
-                    <ul className="space-y-1 text-sm text-slate-300">
-                      <li>• AI creates test variants automatically</li>
-                      <li>• Statistical significance calculations</li>
-                      <li>• Auto-deploys winning variants</li>
-                      <li>• Continuous optimization cycles</li>
-                      <li>• Landing pages, emails, pricing tests</li>
-                    </ul>
-                  </div>
-                  <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                    <p className="text-xs text-blue-300">
-                      <strong>Result:</strong> Average 15-25% improvement in tested elements
+                {/* Automated A/B Testing */}
+                <Card className="bg-gradient-to-br from-blue-900/60 to-cyan-900/60 backdrop-blur-xl border-blue-400/40 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-blue-400/10 rounded-bl-full"></div>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="p-3 bg-blue-500/20 rounded-lg border border-blue-400/30">
+                          <BarChart3 className="w-8 h-8 text-blue-300" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-xl text-blue-300">Automated A/B Testing</CardTitle>
+                          <p className="text-blue-200 text-sm">Set & Forget Optimization</p>
+                        </div>
+                      </div>
+                      <Badge className="bg-blue-500/20 text-blue-300 border border-blue-400/30">
+                        Module 2
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p className="text-white text-lg leading-relaxed">
+                      AI generates, runs, and analyzes A/B tests automatically. <strong>Set it and forget it</strong> growth optimization.
                     </p>
-                  </div>
-                </CardContent>
-              </Card>
+                    <div className="space-y-3">
+                      <h4 className="font-bold text-blue-300 flex items-center">
+                        <Zap className="w-4 h-4 mr-2" />
+                        Automation Features:
+                      </h4>
+                      <div className="grid gap-2">
+                        <div className="flex items-center text-blue-100">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                          <span>AI creates test variants automatically</span>
+                        </div>
+                        <div className="flex items-center text-blue-100">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                          <span>Statistical significance calculations</span>
+                        </div>
+                        <div className="flex items-center text-blue-100">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                          <span>Auto-deploys winning variants</span>
+                        </div>
+                        <div className="flex items-center text-blue-100">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                          <span>Continuous optimization cycles</span>
+                        </div>
+                        <div className="flex items-center text-blue-100">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                          <span>Landing pages, emails, pricing tests</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-400/20">
+                      <div className="text-sm text-blue-200">
+                        <strong className="text-blue-300">Proven Results:</strong> Average 15-25% improvement in tested elements
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
-              {/* Revenue Leak Detection */}
-              <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
-                <CardHeader>
-                  <div className="flex items-center space-x-3">
-                    <AlertTriangle className="w-6 h-6 text-orange-400" />
-                    <CardTitle className="text-orange-400">Revenue Leak Detection</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-slate-300">
-                    Find hidden money in your sales funnel. Identifies exactly where you're losing potential revenue.
-                  </p>
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-white">Leak Types Detected:</h4>
-                    <ul className="space-y-1 text-sm text-slate-300">
-                      <li>• Conversion funnel bottlenecks</li>
-                      <li>• Customer onboarding dropoffs</li>
-                      <li>• Retention and churn issues</li>
-                      <li>• Pricing optimization gaps</li>
-                      <li>• Feature adoption problems</li>
-                    </ul>
-                  </div>
-                  <div className="p-3 bg-orange-500/10 rounded-lg border border-orange-500/20">
-                    <p className="text-xs text-orange-300">
-                      <strong>Impact:</strong> Average recovery of $30,000+ monthly revenue from top leaks
+                {/* Revenue Leak Detection */}
+                <Card className="bg-gradient-to-br from-orange-900/60 to-red-900/60 backdrop-blur-xl border-orange-400/40 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-orange-400/10 rounded-bl-full"></div>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="p-3 bg-orange-500/20 rounded-lg border border-orange-400/30">
+                          <AlertTriangle className="w-8 h-8 text-orange-300" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-xl text-orange-300">Revenue Leak Detection</CardTitle>
+                          <p className="text-orange-200 text-sm">Find Hidden Money</p>
+                        </div>
+                      </div>
+                      <Badge className="bg-orange-500/20 text-orange-300 border border-orange-400/30">
+                        Module 3
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p className="text-white text-lg leading-relaxed">
+                      Find hidden money in your sales funnel. Identifies <strong>exactly where you're losing</strong> potential revenue.
                     </p>
-                  </div>
-                </CardContent>
-              </Card>
+                    <div className="space-y-3">
+                      <h4 className="font-bold text-orange-300 flex items-center">
+                        <Search className="w-4 h-4 mr-2" />
+                        Leak Types Detected:
+                      </h4>
+                      <div className="grid gap-2">
+                        <div className="flex items-center text-orange-100">
+                          <div className="w-2 h-2 bg-orange-400 rounded-full mr-3"></div>
+                          <span>Conversion funnel bottlenecks</span>
+                        </div>
+                        <div className="flex items-center text-orange-100">
+                          <div className="w-2 h-2 bg-orange-400 rounded-full mr-3"></div>
+                          <span>Customer onboarding dropoffs</span>
+                        </div>
+                        <div className="flex items-center text-orange-100">
+                          <div className="w-2 h-2 bg-orange-400 rounded-full mr-3"></div>
+                          <span>Retention and churn issues</span>
+                        </div>
+                        <div className="flex items-center text-orange-100">
+                          <div className="w-2 h-2 bg-orange-400 rounded-full mr-3"></div>
+                          <span>Pricing optimization gaps</span>
+                        </div>
+                        <div className="flex items-center text-orange-100">
+                          <div className="w-2 h-2 bg-orange-400 rounded-full mr-3"></div>
+                          <span>Feature adoption problems</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4 bg-orange-500/10 rounded-lg border border-orange-400/20">
+                      <div className="text-sm text-orange-200">
+                        <strong className="text-orange-300">Average Recovery:</strong> $30,000+ monthly revenue from fixing top leaks
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
-              {/* ROI Calculator */}
-              <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
-                <CardHeader>
-                  <div className="flex items-center space-x-3">
-                    <Calculator className="w-6 h-6 text-purple-400" />
-                    <CardTitle className="text-purple-400">ROI Calculator & Tracking</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-slate-300">
-                    Measure financial impact of every growth initiative with comprehensive ROI tracking and projections.
-                  </p>
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-white">Financial Analytics:</h4>
-                    <ul className="space-y-1 text-sm text-slate-300">
-                      <li>• Projected vs actual performance tracking</li>
-                      <li>• Payback period calculations</li>
-                      <li>• 12-month and 24-month ROI projections</li>
-                      <li>• Risk-adjusted return analysis</li>
-                      <li>• Continuous prediction improvements</li>
-                    </ul>
-                  </div>
-                  <div className="p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
-                    <p className="text-xs text-purple-300">
-                      <strong>Typical ROI:</strong> 300-600% return within 12 months
+                {/* ROI Calculator */}
+                <Card className="bg-gradient-to-br from-purple-900/60 to-pink-900/60 backdrop-blur-xl border-purple-400/40 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-purple-400/10 rounded-bl-full"></div>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="p-3 bg-purple-500/20 rounded-lg border border-purple-400/30">
+                          <Calculator className="w-8 h-8 text-purple-300" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-xl text-purple-300">ROI Calculator & Tracking</CardTitle>
+                          <p className="text-purple-200 text-sm">Financial Impact Analysis</p>
+                        </div>
+                      </div>
+                      <Badge className="bg-purple-500/20 text-purple-300 border border-purple-400/30">
+                        Module 4
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p className="text-white text-lg leading-relaxed">
+                      Measure financial impact of every growth initiative with <strong>comprehensive ROI tracking</strong> and projections.
                     </p>
-                  </div>
-                </CardContent>
-              </Card>
+                    <div className="space-y-3">
+                      <h4 className="font-bold text-purple-300 flex items-center">
+                        <TrendingUp className="w-4 h-4 mr-2" />
+                        Financial Analytics:
+                      </h4>
+                      <div className="grid gap-2">
+                        <div className="flex items-center text-purple-100">
+                          <div className="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
+                          <span>Projected vs actual performance tracking</span>
+                        </div>
+                        <div className="flex items-center text-purple-100">
+                          <div className="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
+                          <span>Payback period calculations</span>
+                        </div>
+                        <div className="flex items-center text-purple-100">
+                          <div className="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
+                          <span>12-month and 24-month ROI projections</span>
+                        </div>
+                        <div className="flex items-center text-purple-100">
+                          <div className="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
+                          <span>Risk-adjusted return analysis</span>
+                        </div>
+                        <div className="flex items-center text-purple-100">
+                          <div className="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
+                          <span>Continuous prediction improvements</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-400/20">
+                      <div className="text-sm text-purple-200">
+                        <strong className="text-purple-300">Typical ROI:</strong> 300-600% return within 12 months
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
 
             {/* How to Use Section */}
