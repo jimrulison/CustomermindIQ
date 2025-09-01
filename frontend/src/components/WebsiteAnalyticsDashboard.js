@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Alert, AlertDescription } from './ui/alert';
+import axios from 'axios';
 import { 
   Globe,
   TrendingUp, 
@@ -20,7 +21,9 @@ import {
   CheckCircle,
   Brain,
   Sparkles,
-  Award
+  Award,
+  RefreshCw,
+  Clock
 } from 'lucide-react';
 
 const WebsiteAnalyticsDashboard = ({ 
