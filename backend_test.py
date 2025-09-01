@@ -513,6 +513,101 @@ class CustomerIntelligenceAITester:
             print(f"❌ Failed - Error: {str(e)}")
             return False, {}
 
+    def run_admin_test(self, name, method, endpoint, expected_status, data=None, headers=None, timeout=30):
+        """Run an Admin System API test with authentication"""
+        url = f"{self.base_url}/{endpoint}"
+        
+        # Use provided headers or default with auth token
+        if headers is None:
+            headers = {'Content-Type': 'application/json'}
+            if self.admin_token:
+                headers['Authorization'] = f'Bearer {self.admin_token}'
+
+        self.admin_tests += 1
+        print(f"\n🔐 Testing Admin System: {name}...")
+        print(f"   URL: {url}")
+        
+        try:
+            if method == 'GET':
+                response = requests.get(url, headers=headers, timeout=timeout)
+            elif method == 'POST':
+                response = requests.post(url, json=data, headers=headers, timeout=timeout)
+            elif method == 'PUT':
+                response = requests.put(url, json=data, headers=headers, timeout=timeout)
+            elif method == 'DELETE':
+                response = requests.delete(url, headers=headers, timeout=timeout)
+
+            success = response.status_code == expected_status
+            if success:
+                self.admin_passed += 1
+                print(f"✅ Passed - Status: {response.status_code}")
+                try:
+                    response_data = response.json()
+                    print(f"   Response preview: {str(response_data)[:200]}...")
+                    return True, response_data
+                except:
+                    return True, {}
+            else:
+                print(f"❌ Failed - Expected {expected_status}, got {response.status_code}")
+                try:
+                    error_data = response.json()
+                    print(f"   Error: {error_data}")
+                except:
+                    print(f"   Error text: {response.text[:200]}")
+                return False, {}
+
+        except requests.exceptions.Timeout:
+            print(f"❌ Failed - Request timed out after {timeout} seconds")
+            return False, {}
+        except Exception as e:
+            print(f"❌ Failed - Error: {str(e)}")
+            return False, {}
+
+    def run_auth_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
+        """Run an Authentication API test"""
+        url = f"{self.base_url}/{endpoint}"
+        headers = {'Content-Type': 'application/json'}
+
+        self.auth_tests += 1
+        print(f"\n🔐 Testing Authentication: {name}...")
+        print(f"   URL: {url}")
+        
+        try:
+            if method == 'GET':
+                response = requests.get(url, headers=headers, timeout=timeout)
+            elif method == 'POST':
+                response = requests.post(url, json=data, headers=headers, timeout=timeout)
+            elif method == 'PUT':
+                response = requests.put(url, json=data, headers=headers, timeout=timeout)
+            elif method == 'DELETE':
+                response = requests.delete(url, headers=headers, timeout=timeout)
+
+            success = response.status_code == expected_status
+            if success:
+                self.auth_passed += 1
+                print(f"✅ Passed - Status: {response.status_code}")
+                try:
+                    response_data = response.json()
+                    print(f"   Response preview: {str(response_data)[:200]}...")
+                    return True, response_data
+                except:
+                    return True, {}
+            else:
+                print(f"❌ Failed - Expected {expected_status}, got {response.status_code}")
+                try:
+                    error_data = response.json()
+                    print(f"   Error: {error_data}")
+                except:
+                    print(f"   Error text: {response.text[:200]}")
+                return False, {}
+
+        except requests.exceptions.Timeout:
+            print(f"❌ Failed - Request timed out after {timeout} seconds")
+            return False, {}
+        except Exception as e:
+            print(f"❌ Failed - Error: {str(e)}")
+            return False, {}
+
         url = f"{self.base_url}/{endpoint}"
         headers = {'Content-Type': 'application/json'}
 
