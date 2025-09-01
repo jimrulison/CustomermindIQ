@@ -20,6 +20,7 @@ class AdminSystemTester:
         
         # Store authentication tokens and test data
         self.admin_token = None
+        self.admin_user_id = None
         self.test_banner_id = None
         self.test_percentage_discount_id = None
         self.test_fixed_discount_id = None
