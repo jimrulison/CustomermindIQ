@@ -14,9 +14,14 @@ const GrowthAccelerationEngine = () => {
 
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
+  // Check if user has annual subscription access
+  const hasAnnualAccess = user && (user.subscription_tier === 'annual' || user.role === 'admin' || user.role === 'super_admin');
+
   useEffect(() => {
-    loadDashboard();
-  }, []);
+    if (hasAnnualAccess) {
+      loadDashboard();
+    }
+  }, [hasAnnualAccess]);
 
   const loadDashboard = async () => {
     setLoading(true);
