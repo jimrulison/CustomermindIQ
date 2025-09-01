@@ -103,13 +103,33 @@ class GrowthEngineOpportunityTester:
         all_opportunities = []
         scan_results = []
         
+        # Sample customer data for the scan
+        sample_customer_data = {
+            "total_revenue": 500000,
+            "total_customers": 250,
+            "monthly_growth_rate": 0.15,
+            "churn_rate": 0.05,
+            "average_order_value": 2000,
+            "customer_acquisition_cost": 150,
+            "lifetime_value": 8000,
+            "industry": "SaaS",
+            "company_size": "mid-market"
+        }
+        
+        scan_request_data = {
+            "customer_data": sample_customer_data,
+            "focus_areas": ["acquisition", "retention", "expansion"],
+            "timeframe_months": 12
+        }
+        
         # Run 5 scans to test diversity
         for i in range(5):
             print(f"\n--- Scan {i+1}/5 ---")
             success, data = self.run_test(
                 f"Opportunity Scan #{i+1}",
-                "GET",
-                "api/growth/opportunities/scan"
+                "POST",
+                "api/growth/opportunities/scan",
+                data=scan_request_data
             )
             
             if success and data.get('status') == 'success':
