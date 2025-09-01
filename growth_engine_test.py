@@ -263,15 +263,15 @@ class GrowthEngineOpportunityTester:
         
         if success and data.get('status') == 'success':
             dashboard = data.get('dashboard', {})
-            opportunities = dashboard.get('opportunities', {})
             
-            print(f"   Total opportunities: {opportunities.get('total', 0)}")
-            print(f"   High priority: {opportunities.get('high_priority', 0)}")
-            print(f"   Medium priority: {opportunities.get('medium_priority', 0)}")
-            print(f"   Low priority: {opportunities.get('low_priority', 0)}")
+            print(f"   Total opportunities: {dashboard.get('total_count', 0)}")
+            print(f"   Total projected impact: ${dashboard.get('total_projected_impact', 0):,}")
             
-            projected_revenue = dashboard.get('projected_revenue', 0)
-            print(f"   Projected revenue: ${projected_revenue:,}")
+            priority_breakdown = dashboard.get('priority_breakdown', {})
+            type_breakdown = dashboard.get('type_breakdown', {})
+            
+            print(f"   Priority breakdown: {priority_breakdown}")
+            print(f"   Type breakdown: {type_breakdown}")
             
             return True
         else:
