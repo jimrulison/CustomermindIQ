@@ -48,6 +48,11 @@ class SubscriptionTier(str, Enum):
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
 
+class SubscriptionType(str, Enum):
+    TRIAL = "trial"
+    MONTHLY = "monthly"
+    ANNUAL = "annual"
+
 # Pydantic Models
 class UserRegistration(BaseModel):
     email: EmailStr
