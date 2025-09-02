@@ -199,10 +199,16 @@ const SubscriptionManager = () => {
     switch (planId) {
       case 'free':
         return <Users className="h-8 w-8 text-blue-600" />;
-      case 'professional':
-        return <Star className="h-8 w-8 text-purple-600" />;
-      case 'enterprise':
+      case 'launch':
+        return <Star className="h-8 w-8 text-green-600" />;
+      case 'growth':
+        return <TrendingUp className="h-8 w-8 text-purple-600" />;
+      case 'scale':
         return <Crown className="h-8 w-8 text-yellow-600" />;
+      case 'white_label':
+        return <Shield className="h-8 w-8 text-indigo-600" />;
+      case 'custom':
+        return <Zap className="h-8 w-8 text-red-600" />;
       default:
         return <CreditCard className="h-8 w-8 text-gray-600" />;
     }
