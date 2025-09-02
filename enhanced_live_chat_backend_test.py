@@ -424,7 +424,7 @@ class EnhancedLiveChatTester:
                 )
                 return False
             
-            headers = {"Authorization": f"Bearer {self.premium_user_token}"}
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
             
             response = self.session.get(
                 f"{BACKEND_URL}/chat/download-file/{stored_filename}",
