@@ -964,6 +964,11 @@ const AdminPortalEnhanced = () => {
             </div>
           )}
 
+          {/* Live Chat Tab */}
+          {activeTab === 'live-chat' && (
+            <AdminChatDashboard />
+          )}
+
           {/* Contact Forms Tab */}
           {activeTab === 'contact-forms' && (
             <div className="space-y-6">
