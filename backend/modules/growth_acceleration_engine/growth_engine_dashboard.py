@@ -1,6 +1,7 @@
 """
 Growth Acceleration Engine - Unified Dashboard
 Comprehensive dashboard combining all growth engine components
+RESTRICTED TO ANNUAL SUBSCRIBERS ONLY
 """
 
 import asyncio
@@ -8,10 +9,13 @@ import json
 import os
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from motor.motor_asyncio import AsyncIOMotorClient
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 from dotenv import load_dotenv
+
+# Import auth dependencies for annual subscription requirement
+from auth.auth_system import require_annual_subscription, UserProfile
 
 from .models import (
     GrowthDashboard,
