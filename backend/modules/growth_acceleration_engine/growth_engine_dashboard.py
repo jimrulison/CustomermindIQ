@@ -484,7 +484,7 @@ growth_dashboard_router = APIRouter(prefix="/api/growth", tags=["Growth Accelera
 dashboard_service = GrowthEngineDashboard()
 
 @growth_dashboard_router.get("/dashboard")
-async def get_growth_dashboard():
+async def get_growth_dashboard(current_user: UserProfile = Depends(require_annual_subscription)):
     """Get comprehensive Growth Acceleration Engine dashboard"""
     try:
         customer_id = "demo_customer_growth"
