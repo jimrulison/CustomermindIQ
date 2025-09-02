@@ -297,13 +297,20 @@ const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
               </button>
               {/* Admin Portal Access - Only for admin users */}
               {(user?.role === 'admin' || user?.role === 'super_admin') && (
-                <button
-                  onClick={() => onNavigate('admin-portal')}
-                  className="px-2 py-1 text-xs bg-red-600/20 text-red-400 rounded border border-red-600/30 hover:bg-red-600/30 transition-colors"
-                  title="Admin Portal"
-                >
-                  <Settings className="w-3 h-3" />
-                </button>
+                <div className="relative">
+                  <button
+                    onClick={() => onNavigate('admin-portal')}
+                    className="px-2 py-1 text-xs bg-red-600/20 text-red-400 rounded border border-red-600/30 hover:bg-red-600/30 transition-colors"
+                    title="Admin Portal"
+                  >
+                    <Settings className="w-3 h-3" />
+                  </button>
+                  {waitingChatsCount > 0 && (
+                    <div className="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-red-500 text-white text-xs rounded-full flex items-center justify-center animate-pulse">
+                      {waitingChatsCount}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
             <Button
