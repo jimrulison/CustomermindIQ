@@ -98,6 +98,9 @@ from modules.website_intelligence_hub import website_intelligence_router
 # Import Support System Module
 from modules.support_system import router as support_router
 
+# Import Support System Module
+from modules.support_system import router as support_router
+
 # Import Growth Acceleration Engine Module
 from modules.growth_acceleration_engine import (
     growth_opportunity_router,
