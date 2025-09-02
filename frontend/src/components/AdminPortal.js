@@ -154,6 +154,17 @@ const AdminPortalEnhanced = () => {
     }
   };
 
+  const loadContactForms = async () => {
+    try {
+      const response = await axios.get(`${backendUrl}/api/odoo/admin/contact-forms`, {
+        headers: getAuthHeaders()
+      });
+      setContactForms(response.data.submissions || []);
+    } catch (error) {
+      console.error('Failed to load contact forms:', error);
+    }
+  };
+
   const loadEmailCampaigns = async () => {
     try {
       const response = await axios.get(`${backendUrl}/api/email/campaigns`, {
