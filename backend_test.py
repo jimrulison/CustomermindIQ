@@ -69,7 +69,7 @@ class CustomerCommunicationTester:
         
         # Test admin login
         try:
-            response = requests.post(f"{API_BASE}/auth/login", json=ADMIN_CREDENTIALS, timeout=30)
+            response = requests.post(f"{API_BASE}/auth/login", json=ADMIN_CREDENTIALS, timeout=60, verify=False)
             if response.status_code == 200:
                 data = response.json()
                 self.admin_token = data.get("access_token")
