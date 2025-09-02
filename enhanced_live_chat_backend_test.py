@@ -283,7 +283,8 @@ class EnhancedLiveChatTester:
             test_content = b"This is a test file for live chat file sharing functionality."
             test_filename = "test_chat_file.txt"
             
-            headers = {"Authorization": f"Bearer {self.premium_user_token}"}
+            # Use admin token since admin created the session
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
             files = {
                 'file': (test_filename, io.BytesIO(test_content), 'text/plain')
             }
