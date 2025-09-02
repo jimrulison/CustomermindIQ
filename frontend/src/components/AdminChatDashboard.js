@@ -108,14 +108,44 @@ const AdminChatDashboard = () => {
       const data = await response.json();
       
       if (data.status === 'success') {
-        setChatSessions(data.sessions);
+        const previousWaitingCount = waitingSessions.length;
+        const newSessions = data.sessions;
+        
+        setChatSessions(newSessions);
         
         // Separate sessions by status
-        const waiting = data.sessions.filter(s => s.status === 'waiting');
-        const active = data.sessions.filter(s => s.status === 'active');
+        const waiting = newSessions.filter(s => s.status === 'waiting');
+        const active = newSessions.filter(s => s.status === 'active');
+        
+        // Check for new waiting sessions
+        if (waiting.length > previousWaitingCount && previousWaitingCount >= 0) {
+          const newChatsCount = waiting.length - previousWaitingCount;
+          if (newChatsCount > 0) {
+            setHasUnreadChats(true);
+            
+            // Send browser notification
+            sendBrowserNotification(
+              '🔔 New Chat Request!',
+              `${newChatsCount} user${newChatsCount > 1 ? 's' : ''} waiting for support`,
+              { tag: 'new-chat' }
+            );
+            
+            // Play notification sound
+            playNotificationSound();
+            
+            // Update page title to show notification
+            document.title = `(${waiting.length}) New Chats - Customer Mind IQ`;
+          }
+        }
         
         setWaitingSessions(waiting);
         setActiveSessions(active);
+        
+        // Clear unread indicator if no waiting sessions
+        if (waiting.length === 0) {
+          setHasUnreadChats(false);
+          document.title = 'Customer Mind IQ';
+        }
       }
     } catch (error) {
       console.error('Error loading chat sessions:', error);
