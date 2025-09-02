@@ -60,6 +60,7 @@ import Training from './components/Training';
 import Support from './components/Support';
 import KnowledgeBase from './components/KnowledgeBase';
 import SubscriptionManager from './components/SubscriptionManager';
+import LiveChatWidget from './components/LiveChatWidget';
 import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
