@@ -76,8 +76,128 @@ const LiveChatWidget = () => {
     };
   }, []);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const connectWebSocket = () => {
+    try {
+      const wsUrl = `${process.env.REACT_APP_BACKEND_URL.replace('http', 'ws')}/chat/ws/${chatSession.session_id}/user`;
+      const ws = new WebSocket(wsUrl);
+      
+      ws.onopen = () => {
+        console.log('WebSocket connected');
+        setConnected(true);
+        setWebsocket(ws);
+      };
+      
+      ws.onclose = () => {
+        console.log('WebSocket disconnected');
+        setConnected(false);
+        setWebsocket(null);
+        
+        // Attempt to reconnect after 3 seconds
+        setTimeout(() => {
+          if (chatSession && !websocket) {
+            connectWebSocket();
+          }
+        }, 3000);
+      };
+      
+      ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+        setConnected(false);
+      };
+      
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          handleWebSocketMessage(data);
+        } catch (error) {
+          console.error('Error parsing WebSocket message:', error);
+        }
+      };
+      
+    } catch (error) {
+      console.error('Error connecting WebSocket:', error);
+    }
+  };
+
+  const handleWebSocketMessage = (data) => {
+    switch (data.type) {
+      case 'connection_established':
+        console.log('Chat connection established');
+        break;
+        
+      case 'new_message':
+        // Add new message to chat
+        const message = {
+          message_id: data.message_id,
+          sender_type: data.sender_type,
+          sender_name: data.sender_name,
+          message: data.message,
+          timestamp: data.timestamp,
+          message_type: data.message?.message_type || 'text',
+          file_info: data.message?.file_info
+        };
+        setMessages(prev => [...prev, message]);
+        break;
+        
+      case 'admin_joined':
+        setChatSession(prev => ({
+          ...prev,
+          status: 'active',
+          admin_name: data.admin_name
+        }));
+        // Add system message
+        const joinMessage = {
+          message_id: `system_${Date.now()}`,
+          sender_type: 'system',
+          sender_name: 'System',
+          message: `${data.admin_name} joined the chat`,
+          timestamp: new Date().toISOString(),
+          message_type: 'system'
+        };
+        setMessages(prev => [...prev, joinMessage]);
+        break;
+        
+      case 'admin_typing':
+        setAdminTyping(true);
+        // Clear typing indicator after 3 seconds
+        setTimeout(() => setAdminTyping(false), 3000);
+        break;
+        
+      case 'file_uploaded':
+        // Handle file upload notification
+        const fileMessage = data.message;
+        setMessages(prev => [...prev, fileMessage]);
+        break;
+        
+      case 'session_closed':
+        setChatSession(prev => ({ ...prev, status: 'closed' }));
+        setConnected(false);
+        break;
+        
+      default:
+        console.log('Unknown WebSocket message type:', data.type);
+    }
+  };
+
+  const sendTypingIndicator = () => {
+    if (websocket && connected) {
+      websocket.send(JSON.stringify({
+        type: 'typing',
+        session_id: chatSession.session_id
+      }));
+    }
+  };
+
+  const sendWebSocketMessage = (message) => {
+    if (websocket && connected) {
+      websocket.send(JSON.stringify({
+        type: 'message',
+        session_id: chatSession.session_id,
+        sender_id: user.user_id,
+        sender_name: `${user.first_name} ${user.last_name}`,
+        message: message
+      }));
+    }
   };
 
   const checkChatAccess = async () => {
