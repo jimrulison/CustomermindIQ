@@ -78,11 +78,13 @@ class UserProfile(BaseModel):
     phone: Optional[str]
     role: UserRole
     subscription_tier: SubscriptionTier
+    subscription_type: Optional[SubscriptionType] = SubscriptionType.TRIAL  # Default to trial
     is_active: bool
     email_verified: bool
     created_at: datetime
     last_login: Optional[datetime]
     profile_picture: Optional[str]
+    trial_end_date: Optional[datetime] = None  # For tracking trial period
 
 class UserUpdate(BaseModel):
     first_name: Optional[str] = None
