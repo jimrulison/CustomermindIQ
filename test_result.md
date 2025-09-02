@@ -470,6 +470,79 @@ frontend:
 user_problem_statement: "Implement comprehensive pricing system based on user's pricing document with Launch/Growth/Scale plans, founders pricing, referral system (30% discount), trial management (3-day, 5-day reminders and 2-week data retention), and maintain GAE access restriction to annual subscribers only."
 
 backend:
+  - task: "New Pricing Structure Implementation - Launch/Growth/Scale Plans"
+    implemented: true
+    working: false
+    file: "backend/modules/subscription_system.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Updated SUBSCRIPTION_FEATURES with new pricing structure: Launch Plan ($49/$490 founders pricing), Growth Plan ($75/$750 founders pricing), Scale Plan ($199/$1990 founders pricing), plus White Label and Custom plans. Added comprehensive feature descriptions matching user's pricing document exactly."
+
+  - task: "Payment System Updates for New Pricing"
+    implemented: true
+    working: false
+    file: "backend/modules/payment_system.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Updated SUBSCRIPTION_PLANS with new pricing structure in cents for Stripe integration. Updated plan names from starter/professional/enterprise to launch/growth/scale. Added regular pricing alongside founders pricing for future implementation."
+
+  - task: "Authentication System Updates for New Tiers"
+    implemented: true
+    working: false
+    file: "backend/auth/auth_system.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Updated SubscriptionTier enum to include LAUNCH, GROWTH, SCALE, WHITE_LABEL, CUSTOM tiers. Updated SUBSCRIPTION_MODULE_ACCESS mapping for new tiers. Updated get_subscription_access_level() to work with new tier structure while maintaining GAE annual restriction."
+
+  - task: "Trial Management System - Reminders and Data Retention"
+    implemented: true
+    working: false
+    file: "backend/modules/subscription_system.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Added /trial-status/{user_email} endpoint to track trial progress and determine when to send 3-day, 5-day reminders and trial ending notifications. Includes 2-week data retention period calculation after trial ends."
+
+  - task: "Referral System - 30% Discount Implementation"
+    implemented: true
+    working: false
+    file: "backend/modules/subscription_system.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Added /apply-referral-discount endpoint for 30% discount when someone uses referrer's name. Added /referral-history/{user_email} to track referral activity and discounts earned. Includes validation for active paying subscribers and prevention of duplicate referrals."
+
+  - task: "Subscription Management - Upgrades and Cancellations"
+    implemented: true
+    working: false
+    file: "backend/modules/subscription_system.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Added /upgrade-subscription endpoint with prorated billing calculations. Added /cancel-subscription-with-refund endpoint supporting immediate cancellation with refund or end-of-cycle cancellation as per pricing document policies. Includes 48-hour refund processing commitment."
+
+backend:
   - task: "Multi-Tier Support System Backend APIs"
     implemented: true
     working: true
