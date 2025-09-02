@@ -40,3 +40,4 @@ nltk>=3.8.0
 textblob>=0.17.0
 psutil>=5.9.0
 emergentintegrations
+aiofiles==23.2.1
