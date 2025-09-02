@@ -438,7 +438,9 @@ async def scan_opportunities(
         raise HTTPException(status_code=500, detail=f"Opportunity scanning error: {e}")
 
 @growth_opportunity_router.get("/dashboard")
-async def get_opportunities_dashboard():
+async def get_opportunities_dashboard(
+    current_user: UserProfile = Depends(require_annual_subscription)
+):
     """Get comprehensive opportunities dashboard"""
     try:
         customer_id = "demo_customer_growth"
@@ -454,7 +456,9 @@ async def get_opportunities_dashboard():
         raise HTTPException(status_code=500, detail=f"Dashboard error: {e}")
 
 @growth_opportunity_router.get("/insights")
-async def get_opportunity_insights():
+async def get_opportunity_insights(
+    current_user: UserProfile = Depends(require_annual_subscription)
+):
     """Get AI-generated insights about growth opportunities"""
     try:
         customer_id = "demo_customer_growth"
