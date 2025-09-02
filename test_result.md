@@ -1870,16 +1870,14 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Dashboard Loading Issue Fix"
     - "Live Chat System with Real-time Notifications - Comprehensive Review Testing"
     - "Fixed Admin Dashboard - Comprehensive Review Testing"
     - "Real-time Chat Notifications - Comprehensive Review Testing"
     - "Admin Portal Integration - Comprehensive Review Testing"
     - "Overall Platform Stability - Comprehensive Review Testing"
   stuck_tasks:
-    - "Live Chat System with Real-time Notifications - Comprehensive Review Testing"
-    - "Fixed Admin Dashboard - Comprehensive Review Testing"
-    - "Real-time Chat Notifications - Comprehensive Review Testing"
-    - "Admin Portal Integration - Comprehensive Review Testing"
+    - "Dashboard Loading Issue Fix"
     - "Overall Platform Stability - Comprehensive Review Testing"
   test_all: false
   test_priority: "high_first"
