@@ -51,6 +51,7 @@ const AdminChatDashboard = () => {
 
   useEffect(() => {
     loadChatSessions();
+    requestNotificationPermission();
     // Refresh every 30 seconds
     const interval = setInterval(loadChatSessions, 30000);
     return () => clearInterval(interval);
