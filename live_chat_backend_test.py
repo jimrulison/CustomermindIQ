@@ -53,16 +53,19 @@ class LiveChatTester:
                 "password": ADMIN_PASSWORD
             }
             
-            response = self.session.post(f"{BACKEND_URL}/auth/login", json=login_data)
+            # Add proper headers
+            headers = {"Content-Type": "application/json"}
+            response = self.session.post(f"{BACKEND_URL}/auth/login", json=login_data, headers=headers, timeout=30)
             
             if response.status_code == 200:
                 data = response.json()
                 self.admin_token = data.get("access_token")
+                user_profile = data.get("user_profile", {})
                 self.log_result(
                     "Admin Authentication", 
                     True, 
-                    f"Admin login successful with credentials {ADMIN_EMAIL}",
-                    {"status_code": response.status_code, "has_token": bool(self.admin_token)}
+                    f"Admin login successful with credentials {ADMIN_EMAIL} (role: {user_profile.get('role')}, tier: {user_profile.get('subscription_tier')})",
+                    {"status_code": response.status_code, "has_token": bool(self.admin_token), "role": user_profile.get('role')}
                 )
                 return True
             else:
