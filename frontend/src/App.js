@@ -1923,6 +1923,9 @@ function AppContent() {
           </div>
         )}
       </div>
+
+      {/* Live Chat Widget - Always available for premium users */}
+      {user && <LiveChatWidget />}
     </div>
   );
 }
