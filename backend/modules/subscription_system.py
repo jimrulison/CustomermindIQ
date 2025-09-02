@@ -161,7 +161,7 @@ async def check_subscription_access(user_email: str, required_tier: str = None) 
     has_growth_acceleration = (
         is_active and 
         subscription_tier == "annual" and 
-        plan_type in ["professional", "enterprise"]
+        plan_type in ["launch", "growth", "scale", "white_label", "custom"]
     )
     
     return {
