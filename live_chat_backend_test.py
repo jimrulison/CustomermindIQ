@@ -93,7 +93,8 @@ class LiveChatTester:
                 "subscription_tier": "growth"  # Premium tier for chat access
             }
             
-            response = self.session.post(f"{BACKEND_URL}/auth/register", json=user_data)
+            headers = {"Content-Type": "application/json"}
+            response = self.session.post(f"{BACKEND_URL}/auth/register", json=user_data, headers=headers, timeout=30)
             
             if response.status_code in [200, 201]:
                 # Now login as the premium user
@@ -102,18 +103,19 @@ class LiveChatTester:
                     "password": user_data["password"]
                 }
                 
-                login_response = self.session.post(f"{BACKEND_URL}/auth/login", json=login_data)
+                login_response = self.session.post(f"{BACKEND_URL}/auth/login", json=login_data, headers=headers, timeout=30)
                 
                 if login_response.status_code == 200:
                     login_data_response = login_response.json()
                     self.premium_user_token = login_data_response.get("access_token")
-                    self.premium_user_id = login_data_response.get("user", {}).get("user_id")
+                    user_profile = login_data_response.get("user_profile", {})
+                    self.premium_user_id = user_profile.get("user_id")
                     
                     self.log_result(
                         "Premium User Creation", 
                         True, 
-                        f"Premium user created and authenticated (Growth tier): {user_data['email']}",
-                        {"status_code": login_response.status_code, "has_token": bool(self.premium_user_token)}
+                        f"Premium user created and authenticated (tier: {user_profile.get('subscription_tier')}): {user_data['email']}",
+                        {"status_code": login_response.status_code, "has_token": bool(self.premium_user_token), "tier": user_profile.get('subscription_tier')}
                     )
                     return True
                 else:
@@ -131,18 +133,19 @@ class LiveChatTester:
                     "password": user_data["password"]
                 }
                 
-                login_response = self.session.post(f"{BACKEND_URL}/auth/login", json=login_data)
+                login_response = self.session.post(f"{BACKEND_URL}/auth/login", json=login_data, headers=headers, timeout=30)
                 
                 if login_response.status_code == 200:
                     login_data_response = login_response.json()
                     self.premium_user_token = login_data_response.get("access_token")
-                    self.premium_user_id = login_data_response.get("user", {}).get("user_id")
+                    user_profile = login_data_response.get("user_profile", {})
+                    self.premium_user_id = user_profile.get("user_id")
                     
                     self.log_result(
                         "Premium User Creation", 
                         True, 
-                        f"Existing premium user authenticated: {user_data['email']}",
-                        {"status_code": login_response.status_code, "has_token": bool(self.premium_user_token)}
+                        f"Existing premium user authenticated (tier: {user_profile.get('subscription_tier')}): {user_data['email']}",
+                        {"status_code": login_response.status_code, "has_token": bool(self.premium_user_token), "tier": user_profile.get('subscription_tier')}
                     )
                     return True
                 else:
