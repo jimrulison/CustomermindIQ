@@ -179,7 +179,7 @@ const AdminPortalEnhanced = () => {
 
   const loadEmailProvider = async () => {
     try {
-      const response = await axios.get(`${backendUrl}/api/email/providers/current`, {
+      const response = await axios.get(`${backendUrl}/api/email/email/providers/current`, {
         headers: getAuthHeaders()
       });
       setEmailProvider(response.data.provider_config);
