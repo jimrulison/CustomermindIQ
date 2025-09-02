@@ -467,7 +467,7 @@ frontend:
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Transform Customer Mind IQ into Universal Customer Intelligence SaaS Platform with modular architecture. Implemented Customer Intelligence AI (5 microservices), Marketing Automation Pro (5 microservices), Revenue Analytics Suite (5 microservices), Advanced Features Expansion module (5 microservices), and now implementing Analytics & Insights module (5 microservices): customer-journey-mapping, revenue-attribution, cohort-analysis, competitive-intelligence, and roi-forecasting."
+user_problem_statement: "Implement comprehensive pricing system based on user's pricing document with Launch/Growth/Scale plans, founders pricing, referral system (30% discount), trial management (3-day, 5-day reminders and 2-week data retention), and maintain GAE access restriction to annual subscribers only."
 
 backend:
   - task: "Multi-Tier Support System Backend APIs"
