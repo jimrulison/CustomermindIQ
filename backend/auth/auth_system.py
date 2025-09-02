@@ -334,11 +334,13 @@ def get_subscription_access_level(user: UserProfile) -> Dict[str, bool]:
     
     return {
         "basic_features": True,  # All users get basic features
-        "advanced_analytics": user.subscription_tier in [SubscriptionTier.PROFESSIONAL, SubscriptionTier.ENTERPRISE],
+        "advanced_analytics": user.subscription_tier in [SubscriptionTier.GROWTH, SubscriptionTier.SCALE, SubscriptionTier.WHITE_LABEL, SubscriptionTier.CUSTOM],
         "growth_acceleration_engine": is_annual,  # Only annual subscribers
-        "priority_support": is_annual,
+        "priority_support": user.subscription_tier in [SubscriptionTier.SCALE, SubscriptionTier.WHITE_LABEL, SubscriptionTier.CUSTOM] and is_annual,
         "unlimited_exports": is_annual,
-        "advanced_integrations": user.subscription_tier == SubscriptionTier.ENTERPRISE and is_annual
+        "advanced_integrations": user.subscription_tier in [SubscriptionTier.SCALE, SubscriptionTier.WHITE_LABEL, SubscriptionTier.CUSTOM] and is_annual,
+        "white_label_features": user.subscription_tier in [SubscriptionTier.WHITE_LABEL, SubscriptionTier.CUSTOM],
+        "custom_features": user.subscription_tier == SubscriptionTier.CUSTOM
     }
 
 def require_role(allowed_roles: List[UserRole]):
