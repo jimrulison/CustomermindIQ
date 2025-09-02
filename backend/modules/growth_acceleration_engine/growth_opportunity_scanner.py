@@ -1,6 +1,7 @@
 """
 Growth Opportunity Scanner - AI-Powered Growth Identification
 Analyzes customer data to identify untapped growth opportunities using advanced AI
+RESTRICTED TO ANNUAL SUBSCRIBERS ONLY
 """
 
 import asyncio
@@ -13,6 +14,9 @@ from fastapi import APIRouter, HTTPException, Depends
 from motor.motor_asyncio import AsyncIOMotorClient
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 from dotenv import load_dotenv
+
+# Import auth dependencies for annual subscription requirement
+from auth.auth_system import require_annual_subscription, UserProfile
 
 from .models import (
     GrowthOpportunity, 
