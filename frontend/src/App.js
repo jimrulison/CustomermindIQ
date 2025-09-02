@@ -947,6 +947,11 @@ function AppContent() {
           <Support />
         )}
         
+        {/* Subscription Manager Module */}
+        {currentPage === 'subscription' && (
+          <SubscriptionManager />
+        )}
+        
         {currentPage === 'create' && (
           <CreateCampaign 
             campaigns={campaigns}
