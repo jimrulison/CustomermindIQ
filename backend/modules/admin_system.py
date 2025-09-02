@@ -1523,67 +1523,121 @@ async def get_user_analytics(
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    # Calculate user metrics
-    user_analytics = {
-        "user_profile": {
-            "user_id": user["user_id"],
-            "email": user["email"],
-            "role": user["role"],
-            "subscription_tier": user["subscription_tier"],
-            "created_at": user["created_at"],
-            "is_active": user.get("is_active", True)
-        },
-        "activity_metrics": {
-            "total_logins": await db.user_activities.count_documents({"user_id": user_id, "activity_type": "login"}),
-            "last_login": None,
-            "session_count_30d": 0,
-            "features_used": []
-        },
-        "subscription_metrics": {
-            "subscription_start": user.get("subscription_start"),
-            "subscription_end": user.get("subscription_end"),
-            "payments_made": 0,
-            "total_revenue": 0.0,
-            "discounts_used": []
-        },
-        "support_metrics": {
-            "support_tickets": 0,
-            "last_support_contact": None,
-            "impersonation_sessions": 0
+    # Calculate user metrics with proper error handling
+    try:
+        user_analytics = {
+            "user_profile": {
+                "user_id": user["user_id"],
+                "email": user["email"],
+                "role": user.get("role", "user"),
+                "subscription_tier": user.get("subscription_tier", "free_trial"),
+                "created_at": user.get("created_at"),
+                "is_active": user.get("is_active", True)
+            },
+            "activity_metrics": {
+                "total_logins": 0,
+                "last_login": None,
+                "session_count_30d": 0,
+                "features_used": []
+            },
+            "subscription_metrics": {
+                "subscription_start": user.get("subscription_start"),
+                "subscription_end": user.get("subscription_end"),
+                "payments_made": 0,
+                "total_revenue": 0.0,
+                "discounts_used": []
+            },
+            "support_metrics": {
+                "support_tickets": 0,
+                "last_support_contact": None,
+                "impersonation_sessions": 0
+            }
         }
-    }
-    
-    # Get last login
-    last_login = await db.user_activities.find_one(
-        {"user_id": user_id, "activity_type": "login"},
-        sort=[("timestamp", -1)]
-    )
-    if last_login:
-        user_analytics["activity_metrics"]["last_login"] = last_login["timestamp"]
-    
-    # Get session count (last 30 days)
-    thirty_days_ago = datetime.utcnow() - timedelta(days=30)
-    user_analytics["activity_metrics"]["session_count_30d"] = await db.user_activities.count_documents({
-        "user_id": user_id,
-        "activity_type": "login",
-        "timestamp": {"$gte": thirty_days_ago}
-    })
-    
-    # Get payment information
-    payments = await db.payments.find({"user_id": user_id}).to_list(length=100)
-    user_analytics["subscription_metrics"]["payments_made"] = len(payments)
-    user_analytics["subscription_metrics"]["total_revenue"] = sum(p.get("amount", 0) for p in payments)
-    
-    # Get discount usage
-    discount_usage = await db.discount_usage.find({"user_id": user_id}).to_list(length=50)
-    user_analytics["subscription_metrics"]["discounts_used"] = discount_usage
-    
-    # Get impersonation sessions
-    user_analytics["support_metrics"]["impersonation_sessions"] = await db.impersonation_sessions.count_documents({
-        "target_user_id": user_id
-    })
-    
-    return user_analytics
+        
+        # Try to get activity data (handle if collections don't exist)
+        try:
+            user_analytics["activity_metrics"]["total_logins"] = await db.user_activities.count_documents({"user_id": user_id, "activity_type": "login"})
+        except:
+            pass
+            
+        # Try to get last login
+        try:
+            last_login = await db.user_activities.find_one(
+                {"user_id": user_id, "activity_type": "login"},
+                sort=[("timestamp", -1)]
+            )
+            if last_login:
+                user_analytics["activity_metrics"]["last_login"] = last_login["timestamp"]
+        except:
+            pass
+        
+        # Try to get session count (last 30 days)
+        try:
+            thirty_days_ago = datetime.utcnow() - timedelta(days=30)
+            user_analytics["activity_metrics"]["session_count_30d"] = await db.user_activities.count_documents({
+                "user_id": user_id,
+                "activity_type": "login",
+                "timestamp": {"$gte": thirty_days_ago}
+            })
+        except:
+            pass
+        
+        # Try to get payment information
+        try:
+            payments = await db.payments.find({"user_id": user_id}).to_list(length=100)
+            user_analytics["subscription_metrics"]["payments_made"] = len(payments)
+            user_analytics["subscription_metrics"]["total_revenue"] = sum(p.get("amount", 0) for p in payments)
+        except:
+            pass
+        
+        # Try to get discount usage
+        try:
+            discount_usage = await db.discount_usage.find({"user_id": user_id}).to_list(length=50)
+            user_analytics["subscription_metrics"]["discounts_used"] = discount_usage[:5]  # Limit to 5 for response size
+        except:
+            pass
+        
+        # Try to get impersonation sessions
+        try:
+            user_analytics["support_metrics"]["impersonation_sessions"] = await db.impersonation_sessions.count_documents({
+                "target_user_id": user_id
+            })
+        except:
+            pass
+        
+        return user_analytics
+        
+    except Exception as e:
+        # Return basic analytics if detailed fails
+        return {
+            "user_profile": {
+                "user_id": user["user_id"],
+                "email": user["email"],
+                "role": user.get("role", "user"),
+                "subscription_tier": user.get("subscription_tier", "free_trial"),
+                "created_at": user.get("created_at"),
+                "is_active": user.get("is_active", True)
+            },
+            "activity_metrics": {
+                "total_logins": 0,
+                "last_login": None,
+                "session_count_30d": 0,
+                "features_used": []
+            },
+            "subscription_metrics": {
+                "subscription_start": user.get("subscription_start"),
+                "subscription_end": user.get("subscription_end"),
+                "payments_made": 0,
+                "total_revenue": 0.0,
+                "discounts_used": []
+            },
+            "support_metrics": {
+                "support_tickets": 0,
+                "last_support_contact": None,
+                "impersonation_sessions": 0
+            },
+            "error": "Some analytics data could not be retrieved"
+        }
 
 # ===== DISCOUNT CODES SYSTEM =====
 
