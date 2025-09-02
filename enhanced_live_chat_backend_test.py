@@ -168,7 +168,7 @@ class EnhancedLiveChatTester:
                     self.log_result(
                         "Create Chat Session", 
                         True, 
-                        f"Chat session created successfully: session_id={session_id}, status={session_status}",
+                        f"Chat session created successfully with admin user: session_id={session_id}, status={session_status}",
                         data
                     )
                     return True
