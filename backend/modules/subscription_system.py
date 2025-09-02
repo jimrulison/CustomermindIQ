@@ -17,7 +17,7 @@ DB_NAME = os.getenv("DB_NAME", "customer_mind_iq")
 client = AsyncIOMotorClient(MONGO_URL)
 db = client[DB_NAME]
 
-router = APIRouter(prefix="/api/subscriptions", tags=["Subscriptions"])
+router = APIRouter(tags=["Subscriptions"])
 
 # Models
 class SubscriptionUpdate(BaseModel):
