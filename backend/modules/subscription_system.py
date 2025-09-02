@@ -357,6 +357,389 @@ async def get_usage_statistics(user_email: str):
         
         # Extract contact limit (basic parsing)
         contact_limit = 100  # Default for free
+        if "1K contacts" in str(plan_features.get("features", [])):
+            contact_limit = 1000
+        elif "10,000 contacts" in str(plan_features.get("features", [])):
+            contact_limit = 10000
+        elif "Unlimited contacts" in str(plan_features.get("features", [])):
+            contact_limit = float('inf')
+        
+        return {
+            "status": "success",
+            "usage": {
+                "contacts": {
+                    "used": total_contacts,
+                    "limit": contact_limit,
+                    "percentage": (total_contacts / contact_limit * 100) if contact_limit != float('inf') else 0
+                },
+                "campaigns": total_campaigns,
+                "automations": total_automations,
+                "plan_type": plan_type,
+                "subscription_tier": user.get("subscription_tier", "monthly")
+            }
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Usage statistics fetch failed: {str(e)}")
+
+# New endpoints for trial management and referral system
+
+@router.get("/trial-status/{user_email}")
+async def get_trial_status(user_email: str):
+    """Get detailed trial status with reminder information"""
+    try:
+        user = await db.users.find_one({"email": user_email})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        is_trial = user.get("is_trial", False)
+        if not is_trial:
+            return {
+                "status": "success",
+                "is_trial": False,
+                "message": "User is not on trial"
+            }
+        
+        trial_start = user.get("subscription_start")
+        trial_end = user.get("subscription_end")
+        
+        if not trial_start or not trial_end:
+            return {
+                "status": "success", 
+                "is_trial": False,
+                "message": "Trial dates not found"
+            }
+        
+        now = datetime.utcnow()
+        days_remaining = (trial_end - now).days
+        days_elapsed = (now - trial_start).days
+        
+        # Determine reminder status
+        reminder_needed = False
+        reminder_type = None
+        
+        if days_remaining <= 1:
+            reminder_needed = True
+            reminder_type = "trial_ending"
+        elif days_remaining <= 2:
+            reminder_needed = True
+            reminder_type = "5_day_reminder"
+        elif days_remaining <= 4:
+            reminder_needed = True
+            reminder_type = "3_day_reminder"
+        
+        return {
+            "status": "success",
+            "is_trial": True,
+            "trial_start": trial_start,
+            "trial_end": trial_end,
+            "days_remaining": days_remaining,
+            "days_elapsed": days_elapsed,
+            "reminder_needed": reminder_needed,
+            "reminder_type": reminder_type,
+            "data_retention_until": trial_end + timedelta(days=14)  # 2 weeks after trial
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Trial status check failed: {str(e)}")
+
+@router.post("/apply-referral-discount")
+async def apply_referral_discount(referral_data: dict):
+    """Apply 30% referral discount to next billing cycle"""
+    try:
+        referrer_email = referral_data.get("referrer_email", "").lower()
+        referee_email = referral_data.get("referee_email", "").lower()
+        
+        if not referrer_email or not referee_email:
+            raise HTTPException(status_code=400, detail="Both referrer and referee emails required")
+        
+        # Check if referrer exists and is active subscriber
+        referrer = await db.users.find_one({"email": referrer_email})
+        if not referrer:
+            raise HTTPException(status_code=404, detail="Referrer not found")
+        
+        if not referrer.get("is_active") or referrer.get("subscription_tier") == "trial":
+            raise HTTPException(status_code=400, detail="Referrer must be an active paying subscriber")
+        
+        # Check if referee exists and is new subscriber
+        referee = await db.users.find_one({"email": referee_email})
+        if not referee:
+            raise HTTPException(status_code=404, detail="Referee not found")
+        
+        # Check if referral already applied
+        existing_referral = await db.referrals.find_one({
+            "referrer_email": referrer_email,
+            "referee_email": referee_email
+        })
+        
+        if existing_referral:
+            raise HTTPException(status_code=400, detail="Referral discount already applied")
+        
+        # Calculate discount amount (30% of next billing cycle)
+        next_billing_amount = 0
+        referrer_plan = referrer.get("plan_type", "launch")
+        referrer_cycle = referrer.get("billing_cycle", "monthly")
+        
+        plan_data = SUBSCRIPTION_FEATURES.get(referrer_plan, {})
+        if referrer_cycle == "annual":
+            next_billing_amount = plan_data.get("annual_price", 0)
+        else:
+            next_billing_amount = plan_data.get("monthly_price", 0)
+        
+        discount_amount = int(next_billing_amount * 0.30)
+        
+        # Create referral record
+        referral_record = {
+            "id": secrets.token_urlsafe(16),
+            "referrer_email": referrer_email,
+            "referee_email": referee_email,
+            "discount_percentage": 30,
+            "discount_amount": discount_amount,
+            "applied_date": datetime.utcnow(),
+            "status": "pending",
+            "referrer_billing_cycle": referrer_cycle,
+            "next_billing_date": referrer.get("subscription_end"),
+            "is_annual_subscriber": referrer.get("subscription_tier") == "annual"
+        }
+        
+        await db.referrals.insert_one(referral_record)
+        
+        return {
+            "status": "success",
+            "message": f"30% referral discount applied to {referrer_email}",
+            "discount_amount": discount_amount,
+            "next_billing_discount": f"${discount_amount/100:.2f}",
+            "applies_to": "next_billing_cycle" if referrer_cycle == "monthly" else "next_annual_renewal"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Referral discount application failed: {str(e)}")
+
+@router.get("/referral-history/{user_email}")
+async def get_referral_history(user_email: str):
+    """Get user's referral history and available discounts"""
+    try:
+        # Get referrals where user is referrer
+        referrals_made = await db.referrals.find({"referrer_email": user_email}).to_list(length=100)
+        
+        # Get referrals where user was referred
+        referrals_received = await db.referrals.find({"referee_email": user_email}).to_list(length=100)
+        
+        # Calculate total discount earned
+        total_discount_earned = sum([r.get("discount_amount", 0) for r in referrals_made])
+        
+        return {
+            "status": "success",
+            "referrals_made": len(referrals_made),
+            "referrals_received": len(referrals_received),
+            "total_discount_earned": total_discount_earned,
+            "total_discount_formatted": f"${total_discount_earned/100:.2f}",
+            "referral_details": {
+                "made": referrals_made,
+                "received": referrals_received
+            }
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Referral history fetch failed: {str(e)}")
+
+@router.post("/upgrade-subscription")
+async def upgrade_subscription(upgrade_data: dict):
+    """Upgrade subscription with prorated billing"""
+    try:
+        user_email = upgrade_data.get("user_email")
+        new_plan_type = upgrade_data.get("new_plan_type")
+        new_billing_cycle = upgrade_data.get("new_billing_cycle", "monthly")
+        
+        if not user_email or not new_plan_type:
+            raise HTTPException(status_code=400, detail="User email and new plan type required")
+        
+        user = await db.users.find_one({"email": user_email})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        current_plan = user.get("plan_type", "launch")
+        current_cycle = user.get("billing_cycle", "monthly")
+        
+        # Validate upgrade path
+        plan_hierarchy = ["launch", "growth", "scale", "white_label", "custom"]
+        current_idx = plan_hierarchy.index(current_plan) if current_plan in plan_hierarchy else 0
+        new_idx = plan_hierarchy.index(new_plan_type) if new_plan_type in plan_hierarchy else 0
+        
+        # Calculate prorated amount
+        current_plan_data = SUBSCRIPTION_FEATURES.get(current_plan, {})
+        new_plan_data = SUBSCRIPTION_FEATURES.get(new_plan_type, {})
+        
+        current_price = current_plan_data.get(f"{current_cycle}_price", 0)
+        new_price = new_plan_data.get(f"{new_billing_cycle}_price", 0)
+        
+        # Calculate remaining days in current cycle
+        subscription_end = user.get("subscription_end")
+        now = datetime.utcnow()
+        
+        if subscription_end and subscription_end > now:
+            days_remaining = (subscription_end - now).days
+            cycle_days = 365 if current_cycle == "annual" else 30
+            
+            # Calculate prorated refund for current plan
+            unused_amount = (current_price * days_remaining) / cycle_days
+            
+            # Calculate prorated charge for new plan
+            new_cycle_days = 365 if new_billing_cycle == "annual" else 30
+            prorated_new_amount = (new_price * days_remaining) / new_cycle_days
+            
+            # Net amount to charge
+            net_charge = max(0, prorated_new_amount - unused_amount)
+        else:
+            net_charge = new_price
+        
+        # Update subscription
+        new_subscription_end = now + timedelta(days=365 if new_billing_cycle == "annual" else 30)
+        
+        update_data = {
+            "plan_type": new_plan_type,
+            "billing_cycle": new_billing_cycle,
+            "subscription_tier": "annual" if new_billing_cycle == "annual" else "monthly",
+            "subscription_end": new_subscription_end,
+            "upgraded_at": now,
+            "previous_plan": current_plan,
+            "upgrade_prorated_charge": net_charge
+        }
+        
+        await db.users.update_one(
+            {"email": user_email},
+            {"$set": update_data}
+        )
+        
+        return {
+            "status": "success",
+            "message": "Subscription upgraded successfully",
+            "previous_plan": current_plan,
+            "new_plan": new_plan_type,
+            "prorated_charge": net_charge,
+            "prorated_charge_formatted": f"${net_charge/100:.2f}",
+            "new_subscription_end": new_subscription_end
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Subscription upgrade failed: {str(e)}")
+
+@router.post("/cancel-subscription-with-refund")
+async def cancel_subscription_with_refund(cancellation_data: dict):
+    """Cancel subscription with refund options as per pricing policy"""
+    try:
+        user_email = cancellation_data.get("user_email")
+        cancellation_type = cancellation_data.get("type", "immediate")  # "immediate" or "end_of_cycle"
+        
+        if not user_email:
+            raise HTTPException(status_code=400, detail="User email required")
+        
+        user = await db.users.find_one({"email": user_email})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        subscription_end = user.get("subscription_end")
+        subscription_start = user.get("subscription_start")
+        billing_cycle = user.get("billing_cycle", "monthly")
+        plan_type = user.get("plan_type", "launch")
+        
+        if not user.get("is_active"):
+            raise HTTPException(status_code=400, detail="No active subscription to cancel")
+        
+        now = datetime.utcnow()
+        
+        # Calculate refund amount based on cancellation type
+        refund_amount = 0
+        
+        if cancellation_type == "immediate" and subscription_end and subscription_end > now:
+            # Calculate prorated refund for remaining time
+            days_remaining = (subscription_end - now).days
+            cycle_days = 365 if billing_cycle == "annual" else 30
+            
+            plan_data = SUBSCRIPTION_FEATURES.get(plan_type, {})
+            paid_amount = plan_data.get(f"{billing_cycle}_price", 0)
+            
+            refund_amount = (paid_amount * days_remaining) / cycle_days
+        
+        # Create cancellation record
+        cancellation_record = {
+            "id": secrets.token_urlsafe(16),
+            "user_email": user_email,
+            "plan_type": plan_type,
+            "billing_cycle": billing_cycle,
+            "cancellation_type": cancellation_type,
+            "cancellation_date": now,
+            "refund_amount": refund_amount,
+            "refund_status": "pending",
+            "original_subscription_end": subscription_end,
+            "reason": cancellation_data.get("reason", ""),
+            "processing_time": "within_48_hours"
+        }
+        
+        await db.cancellations.insert_one(cancellation_record)
+        
+        # Update user subscription status
+        if cancellation_type == "immediate":
+            cancellation_effective_date = now
+        else:
+            cancellation_effective_date = subscription_end
+        
+        await db.users.update_one(
+            {"email": user_email},
+            {
+                "$set": {
+                    "is_active": False if cancellation_type == "immediate" else True,
+                    "subscription_tier": "cancelled",
+                    "cancellation_scheduled": cancellation_effective_date,
+                    "cancelled_at": now,
+                    "data_retention_until": cancellation_effective_date + timedelta(days=14)
+                }
+            }
+        )
+        
+        return {
+            "status": "success",
+            "message": "Subscription cancelled successfully",
+            "cancellation_type": cancellation_type,
+            "effective_date": cancellation_effective_date,
+            "refund_amount": refund_amount,
+            "refund_formatted": f"${refund_amount/100:.2f}",
+            "refund_processing": "Refunds processed within 48 business hours",
+            "data_retention": "Data will be retained for 2 weeks after cancellation"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Subscription cancellation failed: {str(e)}")
+
+# Legacy endpoint maintained for backward compatibility
+@router.post("/cancel-subscription/{user_email}")
+async def get_usage_statistics(user_email: str):
+    """Get user's usage statistics"""
+    try:
+        # Get basic user info
+        user = await db.users.find_one({"email": user_email})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        # Calculate usage statistics
+        total_contacts = await db.customers.count_documents({"user_email": user_email})
+        total_campaigns = await db.campaigns.count_documents({"user_email": user_email})
+        total_automations = await db.automation_workflows.count_documents({"user_email": user_email})
+        
+        # Get plan limits
+        plan_type = user.get("plan_type", "free")
+        plan_features = SUBSCRIPTION_FEATURES.get(plan_type, {})
+        
+        # Extract contact limit (basic parsing)
+        contact_limit = 100  # Default for free
         if "1,000 contacts" in str(plan_features.get("features", [])):
             contact_limit = 1000
         elif "10,000 contacts" in str(plan_features.get("features", [])):
