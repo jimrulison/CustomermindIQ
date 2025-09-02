@@ -7644,8 +7644,8 @@ class CustomerIntelligenceAITester:
         
         return success
 
-    def run_comprehensive_support_system_tests(self):
-        """Run comprehensive Support System module tests"""
+    def run_legacy_support_system_tests(self):
+        """Run comprehensive Support System module tests (legacy)"""
         print("\n" + "="*80)
         print("🎧 SUPPORT SYSTEM MODULE - COMPREHENSIVE TESTING")
         print("="*80)
