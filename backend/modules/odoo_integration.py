@@ -36,7 +36,7 @@ router = APIRouter(tags=["ODOO Integration & Contact Forms"])
 class ContactFormSubmission(BaseModel):
     name: str = Field(..., min_length=2, max_length=100)
     email: EmailStr
-    phone: Optional[str] = Field(None, regex=r"^[\d\-\+\(\)\s]+$")
+    phone: Optional[str] = Field(None, pattern=r"^[\d\-\+\(\)\s]+$")
     company: Optional[str] = Field(None, max_length=100)
     subject: str = Field(..., min_length=5, max_length=200)
     message: str = Field(..., min_length=10, max_length=2000)
