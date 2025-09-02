@@ -39,18 +39,18 @@ const SubscriptionManager = () => {
 
   const loadSubscriptionData = async () => {
     try {
-      // Load subscription plans
-      const plansResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/payments/subscription/plans`);
+      // Load subscription plans using new API endpoint
+      const plansResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/subscriptions/plans`);
       if (plansResponse.ok) {
         const plansData = await plansResponse.json();
         setSubscriptionPlans(plansData.plans);
       }
 
-      // Load current subscription (for demo, we'll use email - in production you'd use user authentication)
-      const currentResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/payments/subscription/current?email=demo@customermindiq.com`);
+      // Load current subscription (using authentication token in production)
+      const currentResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/subscriptions/check-access/demo@customermindiq.com`);
       if (currentResponse.ok) {
         const currentData = await currentResponse.json();
-        setCurrentSubscription(currentData.subscription);
+        setCurrentSubscription(currentData.access);
       }
     } catch (error) {
       console.error('Error loading subscription data:', error);
