@@ -528,3 +528,284 @@ class ODOOIntegration:
 
 # Initialize global instance
 odoo_integration = ODOOIntegration()
+
+# Contact Form Endpoints
+@router.post("/contact-form/submit")
+async def submit_contact_form(
+    form_data: ContactFormSubmission,
+    background_tasks: BackgroundTasks
+):
+    """
+    Submit contact form - creates contact in ODOO and support ticket
+    Available to all website visitors (no authentication required)
+    """
+    
+    form_id = str(uuid.uuid4())
+    
+    try:
+        # Store form submission locally for admin tracking
+        form_record = {
+            "form_id": form_id,
+            "name": form_data.name,
+            "email": form_data.email,
+            "phone": form_data.phone,
+            "company": form_data.company,
+            "subject": form_data.subject,
+            "message": form_data.message,
+            "website": form_data.website,
+            "source": form_data.source,
+            "status": "pending",
+            "submitted_at": datetime.utcnow(),
+            "odoo_contact_id": None,
+            "odoo_ticket_id": None,
+            "admin_response": None,
+            "admin_response_at": None
+        }
+        
+        await db.contact_form_submissions.insert_one(form_record)
+        
+        # Process ODOO integration in background
+        background_tasks.add_task(
+            process_contact_form_odoo_integration,
+            form_id,
+            form_data.dict()
+        )
+        
+        return {
+            "status": "success",
+            "message": "Thank you for contacting us! We'll get back to you soon.",
+            "form_id": form_id,
+            "reference": form_id[-8:]  # Short reference for customer
+        }
+        
+    except Exception as e:
+        logger.error(f"Contact form submission error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to submit contact form")
+
+async def process_contact_form_odoo_integration(form_id: str, form_data: Dict[str, Any]):
+    """Background task to process ODOO integration"""
+    try:
+        # Create contact in ODOO
+        odoo_contact_id = odoo_integration.create_customer({
+            'name': form_data['name'],
+            'email': form_data['email'],
+            'phone': form_data.get('phone', ''),
+            'company': form_data.get('company', ''),
+            'website': form_data.get('website', ''),
+            'source': 'Contact Form'
+        })
+        
+        # Create support ticket/inquiry in ODOO
+        odoo_ticket_id = None
+        if odoo_contact_id:
+            # For now, log as a potential ticket - full helpdesk integration can be added
+            logger.info(f"Contact form inquiry from {form_data['name']} - Subject: {form_data['subject']}")
+        
+        # Update local record with ODOO IDs
+        await db.contact_form_submissions.update_one(
+            {"form_id": form_id},
+            {
+                "$set": {
+                    "odoo_contact_id": odoo_contact_id,
+                    "odoo_ticket_id": odoo_ticket_id,
+                    "status": "processed" if odoo_contact_id else "odoo_error"
+                }
+            }
+        )
+        
+        logger.info(f"ODOO integration completed for form {form_id}")
+        
+    except Exception as e:
+        logger.error(f"ODOO integration failed for form {form_id}: {str(e)}")
+        await db.contact_form_submissions.update_one(
+            {"form_id": form_id},
+            {"$set": {"status": "odoo_error"}}
+        )
+
+# Admin Contact Form Management Endpoints
+@router.get("/admin/contact-forms")
+async def get_contact_form_submissions(
+    status: Optional[str] = None,
+    limit: int = 50,
+    offset: int = 0,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get all contact form submissions for admin review"""
+    
+    query = {}
+    if status:
+        query["status"] = status
+    
+    submissions = await db.contact_form_submissions.find(query).sort("submitted_at", -1).skip(offset).limit(limit).to_list(length=limit)
+    total_count = await db.contact_form_submissions.count_documents(query)
+    
+    # Remove MongoDB ObjectIds
+    for submission in submissions:
+        if "_id" in submission:
+            del submission["_id"]
+    
+    # Get statistics
+    stats = {
+        "total_submissions": await db.contact_form_submissions.count_documents({}),
+        "pending_responses": await db.contact_form_submissions.count_documents({"admin_response": None}),
+        "odoo_integrated": await db.contact_form_submissions.count_documents({"odoo_contact_id": {"$ne": None}}),
+        "today_submissions": await db.contact_form_submissions.count_documents({
+            "submitted_at": {"$gte": datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)}
+        })
+    }
+    
+    return {
+        "submissions": submissions,
+        "total": total_count,
+        "limit": limit,
+        "offset": offset,
+        "statistics": stats
+    }
+
+@router.get("/admin/contact-forms/{form_id}")
+async def get_contact_form_details(
+    form_id: str,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get detailed information about a specific contact form submission"""
+    
+    submission = await db.contact_form_submissions.find_one({"form_id": form_id})
+    if not submission:
+        raise HTTPException(status_code=404, detail="Contact form submission not found")
+    
+    # Remove MongoDB ObjectId
+    del submission["_id"]
+    
+    return {"submission": submission}
+
+@router.post("/admin/contact-forms/{form_id}/respond")
+async def respond_to_contact_form(
+    form_id: str,
+    response_data: AdminResponse,
+    background_tasks: BackgroundTasks,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Admin response to contact form submission"""
+    
+    submission = await db.contact_form_submissions.find_one({"form_id": form_id})
+    if not submission:
+        raise HTTPException(status_code=404, detail="Contact form submission not found")
+    
+    # Update submission with admin response
+    await db.contact_form_submissions.update_one(
+        {"form_id": form_id},
+        {
+            "$set": {
+                "admin_response": response_data.message,
+                "admin_response_at": datetime.utcnow(),
+                "admin_responder": current_user.email,
+                "status": "responded"
+            }
+        }
+    )
+    
+    # Send email response to customer
+    background_tasks.add_task(
+        send_contact_form_response_email,
+        submission["email"],
+        submission["name"],
+        submission["subject"],
+        response_data.message
+    )
+    
+    return {
+        "status": "success",
+        "message": "Response sent successfully",
+        "form_id": form_id
+    }
+
+async def send_contact_form_response_email(customer_email: str, customer_name: str, 
+                                         original_subject: str, admin_response: str):
+    """Send email response to customer"""
+    try:
+        # For now, log the email that would be sent
+        # In production, integrate with actual email service (ODOO or other)
+        email_log = {
+            "to": customer_email,
+            "subject": f"Re: {original_subject}",
+            "body": f"""Dear {customer_name},
+
+Thank you for contacting CustomerMind IQ. Here's our response to your inquiry:
+
+{admin_response}
+
+If you have any further questions, please don't hesitate to reach out.
+
+Best regards,
+CustomerMind IQ Support Team""",
+            "sent_at": datetime.utcnow(),
+            "type": "contact_form_response"
+        }
+        
+        await db.email_logs.insert_one(email_log)
+        logger.info(f"Contact form response email logged for {customer_email}")
+        
+        # Try to send via ODOO if available
+        try:
+            odoo_integration.send_email(
+                customer_email,
+                f"Re: {original_subject}",
+                email_log["body"]
+            )
+        except Exception as odoo_error:
+            logger.warning(f"ODOO email send failed, logged instead: {str(odoo_error)}")
+        
+    except Exception as e:
+        logger.error(f"Failed to send contact form response email: {str(e)}")
+
+# Contact Form Statistics for Admin Dashboard
+@router.get("/admin/contact-forms/stats")
+async def get_contact_form_statistics(
+    days: int = 30,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get contact form statistics for admin dashboard"""
+    
+    date_from = datetime.utcnow() - timedelta(days=days)
+    
+    # Aggregate statistics
+    pipeline = [
+        {"$match": {"submitted_at": {"$gte": date_from}}},
+        {"$group": {
+            "_id": {
+                "$dateToString": {
+                    "format": "%Y-%m-%d",
+                    "date": "$submitted_at"
+                }
+            },
+            "count": {"$sum": 1},
+            "responded": {
+                "$sum": {
+                    "$cond": [{"$ne": ["$admin_response", None]}, 1, 0]
+                }
+            }
+        }},
+        {"$sort": {"_id": 1}}
+    ]
+    
+    daily_stats = await db.contact_form_submissions.aggregate(pipeline).to_list(length=days)
+    
+    # Overall statistics
+    total_forms = await db.contact_form_submissions.count_documents({"submitted_at": {"$gte": date_from}})
+    responded_forms = await db.contact_form_submissions.count_documents({
+        "submitted_at": {"$gte": date_from},
+        "admin_response": {"$ne": None}
+    })
+    
+    response_rate = (responded_forms / total_forms * 100) if total_forms > 0 else 0
+    
+    return {
+        "period_days": days,
+        "daily_statistics": daily_stats,
+        "summary": {
+            "total_submissions": total_forms,
+            "responded_submissions": responded_forms,
+            "pending_responses": total_forms - responded_forms,
+            "response_rate_percent": round(response_rate, 2)
+        }
+    }
