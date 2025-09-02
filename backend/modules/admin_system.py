@@ -162,6 +162,99 @@ class ImpersonationSession(BaseModel):
     is_active: bool
     admin_actions: List[Dict[str, Any]] = Field(default_factory=list)
 
+# New Enhanced Models
+
+class DiscountCode(BaseModel):
+    code_id: str
+    discount_id: str
+    code: str
+    is_active: bool
+    usage_count: int
+    max_uses: Optional[int] = None
+    created_at: datetime
+    expires_at: Optional[datetime] = None
+
+class UserSearchFilter(BaseModel):
+    email: Optional[str] = None
+    role: Optional[UserRole] = None
+    subscription_tier: Optional[SubscriptionTier] = None
+    registration_date_from: Optional[datetime] = None
+    registration_date_to: Optional[datetime] = None
+    is_active: Optional[bool] = None
+    has_subscription: Optional[bool] = None
+    limit: int = Field(default=50, ge=1, le=500)
+    offset: int = Field(default=0, ge=0)
+
+class BulkDiscountApplication(BaseModel):
+    discount_id: str
+    target_criteria: Dict[str, Any]  # Filtering criteria for users
+    notify_users: bool = Field(default=True)
+    reason: str
+
+class DiscountRule(BaseModel):
+    rule_id: str
+    name: str
+    description: str
+    trigger_conditions: Dict[str, Any]
+    discount_config: Dict[str, Any]
+    is_active: bool
+    created_at: datetime
+    last_triggered: Optional[datetime] = None
+    trigger_count: int = 0
+
+class UserCohort(BaseModel):
+    cohort_id: str
+    name: str
+    definition: Dict[str, Any]
+    user_count: int
+    created_at: datetime
+    metrics: Dict[str, Any]
+
+class EmailTemplate(BaseModel):
+    template_id: str
+    name: str
+    subject: str
+    html_content: str
+    text_content: str
+    template_type: str  # discount_applied, banner_notification, etc.
+    variables: List[str]  # Available template variables
+    is_active: bool
+    created_at: datetime
+    last_modified: datetime
+
+class APIKeyConfig(BaseModel):
+    key_id: str
+    service_name: str
+    key_value: str
+    description: str
+    is_active: bool
+    created_at: datetime
+    last_used: Optional[datetime] = None
+    usage_count: int = 0
+
+class WorkflowStep(BaseModel):
+    step_id: str
+    step_type: str  # condition, action, delay
+    config: Dict[str, Any]
+    order: int
+
+class AutomatedWorkflow(BaseModel):
+    workflow_id: str
+    name: str
+    description: str
+    trigger_event: str
+    steps: List[WorkflowStep]
+    is_active: bool
+    created_at: datetime
+    execution_count: int = 0
+    last_executed: Optional[datetime] = None
+
+class ExportRequest(BaseModel):
+    export_type: str  # users, discounts, banners, analytics
+    filters: Dict[str, Any]
+    format: str = Field(default="csv")  # csv, json, xlsx
+    date_range: Optional[Dict[str, datetime]] = None
+
 # Banner Management Endpoints
 @router.post("/admin/banners", response_model=Banner)
 async def create_banner(
