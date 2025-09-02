@@ -1437,6 +1437,46 @@ async def end_impersonation_session(
 
 # ===== ENHANCED USER MANAGEMENT ENDPOINTS =====
 
+# Simple users list endpoint that frontend expects
+@router.get("/admin/users")
+async def get_all_users(
+    limit: int = Query(100, ge=1, le=500),
+    offset: int = Query(0, ge=0),
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get all users - simplified endpoint for admin portal"""
+    try:
+        # Get users from database
+        users_cursor = db.users.find({}).skip(offset).limit(limit)
+        users = await users_cursor.to_list(length=limit)
+        
+        # Convert ObjectId to string and format response
+        for user in users:
+            user["_id"] = str(user["_id"])
+            if "created_at" in user and isinstance(user["created_at"], datetime):
+                user["created_at"] = user["created_at"].isoformat()
+        
+        return {
+            "status": "success",
+            "users": users,
+            "total_count": await db.users.count_documents({}),
+            "offset": offset,
+            "limit": limit
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch users: {str(e)}")
+
+# Simple customers endpoint (alias for users)
+@router.get("/admin/customers")
+async def get_all_customers(
+    limit: int = Query(100, ge=1, le=500),
+    offset: int = Query(0, ge=0),
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get all customers - alias for users endpoint"""
+    return await get_all_users(limit, offset, current_user)
+
 @router.get("/admin/users/search")
 async def search_users(
     email: Optional[str] = Query(None),
