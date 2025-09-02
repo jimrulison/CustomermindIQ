@@ -153,6 +153,28 @@ const AdminPortalEnhanced = () => {
     }
   };
 
+  const loadEmailCampaigns = async () => {
+    try {
+      const response = await axios.get(`${backendUrl}/api/email/campaigns`, {
+        headers: getAuthHeaders()
+      });
+      setEmailCampaigns(response.data.campaigns || []);
+    } catch (error) {
+      console.error('Failed to load email campaigns:', error);
+    }
+  };
+
+  const loadEmailProvider = async () => {
+    try {
+      const response = await axios.get(`${backendUrl}/api/email/providers/current`, {
+        headers: getAuthHeaders()
+      });
+      setEmailProvider(response.data.provider_config);
+    } catch (error) {
+      console.error('Failed to load email provider:', error);
+    }
+  };
+
   const loadBanners = async () => {
     try {
       const response = await axios.get(`${backendUrl}/api/admin/banners`, {
