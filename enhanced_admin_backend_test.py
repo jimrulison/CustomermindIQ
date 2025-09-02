@@ -804,13 +804,17 @@ class EnhancedAdminTester:
 async def main():
     """Main test execution"""
     tester = EnhancedAdminTester()
-    success_rate = await tester.run_comprehensive_test()
-    
-    # Exit with appropriate code
-    if success_rate >= 60:
-        sys.exit(0)  # Success
-    else:
-        sys.exit(1)  # Failure
+    try:
+        success_rate = await tester.run_comprehensive_test()
+        
+        # Exit with appropriate code
+        if success_rate and success_rate >= 60:
+            sys.exit(0)  # Success
+        else:
+            sys.exit(1)  # Failure
+    except Exception as e:
+        print(f"❌ Test execution failed: {e}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     asyncio.run(main())
