@@ -76,6 +76,10 @@ const LiveChatWidget = () => {
     };
   }, []);
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const connectWebSocket = () => {
     try {
       const wsUrl = `${process.env.REACT_APP_BACKEND_URL.replace('http', 'ws')}/chat/ws/${chatSession.session_id}/user`;
