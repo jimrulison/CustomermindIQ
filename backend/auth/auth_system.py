@@ -193,15 +193,28 @@ SUBSCRIPTION_MODULE_ACCESS = {
         "basic_analytics", 
         "lead_scoring_basic"
     ],
-    SubscriptionTier.PROFESSIONAL: [
+    SubscriptionTier.LAUNCH: [
+        "customer_intelligence_basic", "basic_analytics", "website_analytics",
+        "email_integration", "basic_dashboard", "lead_scoring_basic"
+    ],
+    SubscriptionTier.GROWTH: [
         "customer_intelligence", "marketing_automation", "revenue_analytics",
         "analytics_insights", "behavioral_clustering", "churn_prevention",
-        "cross_sell_intelligence", "roi_forecasting", "cohort_analysis"
+        "cross_sell_intelligence", "roi_forecasting", "cohort_analysis",
+        "website_health_monitoring", "advanced_analytics"
     ],
-    SubscriptionTier.ENTERPRISE: [
-        "all_modules", "white_label", "custom_integrations", 
-        "advanced_ai_models", "dedicated_support", "compliance_suite",
-        "ai_command_center", "competitive_intelligence"
+    SubscriptionTier.SCALE: [
+        "all_modules", "ai_command_center", "executive_dashboard",
+        "unlimited_users", "unlimited_websites", "advanced_features",
+        "priority_support", "competitive_intelligence"
+    ],
+    SubscriptionTier.WHITE_LABEL: [
+        "all_modules", "white_label", "custom_branding", "reseller_dashboard",
+        "custom_domain", "dedicated_support"
+    ],
+    SubscriptionTier.CUSTOM: [
+        "all_modules", "custom_integrations", "dedicated_support",
+        "custom_ai_models", "sla_support", "priority_features"
     ]
 }
 
