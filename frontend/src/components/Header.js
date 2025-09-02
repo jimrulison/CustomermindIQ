@@ -28,6 +28,41 @@ import {
 const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
   const [waitingChatsCount, setWaitingChatsCount] = useState(0);
   
+  // Check for waiting chats if user is admin
+  useEffect(() => {
+    if (user?.role === 'admin' || user?.role === 'super_admin') {
+      checkWaitingChats();
+      // Check every 30 seconds
+      const interval = setInterval(checkWaitingChats, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [user]);
+
+  const checkWaitingChats = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/admin/chat/sessions`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token') || localStorage.getItem('token')}`
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        const waitingCount = data.sessions?.filter(s => s.status === 'waiting').length || 0;
+        setWaitingChatsCount(waitingCount);
+        
+        // Update page title if there are waiting chats
+        if (waitingCount > 0) {
+          document.title = `(${waitingCount}) New Chats - Customer Mind IQ`;
+        } else {
+          document.title = 'Customer Mind IQ';
+        }
+      }
+    } catch (error) {
+      console.error('Error checking waiting chats:', error);
+    }
+  };
+  
   // Primary navigation - separated by analytics type
   const primaryNavigation = [
     {
