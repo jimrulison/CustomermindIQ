@@ -912,6 +912,209 @@ async def get_cohort_analytics(
         }
     }
 
+# ===== DISCOUNT ROI TRACKING =====
+
+@router.get("/admin/discounts/roi-tracking")
+async def get_discount_roi_tracking(
+    date_from: Optional[str] = Query(None),
+    date_to: Optional[str] = Query(None),
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get ROI tracking for all discounts"""
+    
+    # Set default date range (last 90 days)
+    if not date_from:
+        date_from = (datetime.utcnow() - timedelta(days=90)).isoformat()
+    if not date_to:
+        date_to = datetime.utcnow().isoformat()
+    
+    date_filter = {
+        "applied_at": {
+            "$gte": datetime.fromisoformat(date_from.replace('Z', '+00:00')),
+            "$lte": datetime.fromisoformat(date_to.replace('Z', '+00:00'))
+        }
+    }
+    
+    # Get all discount usage in period
+    usage_data = await db.discount_usage.find(date_filter).to_list(length=50000)
+    
+    # Group by discount
+    discount_roi = {}
+    for usage in usage_data:
+        discount_id = usage["discount_id"]
+        if discount_id not in discount_roi:
+            discount_roi[discount_id] = {
+                "discount_id": discount_id,
+                "total_uses": 0,
+                "revenue_impact": 0.0,
+                "users_acquired": set(),
+                "conversion_rate": 0.0
+            }
+        
+        discount_roi[discount_id]["total_uses"] += 1
+        discount_roi[discount_id]["users_acquired"].add(usage["user_id"])
+        
+        # Calculate revenue impact
+        if usage["discount_type"] == "percentage":
+            estimated_value = 149.0 * (usage["discount_amount"] / 100)
+        elif usage["discount_type"] == "fixed_amount":
+            estimated_value = usage["discount_amount"]
+        else:  # free_months
+            estimated_value = 149.0 * usage["discount_amount"]
+        
+        discount_roi[discount_id]["revenue_impact"] += estimated_value
+    
+    # Get discount details and calculate final metrics
+    roi_results = []
+    for discount_id, data in discount_roi.items():
+        discount = await db.discounts.find_one({"discount_id": discount_id})
+        if discount:
+            unique_users = len(data["users_acquired"])
+            
+            # Calculate estimated acquisition cost (simplified)
+            estimated_cost = data["revenue_impact"] * 0.3  # Assume 30% cost ratio
+            roi_percentage = ((data["revenue_impact"] - estimated_cost) / estimated_cost * 100) if estimated_cost > 0 else 0
+            
+            roi_results.append({
+                "discount_name": discount["name"],
+                "discount_id": discount_id,
+                "total_uses": data["total_uses"],
+                "unique_users": unique_users,
+                "revenue_impact": round(data["revenue_impact"], 2),
+                "estimated_cost": round(estimated_cost, 2),
+                "roi_percentage": round(roi_percentage, 2),
+                "cost_per_acquisition": round(estimated_cost / unique_users, 2) if unique_users > 0 else 0
+            })
+    
+    # Sort by ROI percentage
+    roi_results.sort(key=lambda x: x["roi_percentage"], reverse=True)
+    
+    return {
+        "roi_tracking": roi_results,
+        "period": f"{date_from} to {date_to}",
+        "total_discounts_analyzed": len(roi_results)
+    }
+
+# ===== EXPORT CAPABILITIES =====
+
+@router.post("/admin/export")
+async def export_admin_data(
+    export_request: ExportRequest,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Export admin data in various formats"""
+    
+    export_type = export_request.export_type
+    filters = export_request.filters
+    format_type = export_request.format
+    
+    # Build query based on filters
+    query = {}
+    if filters.get("date_range"):
+        date_range = filters["date_range"]
+        if date_range.get("from"):
+            query.setdefault("created_at", {})["$gte"] = datetime.fromisoformat(date_range["from"])
+        if date_range.get("to"):
+            query.setdefault("created_at", {})["$lte"] = datetime.fromisoformat(date_range["to"])
+    
+    # Export users data
+    if export_type == "users":
+        if filters.get("subscription_tier"):
+            query["subscription_tier"] = filters["subscription_tier"]
+        if filters.get("is_active") is not None:
+            query["is_active"] = filters["is_active"]
+        
+        users = await db.users.find(query).to_list(length=100000)
+        
+        # Remove sensitive data
+        for user in users:
+            user.pop("password_hash", None)
+            user.pop("_id", None)
+        
+        if format_type == "csv":
+            return _export_to_csv(users, "users_export")
+        else:
+            return {"data": users, "count": len(users)}
+    
+    # Export discounts data
+    elif export_type == "discounts":
+        discounts = await db.discounts.find(query).to_list(length=10000)
+        
+        # Get usage statistics for each discount
+        for discount in discounts:
+            discount.pop("_id", None)
+            usage_count = await db.discount_usage.count_documents({"discount_id": discount["discount_id"]})
+            discount["actual_usage_count"] = usage_count
+        
+        if format_type == "csv":
+            return _export_to_csv(discounts, "discounts_export")
+        else:
+            return {"data": discounts, "count": len(discounts)}
+    
+    # Export analytics data
+    elif export_type == "analytics":
+        # Get comprehensive analytics
+        total_users = await db.users.count_documents({})
+        total_discounts = await db.discounts.count_documents({})
+        total_banners = await db.banners.count_documents({})
+        
+        analytics_data = [{
+            "metric": "Total Users",
+            "value": total_users,
+            "export_timestamp": datetime.utcnow().isoformat()
+        }, {
+            "metric": "Total Discounts",
+            "value": total_discounts,
+            "export_timestamp": datetime.utcnow().isoformat()
+        }, {
+            "metric": "Total Banners", 
+            "value": total_banners,
+            "export_timestamp": datetime.utcnow().isoformat()
+        }]
+        
+        if format_type == "csv":
+            return _export_to_csv(analytics_data, "analytics_export")
+        else:
+            return {"data": analytics_data, "count": len(analytics_data)}
+    
+    else:
+        raise HTTPException(status_code=400, detail="Invalid export type")
+
+def _export_to_csv(data, filename):
+    """Helper function to export data as CSV"""
+    if not data:
+        raise HTTPException(status_code=400, detail="No data to export")
+    
+    # Create CSV content
+    output = io.StringIO()
+    
+    # Get field names from first record
+    fieldnames = list(data[0].keys())
+    writer = csv.DictWriter(output, fieldnames=fieldnames)
+    
+    writer.writeheader()
+    for row in data:
+        # Convert datetime objects to strings
+        cleaned_row = {}
+        for key, value in row.items():
+            if isinstance(value, datetime):
+                cleaned_row[key] = value.isoformat()
+            elif isinstance(value, list):
+                cleaned_row[key] = ", ".join(str(item) for item in value)
+            else:
+                cleaned_row[key] = value
+        writer.writerow(cleaned_row)
+    
+    # Create response
+    csv_content = output.getvalue()
+    output.close()
+    
+    return StreamingResponse(
+        io.StringIO(csv_content),
+        media_type="text/csv",
+        headers={"Content-Disposition": f"attachment; filename={filename}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.csv"}
+    )
+
 # Account Impersonation Endpoints
 @router.post("/admin/impersonate", response_model=ImpersonationSession)
 async def start_impersonation_session(
