@@ -1,18 +1,68 @@
 import os
 import xmlrpc.client
+import httpx
+import uuid
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
+from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
+from motor.motor_asyncio import AsyncIOMotorClient
+from pydantic import BaseModel, Field, EmailStr, validator
+from enum import Enum
 from dotenv import load_dotenv
 import logging
 from functools import wraps
 import time
 
+# Import auth dependencies
+from auth.auth_system import get_current_user, require_role, UserRole, UserProfile, SubscriptionTier
+
 # Load environment variables
 load_dotenv()
+
+# MongoDB setup for local tracking
+MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
+DB_NAME = os.getenv("DB_NAME", "customer_mind_iq")
+client = AsyncIOMotorClient(MONGO_URL)
+db = client[DB_NAME]
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Router for contact form endpoints
+router = APIRouter(tags=["ODOO Integration & Contact Forms"])
+
+# Models for Contact Form
+class ContactFormSubmission(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    email: EmailStr
+    phone: Optional[str] = Field(None, regex=r"^[\d\-\+\(\)\s]+$")
+    company: Optional[str] = Field(None, max_length=100)
+    subject: str = Field(..., min_length=5, max_length=200)
+    message: str = Field(..., min_length=10, max_length=2000)
+    website: Optional[str] = None
+    source: str = "website_contact_form"
+    
+    @validator('website')
+    def validate_website(cls, v):
+        if v and not v.startswith(('http://', 'https://')):
+            v = f'https://{v}'
+        return v
+
+class ContactFormResponse(BaseModel):
+    form_id: str
+    name: str
+    email: str
+    subject: str
+    status: str
+    odoo_contact_id: Optional[int] = None
+    odoo_ticket_id: Optional[int] = None
+    submitted_at: datetime
+    admin_response: Optional[str] = None
+    admin_response_at: Optional[datetime] = None
+
+class AdminResponse(BaseModel):
+    message: str = Field(..., min_length=10, max_length=2000)
 
 class ODOOIntegration:
     """
