@@ -24,8 +24,8 @@ import urllib3
 # Disable SSL warnings for testing
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# Configuration
-BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://growth-engine-app-1.preview.emergentagent.com")
+# Configuration - Use localhost for testing
+BACKEND_URL = "http://localhost:8001"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test credentials
