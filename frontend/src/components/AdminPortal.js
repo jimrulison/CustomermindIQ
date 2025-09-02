@@ -168,7 +168,7 @@ const AdminPortalEnhanced = () => {
 
   const loadEmailCampaigns = async () => {
     try {
-      const response = await axios.get(`${backendUrl}/api/email/campaigns`, {
+      const response = await axios.get(`${backendUrl}/api/email/email/campaigns`, {
         headers: getAuthHeaders()
       });
       setEmailCampaigns(response.data.campaigns || []);
