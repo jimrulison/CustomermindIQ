@@ -296,39 +296,53 @@ const SignIn = ({ onSignIn }) => {
                   </div>
                 </div>
 
-                {/* Updated Subscription Plans */}
+                {/* Updated Subscription Plans - Dynamic from API */}
                 <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                   <h3 className="text-blue-300 font-semibold mb-3">Choose Your Plan After Trial</h3>
-                  <div className="space-y-3 text-sm">
-                    <div className="bg-slate-700/30 rounded-lg p-3">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-white font-medium">Starter</span>
-                        <span className="text-green-400 font-semibold">$99/month</span>
-                      </div>
-                      <p className="text-slate-400 text-xs">3 websites • 50 keywords • Basic analytics</p>
+                  {plansLoading ? (
+                    <div className="text-center text-slate-400">Loading plans...</div>
+                  ) : (
+                    <div className="space-y-3 text-sm">
+                      {Object.entries(subscriptionPlans).map(([planId, plan]) => {
+                        if (planId === 'free') return null; // Don't show free plan in signup
+                        
+                        return (
+                          <div key={planId} className={`bg-slate-700/30 rounded-lg p-3 ${plan.most_popular ? 'ring-2 ring-purple-500/50' : ''}`}>
+                            <div className="flex justify-between items-center mb-1">
+                              <div className="flex items-center">
+                                <span className="text-white font-medium">{plan.name}</span>
+                                {plan.most_popular && (
+                                  <span className="ml-2 text-xs bg-purple-600 text-white px-2 py-1 rounded">Most Popular</span>
+                                )}
+                              </div>
+                              <span className="text-green-400 font-semibold">
+                                {typeof plan.monthly_price === 'number' ? `$${plan.monthly_price}/month` : 'Contact Sales'}
+                              </span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <p className="text-slate-400 text-xs">
+                                {planId === 'launch' && '5 websites • 50 keywords • Basic analytics'}
+                                {planId === 'growth' && '10 websites • 200 keywords • Full analytics'}
+                                {planId === 'scale' && 'Unlimited • Advanced features • Priority support'}
+                                {planId === 'white_label' && 'White-label branding • Reseller dashboard'}
+                                {planId === 'custom' && 'Custom features • Dedicated IT support'}
+                              </p>
+                              {typeof plan.annual_price === 'number' && (
+                                <span className="text-xs text-green-300">
+                                  ${plan.annual_price}/year (2 months free!)
+                                </span>
+                              )}
+                            </div>
+                            {(planId === 'launch' || planId === 'growth' || planId === 'scale') && (
+                              <p className="text-xs text-yellow-300 mt-1">
+                                • Growth Acceleration Engine (Annual Only)
+                              </p>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
-                    <div className="bg-slate-700/30 rounded-lg p-3">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-white font-medium">Professional</span>
-                        <span className="text-green-400 font-semibold">$299/month</span>
-                      </div>
-                      <p className="text-slate-400 text-xs">10 websites • 200 keywords • Full analytics</p>
-                    </div>
-                    <div className="bg-slate-700/30 rounded-lg p-3">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-white font-medium">Enterprise</span>
-                        <span className="text-green-400 font-semibold">$799/month</span>
-                      </div>
-                      <p className="text-slate-400 text-xs">Unlimited • Advanced features • Priority support</p>
-                    </div>
-                    <div className="bg-slate-700/30 rounded-lg p-3">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-white font-medium">Custom</span>
-                        <span className="text-blue-400 font-semibold">Contact Sales</span>
-                      </div>
-                      <p className="text-slate-400 text-xs">Enterprise + Custom solutions</p>
-                    </div>
-                  </div>
+                  )}
                 </div>
 
                 <Button
