@@ -12,7 +12,12 @@ import {
   Clock,
   CheckCircle,
   AlertCircle,
-  Crown
+  Crown,
+  Paperclip,
+  Download,
+  Image,
+  FileText,
+  File
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
