@@ -341,7 +341,7 @@ class EnhancedLiveChatTester:
                 )
                 return False
             
-            headers = {"Authorization": f"Bearer {self.premium_user_token}"}
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
             
             # Test 1: Invalid file type
             invalid_content = b"This is a test executable file"
