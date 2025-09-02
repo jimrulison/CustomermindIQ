@@ -2133,6 +2133,9 @@ app.include_router(website_intelligence_router, prefix="/api/website-intelligenc
 # Include Support System routes  
 app.include_router(support_router, prefix="/api/support", tags=["Support System"])
 
+# Include Email System routes
+app.include_router(email_router, prefix="/api/email", tags=["Email System"])
+
 # =====================================================
 # GROWTH ACCELERATION ENGINE MODULE ROUTERS
 # =====================================================
