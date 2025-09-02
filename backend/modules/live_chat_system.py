@@ -1,12 +1,15 @@
 # Live Chat System - Premium Feature (Growth, Scale, White Label, Custom plans only)
 import os
-from fastapi import APIRouter, HTTPException, Depends, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, HTTPException, Depends, WebSocket, WebSocketDisconnect, UploadFile, File
 from motor.motor_asyncio import AsyncIOMotorClient
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from pydantic import BaseModel, Field
 import secrets
 import json
+import aiofiles
+import mimetypes
+from pathlib import Path
 from auth.auth_system import get_current_user, UserProfile
 from dotenv import load_dotenv
 
