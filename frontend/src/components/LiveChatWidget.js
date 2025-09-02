@@ -631,19 +631,61 @@ const LiveChatWidget = () => {
                             className={`max-w-xs px-3 py-2 rounded-lg text-sm ${
                               message.sender_type === 'user'
                                 ? 'bg-blue-600 text-white'
+                                : message.sender_type === 'system'
+                                ? 'bg-gray-600 text-gray-100 text-center'
                                 : 'bg-slate-700 text-slate-100'
                             }`}
                           >
                             <div className="font-medium text-xs mb-1 opacity-75">
-                              {message.sender_type === 'user' ? 'You' : message.sender_name}
+                              {message.sender_type === 'user' ? 'You' : 
+                               message.sender_type === 'system' ? '' : message.sender_name}
                             </div>
-                            <div>{message.message}</div>
+                            
+                            {message.message_type === 'file' && message.file_info ? (
+                              <div className="space-y-2">
+                                <div className="flex items-center space-x-2">
+                                  {getFileIcon(message.file_info.content_type)}
+                                  <span className="font-medium">{message.file_info.original_name}</span>
+                                </div>
+                                <div className="text-xs opacity-75">
+                                  {formatFileSize(message.file_info.size)}
+                                </div>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="w-full h-6 text-xs"
+                                  onClick={() => downloadFile(message.file_info.stored_name, message.file_info.original_name)}
+                                >
+                                  <Download className="w-3 h-3 mr-1" />
+                                  Download
+                                </Button>
+                              </div>
+                            ) : (
+                              <div>{message.message}</div>
+                            )}
+                            
                             <div className="text-xs opacity-50 mt-1">
                               {formatTime(message.timestamp)}
                             </div>
                           </div>
                         </div>
                       ))}
+                      
+                      {/* Typing Indicator */}
+                      {adminTyping && (
+                        <div className="flex justify-start">
+                          <div className="bg-slate-700 text-slate-100 px-3 py-2 rounded-lg text-sm">
+                            <div className="flex items-center space-x-1">
+                              <div className="flex space-x-1">
+                                <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
+                                <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                                <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                              </div>
+                              <span className="text-xs">Admin is typing...</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                       
                       {messages.length === 0 && (
                         <div className="text-center text-slate-400 text-sm py-8">
