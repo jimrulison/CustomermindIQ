@@ -36,6 +36,8 @@ const AdminPortalEnhanced = () => {
   const [apiKeys, setApiKeys] = useState([]);
   const [workflows, setWorkflows] = useState([]);
   const [supportTickets, setSupportTickets] = useState([]);
+  const [emailCampaigns, setEmailCampaigns] = useState([]);
+  const [emailProvider, setEmailProvider] = useState(null);
   const [analytics, setAnalytics] = useState({});
 
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
