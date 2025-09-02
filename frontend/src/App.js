@@ -190,6 +190,12 @@ function AppContent() {
       setLoading(true);
       console.log('Loading Customer Mind IQ data...');
       
+      // CRITICAL: Force loading to stop after 8 seconds maximum
+      const forceLoadingStop = setTimeout(() => {
+        console.log('FORCE STOPPING LOADING - Timeout reached');
+        setLoading(false);
+      }, 8000);
+      
       // Load basic data first - essential for dashboard
       try {
         console.log('Loading basic dashboard data...');
@@ -208,9 +214,9 @@ function AppContent() {
           })
         ]);
         
-        // Add timeout for basic data (reduced to 10 seconds)
+        // Add timeout for basic data (reduced to 5 seconds)
         const basicTimeout = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Basic data timeout after 10 seconds')), 10000)
+          setTimeout(() => reject(new Error('Basic data timeout after 5 seconds')), 5000)
         );
         
         const [customersRes, campaignsRes, analyticsRes] = await Promise.race([basicDataPromise, basicTimeout]);
@@ -239,7 +245,8 @@ function AppContent() {
         });
       }
       
-      // CRITICAL: Always set loading to false after basic data
+      // CRITICAL: Clear the force timeout and set loading to false
+      clearTimeout(forceLoadingStop);
       setLoading(false);
       console.log('Customer Mind IQ core data loaded successfully');
       
