@@ -698,7 +698,288 @@ async def end_impersonation_session(
         "timestamp": datetime.utcnow()
     })
     
-    return {"message": "Impersonation session ended"}
+    return {"message": "Impersonation session ended successfully"}
+
+# ===== ENHANCED USER MANAGEMENT ENDPOINTS =====
+
+@router.get("/admin/users/search")
+async def search_users(
+    email: Optional[str] = Query(None),
+    role: Optional[UserRole] = Query(None),
+    subscription_tier: Optional[SubscriptionTier] = Query(None),
+    registration_from: Optional[str] = Query(None),
+    registration_to: Optional[str] = Query(None),
+    is_active: Optional[bool] = Query(None),
+    has_subscription: Optional[bool] = Query(None),
+    limit: int = Query(50, ge=1, le=500),
+    offset: int = Query(0, ge=0),
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Advanced user search and filtering"""
+    
+    # Build query
+    query = {}
+    
+    if email:
+        query["email"] = {"$regex": email, "$options": "i"}
+    
+    if role:
+        query["role"] = role
+    
+    if subscription_tier:
+        query["subscription_tier"] = subscription_tier
+    
+    if is_active is not None:
+        query["is_active"] = is_active
+    
+    if has_subscription is not None:
+        if has_subscription:
+            query["subscription_tier"] = {"$in": [SubscriptionTier.MONTHLY, SubscriptionTier.ANNUAL]}
+        else:
+            query["subscription_tier"] = SubscriptionTier.FREE_TRIAL
+            
+    # Date range filtering
+    if registration_from or registration_to:
+        date_query = {}
+        if registration_from:
+            date_query["$gte"] = datetime.fromisoformat(registration_from.replace('Z', '+00:00'))
+        if registration_to:
+            date_query["$lte"] = datetime.fromisoformat(registration_to.replace('Z', '+00:00'))
+        query["created_at"] = date_query
+    
+    # Execute search with pagination
+    cursor = db.users.find(query).sort("created_at", -1).skip(offset).limit(limit)
+    users = await cursor.to_list(length=limit)
+    
+    # Get total count for pagination
+    total_count = await db.users.count_documents(query)
+    
+    # Remove sensitive data and ObjectIds
+    for user in users:
+        if "_id" in user:
+            del user["_id"]
+        if "password_hash" in user:
+            del user["password_hash"]
+    
+    return {
+        "users": users,
+        "total": total_count,
+        "limit": limit,
+        "offset": offset,
+        "has_more": total_count > (offset + limit)
+    }
+
+@router.get("/admin/users/{user_id}/analytics")
+async def get_user_analytics(
+    user_id: str,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get detailed analytics for a specific user"""
+    
+    # Verify user exists
+    user = await db.users.find_one({"user_id": user_id})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Calculate user metrics
+    user_analytics = {
+        "user_profile": {
+            "user_id": user["user_id"],
+            "email": user["email"],
+            "role": user["role"],
+            "subscription_tier": user["subscription_tier"],
+            "created_at": user["created_at"],
+            "is_active": user.get("is_active", True)
+        },
+        "activity_metrics": {
+            "total_logins": await db.user_activities.count_documents({"user_id": user_id, "activity_type": "login"}),
+            "last_login": None,
+            "session_count_30d": 0,
+            "features_used": []
+        },
+        "subscription_metrics": {
+            "subscription_start": user.get("subscription_start"),
+            "subscription_end": user.get("subscription_end"),
+            "payments_made": 0,
+            "total_revenue": 0.0,
+            "discounts_used": []
+        },
+        "support_metrics": {
+            "support_tickets": 0,
+            "last_support_contact": None,
+            "impersonation_sessions": 0
+        }
+    }
+    
+    # Get last login
+    last_login = await db.user_activities.find_one(
+        {"user_id": user_id, "activity_type": "login"},
+        sort=[("timestamp", -1)]
+    )
+    if last_login:
+        user_analytics["activity_metrics"]["last_login"] = last_login["timestamp"]
+    
+    # Get session count (last 30 days)
+    thirty_days_ago = datetime.utcnow() - timedelta(days=30)
+    user_analytics["activity_metrics"]["session_count_30d"] = await db.user_activities.count_documents({
+        "user_id": user_id,
+        "activity_type": "login",
+        "timestamp": {"$gte": thirty_days_ago}
+    })
+    
+    # Get payment information
+    payments = await db.payments.find({"user_id": user_id}).to_list(length=100)
+    user_analytics["subscription_metrics"]["payments_made"] = len(payments)
+    user_analytics["subscription_metrics"]["total_revenue"] = sum(p.get("amount", 0) for p in payments)
+    
+    # Get discount usage
+    discount_usage = await db.discount_usage.find({"user_id": user_id}).to_list(length=50)
+    user_analytics["subscription_metrics"]["discounts_used"] = discount_usage
+    
+    # Get impersonation sessions
+    user_analytics["support_metrics"]["impersonation_sessions"] = await db.impersonation_sessions.count_documents({
+        "target_user_id": user_id
+    })
+    
+    return user_analytics
+
+# ===== DISCOUNT CODES SYSTEM =====
+
+@router.post("/admin/discounts/{discount_id}/codes/generate")
+async def generate_discount_codes(
+    discount_id: str,
+    count: int = Query(1, ge=1, le=1000),
+    max_uses_per_code: Optional[int] = Query(None),
+    expires_in_days: Optional[int] = Query(None),
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Generate discount codes for a discount"""
+    
+    # Verify discount exists
+    discount = await db.discounts.find_one({"discount_id": discount_id})
+    if not discount:
+        raise HTTPException(status_code=404, detail="Discount not found")
+    
+    codes = []
+    for _ in range(count):
+        code_id = str(uuid.uuid4())
+        code = f"CM{uuid.uuid4().hex[:8].upper()}"
+        
+        expires_at = None
+        if expires_in_days:
+            expires_at = datetime.utcnow() + timedelta(days=expires_in_days)
+        
+        code_doc = {
+            "code_id": code_id,
+            "discount_id": discount_id,
+            "code": code,
+            "is_active": True,
+            "usage_count": 0,
+            "max_uses": max_uses_per_code,
+            "created_at": datetime.utcnow(),
+            "expires_at": expires_at,
+            "created_by": current_user.user_id
+        }
+        
+        await db.discount_codes.insert_one(code_doc)
+        
+        # Remove ObjectId for response
+        del code_doc["_id"]
+        codes.append(code_doc)
+    
+    return {
+        "message": f"Generated {count} discount codes",
+        "codes": codes
+    }
+
+@router.get("/admin/discounts/{discount_id}/codes")
+async def get_discount_codes(
+    discount_id: str,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get all codes for a discount"""
+    
+    codes = await db.discount_codes.find({"discount_id": discount_id}).sort("created_at", -1).to_list(length=500)
+    
+    # Remove ObjectIds
+    for code in codes:
+        if "_id" in code:
+            del code["_id"]
+    
+    return {
+        "codes": codes,
+        "total": len(codes)
+    }
+
+@router.post("/discounts/redeem/{code}")
+async def redeem_discount_code(
+    code: str,
+    current_user: UserProfile = Depends(get_current_user)
+):
+    """Redeem a discount code"""
+    
+    # Find the code
+    code_doc = await db.discount_codes.find_one({"code": code})
+    if not code_doc:
+        raise HTTPException(status_code=404, detail="Invalid discount code")
+    
+    # Check if code is active and not expired
+    if not code_doc["is_active"]:
+        raise HTTPException(status_code=400, detail="Discount code is no longer active")
+    
+    if code_doc["expires_at"] and datetime.utcnow() > code_doc["expires_at"]:
+        raise HTTPException(status_code=400, detail="Discount code has expired")
+    
+    # Check usage limits
+    if code_doc["max_uses"] and code_doc["usage_count"] >= code_doc["max_uses"]:
+        raise HTTPException(status_code=400, detail="Discount code usage limit reached")
+    
+    # Check if user already used this code
+    existing_usage = await db.discount_usage.find_one({
+        "user_id": current_user.user_id,
+        "discount_code": code
+    })
+    if existing_usage:
+        raise HTTPException(status_code=400, detail="You have already used this discount code")
+    
+    # Get discount details
+    discount = await db.discounts.find_one({"discount_id": code_doc["discount_id"]})
+    if not discount:
+        raise HTTPException(status_code=404, detail="Associated discount not found")
+    
+    # Apply the discount
+    usage_record = {
+        "usage_id": str(uuid.uuid4()),
+        "discount_id": discount["discount_id"],
+        "discount_code": code,
+        "user_id": current_user.user_id,
+        "applied_at": datetime.utcnow(),
+        "discount_amount": discount["value"],
+        "discount_type": discount["discount_type"]
+    }
+    
+    await db.discount_usage.insert_one(usage_record)
+    
+    # Update usage statistics
+    await db.discount_codes.update_one(
+        {"code": code},
+        {"$inc": {"usage_count": 1}}
+    )
+    
+    await db.discounts.update_one(
+        {"discount_id": discount["discount_id"]},
+        {"$inc": {"total_uses": 1}}
+    )
+    
+    return {
+        "message": "Discount code redeemed successfully",
+        "discount": {
+            "name": discount["name"],
+            "type": discount["discount_type"],
+            "value": discount["value"]
+        },
+        "usage_record": usage_record
+    }
 
 @router.get("/admin/impersonation/active")
 async def get_active_impersonation_sessions(
