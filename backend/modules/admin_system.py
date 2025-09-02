@@ -1115,6 +1115,243 @@ def _export_to_csv(data, filename):
         headers={"Content-Disposition": f"attachment; filename={filename}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.csv"}
     )
 
+# ===== AUTOMATED DISCOUNT RULES =====
+
+@router.post("/admin/discount-rules")
+async def create_discount_rule(
+    name: str,
+    description: str,
+    trigger_conditions: Dict[str, Any],
+    discount_config: Dict[str, Any],
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Create automated discount rule"""
+    
+    rule_id = str(uuid.uuid4())
+    
+    rule_doc = {
+        "rule_id": rule_id,
+        "name": name,
+        "description": description,
+        "trigger_conditions": trigger_conditions,
+        "discount_config": discount_config,
+        "is_active": True,
+        "created_at": datetime.utcnow(),
+        "created_by": current_user.user_id,
+        "last_triggered": None,  
+        "trigger_count": 0
+    }
+    
+    await db.discount_rules.insert_one(rule_doc)
+    
+    # Remove ObjectId for response
+    del rule_doc["_id"]
+    
+    return rule_doc
+
+@router.get("/admin/discount-rules")
+async def get_discount_rules(
+    is_active: Optional[bool] = Query(None),
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get all discount rules"""
+    
+    query = {}
+    if is_active is not None:
+        query["is_active"] = is_active
+    
+    rules = await db.discount_rules.find(query).sort("created_at", -1).to_list(length=100)
+    
+    # Remove ObjectIds
+    for rule in rules:
+        if "_id" in rule:
+            del rule["_id"]
+    
+    return {
+        "rules": rules,
+        "total": len(rules)
+    }
+
+# ===== EMAIL TEMPLATES MANAGEMENT =====
+
+@router.post("/admin/email-templates")
+async def create_email_template(
+    name: str,
+    subject: str,
+    html_content: str,
+    text_content: str,
+    template_type: str,
+    variables: List[str],
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Create a new email template"""
+    
+    template_id = str(uuid.uuid4())
+    
+    template_doc = {
+        "template_id": template_id,
+        "name": name,
+        "subject": subject,
+        "html_content": html_content,
+        "text_content": text_content,
+        "template_type": template_type,
+        "variables": variables,
+        "is_active": True,
+        "created_at": datetime.utcnow(),
+        "last_modified": datetime.utcnow(),
+        "created_by": current_user.user_id
+    }
+    
+    await db.email_templates.insert_one(template_doc)
+    
+    # Remove ObjectId for response
+    del template_doc["_id"]
+    
+    return template_doc
+
+@router.get("/admin/email-templates")
+async def get_email_templates(
+    template_type: Optional[str] = Query(None),
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get all email templates"""
+    
+    query = {}
+    if template_type:
+        query["template_type"] = template_type
+    
+    templates = await db.email_templates.find(query).sort("created_at", -1).to_list(length=100)
+    
+    # Remove ObjectIds
+    for template in templates:
+        if "_id" in template:
+            del template["_id"]
+    
+    return {
+        "templates": templates,
+        "total": len(templates)
+    }
+
+# ===== API KEYS MANAGEMENT =====
+
+@router.post("/admin/api-keys")
+async def create_api_key(
+    service_name: str,
+    key_value: str,
+    description: str,
+    current_user: UserProfile = Depends(require_role([UserRole.SUPER_ADMIN]))  # Super admin only
+):
+    """Create a new API key configuration"""
+    
+    key_id = str(uuid.uuid4())
+    
+    key_doc = {
+        "key_id": key_id,
+        "service_name": service_name,
+        "key_value": key_value,  # In production, this should be encrypted
+        "description": description,
+        "is_active": True,
+        "created_at": datetime.utcnow(),
+        "created_by": current_user.user_id,
+        "last_used": None,
+        "usage_count": 0
+    }
+    
+    await db.api_keys.insert_one(key_doc)
+    
+    # Remove sensitive data and ObjectId for response
+    response_data = key_doc.copy()
+    response_data["key_value"] = "***HIDDEN***"  # Hide actual key value
+    del response_data["_id"]
+    
+    return response_data
+
+@router.get("/admin/api-keys")
+async def get_api_keys(
+    current_user: UserProfile = Depends(require_role([UserRole.SUPER_ADMIN]))
+):
+    """Get all API keys (super admin only)"""
+    
+    keys = await db.api_keys.find({}).sort("created_at", -1).to_list(length=100)
+    
+    # Remove sensitive data and ObjectIds
+    for key in keys:
+        key["key_value"] = "***HIDDEN***"
+        if "_id" in key:
+            del key["_id"]
+    
+    return {
+        "api_keys": keys,
+        "total": len(keys)
+    }
+
+# ===== AUTOMATED WORKFLOWS =====
+
+@router.post("/admin/workflows")
+async def create_automated_workflow(
+    name: str,
+    description: str,
+    trigger_event: str,
+    steps: List[Dict[str, Any]],
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Create a new automated workflow"""
+    
+    workflow_id = str(uuid.uuid4())
+    
+    # Convert steps to WorkflowStep objects
+    workflow_steps = []
+    for i, step in enumerate(steps):
+        workflow_steps.append({
+            "step_id": str(uuid.uuid4()),
+            "step_type": step["step_type"],
+            "config": step["config"],
+            "order": i
+        })
+    
+    workflow_doc = {
+        "workflow_id": workflow_id,
+        "name": name,
+        "description": description,
+        "trigger_event": trigger_event,
+        "steps": workflow_steps,
+        "is_active": True,
+        "created_at": datetime.utcnow(),
+        "created_by": current_user.user_id,
+        "execution_count": 0,
+        "last_executed": None
+    }
+    
+    await db.automated_workflows.insert_one(workflow_doc)
+    
+    # Remove ObjectId for response
+    del workflow_doc["_id"]
+    
+    return workflow_doc
+
+@router.get("/admin/workflows")
+async def get_automated_workflows(
+    is_active: Optional[bool] = Query(None),
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get all automated workflows"""
+    
+    query = {}
+    if is_active is not None:
+        query["is_active"] = is_active
+    
+    workflows = await db.automated_workflows.find(query).sort("created_at", -1).to_list(length=100)
+    
+    # Remove ObjectIds
+    for workflow in workflows:
+        if "_id" in workflow:
+            del workflow["_id"]
+    
+    return {
+        "workflows": workflows,
+        "total": len(workflows)
+    }
+
 # Account Impersonation Endpoints
 @router.post("/admin/impersonate", response_model=ImpersonationSession)
 async def start_impersonation_session(
