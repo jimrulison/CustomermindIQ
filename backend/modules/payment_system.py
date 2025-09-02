@@ -21,7 +21,7 @@ db = client[DB_NAME]
 # Stripe configuration
 stripe.api_key = os.getenv("STRIPE_API_KEY", "sk_test_emergent")
 
-router = APIRouter(prefix="/api/payments", tags=["Payments"])
+router = APIRouter(tags=["Payments"])
 
 # Models
 class PaymentRequest(BaseModel):
