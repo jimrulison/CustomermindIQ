@@ -535,7 +535,7 @@ class CustomerCommunicationTester:
                 total_campaigns = data.get("total", 0)
                 
                 # Get email statistics
-                stats_response = requests.get(f"{API_BASE}/email/stats", headers=headers, timeout=60, verify=False)
+                stats_response = requests.get(f"{API_BASE}/email/email/stats", headers=headers, timeout=60, verify=False)
                 if stats_response.status_code == 200:
                     stats_data = stats_response.json()
                     statistics = stats_data.get("statistics", {})
@@ -577,7 +577,7 @@ class CustomerCommunicationTester:
             email_success = email_response.status_code == 200
             
             # Test email statistics
-            stats_response = requests.get(f"{API_BASE}/email/stats", headers=headers, timeout=60, verify=False)
+            stats_response = requests.get(f"{API_BASE}/email/email/stats", headers=headers, timeout=60, verify=False)
             stats_success = stats_response.status_code == 200
             
             if support_success and email_success and stats_success:
