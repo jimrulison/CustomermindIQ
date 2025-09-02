@@ -547,15 +547,18 @@ backend:
 
   - task: "Subscription Management - Upgrades and Cancellations"
     implemented: true
-    working: false
+    working: true
     file: "backend/modules/subscription_system.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Added /upgrade-subscription endpoint with prorated billing calculations. Added /cancel-subscription-with-refund endpoint supporting immediate cancellation with refund or end-of-cycle cancellation as per pricing document policies. Includes 48-hour refund processing commitment."
+      - working: true
+        agent: "testing"
+        comment: "✅ SUBSCRIPTION MANAGEMENT VERIFIED (Sep 2, 2025): Upgrade and cancellation system working correctly. WORKING: POST /api/subscriptions/upgrade-subscription with prorated billing calculations ($7.50 prorated charge) ✓, POST /api/subscriptions/cancel-subscription-with-refund with immediate/end-of-cycle options ✓, proper refund calculations ✓, 48-hour refund processing commitment included ✓. Subscription management system is production-ready with comprehensive upgrade/cancellation functionality as specified in pricing document."
 
 backend:
   - task: "Multi-Tier Support System Backend APIs"
