@@ -239,9 +239,13 @@ function AppContent() {
         });
       }
       
+      // CRITICAL: Always set loading to false after basic data
+      setLoading(false);
+      console.log('Customer Mind IQ core data loaded successfully');
+      
       // Load additional modules in background (non-blocking)
       // These failures won't prevent the dashboard from loading
-      const loadModulesInBackground = async () => {
+      loadModulesInBackground();
         const moduleTimeout = 5000; // 5 second timeout per module
         
         // Marketing Automation Pro
