@@ -49,10 +49,32 @@ const LiveChatWidget = () => {
     checkAdminAvailability();
   }, [user]);
 
+  // WebSocket connection management
+  useEffect(() => {
+    if (chatSession && !websocket && hasAccess) {
+      connectWebSocket();
+    }
+    
+    return () => {
+      if (websocket) {
+        websocket.close();
+      }
+    };
+  }, [chatSession]);
+
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
