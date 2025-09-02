@@ -440,7 +440,7 @@ class CustomerCommunicationTester:
                     self.log_result(
                         "Email to Subscription Tier", 
                         True, 
-                        f"Email queued for {recipient_count} Professional tier users, Provider: {provider}, Campaign: {campaign_id[:8]}..."
+                        f"Email queued for {recipient_count} Free tier users, Provider: {provider}, Campaign: {campaign_id[:8]}..."
                     )
                     return True
                 else:
