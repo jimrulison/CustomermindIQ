@@ -408,15 +408,15 @@ class CustomerCommunicationTester:
             "html_content": """
             <h2>Exclusive Professional Features Available</h2>
             <p>Hello {{ user_name }},</p>
-            <p>As a Professional tier customer, you now have access to exclusive features:</p>
+            <p>As a Free tier customer, you now have access to basic features:</p>
             <ul>
-                <li>Priority Support with 12-hour response time</li>
-                <li>Live Chat Support during business hours</li>
-                <li>Advanced Email Campaign Tools</li>
-                <li>Enhanced Analytics and Reporting</li>
+                <li>Basic Support with 24-hour response time</li>
+                <li>Email Support</li>
+                <li>Basic Analytics and Reporting</li>
+                <li>Community Support</li>
             </ul>
-            <p>Upgrade to Enterprise for even more advanced features including 4-hour support and dedicated customer success manager.</p>
-            <p>Thank you for choosing CustomerMind IQ Professional!</p>
+            <p>Upgrade to Professional or Enterprise for advanced features including priority support and live chat.</p>
+            <p>Thank you for choosing CustomerMind IQ!</p>
             """,
             "text_content": "Hello {{ user_name }}, As a Professional customer, you have access to priority support, live chat, and advanced features. Consider upgrading to Enterprise for even more benefits. Thank you for choosing CustomerMind IQ!",
             "recipient_type": "subscription_tier",
