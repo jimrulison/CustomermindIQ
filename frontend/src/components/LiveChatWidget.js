@@ -708,40 +708,104 @@ const LiveChatWidget = () => {
 
                     {/* Message Input */}
                     <div className="p-4 border-t border-slate-700">
+                      {/* File Upload Preview */}
+                      {fileUpload && (
+                        <div className="mb-3 p-2 bg-slate-700 rounded-lg flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            {getFileIcon(fileUpload.type)}
+                            <div>
+                              <div className="text-sm text-white">{fileUpload.name}</div>
+                              <div className="text-xs text-slate-400">{formatFileSize(fileUpload.size)}</div>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              size="sm"
+                              onClick={uploadFile}
+                              disabled={uploading}
+                              className="bg-green-600 hover:bg-green-700 h-6 text-xs"
+                            >
+                              {uploading ? 'Uploading...' : 'Send'}
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => setFileUpload(null)}
+                              className="h-6 text-xs"
+                            >
+                              Cancel
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                      
                       <div className="flex space-x-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="px-2"
+                          disabled={uploading}
+                        >
+                          <Paperclip className="w-4 h-4" />
+                        </Button>
+                        
                         <Input
                           value={newMessage}
-                          onChange={(e) => setNewMessage(e.target.value)}
+                          onChange={(e) => {
+                            setNewMessage(e.target.value);
+                            handleTyping();
+                          }}
                           placeholder="Type your message..."
                           className="flex-1 bg-slate-800 border-slate-600 text-white"
-                          onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                          disabled={sending}
+                          onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
+                          disabled={sending || uploading}
                         />
+                        
                         <Button
                           onClick={sendMessage}
-                          disabled={!newMessage.trim() || sending}
+                          disabled={!newMessage.trim() || sending || uploading}
                           size="sm"
                           className="bg-blue-600 hover:bg-blue-700"
                         >
                           <Send className="w-4 h-4" />
                         </Button>
+                        
+                        {/* Hidden File Input */}
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          style={{ display: 'none' }}
+                          onChange={handleFileSelect}
+                          accept="image/*,.pdf,.doc,.docx,.txt,.xls,.xlsx"
+                        />
                       </div>
                       
-                      {chatSession.status === 'active' && (
-                        <div className="flex justify-between items-center mt-2">
+                      {/* Connection Status */}
+                      <div className="flex justify-between items-center mt-2">
+                        <div className="flex items-center space-x-2">
+                          <div className={`w-2 h-2 rounded-full ${connected ? 'bg-green-500' : 'bg-red-500'}`}></div>
                           <span className="text-xs text-slate-400">
-                            Connected to {chatSession.admin_name || 'Admin'}
+                            {connected ? 'Connected' : 'Reconnecting...'}
                           </span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={closeChatSession}
-                            className="text-xs h-6 text-slate-400 hover:text-white"
-                          >
-                            End Chat
-                          </Button>
                         </div>
-                      )}
+                        
+                        {chatSession.status === 'active' && (
+                          <div className="flex items-center space-x-2">
+                            <span className="text-xs text-slate-400">
+                              Connected to {chatSession.admin_name || 'Admin'}
+                            </span>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={closeChatSession}
+                              className="text-xs h-6 text-slate-400 hover:text-white"
+                            >
+                              End Chat
+                            </Button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </>
                 )}
