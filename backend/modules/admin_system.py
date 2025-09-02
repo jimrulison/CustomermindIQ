@@ -416,6 +416,74 @@ async def delete_banner(
     
     return {"message": "Banner deleted successfully"}
 
+# Announcements endpoints (alias for banners with announcement type)
+@router.get("/admin/announcements")
+async def get_announcements(
+    active_only: bool = Query(False),
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get all announcements (banners with announcement type)"""
+    try:
+        # Build query for announcement banners
+        query = {"banner_type": "announcement"}
+        if active_only:
+            query["status"] = "active"
+        
+        # Get announcements from database
+        announcements_cursor = db.banners.find(query).sort("created_at", -1)
+        announcements = await announcements_cursor.to_list(length=100)
+        
+        # Convert ObjectId to string for JSON serialization
+        for announcement in announcements:
+            announcement["_id"] = str(announcement["_id"])
+            if "created_at" in announcement and isinstance(announcement["created_at"], datetime):
+                announcement["created_at"] = announcement["created_at"].isoformat()
+            if "updated_at" in announcement and isinstance(announcement["updated_at"], datetime):
+                announcement["updated_at"] = announcement["updated_at"].isoformat()
+        
+        return {
+            "status": "success",
+            "announcements": announcements,
+            "total_count": len(announcements)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch announcements: {str(e)}")
+
+@router.post("/admin/announcements")
+async def create_announcement(
+    title: str,
+    message: str,
+    priority: int = 1,
+    target_roles: Optional[List[str]] = None,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Create a new announcement"""
+    try:
+        announcement_data = {
+            "banner_id": str(uuid.uuid4()),
+            "title": title,
+            "message": message,
+            "banner_type": "announcement",
+            "status": "active",
+            "priority": priority,
+            "target_roles": target_roles or ["user"],
+            "created_by": current_user.user_id,
+            "created_at": datetime.utcnow(),
+            "updated_at": datetime.utcnow()
+        }
+        
+        result = await db.banners.insert_one(announcement_data)
+        
+        return {
+            "status": "success",
+            "message": "Announcement created successfully",
+            "announcement_id": announcement_data["banner_id"]
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to create announcement: {str(e)}")
+
 @router.post("/banners/{banner_id}/track")
 async def track_banner_interaction(
     banner_id: str,
