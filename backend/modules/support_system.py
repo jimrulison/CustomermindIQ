@@ -13,9 +13,7 @@ from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr
 from enum import Enum
-import smtplib
-from email.mime.text import MimeText
-from email.mime.multipart import MimeMultipart
+# Email imports removed - using logging instead of actual email sending
 from dotenv import load_dotenv
 
 # Import auth dependencies
