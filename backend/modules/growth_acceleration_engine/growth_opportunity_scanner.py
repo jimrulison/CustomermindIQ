@@ -410,7 +410,10 @@ growth_opportunity_router = APIRouter(prefix="/api/growth/opportunities", tags=[
 scanner_service = GrowthOpportunityScanner()
 
 @growth_opportunity_router.post("/scan")
-async def scan_opportunities(request: CreateOpportunityRequest):
+async def scan_opportunities(
+    request: CreateOpportunityRequest,
+    current_user: UserProfile = Depends(require_annual_subscription)
+):
     """Scan for new growth opportunities using AI"""
     try:
         # For demo, use a default customer ID - in production this would come from auth
