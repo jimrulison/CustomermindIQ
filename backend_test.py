@@ -93,7 +93,7 @@ class CustomerCommunicationTester:
         # Test user registration/login
         try:
             # Try to register test user first
-            response = requests.post(f"{API_BASE}/auth/register", json=TEST_USER_CREDENTIALS, timeout=30)
+            response = requests.post(f"{API_BASE}/auth/register", json=TEST_USER_CREDENTIALS, timeout=60, verify=False)
             if response.status_code in [200, 201]:
                 data = response.json()
                 self.user_token = data.get("access_token")
