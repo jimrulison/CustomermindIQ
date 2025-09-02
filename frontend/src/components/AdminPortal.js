@@ -962,6 +962,145 @@ const AdminPortalEnhanced = () => {
             </div>
           )}
 
+          {/* Contact Forms Tab */}
+          {activeTab === 'contact-forms' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">Contact Forms</h2>
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={loadContactForms}
+                    className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  >
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Refresh
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Total Submissions</p>
+                      <p className="text-2xl font-bold text-white">{contactForms.length}</p>
+                    </div>
+                    <Mail className="w-8 h-8 text-blue-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Pending Responses</p>
+                      <p className="text-2xl font-bold text-yellow-400">
+                        {contactForms.filter(form => !form.admin_response).length}
+                      </p>
+                    </div>
+                    <Clock className="w-8 h-8 text-yellow-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Responded</p>
+                      <p className="text-2xl font-bold text-green-400">
+                        {contactForms.filter(form => form.admin_response).length}
+                      </p>
+                    </div>
+                    <CheckCircle className="w-8 h-8 text-green-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-slate-700/50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Contact</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Company</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Subject</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Status</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Date</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-700">
+                      {contactForms.length === 0 ? (
+                        <tr>
+                          <td colSpan="6" className="px-6 py-12 text-center">
+                            <Mail className="w-12 h-12 text-slate-500 mx-auto mb-4" />
+                            <p className="text-slate-400">No contact form submissions found</p>
+                          </td>
+                        </tr>
+                      ) : (
+                        contactForms.map((form) => (
+                          <tr key={form.form_id} className="hover:bg-slate-700/30">
+                            <td className="px-6 py-4">
+                              <div>
+                                <p className="text-white font-medium">{form.name}</p>
+                                <p className="text-slate-400 text-sm">{form.email}</p>
+                                {form.phone && <p className="text-slate-400 text-sm">{form.phone}</p>}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <p className="text-slate-300">{form.company || 'N/A'}</p>
+                            </td>
+                            <td className="px-6 py-4">
+                              <p className="text-slate-300 max-w-xs truncate">{form.subject}</p>
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                form.admin_response 
+                                  ? 'bg-green-900/50 text-green-300' 
+                                  : 'bg-yellow-900/50 text-yellow-300'
+                              }`}>
+                                {form.admin_response ? 'Responded' : 'Pending'}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4">
+                              <p className="text-slate-300 text-sm">
+                                {new Date(form.submitted_at).toLocaleDateString()}
+                              </p>
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center space-x-2">
+                                <button
+                                  onClick={() => {
+                                    setEditingItem(form);
+                                    setModalType('view-contact-form');
+                                    setShowModal(true);
+                                  }}
+                                  className="flex items-center px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"
+                                >
+                                  <Eye className="w-3 h-3 mr-1" />
+                                  View
+                                </button>
+                                {!form.admin_response && (
+                                  <button
+                                    onClick={() => {
+                                      setEditingItem(form);
+                                      setModalType('respond-contact-form');
+                                      setShowModal(true);
+                                    }}
+                                    className="flex items-center px-3 py-1 bg-green-600 text-white rounded text-sm hover:bg-green-700"
+                                  >
+                                    <Mail className="w-3 h-3 mr-1" />
+                                    Respond
+                                  </button>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Email System Tab */}
           {activeTab === 'emails' && (
             <div className="space-y-6">
