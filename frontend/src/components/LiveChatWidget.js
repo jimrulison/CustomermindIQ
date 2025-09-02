@@ -204,6 +204,116 @@ const LiveChatWidget = () => {
     }
   };
 
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFileUpload(file);
+    }
+  };
+
+  const uploadFile = async () => {
+    if (!fileUpload || !chatSession || uploading) return;
+    
+    try {
+      setUploading(true);
+      
+      const formData = new FormData();
+      formData.append('file', fileUpload);
+      
+      const response = await apiCall(`/api/chat/upload-file/${chatSession.session_id}`, {
+        method: 'POST',
+        body: formData
+      });
+      
+      const data = await response.json();
+      
+      if (data.status === 'success') {
+        // Add file message to local state
+        const fileMessage = {
+          message_id: data.message_id,
+          session_id: chatSession.session_id,
+          sender_type: 'user',
+          sender_name: `${user.first_name} ${user.last_name}`,
+          message: `Shared file: ${fileUpload.name}`,
+          message_type: 'file',
+          file_info: data.file_info,
+          timestamp: new Date().toISOString()
+        };
+        
+        setMessages(prev => [...prev, fileMessage]);
+        setFileUpload(null);
+        
+        // Reset file input
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Failed to upload file. Please try again.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const downloadFile = async (filename, originalName) => {
+    try {
+      const response = await apiCall(`/api/chat/download-file/${filename}`);
+      
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = originalName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      } else {
+        alert('Failed to download file');
+      }
+    } catch (error) {
+      console.error('Error downloading file:', error);
+      alert('Failed to download file');
+    }
+  };
+
+  const handleTyping = () => {
+    if (!isTyping) {
+      setIsTyping(true);
+      sendTypingIndicator();
+      
+      // Clear typing indicator after 1 second of no typing
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+      }
+      
+      typingTimeoutRef.current = setTimeout(() => {
+        setIsTyping(false);
+      }, 1000);
+    }
+  };
+
+  const getFileIcon = (contentType) => {
+    if (contentType?.startsWith('image/')) {
+      return <Image className="w-4 h-4" />;
+    } else if (contentType === 'application/pdf' || contentType?.includes('document')) {
+      return <FileText className="w-4 h-4" />;
+    } else {
+      return <File className="w-4 h-4" />;
+    }
+  };
+
+  const formatFileSize = (bytes) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
   const checkChatAccess = async () => {
     try {
       setAccessLoading(true);
