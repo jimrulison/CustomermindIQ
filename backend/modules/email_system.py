@@ -15,10 +15,6 @@ from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks, Query
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr, validator
 from enum import Enum
-from email.mime.text import MimeText
-from email.mime.multipart import MimeMultipart
-from email.mime.base import MimeBase
-from email import encoders
 import base64
 from dotenv import load_dotenv
 
