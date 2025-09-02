@@ -371,7 +371,7 @@ class CustomerCommunicationTester:
         headers = {"Authorization": f"Bearer {self.admin_token}"}
         
         try:
-            response = requests.post(f"{API_BASE}/email/send-simple", json=email_data, headers=headers, timeout=60, verify=False)
+            response = requests.post(f"{API_BASE}/email/email/send-simple", json=email_data, headers=headers, timeout=60, verify=False)
             if response.status_code in [200, 201]:
                 data = response.json()
                 if data.get("status") == "success":
@@ -430,7 +430,7 @@ class CustomerCommunicationTester:
         headers = {"Authorization": f"Bearer {self.admin_token}"}
         
         try:
-            response = requests.post(f"{API_BASE}/email/send-simple", json=email_data, headers=headers, timeout=60, verify=False)
+            response = requests.post(f"{API_BASE}/email/email/send-simple", json=email_data, headers=headers, timeout=60, verify=False)
             if response.status_code in [200, 201]:
                 data = response.json()
                 if data.get("status") == "success":
@@ -492,7 +492,7 @@ class CustomerCommunicationTester:
         headers = {"Authorization": f"Bearer {self.admin_token}"}
         
         try:
-            response = requests.post(f"{API_BASE}/email/send-simple", json=email_data, headers=headers, timeout=60, verify=False)
+            response = requests.post(f"{API_BASE}/email/email/send-simple", json=email_data, headers=headers, timeout=60, verify=False)
             if response.status_code in [200, 201]:
                 data = response.json()
                 if data.get("status") == "success":
