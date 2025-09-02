@@ -392,30 +392,39 @@ const LiveChatWidget = () => {
     try {
       setSending(true);
       
-      const response = await apiCall('/api/chat/send-message', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          session_id: chatSession.session_id,
-          message: newMessage.trim()
-        })
-      });
-      
-      const data = await response.json();
-      
-      if (data.status === 'success') {
-        // Add message to local state immediately for better UX
-        const message = {
-          message_id: data.message_id,
-          session_id: chatSession.session_id,
-          sender_type: 'user',
-          sender_name: `${user.first_name} ${user.last_name}`,
-          message: newMessage.trim(),
-          timestamp: data.timestamp
-        };
-        
-        setMessages(prev => [...prev, message]);
+      // Send via WebSocket for real-time delivery
+      if (connected) {
+        sendWebSocketMessage(newMessage.trim());
         setNewMessage('');
+        setIsTyping(false);
+      } else {
+        // Fallback to REST API if WebSocket not connected
+        const response = await apiCall('/api/chat/send-message', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            session_id: chatSession.session_id,
+            message: newMessage.trim()
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+          // Add message to local state immediately for better UX
+          const message = {
+            message_id: data.message_id,
+            session_id: chatSession.session_id,
+            sender_type: 'user',
+            sender_name: `${user.first_name} ${user.last_name}`,
+            message: newMessage.trim(),
+            timestamp: data.timestamp,
+            message_type: 'text'
+          };
+          
+          setMessages(prev => [...prev, message]);
+          setNewMessage('');
+        }
       }
     } catch (error) {
       console.error('Error sending message:', error);
