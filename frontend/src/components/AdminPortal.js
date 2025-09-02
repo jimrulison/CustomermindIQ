@@ -336,6 +336,7 @@ const AdminPortalEnhanced = () => {
       }
       loadWorkflows();
       loadSupportTickets();
+      loadContactForms();
       loadEmailCampaigns();
       loadEmailProvider();
     }
