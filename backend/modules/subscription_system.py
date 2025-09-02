@@ -721,48 +721,30 @@ async def cancel_subscription_with_refund(cancellation_data: dict):
 
 # Legacy endpoint maintained for backward compatibility
 @router.post("/cancel-subscription/{user_email}")
-async def get_usage_statistics(user_email: str):
-    """Get user's usage statistics"""
+async def cancel_subscription(user_email: str):
+    """Cancel user's subscription (legacy endpoint)"""
     try:
-        # Get basic user info
-        user = await db.users.find_one({"email": user_email})
-        if not user:
+        result = await db.users.update_one(
+            {"email": user_email},
+            {
+                "$set": {
+                    "is_active": False,
+                    "subscription_tier": "cancelled",
+                    "cancelled_at": datetime.utcnow(),
+                    "updated_at": datetime.utcnow()
+                }
+            }
+        )
+        
+        if result.matched_count == 0:
             raise HTTPException(status_code=404, detail="User not found")
-        
-        # Calculate usage statistics
-        total_contacts = await db.customers.count_documents({"user_email": user_email})
-        total_campaigns = await db.campaigns.count_documents({"user_email": user_email})
-        total_automations = await db.automation_workflows.count_documents({"user_email": user_email})
-        
-        # Get plan limits
-        plan_type = user.get("plan_type", "free")
-        plan_features = SUBSCRIPTION_FEATURES.get(plan_type, {})
-        
-        # Extract contact limit (basic parsing)
-        contact_limit = 100  # Default for free
-        if "1,000 contacts" in str(plan_features.get("features", [])):
-            contact_limit = 1000
-        elif "10,000 contacts" in str(plan_features.get("features", [])):
-            contact_limit = 10000
-        elif "Unlimited contacts" in str(plan_features.get("features", [])):
-            contact_limit = float('inf')
         
         return {
             "status": "success",
-            "usage": {
-                "contacts": {
-                    "used": total_contacts,
-                    "limit": contact_limit,
-                    "percentage": (total_contacts / contact_limit * 100) if contact_limit != float('inf') else 0
-                },
-                "campaigns": total_campaigns,
-                "automations": total_automations,
-                "plan_type": plan_type,
-                "subscription_tier": user.get("subscription_tier", "monthly")
-            }
+            "message": "Subscription cancelled successfully"
         }
         
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Usage statistics fetch failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Subscription cancellation failed: {str(e)}")
