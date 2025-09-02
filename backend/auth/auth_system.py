@@ -280,6 +280,51 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     
     return UserProfile(**user)
 
+def require_annual_subscription(current_user: UserProfile = Depends(get_current_user)):
+    """
+    Dependency to ensure user has paid annual subscription (not trial)
+    Required for premium features like Growth Acceleration Engine
+    """
+    # Check if user has annual subscription (not trial)
+    if current_user.subscription_type != SubscriptionType.ANNUAL:
+        raise HTTPException(
+            status_code=403,
+            detail="This feature is only available to annual subscribers. Please upgrade your subscription to access premium features."
+        )
+    
+    # Additional check: ensure subscription tier is not FREE
+    if current_user.subscription_tier == SubscriptionTier.FREE:
+        raise HTTPException(
+            status_code=403,
+            detail="This feature requires a paid subscription. Please upgrade to Professional or Enterprise annual plan."
+        )
+    
+    return current_user
+
+def is_annual_subscriber(user: UserProfile) -> bool:
+    """
+    Check if user is a paid annual subscriber (not trial user)
+    """
+    return (
+        user.subscription_type == SubscriptionType.ANNUAL and 
+        user.subscription_tier != SubscriptionTier.FREE
+    )
+
+def get_subscription_access_level(user: UserProfile) -> Dict[str, bool]:
+    """
+    Get user's access levels for different features
+    """
+    is_annual = is_annual_subscriber(user)
+    
+    return {
+        "basic_features": True,  # All users get basic features
+        "advanced_analytics": user.subscription_tier in [SubscriptionTier.PROFESSIONAL, SubscriptionTier.ENTERPRISE],
+        "growth_acceleration_engine": is_annual,  # Only annual subscribers
+        "priority_support": is_annual,
+        "unlimited_exports": is_annual,
+        "advanced_integrations": user.subscription_tier == SubscriptionTier.ENTERPRISE and is_annual
+    }
+
 def require_role(allowed_roles: List[UserRole]):
     """Decorator to require specific roles"""
     def role_checker(current_user: UserProfile = Depends(get_current_user)):
