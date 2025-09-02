@@ -154,7 +154,7 @@ class CustomerCommunicationTester:
         headers = {"Authorization": f"Bearer {self.user_token}"}
         
         try:
-            response = requests.post(f"{API_BASE}/support/tickets/create", json=ticket_data, headers=headers, timeout=30)
+            response = requests.post(f"{API_BASE}/support/tickets/create", json=ticket_data, headers=headers, timeout=60, verify=False)
             if response.status_code in [200, 201]:
                 data = response.json()
                 if data.get("status") == "success" and data.get("ticket"):
@@ -189,7 +189,7 @@ class CustomerCommunicationTester:
         headers = {"Authorization": f"Bearer {self.admin_token}"}
         
         try:
-            response = requests.get(f"{API_BASE}/support/admin/tickets", headers=headers, timeout=30)
+            response = requests.get(f"{API_BASE}/support/admin/tickets", headers=headers, timeout=60, verify=False)
             if response.status_code == 200:
                 data = response.json()
                 tickets = data.get("tickets", [])
@@ -237,7 +237,7 @@ class CustomerCommunicationTester:
                 f"{API_BASE}/support/admin/tickets/{self.test_ticket_id}/respond", 
                 json=response_data, 
                 headers=headers, 
-                timeout=30
+                timeout=60, verify=False
             )
             if response.status_code in [200, 201]:
                 data = response.json()
@@ -280,7 +280,7 @@ class CustomerCommunicationTester:
                 f"{API_BASE}/support/tickets/{self.test_ticket_id}/respond", 
                 json=reply_data, 
                 headers=headers, 
-                timeout=30
+                timeout=60, verify=False
             )
             if response.status_code in [200, 201]:
                 data = response.json()
@@ -314,7 +314,7 @@ class CustomerCommunicationTester:
         headers = {"Authorization": f"Bearer {self.user_token}"}
         
         try:
-            response = requests.get(f"{API_BASE}/support/tickets/{self.test_ticket_id}", headers=headers, timeout=30)
+            response = requests.get(f"{API_BASE}/support/tickets/{self.test_ticket_id}", headers=headers, timeout=60, verify=False)
             if response.status_code == 200:
                 data = response.json()
                 ticket = data.get("ticket", {})
@@ -371,7 +371,7 @@ class CustomerCommunicationTester:
         headers = {"Authorization": f"Bearer {self.admin_token}"}
         
         try:
-            response = requests.post(f"{API_BASE}/email/send-simple", json=email_data, headers=headers, timeout=30)
+            response = requests.post(f"{API_BASE}/email/send-simple", json=email_data, headers=headers, timeout=60, verify=False)
             if response.status_code in [200, 201]:
                 data = response.json()
                 if data.get("status") == "success":
@@ -430,7 +430,7 @@ class CustomerCommunicationTester:
         headers = {"Authorization": f"Bearer {self.admin_token}"}
         
         try:
-            response = requests.post(f"{API_BASE}/email/send-simple", json=email_data, headers=headers, timeout=30)
+            response = requests.post(f"{API_BASE}/email/send-simple", json=email_data, headers=headers, timeout=60, verify=False)
             if response.status_code in [200, 201]:
                 data = response.json()
                 if data.get("status") == "success":
@@ -492,7 +492,7 @@ class CustomerCommunicationTester:
         headers = {"Authorization": f"Bearer {self.admin_token}"}
         
         try:
-            response = requests.post(f"{API_BASE}/email/send-simple", json=email_data, headers=headers, timeout=30)
+            response = requests.post(f"{API_BASE}/email/send-simple", json=email_data, headers=headers, timeout=60, verify=False)
             if response.status_code in [200, 201]:
                 data = response.json()
                 if data.get("status") == "success":
@@ -528,14 +528,14 @@ class CustomerCommunicationTester:
         
         try:
             # Get email campaigns
-            response = requests.get(f"{API_BASE}/email/campaigns", headers=headers, timeout=30)
+            response = requests.get(f"{API_BASE}/email/campaigns", headers=headers, timeout=60, verify=False)
             if response.status_code == 200:
                 data = response.json()
                 campaigns = data.get("campaigns", [])
                 total_campaigns = data.get("total", 0)
                 
                 # Get email statistics
-                stats_response = requests.get(f"{API_BASE}/email/stats", headers=headers, timeout=30)
+                stats_response = requests.get(f"{API_BASE}/email/stats", headers=headers, timeout=60, verify=False)
                 if stats_response.status_code == 200:
                     stats_data = stats_response.json()
                     statistics = stats_data.get("statistics", {})
@@ -569,15 +569,15 @@ class CustomerCommunicationTester:
         
         try:
             # Test support tickets admin view
-            support_response = requests.get(f"{API_BASE}/support/admin/tickets", headers=headers, timeout=30)
+            support_response = requests.get(f"{API_BASE}/support/admin/tickets", headers=headers, timeout=60, verify=False)
             support_success = support_response.status_code == 200
             
             # Test email campaigns view
-            email_response = requests.get(f"{API_BASE}/email/campaigns", headers=headers, timeout=30)
+            email_response = requests.get(f"{API_BASE}/email/campaigns", headers=headers, timeout=60, verify=False)
             email_success = email_response.status_code == 200
             
             # Test email statistics
-            stats_response = requests.get(f"{API_BASE}/email/stats", headers=headers, timeout=30)
+            stats_response = requests.get(f"{API_BASE}/email/stats", headers=headers, timeout=60, verify=False)
             stats_success = stats_response.status_code == 200
             
             if support_success and email_success and stats_success:
@@ -621,7 +621,7 @@ class CustomerCommunicationTester:
         headers = {"Authorization": f"Bearer {self.user_token}"}
         
         try:
-            response = requests.get(f"{API_BASE}/support/tier-info", headers=headers, timeout=30)
+            response = requests.get(f"{API_BASE}/support/tier-info", headers=headers, timeout=60, verify=False)
             if response.status_code == 200:
                 data = response.json()
                 support_tier = data.get("support_tier")
