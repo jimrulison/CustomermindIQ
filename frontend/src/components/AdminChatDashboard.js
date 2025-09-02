@@ -35,12 +35,17 @@ const AdminChatDashboard = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [sending, setSending] = useState(false);
+  const [websocket, setWebsocket] = useState(null);
+  const [connected, setConnected] = useState(false);
+  const [fileUpload, setFileUpload] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [adminAvailability, setAdminAvailability] = useState({
     is_available: true,
     status_message: 'Available for chat',
     max_concurrent_chats: 5
   });
   const messagesEndRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     loadChatSessions();
