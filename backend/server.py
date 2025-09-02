@@ -2145,6 +2145,9 @@ app.include_router(email_router, prefix="/api/email", tags=["Email System"])
 # Include ODOO Integration routes (Contact Forms & CRM)
 app.include_router(odoo_router, prefix="/api/odoo", tags=["ODOO Integration"])
 
+# Include Live Chat System routes
+app.include_router(chat_router, prefix="/api", tags=["Live Chat System"])
+
 # =====================================================
 # GROWTH ACCELERATION ENGINE MODULE ROUTERS
 # =====================================================
