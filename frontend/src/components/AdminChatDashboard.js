@@ -46,6 +46,8 @@ const AdminChatDashboard = () => {
   });
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
+  const [hasUnreadChats, setHasUnreadChats] = useState(false);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
   useEffect(() => {
     loadChatSessions();
