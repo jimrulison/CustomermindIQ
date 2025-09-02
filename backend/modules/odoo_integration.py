@@ -761,7 +761,7 @@ CustomerMind IQ Support Team""",
 # Contact Form Statistics for Admin Dashboard
 @router.get("/admin/contact-forms/stats")
 async def get_contact_form_statistics(
-    days: int = 30,
+    days: int = Query(30, description="Number of days to analyze"),
     current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
 ):
     """Get contact form statistics for admin dashboard"""
