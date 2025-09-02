@@ -324,6 +324,8 @@ const AdminPortalEnhanced = () => {
       }
       loadWorkflows();
       loadSupportTickets();
+      loadEmailCampaigns();
+      loadEmailProvider();
     }
   }, [hasAdminAccess]);
 
