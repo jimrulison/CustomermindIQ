@@ -16,6 +16,10 @@ import sys
 import requests
 from datetime import datetime, timedelta
 from typing import Dict, Any, List
+import urllib3
+
+# Disable SSL warnings for testing
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configuration
 BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://mind-iq-dashboard.preview.emergentagent.com")
