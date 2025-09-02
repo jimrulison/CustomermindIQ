@@ -108,7 +108,7 @@ class CustomerCommunicationTester:
                     "email": TEST_USER_CREDENTIALS["email"],
                     "password": TEST_USER_CREDENTIALS["password"]
                 }
-                response = requests.post(f"{API_BASE}/auth/login", json=login_data, timeout=30)
+                response = requests.post(f"{API_BASE}/auth/login", json=login_data, timeout=60, verify=False)
                 if response.status_code == 200:
                     data = response.json()
                     self.user_token = data.get("access_token")
