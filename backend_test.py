@@ -62,6 +62,9 @@ class CustomerIntelligenceAITester:
         # NEW: Growth Acceleration Engine Tests
         self.growth_engine_tests = 0
         self.growth_engine_passed = 0
+        # NEW: Email System Tests
+        self.email_system_tests = 0
+        self.email_system_passed = 0
 
     def run_customer_intelligence_test(self, name, method, endpoint, expected_status, data=None, timeout=30):
         """Run a Customer Intelligence API test"""
