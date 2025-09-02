@@ -29,10 +29,10 @@ class TrialRequest(BaseModel):
     user_email: str
     plan_type: str = "starter"
 
-# Subscription Tiers and Features
+# Subscription Tiers and Features - Updated with New Pricing Structure
 SUBSCRIPTION_FEATURES = {
     "free": {
-        "name": "Free Trial",
+        "name": "7-Day Free Trial",
         "features": [
             "Basic analytics (7 days)",
             "Up to 100 contacts",
@@ -41,46 +41,99 @@ SUBSCRIPTION_FEATURES = {
         "growth_acceleration_access": False,
         "trial_days": 7
     },
-    "starter": {
-        "name": "Starter Plan",
+    "launch": {
+        "name": "Launch Plan",
+        "description": "Perfect for growing businesses getting started with customer intelligence",
         "features": [
-            "Basic customer analytics",
-            "Email marketing automation", 
-            "Up to 1,000 contacts",
-            "Standard support"
+            "5 websites",
+            "50 keywords", 
+            "Basic analytics",
+            "Basic dashboard/reporting",
+            "Basic customer intelligence (5 modules)",
+            "Website analytics",
+            "Email integration (1K contacts)",
+            "2 users",
+            "Email support (48hr)"
         ],
-        "growth_acceleration_access": False,
-        "monthly_price": 49,
-        "annual_price": 399
+        "growth_acceleration_access": True,  # Only for annual subscribers
+        "monthly_price": 49,  # Founders pricing
+        "annual_price": 490,  # Founders pricing (2 FREE months)
+        "regular_monthly_price": 99,
+        "regular_annual_price": 990,
+        "annual_savings_months": 2
     },
-    "professional": {
-        "name": "Professional Plan",
+    "growth": {
+        "name": "Growth Plan", 
+        "description": "Most popular plan for businesses ready to scale their customer insights",
         "features": [
-            "Advanced customer intelligence",
-            "AI-powered insights",
-            "Up to 10,000 contacts", 
-            "A/B testing capabilities",
-            "Priority support",
-            "Growth Acceleration Engine (Annual Only)"
+            "Everything in the Launch Plan",
+            "Full Customer Intelligence (14 modules)",
+            "Real-time Website Health Monitoring",
+            "Marketing Automation",
+            "10 websites",
+            "200 keywords",
+            "Full analytics",
+            "10 users",
+            "Live chat when available + email support (12hr)"
         ],
-        "growth_acceleration_access": True,  # Only for annual
-        "monthly_price": 99,
-        "annual_price": 799
+        "growth_acceleration_access": True,  # Only for annual subscribers
+        "monthly_price": 75,  # Founders pricing
+        "annual_price": 750,  # Founders pricing (2 FREE months)
+        "regular_monthly_price": 149,
+        "regular_annual_price": 1490,
+        "annual_savings_months": 2,
+        "most_popular": True
     },
-    "enterprise": {
-        "name": "Enterprise Plan",
+    "scale": {
+        "name": "Scale Plan",
+        "description": "Enterprise-grade features for businesses scaling rapidly",
         "features": [
-            "Unlimited contacts",
+            "Everything in the Growth Plan",
+            "AI Command Center",
+            "Executive Dashboard", 
+            "Unlimited Users",
+            "Unlimited websites",
+            "Advanced features",
+            "Priority support - Live chat when available, 4hr support response time"
+        ],
+        "growth_acceleration_access": True,  # Only for annual subscribers
+        "monthly_price": 199,  # Founders pricing
+        "annual_price": 1990,  # Founders pricing (2 FREE months)
+        "regular_monthly_price": 399,
+        "regular_annual_price": 3990,
+        "annual_savings_months": 2
+    },
+    "white_label": {
+        "name": "White Label Plan",
+        "description": "Custom white-label solution for agencies and resellers",
+        "features": [
+            "Everything in the Scale Plan",
+            "White-label branding",
+            "Custom domain support",
+            "Reseller dashboard",
+            "Custom pricing controls",
+            "Dedicated account manager"
+        ],
+        "growth_acceleration_access": True,
+        "monthly_price": "contact_sales",
+        "annual_price": "contact_sales",
+        "contact_required": True
+    },
+    "custom": {
+        "name": "Custom Plan",
+        "description": "Tailored solution built specifically for your unique business needs",
+        "features": [
+            "Custom feature development",
+            "Dedicated IT support team",
             "Custom integrations",
-            "Dedicated account manager",
-            "White-label options",
-            "Advanced analytics",
-            "Growth Acceleration Engine (Annual Only)",
-            "Custom AI models"
+            "Service level agreements",
+            "Priority feature requests",
+            "Custom pricing and terms"
         ],
-        "growth_acceleration_access": True,  # Only for annual
-        "monthly_price": 199,
-        "annual_price": 1599
+        "growth_acceleration_access": True,
+        "monthly_price": "contact_sales",
+        "annual_price": "contact_sales", 
+        "contact_required": True
     }
 }
 
