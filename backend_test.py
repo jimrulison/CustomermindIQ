@@ -422,8 +422,8 @@ class CustomerCommunicationTester:
             "recipient_type": "subscription_tier",
             "subscription_tiers": ["free"],
             "variables": {
-                "tier_name": "Professional",
-                "support_hours": "12 hours"
+                "tier_name": "Free",
+                "support_hours": "24 hours"
             }
         }
         
