@@ -287,10 +287,10 @@ frontend:
 
   - task: "Subscription Tier Display"
     implemented: true
-    working: true
+    working: false
     file: "frontend/src/components/SignIn.js"
-    stuck_count: 0
-    priority: "medium"
+    stuck_count: 1
+    priority: "high"
     needs_retesting: false
     status_history:
       - working: "NA"
@@ -305,6 +305,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ SUBSCRIPTION PRICING DISPLAY VERIFIED (Jan 29, 2025): Pricing structure correctly displays updated 4-tier system in trial signup form. CONFIRMED: Starter $99/month (3 websites, 50 keywords, Basic analytics), Professional $299/month (10 websites, 200 keywords, Full analytics), Enterprise $799/month (Unlimited, Advanced features, Priority support), Custom (Contact Sales - Enterprise + Custom solutions). All pricing tiers properly formatted and clearly described with feature details. Pricing display is production-ready and matches business requirements."
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL PRICING MISMATCH IDENTIFIED (Sep 2, 2025): Frontend SignIn.js component displays OUTDATED pricing structure (Starter $99, Professional $299, Enterprise $799) while backend API correctly returns NEW pricing structure (Launch $49/$490, Growth $75/$750, Scale $199/$1990). ISSUES: 1) Frontend hardcoded pricing doesn't match backend API, 2) Missing 'Most Popular' badge for Growth plan, 3) No annual savings messaging ('2 months free!'), 4) No Growth Acceleration Engine (Annual Only) messaging, 5) Missing White Label/Custom plans with Contact Sales buttons. Frontend needs immediate update to fetch pricing from /api/subscriptions/plans endpoint instead of using hardcoded values. Backend API is working correctly."
 
   - task: "7-Day Free Trial Frontend"
     implemented: true
