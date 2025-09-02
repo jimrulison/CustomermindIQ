@@ -21,7 +21,8 @@ import {
   Heart,
   Settings,
   BookOpen,
-  CreditCard
+  CreditCard,
+  Bell
 } from 'lucide-react';
 
 const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
