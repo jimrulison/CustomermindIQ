@@ -128,11 +128,11 @@ SUPPORT_TIER_CONFIG = {
 # Helper Functions
 def get_support_tier(subscription_tier: SubscriptionTier) -> SupportTier:
     """Map subscription tier to support tier"""
-    if subscription_tier == SubscriptionTier.FREE_TRIAL:
+    if subscription_tier == SubscriptionTier.FREE:
         return SupportTier.BASIC
-    elif subscription_tier == SubscriptionTier.MONTHLY:
+    elif subscription_tier == SubscriptionTier.PROFESSIONAL:
         return SupportTier.PROFESSIONAL  
-    elif subscription_tier == SubscriptionTier.ANNUAL:
+    elif subscription_tier == SubscriptionTier.ENTERPRISE:
         return SupportTier.ENTERPRISE
     else:
         return SupportTier.BASIC
