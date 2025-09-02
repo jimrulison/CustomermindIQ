@@ -420,7 +420,7 @@ class CustomerCommunicationTester:
             """,
             "text_content": "Hello {{ user_name }}, As a Professional customer, you have access to priority support, live chat, and advanced features. Consider upgrading to Enterprise for even more benefits. Thank you for choosing CustomerMind IQ!",
             "recipient_type": "subscription_tier",
-            "subscription_tiers": ["professional"],
+            "subscription_tiers": ["free"],
             "variables": {
                 "tier_name": "Professional",
                 "support_hours": "12 hours"
