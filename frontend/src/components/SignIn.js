@@ -21,8 +21,45 @@ const SignIn = ({ onSignIn }) => {
     email: '',
     password: ''
   });
+  const [subscriptionPlans, setSubscriptionPlans] = useState({});
+  const [plansLoading, setPlansLoading] = useState(true);
 
   const { login, register } = useAuth();
+
+  // Load subscription plans on component mount
+  useEffect(() => {
+    loadSubscriptionPlans();
+  }, []);
+
+  const loadSubscriptionPlans = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/subscriptions/plans`);
+      if (response.ok) {
+        const data = await response.json();
+        setSubscriptionPlans(data.plans);
+      } else {
+        console.error('Failed to load subscription plans');
+        // Fallback to default plans if API fails
+        setSubscriptionPlans({
+          launch: { name: 'Launch Plan', monthly_price: 49, annual_price: 490 },
+          growth: { name: 'Growth Plan', monthly_price: 75, annual_price: 750, most_popular: true },
+          scale: { name: 'Scale Plan', monthly_price: 199, annual_price: 1990 },
+          custom: { name: 'Custom Plan', monthly_price: 'contact_sales' }
+        });
+      }
+    } catch (error) {
+      console.error('Error loading subscription plans:', error);
+      // Fallback plans
+      setSubscriptionPlans({
+        launch: { name: 'Launch Plan', monthly_price: 49, annual_price: 490 },
+        growth: { name: 'Growth Plan', monthly_price: 75, annual_price: 750, most_popular: true },
+        scale: { name: 'Scale Plan', monthly_price: 199, annual_price: 1990 },
+        custom: { name: 'Custom Plan', monthly_price: 'contact_sales' }
+      });
+    } finally {
+      setPlansLoading(false);
+    }
+  };
 
   const handleSignIn = async (e) => {
     e.preventDefault();
