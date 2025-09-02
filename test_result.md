@@ -249,7 +249,7 @@ frontend:
   - task: "Admin Panel Frontend Integration"
     implemented: true
     working: true
-    file: "frontend/src/components/Admin.js"
+    file: "frontend/src/components/AdminPortal.js"
     stuck_count: 1
     priority: "high"
     needs_retesting: false
@@ -269,6 +269,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ ADMIN PANEL ACCESS CONFIRMED (Aug 29, 2025): Admin panel is now fully accessible and functional. WORKING: Admin Panel button visible in header for admin users, admin authentication working correctly, admin role properly detected and displayed, admin panel navigation functional. Admin panel integration is complete and production-ready with proper role-based access control."
+      - working: true
+        agent: "testing"
+        comment: "✅ COMPREHENSIVE ADMIN PORTAL TESTING COMPLETE (Sep 2, 2025): Full admin portal functionality verified and working. AUTHENTICATION: Admin login successful with credentials admin@customermindiq.com / CustomerMindIQ2025!, proper role-based access control (super_admin role detected). ADMIN PORTAL ACCESS: Settings icon (🔧) in header successfully navigates to admin portal, professional UI with 'CustomerMind IQ Admin Portal' branding. TAB NAVIGATION: All 5 admin tabs functional - User Management, Banner Management, Discount Management, Analytics, Settings. DISCOUNT MANAGEMENT: Create discount modal opens correctly, supports all 3 discount types (percentage, fixed amount, free months), proper form validation and targeting options. BANNER MANAGEMENT: Create banner functionality working, supports all banner types (info, announcement, warning, success), scheduling and priority options available. ANALYTICS DASHBOARD: Admin analytics accessible, displays user statistics, revenue metrics, banner/discount analytics. USER EXPERIENCE: Professional responsive design, proper error handling, clean modal interfaces. AUTHENTICATION FIX: Resolved token storage mismatch (AdminPortal was looking for 'token' but AuthContext stores 'access_token'). Complete admin portal meets all success criteria for discount management, banner management, analytics, and role-based access control as requested by user."
 
   - task: "Subscription Tier Display"
     implemented: true
