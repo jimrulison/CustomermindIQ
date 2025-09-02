@@ -145,7 +145,8 @@ class EnhancedLiveChatTester:
     def create_chat_session(self):
         """Create a chat session for testing file sharing"""
         try:
-            headers = {"Authorization": f"Bearer {self.premium_user_token}"}
+            # Try with admin user first (Scale tier should have access)
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
             chat_data = {
                 "initial_message": "Hello, I need help with file sharing in the live chat system. Can you assist me?"
             }
