@@ -685,6 +685,191 @@ const AdminPortalEnhanced = () => {
             </div>
           )}
 
+          {/* Support Tickets Tab */}
+          {activeTab === 'support' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">Support Tickets</h2>
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={loadSupportTickets}
+                    className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  >
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Refresh
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-slate-700/50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Ticket</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Customer</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Status</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Priority</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Support Tier</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Created</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Due</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-700">
+                      {supportTickets.length === 0 ? (
+                        <tr>
+                          <td colSpan="8" className="px-6 py-8 text-center">
+                            <Headphones className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+                            <p className="text-slate-400">No support tickets found</p>
+                          </td>
+                        </tr>
+                      ) : (
+                        supportTickets.map((ticket) => (
+                          <tr key={ticket.ticket_id} className="hover:bg-slate-700/30">
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div>
+                                <p className="text-white font-medium text-sm">{ticket.subject}</p>
+                                <p className="text-slate-400 text-xs">#{ticket.ticket_id.slice(-8)}</p>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex items-center">
+                                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                  <span className="text-white text-xs font-medium">
+                                    {ticket.user_email.charAt(0).toUpperCase()}
+                                  </span>
+                                </div>
+                                <div className="ml-3">
+                                  <p className="text-white text-sm">{ticket.user_email}</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className={`px-2 py-1 rounded text-xs font-medium ${
+                                ticket.status === 'open' ? 'bg-green-500/20 text-green-400' :
+                                ticket.status === 'in_progress' ? 'bg-blue-500/20 text-blue-400' :
+                                ticket.status === 'waiting_customer' ? 'bg-yellow-500/20 text-yellow-400' :
+                                ticket.status === 'resolved' ? 'bg-purple-500/20 text-purple-400' :
+                                'bg-gray-500/20 text-gray-400'
+                              }`}>
+                                {ticket.status.replace('_', ' ')}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className={`px-2 py-1 rounded text-xs font-medium ${
+                                ticket.priority === 'urgent' ? 'bg-red-500/20 text-red-400' :
+                                ticket.priority === 'high' ? 'bg-orange-500/20 text-orange-400' :
+                                ticket.priority === 'medium' ? 'bg-yellow-500/20 text-yellow-400' :
+                                'bg-green-500/20 text-green-400'
+                              }`}>
+                                {ticket.priority}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className={`px-2 py-1 rounded text-xs font-medium ${
+                                ticket.support_tier === 'enterprise' ? 'bg-purple-500/20 text-purple-400' :
+                                ticket.support_tier === 'professional' ? 'bg-blue-500/20 text-blue-400' :
+                                'bg-gray-500/20 text-gray-400'
+                              }`}>
+                                {ticket.support_tier}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-slate-300 text-sm">
+                              {new Date(ticket.created_at).toLocaleDateString()}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className={`text-sm ${
+                                new Date(ticket.due_date) < new Date() ? 'text-red-400 font-medium' : 'text-slate-300'
+                              }`}>
+                                {new Date(ticket.due_date).toLocaleDateString()}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex space-x-2">
+                                <button
+                                  onClick={() => {
+                                    setEditingItem(ticket);
+                                    setModalType('ticket-details');
+                                    setShowModal(true);
+                                  }}
+                                  className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
+                                  title="View Details"
+                                >
+                                  <Eye className="w-4 h-4" />
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    const agent = prompt('Assign to agent (email):');
+                                    if (agent) {
+                                      // assignTicket(ticket.ticket_id, agent);
+                                      console.log('Assign ticket functionality to be implemented');
+                                    }
+                                  }}
+                                  className="p-2 text-slate-400 hover:text-yellow-400 hover:bg-slate-600 rounded"
+                                  title="Assign Agent"
+                                >
+                                  <UserCheck className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Support Statistics */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Total Tickets</p>
+                      <p className="text-2xl font-bold text-white">{supportTickets.length}</p>
+                    </div>
+                    <Headphones className="w-8 h-8 text-blue-400" />
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Open Tickets</p>
+                      <p className="text-2xl font-bold text-green-400">
+                        {supportTickets.filter(t => t.status === 'open').length}
+                      </p>
+                    </div>
+                    <AlertCircle className="w-8 h-8 text-green-400" />
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Overdue</p>
+                      <p className="text-2xl font-bold text-red-400">
+                        {supportTickets.filter(t => new Date(t.due_date) < new Date() && t.status !== 'closed').length}
+                      </p>
+                    </div>
+                    <Clock className="w-8 h-8 text-red-400" />
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Avg Response</p>
+                      <p className="text-2xl font-bold text-purple-400">8.5h</p>
+                    </div>
+                    <TrendingUp className="w-8 h-8 text-purple-400" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Data Export Tab */}
           {activeTab === 'exports' && (
             <div className="space-y-6">
