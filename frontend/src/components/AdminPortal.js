@@ -7,6 +7,7 @@ import {
   FileSpreadsheet, RefreshCw, UserCheck, Zap, Bell, CreditCard, Gift, Headphones
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import AdminChatDashboard from './AdminChatDashboard';
 
 const AdminPortalEnhanced = () => {
   const { user } = useAuth();
