@@ -702,3 +702,253 @@ async def handle_realtime_message(session_id: str, message_data: dict, sender_ty
             
     except Exception as e:
         print(f"Error handling real-time message: {e}")
+
+# File Sharing Endpoints
+
+@router.post("/chat/upload-file/{session_id}")
+async def upload_chat_file(
+    session_id: str,
+    file: UploadFile = File(...),
+    current_user: UserProfile = Depends(require_premium_chat_access)
+):
+    """Upload a file to chat session"""
+    try:
+        # Verify session belongs to user
+        session = await db.chat_sessions.find_one({
+            "session_id": session_id,
+            "user_id": current_user.user_id
+        })
+        
+        if not session:
+            raise HTTPException(status_code=404, detail="Chat session not found")
+        
+        if session["status"] == "closed":
+            raise HTTPException(status_code=400, detail="Cannot upload to closed session")
+        
+        # Validate file type
+        content_type = file.content_type
+        if content_type not in ALLOWED_FILE_TYPES:
+            raise HTTPException(
+                status_code=400, 
+                detail=f"File type not allowed. Supported types: {', '.join(ALLOWED_FILE_TYPES)}"
+            )
+        
+        # Check file size
+        file_content = await file.read()
+        if len(file_content) > MAX_FILE_SIZE:
+            raise HTTPException(
+                status_code=400, 
+                detail=f"File too large. Maximum size: {MAX_FILE_SIZE // (1024*1024)}MB"
+            )
+        
+        # Generate unique filename
+        file_extension = Path(file.filename).suffix
+        unique_filename = f"{secrets.token_urlsafe(16)}{file_extension}"
+        file_path = UPLOAD_DIR / unique_filename
+        
+        # Save file
+        async with aiofiles.open(file_path, 'wb') as f:
+            await f.write(file_content)
+        
+        # Create file message
+        message_id = f"msg_{secrets.token_urlsafe(12)}"
+        file_info = {
+            "original_name": file.filename,
+            "stored_name": unique_filename,
+            "content_type": content_type,
+            "size": len(file_content),
+            "download_url": f"/api/chat/download-file/{unique_filename}"
+        }
+        
+        file_message = {
+            "message_id": message_id,
+            "session_id": session_id,
+            "sender_type": "user",
+            "sender_id": current_user.user_id,
+            "sender_name": f"{current_user.first_name} {current_user.last_name}",
+            "message": f"Shared file: {file.filename}",
+            "message_type": "file",
+            "file_info": file_info,
+            "timestamp": datetime.utcnow(),
+            "read_by_recipient": False
+        }
+        
+        await db.chat_messages.insert_one(file_message)
+        
+        # Update session activity
+        await db.chat_sessions.update_one(
+            {"session_id": session_id},
+            {"$set": {"last_activity": datetime.utcnow()}}
+        )
+        
+        # Notify admin via WebSocket if session is active
+        if session["status"] == "active" and session.get("admin_id"):
+            await manager.send_to_admin(session["admin_id"], {
+                "type": "file_uploaded",
+                "session_id": session_id,
+                "message": file_message,
+                "sender_type": "user"
+            })
+        
+        return {
+            "status": "success",
+            "message": "File uploaded successfully",
+            "message_id": message_id,
+            "file_info": file_info
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to upload file: {str(e)}")
+
+@router.get("/chat/download-file/{filename}")
+async def download_chat_file(
+    filename: str,
+    current_user: UserProfile = Depends(get_current_user)
+):
+    """Download a chat file (requires authentication)"""
+    try:
+        file_path = UPLOAD_DIR / filename
+        
+        if not file_path.exists():
+            raise HTTPException(status_code=404, detail="File not found")
+        
+        # Verify user has access to this file by checking if they're part of the session
+        # In a more secure implementation, you'd store file-session mapping
+        file_message = await db.chat_messages.find_one({
+            "file_info.stored_name": filename
+        })
+        
+        if not file_message:
+            raise HTTPException(status_code=404, detail="File record not found")
+        
+        # Check if user is part of the session
+        session = await db.chat_sessions.find_one({
+            "session_id": file_message["session_id"]
+        })
+        
+        if not session:
+            raise HTTPException(status_code=404, detail="Session not found")
+        
+        # Allow access if user is the session owner or an admin
+        user_has_access = (
+            session["user_id"] == current_user.user_id or 
+            current_user.role in ["admin", "super_admin"]
+        )
+        
+        if not user_has_access:
+            raise HTTPException(status_code=403, detail="Access denied")
+        
+        # Determine content type
+        content_type = mimetypes.guess_type(str(file_path))[0] or "application/octet-stream"
+        
+        # Read and return file
+        async with aiofiles.open(file_path, 'rb') as f:
+            file_content = await f.read()
+        
+        from fastapi.responses import Response
+        return Response(
+            content=file_content,
+            media_type=content_type,
+            headers={
+                "Content-Disposition": f"attachment; filename={file_message['file_info']['original_name']}"
+            }
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to download file: {str(e)}")
+
+@router.post("/admin/chat/upload-file/{session_id}")
+async def admin_upload_chat_file(
+    session_id: str,
+    file: UploadFile = File(...),
+    current_user: UserProfile = Depends(get_current_user)
+):
+    """Admin file upload to chat session"""
+    if current_user.role not in ["admin", "super_admin"]:
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    try:
+        # Verify session exists
+        session = await db.chat_sessions.find_one({"session_id": session_id})
+        if not session:
+            raise HTTPException(status_code=404, detail="Chat session not found")
+        
+        # Validate file type
+        content_type = file.content_type
+        if content_type not in ALLOWED_FILE_TYPES:
+            raise HTTPException(
+                status_code=400, 
+                detail=f"File type not allowed. Supported types: {', '.join(ALLOWED_FILE_TYPES)}"
+            )
+        
+        # Check file size
+        file_content = await file.read()
+        if len(file_content) > MAX_FILE_SIZE:
+            raise HTTPException(
+                status_code=400, 
+                detail=f"File too large. Maximum size: {MAX_FILE_SIZE // (1024*1024)}MB"
+            )
+        
+        # Generate unique filename
+        file_extension = Path(file.filename).suffix
+        unique_filename = f"{secrets.token_urlsafe(16)}{file_extension}"
+        file_path = UPLOAD_DIR / unique_filename
+        
+        # Save file
+        async with aiofiles.open(file_path, 'wb') as f:
+            await f.write(file_content)
+        
+        # Create file message
+        message_id = f"msg_{secrets.token_urlsafe(12)}"
+        file_info = {
+            "original_name": file.filename,
+            "stored_name": unique_filename,
+            "content_type": content_type,
+            "size": len(file_content),
+            "download_url": f"/api/chat/download-file/{unique_filename}"
+        }
+        
+        file_message = {
+            "message_id": message_id,
+            "session_id": session_id,
+            "sender_type": "admin",
+            "sender_id": current_user.user_id,
+            "sender_name": f"{current_user.first_name} {current_user.last_name}",
+            "message": f"Shared file: {file.filename}",
+            "message_type": "file",
+            "file_info": file_info,
+            "timestamp": datetime.utcnow(),
+            "read_by_recipient": False
+        }
+        
+        await db.chat_messages.insert_one(file_message)
+        
+        # Update session activity
+        await db.chat_sessions.update_one(
+            {"session_id": session_id},
+            {"$set": {"last_activity": datetime.utcnow()}}
+        )
+        
+        # Notify user via WebSocket
+        await manager.send_to_user(session["user_id"], {
+            "type": "file_uploaded",
+            "session_id": session_id,
+            "message": file_message,
+            "sender_type": "admin"
+        })
+        
+        return {
+            "status": "success",
+            "message": "File uploaded successfully",
+            "message_id": message_id,
+            "file_info": file_info
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to upload file: {str(e)}")
