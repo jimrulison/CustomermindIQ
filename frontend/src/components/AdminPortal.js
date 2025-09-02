@@ -36,6 +36,7 @@ const AdminPortalEnhanced = () => {
   const [apiKeys, setApiKeys] = useState([]);
   const [workflows, setWorkflows] = useState([]);
   const [supportTickets, setSupportTickets] = useState([]);
+  const [contactForms, setContactForms] = useState([]);
   const [emailCampaigns, setEmailCampaigns] = useState([]);
   const [emailProvider, setEmailProvider] = useState(null);
   const [analytics, setAnalytics] = useState({});
