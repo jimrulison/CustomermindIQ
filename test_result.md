@@ -1653,12 +1653,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Support Workflow Testing - Admin Response to Customer Reply cycle"
-    - "ODOO Integration Implementation"
-    - "Email Provider Integration Implementation"
+    - "ODOO Integration Testing - Contact Forms and CRM Integration"
+    - "Annual Subscription Validation - Growth Acceleration Engine Access Control"
+    - "Contact Form Admin Management - Response System Testing"
   stuck_tasks:
-    - "Support tier info API returning 500 errors"
-    - "Support tickets/my API returning 500 errors"
+    - "Support tier info API returning 500 errors (may be resolved)"
+    - "Support tickets/my API returning 500 errors (may be resolved)"
   test_all: false
   test_priority: "high_first"
 
