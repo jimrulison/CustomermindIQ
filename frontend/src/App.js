@@ -326,7 +326,6 @@ function AppContent() {
       // Start background loading but don't wait for it
       loadModulesInBackground();
       
-      console.log('Customer Mind IQ core data loaded successfully');
     } catch (error) {
       console.error('Critical error loading data:', error);
       // Ensure we have minimum viable data
