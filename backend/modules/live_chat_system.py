@@ -539,37 +539,141 @@ async def get_admin_availability():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to get availability: {str(e)}")
 
-# WebSocket endpoint for real-time chat
-@router.websocket("/chat/ws/{session_id}")
-async def chat_websocket(websocket: WebSocket, session_id: str):
-    """WebSocket endpoint for real-time chat"""
+# WebSocket endpoints for real-time chat
+@router.websocket("/chat/ws/{session_id}/{user_type}")
+async def chat_websocket(websocket: WebSocket, session_id: str, user_type: str):
+    """WebSocket endpoint for real-time chat (user_type: 'user' or 'admin')"""
     try:
-        # Note: In production, you'd want to authenticate the WebSocket connection
-        # For now, we'll accept the connection and validate session existence
-        
+        # Validate session exists
         session = await db.chat_sessions.find_one({"session_id": session_id})
         if not session:
             await websocket.close(code=4004, reason="Session not found")
             return
         
-        user_id = session["user_id"]
-        await manager.connect_user(websocket, user_id, session_id)
-        
-        try:
-            while True:
-                # Keep connection alive and handle incoming messages
-                data = await websocket.receive_text()
-                message_data = json.loads(data)
+        if user_type == "user":
+            user_id = session["user_id"]
+            await manager.connect_user(websocket, user_id, session_id)
+            
+            await websocket.send_text(json.dumps({
+                "type": "connection_established",
+                "message": "Connected to live chat",
+                "session_id": session_id
+            }))
+            
+            try:
+                while True:
+                    data = await websocket.receive_text()
+                    message_data = json.loads(data)
+                    
+                    if message_data.get("type") == "ping":
+                        await websocket.send_text(json.dumps({"type": "pong"}))
+                    elif message_data.get("type") == "typing":
+                        # Broadcast typing indicator to admin
+                        if session.get("admin_id"):
+                            await manager.send_to_admin(session["admin_id"], {
+                                "type": "user_typing",
+                                "session_id": session_id,
+                                "user_name": session["user_name"]
+                            })
+                    elif message_data.get("type") == "message":
+                        # Handle real-time message sending
+                        await handle_realtime_message(session_id, message_data, "user")
+                        
+            except WebSocketDisconnect:
+                manager.disconnect_user(user_id)
                 
-                # Handle different message types
-                if message_data.get("type") == "ping":
-                    await websocket.send_text(json.dumps({"type": "pong"}))
-                
-        except WebSocketDisconnect:
-            manager.disconnect_user(user_id)
+        elif user_type == "admin":
+            # For admin connections, we need to validate admin permissions
+            # In a real implementation, you'd extract and validate the JWT token here
+            admin_id = "admin_temp"  # This should come from JWT validation
+            await manager.connect_admin(websocket, admin_id)
+            
+            await websocket.send_text(json.dumps({
+                "type": "admin_connected",
+                "message": "Admin connected to chat system"
+            }))
+            
+            try:
+                while True:
+                    data = await websocket.receive_text()
+                    message_data = json.loads(data)
+                    
+                    if message_data.get("type") == "ping":
+                        await websocket.send_text(json.dumps({"type": "pong"}))
+                    elif message_data.get("type") == "typing":
+                        # Broadcast typing indicator to user
+                        user_id = session["user_id"]
+                        await manager.send_to_user(user_id, {
+                            "type": "admin_typing",
+                            "session_id": session_id,
+                            "admin_name": session.get("admin_name", "Admin")
+                        })
+                    elif message_data.get("type") == "message":
+                        # Handle real-time admin message
+                        await handle_realtime_message(session_id, message_data, "admin")
+                        
+            except WebSocketDisconnect:
+                manager.disconnect_admin(admin_id)
+        else:
+            await websocket.close(code=4400, reason="Invalid user type")
             
     except Exception as e:
         try:
             await websocket.close(code=4000, reason="Internal error")
         except:
             pass
+
+async def handle_realtime_message(session_id: str, message_data: dict, sender_type: str):
+    """Handle real-time message sending via WebSocket"""
+    try:
+        session = await db.chat_sessions.find_one({"session_id": session_id})
+        if not session:
+            return
+        
+        # Create message
+        message_id = f"msg_{secrets.token_urlsafe(12)}"
+        message = {
+            "message_id": message_id,
+            "session_id": session_id,
+            "sender_type": sender_type,
+            "sender_id": message_data.get("sender_id", ""),
+            "sender_name": message_data.get("sender_name", ""),
+            "message": message_data.get("message", ""),
+            "timestamp": datetime.utcnow(),
+            "read_by_recipient": False
+        }
+        
+        # Store in database
+        await db.chat_messages.insert_one(message)
+        
+        # Update session activity
+        await db.chat_sessions.update_one(
+            {"session_id": session_id},
+            {"$set": {"last_activity": datetime.utcnow()}}
+        )
+        
+        # Format message for real-time delivery
+        realtime_message = {
+            "type": "new_message",
+            "session_id": session_id,
+            "message_id": message_id,
+            "sender_type": sender_type,
+            "sender_name": message_data.get("sender_name", ""),
+            "message": message_data.get("message", ""),
+            "timestamp": datetime.utcnow().isoformat()
+        }
+        
+        # Send to appropriate recipients
+        if sender_type == "user":
+            # Send to admin if session is active
+            if session.get("admin_id"):
+                await manager.send_to_admin(session["admin_id"], realtime_message)
+            else:
+                # Notify all admins of new message in waiting session
+                await manager.broadcast_to_admins(realtime_message)
+        else:
+            # Send to user
+            await manager.send_to_user(session["user_id"], realtime_message)
+            
+    except Exception as e:
+        print(f"Error handling real-time message: {e}")
