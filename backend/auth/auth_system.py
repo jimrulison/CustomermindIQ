@@ -795,4 +795,4 @@ async def create_default_admin():
     return None
 
 # Export router and utility functions
-__all__ = ["router", "get_current_user", "require_role", "require_subscription", "check_module_access", "create_default_admin"]
+__all__ = ["router", "get_current_user", "require_role", "require_subscription", "check_module_access", "create_default_admin", "require_annual_subscription", "is_annual_subscriber", "get_subscription_access_level"]
