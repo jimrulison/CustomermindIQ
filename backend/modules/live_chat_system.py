@@ -952,3 +952,112 @@ async def admin_upload_chat_file(
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to upload file: {str(e)}")
+
+@router.get("/admin/chat/messages/{session_id}")
+async def get_admin_chat_messages(
+    session_id: str,
+    current_user: UserProfile = Depends(get_current_user)
+):
+    """Get chat messages for admin (admin endpoint)"""
+    if current_user.role not in ["admin", "super_admin"]:
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    try:
+        # Verify session exists
+        session = await db.chat_sessions.find_one({"session_id": session_id})
+        if not session:
+            raise HTTPException(status_code=404, detail="Chat session not found")
+        
+        # Get messages
+        messages = await db.chat_messages.find(
+            {"session_id": session_id}
+        ).sort("timestamp", 1).to_list(length=1000)
+        
+        # Convert ObjectId to string for JSON serialization
+        for message in messages:
+            message["_id"] = str(message["_id"])
+            message["timestamp"] = message["timestamp"].isoformat()
+        
+        return {
+            "status": "success",
+            "session": {
+                "session_id": session["session_id"],
+                "status": session["status"],
+                "user_name": session["user_name"],
+                "admin_name": session.get("admin_name"),
+                "created_at": session["created_at"].isoformat()
+            },
+            "messages": messages
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get messages: {str(e)}")
+
+@router.post("/admin/chat/send-message")
+async def admin_send_message(
+    message_request: SendMessageRequest,
+    current_user: UserProfile = Depends(get_current_user)
+):
+    """Send message as admin"""
+    if current_user.role not in ["admin", "super_admin"]:
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    try:
+        # Verify session exists
+        session = await db.chat_sessions.find_one({"session_id": message_request.session_id})
+        if not session:
+            raise HTTPException(status_code=404, detail="Chat session not found")
+        
+        if session["status"] == "closed":
+            raise HTTPException(status_code=400, detail="Chat session is closed")
+        
+        # Create message
+        message_id = f"msg_{secrets.token_urlsafe(12)}"
+        message = {
+            "message_id": message_id,
+            "session_id": message_request.session_id,
+            "sender_type": "admin",
+            "sender_id": current_user.user_id,
+            "sender_name": f"{current_user.first_name} {current_user.last_name}",
+            "message": message_request.message,
+            "timestamp": datetime.utcnow(),
+            "read_by_recipient": False
+        }
+        
+        await db.chat_messages.insert_one(message)
+        
+        # Update session activity and assign admin if not already assigned
+        update_data = {"last_activity": datetime.utcnow()}
+        if not session.get("admin_id"):
+            update_data.update({
+                "admin_id": current_user.user_id,
+                "admin_name": f"{current_user.first_name} {current_user.last_name}",
+                "status": "active",
+                "assigned_at": datetime.utcnow()
+            })
+        
+        await db.chat_sessions.update_one(
+            {"session_id": message_request.session_id},
+            {"$set": update_data}
+        )
+        
+        # Send to user via WebSocket
+        await manager.send_to_user(session["user_id"], {
+            "type": "new_message",
+            "session_id": message_request.session_id,
+            "message": message,
+            "sender_type": "admin"
+        })
+        
+        return {
+            "status": "success",
+            "message_id": message_id,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to send message: {str(e)}")
