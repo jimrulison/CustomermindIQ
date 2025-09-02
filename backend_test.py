@@ -528,7 +528,7 @@ class CustomerCommunicationTester:
         
         try:
             # Get email campaigns
-            response = requests.get(f"{API_BASE}/email/campaigns", headers=headers, timeout=60, verify=False)
+            response = requests.get(f"{API_BASE}/email/email/campaigns", headers=headers, timeout=60, verify=False)
             if response.status_code == 200:
                 data = response.json()
                 campaigns = data.get("campaigns", [])
@@ -573,7 +573,7 @@ class CustomerCommunicationTester:
             support_success = support_response.status_code == 200
             
             # Test email campaigns view
-            email_response = requests.get(f"{API_BASE}/email/campaigns", headers=headers, timeout=60, verify=False)
+            email_response = requests.get(f"{API_BASE}/email/email/campaigns", headers=headers, timeout=60, verify=False)
             email_success = email_response.status_code == 200
             
             # Test email statistics
