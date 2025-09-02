@@ -610,6 +610,308 @@ async def apply_discount_to_user(
         "usage_record": usage_record
     }
 
+# ===== BULK DISCOUNT APPLICATION =====
+
+@router.post("/admin/discounts/{discount_id}/bulk-apply")
+async def bulk_apply_discount(
+    discount_id: str,
+    bulk_request: BulkDiscountApplication,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Apply discount to multiple users based on criteria"""
+    
+    # Verify discount exists
+    discount = await db.discounts.find_one({"discount_id": discount_id})
+    if not discount:
+        raise HTTPException(status_code=404, detail="Discount not found")
+    
+    # Build user query from criteria
+    user_query = {}
+    criteria = bulk_request.target_criteria
+    
+    if criteria.get("subscription_tier"):
+        user_query["subscription_tier"] = criteria["subscription_tier"]
+    
+    if criteria.get("registration_date_from"):
+        user_query.setdefault("created_at", {})["$gte"] = datetime.fromisoformat(criteria["registration_date_from"])
+    
+    if criteria.get("registration_date_to"):
+        user_query.setdefault("created_at", {})["$lte"] = datetime.fromisoformat(criteria["registration_date_to"])
+        
+    if criteria.get("is_active") is not None:
+        user_query["is_active"] = criteria["is_active"]
+    
+    if criteria.get("email_contains"):
+        user_query["email"] = {"$regex": criteria["email_contains"], "$options": "i"}
+    
+    # Get matching users
+    users = await db.users.find(user_query).to_list(length=10000)
+    
+    if not users:
+        return {"message": "No users match the specified criteria", "applied_count": 0}
+    
+    # Apply discount to each user
+    applied_count = 0
+    failed_applications = []
+    
+    for user in users:
+        try:
+            # Check if user already has this discount
+            existing_usage = await db.discount_usage.find_one({
+                "user_id": user["user_id"],
+                "discount_id": discount_id
+            })
+            
+            if existing_usage:
+                continue  # Skip if already applied
+            
+            # Apply discount
+            usage_record = {
+                "usage_id": str(uuid.uuid4()),
+                "discount_id": discount_id,
+                "user_id": user["user_id"],
+                "applied_by": current_user.user_id,
+                "applied_at": datetime.utcnow(),
+                "discount_amount": discount["value"],
+                "discount_type": discount["discount_type"],
+                "application_reason": bulk_request.reason,
+                "is_bulk_applied": True
+            }
+            
+            await db.discount_usage.insert_one(usage_record)
+            applied_count += 1
+            
+            # Send notification if requested
+            if bulk_request.notify_users:
+                # Add to notification queue (simplified)
+                await db.notification_queue.insert_one({
+                    "user_id": user["user_id"],
+                    "type": "discount_applied",
+                    "message": f"You've received a {discount['name']} discount!",
+                    "discount_id": discount_id,
+                    "created_at": datetime.utcnow(),
+                    "status": "pending"
+                })
+            
+        except Exception as e:
+            failed_applications.append({
+                "user_id": user["user_id"],
+                "error": str(e)
+            })
+    
+    # Update discount usage statistics
+    await db.discounts.update_one(
+        {"discount_id": discount_id},
+        {"$inc": {"total_uses": applied_count}}
+    )
+    
+    return {
+        "message": f"Discount applied to {applied_count} users",
+        "applied_count": applied_count,
+        "total_eligible": len(users),
+        "failed_applications": failed_applications
+    }
+
+# ===== DISCOUNT PERFORMANCE ANALYTICS =====
+
+@router.get("/admin/discounts/{discount_id}/analytics")
+async def get_discount_analytics(
+    discount_id: str,
+    days: int = Query(30, ge=1, le=365),
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get detailed analytics for a specific discount"""
+    
+    # Verify discount exists
+    discount = await db.discounts.find_one({"discount_id": discount_id})
+    if not discount:
+        raise HTTPException(status_code=404, detail="Discount not found")
+    
+    date_from = datetime.utcnow() - timedelta(days=days)
+    
+    # Get usage data
+    usage_data = await db.discount_usage.find({
+        "discount_id": discount_id,
+        "applied_at": {"$gte": date_from}
+    }).to_list(length=10000)
+    
+    # Calculate metrics
+    total_uses = len(usage_data)
+    unique_users = len(set(usage["user_id"] for usage in usage_data))
+    
+    # Revenue impact calculation
+    revenue_impact = 0.0
+    for usage in usage_data:
+        if discount["discount_type"] == "percentage":
+            # Estimate based on average order value (simplified)
+            estimated_order_value = 149.0  # Default monthly subscription
+            revenue_impact += (estimated_order_value * discount["value"] / 100)
+        elif discount["discount_type"] == "fixed_amount":
+            revenue_impact += discount["value"]
+        elif discount["discount_type"] == "free_months":
+            revenue_impact += (149.0 * discount["value"])  # Monthly value * free months
+    
+    # Usage over time (daily breakdown)
+    usage_by_day = {}
+    for usage in usage_data:
+        day = usage["applied_at"].strftime("%Y-%m-%d")
+        usage_by_day[day] = usage_by_day.get(day, 0) + 1
+    
+    # Get code-specific analytics if codes exist
+    codes_data = await db.discount_codes.find({"discount_id": discount_id}).to_list(length=1000)
+    
+    return {
+        "discount_info": {
+            "discount_id": discount_id,
+            "name": discount["name"],
+            "type": discount["discount_type"],
+            "value": discount["value"],
+            "created_at": discount["created_at"]
+        },
+        "usage_metrics": {
+            "total_uses": total_uses,
+            "unique_users": unique_users,
+            "usage_rate": round(total_uses / max(unique_users, 1), 2),
+            "revenue_impact": round(revenue_impact, 2)
+        },
+        "usage_timeline": usage_by_day,
+        "codes_metrics": {
+            "total_codes_generated": len(codes_data),
+            "active_codes": sum(1 for code in codes_data if code["is_active"]),
+            "total_code_redemptions": sum(code.get("usage_count", 0) for code in codes_data)
+        },
+        "period": f"Last {days} days"
+    }
+
+# ===== USER COHORT ANALYSIS =====
+
+@router.post("/admin/cohorts/create")
+async def create_user_cohort(
+    name: str,
+    definition: Dict[str, Any],
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Create a user cohort based on specific criteria"""
+    
+    cohort_id = str(uuid.uuid4())
+    
+    # Build query from definition
+    query = {}
+    if definition.get("subscription_tier"):
+        query["subscription_tier"] = definition["subscription_tier"]
+    
+    if definition.get("registration_period"):
+        period = definition["registration_period"]
+        if period["from"]:
+            query.setdefault("created_at", {})["$gte"] = datetime.fromisoformat(period["from"])
+        if period["to"]:
+            query.setdefault("created_at", {})["$lte"] = datetime.fromisoformat(period["to"])
+    
+    # Get users matching criteria
+    users = await db.users.find(query).to_list(length=50000)
+    user_count = len(users)
+    
+    # Calculate cohort metrics
+    total_revenue = sum(
+        user.get("total_paid", 0) for user in users
+    )
+    
+    avg_revenue_per_user = total_revenue / user_count if user_count > 0 else 0
+    
+    # Retention analysis (simplified)
+    active_users = sum(1 for user in users if user.get("is_active", True))
+    retention_rate = (active_users / user_count) * 100 if user_count > 0 else 0
+    
+    cohort_doc = {
+        "cohort_id": cohort_id,
+        "name": name,
+        "definition": definition,
+        "user_count": user_count,
+        "created_at": datetime.utcnow(),
+        "created_by": current_user.user_id,
+        "metrics": {
+            "total_revenue": total_revenue,
+            "avg_revenue_per_user": round(avg_revenue_per_user, 2),
+            "retention_rate": round(retention_rate, 2),
+            "active_users": active_users
+        }
+    }
+    
+    await db.user_cohorts.insert_one(cohort_doc)
+    
+    # Remove ObjectId for response
+    del cohort_doc["_id"]
+    
+    return cohort_doc
+
+@router.get("/admin/cohorts")
+async def get_user_cohorts(
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get all user cohorts"""
+    
+    cohorts = await db.user_cohorts.find({}).sort("created_at", -1).to_list(length=100)
+    
+    # Remove ObjectIds
+    for cohort in cohorts:
+        if "_id" in cohort:
+            del cohort["_id"]
+    
+    return {
+        "cohorts": cohorts,
+        "total": len(cohorts)
+    }
+
+@router.get("/admin/cohorts/{cohort_id}/analytics")
+async def get_cohort_analytics(
+    cohort_id: str,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get detailed analytics for a specific cohort"""
+    
+    cohort = await db.user_cohorts.find_one({"cohort_id": cohort_id})
+    if not cohort:
+        raise HTTPException(status_code=404, detail="Cohort not found")
+    
+    # Recalculate current metrics
+    definition = cohort["definition"]
+    query = {}
+    
+    if definition.get("subscription_tier"):
+        query["subscription_tier"] = definition["subscription_tier"]
+    
+    if definition.get("registration_period"):
+        period = definition["registration_period"]
+        if period.get("from"):
+            query.setdefault("created_at", {})["$gte"] = datetime.fromisoformat(period["from"])
+        if period.get("to"):
+            query.setdefault("created_at", {})["$lte"] = datetime.fromisoformat(period["to"])
+    
+    users = await db.users.find(query).to_list(length=50000)
+    
+    # Calculate current metrics
+    current_metrics = {
+        "total_users": len(users),
+        "active_users": sum(1 for user in users if user.get("is_active", True)),
+        "subscription_distribution": {},
+        "revenue_metrics": {}
+    }
+    
+    # Subscription distribution
+    for user in users:
+        tier = user.get("subscription_tier", "unknown")
+        current_metrics["subscription_distribution"][tier] = \
+            current_metrics["subscription_distribution"].get(tier, 0) + 1
+    
+    return {
+        "cohort_info": cohort,
+        "current_metrics": current_metrics,
+        "growth_since_creation": {
+            "user_count_change": current_metrics["total_users"] - cohort["user_count"],
+            "retention_analysis": "Updated metrics vs original cohort"
+        }
+    }
+
 # Account Impersonation Endpoints
 @router.post("/admin/impersonate", response_model=ImpersonationSession)
 async def start_impersonation_session(
