@@ -45,8 +45,11 @@ class UserRole(str, Enum):
 
 class SubscriptionTier(str, Enum):
     FREE = "free"
-    PROFESSIONAL = "professional"
-    ENTERPRISE = "enterprise"
+    LAUNCH = "launch"
+    GROWTH = "growth" 
+    SCALE = "scale"
+    WHITE_LABEL = "white_label"
+    CUSTOM = "custom"
 
 class SubscriptionType(str, Enum):
     TRIAL = "trial"
