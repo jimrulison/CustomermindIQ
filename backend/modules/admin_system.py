@@ -1176,12 +1176,7 @@ async def get_discount_rules(
 
 @router.post("/admin/email-templates")
 async def create_email_template(
-    name: str,
-    subject: str,
-    html_content: str,
-    text_content: str,
-    template_type: str,
-    variables: List[str],
+    template_data: Dict[str, Any],
     current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
 ):
     """Create a new email template"""
@@ -1190,13 +1185,13 @@ async def create_email_template(
     
     template_doc = {
         "template_id": template_id,
-        "name": name,
-        "subject": subject,
-        "html_content": html_content,
-        "text_content": text_content,
-        "template_type": template_type,
-        "variables": variables,
-        "is_active": True,
+        "name": template_data.get("name", ""),
+        "subject": template_data.get("subject", ""),
+        "html_content": template_data.get("html_content", ""),
+        "text_content": template_data.get("text_content", ""),
+        "template_type": template_data.get("template_type", "general"),
+        "variables": template_data.get("variables", []),
+        "is_active": template_data.get("is_active", True),
         "created_at": datetime.utcnow(),
         "last_modified": datetime.utcnow(),
         "created_by": current_user.user_id
