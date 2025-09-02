@@ -46,6 +46,14 @@ class ChatMessage(BaseModel):
     message: str
     timestamp: datetime = Field(default_factory=datetime.utcnow)
     read_by_recipient: bool = False
+    message_type: str = "text"  # text, file, image
+    file_info: Optional[Dict[str, Any]] = None  # For file messages
+
+class FileUploadRequest(BaseModel):
+    session_id: str
+    file_name: str
+    file_type: str
+    description: Optional[str] = None
 
 class AdminAvailability(BaseModel):
     admin_id: str
