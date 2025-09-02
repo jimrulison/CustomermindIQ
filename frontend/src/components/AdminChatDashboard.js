@@ -301,6 +301,12 @@ const AdminChatDashboard = () => {
             <div className="flex items-center space-x-2">
               <MessageCircle className="w-6 h-6 text-blue-400" />
               <CardTitle className="text-white">Live Chat Dashboard</CardTitle>
+              {hasUnreadChats && (
+                <Badge className="bg-red-500/20 text-red-400 animate-pulse">
+                  <Bell className="w-3 h-3 mr-1" />
+                  New Chats!
+                </Badge>
+              )}
             </div>
             <Button onClick={loadChatSessions} variant="outline" size="sm">
               <RefreshCw className="w-4 h-4 mr-2" />
