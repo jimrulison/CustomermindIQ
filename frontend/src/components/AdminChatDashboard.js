@@ -20,7 +20,8 @@ import {
   Download,
   Image,
   FileText,
-  File
+  File,
+  Bell
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
