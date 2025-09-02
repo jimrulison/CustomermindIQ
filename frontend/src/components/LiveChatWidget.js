@@ -33,7 +33,15 @@ const LiveChatWidget = () => {
   const [sending, setSending] = useState(false);
   const [adminAvailable, setAdminAvailable] = useState(false);
   const [estimatedWait, setEstimatedWait] = useState('');
+  const [websocket, setWebsocket] = useState(null);
+  const [connected, setConnected] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [adminTyping, setAdminTyping] = useState(false);
+  const [fileUpload, setFileUpload] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const messagesEndRef = useRef(null);
+  const fileInputRef = useRef(null);
+  const typingTimeoutRef = useRef(null);
 
   // Check chat access on component mount
   useEffect(() => {
