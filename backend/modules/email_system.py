@@ -177,7 +177,7 @@ async def get_recipients_by_type(recipient_type: RecipientType, **kwargs) -> Lis
             }).to_list(length=10000)
             for user in users:
                 recipients.append(EmailRecipient(
-                    email=user["email"],
+                    email=user["email"], 
                     name=user.get("first_name", ""),
                     user_id=user["user_id"]
                 ))
