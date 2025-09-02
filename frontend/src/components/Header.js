@@ -26,6 +26,8 @@ import {
 } from 'lucide-react';
 
 const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
+  const [waitingChatsCount, setWaitingChatsCount] = useState(0);
+  
   // Primary navigation - separated by analytics type
   const primaryNavigation = [
     {
