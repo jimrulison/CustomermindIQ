@@ -9276,13 +9276,312 @@ class CustomerIntelligenceAITester:
     # END COMPETITIVE CUSTOMER INTELLIGENCE MODULE TESTS
     # =====================================================
 
+    # =====================================================
+    # EMAIL SYSTEM BACKEND TESTS
+    # =====================================================
+
+    def test_email_provider_configuration(self):
+        """Test email provider configuration endpoint"""
+        if not self.admin_token:
+            print("❌ No admin token available for email provider testing")
+            return False
+            
+        print("\n📧 Testing Email Provider Configuration...")
+        
+        success, response = self.run_email_system_test(
+            "Get Current Email Provider",
+            "GET",
+            "api/email/providers/current",
+            200,
+            timeout=30
+        )
+        
+        if success and response:
+            provider_config = response.get('provider_config', {})
+            available_providers = response.get('available_providers', [])
+            
+            print(f"   Current provider: {provider_config.get('provider', 'unknown')}")
+            print(f"   From email: {provider_config.get('from_email', 'unknown')}")
+            print(f"   From name: {provider_config.get('from_name', 'unknown')}")
+            print(f"   Available providers: {', '.join(available_providers)}")
+        
+        return success
+
+    def test_email_simple_send_all_users(self):
+        """Test sending simple email to all users"""
+        if not self.admin_token:
+            print("❌ No admin token available for email sending testing")
+            return False
+            
+        print("\n📧 Testing Simple Email Send - All Users...")
+        
+        email_data = {
+            "subject": "Test Email to All Users - CustomerMind IQ",
+            "html_content": "<h1>Welcome to CustomerMind IQ!</h1><p>This is a test email sent to all users. Thank you for being part of our community!</p><p>Best regards,<br>The CustomerMind IQ Team</p>",
+            "text_content": "Welcome to CustomerMind IQ! This is a test email sent to all users. Thank you for being part of our community! Best regards, The CustomerMind IQ Team",
+            "recipient_type": "all_users",
+            "variables": {
+                "company": "CustomerMind IQ",
+                "support_email": "support@customermindiq.com"
+            }
+        }
+        
+        success, response = self.run_email_system_test(
+            "Send Simple Email to All Users",
+            "POST",
+            "api/email/send-simple",
+            200,
+            data=email_data,
+            timeout=45
+        )
+        
+        if success and response:
+            self.test_campaign_id = response.get('campaign_id')
+            print(f"   ✅ Email campaign created: {self.test_campaign_id}")
+            print(f"   Recipients: {response.get('recipient_count', 0)}")
+            print(f"   Provider: {response.get('provider', 'unknown')}")
+            print(f"   Status: {response.get('status', 'unknown')}")
+        
+        return success
+
+    def test_email_simple_send_subscription_tier(self):
+        """Test sending simple email to specific subscription tier"""
+        if not self.admin_token:
+            print("❌ No admin token available for subscription tier email testing")
+            return False
+            
+        print("\n📧 Testing Simple Email Send - Subscription Tier (Enterprise)...")
+        
+        email_data = {
+            "subject": "Exclusive Enterprise Features - CustomerMind IQ",
+            "html_content": "<h1>Enterprise Customer Update</h1><p>Dear {{ user_name }},</p><p>As an Enterprise customer, you have access to our premium features including priority support and advanced analytics.</p><p>Contact us at {{ support_email }} for any assistance.</p>",
+            "text_content": "Enterprise Customer Update - Dear {{ user_name }}, As an Enterprise customer, you have access to premium features. Contact us at {{ support_email }} for assistance.",
+            "recipient_type": "subscription_tier",
+            "subscription_tiers": ["enterprise"],
+            "variables": {
+                "support_email": "enterprise@customermindiq.com"
+            }
+        }
+        
+        success, response = self.run_email_system_test(
+            "Send Email to Enterprise Tier",
+            "POST",
+            "api/email/send-simple",
+            200,
+            data=email_data,
+            timeout=45
+        )
+        
+        if success and response:
+            print(f"   ✅ Enterprise email campaign created: {response.get('campaign_id')}")
+            print(f"   Recipients: {response.get('recipient_count', 0)}")
+            print(f"   Provider: {response.get('provider', 'unknown')}")
+        
+        return success
+
+    def test_email_simple_send_custom_list(self):
+        """Test sending simple email to custom email list"""
+        if not self.admin_token:
+            print("❌ No admin token available for custom list email testing")
+            return False
+            
+        print("\n📧 Testing Simple Email Send - Custom Email List...")
+        
+        email_data = {
+            "subject": "Custom Newsletter - CustomerMind IQ Updates",
+            "html_content": "<h1>CustomerMind IQ Newsletter</h1><p>Hello {{ user_name }},</p><p>Here are the latest updates from CustomerMind IQ:</p><ul><li>New AI-powered analytics features</li><li>Enhanced customer intelligence dashboard</li><li>Improved email automation</li></ul><p>Visit our platform to explore these features!</p>",
+            "text_content": "CustomerMind IQ Newsletter - Hello {{ user_name }}, Latest updates: New AI analytics, Enhanced dashboard, Improved email automation. Visit our platform to explore!",
+            "recipient_type": "custom_list",
+            "custom_emails": ["admin@customermindiq.com", "test@example.com"],
+            "variables": {
+                "newsletter_date": "January 2025"
+            }
+        }
+        
+        success, response = self.run_email_system_test(
+            "Send Email to Custom List",
+            "POST",
+            "api/email/send-simple",
+            200,
+            data=email_data,
+            timeout=45
+        )
+        
+        if success and response:
+            print(f"   ✅ Custom list email campaign created: {response.get('campaign_id')}")
+            print(f"   Recipients: {response.get('recipient_count', 0)}")
+            print(f"   Provider: {response.get('provider', 'unknown')}")
+        
+        return success
+
+    def test_email_simple_send_single_user(self):
+        """Test sending simple email to single user"""
+        if not self.admin_token:
+            print("❌ No admin token available for single user email testing")
+            return False
+            
+        print("\n📧 Testing Simple Email Send - Single User...")
+        
+        email_data = {
+            "subject": "Personal Message from CustomerMind IQ",
+            "html_content": "<h1>Personal Message</h1><p>Dear {{ user_name }},</p><p>This is a personalized message just for you. We appreciate your continued use of CustomerMind IQ!</p><p>If you have any questions, please don't hesitate to reach out.</p><p>Best regards,<br>CustomerMind IQ Team</p>",
+            "text_content": "Personal Message - Dear {{ user_name }}, This is a personalized message just for you. We appreciate your continued use of CustomerMind IQ! Best regards, CustomerMind IQ Team",
+            "recipient_type": "single_user",
+            "single_email": "admin@customermindiq.com",
+            "variables": {
+                "personal_note": "Thank you for being an admin!"
+            }
+        }
+        
+        success, response = self.run_email_system_test(
+            "Send Email to Single User",
+            "POST",
+            "api/email/send-simple",
+            200,
+            data=email_data,
+            timeout=45
+        )
+        
+        if success and response:
+            print(f"   ✅ Single user email campaign created: {response.get('campaign_id')}")
+            print(f"   Recipients: {response.get('recipient_count', 0)}")
+            print(f"   Provider: {response.get('provider', 'unknown')}")
+        
+        return success
+
+    def test_email_campaigns_list(self):
+        """Test getting email campaigns list"""
+        if not self.admin_token:
+            print("❌ No admin token available for campaigns listing testing")
+            return False
+            
+        print("\n📋 Testing Email Campaigns List...")
+        
+        success, response = self.run_email_system_test(
+            "Get Email Campaigns",
+            "GET",
+            "api/email/campaigns",
+            200,
+            timeout=30
+        )
+        
+        if success and response:
+            campaigns = response.get('campaigns', [])
+            total = response.get('total', 0)
+            
+            print(f"   Total campaigns: {total}")
+            for campaign in campaigns[:5]:  # Show first 5 campaigns
+                print(f"   - {campaign.get('name', 'Unknown')} ({campaign.get('status', 'unknown')})")
+                print(f"     Recipients: {campaign.get('recipient_count', 0)}, Sent: {campaign.get('sent_count', 0)}")
+        
+        return success
+
+    def test_email_campaign_details(self):
+        """Test getting detailed campaign information"""
+        if not self.admin_token or not hasattr(self, 'test_campaign_id'):
+            print("❌ No admin token or campaign ID available for campaign details testing")
+            return False
+            
+        print(f"\n📊 Testing Email Campaign Details for ID: {self.test_campaign_id}...")
+        
+        success, response = self.run_email_system_test(
+            "Get Campaign Details",
+            "GET",
+            f"api/email/campaigns/{self.test_campaign_id}",
+            200,
+            timeout=30
+        )
+        
+        if success and response:
+            campaign = response.get('campaign', {})
+            email_logs = response.get('email_logs', [])
+            total_logs = response.get('total_logs', 0)
+            
+            print(f"   Campaign: {campaign.get('name', 'Unknown')}")
+            print(f"   Status: {campaign.get('status', 'unknown')}")
+            print(f"   Recipients: {campaign.get('recipient_count', 0)}")
+            print(f"   Sent: {campaign.get('sent_count', 0)}")
+            print(f"   Failed: {campaign.get('failed_count', 0)}")
+            print(f"   Email logs: {total_logs}")
+        
+        return success
+
+    def test_email_statistics(self):
+        """Test getting email statistics"""
+        if not self.admin_token:
+            print("❌ No admin token available for email statistics testing")
+            return False
+            
+        print("\n📊 Testing Email Statistics...")
+        
+        success, response = self.run_email_system_test(
+            "Get Email Statistics",
+            "GET",
+            "api/email/stats?days=30",
+            200,
+            timeout=30
+        )
+        
+        if success and response:
+            period_days = response.get('period_days', 0)
+            statistics = response.get('statistics', {})
+            
+            print(f"   Period: {period_days} days")
+            print(f"   Total campaigns: {statistics.get('total_campaigns', 0)}")
+            print(f"   Total emails sent: {statistics.get('total_emails_sent', 0)}")
+            print(f"   Total emails failed: {statistics.get('total_emails_failed', 0)}")
+            print(f"   Delivery rate: {statistics.get('delivery_rate_percent', 0)}%")
+        
+        return success
+
+    def run_comprehensive_email_system_tests(self):
+        """Run comprehensive email system backend tests"""
+        print("\n" + "="*80)
+        print("📧 EMAIL SYSTEM BACKEND TESTING")
+        print("="*80)
+        
+        # Test 1: Admin Authentication (required for email system)
+        auth_success = self.test_admin_authentication()
+        
+        if not auth_success:
+            print("\n❌ Admin authentication failed - skipping email system tests")
+            return 0, 8
+        
+        # Test 2: Email Provider Configuration
+        test_results = []
+        test_results.append(self.test_email_provider_configuration())
+        
+        # Test 3: Simple Email Methods Testing
+        test_results.append(self.test_email_simple_send_all_users())
+        test_results.append(self.test_email_simple_send_subscription_tier())
+        test_results.append(self.test_email_simple_send_custom_list())
+        test_results.append(self.test_email_simple_send_single_user())
+        
+        # Test 4: Email Campaign Management
+        test_results.append(self.test_email_campaigns_list())
+        test_results.append(self.test_email_campaign_details())
+        
+        # Test 5: Email Statistics
+        test_results.append(self.test_email_statistics())
+        
+        passed_tests = sum(test_results)
+        total_tests = len(test_results)
+        
+        return passed_tests, total_tests
+
+    # =====================================================
+    # END EMAIL SYSTEM BACKEND TESTS
+    # =====================================================
+
 def main():
-    """Main function to run Multi-Tier Support System testing"""
-    print("🎧 MULTI-TIER SUPPORT SYSTEM BACKEND TESTING")
+    """Main function to run Comprehensive Customer Communication System testing"""
     print("="*80)
-    print("Testing the comprehensive multi-tier support system implementation")
-    print("Support tier mapping, ticket creation, admin management, live chat, ODOO integration")
-    print("Including tier-based SLA, ticket CRUD operations, email notifications, and admin portal")
+    print("📧 CUSTOMERMIND IQ - COMPREHENSIVE CUSTOMER COMMUNICATION SYSTEM TESTING")
+    print("="*80)
+    print("Testing the comprehensive customer communication system that combines:")
+    print("1. Multi-Tier Support System (previously implemented)")
+    print("2. Simple Email System (just implemented)")
+    print("Including email provider integration, simple email methods, campaign management")
     print("="*80)
     
     tester = CustomerIntelligenceAITester()
