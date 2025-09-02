@@ -1284,10 +1284,7 @@ async def get_api_keys(
 
 @router.post("/admin/workflows")
 async def create_automated_workflow(
-    name: str,
-    description: str,
-    trigger_event: str,
-    steps: List[Dict[str, Any]],
+    workflow_data: Dict[str, Any],
     current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
 ):
     """Create a new automated workflow"""
@@ -1296,21 +1293,22 @@ async def create_automated_workflow(
     
     # Convert steps to WorkflowStep objects
     workflow_steps = []
+    steps = workflow_data.get("steps", [])
     for i, step in enumerate(steps):
         workflow_steps.append({
             "step_id": str(uuid.uuid4()),
-            "step_type": step["step_type"],
-            "config": step["config"],
+            "step_type": step.get("step_type", "action"),
+            "config": step.get("config", {}),
             "order": i
         })
     
     workflow_doc = {
         "workflow_id": workflow_id,
-        "name": name,
-        "description": description,
-        "trigger_event": trigger_event,
+        "name": workflow_data.get("name", ""),
+        "description": workflow_data.get("description", ""),
+        "trigger_event": workflow_data.get("trigger_event", "manual"),
         "steps": workflow_steps,
-        "is_active": True,
+        "is_active": workflow_data.get("is_active", True),
         "created_at": datetime.utcnow(),
         "created_by": current_user.user_id,
         "execution_count": 0,
