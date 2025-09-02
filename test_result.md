@@ -1617,8 +1617,13 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus: []
-  stuck_tasks: []
+  current_focus:
+    - "Support Workflow Testing - Admin Response to Customer Reply cycle"
+    - "ODOO Integration Implementation"
+    - "Email Provider Integration Implementation"
+  stuck_tasks:
+    - "Support tier info API returning 500 errors"
+    - "Support tickets/my API returning 500 errors"
   test_all: false
   test_priority: "high_first"
 
