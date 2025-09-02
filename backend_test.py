@@ -418,7 +418,7 @@ class CustomerCommunicationTester:
             <p>Upgrade to Professional or Enterprise for advanced features including priority support and live chat.</p>
             <p>Thank you for choosing CustomerMind IQ!</p>
             """,
-            "text_content": "Hello {{ user_name }}, As a Professional customer, you have access to priority support, live chat, and advanced features. Consider upgrading to Enterprise for even more benefits. Thank you for choosing CustomerMind IQ!",
+            "text_content": "Hello {{ user_name }}, As a Free tier customer, you have access to basic support and features. Consider upgrading to Professional or Enterprise for more benefits. Thank you for choosing CustomerMind IQ!",
             "recipient_type": "subscription_tier",
             "subscription_tiers": ["free"],
             "variables": {
