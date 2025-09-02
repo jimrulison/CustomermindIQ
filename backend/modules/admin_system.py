@@ -3,13 +3,20 @@ Customer Mind IQ - Advanced Admin System
 Banner management, discount system, account impersonation, and analytics dashboard
 """
 
-from fastapi import APIRouter, HTTPException, Depends, status, BackgroundTasks
+from fastapi import APIRouter, HTTPException, Depends, status, BackgroundTasks, Query, Response
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, EmailStr, Field
 from typing import Dict, Optional, List, Union, Any
 from datetime import datetime, timedelta
 from enum import Enum
-import uuid
+import asyncio
+import json
 import os
+import csv
+import io
+import uuid
+import re
+import pandas as pd
 from motor.motor_asyncio import AsyncIOMotorClient
 from auth.auth_system import get_current_user, require_role, UserRole, UserProfile, SubscriptionTier
 
