@@ -437,6 +437,14 @@ const LiveChatWidget = () => {
     if (!chatSession) return;
     
     try {
+      // Close WebSocket connection
+      if (websocket) {
+        websocket.close();
+        setWebsocket(null);
+        setConnected(false);
+      }
+      
+      // Call API to close session
       await apiCall(`/api/chat/close-session/${chatSession.session_id}`, {
         method: 'POST'
       });
@@ -444,6 +452,9 @@ const LiveChatWidget = () => {
       setChatSession(null);
       setMessages([]);
       setIsOpen(false);
+      setIsTyping(false);
+      setAdminTyping(false);
+      setFileUpload(null);
     } catch (error) {
       console.error('Error closing chat session:', error);
     }
