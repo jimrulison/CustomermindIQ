@@ -348,15 +348,17 @@ const SubscriptionManager = () => {
         <h2 className="text-2xl font-bold text-center mb-8">Choose Your Plan</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {Object.entries(subscriptionPlans).map(([planId, plan]) => {
-            const isCurrentPlan = currentSubscription?.current_plan === planId;
+            const isCurrentPlan = currentSubscription?.plan_type === planId;
             const isUpgrade = currentSubscription && (
-              (currentSubscription.current_plan === 'free' && planId !== 'free') ||
-              (currentSubscription.current_plan === 'professional' && planId === 'enterprise')
+              (currentSubscription.plan_type === 'free' && planId !== 'free') ||
+              (currentSubscription.plan_type === 'launch' && ['growth', 'scale', 'white_label', 'custom'].includes(planId)) ||
+              (currentSubscription.plan_type === 'growth' && ['scale', 'white_label', 'custom'].includes(planId)) ||
+              (currentSubscription.plan_type === 'scale' && ['white_label', 'custom'].includes(planId))
             );
 
             return (
               <Card key={planId} className={`relative ${getPlanColor(planId)} ${isCurrentPlan ? 'ring-2 ring-blue-500' : ''}`}>
-                {planId === 'professional' && (
+                {plan.most_popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                     <Badge className="bg-purple-600 text-white px-3 py-1">Most Popular</Badge>
                   </div>
@@ -367,9 +369,27 @@ const SubscriptionManager = () => {
                     {getPlanIcon(planId)}
                   </div>
                   <h3 className="text-xl font-bold">{plan.name}</h3>
+                  {plan.description && (
+                    <p className="text-sm text-gray-600 mt-2">{plan.description}</p>
+                  )}
                   <div className="mt-4">
-                    <span className="text-4xl font-bold">${plan.price}</span>
-                    {planId !== 'free' && <span className="text-gray-600">/month</span>}
+                    {typeof plan.monthly_price === 'number' ? (
+                      <>
+                        <div className="flex items-center justify-center space-x-2">
+                          <span className="text-4xl font-bold">${plan.monthly_price}</span>
+                          <span className="text-gray-600">/month</span>
+                        </div>
+                        {plan.annual_price && (
+                          <div className="mt-2 text-sm text-green-600">
+                            <strong>${plan.annual_price}/year</strong> (2 months free!)
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className="text-2xl font-bold text-gray-700">
+                        {plan.monthly_price === 'contact_sales' ? 'Contact Sales' : 'Free'}
+                      </div>
+                    )}
                   </div>
                 </CardHeader>
                 
@@ -386,17 +406,18 @@ const SubscriptionManager = () => {
                   <Button 
                     className="w-full"
                     onClick={() => initiateSubscription(planId)}
-                    disabled={isCurrentPlan || processingPayment === planId}
+                    disabled={isCurrentPlan || processingPayment === planId || plan.contact_required}
                     variant={isCurrentPlan ? "outline" : "default"}
                   >
                     {processingPayment === planId && (
                       <Loader2 className="h-4 w-4 animate-spin mr-2" />
                     )}
                     {isCurrentPlan ? 'Current Plan' : 
+                     plan.contact_required ? 'Contact Sales' :
                      isUpgrade ? `Upgrade to ${plan.name}` : 
-                     planId === 'free' ? 'Start Free' : 
+                     planId === 'free' ? 'Start Free Trial' : 
                      `Get ${plan.name}`}
-                    {!isCurrentPlan && !processingPayment && (
+                    {!isCurrentPlan && !processingPayment && !plan.contact_required && (
                       <ArrowRight className="h-4 w-4 ml-2" />
                     )}
                   </Button>
