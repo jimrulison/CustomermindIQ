@@ -24,6 +24,20 @@ db = client[DB_NAME]
 
 router = APIRouter(tags=["Live Chat"])
 
+# File Upload Directory
+UPLOAD_DIR = Path("/app/uploads/chat_files")
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+# Allowed file types and max file size
+ALLOWED_FILE_TYPES = {
+    'image/jpeg', 'image/png', 'image/gif', 'image/webp',
+    'application/pdf', 'text/plain', 'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+}
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
+
 # Models
 class ChatSession(BaseModel):
     session_id: str
