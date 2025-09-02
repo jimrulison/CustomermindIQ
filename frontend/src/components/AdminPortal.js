@@ -947,6 +947,234 @@ const AdminPortalEnhanced = () => {
               </div>
             </div>
           )}
+
+          {/* Email System Tab */}
+          {activeTab === 'emails' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">Email System</h2>
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={() => {
+                      setModalType('send-email');
+                      setShowModal(true);
+                    }}
+                    className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                  >
+                    <Mail className="w-4 h-4 mr-2" />
+                    Send Email
+                  </button>
+                  <button
+                    onClick={loadEmailCampaigns}
+                    className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  >
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Refresh
+                  </button>
+                </div>
+              </div>
+
+              {/* Email Provider Status */}
+              {emailProvider && (
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-lg font-semibold text-white mb-4">Email Provider Configuration</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-slate-700/50 p-4 rounded-lg">
+                      <p className="text-slate-300 text-sm">Current Provider</p>
+                      <p className="text-white font-semibold capitalize">{emailProvider.provider}</p>
+                    </div>
+                    <div className="bg-slate-700/50 p-4 rounded-lg">
+                      <p className="text-slate-300 text-sm">From Email</p>
+                      <p className="text-white font-semibold">{emailProvider.from_email}</p>
+                    </div>
+                    <div className="bg-slate-700/50 p-4 rounded-lg">
+                      <p className="text-slate-300 text-sm">Status</p>
+                      <p className={`font-semibold ${emailProvider.is_active ? 'text-green-400' : 'text-red-400'}`}>
+                        {emailProvider.is_active ? 'Active' : 'Inactive'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Email Campaigns Table */}
+              <div className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden">
+                <div className="px-6 py-4 border-b border-slate-700">
+                  <h3 className="text-lg font-semibold text-white">Email Campaigns</h3>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-slate-700/50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Campaign</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Recipients</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Status</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Provider</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Sent/Failed</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Created</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-700">
+                      {emailCampaigns.length === 0 ? (
+                        <tr>
+                          <td colSpan="7" className="px-6 py-8 text-center">
+                            <Mail className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+                            <p className="text-slate-400">No email campaigns found</p>
+                          </td>
+                        </tr>
+                      ) : (
+                        emailCampaigns.map((campaign) => (
+                          <tr key={campaign.campaign_id} className="hover:bg-slate-700/30">
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div>
+                                <p className="text-white font-medium text-sm">{campaign.subject}</p>
+                                <p className="text-slate-400 text-xs">#{campaign.campaign_id.slice(-8)}</p>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-slate-300 text-sm">
+                              {campaign.recipient_count}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className={`px-2 py-1 rounded text-xs font-medium ${
+                                campaign.status === 'sent' ? 'bg-green-500/20 text-green-400' :
+                                campaign.status === 'sending' ? 'bg-blue-500/20 text-blue-400' :
+                                campaign.status === 'queued' ? 'bg-yellow-500/20 text-yellow-400' :
+                                campaign.status === 'failed' ? 'bg-red-500/20 text-red-400' :
+                                'bg-gray-500/20 text-gray-400'
+                              }`}>
+                                {campaign.status}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className="px-2 py-1 rounded text-xs font-medium bg-blue-500/20 text-blue-400 capitalize">
+                                {campaign.provider}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-slate-300 text-sm">
+                              <span className="text-green-400">{campaign.sent_count}</span> / 
+                              <span className="text-red-400 ml-1">{campaign.failed_count}</span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-slate-300 text-sm">
+                              {new Date(campaign.created_at).toLocaleDateString()}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <button
+                                onClick={() => {
+                                  setEditingItem(campaign);
+                                  setModalType('campaign-details');
+                                  setShowModal(true);
+                                }}
+                                className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
+                                title="View Details"
+                              >
+                                <Eye className="w-4 h-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Email Statistics */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Total Campaigns</p>
+                      <p className="text-2xl font-bold text-white">{emailCampaigns.length}</p>
+                    </div>
+                    <Mail className="w-8 h-8 text-blue-400" />
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Emails Sent</p>
+                      <p className="text-2xl font-bold text-green-400">
+                        {emailCampaigns.reduce((sum, c) => sum + (c.sent_count || 0), 0)}
+                      </p>
+                    </div>
+                    <CheckCircle className="w-8 h-8 text-green-400" />
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Failed</p>
+                      <p className="text-2xl font-bold text-red-400">
+                        {emailCampaigns.reduce((sum, c) => sum + (c.failed_count || 0), 0)}
+                      </p>
+                    </div>
+                    <AlertCircle className="w-8 h-8 text-red-400" />
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Delivery Rate</p>
+                      <p className="text-2xl font-bold text-purple-400">
+                        {emailCampaigns.length > 0 ? 
+                          Math.round((emailCampaigns.reduce((sum, c) => sum + (c.sent_count || 0), 0) / 
+                          Math.max(emailCampaigns.reduce((sum, c) => sum + (c.recipient_count || 0), 0), 1)) * 100) : 0}%
+                      </p>
+                    </div>
+                    <TrendingUp className="w-8 h-8 text-purple-400" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Send Email Form (Simple Method) */}
+              <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Quick Send Email</h3>
+                <p className="text-slate-400 text-sm mb-4">Simple method to send emails to customers</p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <button
+                    onClick={() => {
+                      setModalType('send-to-all');
+                      setShowModal(true);
+                    }}
+                    className="flex flex-col items-center p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors"
+                  >
+                    <Users className="w-8 h-8 text-blue-400 mb-2" />
+                    <span className="text-white font-medium">All Users</span>
+                    <span className="text-slate-400 text-xs">Send to all customers</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setModalType('send-to-tier');
+                      setShowModal(true);
+                    }}
+                    className="flex flex-col items-center p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors"
+                  >
+                    <Target className="w-8 h-8 text-green-400 mb-2" />
+                    <span className="text-white font-medium">By Subscription</span>
+                    <span className="text-slate-400 text-xs">Target specific tiers</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setModalType('send-custom');
+                      setShowModal(true);
+                    }}
+                    className="flex flex-col items-center p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors"
+                  >
+                    <Edit className="w-8 h-8 text-purple-400 mb-2" />
+                    <span className="text-white font-medium">Custom List</span>
+                    <span className="text-slate-400 text-xs">Specific email addresses</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
