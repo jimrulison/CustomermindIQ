@@ -107,6 +107,9 @@ from modules.email_system import router as email_router
 # Import ODOO Integration System
 from modules.odoo_integration import router as odoo_router
 
+# Import Live Chat System Module
+from modules.live_chat_system import router as chat_router
+
 # Import Growth Acceleration Engine Module
 from modules.growth_acceleration_engine import (
     growth_opportunity_router,
