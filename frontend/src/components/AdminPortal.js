@@ -140,6 +140,17 @@ const AdminPortalEnhanced = () => {
     }
   };
 
+  const loadSupportTickets = async () => {
+    try {
+      const response = await axios.get(`${backendUrl}/api/support/admin/tickets`, {
+        headers: getAuthHeaders()
+      });
+      setSupportTickets(response.data.tickets || []);
+    } catch (error) {
+      console.error('Failed to load support tickets:', error);
+    }
+  };
+
   const loadBanners = async () => {
     try {
       const response = await axios.get(`${backendUrl}/api/admin/banners`, {
