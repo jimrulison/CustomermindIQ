@@ -178,6 +178,9 @@
       - working: true
         agent: "testing"
         comment: "✅ SUBSCRIPTION TIERS WORKING (Jan 29, 2025): Subscription tiers endpoint fully functional, returning correct 4-tier pricing structure: Starter $99, Professional $299, Enterprise $799, Custom pricing. All tier features and limits properly configured. Subscription system operational and production-ready."
+      - working: true
+        agent: "testing"
+        comment: "✅ NEW PRICING STRUCTURE BACKEND CONFIRMED (Sep 2, 2025): Backend API /api/subscriptions/plans fully functional and returns correct new pricing structure: Launch Plan ($49/$490), Growth Plan ($75/$750 - Most Popular), Scale Plan ($199/$1990), White Label (Contact Sales), Custom (Contact Sales). All plans include Growth Acceleration Engine access (Annual Only), annual savings messaging (2 months free), and proper feature lists. Backend pricing system is production-ready and matches review requirements exactly."
 
   - task: "7-Day Free Trial System"
     implemented: true
