@@ -218,10 +218,16 @@ const SubscriptionManager = () => {
     switch (planId) {
       case 'free':
         return 'border-blue-200 bg-blue-50';
-      case 'professional':
+      case 'launch':
+        return 'border-green-200 bg-green-50';
+      case 'growth':
         return 'border-purple-200 bg-purple-50';
-      case 'enterprise':
-        return 'border-yellow-200 bg-yellow-50';
+      case 'scale':
+        return 'border-yellow-200 bg-yellow-50';  
+      case 'white_label':
+        return 'border-indigo-200 bg-indigo-50';
+      case 'custom':
+        return 'border-red-200 bg-red-50';
       default:
         return 'border-gray-200 bg-gray-50';
     }
