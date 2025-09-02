@@ -33,44 +33,97 @@ class PaymentMethodRequest(BaseModel):
     payment_method_id: str
     customer_email: str
 
-# Subscription Plans Configuration
+# Subscription Plans Configuration - Updated with New Pricing Structure
 SUBSCRIPTION_PLANS = {
-    "starter": {
-        "name": "Starter Plan",
-        "monthly_price": 4900,  # $49 in cents
-        "annual_price": 39900,  # $399 in cents (2 months free)
+    "launch": {
+        "name": "Launch Plan",
+        "description": "Perfect for growing businesses getting started with customer intelligence",
+        "monthly_price": 4900,  # $49 in cents (founders pricing)
+        "annual_price": 49000,  # $490 in cents (founders pricing, 2 months free)
+        "regular_monthly_price": 9900,  # $99 in cents (regular pricing)
+        "regular_annual_price": 99000,  # $990 in cents (regular pricing)
         "features": [
-            "Basic customer analytics",
-            "Email marketing automation",
-            "Up to 1,000 contacts",
-            "Standard support"
+            "5 websites",
+            "50 keywords", 
+            "Basic analytics",
+            "Basic dashboard/reporting",
+            "Basic customer intelligence (5 modules)",
+            "Website analytics",
+            "Email integration (1K contacts)",
+            "2 users",
+            "Email support (48hr)",
+            "Growth Acceleration Engine (Annual Only)"
         ]
     },
-    "professional": {
-        "name": "Professional Plan", 
-        "monthly_price": 9900,  # $99 in cents
-        "annual_price": 79900,  # $799 in cents (2 months free)
+    "growth": {
+        "name": "Growth Plan", 
+        "description": "Most popular plan for businesses ready to scale their customer insights",
+        "monthly_price": 7500,  # $75 in cents (founders pricing)
+        "annual_price": 75000,  # $750 in cents (founders pricing, 2 months free)
+        "regular_monthly_price": 14900,  # $149 in cents (regular pricing)
+        "regular_annual_price": 149000,  # $1490 in cents (regular pricing)
+        "most_popular": True,
         "features": [
-            "Advanced customer intelligence",
-            "AI-powered insights", 
-            "Up to 10,000 contacts",
-            "A/B testing capabilities",
-            "Priority support",
-            "Growth Acceleration Engine"  # Exclusive to annual
+            "Everything in the Launch Plan",
+            "Full Customer Intelligence (14 modules)",
+            "Real-time Website Health Monitoring",
+            "Marketing Automation",
+            "10 websites",
+            "200 keywords",
+            "Full analytics",
+            "10 users",
+            "Live chat when available + email support (12hr)",
+            "Growth Acceleration Engine (Annual Only)"
         ]
     },
-    "enterprise": {
-        "name": "Enterprise Plan",
-        "monthly_price": 19900,  # $199 in cents
-        "annual_price": 159900,  # $1,599 in cents (2 months free)
+    "scale": {
+        "name": "Scale Plan",
+        "description": "Enterprise-grade features for businesses scaling rapidly",
+        "monthly_price": 19900,  # $199 in cents (founders pricing)
+        "annual_price": 199000,  # $1990 in cents (founders pricing, 2 months free)
+        "regular_monthly_price": 39900,  # $399 in cents (regular pricing)
+        "regular_annual_price": 399000,  # $3990 in cents (regular pricing)
         "features": [
-            "Unlimited contacts",
-            "Custom integrations",
+            "Everything in the Growth Plan",
+            "AI Command Center",
+            "Executive Dashboard", 
+            "Unlimited Users",
+            "Unlimited websites",
+            "Advanced features",
+            "Priority support - Live chat when available, 4hr support response time",
+            "Growth Acceleration Engine (Annual Only)"
+        ]
+    },
+    "white_label": {
+        "name": "White Label Plan",
+        "description": "Custom white-label solution for agencies and resellers",
+        "monthly_price": "contact_sales",
+        "annual_price": "contact_sales",
+        "contact_required": True,
+        "features": [
+            "Everything in the Scale Plan",
+            "White-label branding",
+            "Custom domain support",
+            "Reseller dashboard",
+            "Custom pricing controls",
             "Dedicated account manager",
-            "White-label options",
-            "Advanced analytics",
-            "Growth Acceleration Engine",  # Exclusive to annual
-            "Custom AI models"
+            "Growth Acceleration Engine (Annual Only)"
+        ]
+    },
+    "custom": {
+        "name": "Custom Plan",
+        "description": "Tailored solution built specifically for your unique business needs",
+        "monthly_price": "contact_sales",
+        "annual_price": "contact_sales",
+        "contact_required": True,
+        "features": [
+            "Custom feature development",
+            "Dedicated IT support team",
+            "Custom integrations",
+            "Service level agreements",
+            "Priority feature requests",
+            "Custom pricing and terms",
+            "Growth Acceleration Engine (Annual Only)"
         ]
     }
 }
