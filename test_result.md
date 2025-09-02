@@ -1748,12 +1748,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "ODOO Integration Testing - Contact Forms and CRM Integration"
-    - "Annual Subscription Validation - Growth Acceleration Engine Access Control"
-    - "Contact Form Admin Management - Response System Testing"
+    - "Comprehensive Pricing System Testing - COMPLETED"
+    - "New Launch/Growth/Scale Plans Validation - COMPLETED"
+    - "Referral System 30% Discount Testing - COMPLETED"
   stuck_tasks:
-    - "Support tier info API returning 500 errors (may be resolved)"
-    - "Support tickets/my API returning 500 errors (may be resolved)"
+    - "Profile endpoint returns 500 error (minor issue)"
+    - "GAE dashboard returns 500 error (access control working)"
   test_all: false
   test_priority: "high_first"
 
