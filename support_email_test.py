@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import Dict, Any, List
 
 # Configuration
-BACKEND_URL = "https://growth-engine-app-1.preview.emergentagent.com"
+BACKEND_URL = "https://customer-mind-iq-3.preview.emergentagent.com"
 ADMIN_EMAIL = "admin@customermindiq.com"
 ADMIN_PASSWORD = "CustomerMindIQ2025!"
 
