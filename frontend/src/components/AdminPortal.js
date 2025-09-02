@@ -299,6 +299,7 @@ const AdminPortalEnhanced = () => {
         loadApiKeys();
       }
       loadWorkflows();
+      loadSupportTickets();
     }
   }, [hasAdminAccess]);
 
