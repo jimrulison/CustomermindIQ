@@ -20,7 +20,8 @@ import {
   HelpCircle,
   Heart,
   Settings,
-  BookOpen
+  BookOpen,
+  CreditCard
 } from 'lucide-react';
 
 const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
