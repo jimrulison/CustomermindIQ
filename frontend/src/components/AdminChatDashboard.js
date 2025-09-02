@@ -71,6 +71,36 @@ const AdminChatDashboard = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const requestNotificationPermission = async () => {
+    if ('Notification' in window) {
+      const permission = await Notification.requestPermission();
+      setNotificationsEnabled(permission === 'granted');
+    }
+  };
+
+  const sendBrowserNotification = (title, body, options = {}) => {
+    if (notificationsEnabled && 'Notification' in window) {
+      const notification = new Notification(title, {
+        body,
+        icon: '/favicon.ico',
+        badge: '/favicon.ico',
+        ...options
+      });
+      
+      // Auto-close after 5 seconds
+      setTimeout(() => notification.close(), 5000);
+      
+      return notification;
+    }
+  };
+
+  const playNotificationSound = () => {
+    // Create audio notification
+    const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmcfDjiTy+zNeSsFKXfJ8N2QQAoUXrTp66hVFApGn+DyvmcfDjiTy+zNeSsFKXfJ8N2QQAoUXrTp66hVFApGn+DyvmcfDjiTy+zNeSsFKXfJ8N2QQAoUXrTp66hVFApGn+DyvmcfDjiTy+zNeSsFKXfJ8N2QQAoUXrTp66hVFApGn+DyvmcfDjiTy+zNeSsFKXfJ8N2QQAoUXrTp66hVFApGn+DyvmcfDjiTy+zNeSsFKXfJ8N2QQAoUXrTp66hVFApGn+DyvmcfDjiTy+zNeSsFKXfJ8N2QQAoUXrTp66hVFApGn+DyvmcfDjiTy+zNeSsFKXfJ8N2QQAoUXrTp66hVFApGn+DyvmcfDjiTy+zNeSsFKXfJ8N2QQAoUXrTp66hVFApGn+DyvmcfDjiTy+zNeSsFKXfJ8N2QQAoUXrTp66hVFA==');
+    audio.volume = 0.3;
+    audio.play().catch(e => console.log('Audio notification failed:', e));
+  };
+
   const loadChatSessions = async () => {
     try {
       setLoading(true);
