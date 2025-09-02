@@ -15,7 +15,12 @@ import {
   Settings,
   Crown,
   Eye,
-  EyeOff
+  EyeOff,
+  Paperclip,
+  Download,
+  Image,
+  FileText,
+  File
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
