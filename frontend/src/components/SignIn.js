@@ -460,14 +460,18 @@ const SignIn = ({ onSignIn }) => {
                 {loading ? 'Signing In...' : 'Sign In'}
               </Button>
               
-              <div className="text-center">
-                <button
-                  type="button"
-                  onClick={() => setShowSignUp(true)}
-                  className="text-blue-400 hover:text-blue-300 text-sm"
-                >
-                  Start 7-Day Free Trial - No Credit Card Required
-                </button>
+              <Button
+                type="button"
+                onClick={() => setShowSignUp(true)}
+                className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white mt-3"
+              >
+                SIGN UP NOW - FREE 7-Day Trial
+              </Button>
+              
+              <div className="text-center mt-2">
+                <span className="text-slate-400 text-xs">
+                  No Credit Card Required • Cancel Anytime
+                </span>
               </div>
             </form>
           </CardContent>
