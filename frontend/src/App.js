@@ -190,11 +190,11 @@ function AppContent() {
       setLoading(true);
       console.log('Loading Customer Mind IQ data...');
       
-      // CRITICAL: Force loading to stop after 8 seconds maximum
+      // CRITICAL: Force loading to stop after 5 seconds maximum to prevent hanging
       const forceLoadingStop = setTimeout(() => {
         console.log('FORCE STOPPING LOADING - Timeout reached');
         setLoading(false);
-      }, 8000);
+      }, 5000);
       
       // Load basic data first - essential for dashboard
       try {
