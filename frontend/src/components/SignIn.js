@@ -422,7 +422,7 @@ const SignIn = ({ onSignIn }) => {
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="CustomerMindIQ2025!"
+                    placeholder="Enter your password"
                     className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400 pl-10 pr-10"
                     required
                   />
