@@ -44,6 +44,7 @@ class EmailStatus(str, Enum):
     CLICKED = "clicked"
 
 class EmailProvider(str, Enum):
+    ODOO = "odoo"                   # ODOO Email Integration (Preferred)
     INTERNAL = "internal"           # Simple SMTP
     SENDGRID = "sendgrid"
     MAILGUN = "mailgun"
