@@ -742,6 +742,175 @@ class ODOOIntegration:
 # Initialize global instance
 odoo_integration = ODOOIntegration()
 
+# Default Customer Mind IQ Email Templates
+DEFAULT_EMAIL_TEMPLATES = [
+    {
+        'name': 'Customer Mind IQ - Welcome Email',
+        'subject': 'Welcome to Customer Mind IQ - Your AI-Powered Analytics Platform',
+        'html_content': '''
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
+                <h1 style="color: white; margin: 0;">Welcome to Customer Mind IQ</h1>
+                <p style="color: #f0f0f0; margin: 10px 0;">AI-Powered Customer Intelligence Platform</p>
+            </div>
+            <div style="padding: 30px; background: #f9f9f9;">
+                <h2 style="color: #333;">Hello ${object.name or 'Valued Customer'},</h2>
+                <p style="color: #666; line-height: 1.6;">
+                    Welcome to Customer Mind IQ! We're excited to help you unlock the power of AI-driven customer analytics.
+                </p>
+                <p style="color: #666; line-height: 1.6;">
+                    Your Customer Mind IQ platform includes:
+                </p>
+                <ul style="color: #666; line-height: 1.8;">
+                    <li>14 AI-powered intelligence modules</li>
+                    <li>Real-time customer behavior analysis</li>
+                    <li>Automated marketing campaigns</li>
+                    <li>Advanced revenue forecasting</li>
+                    <li>Comprehensive analytics dashboard</li>
+                </ul>
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="https://customermindiq.com/login" style="background: #667eea; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        Get Started Now
+                    </a>
+                </div>
+                <p style="color: #666; line-height: 1.6;">
+                    If you have any questions, our support team is here to help at support@customermindiq.com
+                </p>
+            </div>
+            <div style="background: #333; padding: 20px; text-align: center;">
+                <p style="color: #999; margin: 0;">© 2025 Customer Mind IQ. All rights reserved.</p>
+            </div>
+        </div>
+        ''',
+        'from_email': 'welcome@customermindiq.com'
+    },
+    {
+        'name': 'Customer Mind IQ - Monthly Analytics Report',
+        'subject': 'Your Monthly Customer Intelligence Report - ${object.name}',
+        'html_content': '''
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; text-align: center;">
+                <h1 style="color: white; margin: 0;">Monthly Intelligence Report</h1>
+                <p style="color: #f0f0f0; margin: 10px 0;">Customer Mind IQ Analytics</p>
+            </div>
+            <div style="padding: 30px; background: #f9f9f9;">
+                <h2 style="color: #333;">Hi ${object.name},</h2>
+                <p style="color: #666; line-height: 1.6;">
+                    Here's your monthly Customer Mind IQ intelligence report with key insights from your customer data.
+                </p>
+                <div style="background: white; padding: 20px; margin: 20px 0; border-left: 4px solid #4facfe;">
+                    <h3 style="color: #333; margin-top: 0;">This Month's Highlights</h3>
+                    <ul style="color: #666; line-height: 1.8;">
+                        <li>Customer behavior patterns analyzed</li>
+                        <li>Revenue opportunities identified</li>
+                        <li>Churn prevention recommendations</li>
+                        <li>Marketing campaign optimizations</li>
+                    </ul>
+                </div>
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="https://customermindiq.com/dashboard" style="background: #4facfe; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        View Full Report
+                    </a>
+                </div>
+            </div>
+            <div style="background: #333; padding: 20px; text-align: center;">
+                <p style="color: #999; margin: 0;">© 2025 Customer Mind IQ. All rights reserved.</p>
+            </div>
+        </div>
+        ''',
+        'from_email': 'reports@customermindiq.com'
+    },
+    {
+        'name': 'Customer Mind IQ - Product Recommendation',
+        'subject': 'Personalized Recommendations from Customer Mind IQ',
+        'html_content': '''
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 30px; text-align: center;">
+                <h1 style="color: #333; margin: 0;">Smart Recommendations</h1>
+                <p style="color: #666; margin: 10px 0;">Powered by Customer Mind IQ AI</p>
+            </div>
+            <div style="padding: 30px; background: #f9f9f9;">
+                <h2 style="color: #333;">Hi ${object.name},</h2>
+                <p style="color: #666; line-height: 1.6;">
+                    Based on your usage patterns and business needs, our AI has identified products that could benefit your organization:
+                </p>
+                <div style="background: white; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <h3 style="color: #333; margin-top: 0;">Recommended for You</h3>
+                    <p style="color: #666; line-height: 1.6;">
+                        Our AI analysis suggests these solutions align perfectly with your current business trajectory and could drive significant ROI.
+                    </p>
+                </div>
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="https://customermindiq.com/recommendations" style="background: #667eea; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        View Recommendations
+                    </a>
+                </div>
+            </div>
+            <div style="background: #333; padding: 20px; text-align: center;">
+                <p style="color: #999; margin: 0;">© 2025 Customer Mind IQ. All rights reserved.</p>
+            </div>
+        </div>
+        ''',
+        'from_email': 'recommendations@customermindiq.com'
+    },
+    {
+        'name': 'Customer Mind IQ - Support Response',
+        'subject': 'Re: ${object.name} - Customer Mind IQ Support',
+        'html_content': '''
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
+                <h1 style="color: white; margin: 0;">Customer Mind IQ Support</h1>
+                <p style="color: #f0f0f0; margin: 10px 0;">We're here to help</p>
+            </div>
+            <div style="padding: 30px; background: #f9f9f9;">
+                <h2 style="color: #333;">Hello ${object.name},</h2>
+                <p style="color: #666; line-height: 1.6;">
+                    Thank you for contacting Customer Mind IQ support. We've received your inquiry and our team is working on a solution.
+                </p>
+                <div style="background: white; padding: 20px; margin: 20px 0; border-left: 4px solid #667eea;">
+                    <p style="color: #666; line-height: 1.6;">
+                        Our support team typically responds within 24 hours. For urgent matters, please call our support line.
+                    </p>
+                </div>
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="https://customermindiq.com/support" style="background: #667eea; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        Visit Support Center
+                    </a>
+                </div>
+            </div>
+            <div style="background: #333; padding: 20px; text-align: center;">
+                <p style="color: #999; margin: 0;">© 2025 Customer Mind IQ. All rights reserved.</p>
+            </div>
+        </div>
+        ''',
+        'from_email': 'support@customermindiq.com'
+    }
+]
+
+async def create_default_email_templates():
+    """Create default Customer Mind IQ email templates in ODOO"""
+    try:
+        logger.info("Creating default Customer Mind IQ email templates in ODOO...")
+        created_templates = []
+        
+        for template_data in DEFAULT_EMAIL_TEMPLATES:
+            try:
+                template_id = odoo_integration.create_email_template(template_data)
+                if template_id:
+                    created_templates.append({
+                        'name': template_data['name'],
+                        'template_id': template_id
+                    })
+                    logger.info(f"Created template: {template_data['name']} (ID: {template_id})")
+            except Exception as e:
+                logger.error(f"Failed to create template {template_data['name']}: {str(e)}")
+        
+        return created_templates
+        
+    except Exception as e:
+        logger.error(f"Failed to create default email templates: {str(e)}")
+        return []
+
 # Contact Form Endpoints
 @router.post("/contact-form/submit")
 async def submit_contact_form(
