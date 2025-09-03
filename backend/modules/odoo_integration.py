@@ -1023,3 +1023,190 @@ CustomerMind IQ Support Team""",
     except Exception as e:
         logger.error(f"Failed to send contact form response email: {str(e)}")
 
+# Enhanced ODOO Email Integration Endpoints
+@router.get("/connection/test")
+async def test_odoo_connection():
+    """Test ODOO connection and return status"""
+    try:
+        status = odoo_integration.test_connection()
+        return status
+    except Exception as e:
+        return {
+            'status': 'error',
+            'connected': False,
+            'message': f'Connection test failed: {str(e)}'
+        }
+
+@router.get("/email/templates")
+async def get_odoo_email_templates(
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get all email templates from ODOO"""
+    try:
+        templates = odoo_integration.get_email_templates()
+        return {
+            "status": "success",
+            "templates": templates,
+            "count": len(templates)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve templates: {str(e)}")
+
+@router.post("/email/templates/create")
+async def create_odoo_email_template(
+    template_data: Dict[str, Any],
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Create new email template in ODOO"""
+    try:
+        template_id = odoo_integration.create_email_template(template_data)
+        
+        if template_id:
+            return {
+                "status": "success",
+                "template_id": template_id,
+                "message": "Email template created successfully in ODOO"
+            }
+        else:
+            raise HTTPException(status_code=500, detail="Failed to create email template")
+            
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Template creation failed: {str(e)}")
+
+@router.post("/email/campaigns/send")
+async def send_odoo_email_campaign(
+    campaign_data: Dict[str, Any],
+    background_tasks: BackgroundTasks,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Send email campaign through ODOO"""
+    try:
+        template_id = campaign_data.get('template_id')
+        recipient_emails = campaign_data.get('recipient_emails', [])
+        context_data = campaign_data.get('context_data', {})
+        
+        if not template_id or not recipient_emails:
+            raise HTTPException(status_code=400, detail="template_id and recipient_emails are required")
+        
+        # Send campaign in background
+        background_tasks.add_task(
+            process_odoo_email_campaign,
+            template_id,
+            recipient_emails,
+            context_data,
+            current_user.email
+        )
+        
+        return {
+            "status": "success",
+            "message": f"Email campaign queued for {len(recipient_emails)} recipients",
+            "template_id": template_id,
+            "recipient_count": len(recipient_emails)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Campaign send failed: {str(e)}")
+
+async def process_odoo_email_campaign(template_id: int, recipient_emails: List[str], 
+                                    context_data: Dict[str, Any], admin_email: str):
+    """Background task to process ODOO email campaign"""
+    try:
+        # Send campaign via ODOO
+        results = odoo_integration.send_email_campaign(template_id, recipient_emails, context_data)
+        
+        # Log campaign results
+        campaign_log = {
+            "template_id": template_id,
+            "recipient_count": len(recipient_emails),
+            "success_count": results.get('success_count', 0),
+            "failed_count": results.get('failed_count', 0),
+            "email_ids": results.get('email_ids', []),
+            "errors": results.get('errors', []),
+            "sent_by": admin_email,
+            "sent_at": datetime.utcnow(),
+            "provider": "odoo"
+        }
+        
+        await db.odoo_email_campaigns.insert_one(campaign_log)
+        logger.info(f"ODOO campaign completed: {results['success_count']} sent, {results['failed_count']} failed")
+        
+    except Exception as e:
+        logger.error(f"ODOO campaign processing failed: {str(e)}")
+        # Log failed campaign
+        await db.odoo_email_campaigns.insert_one({
+            "template_id": template_id,
+            "recipient_count": len(recipient_emails),
+            "success_count": 0,
+            "failed_count": len(recipient_emails),
+            "error": str(e),
+            "sent_by": admin_email,
+            "sent_at": datetime.utcnow(),
+            "provider": "odoo",
+            "status": "failed"
+        })
+
+@router.get("/email/campaigns/history")
+async def get_odoo_campaign_history(
+    limit: int = 20,
+    offset: int = 0,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get ODOO email campaign history"""
+    try:
+        campaigns = await db.odoo_email_campaigns.find({}).sort("sent_at", -1).skip(offset).limit(limit).to_list(length=limit)
+        total_count = await db.odoo_email_campaigns.count_documents({})
+        
+        # Remove MongoDB ObjectIds
+        for campaign in campaigns:
+            if "_id" in campaign:
+                del campaign["_id"]
+        
+        return {
+            "campaigns": campaigns,
+            "total": total_count,
+            "limit": limit,
+            "offset": offset
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve campaign history: {str(e)}")
+
+@router.get("/customers/sync")
+async def sync_customers_from_odoo(
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Sync customers from ODOO to Customer Mind IQ"""
+    try:
+        customers = odoo_integration.get_customers(limit=500)  # Get more customers
+        
+        if not customers:
+            return {
+                "status": "warning",
+                "message": "No customers found in ODOO",
+                "synced_count": 0
+            }
+        
+        synced_count = 0
+        for customer in customers:
+            # Store in local database
+            await db.odoo_customers.update_one(
+                {"customer_id": customer["customer_id"]},
+                {"$set": {
+                    **customer,
+                    "synced_at": datetime.utcnow(),
+                    "sync_source": "odoo"
+                }},
+                upsert=True
+            )
+            synced_count += 1
+        
+        return {
+            "status": "success",
+            "message": f"Successfully synced {synced_count} customers from ODOO",
+            "synced_count": synced_count,
+            "sync_timestamp": datetime.utcnow()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Customer sync failed: {str(e)}")
+
