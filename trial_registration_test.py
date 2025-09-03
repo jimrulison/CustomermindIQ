@@ -14,8 +14,8 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# Get backend URL from frontend .env
-BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://customer-mind-iq-4.preview.emergentagent.com")
+# Get backend URL - use localhost for testing
+BACKEND_URL = "http://localhost:8001"
 
 class TrialRegistrationTester:
     def __init__(self):
