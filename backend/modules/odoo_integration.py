@@ -1967,7 +1967,11 @@ async def get_integration_status(
                 "email_campaigns": True,
                 "customer_sync": True,
                 "template_management": True,
-                "contact_forms": True
+                "contact_forms": True,
+                "sales_pipeline": True,      # Phase 2 features
+                "sales_analytics": True,
+                "customer_interactions": True,
+                "sales_forecasting": True
             },
             "last_checked": datetime.utcnow()
         }
@@ -1979,4 +1983,220 @@ async def get_integration_status(
             "features": {"error": "Could not check features"},
             "last_checked": datetime.utcnow()
         }
+
+# =====================================================
+# PHASE 2: ENHANCED CRM API ENDPOINTS
+# =====================================================
+
+@router.get("/crm/pipeline")
+async def get_sales_pipeline(
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get sales pipeline data from ODOO CRM"""
+    try:
+        pipeline = odoo_integration.get_sales_pipeline()
+        
+        # Calculate summary statistics
+        total_opportunities = len(pipeline)
+        total_value = sum(opp.get('expected_revenue', 0) for opp in pipeline)
+        weighted_value = sum(opp.get('expected_revenue', 0) * (opp.get('probability', 0) / 100) for opp in pipeline)
+        
+        # Group by stage
+        stages = {}
+        for opp in pipeline:
+            stage = opp.get('stage', 'Unknown')
+            if stage not in stages:
+                stages[stage] = {'count': 0, 'value': 0}
+            stages[stage]['count'] += 1
+            stages[stage]['value'] += opp.get('expected_revenue', 0)
+        
+        return {
+            "status": "success",
+            "pipeline": pipeline,
+            "summary": {
+                "total_opportunities": total_opportunities,
+                "total_pipeline_value": round(total_value, 2),
+                "weighted_pipeline_value": round(weighted_value, 2),
+                "stages": stages
+            },
+            "retrieved_at": datetime.utcnow()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve sales pipeline: {str(e)}")
+
+@router.post("/crm/leads/create")
+async def create_lead_opportunity(
+    lead_data: Dict[str, Any],
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Create new lead/opportunity in ODOO CRM"""
+    try:
+        lead_id = odoo_integration.create_lead(lead_data)
+        
+        if lead_id:
+            return {
+                "status": "success",
+                "lead_id": lead_id,
+                "message": "Lead/opportunity created successfully in ODOO",
+                "data": lead_data
+            }
+        else:
+            raise HTTPException(status_code=500, detail="Failed to create lead in ODOO")
+            
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Lead creation failed: {str(e)}")
+
+@router.put("/crm/leads/{lead_id}/stage")
+async def update_lead_stage(
+    lead_id: int,
+    stage_data: Dict[str, str],
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Update lead/opportunity stage in ODOO"""
+    try:
+        stage_name = stage_data.get('stage_name')
+        if not stage_name:
+            raise HTTPException(status_code=400, detail="stage_name is required")
+        
+        success = odoo_integration.update_lead_stage(lead_id, stage_name)
+        
+        if success:
+            return {
+                "status": "success",
+                "lead_id": lead_id,
+                "new_stage": stage_name,
+                "message": "Lead stage updated successfully"
+            }
+        else:
+            raise HTTPException(status_code=404, detail=f"Stage '{stage_name}' not found or update failed")
+            
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Stage update failed: {str(e)}")
+
+@router.get("/crm/analytics")
+async def get_sales_analytics(
+    days: int = 90,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get comprehensive sales analytics from ODOO"""
+    try:
+        analytics = odoo_integration.get_sales_analytics(days_back=days)
+        
+        return {
+            "status": "success",
+            "analytics": analytics,
+            "period": f"Last {days} days",
+            "generated_at": datetime.utcnow()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve sales analytics: {str(e)}")
+
+@router.get("/crm/customers/{customer_id}/interactions")
+async def get_customer_interactions(
+    customer_id: int,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get customer interaction history from ODOO"""
+    try:
+        interactions = odoo_integration.get_customer_interactions(customer_id)
+        
+        return {
+            "status": "success",
+            "customer_id": customer_id,
+            "interactions": interactions,
+            "total_interactions": len(interactions),
+            "retrieved_at": datetime.utcnow()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve customer interactions: {str(e)}")
+
+@router.post("/crm/customers/sync")
+async def sync_customer_bidirectional(
+    customer_data: Dict[str, Any],
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Bidirectional sync between Customer Mind IQ and ODOO"""
+    try:
+        sync_result = odoo_integration.sync_customer_data_bidirectional(customer_data)
+        
+        return {
+            "status": "success" if sync_result['success'] else "error",
+            "sync_result": sync_result,
+            "synced_at": datetime.utcnow()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Customer sync failed: {str(e)}")
+
+@router.get("/crm/forecast")
+async def get_sales_forecast(
+    months: int = 6,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Generate sales forecast based on ODOO pipeline data"""
+    try:
+        forecast = odoo_integration.get_sales_forecast(months_ahead=months)
+        
+        return {
+            "status": "success",
+            "forecast": forecast,
+            "forecast_period": f"Next {months} months",
+            "generated_at": datetime.utcnow()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to generate sales forecast: {str(e)}")
+
+@router.get("/crm/dashboard")
+async def get_crm_dashboard(
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get comprehensive CRM dashboard data"""
+    try:
+        # Get all CRM data in parallel (simulated)
+        pipeline = odoo_integration.get_sales_pipeline()
+        analytics = odoo_integration.get_sales_analytics(days_back=30)
+        forecast = odoo_integration.get_sales_forecast(months_ahead=3)
+        
+        # Calculate dashboard metrics
+        total_opportunities = len(pipeline)
+        total_pipeline_value = sum(opp.get('expected_revenue', 0) for opp in pipeline)
+        
+        # Stage distribution
+        stage_distribution = {}
+        for opp in pipeline:
+            stage = opp.get('stage', 'Unknown')
+            stage_distribution[stage] = stage_distribution.get(stage, 0) + 1
+        
+        dashboard_data = {
+            "overview": {
+                "total_opportunities": total_opportunities,
+                "total_pipeline_value": round(total_pipeline_value, 2),
+                "conversion_rate": analytics.get('conversion_rate', 0),
+                "average_deal_size": analytics.get('average_deal_size', 0)
+            },
+            "pipeline_summary": {
+                "stage_distribution": stage_distribution,
+                "recent_opportunities": pipeline[:5]  # Latest 5
+            },
+            "analytics_summary": {
+                "monthly_performance": analytics,
+                "forecast_summary": {
+                    "next_3_months": forecast.get('weighted_pipeline_value', 0),
+                    "confidence": forecast.get('confidence_level', 'unknown')
+                }
+            },
+            "generated_at": datetime.utcnow()
+        }
+        
+        return {
+            "status": "success",
+            "dashboard": dashboard_data
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to generate CRM dashboard: {str(e)}")
 
