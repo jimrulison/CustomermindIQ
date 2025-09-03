@@ -222,7 +222,7 @@ class ODOOIntegration:
             
             # Read order data
             orders = self.models.execute_kw(
-                self.database, self.uid, self.api_key,
+                self.database, self.uid, self.password,
                 'sale.order', 'read',
                 [order_ids],
                 {
