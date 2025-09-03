@@ -762,6 +762,29 @@
                 header.style.background = 'rgba(255, 255, 255, 0.95)';
             }
         });
+
+        // Image loading fallback
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.screenshot-image');
+            images.forEach(img => {
+                img.addEventListener('error', function() {
+                    console.log('Image failed to load:', this.src);
+                    this.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                    this.style.color = 'white';
+                    this.style.display = 'flex';
+                    this.style.alignItems = 'center';
+                    this.style.justifyContent = 'center';
+                    this.style.fontSize = '1.2rem';
+                    this.style.textAlign = 'center';
+                    this.style.minHeight = '300px';
+                    this.alt = '📊 Dashboard Screenshot (Loading...)';
+                });
+                
+                img.addEventListener('load', function() {
+                    console.log('Image loaded successfully:', this.src);
+                });
+            });
+        });
     </script>
 </body>
 </html>
