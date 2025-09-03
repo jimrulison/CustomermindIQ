@@ -60,8 +60,9 @@ class TrialRegistrationTester:
         try:
             # Use realistic test data as requested - use timestamp to avoid duplicates
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            self.test_email = f"jane.smith.{timestamp}@testcompany.com"
             test_data = {
-                "email": f"jane.smith.{timestamp}@testcompany.com",
+                "email": self.test_email,
                 "first_name": "Jane",
                 "last_name": "Smith",
                 "company_name": "Test Company Inc"
