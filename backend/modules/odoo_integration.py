@@ -156,7 +156,7 @@ class ODOOIntegration:
         try:
             # Search for customer partners (is_customer=True)
             customer_ids = self.models.execute_kw(
-                self.database, self.uid, self.api_key,
+                self.database, self.uid, self.password,
                 'res.partner', 'search',
                 [[['is_company', '=', False], ['customer_rank', '>', 0]]],
                 {'limit': limit, 'offset': offset}
