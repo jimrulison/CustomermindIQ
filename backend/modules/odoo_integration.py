@@ -305,7 +305,7 @@ class ODOOIntegration:
         try:
             # Search for active products
             product_ids = self.models.execute_kw(
-                self.database, self.uid, self.api_key,
+                self.database, self.uid, self.password,
                 'product.template', 'search',
                 [[['active', '=', True], ['sale_ok', '=', True]]],
                 {'limit': limit}
