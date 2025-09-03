@@ -207,7 +207,7 @@ class ODOOIntegration:
             
             # Search for sales orders for this customer
             order_ids = self.models.execute_kw(
-                self.database, self.uid, self.api_key,
+                self.database, self.uid, self.password,
                 'sale.order', 'search',
                 [[
                     ['partner_id', '=', customer_id],
