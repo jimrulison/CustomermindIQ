@@ -1351,12 +1351,174 @@ const AdminPortalEnhanced = () => {
                 </div>
               </div>
 
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {contactForms.length === 0 ? (
+                  <div className="col-span-full bg-slate-800/50 rounded-xl border border-slate-700 p-12 text-center">
+                    <Mail className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold text-white mb-2">No contact forms found</h3>
+                    <p className="text-slate-400 mb-4">Contact form submissions will appear here</p>
+                  </div>
+                ) : (
+                  contactForms.map((form) => (
+                    <div key={form.submission_id} className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <h3 className="text-lg font-semibold text-white mb-1">{form.subject}</h3>
+                          <p className="text-slate-400 text-sm">{form.email}</p>
+                        </div>
+                        <span className={`px-2 py-1 rounded text-xs font-medium ${
+                          form.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
+                          form.status === 'responded' ? 'bg-green-500/20 text-green-400' :
+                          'bg-gray-500/20 text-gray-400'
+                        }`}>
+                          {form.status}
+                        </span>
+                      </div>
+                      
+                      <p className="text-slate-300 text-sm mb-4 line-clamp-3">{form.message}</p>
+                      
+                      <div className="flex items-center justify-between text-xs text-slate-500">
+                        <span>Created: {new Date(form.created_at).toLocaleDateString()}</span>
+                        <button
+                          onClick={() => {
+                            setEditingItem(form);
+                            setModalType('respond-contact');
+                            setShowModal(true);
+                          }}
+                          className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                        >
+                          Respond
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Advanced Analytics Tab */}
+          {activeTab === 'analytics' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">Advanced Analytics</h2>
+                <button
+                  onClick={() => setAnalytics({})}
+                  className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  <RefreshCw className="w-4 h-4 mr-2" />
+                  Refresh
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Page Views</p>
+                      <p className="text-2xl font-bold text-blue-400">145,623</p>
+                    </div>
+                    <Eye className="w-8 h-8 text-blue-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Conversion Rate</p>
+                      <p className="text-2xl font-bold text-green-400">8.2%</p>
+                    </div>
+                    <TrendingUp className="w-8 h-8 text-green-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Churn Rate</p>
+                      <p className="text-2xl font-bold text-red-400">2.1%</p>
+                    </div>
+                    <AlertCircle className="w-8 h-8 text-red-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">LTV</p>
+                      <p className="text-2xl font-bold text-purple-400">$1,247</p>
+                    </div>
+                    <DollarSign className="w-8 h-8 text-purple-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Analytics Dashboard</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-slate-700/30 rounded-lg p-4">
+                    <h4 className="text-md font-medium text-white mb-3">User Acquisition</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-300">Organic Search</span>
+                        <span className="text-green-400">47%</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-300">Direct Traffic</span>
+                        <span className="text-blue-400">31%</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-300">Social Media</span>
+                        <span className="text-purple-400">15%</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-300">Referrals</span>
+                        <span className="text-yellow-400">7%</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-slate-700/30 rounded-lg p-4">
+                    <h4 className="text-md font-medium text-white mb-3">Revenue Breakdown</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-300">Subscriptions</span>
+                        <span className="text-green-400">$8,450</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-300">One-time Purchases</span>
+                        <span className="text-blue-400">$2,150</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-300">Add-ons</span>
+                        <span className="text-purple-400">$890</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Email Templates Tab */}
+          {activeTab === 'templates' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">Email Templates</h2>
+                <button
+                  onClick={() => {
+                    setModalType('create-template');
+                    setShowModal(true);
+                  }}
+                  className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Template
+                </button>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-slate-400 text-sm">Total Submissions</p>
-                      <p className="text-2xl font-bold text-white">{contactForms.length}</p>
+                      <p className="text-slate-400 text-sm">Total Templates</p>
+                      <p className="text-2xl font-bold text-white">{emailTemplates.length}</p>
                     </div>
                     <Mail className="w-8 h-8 text-blue-400" />
                   </div>
@@ -1364,23 +1526,277 @@ const AdminPortalEnhanced = () => {
                 <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-slate-400 text-sm">Pending Responses</p>
-                      <p className="text-2xl font-bold text-yellow-400">
-                        {contactForms.filter(form => !form.admin_response).length}
+                      <p className="text-slate-400 text-sm">Active Templates</p>
+                      <p className="text-2xl font-bold text-green-400">
+                        {emailTemplates.filter(template => template.is_active).length}
                       </p>
                     </div>
-                    <Clock className="w-8 h-8 text-yellow-400" />
+                    <CheckCircle className="w-8 h-8 text-green-400" />
                   </div>
                 </div>
                 <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-slate-400 text-sm">Responded</p>
+                      <p className="text-slate-400 text-sm">Avg Open Rate</p>
+                      <p className="text-2xl font-bold text-purple-400">24.3%</p>
+                    </div>
+                    <Eye className="w-8 h-8 text-purple-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {emailTemplates.length === 0 ? (
+                  <div className="col-span-full bg-slate-800/50 rounded-xl border border-slate-700 p-12 text-center">
+                    <Mail className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold text-white mb-2">No email templates found</h3>
+                    <p className="text-slate-400 mb-4">Create email templates for automated campaigns</p>
+                    <button
+                      onClick={() => {
+                        setModalType('create-template');
+                        setShowModal(true);
+                      }}
+                      className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 mx-auto"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Create First Template
+                    </button>
+                  </div>
+                ) : (
+                  emailTemplates.map((template) => (
+                    <div key={template.template_id} className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <h3 className="text-lg font-semibold text-white mb-1">{template.name}</h3>
+                          <p className="text-slate-400 text-sm">{template.subject}</p>
+                        </div>
+                        <span className={`px-2 py-1 rounded text-xs font-medium ml-2 ${
+                          template.is_active ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'
+                        }`}>
+                          {template.is_active ? 'Active' : 'Inactive'}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between text-sm text-slate-400 mb-4">
+                        <span>Type: {template.template_type}</span>
+                        <span>Used: {template.usage_count || 0} times</span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div className="text-xs text-slate-500">
+                          Created: {new Date(template.created_at).toLocaleDateString()}
+                        </div>
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => {
+                              setEditingItem(template);
+                              setModalType('edit-template');
+                              setShowModal(true);
+                            }}
+                            className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
+                            title="Edit Template"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              if (confirm('Send test email with this template?')) {
+                                const email = prompt('Enter test email address:');
+                                if (email) {
+                                  console.log('Send test email functionality to be implemented');
+                                }
+                              }
+                            }}
+                            className="p-2 text-slate-400 hover:text-green-400 hover:bg-slate-600 rounded"
+                            title="Send Test"
+                          >
+                            <Mail className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Automated Workflows Tab */}
+          {activeTab === 'workflows' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">Automated Workflows</h2>
+                <button
+                  onClick={() => {
+                    setModalType('create-workflow');
+                    setShowModal(true);
+                  }}
+                  className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Workflow
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Total Workflows</p>
+                      <p className="text-2xl font-bold text-white">{workflows.length}</p>
+                    </div>
+                    <Workflow className="w-8 h-8 text-blue-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Active Workflows</p>
                       <p className="text-2xl font-bold text-green-400">
-                        {contactForms.filter(form => form.admin_response).length}
+                        {workflows.filter(workflow => workflow.is_active).length}
                       </p>
                     </div>
                     <CheckCircle className="w-8 h-8 text-green-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Executions Today</p>
+                      <p className="text-2xl font-bold text-purple-400">247</p>
+                    </div>
+                    <Zap className="w-8 h-8 text-purple-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Success Rate</p>
+                      <p className="text-2xl font-bold text-green-400">97.8%</p>
+                    </div>
+                    <Target className="w-8 h-8 text-green-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {workflows.length === 0 ? (
+                  <div className="col-span-full bg-slate-800/50 rounded-xl border border-slate-700 p-12 text-center">
+                    <Workflow className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold text-white mb-2">No workflows found</h3>
+                    <p className="text-slate-400 mb-4">Create automated workflows to streamline your processes</p>
+                    <button
+                      onClick={() => {
+                        setModalType('create-workflow');
+                        setShowModal(true);
+                      }}
+                      className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 mx-auto"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Create First Workflow
+                    </button>
+                  </div>
+                ) : (
+                  workflows.map((workflow) => (
+                    <div key={workflow.workflow_id} className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <h3 className="text-lg font-semibold text-white mb-1">{workflow.name}</h3>
+                          <p className="text-slate-400 text-sm">{workflow.description}</p>
+                        </div>
+                        <span className={`px-2 py-1 rounded text-xs font-medium ml-2 ${
+                          workflow.is_active ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'
+                        }`}>
+                          {workflow.is_active ? 'Active' : 'Inactive'}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between text-sm text-slate-400 mb-4">
+                        <span>Trigger: {workflow.trigger_type}</span>
+                        <span>Executions: {workflow.execution_count || 0}</span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div className="text-xs text-slate-500">
+                          Last run: {workflow.last_execution ? new Date(workflow.last_execution).toLocaleDateString() : 'Never'}
+                        </div>
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => {
+                              setEditingItem(workflow);
+                              setModalType('edit-workflow');
+                              setShowModal(true);
+                            }}
+                            className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
+                            title="Edit Workflow"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              if (confirm('Run this workflow now?')) {
+                                console.log('Run workflow functionality to be implemented');
+                              }
+                            }}
+                            className="p-2 text-slate-400 hover:text-green-400 hover:bg-slate-600 rounded"
+                            title="Run Now"
+                          >
+                            <Zap className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* API Keys Tab */}
+          {activeTab === 'api-keys' && user.role === 'super_admin' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">API Keys</h2>
+                <button
+                  onClick={() => {
+                    setModalType('create-api-key');
+                    setShowModal(true);
+                  }}
+                  className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Generate API Key
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Total Keys</p>
+                      <p className="text-2xl font-bold text-white">{apiKeys.length}</p>
+                    </div>
+                    <Key className="w-8 h-8 text-blue-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Active Keys</p>
+                      <p className="text-2xl font-bold text-green-400">
+                        {apiKeys.filter(key => key.is_active).length}
+                      </p>
+                    </div>
+                    <CheckCircle className="w-8 h-8 text-green-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Requests Today</p>
+                      <p className="text-2xl font-bold text-purple-400">8,247</p>
+                    </div>
+                    <BarChart3 className="w-8 h-8 text-purple-400" />
                   </div>
                 </div>
               </div>
@@ -1390,78 +1806,96 @@ const AdminPortalEnhanced = () => {
                   <table className="w-full">
                     <thead className="bg-slate-700/50">
                       <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Contact</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Company</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Subject</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Name</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Key</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Permissions</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Usage</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Status</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Date</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Created</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-700">
-                      {contactForms.length === 0 ? (
+                      {apiKeys.length === 0 ? (
                         <tr>
-                          <td colSpan="6" className="px-6 py-12 text-center">
-                            <Mail className="w-12 h-12 text-slate-500 mx-auto mb-4" />
-                            <p className="text-slate-400">No contact form submissions found</p>
+                          <td colSpan="7" className="px-6 py-8 text-center">
+                            <Key className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+                            <p className="text-slate-400">No API keys found</p>
                           </td>
                         </tr>
                       ) : (
-                        contactForms.map((form) => (
-                          <tr key={form.form_id} className="hover:bg-slate-700/30">
-                            <td className="px-6 py-4">
-                              <div>
-                                <p className="text-white font-medium">{form.name}</p>
-                                <p className="text-slate-400 text-sm">{form.email}</p>
-                                {form.phone && <p className="text-slate-400 text-sm">{form.phone}</p>}
-                              </div>
+                        apiKeys.map((apiKey) => (
+                          <tr key={apiKey.key_id} className="hover:bg-slate-700/30">
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <p className="text-white font-medium">{apiKey.name}</p>
+                              <p className="text-slate-400 text-sm">{apiKey.description}</p>
                             </td>
-                            <td className="px-6 py-4">
-                              <p className="text-slate-300">{form.company || 'N/A'}</p>
-                            </td>
-                            <td className="px-6 py-4">
-                              <p className="text-slate-300 max-w-xs truncate">{form.subject}</p>
-                            </td>
-                            <td className="px-6 py-4">
-                              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                form.admin_response 
-                                  ? 'bg-green-900/50 text-green-300' 
-                                  : 'bg-yellow-900/50 text-yellow-300'
-                              }`}>
-                                {form.admin_response ? 'Responded' : 'Pending'}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4">
-                              <p className="text-slate-300 text-sm">
-                                {new Date(form.submitted_at).toLocaleDateString()}
-                              </p>
-                            </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4 whitespace-nowrap">
                               <div className="flex items-center space-x-2">
+                                <code className="bg-slate-700 px-2 py-1 rounded text-sm text-slate-300">
+                                  {apiKey.masked_key}
+                                </code>
                                 <button
                                   onClick={() => {
-                                    setEditingItem(form);
-                                    setModalType('view-contact-form');
+                                    navigator.clipboard.writeText(apiKey.full_key);
+                                    alert('API key copied to clipboard');
+                                  }}
+                                  className="p-1 text-slate-400 hover:text-blue-400"
+                                  title="Copy Key"
+                                >
+                                  <Copy className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex flex-wrap gap-1">
+                                {apiKey.permissions.map((permission) => (
+                                  <span key={permission} className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">
+                                    {permission}
+                                  </span>
+                                ))}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm">
+                                <p className="text-white">{apiKey.usage_count || 0} requests</p>
+                                <p className="text-slate-400">Last used: {apiKey.last_used ? new Date(apiKey.last_used).toLocaleDateString() : 'Never'}</p>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className={`px-2 py-1 rounded text-xs font-medium ${
+                                apiKey.is_active ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                              }`}>
+                                {apiKey.is_active ? 'Active' : 'Disabled'}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-slate-300 text-sm">
+                              {new Date(apiKey.created_at).toLocaleDateString()}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex space-x-2">
+                                <button
+                                  onClick={() => {
+                                    setEditingItem(apiKey);
+                                    setModalType('edit-api-key');
                                     setShowModal(true);
                                   }}
-                                  className="flex items-center px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"
+                                  className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
+                                  title="Edit Key"
                                 >
-                                  <Eye className="w-3 h-3 mr-1" />
-                                  View
+                                  <Edit className="w-4 h-4" />
                                 </button>
-                                {!form.admin_response && (
-                                  <button
-                                    onClick={() => {
-                                      setEditingItem(form);
-                                      setModalType('respond-contact-form');
-                                      setShowModal(true);
-                                    }}
-                                    className="flex items-center px-3 py-1 bg-green-600 text-white rounded text-sm hover:bg-green-700"
-                                  >
-                                    <Mail className="w-3 h-3 mr-1" />
-                                    Respond
-                                  </button>
-                                )}
+                                <button
+                                  onClick={() => {
+                                    if (confirm('Are you sure you want to delete this API key?')) {
+                                      console.log('Delete API key functionality to be implemented');
+                                    }
+                                  }}
+                                  className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-600 rounded"
+                                  title="Delete Key"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
                               </div>
                             </td>
                           </tr>
@@ -1469,6 +1903,134 @@ const AdminPortalEnhanced = () => {
                       )}
                     </tbody>
                   </table>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Settings Tab */}
+          {activeTab === 'settings' && (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-white">System Settings</h2>
+
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-lg font-semibold text-white mb-4">General Settings</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">Site Name</label>
+                      <input
+                        type="text"
+                        defaultValue="Customer Mind IQ"
+                        className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">Support Email</label>
+                      <input
+                        type="email"
+                        defaultValue="support@customermindiq.com"
+                        className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">Timezone</label>
+                      <select className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                        <option>UTC</option>
+                        <option>EST</option>
+                        <option>PST</option>
+                        <option>CST</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-lg font-semibold text-white mb-4">Security Settings</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-white font-medium">Two-Factor Authentication</p>
+                        <p className="text-slate-400 text-sm">Require 2FA for admin users</p>
+                      </div>
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" className="sr-only peer" />
+                        <div className="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                      </label>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-white font-medium">Session Timeout</p>
+                        <p className="text-slate-400 text-sm">Auto-logout after inactivity</p>
+                      </div>
+                      <select className="px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white text-sm">
+                        <option>30 minutes</option>
+                        <option>1 hour</option>
+                        <option>4 hours</option>
+                        <option>8 hours</option>
+                      </select>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-white font-medium">IP Restrictions</p>
+                        <p className="text-slate-400 text-sm">Limit admin access by IP</p>
+                      </div>
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" className="sr-only peer" />
+                        <div className="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-lg font-semibold text-white mb-4">Email Configuration</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">SMTP Server</label>
+                      <input
+                        type="text"
+                        defaultValue="smtp.customermindiq.com"
+                        className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Port</label>
+                        <input
+                          type="number"
+                          defaultValue="587"
+                          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Encryption</label>
+                        <select className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                          <option>TLS</option>
+                          <option>SSL</option>
+                          <option>None</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-lg font-semibold text-white mb-4">System Maintenance</h3>
+                  <div className="space-y-4">
+                    <button className="w-full flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                      <Download className="w-4 h-4 mr-2" />
+                      Backup Database
+                    </button>
+                    <button className="w-full flex items-center justify-center px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">
+                      <RefreshCw className="w-4 h-4 mr-2" />
+                      Clear Cache
+                    </button>
+                    <button className="w-full flex items-center justify-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                      <CheckCircle className="w-4 h-4 mr-2" />
+                      Run Health Check
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
