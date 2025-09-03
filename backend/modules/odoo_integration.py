@@ -525,6 +525,219 @@ class ODOOIntegration:
                 'connected': False,
                 'message': f'Connection failed: {str(e)}'
             }
+    
+    @retry_on_failure(max_retries=3)
+    def create_email_template(self, template_data: Dict[str, Any]) -> Optional[int]:
+        """
+        Create email template in ODOO for Customer Mind IQ campaigns
+        """
+        try:
+            template_dict = {
+                'name': template_data.get('name', 'Customer Mind IQ Template'),
+                'model_id': self._get_model_id('res.partner'),  # For customer emails
+                'subject': template_data.get('subject', 'Customer Mind IQ Newsletter'),
+                'body_html': template_data.get('html_content', '<p>Default content</p>'),
+                'email_from': template_data.get('from_email', 'noreply@customermindiq.com'),
+                'email_to': '${object.email}',
+                'auto_delete': False,
+                'lang': template_data.get('language', 'en_US'),
+                'use_default_to': True
+            }
+            
+            template_id = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'mail.template', 'create',
+                [template_dict]
+            )
+            
+            logger.info(f"Created ODOO email template with ID: {template_id}")
+            return template_id
+            
+        except Exception as e:
+            logger.error(f"Error creating email template: {str(e)}")
+            return None
+    
+    @retry_on_failure(max_retries=3)
+    def get_email_templates(self) -> List[Dict[str, Any]]:
+        """
+        Get all Customer Mind IQ email templates from ODOO
+        """
+        try:
+            # Search for email templates
+            template_ids = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'mail.template', 'search',
+                [[]]  # Get all templates
+            )
+            
+            if not template_ids:
+                return []
+            
+            # Read template data
+            templates = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'mail.template', 'read',
+                [template_ids],
+                {
+                    'fields': [
+                        'name', 'subject', 'body_html', 'email_from',
+                        'model_id', 'lang', 'create_date', 'write_date'
+                    ]
+                }
+            )
+            
+            transformed_templates = []
+            for template in templates:
+                transformed_template = {
+                    'template_id': template['id'],
+                    'name': template['name'],
+                    'subject': template['subject'],
+                    'html_content': template.get('body_html', ''),
+                    'from_email': template.get('email_from', ''),
+                    'model': template.get('model_id', [None, ''])[1] if template.get('model_id') else '',
+                    'language': template.get('lang', 'en_US'),
+                    'created_at': template.get('create_date'),
+                    'updated_at': template.get('write_date')
+                }
+                transformed_templates.append(transformed_template)
+            
+            logger.info(f"Retrieved {len(transformed_templates)} email templates from ODOO")
+            return transformed_templates
+            
+        except Exception as e:
+            logger.error(f"Error retrieving email templates: {str(e)}")
+            return []
+    
+    @retry_on_failure(max_retries=3)
+    def send_email_campaign(self, template_id: int, recipient_emails: List[str], 
+                           context_data: Dict[str, Any] = None) -> Dict[str, Any]:
+        """
+        Send email campaign using ODOO template
+        """
+        try:
+            results = {
+                'success_count': 0,
+                'failed_count': 0,
+                'email_ids': [],
+                'errors': []
+            }
+            
+            for email in recipient_emails:
+                try:
+                    # Find or create contact
+                    partner_id = self._find_or_create_partner(email, context_data or {})
+                    
+                    if partner_id:
+                        # Generate email from template
+                        template_values = self.models.execute_kw(
+                            self.database, self.uid, self.password,
+                            'mail.template', 'generate_email',
+                            [template_id, partner_id]
+                        )
+                        
+                        # Create and send email
+                        email_data = {
+                            'subject': template_values.get('subject', 'Customer Mind IQ Email'),
+                            'body_html': template_values.get('body_html', ''),
+                            'email_to': email,
+                            'email_from': template_values.get('email_from', 'noreply@customermindiq.com'),
+                            'auto_delete': False,
+                            'state': 'outgoing'
+                        }
+                        
+                        mail_id = self.models.execute_kw(
+                            self.database, self.uid, self.password,
+                            'mail.mail', 'create',
+                            [email_data]
+                        )
+                        
+                        # Send the email
+                        self.models.execute_kw(
+                            self.database, self.uid, self.password,
+                            'mail.mail', 'send',
+                            [[mail_id]]
+                        )
+                        
+                        results['success_count'] += 1
+                        results['email_ids'].append(mail_id)
+                        
+                    else:
+                        results['failed_count'] += 1
+                        results['errors'].append(f"Could not create/find partner for {email}")
+                        
+                except Exception as e:
+                    results['failed_count'] += 1
+                    results['errors'].append(f"Failed to send to {email}: {str(e)}")
+            
+            logger.info(f"Campaign sent: {results['success_count']} success, {results['failed_count']} failed")
+            return results
+            
+        except Exception as e:
+            logger.error(f"Error sending email campaign: {str(e)}")
+            return {
+                'success_count': 0,
+                'failed_count': len(recipient_emails),
+                'email_ids': [],
+                'errors': [f"Campaign failed: {str(e)}"]
+            }
+    
+    def _get_model_id(self, model_name: str) -> int:
+        """Get model ID for a given model name"""
+        try:
+            model_ids = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'ir.model', 'search',
+                [[['model', '=', model_name]]]
+            )
+            
+            if model_ids:
+                return model_ids[0]
+            else:
+                # Default to res.partner model
+                return 1
+                
+        except Exception as e:
+            logger.error(f"Error getting model ID for {model_name}: {str(e)}")
+            return 1
+    
+    def _find_or_create_partner(self, email: str, context_data: Dict[str, Any]) -> Optional[int]:
+        """Find existing partner or create new one"""
+        try:
+            # Search for existing partner
+            partner_ids = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'res.partner', 'search',
+                [[['email', '=', email]]]
+            )
+            
+            if partner_ids:
+                return partner_ids[0]
+            
+            # Create new partner
+            partner_data = {
+                'name': context_data.get('name', email.split('@')[0]),
+                'email': email,
+                'is_company': False,
+                'customer_rank': 1
+            }
+            
+            if context_data.get('phone'):
+                partner_data['phone'] = context_data['phone']
+            if context_data.get('company'):
+                partner_data['company_type'] = 'company'
+                partner_data['name'] = context_data['company']
+            
+            partner_id = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'res.partner', 'create',
+                [partner_data]
+            )
+            
+            return partner_id
+            
+        except Exception as e:
+            logger.error(f"Error finding/creating partner for {email}: {str(e)}")
+            return None
 
 # Initialize global instance
 odoo_integration = ODOOIntegration()
