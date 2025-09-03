@@ -22,6 +22,7 @@ class TrialRegistrationTester:
         self.backend_url = BACKEND_URL
         self.session = None
         self.test_results = []
+        self.test_email = None  # Store email for duplicate test
         
     async def setup_session(self):
         """Setup HTTP session"""
