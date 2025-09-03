@@ -207,10 +207,13 @@ const AdminPortalEnhanced = () => {
 
   const loadDiscounts = async () => {
     try {
+      console.log('💰 Loading discounts...');
       const response = await axios.get(`${backendUrl}/api/admin/discounts`, {
         headers: getAuthHeaders()
       });
+      console.log('💰 Discounts response:', response.data);
       setDiscounts(response.data.discounts || []);
+      console.log('💰 Discounts loaded:', response.data.discounts?.length || 0);
     } catch (error) {
       console.error('Failed to load discounts:', error);
     }
