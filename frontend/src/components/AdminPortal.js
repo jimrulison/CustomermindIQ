@@ -682,8 +682,363 @@ const AdminPortalEnhanced = () => {
             </div>
           )}
 
-          {/* Other tabs would be implemented similarly with enhanced features... */}
-          {/* For brevity, I'll show the structure for discount codes tab */}
+          {/* Banner Management Tab */}
+          {activeTab === 'banners' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">Banner Management</h2>
+                <button
+                  onClick={() => {
+                    setModalType('create-banner');
+                    setShowModal(true);
+                  }}
+                  className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Banner
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Total Banners</p>
+                      <p className="text-2xl font-bold text-white">{banners.length}</p>
+                    </div>
+                    <Megaphone className="w-8 h-8 text-blue-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Active Banners</p>
+                      <p className="text-2xl font-bold text-green-400">
+                        {banners.filter(banner => banner.is_active).length}
+                      </p>
+                    </div>
+                    <CheckCircle className="w-8 h-8 text-green-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Total Views</p>
+                      <p className="text-2xl font-bold text-purple-400">
+                        {banners.reduce((sum, banner) => sum + (banner.views || 0), 0)}
+                      </p>
+                    </div>
+                    <Eye className="w-8 h-8 text-purple-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {banners.length === 0 ? (
+                  <div className="col-span-full bg-slate-800/50 rounded-xl border border-slate-700 p-12 text-center">
+                    <Megaphone className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold text-white mb-2">No banners found</h3>
+                    <p className="text-slate-400 mb-4">Create your first banner to engage with customers</p>
+                    <button
+                      onClick={() => {
+                        setModalType('create-banner');
+                        setShowModal(true);
+                      }}
+                      className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 mx-auto"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Create First Banner
+                    </button>
+                  </div>
+                ) : (
+                  banners.map((banner) => (
+                    <div key={banner.banner_id} className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <h3 className="text-lg font-semibold text-white mb-1">{banner.title}</h3>
+                          <p className="text-slate-400 text-sm line-clamp-2">{banner.message}</p>
+                        </div>
+                        <span className={`px-2 py-1 rounded text-xs font-medium ml-2 ${
+                          banner.is_active ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'
+                        }`}>
+                          {banner.is_active ? 'Active' : 'Inactive'}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between text-sm text-slate-400 mb-4">
+                        <span>Type: {banner.banner_type}</span>
+                        <span>Priority: {banner.priority}</span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between text-sm">
+                        <div className="flex space-x-4">
+                          <span className="text-slate-400">
+                            <Eye className="w-4 h-4 inline mr-1" />
+                            {banner.views || 0}
+                          </span>
+                          <span className="text-slate-400">
+                            <MousePointer className="w-4 h-4 inline mr-1" />
+                            {banner.clicks || 0}
+                          </span>
+                        </div>
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => {
+                              setEditingItem(banner);
+                              setModalType('edit-banner');
+                              setShowModal(true);
+                            }}
+                            className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
+                            title="Edit Banner"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              if (confirm('Are you sure you want to delete this banner?')) {
+                                // deleteBanner(banner.banner_id);
+                                console.log('Delete banner functionality to be implemented');
+                              }
+                            }}
+                            className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-600 rounded"
+                            title="Delete Banner"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Discount Management Tab */}
+          {activeTab === 'discounts' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">Discount Management</h2>
+                <button
+                  onClick={() => {
+                    setModalType('create-discount');
+                    setShowModal(true);
+                  }}
+                  className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Discount
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Total Discounts</p>
+                      <p className="text-2xl font-bold text-white">{discounts.length}</p>
+                    </div>
+                    <Gift className="w-8 h-8 text-blue-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Active Discounts</p>
+                      <p className="text-2xl font-bold text-green-400">
+                        {discounts.filter(discount => discount.is_active).length}
+                      </p>
+                    </div>
+                    <CheckCircle className="w-8 h-8 text-green-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Total Uses</p>
+                      <p className="text-2xl font-bold text-purple-400">
+                        {discounts.reduce((sum, discount) => sum + (discount.total_uses || 0), 0)}
+                      </p>
+                    </div>
+                    <Target className="w-8 h-8 text-purple-400" />
+                  </div>
+                </div>
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Revenue Impact</p>
+                      <p className="text-2xl font-bold text-yellow-400">
+                        ${discounts.reduce((sum, discount) => sum + (discount.total_revenue_impact || 0), 0).toLocaleString()}
+                      </p>
+                    </div>
+                    <DollarSign className="w-8 h-8 text-yellow-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {discounts.length === 0 ? (
+                  <div className="col-span-full bg-slate-800/50 rounded-xl border border-slate-700 p-12 text-center">
+                    <Gift className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold text-white mb-2">No discounts available</h3>
+                    <p className="text-slate-400 mb-4">Create discounts to boost customer engagement and sales</p>
+                    <button
+                      onClick={() => {
+                        setModalType('create-discount');
+                        setShowModal(true);
+                      }}
+                      className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 mx-auto"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Create First Discount
+                    </button>
+                  </div>
+                ) : (
+                  discounts.map((discount) => (
+                    <div key={discount.discount_id} className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <h3 className="text-lg font-semibold text-white mb-1">{discount.name}</h3>
+                          <p className="text-slate-400 text-sm line-clamp-2">{discount.description}</p>
+                        </div>
+                        <span className={`px-2 py-1 rounded text-xs font-medium ml-2 ${
+                          discount.is_active ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'
+                        }`}>
+                          {discount.is_active ? 'Active' : 'Inactive'}
+                        </span>
+                      </div>
+                      
+                      <div className="mb-4">
+                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                          discount.discount_type === 'percentage' ? 'bg-blue-500/20 text-blue-400' :
+                          discount.discount_type === 'fixed_amount' ? 'bg-green-500/20 text-green-400' :
+                          'bg-purple-500/20 text-purple-400'
+                        }`}>
+                          {discount.discount_type === 'percentage' ? `${discount.value}% Off` :
+                           discount.discount_type === 'fixed_amount' ? `$${discount.value} Off` :
+                           `${discount.value} Free Months`}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between text-sm text-slate-400 mb-4">
+                        <span>Uses: {discount.total_uses || 0}/{discount.usage_limit || '∞'}</span>
+                        <span>Impact: ${discount.total_revenue_impact || 0}</span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div className="text-xs text-slate-500">
+                          Created: {new Date(discount.created_at).toLocaleDateString()}
+                        </div>
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => {
+                              setEditingItem(discount);
+                              setModalType('edit-discount');
+                              setShowModal(true);
+                            }}
+                            className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
+                            title="Edit Discount"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              const reason = prompt('Enter reason for bulk application:');
+                              if (reason) {
+                                const criteria = prompt('Enter target criteria (e.g., "subscription_tier=premium"):');
+                                if (criteria) {
+                                  handleBulkDiscountApplication(discount.discount_id, criteria, reason);
+                                }
+                              }
+                            }}
+                            className="p-2 text-slate-400 hover:text-green-400 hover:bg-slate-600 rounded"
+                            title="Bulk Apply"
+                          >
+                            <Zap className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Cohorts Tab */}
+          {activeTab === 'cohorts' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">User Cohorts</h2>
+                <button
+                  onClick={() => {
+                    setModalType('create-cohort');
+                    setShowModal(true);
+                  }}
+                  className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Cohort
+                </button>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {cohorts.length === 0 ? (
+                  <div className="col-span-full bg-slate-800/50 rounded-xl border border-slate-700 p-12 text-center">
+                    <Target className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold text-white mb-2">No user cohorts found</h3>
+                    <p className="text-slate-400 mb-4">Create cohorts to analyze user behavior and retention</p>
+                    <button
+                      onClick={() => {
+                        setModalType('create-cohort');
+                        setShowModal(true);
+                      }}
+                      className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 mx-auto"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Create First Cohort
+                    </button>
+                  </div>
+                ) : (
+                  cohorts.map((cohort) => (
+                    <div key={cohort.cohort_id} className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                      <h3 className="text-lg font-semibold text-white mb-2">{cohort.name}</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-slate-300">Users</span>
+                          <span className="text-blue-400 font-semibold">{cohort.user_count}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-300">Total Revenue</span>
+                          <span className="text-green-400 font-semibold">
+                            ${cohort.metrics?.total_revenue?.toLocaleString() || '0'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-300">ARPU</span>
+                          <span className="text-purple-400 font-semibold">
+                            ${cohort.metrics?.avg_revenue_per_user?.toFixed(2) || '0.00'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-300">Retention Rate</span>
+                          <span className="text-yellow-400 font-semibold">
+                            {cohort.metrics?.retention_rate?.toFixed(1) || '0.0'}%
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-4 pt-4 border-t border-slate-700">
+                        <div className="text-xs text-slate-500">
+                          Created: {new Date(cohort.created_at).toLocaleDateString()}
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
           
           {activeTab === 'codes' && (
             <div className="space-y-6">
