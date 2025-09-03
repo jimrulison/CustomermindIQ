@@ -740,6 +740,545 @@ class ODOOIntegration:
         except Exception as e:
             logger.error(f"Error finding/creating partner for {email}: {str(e)}")
             return None
+    
+    # =====================================================
+    # PHASE 2: ENHANCED CRM FEATURES
+    # =====================================================
+    
+    @retry_on_failure(max_retries=3)
+    def get_sales_pipeline(self) -> List[Dict[str, Any]]:
+        """
+        Get sales pipeline data from ODOO CRM
+        """
+        try:
+            # Search for active opportunities/leads
+            opportunity_ids = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'crm.lead', 'search',
+                [[['active', '=', True]]]
+            )
+            
+            if not opportunity_ids:
+                return []
+            
+            # Read opportunity data
+            opportunities = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'crm.lead', 'read',
+                [opportunity_ids],
+                {
+                    'fields': [
+                        'name', 'partner_id', 'email_from', 'phone',
+                        'expected_revenue', 'probability', 'stage_id',
+                        'user_id', 'team_id', 'date_deadline',
+                        'create_date', 'write_date', 'description',
+                        'source_id', 'campaign_id', 'medium_id'
+                    ]
+                }
+            )
+            
+            transformed_opportunities = []
+            for opp in opportunities:
+                # Get partner name if available
+                partner_name = None
+                if opp.get('partner_id'):
+                    partner_name = opp['partner_id'][1] if isinstance(opp['partner_id'], list) else None
+                
+                # Get stage name
+                stage_name = opp.get('stage_id', [None, 'Unknown'])[1] if opp.get('stage_id') else 'Unknown'
+                
+                # Get user name
+                user_name = opp.get('user_id', [None, 'Unassigned'])[1] if opp.get('user_id') else 'Unassigned'
+                
+                transformed_opp = {
+                    'opportunity_id': opp['id'],
+                    'name': opp.get('name', 'Untitled Opportunity'),
+                    'partner_name': partner_name,
+                    'email': opp.get('email_from', ''),
+                    'phone': opp.get('phone', ''),
+                    'expected_revenue': float(opp.get('expected_revenue', 0)),
+                    'probability': float(opp.get('probability', 0)),
+                    'stage': stage_name,
+                    'assigned_to': user_name,
+                    'deadline': opp.get('date_deadline'),
+                    'created_date': opp.get('create_date'),
+                    'last_updated': opp.get('write_date'),
+                    'description': opp.get('description', ''),
+                    'source': opp.get('source_id', [None, ''])[1] if opp.get('source_id') else '',
+                    'campaign': opp.get('campaign_id', [None, ''])[1] if opp.get('campaign_id') else ''
+                }
+                transformed_opportunities.append(transformed_opp)
+            
+            logger.info(f"Retrieved {len(transformed_opportunities)} opportunities from ODOO")
+            return transformed_opportunities
+            
+        except Exception as e:
+            logger.error(f"Error retrieving sales pipeline: {str(e)}")
+            return []
+    
+    @retry_on_failure(max_retries=3)
+    def create_lead(self, lead_data: Dict[str, Any]) -> Optional[int]:
+        """
+        Create new lead/opportunity in ODOO CRM
+        """
+        try:
+            odoo_lead_data = {
+                'name': lead_data.get('name', 'Customer Mind IQ Lead'),
+                'email_from': lead_data.get('email', ''),
+                'phone': lead_data.get('phone', ''),
+                'description': lead_data.get('description', ''),
+                'expected_revenue': float(lead_data.get('expected_revenue', 0)),
+                'probability': float(lead_data.get('probability', 10)),
+                'type': 'opportunity',  # Create as opportunity, not just lead
+                'active': True
+            }
+            
+            # Add optional fields
+            if lead_data.get('company'):
+                odoo_lead_data['partner_name'] = lead_data['company']
+            if lead_data.get('source'):
+                odoo_lead_data['description'] = f"Source: {lead_data['source']}\n{odoo_lead_data['description']}"
+            
+            lead_id = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'crm.lead', 'create',
+                [odoo_lead_data]
+            )
+            
+            logger.info(f"Created lead/opportunity with ID: {lead_id}")
+            return lead_id
+            
+        except Exception as e:
+            logger.error(f"Error creating lead: {str(e)}")
+            return None
+    
+    @retry_on_failure(max_retries=3)
+    def update_lead_stage(self, lead_id: int, stage_name: str) -> bool:
+        """
+        Update lead/opportunity stage in ODOO
+        """
+        try:
+            # Find stage ID by name
+            stage_ids = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'crm.stage', 'search',
+                [[['name', 'ilike', stage_name]]]
+            )
+            
+            if not stage_ids:
+                logger.warning(f"Stage '{stage_name}' not found")
+                return False
+            
+            # Update lead stage
+            self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'crm.lead', 'write',
+                [[lead_id], {'stage_id': stage_ids[0]}]
+            )
+            
+            logger.info(f"Updated lead {lead_id} to stage '{stage_name}'")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error updating lead stage: {str(e)}")
+            return False
+    
+    @retry_on_failure(max_retries=3)
+    def get_sales_analytics(self, days_back: int = 90) -> Dict[str, Any]:
+        """
+        Get comprehensive sales analytics from ODOO
+        """
+        try:
+            from datetime import datetime, timedelta
+            end_date = datetime.now()
+            start_date = end_date - timedelta(days=days_back)
+            
+            # Get opportunities in date range
+            opportunity_ids = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'crm.lead', 'search',
+                [[
+                    ['create_date', '>=', start_date.strftime('%Y-%m-%d')],
+                    ['create_date', '<=', end_date.strftime('%Y-%m-%d')]
+                ]]
+            )
+            
+            if not opportunity_ids:
+                return {
+                    'total_opportunities': 0,
+                    'won_opportunities': 0,
+                    'total_revenue': 0,
+                    'conversion_rate': 0,
+                    'average_deal_size': 0,
+                    'pipeline_value': 0
+                }
+            
+            # Read opportunity data
+            opportunities = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'crm.lead', 'read',
+                [opportunity_ids],
+                {
+                    'fields': [
+                        'name', 'stage_id', 'expected_revenue', 
+                        'probability', 'active', 'won_date'
+                    ]
+                }
+            )
+            
+            # Calculate analytics
+            total_opportunities = len(opportunities)
+            won_opportunities = 0
+            total_revenue = 0
+            pipeline_value = 0
+            
+            for opp in opportunities:
+                expected_revenue = float(opp.get('expected_revenue', 0))
+                probability = float(opp.get('probability', 0))
+                
+                # Check if won (you might need to adjust this based on your ODOO setup)
+                stage_name = opp.get('stage_id', [None, ''])[1] if opp.get('stage_id') else ''
+                is_won = 'won' in stage_name.lower() or probability >= 100
+                
+                if is_won:
+                    won_opportunities += 1
+                    total_revenue += expected_revenue
+                else:
+                    pipeline_value += expected_revenue * (probability / 100)
+            
+            conversion_rate = (won_opportunities / total_opportunities * 100) if total_opportunities > 0 else 0
+            average_deal_size = (total_revenue / won_opportunities) if won_opportunities > 0 else 0
+            
+            analytics = {
+                'total_opportunities': total_opportunities,
+                'won_opportunities': won_opportunities,
+                'total_revenue': total_revenue,
+                'conversion_rate': round(conversion_rate, 2),
+                'average_deal_size': round(average_deal_size, 2),
+                'pipeline_value': round(pipeline_value, 2),
+                'period_days': days_back
+            }
+            
+            logger.info(f"Sales analytics calculated for {days_back} days")
+            return analytics
+            
+        except Exception as e:
+            logger.error(f"Error calculating sales analytics: {str(e)}")
+            return {
+                'error': str(e),
+                'total_opportunities': 0,
+                'won_opportunities': 0,
+                'total_revenue': 0,
+                'conversion_rate': 0,
+                'average_deal_size': 0,
+                'pipeline_value': 0
+            }
+    
+    @retry_on_failure(max_retries=3)
+    def get_customer_interactions(self, customer_id: int) -> List[Dict[str, Any]]:
+        """
+        Get customer interaction history from ODOO
+        """
+        try:
+            # Get mail messages for the customer
+            message_ids = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'mail.message', 'search',
+                [[
+                    ['res_id', '=', customer_id],
+                    ['model', '=', 'res.partner']
+                ]]
+            )
+            
+            if not message_ids:
+                return []
+            
+            # Read message data
+            messages = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'mail.message', 'read',
+                [message_ids],
+                {
+                    'fields': [
+                        'subject', 'body', 'date', 'author_id',
+                        'message_type', 'subtype_id', 'email_from'
+                    ]
+                }
+            )
+            
+            # Get activities for the customer
+            activity_ids = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'mail.activity', 'search',
+                [[
+                    ['res_id', '=', customer_id],
+                    ['res_model', '=', 'res.partner']
+                ]]
+            )
+            
+            interactions = []
+            
+            # Process messages
+            for message in messages:
+                author_name = message.get('author_id', [None, 'System'])[1] if message.get('author_id') else 'System'
+                
+                interaction = {
+                    'type': 'message',
+                    'subject': message.get('subject', 'No Subject'),
+                    'content': message.get('body', ''),
+                    'date': message.get('date'),
+                    'author': author_name,
+                    'email_from': message.get('email_from', ''),
+                    'message_type': message.get('message_type', 'email')
+                }
+                interactions.append(interaction)
+            
+            # Process activities if any
+            if activity_ids:
+                activities = self.models.execute_kw(
+                    self.database, self.uid, self.password,
+                    'mail.activity', 'read',
+                    [activity_ids],
+                    {
+                        'fields': [
+                            'summary', 'note', 'date_deadline',
+                            'user_id', 'activity_type_id', 'state'
+                        ]
+                    }
+                )
+                
+                for activity in activities:
+                    user_name = activity.get('user_id', [None, 'Unknown'])[1] if activity.get('user_id') else 'Unknown'
+                    activity_type = activity.get('activity_type_id', [None, 'Activity'])[1] if activity.get('activity_type_id') else 'Activity'
+                    
+                    interaction = {
+                        'type': 'activity',
+                        'subject': activity.get('summary', activity_type),
+                        'content': activity.get('note', ''),
+                        'date': activity.get('date_deadline'),
+                        'author': user_name,
+                        'activity_type': activity_type,
+                        'state': activity.get('state', 'planned')
+                    }
+                    interactions.append(interaction)
+            
+            # Sort by date (most recent first)
+            interactions.sort(key=lambda x: x.get('date', ''), reverse=True)
+            
+            logger.info(f"Retrieved {len(interactions)} interactions for customer {customer_id}")
+            return interactions
+            
+        except Exception as e:
+            logger.error(f"Error retrieving customer interactions: {str(e)}")
+            return []
+    
+    @retry_on_failure(max_retries=3)
+    def sync_customer_data_bidirectional(self, customer_mind_iq_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Bidirectional sync: Update ODOO with Customer Mind IQ data and vice versa
+        """
+        try:
+            email = customer_mind_iq_data.get('email')
+            if not email:
+                return {'success': False, 'error': 'Email is required'}
+            
+            # Find existing customer in ODOO
+            partner_ids = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'res.partner', 'search',
+                [[['email', '=', email]]]
+            )
+            
+            sync_result = {
+                'success': True,
+                'action': 'updated' if partner_ids else 'created',
+                'partner_id': None,
+                'changes': []
+            }
+            
+            # Prepare ODOO data
+            partner_data = {
+                'name': customer_mind_iq_data.get('name', email.split('@')[0]),
+                'email': email,
+                'phone': customer_mind_iq_data.get('phone', ''),
+                'is_company': False,
+                'customer_rank': 1
+            }
+            
+            # Add Customer Mind IQ specific fields as comments/notes
+            if customer_mind_iq_data.get('engagement_score'):
+                partner_data['comment'] = f"Customer Mind IQ Engagement Score: {customer_mind_iq_data['engagement_score']}"
+            
+            if customer_mind_iq_data.get('lifecycle_stage'):
+                partner_data['comment'] = f"{partner_data.get('comment', '')}\nLifecycle Stage: {customer_mind_iq_data['lifecycle_stage']}"
+            
+            if partner_ids:
+                # Update existing customer
+                partner_id = partner_ids[0]
+                
+                # Get current data to compare
+                current_data = self.models.execute_kw(
+                    self.database, self.uid, self.password,
+                    'res.partner', 'read',
+                    [partner_id],
+                    {'fields': list(partner_data.keys())}
+                )[0]
+                
+                # Track changes
+                for key, new_value in partner_data.items():
+                    old_value = current_data.get(key, '')
+                    if str(new_value) != str(old_value) and new_value:
+                        sync_result['changes'].append({
+                            'field': key,
+                            'old_value': old_value,
+                            'new_value': new_value
+                        })
+                
+                # Update if there are changes
+                if sync_result['changes']:
+                    self.models.execute_kw(
+                        self.database, self.uid, self.password,
+                        'res.partner', 'write',
+                        [[partner_id], partner_data]
+                    )
+                
+                sync_result['partner_id'] = partner_id
+                
+            else:
+                # Create new customer
+                partner_id = self.models.execute_kw(
+                    self.database, self.uid, self.password,
+                    'res.partner', 'create',
+                    [partner_data]
+                )
+                
+                sync_result['partner_id'] = partner_id
+                sync_result['changes'] = [{'field': 'all', 'action': 'created'}]
+            
+            logger.info(f"Bidirectional sync completed for {email}: {sync_result['action']}")
+            return sync_result
+            
+        except Exception as e:
+            logger.error(f"Error in bidirectional sync: {str(e)}")
+            return {
+                'success': False,
+                'error': str(e),
+                'partner_id': None,
+                'changes': []
+            }
+    
+    @retry_on_failure(max_retries=3)
+    def get_sales_forecast(self, months_ahead: int = 6) -> Dict[str, Any]:
+        """
+        Generate sales forecast based on ODOO pipeline data
+        """
+        try:
+            from datetime import datetime, timedelta
+            
+            # Get all active opportunities
+            opportunity_ids = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'crm.lead', 'search',
+                [[['active', '=', True], ['type', '=', 'opportunity']]]
+            )
+            
+            if not opportunity_ids:
+                return {
+                    'forecast_period_months': months_ahead,
+                    'total_pipeline_value': 0,
+                    'weighted_pipeline_value': 0,
+                    'monthly_forecast': {},
+                    'confidence_level': 'low'
+                }
+            
+            # Read opportunity data
+            opportunities = self.models.execute_kw(
+                self.database, self.uid, self.password,
+                'crm.lead', 'read',
+                [opportunity_ids],
+                {
+                    'fields': [
+                        'name', 'expected_revenue', 'probability',
+                        'date_deadline', 'stage_id', 'create_date'
+                    ]
+                }
+            )
+            
+            total_pipeline_value = 0
+            weighted_pipeline_value = 0
+            monthly_forecast = {}
+            
+            # Initialize monthly forecast
+            current_date = datetime.now()
+            for i in range(months_ahead):
+                month_date = current_date + timedelta(days=30*i)
+                month_key = month_date.strftime('%Y-%m')
+                monthly_forecast[month_key] = {
+                    'month': month_date.strftime('%B %Y'),
+                    'opportunities': 0,
+                    'pipeline_value': 0,
+                    'weighted_value': 0
+                }
+            
+            # Process opportunities
+            for opp in opportunities:
+                expected_revenue = float(opp.get('expected_revenue', 0))
+                probability = float(opp.get('probability', 0)) / 100
+                
+                total_pipeline_value += expected_revenue
+                weighted_pipeline_value += expected_revenue * probability
+                
+                # Assign to month based on deadline or creation date
+                deadline = opp.get('date_deadline')
+                if deadline:
+                    try:
+                        deadline_date = datetime.strptime(deadline, '%Y-%m-%d')
+                        month_key = deadline_date.strftime('%Y-%m')
+                        
+                        if month_key in monthly_forecast:
+                            monthly_forecast[month_key]['opportunities'] += 1
+                            monthly_forecast[month_key]['pipeline_value'] += expected_revenue
+                            monthly_forecast[month_key]['weighted_value'] += expected_revenue * probability
+                    except:
+                        # If date parsing fails, add to current month
+                        current_month = current_date.strftime('%Y-%m')
+                        if current_month in monthly_forecast:
+                            monthly_forecast[current_month]['opportunities'] += 1
+                            monthly_forecast[current_month]['pipeline_value'] += expected_revenue
+                            monthly_forecast[current_month]['weighted_value'] += expected_revenue * probability
+            
+            # Determine confidence level
+            total_opportunities = len(opportunities)
+            if total_opportunities >= 20 and weighted_pipeline_value > 0:
+                confidence_level = 'high'
+            elif total_opportunities >= 10:
+                confidence_level = 'medium'
+            else:
+                confidence_level = 'low'
+            
+            forecast = {
+                'forecast_period_months': months_ahead,
+                'total_opportunities': total_opportunities,
+                'total_pipeline_value': round(total_pipeline_value, 2),
+                'weighted_pipeline_value': round(weighted_pipeline_value, 2),
+                'monthly_forecast': monthly_forecast,
+                'confidence_level': confidence_level,
+                'generated_at': datetime.now().isoformat()
+            }
+            
+            logger.info(f"Sales forecast generated for {months_ahead} months")
+            return forecast
+            
+        except Exception as e:
+            logger.error(f"Error generating sales forecast: {str(e)}")
+            return {
+                'error': str(e),
+                'forecast_period_months': months_ahead,
+                'total_pipeline_value': 0,
+                'weighted_pipeline_value': 0,
+                'monthly_forecast': {},
+                'confidence_level': 'error'
+            }
 
 # Initialize global instance
 odoo_integration = ODOOIntegration()
