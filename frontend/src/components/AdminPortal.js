@@ -193,10 +193,13 @@ const AdminPortalEnhanced = () => {
 
   const loadBanners = async () => {
     try {
+      console.log('📢 Loading banners...');
       const response = await axios.get(`${backendUrl}/api/admin/banners`, {
         headers: getAuthHeaders()
       });
+      console.log('📢 Banners response:', response.data);
       setBanners(response.data.banners || []);
+      console.log('📢 Banners loaded:', response.data.banners?.length || 0);
     } catch (error) {
       console.error('Failed to load banners:', error);
     }
