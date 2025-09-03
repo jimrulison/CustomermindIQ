@@ -71,11 +71,11 @@ class ODOOIntegration:
     """
     
     def __init__(self):
-        self.url = os.getenv('ODOO_URL', 'https://your-odoo-instance.com')
-        self.database = os.getenv('ODOO_DATABASE', 'main')
-        self.username = os.getenv('ODOO_USERNAME', 'admin')
-        self.password = os.getenv('ODOO_PASSWORD', 'admin')
-        self.api_key = "a69407b31a27a482e5dc4534e56c8b30378cd7fa"  # User provided API key
+        self.url = os.getenv('ODOO_URL', 'https://fancy-free-living-llc.odoo.com/odoo')
+        self.database = os.getenv('ODOO_DATABASE', 'fancy-free-living-llc')
+        self.username = os.getenv('ODOO_USERNAME', 'jimrulison@gmail.com')
+        self.password = os.getenv('ODOO_PASSWORD', 'JR09mar05!')
+        self.api_key = os.getenv('ODOO_API_KEY', '71e29cd64ac0f858e2eeb8b175327a05b64165f1')
         
         # For testing, allow missing credentials
         logger.info(f"Initializing ODOO integration with API key: {self.api_key[:20]}...")
