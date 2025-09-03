@@ -330,6 +330,7 @@ const AdminPortalEnhanced = () => {
 
   useEffect(() => {
     if (hasAdminAccess) {
+      console.log('🔄 Loading all admin data...');
       loadDashboardData();
       loadBanners();
       loadDiscounts();
@@ -341,8 +342,9 @@ const AdminPortalEnhanced = () => {
       loadWorkflows();
       loadSupportTickets();
       loadContactForms();
-      loadEmailCampaigns();
+      loadEmailCampaigns(); 
       loadEmailProvider();
+      console.log('✅ All admin data loading initiated');
     }
   }, [hasAdminAccess]);
 
