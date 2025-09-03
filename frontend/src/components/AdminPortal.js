@@ -58,15 +58,18 @@ const AdminPortalEnhanced = () => {
   const loadDashboardData = async () => {
     setLoading(true);
     try {
+      console.log('Loading admin dashboard data...');
       const response = await axios.get(`${backendUrl}/api/admin/analytics/dashboard`, {
         headers: getAuthHeaders()
       });
+      console.log('Dashboard response:', response.data);
       if (response.data) {
         setAdminData(response.data);
+        console.log('Admin data set:', response.data);
       }
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
-      setError('Failed to load dashboard data');
+      setError(`Failed to load dashboard data: ${error.message}`);
     } finally {
       setLoading(false);
     }
