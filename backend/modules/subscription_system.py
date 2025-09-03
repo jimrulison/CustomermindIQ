@@ -146,6 +146,11 @@ SUBSCRIPTION_FEATURES = {
 }
 
 # Helper Functions
+def hash_password(password: str) -> str:
+    """Hash password using bcrypt"""
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
+
 async def check_subscription_access(user_email: str, required_tier: str = None) -> dict:
     """Check user's subscription access and permissions"""
     user = await db.users.find_one({"email": user_email})
