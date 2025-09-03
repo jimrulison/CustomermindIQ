@@ -1,5 +1,6 @@
 # Subscription Management System
 import os
+import uuid
 from fastapi import APIRouter, HTTPException, Depends
 from motor.motor_asyncio import AsyncIOMotorClient
 from typing import List, Dict, Any, Optional
