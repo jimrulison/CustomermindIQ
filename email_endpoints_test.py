@@ -9,7 +9,7 @@ import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://customer-mind-iq-3.preview.emergentagent.com")
+BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://livechat-admin.preview.emergentagent.com")
 API_BASE = f"{BACKEND_URL}/api"
 
 # Admin credentials
