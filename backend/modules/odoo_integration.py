@@ -105,7 +105,7 @@ class ODOOIntegration:
             self.uid = self.common.authenticate(
                 self.database, 
                 self.username, 
-                self.api_key,  # Use API key instead of password
+                self.password,  # Use password for XMLRPC authentication
                 {}
             )
             
