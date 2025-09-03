@@ -167,7 +167,7 @@ class ODOOIntegration:
             
             # Read customer data
             customers = self.models.execute_kw(
-                self.database, self.uid, self.api_key,
+                self.database, self.uid, self.password,
                 'res.partner', 'read',
                 [customer_ids],
                 {
