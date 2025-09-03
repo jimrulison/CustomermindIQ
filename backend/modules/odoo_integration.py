@@ -415,7 +415,7 @@ class ODOOIntegration:
                 odoo_data['city'] = customer_data['city']
             
             customer_id = self.models.execute_kw(
-                self.database, self.uid, self.api_key,
+                self.database, self.uid, self.password,
                 'res.partner', 'create',
                 [odoo_data]
             )
