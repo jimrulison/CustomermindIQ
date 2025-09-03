@@ -132,16 +132,20 @@ const SignIn = ({ onSignIn }) => {
 
       const trialData = await trialResponse.json();
 
-      if (trialResponse.ok) {
-        // Auto-login the trial user
-        const loginResult = await login(signUpData.email.trim().toLowerCase(), 'trial_password_temp', false);
+      if (trialResponse.ok && trialData.status === 'success') {
+        // Auto-login the trial user with the returned password
+        const loginResult = await login(
+          signUpData.email.trim().toLowerCase(), 
+          trialData.user.password, 
+          false
+        );
         if (loginResult.success) {
           onSignIn(loginResult.user);
         } else {
           setError('Trial created but login failed. Please contact support.');
         }
       } else {
-        setError(trialData.detail || 'Failed to start trial');
+        setError(trialData.detail || trialData.message || 'Failed to start trial');
       }
     } catch (error) {
       setError('Unable to connect to server. Please try again.');
