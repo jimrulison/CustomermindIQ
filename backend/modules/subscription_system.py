@@ -29,6 +29,12 @@ class TrialRequest(BaseModel):
     user_email: str
     plan_type: str = "starter"
 
+class TrialRegistration(BaseModel):
+    email: str
+    first_name: str
+    last_name: str
+    company_name: Optional[str] = None
+
 # Subscription Tiers and Features - Updated with New Pricing Structure
 SUBSCRIPTION_FEATURES = {
     "free": {
