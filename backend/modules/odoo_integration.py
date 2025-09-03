@@ -95,11 +95,13 @@ class ODOOIntegration:
     def _connect(self):
         """Establish connection to ODOO server"""
         try:
-            logger.info(f"Connecting to ODOO at {self.url}")
+            # Clean the URL - remove /odoo if it's already there
+            base_url = self.url.rstrip('/odoo').rstrip('/')
+            logger.info(f"Connecting to ODOO at {base_url}")
             
-            # Create server proxy objects
-            self.common = xmlrpc.client.ServerProxy(f'{self.url}/xmlrpc/2/common')
-            self.models = xmlrpc.client.ServerProxy(f'{self.url}/xmlrpc/2/object')
+            # Create server proxy objects - ODOO XMLRPC endpoints
+            self.common = xmlrpc.client.ServerProxy(f'{base_url}/xmlrpc/2/common')
+            self.models = xmlrpc.client.ServerProxy(f'{base_url}/xmlrpc/2/object')
             
             # Authenticate and get user ID
             self.uid = self.common.authenticate(
