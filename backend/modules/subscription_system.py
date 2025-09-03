@@ -313,7 +313,7 @@ async def register_trial_user(trial_data: TrialRegistration):
                 "first_name": trial_data.first_name,
                 "last_name": trial_data.last_name,
                 "company_name": trial_data.company_name,
-                "password": new_user["password"]  # Return temp password for auto-login
+                "password": temp_password  # Return temp password for auto-login
             }
         }
         
