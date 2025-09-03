@@ -7,6 +7,7 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from pydantic import BaseModel, Field
 import secrets
+import bcrypt
 from dotenv import load_dotenv
 
 # Load environment variables
