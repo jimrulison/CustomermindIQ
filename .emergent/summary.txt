@@ -1,91 +1,79 @@
 <analysis>
-The previous AI engineer's work focused on two main areas: refining the application's pricing structure and implementing a user-to-admin live chat system. The pricing update involved backend logic in  and , and frontend display in  and , resolving routing and Pydantic validation issues. The core of this trajectory, however, was the live chat feature. This involved creating new backend () and frontend (, ) components, integrating real-time WebSockets, file sharing, and robust admin notification systems. Critical issues like admin dashboard 500 errors, missing email endpoints, and a frontend infinite loading problem were also systematically identified and fixed, ensuring the platform's stability.
+The trajectory details the collaborative development of the Customer Mind IQ platform, initially focusing on two critical areas: ODOO CRM integration and rectifying significant frontend stability and data display issues. The ODOO integration spanned two phases: enhancing email capabilities via ODOO, including template management and routing, and then deepening CRM features like sales pipeline and customer data sync. Concurrently, extensive debugging addressed a persistent frontend loading problem, various 500 errors caused by backend JWT and Pydantic enum mismatches, and the complete implementation of previously blank admin dashboard tabs. Finally, the work shifted to developing and refining a landing page, resolving image display issues, updating pricing details, fixing navigation flows, and implementing a prominent logo, culminating in the initiation of crossed-out pricing display.
 </analysis>
 
 <product_requirements>
-The Customer Mind IQ is a SaaS platform offering 14 AI modules, including an Admin Authentication System, Advanced Admin Features, a 7-day free trial, and a Knowledge Base. Recent development centered on:
+The Customer Mind IQ platform is a SaaS application featuring 14 AI modules, an Admin Authentication System, Advanced Admin Features, a 7-day free trial, and a Knowledge Base. The user's explicit requests and the problem statement driving development include:
 1.  **Growth Acceleration Engine (GAE)**: An AI module for *annual subscribers* with strict access control.
 2.  **Secure Admin Portal**: Existing admin panel migrated to an in-app portal ().
-3.  **Multi-Tier Support System**: Email support (24hr, 12hr, 4hr + live chat) with ODOO integration for CRM. A contact form with admin page listing is required.
+3.  **Multi-Tier Support System**: Email support (24hr, 12hr, 4hr + live chat) with ODOO integration for CRM. This includes a contact form with an admin page listing.
 4.  **Simple Email System**: For administrators to send emails (all, by subscription, custom, single user) with API hookup.
-5.  **Detailed Pricing Structure**: New plans (Launch: 9/90, Growth: 5/50, Scale: 99/990, White Label/Custom: Contact Sales) including Founders Pricing, Most Popular badge for Growth, and 2 months free! annual savings.
+5.  **Detailed Pricing Structure**: New plans (Launch: 9/90, Growth: 5/50, Scale: 99/990, White Label/Custom: Contact Sales) including Founders Pricing, Most Popular badge for Growth, and 2 months free! annual savings. User requested to display specific crossed-out regular prices (e.g., Launch: ~~9~~ 9).
 6.  **User-to-Admin Live Chat**: A chat program with user-to-admin functionality. Admin can toggle availability. This feature is restricted to Growth, Scale, White Label, and Custom plan users.
+7.  **Landing Page Development**: Create a  page featuring a demo video, dashboard screenshots, correct pricing, a clear call-to-action to the signup flow, and a prominent logo.
 </product_requirements>
 
 <key_technical_concepts>
 -   **Full-Stack Architecture**: React (frontend), FastAPI (backend), MongoDB (database).
 -   **Deployment**: Kubernetes, Supervisor,  prefix routing, environment variables.
 -   **Authentication/Authorization**: JWT, RBAC, Subscription Tier-based Access, Pydantic Enums.
--   **Third-Party Integrations**: Stripe, ODOO.
--   **Backend Patterns**: Pydantic for data validation, FastAPI for API routing, WebSockets,  for file handling.
--   **Frontend Patterns**: React components, state management (useState, useEffect), API calls, React Router, WebSocket API, Browser Notifications API.
+-   **Third-Party Integrations**: Stripe, ODOO, Emergent LLM Integrations.
+-   **Backend Patterns**: Pydantic, FastAPI, WebSockets,  for file handling, XMLRPC client for ODOO.
+-   **Frontend Patterns**: React components, state management, API calls, React Router, WebSocket API, Browser Notifications API.
 </key_technical_concepts>
 
 <code_architecture>
 
 -   
     -   **Importance**: Main FastAPI entry point.
-    -   **Changes**: Corrected router prefixes for  and . Imported and included  and  routers, ensuring  prefix for all.
+    -   **Changes**: Corrected router prefixes, imported , , , and  routers, ensuring  prefix for all.
 -   
     -   **Importance**: User authentication and roles.
-    -   **Changes**: Updated  and logic to new  enum values (FREE, LAUNCH, GROWTH, SCALE, WHITE_LABEL, CUSTOM) to fix Pydantic validation.
+    -   **Changes**: Updated  with new  enum values. Fixed JWT error by changing  to . Fixed  usage.
 -   
-    -   **Importance**: Handles payment processing.
-    -   **Changes**: Updated for new pricing, fixed router double-prefixing.
+    -   **Importance**: Handles email campaigns and notifications.
+    -   **Changes**: Modified to route email sending through ODOO by default and added ODOO as a provider option. Added new endpoints for enhanced email provider status.
 -   
-    -   **Importance**: Core subscription management.
-    -   **Changes**: Implemented new pricing tiers, monthly/annual billing, referral discounts, trial reminders, prorated upgrades, cancellations. Fixed decorator and router issues.
+    -   **Importance**: Backend for ODOO CRM integration.
+    -   **Changes**: Updated to use environment variables for ODOO credentials. Switched from API key to password authentication. Added enhanced ODOO email integration (templates, campaigns), and deeper CRM features (customer data sync, sales pipeline, lead management). Added new endpoints for connection testing, email template management, and CRM functionalities.
 -   
-    -   **Importance**: **NEWLY CREATED**. Backend for live chat.
-    -   **Changes**: Defines , ,  models. Implements REST APIs for chat access, admin availability, and message submission. Added WebSocket endpoints for real-time messaging, file upload/download logic, and new admin-specific endpoints ().
--   
-    -   **Importance**: Backend for admin functionalities.
-    -   **Changes**: Ensured essential admin endpoints like , , and  were correctly registered and accessible.
--   
-    -   **Importance**: Lists Python dependencies.
-    -   **Changes**: Added  for backend file handling.
--   
-    -   **Importance**: User signup form.
-    -   **Changes**: Fetches and displays dynamic pricing from backend.
--   
-    -   **Importance**: User subscription management UI.
-    -   **Changes**: Displays new pricing and management options.
--   
-    -   **Importance**: Global navigation.
-    -   **Changes**: Added Subscription Manager link and a visual notification badge for new chat requests for admin users.
--   
-    -   **Importance**: Main admin interface.
-    -   **Changes**: Integrated  component, adding a Live Chat tab.
--   
-    -   **Importance**: **NEWLY CREATED**. User-facing chat interface.
-    -   **Changes**: Implemented floating chat button, chat window, WebSocket integration for real-time messaging, file upload UI, typing indicators, and connection status.
--   
-    -   **Importance**: **NEWLY CREATED**. Admin-facing chat dashboard.
-    -   **Changes**: Displays active chat sessions, admin availability toggle, real-time messaging, file sharing, and integrated browser notifications, audio alerts, and visual indicators for new chats.
+    -   **Importance**: Stores environment variables.
+    -   **Changes**: Fixed formatting for ODOO URL and credentials (ODOO_URL, ODOO_DB, ODOO_USERNAME, ODOO_PASSWORD).
 -   
     -   **Importance**: Root React component, routing, global state.
-    -   **Changes**: Imported  and . Added conditional rendering for  for logged-in users. Fixed a critical frontend loading issue by adding an 8-second force timeout and reducing API call timeouts. Corrected email endpoint paths.
+    -   **Changes**: Fixed a critical frontend loading issue by simplifying loading logic, reducing timeout (from 8s to 3s), separating background loading, and improving error handling ().
 -   
-    -   **Importance**: Documents testing protocols and results.
-    -   **Changes**: Continuously updated to reflect testing of pricing system, live chat, and admin dashboard fixes.
+    -   **Importance**: User login form.
+    -   **Changes**: Added a prominent SIGN UP NOW button below the login form, linking to the signup page.
+-   
+    -   **Importance**: Main admin interface.
+    -   **Changes**: Fixed dashboard data display by correcting the response structure interpretation. Fixed  by importing the icon. Modified  hook to call all individual data loading functions (banners, discounts, cohorts). Implemented content rendering for previously blank tabs: Advanced Analytics, Email Templates, Automated Workflows, API Keys, and Settings. Imported  icon.
+-   
+    -   **Importance**: Public-facing landing page for Customer Mind IQ.
+    -   **Changes**: Created from scratch. Integrated demo video, website and customer analytics dashboard screenshots, and branding logo. Updated all pricing references (from 164 to 000 bonus, 97 to 49/month). Fixed Start Trial button links to direct users to the login/signup flow. Implemented prominent logo. Fixed image loading issues (URL encoding, error handling, CSS adjustments, finally replacing a problematic screenshot). Added pricing information in multiple strategic locations and a yellow-bordered box to highlight the Exclusive Annual Member Bonus section.
+-   
+    -   **Importance**: Temporary HTML file for debugging image loading issues on the landing page.
+    -   **Changes**: Created to test different URL encoding formats and provide console feedback on image loading success/failure.
+-   
+    -   **Importance**: Documentation for the ODOO integration.
+    -   **Changes**: Newly created to detail the ODOO email and CRM features.
 </code_architecture>
 
 <pending_tasks>
--   **ODOO Integration (Deeper)**: Further API integration for comprehensive CRM functionalities.
--   **Email System API Hookup**: Integrate the backend email system with a specific third-party email provider.
+-   **Email System API Hookup (General):** While ODOO email integration is complete, the prompt mentions integrate the backend email system with a *specific third-party email provider*. It's unclear if ODOO fully replaces this or if other providers still need specific integration.
+-   **Implement remaining crossed-out pricing:** Continue implementing the crossed-out pricing in the remaining pricing sections of the landing page (e.g., under the 2-min demo section, AI-powered customer behavior section, and bottom of the page).
 </pending_tasks>
 
 <current_work>
-Immediately before this summary, the AI engineer successfully completed the implementation of a comprehensive user-to-admin live chat system and resolved critical platform stability issues.
+Immediately before this summary request, the AI engineer was actively working on refining the  page's pricing display based on the user's latest feedback. The user requested to show crossed-out regular prices alongside the current discounted prices. The AI engineer initiated this by asking for the specific regular price values for each tier (Launch, Growth, Scale for both monthly and annual plans). The user provided these values:
+-   **Monthly:** ~~9~~ 9, ~~49~~ 5, ~~99~~ 99
+-   **Annual:** ~~90~~ 90, ~~490~~ 50, ~~990~~ 990
 
-**Live Chat System**: This was built out from initial scaffolding. On the backend,  was extended to include real-time WebSocket communication, file upload/download endpoints (supporting images, PDFs, documents up to 10MB), and admin-specific message handling. Frontend components  (user) and  (admin) were fully developed, incorporating WebSocket logic, file upload/display UI, typing indicators, and connection status. Crucially, a robust admin notification system was added, featuring browser popups, audio alerts, page title updates, and a visual notification badge on the admin portal button in .
+The AI engineer has already started implementing these changes, beginning with updating the pricing under the 7-day free trial section in . The trajectory ends as the AI engineer moves to update the pricing in the 2-min demo section.
 
-**Admin Dashboard Fixes**: Multiple issues hindering the admin experience were addressed. The 500 errors on  were resolved (traced back to a  enum mismatch). Frontend calls to email system endpoints were corrected, fixing 404 errors for  and  by adjusting paths in . Missing admin endpoints for , , and  were properly registered in  and .
-
-**Frontend Loading Issue**: A critical JavaScript runtime error () causing the application to get stuck on a loading screen was identified and fixed in . This involved adding an 8-second force timeout and reducing API call timeouts to ensure the dashboard loads reliably.
-The entire system, including these new features and fixes, has been thoroughly tested, with backend APIs achieving 100% success and frontend integration at 85% success rate, confirming it is production-ready.
+This task is part of a broader effort to make the landing page more compelling and conversion-optimized, following the successful resolution of all admin dashboard functionality, ODOO integration, and initial landing page creation with correct video, logo, and real dashboard screenshots.
 </current_work>
 
 <optional_next_step>
-The application is now ready for production deployment.
+Continue implementing the requested crossed-out pricing in the remaining sections of the  page.
 </optional_next_step>
