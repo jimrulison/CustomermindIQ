@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomerMindIQ - Unify Your Customer Intelligence + $3,000 Annual Bonus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        .bonus-announcement {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            margin: 2rem auto;
+            max-width: 600px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .bonus-value {
+            font-size: 2rem;
+            color: #ffeb3b;
+            display: block;
+            margin-top: 0.5rem;
+        }
+        
+        .cta-section {
+            margin-top: 2rem;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+        
+        .launch-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.6);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Video Section */
+        .video-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+        }
+
+        .play-button {
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Screenshots Section */
+        .screenshots {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .screenshot-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            margin-bottom: 3rem;
+        }
+
+        .screenshot-container.website-analytics {
+            border: 3px solid #4facfe;
+        }
+
+        .screenshot-container.customer-analytics {
+            border: 3px solid #27ae60;
+        }
+
+        .screenshot-image {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .screenshot-description {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .website-analytics .screenshot-description {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .customer-analytics .screenshot-description {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+
+        /* Bonus Features Section */
+        .bonus-features {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .bonus-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .bonus-header h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ffeb3b;
+        }
+
+        .bonus-value-prop {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .savings-highlight {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .bonus-modules {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .bonus-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .bonus-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .bonus-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #ffeb3b;
+        }
+
+        .bonus-value-badge {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .feature-card p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-header h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .pricing-card.featured {
+            border: 3px solid #4facfe;
+            transform: scale(1.05);
+        }
+        
+        .founders-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Final CTA */
+        .final-cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .cta-bonus-reminder {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 235, 59, 0.5);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .cta-bonus-reminder h3 {
+            color: #ffeb3b;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .bonus-announcement {
+                font-size: 1.1rem;
+                padding: 1rem 1.5rem;
+            }
+
+            .bonus-value {
+                font-size: 1.5rem;
+            }
+            
+            .features-grid, .bonus-modules {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .bonus-header h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">CustomerMindIQ</div>
+            <div class="nav-buttons">
+                <a href="/login" class="btn btn-primary">Start FREE 7-Day Trial - No Card Required</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="launch-badge">🚀 Brand New Launch - Be Among Our First Users!</div>
+                <h1>Ready to Unify Your Customer Intelligence?</h1>
+                <p class="hero-subtitle">Join our first wave of users. Try everything free for 7 days, then lock in annual pricing to get $7,164 in bonus modules at no extra cost.</p>
+                
+                <div class="bonus-announcement">
+                    <div>Annual Members Get Exclusive Bonus!</div>
+                    <span class="bonus-value">$7,164 Premium Modules - FREE</span>
+                </div>
+
+                <div class="cta-section">
+                    <a href="/login" class="btn btn-primary">Start Your FREE 7-Day Trial</a>
+                    <a href="#bonuses" class="btn btn-secondary">See Growth Engine Bonus</a>
+                </div>
+                <p style="font-size: 1.2rem; margin-top: 1.5rem; opacity: 0.9; font-weight: bold; background: rgba(255, 255, 255, 0.1); padding: 1rem; border-radius: 10px;">🚀 7-Day FREE Trial • No Credit Card Required • Cancel Anytime • Instant Access</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 3rem; margin-bottom: 1rem;">See CustomerMindIQ in Action</h2>
+                <p style="font-size: 1.4rem; opacity: 0.9; max-width: 700px; margin: 0 auto;">Watch founder Jim demonstrate the platform and explain how CustomerMindIQ can transform your business intelligence in under 2 minutes.</p>
+            </div>
+            
+            <div style="max-width: 900px; margin: 0 auto;">
+                <!-- Video Container -->
+                <div style="position: relative; background: white; padding: 1.5rem; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+                    <!-- Actual Video Player -->
+                    <div style="width: 100%; border-radius: 15px; overflow: hidden;">
+                        <video 
+                            id="customerminiq-demo-video" 
+                            controls 
+                            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 500'%3E%3Crect width='900' height='500' fill='%23667eea'/%3E%3Ctext x='450' y='250' font-family='Arial' font-size='24' fill='white' text-anchor='middle'%3ECustomerMindIQ Platform Demo%3C/text%3E%3C/svg%3E"
+                            style="width: 100%; height: 500px; background: #000; border-radius: 15px;"
+                        >
+                            <source src="https://customer-assets.emergentagent.com/job_livechat-admin/artifacts/1e2zfvir_CM%20Final%20-%20Made%20with%20Clipchamp_1756653379496.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    
+                    <!-- Video Benefits -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem; text-align: center;">
+                        <div style="background: #f8f9fa; color: #2c3e50; padding: 1.5rem; border-radius: 15px;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">👨‍💼</div>
+                            <div style="font-weight: bold; margin-bottom: 0.5rem;">Meet the Founder</div>
+                            <div style="font-size: 0.9rem; color: #6c757d;">Jim explains why he built CustomerMindIQ and his honest approach</div>
+                        </div>
+                        <div style="background: #f8f9fa; color: #2c3e50; padding: 1.5rem; border-radius: 15px;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🚀</div>
+                            <div style="font-weight: bold; margin-bottom: 0.5rem;">Live Demo</div>
+                            <div style="font-size: 0.9rem; color: #6c757d;">See the actual platform in action with real features</div>
+                        </div>
+                        <div style="background: #f8f9fa; color: #2c3e50; padding: 1.5rem; border-radius: 15px;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎁</div>
+                            <div style="font-weight: bold; margin-bottom: 0.5rem;">Bonus Explained</div>
+                            <div style="font-size: 0.9rem; color: #6c757d;">Learn about the $7,164 Growth Engine for annual members</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video CTA -->
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="/login" class="btn btn-primary" style="font-size: 1.3rem; padding: 1.2rem 3rem;">Start Your FREE Trial After Watching</a>
+                    <p style="font-size: 1rem; margin-top: 1.5rem; opacity: 0.8;">
+                        🕐 2-minute demo • 🚀 Live platform walkthrough • 💰 $7,164 bonus explanation • 🔒 No signup required to watch
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="screenshots">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 class="section-title">See Your Data Come Alive</h2>
+                <p style="font-size: 1.2rem; color: #6c757d; max-width: 600px; margin: 0 auto;">Real dashboards from the CustomerMindIQ platform showing how we transform scattered data into actionable insights.</p>
+            </div>
+
+            <!-- Website Analytics Screenshot -->
+            <div class="screenshot-container website-analytics">
+                <h3 style="text-align: center; color: #2c3e50; margin-bottom: 1.5rem; font-size: 1.8rem;">🌐 Website Analytics Intelligence</h3>
+                <div style="width: 100%; background: #f8f9fa; border-radius: 15px; padding: 1rem; text-align: center;">
+                    <img src="https://customer-assets.emergentagent.com/job_livechat-admin/artifacts/7077tmmd_Screenshot%202025-09-03%20142532.png" 
+                         alt="Website Analytics Dashboard showing 87.4% Health Score, 156 Keywords, Performance Optimization, SEO Intelligence"
+                         class="screenshot-image">
+                    <div class="screenshot-description">
+                        <div style="font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem;">📊 Website Analytics Intelligence Dashboard</div>
+                        <div style="font-size: 1rem; opacity: 0.9;">
+                            ✓ 87.4% Overall Health Score &nbsp;&nbsp; ✓ 156 Keywords Tracked &nbsp;&nbsp; ✓ Performance Optimization &nbsp;&nbsp; ✓ SEO Intelligence
+                        </div>
+                    </div>
+                </div>
+                <p style="color: #6c757d; font-style: italic; text-align: center; margin-top: 1rem;">Comprehensive website performance, SEO optimization, and technical analysis platform</p>
+            </div>
+
+            <!-- Customer Analytics Screenshot -->
+            <div class="screenshot-container customer-analytics">
+                <h3 style="text-align: center; color: #2c3e50; margin-bottom: 1.5rem; font-size: 1.8rem;">👥 Customer Analytics Intelligence</h3>
+                <div style="width: 100%; background: #f8f9fa; border-radius: 15px; padding: 1rem; text-align: center;">
+                    <img src="https://customer-assets.emergentagent.com/job_livechat-admin/artifacts/nf7201zu_Screenshot%202025-09-03%20142542.png" 
+                         alt="Customer Analytics Dashboard showing AI-Powered Analysis, Revenue Analytics, Growth Intelligence, Real-Time Monitoring"
+                         class="screenshot-image">
+                    <div class="screenshot-description">
+                        <div style="font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem;">🎯 Customer Analytics Intelligence Dashboard</div>
+                        <div style="font-size: 1rem; opacity: 0.9;">
+                            ✓ AI-Powered Customer Behavior Analysis &nbsp;&nbsp; ✓ Revenue Analytics Suite &nbsp;&nbsp; ✓ Growth Intelligence &nbsp;&nbsp; ✓ Real-Time Health Monitoring
+                        </div>
+                    </div>
+                </div>
+                <p style="color: #6c757d; font-style: italic; text-align: center; margin-top: 1rem;">AI-powered customer behavior analysis and purchase optimization platform</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Annual Bonus Features -->
+    <section class="bonus-features" id="bonuses">
+        <div class="container">
+            <div class="bonus-header">
+                <h2>Exclusive Annual Member Bonus</h2>
+                <p class="bonus-value-prop">Lock in annual plan and get $597/month Growth Acceleration Engine absolutely FREE</p>
+                <div class="savings-highlight">$7,164 Annual Value - Yours at no extra cost!</div>
+            </div>
+            
+            <div class="bonus-modules">
+                <div class="bonus-card">
+                    <div class="bonus-value-badge">$597/month • $7,164/year Value</div>
+                    <h3>🚀 Growth Acceleration Engine</h3>
+                    <p><strong>AI-powered growth strategist that never sleeps.</strong> Our most advanced module analyzes your business and tells you exactly where to focus for maximum revenue impact.</p>
+                    <ul style="text-align: left; margin-top: 1.5rem; opacity: 0.9; font-size: 1.1rem;">
+                        <li>✓ AI identifies your top 3 monthly growth opportunities</li>
+                        <li>✓ Automated A/B testing and optimization</li>
+                        <li>✓ Revenue leak detection and repair</li>
+                        <li>✓ Complete ROI tracking and learning</li>
+                        <li>✓ Growth forecasting and scenario planning</li>
+                        <li>✓ Competitive intelligence monitoring</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Everything You Need in One Platform</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🎯</span>
+                    <h3>Customer Intelligence</h3>
+                    <p>Understand who your customers really are, what they want, and when they're likely to buy. AI-powered insights that actually help you grow.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📊</span>
+                    <h3>Revenue Analytics</h3>
+                    <p>Track every dollar, predict future revenue, and identify which marketing channels actually drive growth. No more guessing where your money goes.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🚀</span>
+                    <h3>Growth Acceleration</h3>
+                    <p>Annual members get our most powerful module FREE. AI finds your biggest growth opportunities and tells you exactly how to capture them.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Real-Time Insights</h3>
+                    <p>Stop waiting for monthly reports. Get instant alerts when something important happens in your business. React to opportunities in real-time.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🔮</span>
+                    <h3>Predictive Analytics</h3>
+                    <p>Know which customers will churn before they do. Predict revenue 6 months out. Make decisions based on what will happen, not what already did.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🎨</span>
+                    <h3>Beautiful Dashboards</h3>
+                    <p>Data that actually makes sense. Clean, intuitive dashboards that executives love and team members actually use. No training required.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="cta-bonus-reminder">
+                <h3>🎁 Don't Miss Your $7,164 Bonus</h3>
+                <p style="font-size: 1.2rem; opacity: 0.9;">Annual members get the Growth Acceleration Engine absolutely FREE. That's $597/month in AI-powered growth tools at no extra cost.</p>
+            </div>
+            
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to Transform Your Business Intelligence?</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9;">Join our first wave of users. Try everything free for 7 days.</p>
+            
+            <div>
+                <a href="/login" class="btn btn-primary" style="font-size: 1.4rem; padding: 1.5rem 4rem;">Start Your FREE 7-Day Trial</a>
+            </div>
+            
+            <p style="font-size: 1.1rem; margin-top: 2rem; opacity: 0.8;">
+                🚀 No Credit Card Required • ⚡ Instant Setup • 🔒 Cancel Anytime • 🎁 $7,164 Annual Bonus
+            </p>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
