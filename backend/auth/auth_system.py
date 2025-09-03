@@ -797,7 +797,7 @@ async def create_default_admin():
             "company_name": "Customer Mind IQ",
             "phone": None,
             "role": UserRole.SUPER_ADMIN,
-            "subscription_tier": SubscriptionTier.ENTERPRISE,
+            "subscription_tier": SubscriptionTier.SCALE,
             "is_active": True,
             "email_verified": True,
             "created_at": datetime.utcnow(),
