@@ -693,6 +693,19 @@ async def get_current_email_provider(
     
     config = await get_email_provider_config()
     
+    # Check ODOO integration status
+    odoo_status = {"available": False, "connected": False}
+    try:
+        from modules.odoo_integration import odoo_integration
+        odoo_status["available"] = True
+        odoo_status["connected"] = odoo_integration.connected or odoo_integration._connect()
+        if odoo_status["connected"]:
+            odoo_status["message"] = "ODOO email integration active"
+        else:
+            odoo_status["message"] = "ODOO connection failed"
+    except Exception as e:
+        odoo_status["message"] = f"ODOO integration error: {str(e)}"
+    
     # Hide sensitive information
     config_dict = config.dict()
     if config_dict.get("api_key"):
@@ -702,7 +715,9 @@ async def get_current_email_provider(
     
     return {
         "provider_config": config_dict,
-        "available_providers": [provider.value for provider in EmailProvider]
+        "available_providers": [provider.value for provider in EmailProvider],
+        "odoo_integration": odoo_status,
+        "email_routing": "ODOO (preferred) -> Configured Provider (fallback)" if odoo_status["connected"] else "Configured Provider Only"
     }
 
 @router.get("/email/stats")
