@@ -228,6 +228,91 @@ async def start_free_trial(trial_request: TrialRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Trial activation failed: {str(e)}")
 
+@router.post("/trial/register")
+async def register_trial_user(trial_data: TrialRegistration):
+    """Register a new user with 7-day free trial"""
+    try:
+        # Check if user already exists
+        existing_user = await db.users.find_one({"email": trial_data.email})
+        
+        if existing_user:
+            if existing_user.get("has_had_trial", False):
+                raise HTTPException(status_code=400, detail="Email already registered and trial used")
+            else:
+                # User exists but hasn't used trial, activate trial
+                trial_end = datetime.utcnow() + timedelta(days=7)
+                
+                await db.users.update_one(
+                    {"email": trial_data.email},
+                    {"$set": {
+                        "plan_type": "free",
+                        "billing_cycle": "trial",
+                        "subscription_tier": "free",
+                        "subscription_start": datetime.utcnow(),
+                        "subscription_end": trial_end,
+                        "is_active": True,
+                        "is_trial": True,
+                        "has_had_trial": True,
+                        "updated_at": datetime.utcnow()
+                    }}
+                )
+                
+                return {
+                    "status": "success",
+                    "message": "Trial activated for existing user",
+                    "trial_end": trial_end,
+                    "user": {
+                        "email": trial_data.email,
+                        "first_name": existing_user.get("first_name"),
+                        "last_name": existing_user.get("last_name")
+                    }
+                }
+        
+        # Create new user with trial
+        user_id = str(uuid.uuid4())
+        trial_end = datetime.utcnow() + timedelta(days=7)
+        
+        new_user = {
+            "user_id": user_id,
+            "email": trial_data.email,
+            "first_name": trial_data.first_name,
+            "last_name": trial_data.last_name,
+            "company_name": trial_data.company_name,
+            "password": secrets.token_urlsafe(16),  # Generate random password for trial
+            "role": "user",
+            "plan_type": "free",
+            "billing_cycle": "trial",
+            "subscription_tier": "free",
+            "subscription_start": datetime.utcnow(),
+            "subscription_end": trial_end,
+            "is_active": True,
+            "is_trial": True,
+            "has_had_trial": True,
+            "created_at": datetime.utcnow(),
+            "updated_at": datetime.utcnow()
+        }
+        
+        await db.users.insert_one(new_user)
+        
+        return {
+            "status": "success",
+            "message": "Trial user registered successfully",
+            "trial_end": trial_end,
+            "user": {
+                "user_id": user_id,
+                "email": trial_data.email,
+                "first_name": trial_data.first_name,
+                "last_name": trial_data.last_name,
+                "company_name": trial_data.company_name,
+                "password": new_user["password"]  # Return temp password for auto-login
+            }
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Trial registration failed: {str(e)}")
+
 @router.get("/check-access/{user_email}")
 async def check_user_access(user_email: str):
     """Check user's subscription access and permissions"""
