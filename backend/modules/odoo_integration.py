@@ -1,20 +1,18 @@
 import os
 import xmlrpc.client
-import httpx
 import uuid
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks, Query
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr, validator
-from enum import Enum
 from dotenv import load_dotenv
 import logging
 from functools import wraps
 import time
 
 # Import auth dependencies
-from auth.auth_system import get_current_user, require_role, UserRole, UserProfile, SubscriptionTier
+from auth.auth_system import require_role, UserRole, UserProfile
 
 # Load environment variables
 load_dotenv()
