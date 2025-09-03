@@ -216,6 +216,23 @@ async def send_via_provider(provider_config: EmailProviderConfig, to_email: str,
                            html_content: str, text_content: str = None) -> Dict[str, Any]:
     """Send email via configured provider"""
     
+    # Check if ODOO integration is available and preferred
+    try:
+        from modules.odoo_integration import odoo_integration
+        
+        # Test if ODOO is connected and working
+        if odoo_integration.connected or odoo_integration._connect():
+            logger.info(f"Routing email to {to_email} through ODOO")
+            success = odoo_integration.send_email(to_email, subject, html_content)
+            return {
+                "success": success,
+                "provider_response": "odoo_integration",
+                "provider": "odoo"
+            }
+    except Exception as odoo_error:
+        logger.warning(f"ODOO email failed, falling back to configured provider: {str(odoo_error)}")
+    
+    # Fallback to configured provider
     if provider_config.provider == EmailProvider.SENDGRID:
         return await send_via_sendgrid(provider_config, to_email, subject, html_content, text_content)
     elif provider_config.provider == EmailProvider.MAILGUN:
