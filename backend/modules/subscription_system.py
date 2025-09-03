@@ -278,13 +278,16 @@ async def register_trial_user(trial_data: TrialRegistration):
         user_id = str(uuid.uuid4())
         trial_end = datetime.utcnow() + timedelta(days=7)
         
+        # Generate random password and hash it properly
+        temp_password = secrets.token_urlsafe(16)
+        
         new_user = {
             "user_id": user_id,
             "email": trial_data.email,
             "first_name": trial_data.first_name,
             "last_name": trial_data.last_name,
             "company_name": trial_data.company_name,
-            "password": secrets.token_urlsafe(16),  # Generate random password for trial
+            "password_hash": hash_password(temp_password),  # Store hashed password
             "role": "user",
             "plan_type": "free",
             "billing_cycle": "trial",
