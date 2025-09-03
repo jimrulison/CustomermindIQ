@@ -112,10 +112,9 @@ class TrialRegistrationTester:
         test_name = "Duplicate Registration Error Handling"
         
         try:
-            # Use same email as first test - but this will be different due to timestamp
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            # Use same email as first test
             test_data = {
-                "email": f"jane.smith.{timestamp}@testcompany.com",
+                "email": self.test_email,
                 "first_name": "Jane",
                 "last_name": "Smith",
                 "company_name": "Test Company Inc"
