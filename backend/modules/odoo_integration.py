@@ -374,7 +374,7 @@ class ODOOIntegration:
             
             # Create mail record
             mail_id = self.models.execute_kw(
-                self.database, self.uid, self.api_key,
+                self.database, self.uid, self.password,
                 'mail.mail', 'create',
                 [mail_data]
             )
