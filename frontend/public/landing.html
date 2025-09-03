@@ -204,8 +204,28 @@
 
         .screenshot-image {
             width: 100%;
+            height: auto;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: block;
+            max-width: 100%;
+            background: #f8f9fa;
+            min-height: 300px;
+            object-fit: contain;
+        }
+        
+        .screenshot-image:not([src]), .screenshot-image[src=""] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .screenshot-image:not([src])::after, .screenshot-image[src=""]::after {
+            content: "📊 Dashboard Screenshot Loading...";
         }
 
         .screenshot-description {
