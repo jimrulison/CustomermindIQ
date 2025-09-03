@@ -61,8 +61,8 @@ const AdminPortalEnhanced = () => {
       const response = await axios.get(`${backendUrl}/api/admin/analytics/dashboard`, {
         headers: getAuthHeaders()
       });
-      if (response.data.status === 'success') {
-        setAdminData(response.data.analytics);
+      if (response.data) {
+        setAdminData(response.data);
       }
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
