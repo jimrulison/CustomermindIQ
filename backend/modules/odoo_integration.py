@@ -1379,3 +1379,65 @@ async def sync_customers_from_odoo(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Customer sync failed: {str(e)}")
 
+@router.post("/email/templates/create-defaults")
+async def create_default_templates(
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Create default Customer Mind IQ email templates in ODOO"""
+    try:
+        created_templates = await create_default_email_templates()
+        
+        return {
+            "status": "success",
+            "message": f"Created {len(created_templates)} default email templates",
+            "templates": created_templates,
+            "created_count": len(created_templates)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to create default templates: {str(e)}")
+
+@router.get("/integration/status")
+async def get_integration_status(
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get comprehensive ODOO integration status"""
+    try:
+        # Test connection
+        connection_status = odoo_integration.test_connection()
+        
+        # Get template count
+        templates = odoo_integration.get_email_templates()
+        
+        # Get customer count
+        customers = odoo_integration.get_customers(limit=5)  # Just get a few for testing
+        
+        # Get recent campaign stats
+        recent_campaigns = await db.odoo_email_campaigns.count_documents({
+            "sent_at": {"$gte": datetime.utcnow() - timedelta(days=30)}
+        })
+        
+        return {
+            "connection": connection_status,
+            "statistics": {
+                "email_templates": len(templates),
+                "customers_available": len(customers),
+                "campaigns_last_30_days": recent_campaigns
+            },
+            "features": {
+                "email_campaigns": True,
+                "customer_sync": True,
+                "template_management": True,
+                "contact_forms": True
+            },
+            "last_checked": datetime.utcnow()
+        }
+        
+    except Exception as e:
+        return {
+            "connection": {"status": "error", "message": str(e)},
+            "statistics": {"error": "Could not retrieve statistics"},
+            "features": {"error": "Could not check features"},
+            "last_checked": datetime.utcnow()
+        }
+
