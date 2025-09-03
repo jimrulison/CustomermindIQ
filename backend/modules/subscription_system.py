@@ -287,6 +287,7 @@ async def register_trial_user(trial_data: TrialRegistration):
             "first_name": trial_data.first_name,
             "last_name": trial_data.last_name,
             "company_name": trial_data.company_name,
+            "phone": None,  # Required by UserProfile
             "password_hash": hash_password(temp_password),  # Store hashed password
             "role": "user",
             "plan_type": "free",
@@ -297,6 +298,9 @@ async def register_trial_user(trial_data: TrialRegistration):
             "is_active": True,
             "is_trial": True,
             "has_had_trial": True,
+            "email_verified": False,  # Required by UserProfile
+            "last_login": None,  # Required by UserProfile
+            "profile_picture": None,  # Required by UserProfile
             "created_at": datetime.utcnow(),
             "updated_at": datetime.utcnow()
         }
