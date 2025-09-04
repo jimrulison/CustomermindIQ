@@ -14,6 +14,7 @@ const SignIn = ({ onSignIn }) => {
   const [showSignUp, setShowSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showSignUpPassword, setShowSignUpPassword] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
   const [signUpData, setSignUpData] = useState({
     first_name: '',
     last_name: '',
