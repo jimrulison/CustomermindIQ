@@ -905,7 +905,7 @@ async def cancel_subscription_with_refund(cancellation_data: dict):
             "effective_date": cancellation_effective_date,
             "refund_amount": refund_amount,
             "refund_formatted": f"${refund_amount/100:.2f}",
-            "refund_processing": "Refunds processed within 48 business hours",
+            "refund_processing": "Refunds processed within 1-2 business days",
             "data_retention": "Data will be retained for 2 weeks after cancellation"
         }
         
