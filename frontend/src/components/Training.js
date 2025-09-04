@@ -331,6 +331,26 @@ const Training = () => {
         "Integration & Setup Help",
         "Advanced Features FAQ"
       ]
+    },
+    {
+      id: 7,
+      title: "Customer Mind Quiz and Answers",
+      description: "Test your knowledge with our comprehensive quiz covering all CustomerMind IQ features and best practices",
+      icon: Award,
+      pages: "Quiz",
+      lastUpdated: "January 2025",
+      downloadUrl: "https://customer-assets.emergentagent.com/job_mindiq-customer/artifacts/s9mm15oh_Customer%20Mind%20quiz%20and%20answers.docx",
+      pdfType: "quiz",
+      filename: "Customer_Mind_quiz_and_answers.docx",
+      size: "DOCX",
+      sections: [
+        "Platform Knowledge Assessment",
+        "Feature Usage Questions",
+        "Best Practices Quiz",
+        "Analytics & Reporting Questions",
+        "Support & Troubleshooting Quiz",
+        "Complete Answer Key"
+      ]
     }
   ];
 
