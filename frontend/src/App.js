@@ -688,14 +688,32 @@ function AppContent() {
       
       {/* Overage Approval Modal */}
       {showOverageApproval && (
-        <OverageApproval 
-          overageStatus={overageStatus}
-          onClose={() => setShowOverageApproval(false)}
-          onApprove={() => {
-            setShowOverageApproval(false);
-            setOverageStatus(null);
-          }}
-        />
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-slate-900 rounded-xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-white">Approve Additional Services</h2>
+                <button 
+                  onClick={() => setShowOverageApproval(false)}
+                  className="text-slate-400 hover:text-white"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <OverageApproval 
+                userEmail={user?.email}
+                onApprovalComplete={(result) => {
+                  setShowOverageApproval(false);
+                  setOverageStatus(null);
+                  // Optionally show a success message
+                  console.log('Overage approval completed:', result);
+                }}
+              />
+            </div>
+          </div>
+        </div>
       )}
       
       <div className="container mx-auto px-6 py-8">
