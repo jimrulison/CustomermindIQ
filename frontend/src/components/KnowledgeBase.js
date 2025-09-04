@@ -951,6 +951,7 @@ A successful CustomerMind IQ implementation transforms your organization's relat
           padding: 4px 8px;
           border-radius: 12px;
           font-size: 0.8rem;
+          color: #000000; /* Ensure count text is black */
         }
 
         .category-item.active .category-count {
