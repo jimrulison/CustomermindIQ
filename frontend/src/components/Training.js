@@ -100,6 +100,30 @@ const Training = () => {
     },
     {
       id: 1,
+      title: "Dashboard & Navigation Essentials",
+      description: "Master the CustomerMind IQ dashboard and navigation system for efficient platform usage",
+      duration: "Video",
+      difficulty: "Beginner",
+      category: "Getting Started",
+      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=225&fit=crop",
+      videoUrl: "https://customer-assets.emergentagent.com/job_customer-mind-iq-5/artifacts/0iqr1apf_Training%20Video%201-%20Dashboard%2C%20Navigation.mp4",
+      topics: ["Dashboard Overview", "Navigation Menu", "User Interface", "Quick Actions", "Settings Access"],
+      featured: true // Mark as featured for new users
+    },
+    {
+      id: 2,
+      title: "Command Center Deep Dive",
+      description: "Comprehensive guide to the CustomerMind IQ Command Center and its powerful management capabilities",
+      duration: "Video",
+      difficulty: "Intermediate",
+      category: "Advanced Features",
+      thumbnail: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=225&fit=crop",
+      videoUrl: "https://customer-assets.emergentagent.com/job_customer-mind-iq-5/artifacts/khwcrfkz_Training%20Video%202-%20Command%20Center.mp4",
+      topics: ["Command Center Overview", "Management Tools", "Advanced Controls", "Automation Features", "System Monitoring"],
+      featured: true // Mark as featured for advanced users
+    },
+    {
+      id: 3,
       title: "Getting Started with Website Intelligence Hub",
       description: "Complete overview of the platform and how to add your first website",
       duration: "8:45",
@@ -110,7 +134,7 @@ const Training = () => {
       topics: ["Platform Navigation", "Adding Websites", "Dashboard Overview", "Basic Setup"]
     },
     {
-      id: 2,
+      id: 4,
       title: "Understanding Performance Metrics",
       description: "Deep dive into Core Web Vitals and performance optimization",
       duration: "12:30",
@@ -121,7 +145,7 @@ const Training = () => {
       topics: ["Core Web Vitals", "Load Times", "Performance Scoring", "Optimization Tips"]
     },
     {
-      id: 3,
+      id: 5,
       title: "SEO Intelligence Mastery",
       description: "Maximize your search engine optimization with our SEO tools",
       duration: "15:22",
@@ -132,7 +156,7 @@ const Training = () => {
       topics: ["Keyword Research", "Technical SEO", "Content Optimization", "Competitor Analysis"]
     },
     {
-      id: 4,
+      id: 6,
       title: "Multi-Website Management",
       description: "Best practices for managing multiple websites and client accounts",
       duration: "10:15",
@@ -143,7 +167,7 @@ const Training = () => {
       topics: ["Website Organization", "Bulk Operations", "Client Reporting", "Workflow Optimization"]
     },
     {
-      id: 5,
+      id: 7,
       title: "Membership Tiers & Scaling",
       description: "Understanding plans, limits, and when to upgrade your membership",
       duration: "6:30",
@@ -154,7 +178,7 @@ const Training = () => {
       topics: ["Plan Comparison", "Upgrade Benefits", "Usage Tracking", "ROI Calculation"]
     },
     {
-      id: 6,
+      id: 8,
       title: "Advanced Analytics & Reporting",
       description: "Create professional reports and track ROI from your optimizations",
       duration: "18:45",
