@@ -285,37 +285,39 @@ function AppContent() {
     }, 500);
   };
 
-  // Separate function for background module loading
+  // Separate function for background module loading - optimized
   const loadBackgroundModules = async () => {
-    console.log('Starting background module loading...');
+    console.log('Starting optimized background module loading...');
     
     // Set default values immediately to prevent undefined errors
-    setMarketingDashboard({ modules: {} });
-    setMultiChannelData({ dashboard: {} });
-    setAbTestingData({ dashboard: {} });
-    setDynamicContentData({ dashboard: {} });
-    setLeadScoringData({ dashboard: {} });
-    setReferralData({ dashboard: {} });
-    setAdvancedDashboard({ modules: {} });
-    setBehavioralClusteringData({ dashboard: {} });
-    setChurnPreventionData({ dashboard: {} });
-    setCrossSellIntelligenceData({ dashboard: {} });
-    setAdvancedPricingData({ dashboard: {} });
-    setSentimentAnalysisData({ dashboard: {} });
-    setRevenueDashboard({ modules: {} });
-    setRevenueForecastingData({ dashboard: {} });
-    setPriceOptimizationData({ dashboard: {} });
-    setProfitMarginData({ dashboard: {} });
-    setSubscriptionAnalyticsData({ dashboard: {} });
-    setFinancialReportingData({ dashboard: {} });
-    setAnalyticsInsightsDashboard({ modules: {} });
-    setCustomerJourneyData({ dashboard_data: {} });
-    setRevenueAttributionData({ dashboard_data: {} });
-    setCohortAnalysisData({ dashboard_data: {} });
-    setCompetitiveIntelligenceData({ dashboard_data: {} });
-    setRoiForecastingData({ dashboard_data: {} });
+    const defaultModuleData = { modules: {}, dashboard: {}, dashboard_data: {} };
     
-    // Load modules in background without blocking UI
+    setMarketingDashboard(defaultModuleData);
+    setMultiChannelData(defaultModuleData);
+    setAbTestingData(defaultModuleData);
+    setDynamicContentData(defaultModuleData);
+    setLeadScoringData(defaultModuleData);
+    setReferralData(defaultModuleData);
+    setAdvancedDashboard(defaultModuleData);
+    setBehavioralClusteringData(defaultModuleData);
+    setChurnPreventionData(defaultModuleData);
+    setCrossSellIntelligenceData(defaultModuleData);
+    setAdvancedPricingData(defaultModuleData);
+    setSentimentAnalysisData(defaultModuleData);
+    setRevenueDashboard(defaultModuleData);
+    setRevenueForecastingData(defaultModuleData);
+    setPriceOptimizationData(defaultModuleData);
+    setProfitMarginData(defaultModuleData);
+    setSubscriptionAnalyticsData(defaultModuleData);
+    setFinancialReportingData(defaultModuleData);
+    setAnalyticsInsightsDashboard(defaultModuleData);
+    setCustomerJourneyData(defaultModuleData);
+    setRevenueAttributionData(defaultModuleData);
+    setCohortAnalysisData(defaultModuleData);
+    setCompetitiveIntelligenceData(defaultModuleData);
+    setRoiForecastingData(defaultModuleData);
+    
+    // Load modules with faster timeout and error handling
     const moduleLoaders = [
       { name: 'Marketing', loader: loadMarketingData },
       { name: 'Advanced Features', loader: loadAdvancedFeaturesData },
@@ -323,18 +325,21 @@ function AppContent() {
       { name: 'Analytics Insights', loader: loadAnalyticsInsightsData }
     ];
     
-    for (const { name, loader } of moduleLoaders) {
+    // Load modules in parallel with shorter timeout
+    const modulePromises = moduleLoaders.map(async ({ name, loader }) => {
       try {
         await Promise.race([
           loader(),
-          new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000))
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 1500)) // Reduced timeout
         ]);
-        console.log(`${name} data loaded`);
+        console.log(`${name} data loaded successfully`);
       } catch (error) {
         console.log(`${name} data load failed (non-critical):`, error.message);
       }
-    }
+    });
     
+    // Wait for all modules to complete (or timeout)
+    await Promise.allSettled(modulePromises);
     console.log('Background module loading completed');
   };
 
