@@ -943,3 +943,323 @@ async def cancel_subscription(user_email: str):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Subscription cancellation failed: {str(e)}")
+
+# ==============================================================================
+# ENHANCED REFUND SYSTEM WITH PREPAID BALANCE SUPPORT
+# ==============================================================================
+
+@router.post("/admin/process-refund")
+async def admin_process_refund(refund_request: RefundRequest):
+    """Admin endpoint for processing refunds with prepaid balance support"""
+    try:
+        user = await db.users.find_one({"email": refund_request.user_email})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        # Get current subscription details
+        subscription_end = user.get("subscription_end")
+        subscription_start = user.get("subscription_start")
+        billing_cycle = user.get("billing_cycle", "monthly")
+        plan_type = user.get("plan_type", "launch")
+        now = datetime.utcnow()
+        
+        # Get prepaid balance
+        prepaid_balance = await db.prepaid_balances.find_one({"user_email": refund_request.user_email})
+        prepaid_amount = prepaid_balance.get("balance_amount", 0) if prepaid_balance else 0
+        
+        # Calculate refunds based on refund type
+        subscription_refund = 0
+        
+        if refund_request.refund_type == "immediate" and subscription_end and subscription_end > now:
+            # Calculate prorated refund for remaining time
+            days_remaining = (subscription_end - now).days
+            cycle_days = 365 if billing_cycle == "annual" else 30
+            
+            plan_data = SUBSCRIPTION_FEATURES.get(plan_type, {})
+            paid_amount = plan_data.get(f"{billing_cycle}_price", 0)
+            
+            # Prorated refund calculation
+            subscription_refund = (paid_amount * days_remaining) / cycle_days
+        
+        # Total refund = subscription refund + prepaid balance
+        total_refund = subscription_refund + prepaid_amount
+        
+        # Create refund record
+        refund_record = {
+            "refund_id": str(uuid.uuid4()),
+            "user_email": refund_request.user_email,
+            "refund_type": refund_request.refund_type,
+            "subscription_refund": subscription_refund,
+            "prepaid_refund": prepaid_amount,
+            "total_refund": total_refund,
+            "reason": refund_request.reason,
+            "admin_notes": refund_request.admin_notes,
+            "status": "pending",
+            "created_at": now,
+            "processed_at": None,
+            "original_plan": plan_type,
+            "original_billing_cycle": billing_cycle,
+            "cancellation_effective_date": now if refund_request.refund_type == "immediate" else subscription_end
+        }
+        
+        await db.refund_requests.insert_one(refund_record)
+        
+        # Update user status based on refund type
+        if refund_request.refund_type == "immediate":
+            # Immediate cancellation
+            await db.users.update_one(
+                {"email": refund_request.user_email},
+                {"$set": {
+                    "is_active": False,
+                    "subscription_tier": "cancelled",
+                    "cancelled_at": now,
+                    "cancellation_type": "immediate_with_refund",
+                    "data_retention_until": now + timedelta(days=14)
+                }}
+            )
+            
+            # Clear prepaid balance
+            if prepaid_balance:
+                await db.prepaid_balances.update_one(
+                    {"user_email": refund_request.user_email},
+                    {"$set": {"balance_amount": 0, "last_updated": now}}
+                )
+        else:
+            # End of cycle cancellation - just refund prepaid balance
+            await db.users.update_one(
+                {"email": refund_request.user_email},
+                {"$set": {
+                    "cancellation_scheduled": subscription_end,
+                    "cancellation_type": "end_of_cycle_with_prepaid_refund",
+                    "prepaid_refund_processed": True
+                }}
+            )
+            
+            # Clear prepaid balance but keep subscription active until end
+            if prepaid_balance:
+                await db.prepaid_balances.update_one(
+                    {"user_email": refund_request.user_email},
+                    {"$set": {"balance_amount": 0, "last_updated": now}}
+                )
+        
+        return {
+            "status": "success",
+            "message": "Refund processed successfully",
+            "refund_details": {
+                "refund_id": refund_record["refund_id"],
+                "refund_type": refund_request.refund_type,
+                "subscription_refund": f"${subscription_refund/100:.2f}",
+                "prepaid_refund": f"${prepaid_amount/100:.2f}",
+                "total_refund": f"${total_refund/100:.2f}",
+                "effective_date": refund_record["cancellation_effective_date"],
+                "processing_time": "2-3 business days"
+            }
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Refund processing failed: {str(e)}")
+
+@router.get("/admin/refund-requests")
+async def get_refund_requests(
+    status: Optional[str] = Query(None, description="Filter by status"),
+    limit: int = Query(50, ge=1, le=200)
+):
+    """Get all refund requests for admin review"""
+    try:
+        query = {}
+        if status:
+            query["status"] = status
+        
+        requests = await db.refund_requests.find(query).sort("created_at", -1).limit(limit).to_list(length=None)
+        
+        # Format for display
+        for request in requests:
+            request["_id"] = str(request["_id"])
+            request["created_at_formatted"] = request["created_at"].strftime("%Y-%m-%d %H:%M:%S")
+            if request.get("processed_at"):
+                request["processed_at_formatted"] = request["processed_at"].strftime("%Y-%m-%d %H:%M:%S")
+        
+        return {
+            "status": "success",
+            "total_requests": len(requests),
+            "refund_requests": requests
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch refund requests: {str(e)}")
+
+# ==============================================================================
+# USAGE TRACKING AND OVERAGE BILLING SYSTEM
+# ==============================================================================
+
+@router.get("/usage/{user_email}")
+async def get_detailed_usage(user_email: str):
+    """Get detailed usage statistics with overage calculations"""
+    try:
+        user = await db.users.find_one({"email": user_email})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        plan_type = user.get("plan_type", "free")
+        limits = USAGE_LIMITS.get(plan_type, USAGE_LIMITS["free"])
+        
+        # Get actual usage data (this would be populated by your various modules)
+        current_usage = {
+            "contacts": await db.customers.count_documents({"owner_email": user_email}),
+            "websites": await db.websites.count_documents({"user_email": user_email}) if "websites" in await db.list_collection_names() else 0,
+            "keywords": await db.keywords.count_documents({"user_email": user_email}) if "keywords" in await db.list_collection_names() else 0,
+            "users": await db.team_members.count_documents({"team_owner": user_email}) if "team_members" in await db.list_collection_names() else 1,
+            "api_calls_per_month": await get_monthly_api_calls(user_email),
+            "email_sends_per_month": await get_monthly_email_sends(user_email),
+            "data_storage_gb": await calculate_data_storage(user_email)
+        }
+        
+        # Calculate overages and costs
+        usage_details = {}
+        total_overage_cost = 0
+        
+        for resource, current in current_usage.items():
+            limit = limits.get(resource, 0)
+            overage = max(0, current - limit) if limit != float('inf') else 0
+            overage_cost = overage * OVERAGE_PRICING.get(resource, 0) if limit != float('inf') else 0
+            total_overage_cost += overage_cost
+            
+            usage_details[resource] = {
+                "current": current,
+                "limit": limit if limit != float('inf') else "Unlimited",
+                "overage": overage,
+                "overage_cost": f"${overage_cost:.2f}",
+                "percentage_used": round((current / limit * 100) if limit != float('inf') else 0, 1),
+                "status": "over_limit" if overage > 0 else "within_limit"
+            }
+        
+        return {
+            "status": "success",
+            "user_email": user_email,
+            "plan_type": plan_type,
+            "usage_details": usage_details,
+            "total_overage_cost": f"${total_overage_cost:.2f}",
+            "billing_note": "Overages will be charged on your next billing cycle" if total_overage_cost > 0 else "All usage within plan limits"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Usage calculation failed: {str(e)}")
+
+@router.post("/admin/charge-overages")
+async def charge_usage_overages():
+    """Admin endpoint to process monthly overage charges for all users"""
+    try:
+        # Get all active users
+        active_users = await db.users.find({"is_active": True}).to_list(length=None)
+        
+        overage_charges = []
+        total_charges = 0
+        
+        for user in active_users:
+            user_email = user["email"]
+            plan_type = user.get("plan_type", "free")
+            
+            # Skip scale plan users (they have high limits)
+            if plan_type == "scale":
+                continue
+            
+            # Get usage and calculate overages
+            usage_response = await get_detailed_usage(user_email)
+            usage_details = usage_response["usage_details"]
+            
+            user_overage_cost = 0
+            overage_items = []
+            
+            for resource, details in usage_details.items():
+                if details["status"] == "over_limit":
+                    overage_cost = float(details["overage_cost"].replace("$", ""))
+                    if overage_cost > 0:
+                        user_overage_cost += overage_cost
+                        overage_items.append({
+                            "resource": resource,
+                            "overage_amount": details["overage"],
+                            "cost": overage_cost
+                        })
+            
+            if user_overage_cost > 0:
+                # Create overage charge record
+                overage_record = {
+                    "charge_id": str(uuid.uuid4()),
+                    "user_email": user_email,
+                    "plan_type": plan_type,
+                    "billing_period": datetime.utcnow().strftime("%Y-%m"),
+                    "overage_items": overage_items,
+                    "total_charge": user_overage_cost,
+                    "status": "pending",
+                    "created_at": datetime.utcnow()
+                }
+                
+                await db.overage_charges.insert_one(overage_record)
+                overage_charges.append(overage_record)
+                total_charges += user_overage_cost
+        
+        return {
+            "status": "success",
+            "message": f"Processed overage charges for {len(overage_charges)} users",
+            "total_charges": f"${total_charges:.2f}",
+            "overage_charges": overage_charges
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Overage charging failed: {str(e)}")
+
+# Helper functions for usage calculations
+async def get_monthly_api_calls(user_email: str) -> int:
+    """Get API calls for current month"""
+    try:
+        # This would track API calls - implement based on your API logging
+        current_month_start = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        
+        # Placeholder - implement actual API call tracking
+        api_logs = await db.api_logs.count_documents({
+            "user_email": user_email,
+            "timestamp": {"$gte": current_month_start}
+        }) if "api_logs" in await db.list_collection_names() else 0
+        
+        return api_logs
+    except:
+        return 0
+
+async def get_monthly_email_sends(user_email: str) -> int:
+    """Get emails sent for current month"""
+    try:
+        current_month_start = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        
+        # Count from email campaigns and trial emails
+        email_sends = await db.email_campaigns.aggregate([
+            {"$match": {
+                "user_email": user_email,
+                "sent_at": {"$gte": current_month_start}
+            }},
+            {"$group": {"_id": None, "total": {"$sum": "$recipient_count"}}}
+        ]).to_list(length=1)
+        
+        return email_sends[0]["total"] if email_sends else 0
+    except:
+        return 0
+
+async def calculate_data_storage(user_email: str) -> float:
+    """Calculate data storage usage in GB"""
+    try:
+        # This would calculate actual data storage - placeholder implementation
+        # You'd need to track file uploads, database size per user, etc.
+        
+        # Estimate based on customer records and other data
+        customer_count = await db.customers.count_documents({"owner_email": user_email})
+        campaigns_count = await db.email_campaigns.count_documents({"user_email": user_email})
+        
+        # Rough estimate: each customer = 1KB, each campaign = 10KB
+        estimated_gb = (customer_count * 0.001 + campaigns_count * 0.01) / 1024
+        
+        return round(estimated_gb, 2)
+    except:
+        return 0.1  # Minimum usage
