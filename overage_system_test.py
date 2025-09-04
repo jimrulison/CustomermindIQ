@@ -30,7 +30,7 @@ API_BASE = f"{BACKEND_URL}/api"
 class OverageApprovalSystemTester:
     def __init__(self):
         self.admin_token = None
-        self.test_user_email = "testuser@example.com"
+        self.test_user_email = "testuser123@example.com"
         self.results = []
         
     def log_result(self, test_name: str, success: bool, details: str = "", data: Any = None):
