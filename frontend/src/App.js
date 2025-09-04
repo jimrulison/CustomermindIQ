@@ -875,7 +875,13 @@ function AppContent() {
                             ))}
                           </div>
                         </div>
-                      ))}
+                      )) : (
+                        <div className="text-center py-8">
+                          <Brain className="w-12 h-12 mx-auto text-slate-500 mb-4" />
+                          <h3 className="text-white text-lg mb-2">No Customer Data Available</h3>
+                          <p className="text-slate-400 text-sm">Customer intelligence data is being loaded...</p>
+                        </div>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
