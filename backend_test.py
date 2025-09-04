@@ -997,6 +997,16 @@ class CustomerCommunicationTester:
         # Key findings
         print("🔍 KEY FINDINGS:")
         
+        # User-reported issues
+        user_issue_tests = [r for r in self.results if any(test in r["test"] for test in ["Admin Manual Loading", "Templates Functionality", "Trial Email System", "API Keys Configuration", "Basic System Health"])]
+        user_issues_success = all(r["success"] for r in user_issue_tests)
+        
+        if user_issues_success:
+            print("  ✅ User-Reported Issues: All systems operational - Admin manual, Templates, Trial emails, API keys ✅")
+        else:
+            failed_user_issues = [r["test"] for r in user_issue_tests if not r["success"]]
+            print(f"  ❌ User-Reported Issues Found: {', '.join(failed_user_issues)}")
+        
         # Support ticket workflow
         support_tests = [r for r in self.results if any(test in r["test"] for test in ["Support", "Ticket", "Admin View", "Admin Ticket Response", "Customer Ticket Reply"])]
         support_success = all(r["success"] for r in support_tests)
