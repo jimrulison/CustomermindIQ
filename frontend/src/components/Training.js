@@ -486,7 +486,18 @@ const Training = () => {
         <TabsContent value="videos" className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {videoContent.map((video) => (
-              <Card key={video.id} className="bg-slate-800/50 backdrop-blur-xl border-slate-700 hover:border-slate-600 transition-all group">
+              <Card key={video.id} className={`backdrop-blur-xl transition-all group ${
+                video.featured 
+                  ? "bg-gradient-to-br from-green-600/20 to-blue-600/20 border-green-500/50 ring-2 ring-green-400/50" 
+                  : "bg-slate-800/50 border-slate-700 hover:border-slate-600"
+              }`}>
+                {video.featured && (
+                  <div className="absolute -top-2 -right-2 z-10">
+                    <Badge className="bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold px-3 py-1">
+                      ⭐ FEATURED
+                    </Badge>
+                  </div>
+                )}
                 <div className="relative">
                   <img 
                     src={video.thumbnail} 
@@ -506,7 +517,7 @@ const Training = () => {
                     </Button>
                   </div>
                   <div className="absolute top-2 right-2">
-                    <Badge className={getCategoryColor(video.category)}>
+                    <Badge className={video.category === 'Growth' ? 'bg-green-500/20 text-green-400' : getCategoryColor(video.category)}>
                       {video.category}
                     </Badge>
                   </div>
