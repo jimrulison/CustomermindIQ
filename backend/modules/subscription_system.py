@@ -62,6 +62,57 @@ class PrepaidBalance(BaseModel):
     last_updated: datetime
     transaction_history: List[Dict[str, Any]] = []
 
+# Usage Limits and Overage Pricing
+USAGE_LIMITS = {
+    "free": {
+        "contacts": 100,
+        "websites": 1,
+        "keywords": 10,
+        "users": 1,
+        "api_calls_per_month": 1000,
+        "email_sends_per_month": 100,
+        "data_storage_gb": 1
+    },
+    "launch": {
+        "contacts": 1000,
+        "websites": 5,
+        "keywords": 50,
+        "users": 2,
+        "api_calls_per_month": 10000,
+        "email_sends_per_month": 1000,
+        "data_storage_gb": 10
+    },
+    "growth": {
+        "contacts": 10000,
+        "websites": 10,
+        "keywords": 200,
+        "users": 10,
+        "api_calls_per_month": 50000,
+        "email_sends_per_month": 10000,
+        "data_storage_gb": 50
+    },
+    "scale": {
+        "contacts": float('inf'),  # Unlimited
+        "websites": float('inf'),
+        "keywords": float('inf'),
+        "users": float('inf'),
+        "api_calls_per_month": 200000,
+        "email_sends_per_month": float('inf'),
+        "data_storage_gb": 200
+    }
+}
+
+# Overage Pricing (per unit when limits exceeded)
+OVERAGE_PRICING = {
+    "contacts": 0.01,           # $0.01 per extra contact per month
+    "websites": 5.00,           # $5.00 per extra website per month
+    "keywords": 0.50,           # $0.50 per extra keyword per month
+    "users": 10.00,             # $10.00 per extra user per month
+    "api_calls": 0.001,         # $0.001 per extra API call (1,000 calls = $1)
+    "email_sends": 0.01,        # $0.01 per extra email sent
+    "data_storage_gb": 2.00     # $2.00 per extra GB per month
+}
+
 # Subscription Tiers and Features - Updated with New Pricing Structure
 SUBSCRIPTION_FEATURES = {
     "free": {
