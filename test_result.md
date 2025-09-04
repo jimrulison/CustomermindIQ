@@ -2159,12 +2159,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Dashboard Loading Issue Fix"
+    - "Customer Intelligence Frontend Data Display"
     - "Live Chat System with Real-time Notifications - Comprehensive Review Testing"
     - "Fixed Admin Dashboard - Comprehensive Review Testing"
     - "Real-time Chat Notifications - Comprehensive Review Testing"
     - "Admin Portal Integration - Comprehensive Review Testing"
-    - "Overall Platform Stability - Comprehensive Review Testing"
   completed_tasks:
     - "Phase 2 Enhanced CRM - Sales Pipeline Management"
     - "Phase 2 Enhanced CRM - Lead/Opportunity Creation"
@@ -2172,9 +2171,10 @@ test_plan:
     - "Phase 2 Enhanced CRM - Customer Relationship Management"
     - "Phase 2 Enhanced CRM - CRM Dashboard"
     - "Phase 2 Enhanced CRM - Integration Status Update"
-  stuck_tasks:
     - "Dashboard Loading Issue Fix"
     - "Overall Platform Stability - Comprehensive Review Testing"
+  stuck_tasks:
+    - "Customer Intelligence Frontend Data Display"
     - "Phase 2 Enhanced CRM - Lead Stage Updates"
   test_all: false
   test_priority: "high_first"
