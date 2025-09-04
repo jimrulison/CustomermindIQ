@@ -614,6 +614,28 @@ const SignIn = ({ onSignIn }) => {
                 {loading ? 'Signing In...' : 'Sign In'}
               </Button>
               
+              <div className="text-center mt-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const email = prompt("Enter your email address for password reset:");
+                    if (email) {
+                      fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/request-password-reset`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                      })
+                      .then(res => res.json())
+                      .then(data => alert(data.message))
+                      .catch(err => alert('Password reset request failed'));
+                    }
+                  }}
+                  className="text-blue-400 hover:text-blue-300 text-sm underline"
+                >
+                  Forgot Password?
+                </button>
+              </div>
+              
               <Button
                 type="button"
                 onClick={() => setShowSignUp(true)}
