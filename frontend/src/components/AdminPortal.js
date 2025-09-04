@@ -416,6 +416,7 @@ const AdminPortalEnhanced = () => {
                 { id: 'contact-forms', name: 'Contact Forms', icon: Mail },
                 { id: 'emails', name: 'Email System', icon: Mail },
                 { id: 'trial-emails', name: 'Trial Emails', icon: Clock },
+                { id: 'refunds', name: 'Refunds & Usage', icon: CreditCard },
                 ...(user.role === 'super_admin' ? [
                   { id: 'api-keys', name: 'API Keys', icon: Key }
                 ] : []),
