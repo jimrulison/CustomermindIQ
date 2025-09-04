@@ -197,7 +197,7 @@ const Training = () => {
       title: "Quick Start Guide",
       description: "Get up and running with CustomerMind IQ in under 30 minutes - complete setup and navigation",
       icon: BookOpen,
-      pages: 7,
+      pages: 6,
       lastUpdated: "January 2025",
       downloadUrl: "/api/download/quick-start-guide",
       pdfType: "quick-start-guide",
