@@ -181,7 +181,7 @@ const Training = () => {
       topics: ["Keyword Research", "Technical SEO", "Content Optimization", "Competitor Analysis"]
     },
     {
-      id: 6,
+      id: 8,
       title: "Multi-Website Management",
       description: "Best practices for managing multiple websites and client accounts",
       duration: "10:15",
@@ -192,7 +192,7 @@ const Training = () => {
       topics: ["Website Organization", "Bulk Operations", "Client Reporting", "Workflow Optimization"]
     },
     {
-      id: 7,
+      id: 9,
       title: "Membership Tiers & Scaling",
       description: "Understanding plans, limits, and when to upgrade your membership",
       duration: "6:30",
@@ -203,7 +203,7 @@ const Training = () => {
       topics: ["Plan Comparison", "Upgrade Benefits", "Usage Tracking", "ROI Calculation"]
     },
     {
-      id: 8,
+      id: 10,
       title: "Advanced Analytics & Reporting",
       description: "Create professional reports and track ROI from your optimizations",
       duration: "18:45",
