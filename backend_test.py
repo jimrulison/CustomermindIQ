@@ -813,54 +813,54 @@ class CustomerCommunicationTester:
         
         headers = {"Authorization": f"Bearer {self.admin_token}"}
         
-        # Test 1: GET /api/email/trial/logs
+        # Test 1: GET /api/email/email/trial/logs (correct path based on router prefix)
         try:
-            response = requests.get(f"{API_BASE}/email/trial/logs", headers=headers, timeout=60, verify=False)
+            response = requests.get(f"{API_BASE}/email/email/trial/logs", headers=headers, timeout=60, verify=False)
             if response.status_code == 200:
                 data = response.json()
                 log_count = len(data.get("logs", [])) if isinstance(data.get("logs"), list) else 0
                 self.log_result(
-                    "GET /api/email/trial/logs", 
+                    "GET /api/email/email/trial/logs", 
                     True, 
                     f"Successfully retrieved {log_count} trial email logs"
                 )
                 logs_success = True
             elif response.status_code == 500:
-                self.log_result("GET /api/email/trial/logs", False, "500 Internal Server Error - RUNTIME ERROR DETECTED")
+                self.log_result("GET /api/email/email/trial/logs", False, "500 Internal Server Error - RUNTIME ERROR DETECTED")
                 logs_success = False
             elif response.status_code == 404:
-                self.log_result("GET /api/email/trial/logs", False, "404 Not Found - endpoint not accessible")
+                self.log_result("GET /api/email/email/trial/logs", False, "404 Not Found - endpoint not accessible")
                 logs_success = False
             else:
-                self.log_result("GET /api/email/trial/logs", False, f"Status: {response.status_code}", response.text[:200])
+                self.log_result("GET /api/email/email/trial/logs", False, f"Status: {response.status_code}", response.text[:200])
                 logs_success = False
         except Exception as e:
-            self.log_result("GET /api/email/trial/logs", False, f"Exception: {str(e)}")
+            self.log_result("GET /api/email/email/trial/logs", False, f"Exception: {str(e)}")
             logs_success = False
         
-        # Test 2: GET /api/email/trial/stats
+        # Test 2: GET /api/email/email/trial/stats (correct path based on router prefix)
         try:
-            response = requests.get(f"{API_BASE}/email/trial/stats", headers=headers, timeout=60, verify=False)
+            response = requests.get(f"{API_BASE}/email/email/trial/stats", headers=headers, timeout=60, verify=False)
             if response.status_code == 200:
                 data = response.json()
                 stats = data.get("statistics", {})
                 self.log_result(
-                    "GET /api/email/trial/stats", 
+                    "GET /api/email/email/trial/stats", 
                     True, 
                     f"Successfully retrieved trial email stats: {stats}"
                 )
                 stats_success = True
             elif response.status_code == 500:
-                self.log_result("GET /api/email/trial/stats", False, "500 Internal Server Error - RUNTIME ERROR DETECTED")
+                self.log_result("GET /api/email/email/trial/stats", False, "500 Internal Server Error - RUNTIME ERROR DETECTED")
                 stats_success = False
             elif response.status_code == 404:
-                self.log_result("GET /api/email/trial/stats", False, "404 Not Found - endpoint not accessible")
+                self.log_result("GET /api/email/email/trial/stats", False, "404 Not Found - endpoint not accessible")
                 stats_success = False
             else:
-                self.log_result("GET /api/email/trial/stats", False, f"Status: {response.status_code}", response.text[:200])
+                self.log_result("GET /api/email/email/trial/stats", False, f"Status: {response.status_code}", response.text[:200])
                 stats_success = False
         except Exception as e:
-            self.log_result("GET /api/email/trial/stats", False, f"Exception: {str(e)}")
+            self.log_result("GET /api/email/email/trial/stats", False, f"Exception: {str(e)}")
             stats_success = False
         
         # Test 3: POST /api/subscriptions/trial/register (with sample data)
