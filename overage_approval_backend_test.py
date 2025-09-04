@@ -64,7 +64,9 @@ class OverageApprovalTester:
         print("=" * 50)
         
         try:
-            response = requests.post(f"{API_BASE}/auth/login", json=ADMIN_CREDENTIALS, timeout=60, verify=False)
+            # Add proper headers for the request
+            headers = {"Content-Type": "application/json"}
+            response = requests.post(f"{API_BASE}/auth/login", json=ADMIN_CREDENTIALS, headers=headers, timeout=60, verify=False)
             if response.status_code == 200:
                 data = response.json()
                 self.admin_token = data.get("access_token")
