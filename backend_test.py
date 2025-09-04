@@ -646,6 +646,307 @@ class CustomerCommunicationTester:
             self.log_result("Support Tier Information", False, f"Exception: {str(e)}")
             return False
 
+    # =====================================================
+    # USER-REPORTED ISSUE TESTS
+    # =====================================================
+
+    async def test_admin_manual_loading(self):
+        """Test admin manual accessibility via API endpoints"""
+        print("📚 TESTING ADMIN MANUAL LOADING")
+        print("=" * 50)
+        
+        if not self.admin_token:
+            self.log_result("Admin Manual Loading", False, "No admin token available")
+            return False
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        manual_endpoints = [
+            "/api/admin/manual",
+            "/api/training/manual", 
+            "/api/download/admin-training-manual",
+            "/api/download/complete-training-manual",
+            "/api/download/quick-start-guide"
+        ]
+        
+        successful_endpoints = []
+        failed_endpoints = []
+        
+        for endpoint in manual_endpoints:
+            try:
+                response = requests.get(f"{API_BASE.replace('/api', '')}{endpoint}", headers=headers, timeout=60, verify=False)
+                if response.status_code == 200:
+                    successful_endpoints.append(f"{endpoint} (200)")
+                elif response.status_code == 404:
+                    failed_endpoints.append(f"{endpoint} (404 - Not Found)")
+                else:
+                    failed_endpoints.append(f"{endpoint} ({response.status_code})")
+            except Exception as e:
+                failed_endpoints.append(f"{endpoint} (Exception: {str(e)[:50]})")
+        
+        if successful_endpoints:
+            self.log_result(
+                "Admin Manual Loading", 
+                True, 
+                f"Found {len(successful_endpoints)} working manual endpoints: {', '.join(successful_endpoints)}"
+            )
+            return True
+        else:
+            self.log_result(
+                "Admin Manual Loading", 
+                False, 
+                f"No working manual endpoints found. Tested: {', '.join(failed_endpoints)}"
+            )
+            return False
+
+    async def test_templates_functionality(self):
+        """Test templates functionality - check for template endpoints"""
+        print("📄 TESTING TEMPLATES FUNCTIONALITY")
+        print("=" * 50)
+        
+        if not self.admin_token:
+            self.log_result("Templates Functionality", False, "No admin token available")
+            return False
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        template_endpoints = [
+            "/api/templates",
+            "/api/email/templates",
+            "/api/admin/templates",
+            "/api/email/email/templates"
+        ]
+        
+        successful_endpoints = []
+        template_data = {}
+        
+        for endpoint in template_endpoints:
+            try:
+                response = requests.get(f"{API_BASE}{endpoint}", headers=headers, timeout=60, verify=False)
+                if response.status_code == 200:
+                    data = response.json()
+                    template_count = 0
+                    
+                    # Try to count templates from different response formats
+                    if isinstance(data, list):
+                        template_count = len(data)
+                    elif isinstance(data, dict):
+                        if 'templates' in data:
+                            template_count = len(data['templates']) if isinstance(data['templates'], list) else 1
+                        elif 'data' in data:
+                            template_count = len(data['data']) if isinstance(data['data'], list) else 1
+                        else:
+                            template_count = len(data.keys())
+                    
+                    successful_endpoints.append(f"{endpoint} ({template_count} templates)")
+                    template_data[endpoint] = {"count": template_count, "data": data}
+                    
+            except Exception as e:
+                continue
+        
+        if successful_endpoints:
+            total_templates = sum(template_data[ep.split(' (')[0]]["count"] for ep in successful_endpoints)
+            self.log_result(
+                "Templates Functionality", 
+                True, 
+                f"Found {len(successful_endpoints)} template endpoints with {total_templates} total templates: {', '.join(successful_endpoints)}"
+            )
+            return True
+        else:
+            self.log_result(
+                "Templates Functionality", 
+                False, 
+                "No working template endpoints found. User mentioned 'quite a few' templates including 4 new ones."
+            )
+            return False
+
+    async def test_trial_email_system(self):
+        """Test trial email system endpoints for runtime errors"""
+        print("📧 TESTING TRIAL EMAIL SYSTEM")
+        print("=" * 50)
+        
+        if not self.admin_token:
+            self.log_result("Trial Email System", False, "No admin token available")
+            return False
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        trial_endpoints = [
+            ("/api/email/trial/logs", "GET"),
+            ("/api/email/trial/stats", "GET"), 
+            ("/api/email/trial/process-scheduled", "POST"),
+            ("/api/subscriptions/trial/register", "POST")
+        ]
+        
+        successful_tests = []
+        failed_tests = []
+        
+        for endpoint, method in trial_endpoints:
+            try:
+                if method == "GET":
+                    response = requests.get(f"{API_BASE}{endpoint}", headers=headers, timeout=60, verify=False)
+                else:  # POST
+                    if "register" in endpoint:
+                        # Test trial registration with sample data
+                        test_data = {
+                            "email": f"trial_test_{datetime.now().strftime('%H%M%S')}@example.com",
+                            "first_name": "Trial",
+                            "last_name": "Test",
+                            "company_name": "Test Company"
+                        }
+                        response = requests.post(f"{API_BASE}{endpoint}", json=test_data, headers=headers, timeout=60, verify=False)
+                    else:
+                        response = requests.post(f"{API_BASE}{endpoint}", json={}, headers=headers, timeout=60, verify=False)
+                
+                if response.status_code in [200, 201]:
+                    data = response.json()
+                    successful_tests.append(f"{endpoint} ({response.status_code})")
+                elif response.status_code == 500:
+                    # This is what we're looking for - runtime errors
+                    failed_tests.append(f"{endpoint} (500 - RUNTIME ERROR)")
+                else:
+                    failed_tests.append(f"{endpoint} ({response.status_code})")
+                    
+            except Exception as e:
+                failed_tests.append(f"{endpoint} (Exception: {str(e)[:50]})")
+        
+        if failed_tests:
+            runtime_errors = [test for test in failed_tests if "RUNTIME ERROR" in test]
+            if runtime_errors:
+                self.log_result(
+                    "Trial Email System", 
+                    False, 
+                    f"RUNTIME ERRORS DETECTED: {', '.join(runtime_errors)}. Working endpoints: {', '.join(successful_tests)}"
+                )
+            else:
+                self.log_result(
+                    "Trial Email System", 
+                    True, 
+                    f"No runtime errors found. Working: {', '.join(successful_tests)}, Issues: {', '.join(failed_tests)}"
+                )
+            return len(runtime_errors) == 0
+        else:
+            self.log_result(
+                "Trial Email System", 
+                True, 
+                f"All trial email endpoints working: {', '.join(successful_tests)}"
+            )
+            return True
+
+    async def test_api_keys_configuration(self):
+        """Test API keys management endpoints"""
+        print("🔑 TESTING API KEYS CONFIGURATION")
+        print("=" * 50)
+        
+        if not self.admin_token:
+            self.log_result("API Keys Configuration", False, "No admin token available")
+            return False
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        api_key_endpoints = [
+            "/api/admin/api-keys",
+            "/api/keys",
+            "/api/admin/keys",
+            "/api/admin/api-keys/list"
+        ]
+        
+        successful_endpoints = []
+        failed_endpoints = []
+        
+        for endpoint in api_key_endpoints:
+            try:
+                response = requests.get(f"{API_BASE}{endpoint}", headers=headers, timeout=60, verify=False)
+                if response.status_code == 200:
+                    data = response.json()
+                    key_count = 0
+                    
+                    # Try to count API keys from response
+                    if isinstance(data, list):
+                        key_count = len(data)
+                    elif isinstance(data, dict):
+                        if 'api_keys' in data:
+                            key_count = len(data['api_keys']) if isinstance(data['api_keys'], list) else 1
+                        elif 'keys' in data:
+                            key_count = len(data['keys']) if isinstance(data['keys'], list) else 1
+                    
+                    successful_endpoints.append(f"{endpoint} ({key_count} keys)")
+                elif response.status_code == 500:
+                    failed_endpoints.append(f"{endpoint} (500 - Runtime Error)")
+                else:
+                    failed_endpoints.append(f"{endpoint} ({response.status_code})")
+                    
+            except Exception as e:
+                failed_endpoints.append(f"{endpoint} (Exception)")
+        
+        if successful_endpoints:
+            self.log_result(
+                "API Keys Configuration", 
+                True, 
+                f"Found {len(successful_endpoints)} working API key endpoints: {', '.join(successful_endpoints)}"
+            )
+            return True
+        else:
+            self.log_result(
+                "API Keys Configuration", 
+                False, 
+                f"No working API key endpoints found. Tested: {', '.join(failed_endpoints)}"
+            )
+            return False
+
+    async def test_basic_system_health(self):
+        """Test basic system health and core backend services"""
+        print("🏥 TESTING BASIC SYSTEM HEALTH")
+        print("=" * 50)
+        
+        health_endpoints = [
+            "/api/health",
+            "/api/test-db", 
+            "/api/auth/health",
+            "/api/admin/health"
+        ]
+        
+        successful_checks = []
+        failed_checks = []
+        
+        for endpoint in health_endpoints:
+            try:
+                response = requests.get(f"{API_BASE}{endpoint}", timeout=60, verify=False)
+                if response.status_code == 200:
+                    data = response.json()
+                    status = data.get("status", "unknown")
+                    successful_checks.append(f"{endpoint} ({status})")
+                else:
+                    failed_checks.append(f"{endpoint} ({response.status_code})")
+            except Exception as e:
+                failed_checks.append(f"{endpoint} (Exception)")
+        
+        # Test database connectivity specifically
+        try:
+            response = requests.get(f"{API_BASE}/test-db", timeout=60, verify=False)
+            if response.status_code == 200:
+                data = response.json()
+                db_status = data.get("overall_status", "unknown")
+                if "ALL TESTS PASSED" in db_status:
+                    successful_checks.append(f"Database connectivity (✅ All tests passed)")
+                else:
+                    failed_checks.append(f"Database connectivity ({db_status})")
+            else:
+                failed_checks.append(f"Database connectivity ({response.status_code})")
+        except Exception as e:
+            failed_checks.append(f"Database connectivity (Exception)")
+        
+        if len(successful_checks) >= 2:  # At least 2 health checks should pass
+            self.log_result(
+                "Basic System Health", 
+                True, 
+                f"System healthy. Working: {', '.join(successful_checks)}. Issues: {', '.join(failed_checks) if failed_checks else 'None'}"
+            )
+            return True
+        else:
+            self.log_result(
+                "Basic System Health", 
+                False, 
+                f"System health issues detected. Working: {', '.join(successful_checks)}. Failed: {', '.join(failed_checks)}"
+            )
+            return False
+
     def print_summary(self):
         """Print comprehensive test summary"""
         print("\n" + "=" * 80)
