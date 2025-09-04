@@ -9,6 +9,7 @@ import os
 import uuid
 import smtplib
 import requests
+import logging
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional, Union
 from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks, Query
