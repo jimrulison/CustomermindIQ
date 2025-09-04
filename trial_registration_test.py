@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Get backend URL from environment
-BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://mindiq-customer.preview.emergentagent.com")
+BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://mindiq-customer-1.preview.emergentagent.com")
 
 class TrialRegistrationTester:
     def __init__(self):
