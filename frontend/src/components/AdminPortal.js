@@ -426,7 +426,19 @@ const AdminPortalEnhanced = () => {
               ].map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => {
+                    if (tab.isDownload && tab.id === 'admin-manual') {
+                      // Download Admin Training Manual
+                      const link = document.createElement('a');
+                      link.href = '/admin_training_manual.html';
+                      link.download = 'Customer_Mind_IQ_Admin_Manual.html';
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                    } else {
+                      setActiveTab(tab.id);
+                    }
+                  }}
                   className={`w-full flex items-center px-3 py-2 rounded-lg text-left transition-colors ${
                     activeTab === tab.id
                       ? 'bg-blue-600 text-white'
