@@ -1053,6 +1053,11 @@ async def main():
     # Run all tests in sequence
     test_sequence = [
         tester.test_authentication_setup,
+        tester.test_basic_system_health,
+        tester.test_admin_manual_loading,
+        tester.test_templates_functionality,
+        tester.test_trial_email_system,
+        tester.test_api_keys_configuration,
         tester.test_support_ticket_creation,
         tester.test_admin_view_tickets,
         tester.test_admin_respond_to_ticket,
