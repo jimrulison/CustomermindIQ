@@ -404,6 +404,32 @@ growth_opportunity_router = APIRouter(prefix="/api/growth/opportunities", tags=[
 # Initialize service
 scanner_service = GrowthOpportunityScanner()
 
+@growth_opportunity_router.get("/")
+async def get_growth_opportunities_status():
+    """Get growth opportunities service status - public endpoint for testing"""
+    try:
+        return {
+            "status": "success",
+            "service": "Growth Opportunity Scanner",
+            "version": "2.0.0",
+            "llm_provider": "Claude Sonnet 4 / GPT-5",
+            "available_endpoints": [
+                "/scan - Scan for growth opportunities",
+                "/dashboard - Get opportunities dashboard", 
+                "/insights - Get AI insights",
+                "/{id} - Get opportunity details",
+                "/{id}/implement - Mark as implementing"
+            ],
+            "timestamp": datetime.now().isoformat()
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "service": "Growth Opportunity Scanner",
+            "error": str(e),
+            "timestamp": datetime.now().isoformat()
+        }
+
 @growth_opportunity_router.post("/scan")
 async def scan_opportunities(
     request: CreateOpportunityRequest,
