@@ -1052,7 +1052,7 @@ async def admin_process_refund(refund_request: RefundRequest):
                 "prepaid_refund": f"${prepaid_amount/100:.2f}",
                 "total_refund": f"${total_refund/100:.2f}",
                 "effective_date": refund_record["cancellation_effective_date"],
-                "processing_time": "2-3 business days"
+                "processing_time": "1-2 business days"
             }
         }
         
