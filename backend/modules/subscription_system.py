@@ -56,6 +56,16 @@ class UsageOverage(BaseModel):
     overage_amount: int
     overage_cost: float
 
+class OverageApproval(BaseModel):
+    user_email: str
+    approved_overages: List[Dict[str, Any]]  # List of approved overage items
+    
+class OverageApprovalItem(BaseModel):
+    resource_type: str
+    overage_amount: int
+    monthly_cost: float
+    approved: bool
+
 class PrepaidBalance(BaseModel):
     user_email: str
     balance_amount: float
