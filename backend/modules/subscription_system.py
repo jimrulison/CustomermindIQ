@@ -42,6 +42,26 @@ class TrialRegistration(BaseModel):
     last_name: str
     company_name: Optional[str] = None
 
+class RefundRequest(BaseModel):
+    user_email: str
+    refund_type: str  # "end_of_cycle" or "immediate"
+    reason: Optional[str] = None
+    admin_notes: Optional[str] = None
+
+class UsageOverage(BaseModel):
+    user_email: str
+    resource_type: str  # "contacts", "websites", "keywords", "users", "api_calls"
+    current_usage: int
+    plan_limit: int
+    overage_amount: int
+    overage_cost: float
+
+class PrepaidBalance(BaseModel):
+    user_email: str
+    balance_amount: float
+    last_updated: datetime
+    transaction_history: List[Dict[str, Any]] = []
+
 # Subscription Tiers and Features - Updated with New Pricing Structure
 SUBSCRIPTION_FEATURES = {
     "free": {
