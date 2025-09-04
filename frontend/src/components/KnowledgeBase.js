@@ -929,6 +929,7 @@ A successful CustomerMind IQ implementation transforms your organization's relat
           cursor: pointer;
           transition: all 0.3s ease;
           text-align: left;
+          color: #000000; /* Ensure text is black by default */
         }
 
         .category-item:hover {
