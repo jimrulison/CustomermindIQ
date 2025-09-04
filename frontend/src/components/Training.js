@@ -31,6 +31,7 @@ import {
   Lock,
   RefreshCw,
   Sparkles,
+  HelpCircle,
   HelpCircle
 } from 'lucide-react';
 
