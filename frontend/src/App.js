@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/ui/card';
 import { Button } from './components/ui/button';
 import { Input } from './components/ui/input';
@@ -62,6 +63,7 @@ import Support from './components/Support';
 import KnowledgeBase from './components/KnowledgeBase';
 import SubscriptionManager from './components/SubscriptionManager';
 import LiveChatWidget from './components/LiveChatWidget';
+import PublicTrainingPage from './components/PublicTrainingPage';
 import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
