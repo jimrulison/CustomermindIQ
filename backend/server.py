@@ -174,6 +174,20 @@ app.add_middleware(
 # Static files for serving assets
 app.mount("/static", StaticFiles(directory="/app/backend/static"), name="static")
 
+# Serve admin manual directly as static file (workaround for API routing issues)
+@app.get("/admin-training-manual.html")
+async def serve_admin_manual_static():
+    """Serve Admin Training Manual as static file"""
+    html_path = "/app/CustomerMind_IQ_Admin_Training_Manual_Professional.html"
+    if not os.path.exists(html_path):
+        raise HTTPException(status_code=404, detail="Admin Training Manual not found")
+    
+    return FileResponse(
+        path=html_path,
+        media_type="text/html",
+        filename="CustomerMind_IQ_Admin_Training_Manual.html"
+    )
+
 # Training Materials Static Serving
 @app.get("/training-test")
 async def serve_training_test():
