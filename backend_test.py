@@ -1306,7 +1306,7 @@ class CustomerCommunicationTester:
         review_tests = [
             "GET /api/admin/api-keys", "POST /api/admin/api-keys",
             "GET /api/admin/email-templates", "POST /api/admin/email-templates", 
-            "GET /api/email/trial/logs", "GET /api/email/trial/stats", "POST /api/subscriptions/trial/register",
+            "GET /api/email/email/trial/logs", "GET /api/email/email/trial/stats", "POST /api/subscriptions/trial/register",
             "GET /api/download/admin-training-manual", "GET /api/download/complete-training-manual"
         ]
         
