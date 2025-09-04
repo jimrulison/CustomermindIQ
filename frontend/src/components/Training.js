@@ -286,6 +286,26 @@ const Training = () => {
         "Rate Limits & Best Practices",
         "SDK Documentation"
       ]
+    },
+    {
+      id: 6,
+      title: "Frequently Asked Questions (FAQ)",
+      description: "Comprehensive FAQ covering common questions, troubleshooting, and platform guidance",
+      icon: HelpCircle,
+      pages: "FAQ",
+      lastUpdated: "January 2025",
+      downloadUrl: "https://customer-assets.emergentagent.com/job_customer-mind-iq-5/artifacts/gwct7ki3_Customer%20Mind%20IQ%20FAQ.docx",
+      pdfType: "faq",
+      filename: "Customer_Mind_IQ_FAQ.docx",
+      size: "DOCX",
+      sections: [
+        "Getting Started Questions",
+        "Account & Billing FAQ",
+        "Technical Support & Troubleshooting",
+        "Feature Questions & Usage",
+        "Integration & Setup Help",
+        "Advanced Features FAQ"
+      ]
     }
   ];
 
