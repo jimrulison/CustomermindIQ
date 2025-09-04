@@ -69,6 +69,11 @@ import './App.css';
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
 function AppContent() {
+  // Check if current URL is for public training page
+  if (window.location.pathname === '/training-videos') {
+    return <PublicTrainingPage />;
+  }
+
   // Get authentication state from context
   const { user, isAuthenticated, logout, apiCall } = useAuth();
 
