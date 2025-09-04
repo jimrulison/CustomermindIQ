@@ -403,6 +403,7 @@ const AdminPortalEnhanced = () => {
             <nav className="space-y-2">
               {[
                 { id: 'dashboard', name: 'Dashboard', icon: BarChart3 },
+                { id: 'admin-manual', name: 'Admin Manual', icon: Download, isDownload: true },
                 { id: 'users', name: 'User Management', icon: Users },
                 { id: 'banners', name: 'Banner Management', icon: Megaphone },
                 { id: 'discounts', name: 'Discount Management', icon: DollarSign },
