@@ -942,6 +942,7 @@ A successful CustomerMind IQ implementation transforms your organization's relat
 
         .category-label {
           font-weight: 500;
+          color: #000000; /* Explicitly set to black for visibility */
         }
 
         .category-count {
