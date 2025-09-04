@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomerMind IQ - Complete Training Manual</title>
+    <style>
+        /* PDF-Optimized Professional Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 2cm 2cm 2cm 2cm;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            font-size: 11pt;
+            background: white;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styling */
+        .header {
+            text-align: center;
+            padding: 20pt 0 30pt 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30pt;
+            page-break-after: avoid;
+        }
+
+        .logo-text {
+            font-size: 28pt;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8pt;
+        }
+
+        .main-title {
+            font-size: 24pt;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8pt;
+        }
+
+        .subtitle {
+            font-size: 14pt;
+            color: #666;
+            margin-bottom: 15pt;
+        }
+
+        .version {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 6pt 12pt;
+            border-radius: 15pt;
+            font-size: 10pt;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        /* Table of Contents */
+        .toc {
+            margin-bottom: 40pt;
+            padding: 20pt;
+            border: 2px solid #e1e8ff;
+            border-radius: 8pt;
+            background: #f8f9ff;
+            page-break-inside: avoid;
+        }
+
+        .toc h2 {
+            color: #667eea;
+            font-size: 18pt;
+            margin-bottom: 15pt;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8pt;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8pt 0;
+            border-bottom: 1px dotted #ccc;
+        }
+
+        .toc-item:last-child {
+            border-bottom: none;
+        }
+
+        .toc-number {
+            background: #667eea;
+            color: white;
+            width: 20pt;
+            height: 20pt;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9pt;
+            font-weight: bold;
+        }
+
+        /* Content Sections */
+        .section {
+            margin-bottom: 40pt;
+            padding-bottom: 20pt;
+            border-bottom: 1px solid #eee;
+            page-break-inside: avoid;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 18pt;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20pt;
+            padding-bottom: 8pt;
+            border-bottom: 3px solid #667eea;
+            page-break-after: avoid;
+        }
+
+        .subsection {
+            margin: 20pt 0;
+        }
+
+        .subsection-title {
+            font-size: 14pt;
+            color: #667eea;
+            margin-bottom: 12pt;
+            font-weight: 600;
+        }
+
+        .subsection p {
+            margin-bottom: 10pt;
+        }
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15pt;
+            margin: 20pt 0;
+            page-break-inside: avoid;
+        }
+
+        .feature-card {
+            border: 1px solid #e1e8ff;
+            border-radius: 8pt;
+            padding: 15pt;
+            background: #f8f9ff;
+        }
+
+        .feature-card h4 {
+            color: #333;
+            margin-bottom: 10pt;
+            font-size: 12pt;
+            font-weight: bold;
+        }
+
+        /* Feature Lists */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            padding: 4pt 0;
+            padding-left: 20pt;
+            position: relative;
+            font-size: 10pt;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 4pt;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        /* Step-by-step instructions */
+        .step-by-step {
+            counter-reset: step-counter;
+            margin: 15pt 0;
+        }
+
+        .step-item {
+            counter-increment: step-counter;
+            background: #f8f9ff;
+            border-radius: 8pt;
+            padding: 12pt;
+            margin: 10pt 0;
+            position: relative;
+            padding-left: 45pt;
+            page-break-inside: avoid;
+        }
+
+        .step-item::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 12pt;
+            top: 12pt;
+            width: 20pt;
+            height: 20pt;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 9pt;
+        }
+
+        .step-item h4 {
+            font-size: 12pt;
+            color: #333;
+            margin-bottom: 8pt;
+        }
+
+        .step-item p {
+            margin-bottom: 6pt;
+            font-size: 10pt;
+        }
+
+        /* Alert Boxes */
+        .credentials {
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            border-radius: 8pt;
+            padding: 15pt;
+            margin: 15pt 0;
+            text-align: center;
+            page-break-inside: avoid;
+        }
+
+        .credentials h4 {
+            color: #2e7d32;
+            margin-bottom: 10pt;
+            font-size: 12pt;
+        }
+
+        .cred-item {
+            background: white;
+            padding: 8pt 12pt;
+            margin: 6pt 0;
+            border-radius: 4pt;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #1565c0;
+            font-size: 10pt;
+        }
+
+        .warning {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15pt;
+            margin: 15pt 0;
+            border-radius: 4pt;
+            page-break-inside: avoid;
+        }
+
+        .tip {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15pt;
+            margin: 15pt 0;
+            border-radius: 4pt;
+            page-break-inside: avoid;
+        }
+
+        .admin-section {
+            background: #fce4ec;
+            border: 2px solid #e91e63;
+            border-radius: 8pt;
+            padding: 15pt;
+            margin: 15pt 0;
+            page-break-inside: avoid;
+        }
+
+        .admin-section h4 {
+            color: #e91e63;
+            margin-bottom: 10pt;
+            font-size: 12pt;
+        }
+
+        /* Code blocks */
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15pt;
+            border-radius: 6pt;
+            margin: 15pt 0;
+            font-family: 'Courier New', monospace;
+            font-size: 9pt;
+            overflow-x: auto;
+            page-break-inside: avoid;
+        }
+
+        /* Pricing grid */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10pt;
+            margin: 15pt 0;
+            page-break-inside: avoid;
+        }
+
+        .pricing-card {
+            border: 1px solid #e1e8ff;
+            border-radius: 6pt;
+            padding: 12pt;
+            text-align: center;
+            background: white;
+        }
+
+        .pricing-card.featured {
+            border-color: #667eea;
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .pricing-card h4 {
+            font-size: 12pt;
+            margin-bottom: 8pt;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 10pt;
+        }
+
+        .sale-price {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 14pt;
+        }
+
+        .pricing-card.featured .sale-price {
+            color: #ffd700;
+        }
+
+        .sale-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 3pt 6pt;
+            border-radius: 10pt;
+            font-size: 8pt;
+            font-weight: bold;
+            display: inline-block;
+            margin: 4pt 0;
+        }
+
+        /* Page Breaks */
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* Print-specific styles */
+        @media print {
+            body {
+                font-size: 10pt;
+            }
+            
+            .feature-grid, .pricing-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8pt;
+            }
+            
+            .no-print {
+                display: none;
+            }
+            
+            .section {
+                page-break-inside: auto;
+            }
+        }
+
+        /* Screen responsive */
+        @media screen and (max-width: 768px) {
+            .feature-grid, .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-text">CustomerMind IQ</div>
+            <h1 class="main-title">Complete Training Manual</h1>
+            <p class="subtitle">Universal Customer Intelligence SaaS Platform</p>
+            <span class="version">Professional Edition v2.0</span>
+        </div>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <div class="toc-item">
+                <span>Authentication & Security</span>
+                <span class="toc-number">1</span>
+            </div>
+            <div class="toc-item">
+                <span>7-Day Free Trial System</span>
+                <span class="toc-number">2</span>
+            </div>
+            <div class="toc-item">
+                <span>Subscription Tiers & Pricing</span>
+                <span class="toc-number">3</span>
+            </div>
+            <div class="toc-item">
+                <span>Dashboard Navigation</span>
+                <span class="toc-number">4</span>
+            </div>
+            <div class="toc-item">
+                <span>Customer Analytics Modules</span>
+                <span class="toc-number">5</span>
+            </div>
+            <div class="toc-item">
+                <span>Website Analytics Modules</span>
+                <span class="toc-number">6</span>
+            </div>
+            <div class="toc-item">
+                <span>Admin Panel Features</span>
+                <span class="toc-number">7</span>
+            </div>
+            <div class="toc-item">
+                <span>Data Integrations</span>
+                <span class="toc-number">8</span>
+            </div>
+            <div class="toc-item">
+                <span>Best Practices & Tips</span>
+                <span class="toc-number">9</span>
+            </div>
+            <div class="toc-item">
+                <span>Troubleshooting Guide</span>
+                <span class="toc-number">10</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">1. Authentication & Security</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Enterprise Authentication System</h3>
+                <p>CustomerMind IQ features enterprise-grade JWT token-based authentication with role-based access control, automatic session management, and multi-factor security options.</p>
+
+                <div class="credentials">
+                    <h4>🔐 Default Admin Credentials</h4>
+                    <div class="cred-item">Email: admin@customermindiq.com</div>
+                    <div class="cred-item">Password: CustomerMindIQ2025!</div>
+                </div>
+
+                <div class="subsection-title">Authentication Features</div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🔒 Security Features</h4>
+                        <ul class="feature-list">
+                            <li>JWT token-based authentication</li>
+                            <li>Automatic token refresh</li>
+                            <li>Session timeout management</li>
+                            <li>Account lockout protection</li>
+                            <li>Password complexity requirements</li>
+                            <li>Role-based access control (RBAC)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>👥 User Roles</h4>
+                        <ul class="feature-list">
+                            <li><strong>User:</strong> Standard dashboard access</li>
+                            <li><strong>Admin:</strong> User management capabilities</li>
+                            <li><strong>Super Admin:</strong> Full platform control</li>
+                            <li>Trial users get Starter tier access</li>
+                            <li>Role-based feature visibility</li>
+                            <li>Subscription tier permissions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    <strong>💡 Security Best Practices:</strong>
+                    <ul class="feature-list">
+                        <li>Change default admin password immediately after first login</li>
+                        <li>Enable two-factor authentication for admin accounts</li>
+                        <li>Regularly review user access and permissions</li>
+                        <li>Monitor login activities and failed attempts</li>
+                        <li>Use strong, unique passwords for all accounts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="section">
+            <h2 class="section-title">2. 7-Day Free Trial System</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Trial Registration Process</h3>
+                <p>The 7-day free trial provides complete access to Starter tier features without requiring credit card information. This allows users to fully evaluate the platform before committing to a subscription.</p>
+
+                <div class="step-by-step">
+                    <div class="step-item">
+                        <h4>Access Trial Registration</h4>
+                        <p>Click "Start 7-Day Free Trial - No Credit Card Required" button on the login page to begin the registration process.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Complete Registration Form</h4>
+                        <ul class="feature-list">
+                            <li>First Name and Last Name (required)</li>
+                            <li>Company Name (optional but recommended)</li>
+                            <li>Email Address (required - becomes login ID)</li>
+                            <li>Secure Password (must meet complexity requirements)</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Automatic Account Creation</h4>
+                        <p>Upon registration, the system automatically creates a trial account with Starter tier permissions and sets a 7-day expiration date.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Instant Access</h4>
+                        <p>Users are immediately logged in and can access all Starter tier features including basic analytics, customer intelligence, and platform navigation.</p>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Trial Features & Limitations</div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>✅ Trial Includes</h4>
+                        <ul class="feature-list">
+                            <li>Full Starter tier feature access</li>
+                            <li>3 websites monitoring capability</li>
+                            <li>50 keywords tracking</li>
+                            <li>Basic analytics and reporting</li>
+                            <li>Customer intelligence insights</li>
+                            <li>Email support access</li>
+                            <li>Training materials and documentation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>⏰ Trial Management</h4>
+                        <ul class="feature-list">
+                            <li>7-day duration from registration</li>
+                            <li>No automatic billing or charges</li>
+                            <li>Account hold after expiration</li>
+                            <li>Upgrade available anytime during trial</li>
+                            <li>Data retention during hold period</li>
+                            <li>Admin extension capabilities</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <strong>⚠️ Trial Expiration Process:</strong>
+                    <ul class="feature-list">
+                        <li>Account is automatically placed on hold after 7 days</li>
+                        <li>Users receive email notifications before expiration</li>
+                        <li>Data is preserved for 30 days during hold period</li>
+                        <li>Users can upgrade to paid plan to reactivate access</li>
+                        <li>No automatic billing - explicit subscription required</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="section">
+            <h2 class="section-title">3. Subscription Tiers & Pricing</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Current Pricing Structure (Limited-Time Sale)</h3>
+                <p>CustomerMind IQ offers four subscription tiers designed to scale with business needs. Currently featuring 50% off promotional pricing.</p>
+
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h4>Starter</h4>
+                        <div class="original-price">$99/month</div>
+                        <div class="sale-price">$49/month</div>
+                        <div class="sale-badge">50% OFF</div>
+                        <ul class="feature-list">
+                            <li>3 websites monitored</li>
+                            <li>50 keywords tracked</li>
+                            <li>Basic analytics dashboard</li>
+                            <li>2 team members</li>
+                            <li>Email support</li>
+                            <li>Core AI insights</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pricing-card featured">
+                        <h4>Professional</h4>
+                        <div class="original-price">$299/month</div>
+                        <div class="sale-price">$149/month</div>
+                        <div class="sale-badge">50% OFF</div>
+                        <ul class="feature-list">
+                            <li>10 websites monitored</li>
+                            <li>200 keywords tracked</li>
+                            <li>Full analytics suite</li>
+                            <li>10 team members</li>
+                            <li>Product intelligence</li>
+                            <li>Priority chat support</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h4>Enterprise</h4>
+                        <div class="original-price">$799/month</div>
+                        <div class="sale-price">$399/month</div>
+                        <div class="sale-badge">50% OFF</div>
+                        <ul class="feature-list">
+                            <li>Unlimited websites</li>
+                            <li>500+ keywords</li>
+                            <li>Advanced compliance tools</li>
+                            <li>Unlimited team members</li>
+                            <li>AI Command Center</li>
+                            <li>Phone support + SLA</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h4>Custom Enterprise</h4>
+                        <div class="sale-price" style="font-size: 12pt;">Contact Sales</div>
+                        <div class="sale-badge">CUSTOM</div>
+                        <ul class="feature-list">
+                            <li>Everything in Enterprise</li>
+                            <li>On-premise deployment</li>
+                            <li>Custom integrations</li>
+                            <li>Dedicated support team</li>
+                            <li>Custom ML models</li>
+                            <li>24/7 priority support</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Feature Comparison</div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🧠 AI & Analytics</h4>
+                        <ul class="feature-list">
+                            <li><strong>Starter:</strong> Basic customer insights</li>
+                            <li><strong>Professional:</strong> Advanced behavioral analysis</li>
+                            <li><strong>Enterprise:</strong> Predictive modeling</li>
+                            <li><strong>Custom:</strong> Proprietary AI models</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>📊 Reporting & Dashboards</h4>
+                        <ul class="feature-list">
+                            <li><strong>Starter:</strong> Standard reports</li>
+                            <li><strong>Professional:</strong> Custom dashboards</li>
+                            <li><strong>Enterprise:</strong> Executive reporting</li>
+                            <li><strong>Custom:</strong> White-label options</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="section">
+            <h2 class="section-title">4. Dashboard Navigation</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Main Navigation Structure</h3>
+                <p>The CustomerMind IQ platform is organized into two primary dashboard views, each focusing on different aspects of customer intelligence and business analytics.</p>
+
+                <div class="subsection-title">🧠 Customer Analytics Dashboard</div>
+                <p>Comprehensive customer intelligence and business analytics tools:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Core Analytics</h4>
+                        <ul class="feature-list">
+                            <li><strong>Customer Intelligence:</strong> AI-powered customer insights and segmentation</li>
+                            <li><strong>Real-Time Health:</strong> Live platform monitoring and system status</li>
+                            <li><strong>Marketing Automation:</strong> Multi-channel campaign management</li>
+                            <li><strong>Revenue Analytics:</strong> Financial forecasting and revenue optimization</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>Advanced Features</h4>
+                        <ul class="feature-list">
+                            <li><strong>Advanced Features:</strong> Behavioral clustering & churn prevention</li>
+                            <li><strong>Customer Success:</strong> Retention optimization and lifecycle management</li>
+                            <li><strong>Executive Dashboard:</strong> C-level insights and strategic metrics</li>
+                            <li><strong>Growth Intelligence:</strong> Expansion opportunities and scaling insights</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">🌐 Website Analytics Dashboard</div>
+                <p>Website performance and technical intelligence modules:</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Website Intelligence</h4>
+                        <ul class="feature-list">
+                            <li><strong>Website Intelligence:</strong> Performance monitoring and optimization</li>
+                            <li><strong>Analytics & Insights:</strong> Traffic analysis and user behavior</li>
+                            <li><strong>Product Intelligence:</strong> Feature usage analytics and adoption</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>Technical Management</h4>
+                        <ul class="feature-list">
+                            <li><strong>Integration & Data Hub:</strong> API management and data connectors</li>
+                            <li><strong>Compliance & Governance:</strong> Regulatory monitoring and compliance</li>
+                            <li><strong>AI Command Center:</strong> Model management and AI operations</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    <strong>💡 Navigation Tips:</strong>
+                    <ul class="feature-list">
+                        <li>Use the toggle buttons to switch between Customer and Website analytics</li>
+                        <li>Bookmark frequently used modules for quick access</li>
+                        <li>Check notification badges for important updates</li>
+                        <li>Use search functionality to quickly find specific features</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="section">
+            <h2 class="section-title">5. Customer Analytics Modules</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Customer Intelligence AI</h3>
+                <p>AI-powered customer analysis providing deep insights into customer behavior, preferences, and lifecycle management.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🔍 Behavioral Analysis</h4>
+                        <ul class="feature-list">
+                            <li>Customer segmentation and clustering</li>
+                            <li>Behavioral pattern recognition</li>
+                            <li>Journey mapping and touchpoint analysis</li>
+                            <li>Engagement scoring and metrics</li>
+                            <li>Lifecycle stage identification</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>📈 Predictive Analytics</h4>
+                        <ul class="feature-list">
+                            <li>Churn prediction and prevention</li>
+                            <li>Lifetime value calculations</li>
+                            <li>Upsell/cross-sell opportunities</li>
+                            <li>Purchase propensity modeling</li>
+                            <li>Risk assessment and scoring</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Marketing Automation Pro</div>
+                <p>Comprehensive marketing automation with AI-powered campaign optimization and multi-channel orchestration.</p>
+
+                <div class="step-by-step">
+                    <div class="step-item">
+                        <h4>Campaign Creation</h4>
+                        <p>Design and launch marketing campaigns using AI-assisted content creation, audience targeting, and channel optimization.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Multi-Channel Orchestration</h4>
+                        <p>Coordinate campaigns across email, social media, web, and mobile channels with unified messaging and timing.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>A/B Testing & Optimization</h4>
+                        <p>Automatically test campaign variations and optimize performance based on real-time engagement data.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Performance Analytics</h4>
+                        <p>Track campaign effectiveness with detailed metrics, conversion tracking, and ROI analysis.</p>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Revenue Analytics Suite</div>
+                <p>Financial intelligence and revenue optimization tools for strategic business planning.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>💰 Financial Forecasting</h4>
+                        <ul class="feature-list">
+                            <li>Revenue prediction and modeling</li>
+                            <li>Seasonal trend analysis</li>
+                            <li>Budget planning and variance tracking</li>
+                            <li>Cash flow forecasting</li>
+                            <li>Scenario planning tools</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>📊 Performance Metrics</h4>
+                        <ul class="feature-list">
+                            <li>Monthly/Annual Recurring Revenue (MRR/ARR)</li>
+                            <li>Customer Acquisition Cost (CAC)</li>
+                            <li>Customer Lifetime Value (CLV)</li>
+                            <li>Churn rate and retention metrics</li>
+                            <li>Unit economics and profitability</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="section">
+            <h2 class="section-title">6. Website Analytics Modules</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Website Intelligence Hub</h3>
+                <p>Comprehensive website performance monitoring, user experience optimization, and technical health analysis.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🌐 Performance Monitoring</h4>
+                        <ul class="feature-list">
+                            <li>Page load speed analysis</li>
+                            <li>Core Web Vitals tracking</li>
+                            <li>Mobile responsiveness testing</li>
+                            <li>Uptime and availability monitoring</li>
+                            <li>Error tracking and debugging</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>👥 User Experience</h4>
+                        <ul class="feature-list">
+                            <li>User journey and flow analysis</li>
+                            <li>Conversion funnel optimization</li>
+                            <li>Heatmap and click tracking</li>
+                            <li>A/B testing capabilities</li>
+                            <li>Accessibility compliance monitoring</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Product Intelligence</div>
+                <p>Feature usage analytics, product-market fit analysis, and user adoption insights.</p>
+
+                <div class="step-by-step">
+                    <div class="step-item">
+                        <h4>Feature Usage Tracking</h4>
+                        <p>Monitor which features are used most frequently, identify adoption patterns, and track user engagement with different product capabilities.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Onboarding Optimization</h4>
+                        <p>Analyze user onboarding flows, identify drop-off points, and optimize the new user experience for better activation rates.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Product-Market Fit Analysis</h4>
+                        <p>Measure product-market fit indicators, analyze user retention curves, and identify opportunities for product improvements.</p>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Compliance & Governance</div>
+                <p>Regulatory compliance monitoring, data governance, and security management tools.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🔒 Data Protection</h4>
+                        <ul class="feature-list">
+                            <li>GDPR compliance monitoring</li>
+                            <li>CCPA data rights management</li>
+                            <li>Cookie consent tracking</li>
+                            <li>Data retention policies</li>
+                            <li>Privacy impact assessments</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>📋 Audit & Reporting</h4>
+                        <ul class="feature-list">
+                            <li>Compliance audit trails</li>
+                            <li>Risk assessment reports</li>
+                            <li>Security incident tracking</li>
+                            <li>Regulatory reporting automation</li>
+                            <li>Policy violation alerts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="section">
+            <h2 class="section-title">7. Admin Panel Features</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Admin Access & Overview</h3>
+                <p>Administrative features are available to users with Administrator or Super Administrator roles, providing comprehensive platform management capabilities.</p>
+
+                <div class="admin-section">
+                    <h4>🛡️ Admin Requirements</h4>
+                    <p>Admin panel access requires Administrator or Super Administrator role. Use the provided admin credentials to access these features.</p>
+                </div>
+
+                <div class="subsection-title">Banner Management System</div>
+                <p>Create and manage targeted announcements that appear to users based on their subscription tier, role, or specific targeting criteria.</p>
+
+                <div class="step-by-step">
+                    <div class="step-item">
+                        <h4>Create Announcements</h4>
+                        <ul class="feature-list">
+                            <li>Navigate to Admin Panel → Banner Management</li>
+                            <li>Click "New Banner" to create announcements</li>
+                            <li>Set title, message, and banner type (Info, Warning, Success, Training, Maintenance)</li>
+                            <li>Configure targeting options and display settings</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Targeting & Scheduling</h4>
+                        <ul class="feature-list">
+                            <li>Target specific user roles or subscription tiers</li>
+                            <li>Schedule banners with start and end dates</li>
+                            <li>Set priority levels for multiple active banners</li>
+                            <li>Enable/disable dismissible options</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Analytics & Performance</h4>
+                        <ul class="feature-list">
+                            <li>Track banner view counts and engagement rates</li>
+                            <li>Monitor click-through rates for call-to-action banners</li>
+                            <li>Analyze dismissal rates and user interaction</li>
+                            <li>Generate banner performance reports</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Discount Management</div>
+                <p>Flexible discount system supporting percentage, fixed amount, and tier-specific promotions with comprehensive tracking and analytics.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>💰 Discount Types</h4>
+                        <ul class="feature-list">
+                            <li><strong>Percentage:</strong> 25% off subscription fees</li>
+                            <li><strong>Fixed Amount:</strong> $50 off annual plans</li>
+                            <li><strong>Free Months:</strong> 2 months free with upgrade</li>
+                            <li><strong>Tier-Specific:</strong> Professional upgrade discounts</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🎯 Targeting Options</h4>
+                        <ul class="feature-list">
+                            <li>Apply to specific users by email</li>
+                            <li>Target subscription tiers</li>
+                            <li>Set minimum purchase requirements</li>
+                            <li>Configure usage limits and expiration</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">User Management & Impersonation</div>
+                <p>Comprehensive user account management with secure impersonation capabilities for customer support.</p>
+
+                <div class="warning">
+                    <strong>🔒 Security Guidelines:</strong>
+                    <ul class="feature-list">
+                        <li>All impersonation sessions are logged and audited</li>
+                        <li>Cannot impersonate other admin accounts</li>
+                        <li>Session time limits enforced (5 minutes to 8 hours)</li>
+                        <li>Must provide reason for each impersonation session</li>
+                        <li>Clear visual indicators during active impersonation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="section">
+            <h2 class="section-title">8. Data Integrations</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Integration Overview</h3>
+                <p>CustomerMind IQ supports multiple data integration methods to connect with existing business systems and external data sources.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🔌 Native Connectors</h4>
+                        <ul class="feature-list">
+                            <li>CRM systems (Salesforce, HubSpot, Pipedrive)</li>
+                            <li>E-commerce platforms (Shopify, WooCommerce, Magento)</li>
+                            <li>Marketing tools (Mailchimp, Constant Contact)</li>
+                            <li>Analytics platforms (Google Analytics, Adobe Analytics)</li>
+                            <li>Payment processors (Stripe, PayPal, Square)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🔧 Technical Options</h4>
+                        <ul class="feature-list">
+                            <li>REST API endpoints for custom integrations</li>
+                            <li>Webhook support for real-time data sync</li>
+                            <li>CSV/Excel file upload capabilities</li>
+                            <li>Database direct connections (MySQL, PostgreSQL)</li>
+                            <li>Cloud storage integrations (AWS S3, Google Cloud)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Integration Setup Process</div>
+                <div class="step-by-step">
+                    <div class="step-item">
+                        <h4>Access Integration Hub</h4>
+                        <p>Navigate to Website Analytics → Integration & Data Hub to view available connectors and integration options.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Configure Data Sources</h4>
+                        <p>Select your integration type, provide necessary credentials or API keys, and configure data mapping and sync preferences.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Test & Validate</h4>
+                        <p>Run connection tests, validate data quality, and confirm that information is flowing correctly into your CustomerMind IQ dashboards.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Monitor & Maintain</h4>
+                        <p>Set up monitoring for integration health, configure alerts for sync failures, and regularly review data quality metrics.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">9. Best Practices & Tips</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Platform Optimization</h3>
+                <p>Maximize the value of your CustomerMind IQ investment with these proven best practices and optimization strategies.</p>
+
+                <div class="tip">
+                    <strong>💡 Getting Started Tips:</strong>
+                    <ul class="feature-list">
+                        <li>Complete your profile setup and company information thoroughly</li>
+                        <li>Connect at least 2-3 data sources for comprehensive insights</li>
+                        <li>Set up team members with appropriate role permissions</li>
+                        <li>Review training materials for your subscription tier</li>
+                        <li>Schedule regular check-ins with customer success team</li>
+                    </ul>
+                </div>
+
+                <div class="subsection-title">Data Quality Management</div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>📊 Data Hygiene</h4>
+                        <ul class="feature-list">
+                            <li>Regular data cleaning and validation</li>
+                            <li>Consistent naming conventions</li>
+                            <li>Remove duplicate records</li>
+                            <li>Validate email addresses and contact info</li>
+                            <li>Monitor data completeness metrics</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🔄 Integration Health</h4>
+                        <ul class="feature-list">
+                            <li>Monitor sync status regularly</li>
+                            <li>Set up alerts for integration failures</li>
+                            <li>Review API rate limits and usage</li>
+                            <li>Test integrations after system updates</li>
+                            <li>Maintain backup data export procedures</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Performance Optimization</div>
+                <div class="step-by-step">
+                    <div class="step-item">
+                        <h4>Dashboard Customization</h4>
+                        <p>Customize dashboards to focus on your most important KPIs and metrics. Remove unused widgets and organize information for quick decision-making.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Alert Configuration</h4>
+                        <p>Set up intelligent alerts for critical metrics like churn risk, revenue thresholds, and performance anomalies to enable proactive management.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Regular Review Cycles</h4>
+                        <p>Establish weekly, monthly, and quarterly review cycles to analyze trends, identify opportunities, and adjust strategies based on insights.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">10. Troubleshooting Guide</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Common Issues & Solutions</h3>
+                <p>Quick resolution guide for frequently encountered issues and their solutions.</p>
+
+                <div class="subsection-title">Authentication & Access Issues</div>
+                <div class="step-by-step">
+                    <div class="step-item">
+                        <h4>Login Problems</h4>
+                        <ul class="feature-list">
+                            <li>Verify email address and password spelling</li>
+                            <li>Check for account lockout (5 failed attempts)</li>
+                            <li>Clear browser cache and cookies</li>
+                            <li>Try incognito/private browsing mode</li>
+                            <li>Contact support for password reset</li>
+                        </ul>
+                    </div>
+
+                    <div class="step-item">
+                        <h4>Permission Denied Errors</h4>
+                        <ul class="feature-list">
+                            <li>Verify your subscription tier includes the feature</li>
+                            <li>Check user role permissions with admin</li>
+                            <li>Confirm trial period hasn't expired</li>
+                            <li>Log out and log back in to refresh permissions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Data & Integration Issues</div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🔧 Sync Problems</h4>
+                        <ul class="feature-list">
+                            <li>Check integration status in Data Hub</li>
+                            <li>Verify API credentials are still valid</li>
+                            <li>Review rate limiting and quota usage</li>
+                            <li>Test connection manually</li>
+                            <li>Check source system for changes</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>📊 Missing Data</h4>
+                        <ul class="feature-list">
+                            <li>Confirm data source is properly connected</li>
+                            <li>Check date ranges and filters</li>
+                            <li>Verify permissions on source systems</li>
+                            <li>Review mapping configuration</li>
+                            <li>Allow 24-48 hours for initial sync</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection-title">Performance Issues</div>
+                <div class="warning">
+                    <strong>🚨 When to Contact Support:</strong>
+                    <ul class="feature-list">
+                        <li>Dashboard loading takes more than 30 seconds consistently</li>
+                        <li>Data discrepancies between source and CustomerMind IQ</li>
+                        <li>Integration failures persisting for more than 24 hours</li>
+                        <li>Billing or subscription issues</li>
+                        <li>Security concerns or suspected unauthorized access</li>
+                    </ul>
+                </div>
+
+                <div class="subsection-title">Support Channels</div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>📧 Email Support</h4>
+                        <ul class="feature-list">
+                            <li>support@customermindiq.com</li>
+                            <li>Include account email and issue description</li>
+                            <li>Attach screenshots if applicable</li>
+                            <li>Response within 24 hours (business days)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>💬 Priority Support</h4>
+                        <ul class="feature-list">
+                            <li>Professional tier: Live chat support</li>
+                            <li>Enterprise tier: Phone support + SLA</li>
+                            <li>Custom tier: Dedicated support team</li>
+                            <li>24/7 availability for critical issues</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="no-print" style="text-align: center; margin-top: 40pt; padding: 20pt; border-top: 2px solid #eee;">
+            <button style="background: #667eea; color: white; padding: 12pt 24pt; border: none; border-radius: 6pt; font-size: 12pt; cursor: pointer; margin: 0 10pt;" onclick="downloadCurrentPDF()">📄 Download Complete Manual PDF</button>
+            <a href="/CustomerMind_IQ_Training_Portal_Professional.html" style="background: #4caf50; color: white; padding: 12pt 24pt; border: none; border-radius: 6pt; font-size: 12pt; text-decoration: none; display: inline-block; margin: 0 10pt;">📚 Training Portal</a>
+        </div>
+    </div>
+
+    <script>
+        // Get backend URL from environment or use default
+        const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://mindiq-customer-1.preview.emergentagent.com';
+        
+        // Function to download current PDF
+        async function downloadCurrentPDF() {
+            try {
+                console.log('Downloading Complete Training Manual PDF...');
+                
+                // Show loading indicator
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = '⏳ Downloading...';
+                button.disabled = true;
+                
+                // Make API request
+                const response = await fetch(`${API_BASE_URL}/api/download/complete-training-manual`);
+                
+                if (!response.ok) {
+                    throw new Error(`Download failed: ${response.status} ${response.statusText}`);
+                }
+                
+                // Get the PDF blob
+                const blob = await response.blob();
+                
+                // Create download link
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'CustomerMind_IQ_Complete_Training_Manual.pdf';
+                document.body.appendChild(a);
+                a.click();
+                
+                // Cleanup
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                console.log('✅ Successfully downloaded Complete Training Manual PDF');
+                
+                // Reset button
+                button.textContent = originalText;
+                button.disabled = false;
+                
+            } catch (error) {
+                console.error('PDF Download Error:', error);
+                
+                // Show error and reset button
+                button.textContent = '❌ Download Failed';
+                button.disabled = false;
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 3000);
+                
+                // Show user-friendly error message
+                alert(`Sorry, there was an error downloading the PDF. Please try again or contact support if the problem persists.\n\nError: ${error.message}`);
+            }
+        }
+    </script>
