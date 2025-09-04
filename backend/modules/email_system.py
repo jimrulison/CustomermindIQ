@@ -25,6 +25,9 @@ from auth.auth_system import get_current_user, require_role, UserRole, UserProfi
 # Load environment variables
 load_dotenv()
 
+# Setup logging
+logger = logging.getLogger(__name__)
+
 # MongoDB setup
 MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
 DB_NAME = os.getenv("DB_NAME", "customer_mind_iq")
