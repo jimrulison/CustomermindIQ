@@ -27,6 +27,118 @@ const SignIn = ({ onSignIn }) => {
 
   const { login, register } = useAuth();
 
+  // Celebration functions
+  const createFireworks = () => {
+    const fireworksContainer = document.createElement('div');
+    fireworksContainer.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      overflow: hidden;
+    `;
+    document.body.appendChild(fireworksContainer);
+
+    // Create multiple fireworks
+    for (let i = 0; i < 6; i++) {
+      setTimeout(() => {
+        createSingleFirework(fireworksContainer);
+      }, i * 300);
+    }
+
+    // Remove fireworks container after animations
+    setTimeout(() => {
+      document.body.removeChild(fireworksContainer);
+    }, 4000);
+  };
+
+  const createSingleFirework = (container) => {
+    const centerX = Math.random() * window.innerWidth;
+    const centerY = Math.random() * (window.innerHeight * 0.6) + window.innerHeight * 0.1;
+    
+    // Create particles
+    for (let i = 0; i < 12; i++) {
+      const particle = document.createElement('div');
+      const angle = (i * 30) * (Math.PI / 180);
+      const distance = 100 + Math.random() * 100;
+      const colors = ['#ff6b6b', '#4facfe', '#00f2fe', '#ffeb3b', '#27ae60', '#e74c3c', '#9b59b6', '#f39c12'];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      
+      particle.style.cssText = `
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: ${color};
+        border-radius: 50%;
+        left: ${centerX}px;
+        top: ${centerY}px;
+        transform: translate(-50%, -50%);
+        animation: firework-particle 2s ease-out forwards;
+        box-shadow: 0 0 10px ${color};
+      `;
+      
+      const keyframes = `
+        @keyframes firework-particle {
+          0% {
+            transform: translate(-50%, -50%) translate(0, 0) scale(0);
+            opacity: 1;
+          }
+          50% {
+            transform: translate(-50%, -50%) translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(1);
+            opacity: 1;
+          }
+          100% {
+            transform: translate(-50%, -50%) translate(${Math.cos(angle) * distance * 1.5}px, ${Math.sin(angle) * distance * 1.5}px) scale(0);
+            opacity: 0;
+          }
+        }
+      `;
+      
+      if (!document.querySelector('#firework-keyframes')) {
+        const style = document.createElement('style');
+        style.id = 'firework-keyframes';
+        style.textContent = keyframes;
+        document.head.appendChild(style);
+      }
+      
+      container.appendChild(particle);
+      
+      setTimeout(() => {
+        if (container.contains(particle)) {
+          container.removeChild(particle);
+        }
+      }, 2000);
+    }
+  };
+
+  const playTrialSuccessAudio = () => {
+    try {
+      const audio = new Audio('https://customer-assets.emergentagent.com/job_customer-mind-iq-4/artifacts/m8ysblre_7%20day%20free%20trial%20audio.mp3');
+      audio.volume = 0.7;
+      audio.play().catch(error => {
+        console.log('Audio play failed:', error);
+        // Audio play failed, but that's okay - fireworks will still show
+      });
+    } catch (error) {
+      console.log('Audio creation failed:', error);
+      // Audio failed, but that's okay - fireworks will still show
+    }
+  };
+
+  const startCelebration = () => {
+    setShowCelebration(true);
+    createFireworks();
+    playTrialSuccessAudio();
+    
+    // Hide celebration message after a few seconds
+    setTimeout(() => {
+      setShowCelebration(false);
+    }, 3500);
+  };
+
   // Load subscription plans on component mount
   useEffect(() => {
     loadSubscriptionPlans();
