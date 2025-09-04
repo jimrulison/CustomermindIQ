@@ -2265,6 +2265,195 @@ const AdminPortalEnhanced = () => {
               </div>
             </div>
           )}
+          
+          {/* Refunds & Usage Tab */}
+          {activeTab === 'refunds' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold text-white">Refunds & Usage Management</h2>
+                  <p className="text-slate-400">Process refunds and monitor usage overages</p>
+                </div>
+              </div>
+              
+              {/* Refund Management Section */}
+              <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Process Customer Refund</h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Refund Form */}
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-400 mb-2">Customer Email</label>
+                      <input
+                        type="email"
+                        placeholder="customer@example.com"
+                        className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-400"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-slate-400 mb-2">Refund Type</label>
+                      <select className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-2 text-white">
+                        <option value="end_of_cycle">End of cycle + refund prepaid balance</option>
+                        <option value="immediate">Immediate cancel + full prorated refund</option>
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-slate-400 mb-2">Reason</label>
+                      <input
+                        type="text"
+                        placeholder="Customer requested cancellation"
+                        className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-400"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-slate-400 mb-2">Admin Notes</label>
+                      <textarea
+                        placeholder="Internal notes about this refund..."
+                        rows="3"
+                        className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-400"
+                      />
+                    </div>
+                    
+                    <button className="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg transition-colors">
+                      Process Refund
+                    </button>
+                  </div>
+                  
+                  {/* Refund Info */}
+                  <div className="bg-slate-700/30 rounded-lg p-4">
+                    <h4 className="text-white font-medium mb-3">Refund Options Explained</h4>
+                    
+                    <div className="space-y-3 text-sm">
+                      <div className="border-l-2 border-blue-400 pl-3">
+                        <div className="text-white font-medium">End of Cycle</div>
+                        <div className="text-slate-400">• Subscription continues until due date</div>
+                        <div className="text-slate-400">• Refunds any prepaid account balance</div>
+                        <div className="text-slate-400">• No more charges after due date</div>
+                      </div>
+                      
+                      <div className="border-l-2 border-red-400 pl-3">
+                        <div className="text-white font-medium">Immediate Cancel</div>
+                        <div className="text-slate-400">• Cancels subscription immediately</div>
+                        <div className="text-slate-400">• Prorated refund for unused time</div>
+                        <div className="text-slate-400">• Refunds prepaid balance</div>
+                        <div className="text-slate-400">• User loses access immediately</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Recent Refund Requests */}
+              <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Recent Refund Requests</h3>
+                
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-slate-700">
+                        <th className="text-left text-slate-400 py-2">Customer</th>
+                        <th className="text-left text-slate-400 py-2">Type</th>
+                        <th className="text-left text-slate-400 py-2">Amount</th>
+                        <th className="text-left text-slate-400 py-2">Status</th>
+                        <th className="text-left text-slate-400 py-2">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b border-slate-700/50">
+                        <td className="py-2 text-white">user@example.com</td>
+                        <td className="py-2 text-slate-300">Immediate</td>
+                        <td className="py-2 text-green-400">$45.67</td>
+                        <td className="py-2"><span className="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded text-xs">Pending</span></td>
+                        <td className="py-2 text-slate-400">2024-01-15</td>
+                      </tr>
+                      <tr className="border-b border-slate-700/50">
+                        <td className="py-2 text-white">customer@test.com</td>
+                        <td className="py-2 text-slate-300">End of Cycle</td>
+                        <td className="py-2 text-green-400">$12.50</td>
+                        <td className="py-2"><span className="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs">Processed</span></td>
+                        <td className="py-2 text-slate-400">2024-01-14</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+              {/* Usage Monitoring */}
+              <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Usage Overage Monitoring</h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  <div className="bg-slate-700/30 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-slate-400 text-sm">Users Over Limits</p>
+                        <p className="text-2xl font-bold text-orange-400">12</p>
+                      </div>
+                      <AlertTriangle className="w-8 h-8 text-orange-400" />
+                    </div>
+                  </div>
+                  
+                  <div className="bg-slate-700/30 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-slate-400 text-sm">Monthly Overages</p>
+                        <p className="text-2xl font-bold text-red-400">$234.56</p>
+                      </div>
+                      <CreditCard className="w-8 h-8 text-red-400" />
+                    </div>
+                  </div>
+                  
+                  <div className="bg-slate-700/30 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-slate-400 text-sm">Avg Overage/User</p>
+                        <p className="text-2xl font-bold text-purple-400">$19.55</p>
+                      </div>
+                      <TrendingUp className="w-8 h-8 text-purple-400" />
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Overage Details */}
+                <div className="space-y-3">
+                  <h4 className="text-white font-medium">Current Overage Charges</h4>
+                  
+                  <div className="bg-slate-700/20 rounded-lg p-3">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-white">user@company.com (Growth Plan)</span>
+                      <span className="text-red-400">+$12.50</span>
+                    </div>
+                    <div className="text-xs text-slate-400 mt-1">
+                      Contacts: 12,500/10,000 (+2,500 × $0.01) • Websites: 12/10 (+2 × $5.00)
+                    </div>
+                  </div>
+                  
+                  <div className="bg-slate-700/20 rounded-lg p-3">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-white">business@example.com (Launch Plan)</span>
+                      <span className="text-red-400">+$7.25</span>
+                    </div>
+                    <div className="text-xs text-slate-400 mt-1">
+                      Contacts: 1,250/1,000 (+250 × $0.01) • Users: 3/2 (+1 × $10.00)
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex gap-3 mt-4">
+                  <button className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                    Process All Overages
+                  </button>
+                  <button className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                    Export Overage Report
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
