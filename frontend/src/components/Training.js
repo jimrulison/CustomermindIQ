@@ -149,17 +149,6 @@ const Training = () => {
     },
     {
       id: 5,
-      title: "Understanding Performance Metrics",
-      description: "Deep dive into Core Web Vitals and performance optimization",
-      duration: "12:30",
-      difficulty: "Intermediate",
-      category: "Performance",
-      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=225&fit=crop",
-      videoUrl: "/training/videos/performance_metrics.mp4", // You'll upload this
-      topics: ["Core Web Vitals", "Load Times", "Performance Scoring", "Optimization Tips"]
-    },
-    {
-      id: 6,
       title: "Our Support System!!",
       description: "Complete guide to CustomerMind IQ's comprehensive support system and how to get help when you need it",
       duration: "Video",
@@ -169,50 +158,6 @@ const Training = () => {
       videoUrl: "https://customer-assets.emergentagent.com/job_mindiq-customer/artifacts/l407wb38_Training%20Video%205-%20Our%20Support%20System%21%21.mp4",
       topics: ["Support Channels", "Help Resources", "Live Chat System", "Knowledge Base Navigation", "Getting Quick Help"],
       featured: true // Mark as featured for new users needing support
-    },
-    {
-      id: 7,
-      title: "SEO Intelligence Mastery",
-      description: "Maximize your search engine optimization with our SEO tools",
-      duration: "15:22",
-      difficulty: "Advanced",
-      category: "SEO",
-      thumbnail: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=400&h=225&fit=crop",
-      videoUrl: "/training/videos/seo_mastery.mp4", // You'll upload this
-      topics: ["Keyword Research", "Technical SEO", "Content Optimization", "Competitor Analysis"]
-    },
-    {
-      id: 8,
-      title: "Multi-Website Management",
-      description: "Best practices for managing multiple websites and client accounts",
-      duration: "10:15",
-      difficulty: "Intermediate",
-      category: "Management",
-      thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=225&fit=crop",
-      videoUrl: "/training/videos/multi_website_management.mp4", // You'll upload this
-      topics: ["Website Organization", "Bulk Operations", "Client Reporting", "Workflow Optimization"]
-    },
-    {
-      id: 9,
-      title: "Membership Tiers & Scaling",
-      description: "Understanding plans, limits, and when to upgrade your membership",
-      duration: "6:30",
-      difficulty: "Beginner",
-      category: "Account",
-      thumbnail: "https://images.unsplash.com/photo-1553028826-f4804151e0b2?w=400&h=225&fit=crop",
-      videoUrl: "/training/videos/membership_scaling.mp4", // You'll upload this
-      topics: ["Plan Comparison", "Upgrade Benefits", "Usage Tracking", "ROI Calculation"]
-    },
-    {
-      id: 10,
-      title: "Advanced Analytics & Reporting",
-      description: "Create professional reports and track ROI from your optimizations",
-      duration: "18:45",
-      difficulty: "Advanced",
-      category: "Analytics",
-      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=225&fit=crop",
-      videoUrl: "/training/videos/advanced_analytics.mp4", // You'll upload this
-      topics: ["Custom Reports", "ROI Tracking", "Client Dashboards", "Performance Trends"]
     }
   ];
 
