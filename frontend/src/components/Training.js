@@ -137,14 +137,15 @@ const Training = () => {
     },
     {
       id: 4,
-      title: "Getting Started with Website Intelligence Hub",
-      description: "Complete overview of the platform and how to add your first website",
-      duration: "8:45",
-      difficulty: "Beginner",
-      category: "Overview",
-      thumbnail: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=225&fit=crop",
-      videoUrl: "/training/videos/getting_started.mp4", // You'll upload this
-      topics: ["Platform Navigation", "Adding Websites", "Dashboard Overview", "Basic Setup"]
+      title: "Business Impact Analysis",
+      description: "Learn how to measure and analyze the business impact of CustomerMind IQ on your organization's performance",
+      duration: "Presentation",
+      difficulty: "Intermediate",
+      category: "Business Strategy",
+      thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=225&fit=crop",
+      videoUrl: "https://customer-assets.emergentagent.com/job_mindiq-customer/artifacts/nh8nkifn_Training%20Video%204-%20Business%20Impact%20Analysis.pptx",
+      topics: ["ROI Measurement", "Performance Metrics", "Business Growth Analysis", "Impact Assessment", "Strategic Planning"],
+      featured: true // Mark as featured for business strategy training
     },
     {
       id: 5,
