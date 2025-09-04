@@ -1,17 +1,28 @@
 #!/usr/bin/env python3
 """
-CustomerMind IQ - Comprehensive Backend Testing for User-Reported Issues
-Testing specific areas mentioned in user review request
+CustomerMind IQ - Backend Testing for Specific User-Reported Issues
+Testing the exact endpoints mentioned in the review request after frontend URL fix
 
-Test Objectives:
-1. Admin manual loading - test API endpoints like /api/admin/manual or /api/training/manual
-2. Templates functionality - check /api/templates or /api/email/templates endpoints  
-3. Trial email system - test /api/email/trial/* endpoints
-4. API keys configuration - check /api/admin/api-keys or /api/keys endpoints
-5. Basic system health - verify core backend services
-6. Complete Support Ticket Cycle (Create → Admin Response → Customer Reply)
-7. Simple Email System Demonstration (All Users, Subscription Tier, Custom)
-8. Integrated Communication Management (Admin Dashboard Integration)
+SPECIFIC TEST OBJECTIVES (from review request):
+1. **API Keys Management**: Test admin API keys endpoints:
+   - GET /api/admin/api-keys (to list existing keys)
+   - POST /api/admin/api-keys (to create a test key)
+
+2. **Email Templates**: Test admin email templates endpoints:
+   - GET /api/admin/email-templates (to list existing templates)
+   - POST /api/admin/email-templates (to create a test template)
+
+3. **Trial Email System**: Test trial email endpoints for runtime errors:
+   - GET /api/email/trial/logs
+   - GET /api/email/trial/stats
+   - POST /api/subscriptions/trial/register (with sample data)
+
+4. **Admin Manual**: Verify admin manual endpoints are working:
+   - GET /api/download/admin-training-manual
+   - GET /api/download/complete-training-manual
+
+Use admin credentials: admin@customermindiq.com / CustomerMindIQ2025!
+Focus on whether endpoints return proper data instead of 404 errors and check for runtime errors.
 """
 
 import asyncio
