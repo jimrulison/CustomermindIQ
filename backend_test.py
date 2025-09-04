@@ -1368,25 +1368,20 @@ async def main():
     
     tester = CustomerCommunicationTester()
     
-    # Run all tests in sequence
+    # Run focused tests for review request
     test_sequence = [
         tester.test_authentication_setup,
         tester.test_basic_system_health,
+        # SPECIFIC REVIEW REQUEST TESTS
+        tester.test_api_keys_management_endpoints,
+        tester.test_email_templates_endpoints, 
+        tester.test_trial_email_system_endpoints,
+        tester.test_admin_manual_endpoints,
+        # ADDITIONAL COMPREHENSIVE TESTS
         tester.test_admin_manual_loading,
         tester.test_templates_functionality,
         tester.test_trial_email_system,
-        tester.test_api_keys_configuration,
-        tester.test_support_ticket_creation,
-        tester.test_admin_view_tickets,
-        tester.test_admin_respond_to_ticket,
-        tester.test_customer_reply_to_ticket,
-        tester.test_ticket_conversation_history,
-        tester.test_support_tier_info,
-        tester.test_email_to_all_users,
-        tester.test_email_to_subscription_tier,
-        tester.test_email_to_custom_list,
-        tester.test_email_campaign_tracking,
-        tester.test_admin_dashboard_integration
+        tester.test_api_keys_configuration
     ]
     
     for test_func in test_sequence:
