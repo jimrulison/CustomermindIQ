@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   // Get backend URL from environment
   const backendUrl = process.env.REACT_APP_BACKEND_URL || window.location.origin;
 
-  // Check for stored authentication on app start
+  // Check for stored authentication on app start - optimized
   useEffect(() => {
     const storedToken = localStorage.getItem('access_token');
     const storedUser = localStorage.getItem('user_profile');
@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }) => {
         const userProfile = JSON.parse(storedUser);
         setToken(storedToken);
         setUser(userProfile);
+        console.log('Authentication restored from localStorage');
       } catch (error) {
         console.error('Error parsing stored user profile:', error);
         localStorage.removeItem('access_token');
@@ -35,7 +36,10 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('user_profile');
       }
     }
+    
+    // Set loading to false immediately - don't wait for API validation
     setLoading(false);
+    console.log('AuthContext initialization complete');
   }, []);
 
   // Register new user
