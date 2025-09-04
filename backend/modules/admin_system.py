@@ -2120,5 +2120,213 @@ async def get_user_analytics(
         "generated_at": datetime.utcnow()
     }
 
+# ==============================================================================
+# TRIAL EMAIL AUTOMATION ADMIN ENDPOINTS
+# ==============================================================================
+
+@router.get("/admin/trial-emails/logs")
+async def get_admin_trial_email_logs(
+    user_email: Optional[str] = Query(None, description="Filter by user email"),
+    email_type: Optional[str] = Query(None, description="Filter by email type"),
+    status: Optional[str] = Query(None, description="Filter by status"),
+    limit: int = Query(50, ge=1, le=200, description="Number of logs to return"),
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN]))
+):
+    """Get all trial email logs for admin dashboard"""
+    try:
+        # Build query
+        query = {}
+        if user_email:
+            query["user_email"] = {"$regex": user_email, "$options": "i"}
+        if email_type:
+            query["email_type"] = email_type
+        if status:
+            query["status"] = status
+        
+        # Get logs
+        logs = await db.trial_email_logs.find(query).sort("created_at", -1).limit(limit).to_list(length=None)
+        total_count = await db.trial_email_logs.count_documents(query)
+        
+        # Convert ObjectId to string and format dates
+        for log in logs:
+            log["_id"] = str(log["_id"])
+            # Format dates for better display
+            if "scheduled_send_time" in log:
+                log["scheduled_send_time_formatted"] = log["scheduled_send_time"].strftime("%Y-%m-%d %H:%M:%S")
+            if "actual_send_time" in log and log["actual_send_time"]:
+                log["actual_send_time_formatted"] = log["actual_send_time"].strftime("%Y-%m-%d %H:%M:%S")
+            if "created_at" in log:
+                log["created_at_formatted"] = log["created_at"].strftime("%Y-%m-%d %H:%M:%S")
+        
+        return {
+            "status": "success",
+            "total_count": total_count,
+            "returned_count": len(logs),
+            "logs": logs
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch trial email logs: {str(e)}")
+
+@router.get("/admin/trial-emails/stats")
+async def get_admin_trial_email_stats(
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN]))
+):
+    """Get comprehensive trial email statistics for admin dashboard"""
+    try:
+        # Overall stats
+        total_logs = await db.trial_email_logs.count_documents({})
+        sent_count = await db.trial_email_logs.count_documents({"status": "sent"})
+        failed_count = await db.trial_email_logs.count_documents({"status": "failed"})
+        scheduled_count = await db.trial_email_logs.count_documents({"status": "scheduled"})
+        skipped_count = await db.trial_email_logs.count_documents({"status": "skipped"})
+        
+        # Stats by email type
+        email_types = ["welcome", "progress", "urgency", "final"]
+        type_stats = {}
+        
+        for email_type in email_types:
+            type_total = await db.trial_email_logs.count_documents({"email_type": email_type})
+            type_sent = await db.trial_email_logs.count_documents({
+                "email_type": email_type,
+                "status": "sent"
+            })
+            type_failed = await db.trial_email_logs.count_documents({
+                "email_type": email_type,
+                "status": "failed"
+            })
+            
+            type_stats[email_type] = {
+                "total": type_total,
+                "sent": type_sent,
+                "failed": type_failed,
+                "success_rate": round((type_sent / type_total * 100) if type_total > 0 else 0, 2)
+            }
+        
+        # Recent activity (last 7 days)
+        seven_days_ago = datetime.utcnow() - timedelta(days=7)
+        recent_activity = await db.trial_email_logs.aggregate([
+            {
+                "$match": {
+                    "created_at": {"$gte": seven_days_ago}
+                }
+            },
+            {
+                "$group": {
+                    "_id": {
+                        "date": {"$dateToString": {"format": "%Y-%m-%d", "date": "$created_at"}},
+                        "type": "$email_type"
+                    },
+                    "count": {"$sum": 1}
+                }
+            },
+            {"$sort": {"_id.date": 1}}
+        ]).to_list(length=None)
+        
+        # Trial users with email activity
+        trial_users_with_emails = await db.trial_email_logs.aggregate([
+            {
+                "$group": {
+                    "_id": "$user_email",
+                    "total_emails": {"$sum": 1},
+                    "sent_emails": {
+                        "$sum": {"$cond": [{"$eq": ["$status", "sent"]}, 1, 0]}
+                    },
+                    "first_name": {"$first": "$first_name"},
+                    "trial_start": {"$first": "$trial_start_date"},
+                    "trial_end": {"$first": "$trial_end_date"}
+                }
+            },
+            {"$sort": {"trial_start": -1}},
+            {"$limit": 20}
+        ]).to_list(length=None)
+        
+        # Calculate overall success rate
+        success_rate = round((sent_count / total_logs * 100) if total_logs > 0 else 0, 2)
+        
+        return {
+            "status": "success",
+            "overall_stats": {
+                "total_emails": total_logs,
+                "sent": sent_count,
+                "failed": failed_count,
+                "scheduled": scheduled_count,
+                "skipped": skipped_count,
+                "success_rate_percent": success_rate
+            },
+            "stats_by_email_type": type_stats,
+            "recent_activity": recent_activity,
+            "trial_users_with_emails": trial_users_with_emails,
+            "generated_at": datetime.utcnow()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch trial email stats: {str(e)}")
+
+@router.post("/admin/trial-emails/send-now/{log_id}")
+async def admin_send_trial_email_now(
+    log_id: str,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN]))
+):
+    """Admin endpoint to manually send a trial email immediately"""
+    try:
+        # Import the send function from email system
+        from email_system import send_trial_email_now
+        
+        result = await send_trial_email_now(log_id)
+        return result
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to send trial email: {str(e)}")
+
+@router.post("/admin/trial-emails/process-scheduled")
+async def admin_process_scheduled_trial_emails(
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN]))
+):
+    """Admin endpoint to manually process all scheduled trial emails"""
+    try:
+        # Import the process function from email system
+        from email_system import process_scheduled_trial_emails
+        
+        await process_scheduled_trial_emails()
+        return {"status": "success", "message": "All scheduled trial emails processed"}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to process scheduled emails: {str(e)}")
+
+@router.get("/admin/trial-emails/user/{user_email}")
+async def get_trial_emails_for_user(
+    user_email: str,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN]))
+):
+    """Get all trial emails for a specific user"""
+    try:
+        # Get user's trial emails
+        emails = await db.trial_email_logs.find(
+            {"user_email": user_email}
+        ).sort("scheduled_send_time", 1).to_list(length=None)
+        
+        # Get user info
+        user = await db.users.find_one({"email": user_email})
+        
+        # Format data
+        for email in emails:
+            email["_id"] = str(email["_id"])
+            email["scheduled_send_time_formatted"] = email["scheduled_send_time"].strftime("%Y-%m-%d %H:%M:%S")
+            if email.get("actual_send_time"):
+                email["actual_send_time_formatted"] = email["actual_send_time"].strftime("%Y-%m-%d %H:%M:%S")
+        
+        return {
+            "status": "success",
+            "user_email": user_email,
+            "user_name": f"{user.get('first_name', '')} {user.get('last_name', '')}" if user else "Unknown",
+            "trial_status": "active" if user and user.get("is_trial") else "expired/converted",
+            "emails": emails,
+            "total_emails": len(emails)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch user trial emails: {str(e)}")
+
 # Export router
 __all__ = ["router"]
