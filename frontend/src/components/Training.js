@@ -30,7 +30,8 @@ import {
   Award,
   Lock,
   RefreshCw,
-  Sparkles
+  Sparkles,
+  HelpCircle
 } from 'lucide-react';
 
 const Training = () => {
