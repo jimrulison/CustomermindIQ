@@ -38,12 +38,11 @@ class UniversalIntelligenceService:
         Generate comprehensive business intelligence from unified customer profiles
         """
         try:
-            chat = LlmChat(
-                api_key=self.api_key,
+            # Use advanced LLM manager for enhanced intelligence analysis
+            chat = llm_manager.create_intelligence_chat(
                 session_id=f"business_intelligence_{datetime.now().strftime('%Y%m%d')}",
-                system_message="""You are Customer Mind IQ's universal business intelligence analyst. 
-                Analyze customer data from any business software to provide actionable insights and recommendations."""
-            ).with_model("openai", "gpt-4o-mini")
+                context="business intelligence"
+            )
             
             # Prepare analysis data
             analysis_data = await self._prepare_business_analysis_data(profiles)
