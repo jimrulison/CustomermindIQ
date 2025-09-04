@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Base - Category List Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .kb-sidebar {
+            width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            height: fit-content;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+        }
+
+        .kb-sidebar h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border: none;
+            background: transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            color: #000000; /* Black text for visibility */
+        }
+
+        .category-item:hover {
+            background: #f8f9ff;
+        }
+
+        .category-Item.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .category-label {
+            font-weight: 500;
+            color: #000000; /* Explicitly black for visibility */
+        }
+
+        .category-count {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: #000000; /* Black count text */
+        }
+
+        .category-item.active .category-label,
+        .category-item.active .category-count {
+            color: white;
+        }
+
+        .test-info {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Knowledge Base Category List - Visibility Test</h2>
+        <p>This shows how the category list should appear with black text for proper visibility.</p>
+    </div>
+
+    <div class="kb-sidebar">
+        <h3>Categories</h3>
+        <div class="category-list">
+            <button class="category-item active">
+                <span class="category-label">All Articles</span>
+                <span class="category-count">25</span>
+            </button>
+            <button class="category-item">
+                <span class="category-label">Getting Started</span>
+                <span class="category-count">8</span>
+            </button>
+            <button class="category-item">
+                <span class="category-label">Features</span>
+                <span class="category-count">6</span>
+            </button>
+            <button class="category-item">
+                <span class="category-label">Troubleshooting</span>
+                <span class="category-count">4</span>
+            </button>
+            <button class="category-item">
+                <span class="category-label">Integration</span>
+                <span class="category-count">3</span>
+            </button>
+            <button class="category-item">
+                <span class="category-label">Training</span>
+                <span class="category-count">4</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Add click handlers for demonstration
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
