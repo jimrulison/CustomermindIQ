@@ -117,6 +117,37 @@ class EmailCampaign(BaseModel):
     sent_at: Optional[datetime] = None
     scheduled_at: Optional[datetime] = None
 
+# Trial Email Automation Models
+class TrialEmailType(str, Enum):
+    WELCOME = "welcome"           # Immediate
+    PROGRESS_CHECK = "progress"   # Day 3
+    URGENCY = "urgency"          # Day 5 (2 days before expiration)
+    FINAL_NOTICE = "final"       # Day 7 (expiration day)
+
+class TrialEmailStatus(str, Enum):
+    SCHEDULED = "scheduled"
+    SENT = "sent"
+    FAILED = "failed"
+    SKIPPED = "skipped"  # User converted before email sent
+
+class TrialEmailLog(BaseModel):
+    log_id: str
+    user_email: str
+    user_id: str
+    first_name: str
+    trial_start_date: datetime
+    trial_end_date: datetime
+    email_type: TrialEmailType
+    subject: str
+    html_content: str
+    scheduled_send_time: datetime
+    actual_send_time: Optional[datetime] = None
+    status: TrialEmailStatus
+    error_message: Optional[str] = None
+    provider_used: EmailProvider
+    created_at: datetime
+    updated_at: datetime
+
 # Email Provider Configurations
 DEFAULT_EMAIL_PROVIDERS = {
     EmailProvider.SENDGRID: {
