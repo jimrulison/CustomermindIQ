@@ -147,7 +147,7 @@ const Training = () => {
       topics: ["Platform Navigation", "Adding Websites", "Dashboard Overview", "Basic Setup"]
     },
     {
-      id: 4,
+      id: 5,
       title: "Understanding Performance Metrics",
       description: "Deep dive into Core Web Vitals and performance optimization",
       duration: "12:30",
@@ -158,7 +158,19 @@ const Training = () => {
       topics: ["Core Web Vitals", "Load Times", "Performance Scoring", "Optimization Tips"]
     },
     {
-      id: 5,
+      id: 6,
+      title: "Our Support System!!",
+      description: "Complete guide to CustomerMind IQ's comprehensive support system and how to get help when you need it",
+      duration: "Video",
+      difficulty: "Beginner",
+      category: "Support",
+      thumbnail: "https://images.unsplash.com/photo-1553028826-f4804151e0b2?w=400&h=225&fit=crop",
+      videoUrl: "https://customer-assets.emergentagent.com/job_mindiq-customer/artifacts/l407wb38_Training%20Video%205-%20Our%20Support%20System%21%21.mp4",
+      topics: ["Support Channels", "Help Resources", "Live Chat System", "Knowledge Base Navigation", "Getting Quick Help"],
+      featured: true // Mark as featured for new users needing support
+    },
+    {
+      id: 7,
       title: "SEO Intelligence Mastery",
       description: "Maximize your search engine optimization with our SEO tools",
       duration: "15:22",
