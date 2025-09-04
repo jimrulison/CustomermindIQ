@@ -1989,7 +1989,8 @@ function App() {
           <Route path="/training-videos" element={<PublicTrainingPage />} />
           
           {/* Main application - Authentication required */}
-          <Route path="/*" element={<AppContent />} />
+          <Route path="/" element={<AppContent />} />
+          <Route path="*" element={<AppContent />} />
         </Routes>
       </AuthProvider>
     </Router>
