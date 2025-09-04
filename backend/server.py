@@ -312,6 +312,12 @@ class CustomerBehavior(BaseModel):
     purchase_patterns: Dict[str, Any] = Field(default_factory=dict)
     engagement_score: float = 0.0
     lifecycle_stage: str = "new"
+    # Data privacy fields
+    owner_user_id: Optional[str] = None  # ID of the user who owns this customer data
+    created_by: Optional[str] = None     # ID of the user who created this entry
+    is_shared: bool = False              # Whether this data can be shared with other users
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
 
 class ProductRecommendation(BaseModel):
     product_name: str
