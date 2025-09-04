@@ -21,7 +21,7 @@ import time
 class Phase3BackendTester:
     def __init__(self):
         # Use the production URL from frontend/.env
-        self.base_url = "https://customer-mind-iq-4.preview.emergentagent.com/api"
+        self.base_url = "https://customer-mind-iq-5.preview.emergentagent.com/api"
         
         # Test counters for Phase 3 modules
         self.compliance_governance_tests = 0
