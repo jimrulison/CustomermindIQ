@@ -428,10 +428,10 @@ const AdminPortalEnhanced = () => {
                   key={tab.id}
                   onClick={() => {
                     if (tab.isDownload && tab.id === 'admin-manual') {
-                      // Download Admin Training Manual (using backend static route)
+                      // Download Admin Training Manual using direct backend endpoint
                       const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
                       const link = document.createElement('a');
-                      link.href = `${backendUrl}/admin-training-manual.html`;
+                      link.href = `${backendUrl}/download-admin-manual-direct`;
                       link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
                       link.target = '_blank';
                       document.body.appendChild(link);
