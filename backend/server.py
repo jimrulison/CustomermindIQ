@@ -126,7 +126,7 @@ from modules.growth_acceleration_engine import (
 from modules.payment_system import router as payment_router
 
 # Import Authentication System
-from auth.auth_system import router as auth_router, create_default_admin, UserProfile, get_current_user
+from auth.auth_system import router as auth_router, create_default_admin, UserProfile, get_current_user, require_role, UserRole
 
 # Import Advanced Admin System
 from modules.admin_system import router as admin_router
