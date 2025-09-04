@@ -15,8 +15,8 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // TEMPORARY FIX: Force the correct backend URL since environment variable seems to be cached/overridden
-  const backendUrl = 'https://mindiq-customer.preview.emergentagent.com';
+  // Use environment variable for backend URL with fallback
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
   
   // Debug: Log the backend URL
   console.log('AUTH CONTEXT - Backend URL (forced):', backendUrl);
