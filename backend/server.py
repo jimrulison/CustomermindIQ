@@ -1073,7 +1073,9 @@ async def delete_customer_data(customer_id: str, current_user: UserProfile = Dep
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to delete customer data: {e}")
-async def create_campaign(campaign: EmailCampaign, background_tasks: BackgroundTasks):
+
+@app.post("/api/campaigns", response_model=EmailCampaign)
+async def create_campaign(campaign: EmailCampaign, current_user: UserProfile = Depends(get_current_user), background_tasks: BackgroundTasks = BackgroundTasks()):
     """Create a new AI-powered email campaign"""
     try:
         campaign.id = str(uuid.uuid4())
