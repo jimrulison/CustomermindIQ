@@ -2341,6 +2341,7 @@ const AdminPortalEnhanced = () => {
                         <div className="text-slate-400">• Prorated refund for unused time</div>
                         <div className="text-slate-400">• Refunds prepaid balance</div>
                         <div className="text-slate-400">• User loses access immediately</div>
+                        <div className="text-slate-400">• Processed in 1-2 business days</div>
                       </div>
                     </div>
                   </div>
