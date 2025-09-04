@@ -1035,6 +1035,9 @@ TRIAL_EMAIL_TEMPLATES = {
         "html_template": """
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f8f9fa;">
             <div style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); padding: 30px; text-align: center;">
+                <img src="https://customer-assets.emergentagent.com/job_customer-mind-iq-4/artifacts/pntu3yqm_Customer%20Mind%20IQ%20logo.png" 
+                     alt="Customer Mind IQ" 
+                     style="height: 80px; width: auto; margin-bottom: 20px; object-fit: contain;" />
                 <h1 style="color: white; margin: 0; font-size: 28px;">🚨 FINAL NOTICE</h1>
                 <p style="color: rgba(255,255,255,0.9); font-size: 18px; margin: 10px 0 0 0;">Your trial expires today</p>
             </div>
