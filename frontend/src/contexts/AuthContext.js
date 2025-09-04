@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // TEMPORARY FIX: Force the correct backend URL since environment variable seems to be cached/overridden
-  const backendUrl = 'https://customer-mind-iq-5.preview.emergentagent.com';
+  const backendUrl = 'https://mindiq-customer.preview.emergentagent.com';
   
   // Debug: Log the backend URL
   console.log('AUTH CONTEXT - Backend URL (forced):', backendUrl);
