@@ -17,6 +17,8 @@ from dotenv import load_dotenv
 
 # Import auth dependencies for annual subscription requirement
 from auth.auth_system import require_annual_subscription, UserProfile
+# Import advanced LLM manager for latest AI models
+from ..llm_manager import llm_manager, ModelType, LLMProvider
 
 from .models import (
     GrowthOpportunity, 
