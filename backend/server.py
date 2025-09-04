@@ -1199,6 +1199,69 @@ async def get_analytics(current_user: UserProfile = Depends(get_current_user)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Customer Mind IQ analytics error: {e}")
 
+@app.get("/api/admin/customers/all")
+async def get_all_customers_admin(current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))):
+    """Admin endpoint: Get all customers from all users with ownership information"""
+    try:
+        # Get all customers with ownership info
+        customers = await db.customers.find({}).to_list(length=1000)
+        
+        # Group by owner
+        customers_by_owner = {}
+        unowned_customers = []
+        
+        for customer in customers:
+            owner_id = customer.get("owner_user_id")
+            if owner_id:
+                if owner_id not in customers_by_owner:
+                    customers_by_owner[owner_id] = []
+                customers_by_owner[owner_id].append(CustomerBehavior(**customer))
+            else:
+                unowned_customers.append(CustomerBehavior(**customer))
+        
+        return {
+            "total_customers": len(customers),
+            "customers_by_owner": customers_by_owner,
+            "unowned_customers": unowned_customers,
+            "privacy_summary": {
+                "owned_customers": len(customers) - len(unowned_customers),
+                "unowned_customers": len(unowned_customers),
+                "unique_owners": len(customers_by_owner)
+            }
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Admin customer view error: {e}")
+
+@app.get("/api/privacy/my-data")
+async def get_my_data(current_user: UserProfile = Depends(get_current_user)):
+    """Get all data owned by the current user"""
+    try:
+        # Get all customer data owned by this user
+        customers = await db.customers.find({"owner_user_id": current_user.user_id}).to_list(length=1000)
+        
+        # Get all campaigns created by this user
+        campaigns = await db.campaigns.find({"created_by": current_user.user_id}).to_list(length=100)
+        
+        return {
+            "user_info": {
+                "user_id": current_user.user_id,
+                "email": current_user.email,
+                "name": f"{current_user.first_name} {current_user.last_name}",
+                "role": current_user.role
+            },
+            "data_summary": {
+                "total_customers": len(customers),
+                "total_campaigns": len(campaigns),
+                "data_created_at": customers[0].get("created_at") if customers else None
+            },
+            "customers": [CustomerBehavior(**customer) for customer in customers],
+            "privacy_status": "All data is private to your account only"
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Privacy data view error: {e}")
+
 async def schedule_campaign_sending(campaign_id: str):
     """Background task to send scheduled campaigns via Customer Mind IQ"""
     try:
