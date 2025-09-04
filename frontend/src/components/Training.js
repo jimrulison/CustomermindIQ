@@ -471,18 +471,6 @@ const Training = () => {
             </div>
           </CardContent>
         </Card>
-
-        <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-2xl font-bold text-white">72</div>
-                <div className="text-xs text-orange-200">Total Minutes</div>
-              </div>
-              <Clock className="h-8 w-8 text-orange-400" />
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       {/* Main Content Tabs */}
