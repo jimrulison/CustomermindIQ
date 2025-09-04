@@ -885,13 +885,20 @@ async def get_customers(current_user: UserProfile = Depends(get_current_user)):
         raise HTTPException(status_code=500, detail=f"Customer Mind IQ error: {e}")
 
 @app.get("/api/customers/{customer_id}/recommendations")
-async def get_customer_recommendations(customer_id: str):
-    """Get AI-powered product recommendations for a specific customer"""
+async def get_customer_recommendations(customer_id: str, current_user: UserProfile = Depends(get_current_user)):
+    """Get AI-powered product recommendations for a specific customer - with privacy controls"""
     try:
-        # Get customer data
-        customer = await db.customers.find_one({"customer_id": customer_id})
+        # Build query with ownership filter
+        if current_user.role in ["admin", "super_admin"]:
+            # Admin can access any customer
+            query = {"customer_id": customer_id}
+        else:
+            # Regular users can only access their own customers
+            query = {"customer_id": customer_id, "owner_user_id": current_user.user_id}
+        
+        customer = await db.customers.find_one(query)
         if not customer:
-            raise HTTPException(status_code=404, detail="Customer not found")
+            raise HTTPException(status_code=404, detail="Customer not found or access denied")
         
         # Get Customer Mind IQ AI analysis for recommendations
         analysis = await analytics_service.analyze_customer_behavior(customer)
