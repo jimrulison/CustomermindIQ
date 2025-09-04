@@ -252,26 +252,36 @@ function AppContent() {
     }
   };
 
-  // Background data loading - doesn't affect UI loading state
+  // Background data loading - doesn't affect UI loading state  
   const loadBackgroundData = async () => {
     console.log('Loading background data...');
     
+    // Only load if authenticated
+    if (!isAuthenticated || !apiCall) {
+      console.log('Not authenticated yet, skipping data loading');
+      return;
+    }
+    
     try {
-      // Load essential data with fast timeout using authenticated API calls
+      // Load essential data using authenticated API calls
       const [customersRes, campaignsRes, analyticsRes] = await Promise.allSettled([
         apiCall('/api/customers'),
-        apiCall('/api/campaigns'),
+        apiCall('/api/campaigns'), 
         apiCall('/api/analytics')
       ]);
       
       // Update data if successful
       if (customersRes.status === 'fulfilled') {
         setCustomers(customersRes.value);
-        console.log('Customers loaded:', customersRes.value.length);
+        console.log('Customers loaded:', customersRes.value?.length || 0);
+      } else {
+        console.log('Failed to load customers:', customersRes.reason);
       }
+      
       if (campaignsRes.status === 'fulfilled') {
         setCampaigns(campaignsRes.value);
       }
+      
       if (analyticsRes.status === 'fulfilled') {
         setAnalytics(analyticsRes.value);
       }
