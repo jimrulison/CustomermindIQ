@@ -1,14 +1,19 @@
 # Subscription Management System
 import os
 import uuid
+import bcrypt
 from fastapi import APIRouter, HTTPException, Depends
 from motor.motor_asyncio import AsyncIOMotorClient
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from pydantic import BaseModel, Field
 import secrets
-import bcrypt
 from dotenv import load_dotenv
+
+# Import email system for trial automation
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from email_system import schedule_trial_email_sequence
 
 # Load environment variables
 load_dotenv()
