@@ -270,12 +270,24 @@ function AppContent() {
         apiCall('/api/analytics')
       ]);
       
-      // Update data if successful
+      // Update data if successful - with array validation
       if (customersRes.status === 'fulfilled') {
-        setCustomers(customersRes.value);
-        console.log('Customers loaded:', customersRes.value?.length || 0);
+        const customersData = customersRes.value;
+        // Ensure customers is always an array
+        if (Array.isArray(customersData)) {
+          setCustomers(customersData);
+          console.log('Customers loaded:', customersData.length);
+        } else if (customersData && Array.isArray(customersData.data)) {
+          // Handle case where API returns {data: [...]}
+          setCustomers(customersData.data);
+          console.log('Customers loaded from data property:', customersData.data.length);
+        } else {
+          console.log('Invalid customers data format:', customersData);
+          setCustomers([]); // Fallback to empty array
+        }
       } else {
         console.log('Failed to load customers:', customersRes.reason);
+        setCustomers([]); // Ensure it's always an array on error
       }
       
       if (campaignsRes.status === 'fulfilled') {
