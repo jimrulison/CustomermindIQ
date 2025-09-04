@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Mind IQ - Training Videos & Pricing</title>
+    <meta name="description" content="Comprehensive training videos and pricing for Customer Mind IQ - AI-powered customer intelligence platform">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%);
+            color: white;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 0;
+        }
+        
+        .logo {
+            width: auto;
+            height: 96px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #3b82f6, #06d6a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Training Videos Section */
+        .section {
+            margin-bottom: 80px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .section-header p {
+            font-size: 1.125rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .video-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .video-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .video-card.featured {
+            border: 2px solid rgba(34, 197, 94, 0.3);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(59, 130, 246, 0.1));
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        
+        .video-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: white;
+        }
+        
+        .video-description {
+            color: #94a3b8;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+        
+        .video-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        
+        .badge {
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid;
+        }
+        
+        .badge.category {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        .badge.difficulty {
+            background: rgba(71, 85, 105, 0.5);
+            color: #cbd5e1;
+            border-color: rgba(71, 85, 105, 0.3);
+        }
+        
+        .video-topics {
+            margin-top: 12px;
+        }
+        
+        .video-topics p {
+            font-size: 0.875rem;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+        }
+        
+        .topics-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        
+        .topic-tag {
+            background: rgba(71, 85, 105, 0.5);
+            color: #94a3b8;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+        
+        /* Pricing Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .pricing-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            border-radius: 12px;
+            padding: 32px 24px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card.popular {
+            border: 2px solid rgba(59, 130, 246, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #3b82f6;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .plan-description {
+            color: #94a3b8;
+            margin-bottom: 24px;
+        }
+        
+        .pricing {
+            margin-bottom: 24px;
+        }
+        
+        .price-monthly {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .original-price {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            text-decoration: line-through;
+        }
+        
+        .current-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .price-period {
+            color: #94a3b8;
+        }
+        
+        .price-yearly {
+            text-align: center;
+            margin-top: 12px;
+        }
+        
+        .yearly-savings {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 8px;
+            display: inline-block;
+        }
+        
+        .features {
+            list-style: none;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+        
+        .features li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            color: #cbd5e1;
+        }
+        
+        .features li::before {
+            content: "✓";
+            color: #22c55e;
+            font-weight: bold;
+            margin-right: 12px;
+            width: 16px;
+        }
+        
+        .cta-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .cta-button:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+        
+        /* Bonus Section */
+        .bonus-section {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.2));
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .bonus-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .bonus-highlight {
+            color: #22c55e;
+            font-weight: 700;
+            font-style: italic;
+        }
+        
+        /* Final CTA Section */
+        .final-cta {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        .final-cta h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .final-cta p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .final-cta-button {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 8px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .final-cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+        }
+        
+        .final-cta-note {
+            margin-top: 16px;
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1.125rem;
+            }
+            
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.popular {
+                transform: none;
+            }
+            
+            .container {
+                padding: 0 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <img src="https://customer-assets.emergentagent.com/job_customer-mind-iq-4/artifacts/pntu3yqm_Customer%20Mind%20IQ%20logo.png" 
+                 alt="CustomerMind IQ" 
+                 class="logo">
+            <h1>Want to really know what the Customer Mind IQ software is all about?</h1>
+            <p>Here are our training videos that we are glad to share.</p>
+        </div>
+
+        <!-- Training Videos Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2>
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                        <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                    </svg>
+                    Training Videos
+                </h2>
+                <p>Get hands-on training with our comprehensive video library covering all aspects of the CustomerMind IQ platform</p>
+            </div>
+
+            <div class="video-grid">
+                <!-- Featured Video 1 -->
+                <div class="video-card featured" onclick="playVideo('growth-engine')">
+                    <div class="video-overlay">⭐ FEATURED</div>
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=225&fit=crop" 
+                         alt="Growth Acceleration Engine" class="video-thumbnail">
+                    <div class="video-title">Growth Acceleration Engine - Introduction</div>
+                    <div class="video-description">Complete introduction to the Growth Acceleration Engine and how it can accelerate your business growth</div>
+                    <div class="video-meta">
+                        <span class="badge category">Growth</span>
+                        <span class="badge difficulty">All Levels</span>
+                    </div>
+                    <div class="video-topics">
+                        <p>What you'll learn:</p>
+                        <div class="topics-list">
+                            <span class="topic-tag">Growth Engine Overview</span>
+                            <span class="topic-tag">Business Acceleration</span>
+                            <span class="topic-tag">AI-Powered Growth</span>
+                            <span class="topic-tag">Revenue Optimization</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Video 2 -->
+                <div class="video-card featured" onclick="playVideo('dashboard-navigation')">
+                    <div class="video-overlay">⭐ FEATURED</div>
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=225&fit=crop" 
+                         alt="Dashboard & Navigation Essentials" class="video-thumbnail">
+                    <div class="video-title">Dashboard & Navigation Essentials</div>
+                    <div class="video-description">Master the CustomerMind IQ dashboard and navigation system for efficient platform usage</div>
+                    <div class="video-meta">
+                        <span class="badge category">Getting Started</span>
+                        <span class="badge difficulty">Beginner</span>
+                    </div>
+                    <div class="video-topics">
+                        <p>What you'll learn:</p>
+                        <div class="topics-list">
+                            <span class="topic-tag">Dashboard Overview</span>
+                            <span class="topic-tag">Navigation Menu</span>
+                            <span class="topic-tag">User Interface</span>
+                            <span class="topic-tag">Quick Actions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Video 3 -->
+                <div class="video-card featured" onclick="playVideo('command-center')">
+                    <div class="video-overlay">⭐ FEATURED</div>
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=225&fit=crop" 
+                         alt="Command Center Deep Dive" class="video-thumbnail">
+                    <div class="video-title">Command Center Deep Dive</div>
+                    <div class="video-description">Comprehensive guide to the CustomerMind IQ Command Center and its powerful management capabilities</div>
+                    <div class="video-meta">
+                        <span class="badge category">Advanced Features</span>
+                        <span class="badge difficulty">Intermediate</span>
+                    </div>
+                    <div class="video-topics">
+                        <p>What you'll learn:</p>
+                        <div class="topics-list">
+                            <span class="topic-tag">Command Center Overview</span>
+                            <span class="topic-tag">Management Tools</span>
+                            <span class="topic-tag">Advanced Controls</span>
+                            <span class="topic-tag">System Monitoring</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Training Videos -->
+                <div class="video-card" onclick="playVideo('getting-started')">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=225&fit=crop" 
+                         alt="Getting Started" class="video-thumbnail">
+                    <div class="video-title">Getting Started with Website Intelligence Hub</div>
+                    <div class="video-description">Complete overview of the platform and how to add your first website</div>
+                    <div class="video-meta">
+                        <span class="badge category">Overview</span>
+                        <span class="badge difficulty">Beginner</span>
+                    </div>
+                </div>
+
+                <div class="video-card" onclick="playVideo('performance-metrics')">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=225&fit=crop" 
+                         alt="Performance Metrics" class="video-thumbnail">
+                    <div class="video-title">Understanding Performance Metrics</div>
+                    <div class="video-description">Deep dive into Core Web Vitals and performance optimization</div>
+                    <div class="video-meta">
+                        <span class="badge category">Performance</span>
+                        <span class="badge difficulty">Intermediate</span>
+                    </div>
+                </div>
+
+                <div class="video-card" onclick="playVideo('seo-intelligence')">
+                    <img src="https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=400&h=225&fit=crop" 
+                         alt="SEO Intelligence" class="video-thumbnail">
+                    <div class="video-title">SEO Intelligence Mastery</div>
+                    <div class="video-description">Maximize your search engine optimization with our SEO tools</div>
+                    <div class="video-meta">
+                        <span class="badge category">SEO</span>
+                        <span class="badge difficulty">Advanced</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2>
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                    </svg>
+                    Choose Your Plan
+                </h2>
+                <p>Get started with our powerful AI-driven customer intelligence platform</p>
+                <div style="margin-top: 20px;">
+                    <span class="yearly-savings" style="font-size: 1.125rem; padding: 8px 16px;">
+                        🏆 12 months for the price of 10 with annual plans!
+                    </span>
+                </div>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Launch Plan -->
+                <div class="pricing-card">
+                    <div class="plan-name">Launch</div>
+                    <div class="plan-description">Perfect for growing businesses</div>
+                    <div class="pricing">
+                        <div class="price-monthly">
+                            <span class="original-price">$99</span>
+                            <span class="current-price">$49</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <div class="price-yearly">
+                            <p style="color: #94a3b8; margin-bottom: 4px;">or</p>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                <span style="text-decoration: line-through; color: #94a3b8;">$1188</span>
+                                <span style="color: #22c55e; font-weight: 700; font-size: 1.25rem;">$490</span>
+                                <span style="color: #94a3b8;">/year</span>
+                            </div>
+                            <span class="yearly-savings">Save 2 months!</span>
+                        </div>
+                    </div>
+                    <ul class="features">
+                        <li>Up to 5 websites</li>
+                        <li>Basic AI analytics</li>
+                        <li>Email support</li>
+                        <li>Dashboard insights</li>
+                        <li>Performance monitoring</li>
+                    </ul>
+                    <button class="cta-button" onclick="startTrial()">Get Started</button>
+                </div>
+
+                <!-- Growth Plan -->
+                <div class="pricing-card popular">
+                    <div class="pricing-badge">Most Popular</div>
+                    <div class="plan-name">Growth</div>
+                    <div class="plan-description">Most popular for scaling companies</div>
+                    <div class="pricing">
+                        <div class="price-monthly">
+                            <span class="original-price">$199</span>
+                            <span class="current-price">$75</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <div class="price-yearly">
+                            <p style="color: #94a3b8; margin-bottom: 4px;">or</p>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                <span style="text-decoration: line-through; color: #94a3b8;">$2388</span>
+                                <span style="color: #22c55e; font-weight: 700; font-size: 1.25rem;">$750</span>
+                                <span style="color: #94a3b8;">/year</span>
+                            </div>
+                            <span class="yearly-savings">Save 2 months!</span>
+                        </div>
+                    </div>
+                    <ul class="features">
+                        <li>Up to 15 websites</li>
+                        <li>Advanced AI insights</li>
+                        <li>Priority support</li>
+                        <li>Growth Acceleration Engine (Annual Only)</li>
+                        <li>Custom reporting</li>
+                        <li>Live chat support</li>
+                    </ul>
+                    <button class="cta-button" onclick="startTrial()">Get Started</button>
+                </div>
+
+                <!-- Scale Plan -->
+                <div class="pricing-card">
+                    <div class="plan-name">Scale</div>
+                    <div class="plan-description">For enterprise-level operations</div>
+                    <div class="pricing">
+                        <div class="price-monthly">
+                            <span class="original-price">$399</span>
+                            <span class="current-price">$199</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <div class="price-yearly">
+                            <p style="color: #94a3b8; margin-bottom: 4px;">or</p>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                <span style="text-decoration: line-through; color: #94a3b8;">$4788</span>
+                                <span style="color: #22c55e; font-weight: 700; font-size: 1.25rem;">$1990</span>
+                                <span style="color: #94a3b8;">/year</span>
+                            </div>
+                            <span class="yearly-savings">Save 2 months!</span>
+                        </div>
+                    </div>
+                    <ul class="features">
+                        <li>Unlimited websites</li>
+                        <li>Enterprise AI features</li>
+                        <li>24/7 phone support</li>
+                        <li>Growth Acceleration Engine (Annual Only)</li>
+                        <li>White-label options</li>
+                        <li>Dedicated account manager</li>
+                    </ul>
+                    <button class="cta-button" onclick="startTrial()">Get Started</button>
+                </div>
+
+                <!-- White Label Plan -->
+                <div class="pricing-card">
+                    <div class="plan-name">White Label</div>
+                    <div class="plan-description">Complete white-label solution</div>
+                    <div class="pricing">
+                        <div class="price-monthly">
+                            <span class="current-price" style="font-size: 1.5rem;">Contact Sales</span>
+                        </div>
+                    </div>
+                    <ul class="features">
+                        <li>Complete white-labeling</li>
+                        <li>Custom branding</li>
+                        <li>API access</li>
+                        <li>Growth Acceleration Engine (Annual Only)</li>
+                        <li>Custom integrations</li>
+                        <li>Dedicated infrastructure</li>
+                    </ul>
+                    <button class="cta-button" onclick="startTrial()">Contact Sales</button>
+                </div>
+            </div>
+
+            <!-- Annual Bonus Section -->
+            <div class="bonus-section">
+                <div class="bonus-title">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="m9 12 2 2 4-4"></path>
+                    </svg>
+                    Exclusive Annual Member Bonus
+                </div>
+                <p style="font-size: 1.25rem; margin-bottom: 16px;">
+                    Get the <span class="bonus-highlight">FREE</span> $3,000 Growth Acceleration Engine
+                </p>
+                <p style="color: #94a3b8; max-width: 600px; margin: 0 auto;">
+                    Available with Launch, Growth, and Scale annual plans. Unlock AI-powered growth opportunities, 
+                    automated A/B testing, and revenue optimization tools.
+                </p>
+            </div>
+        </div>
+
+        <!-- Final CTA Section -->
+        <div class="final-cta">
+            <h3>Ready to Transform Your Business?</h3>
+            <p>Start your 7-day free trial today and experience the power of AI-driven customer intelligence</p>
+            <button class="final-cta-button" onclick="startTrial()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+                Start 7-Day Free Trial - No Credit Card Required
+            </button>
+            <p class="final-cta-note">Full access to all features • Cancel anytime • No commitments</p>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; padding: 20px; box-sizing: border-box;">
+        <div style="position: relative; max-width: 800px; margin: 50px auto; background: #1e293b; border-radius: 12px; padding: 30px;">
+            <button onclick="closeVideo()" style="position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
+            <div id="videoContent">
+                <h3 style="color: white; margin-bottom: 20px;">Training Video</h3>
+                <p style="color: #94a3b8; margin-bottom: 20px;">To access our complete video training library, sign up for your free 7-day trial!</p>
+                <button onclick="startTrial()" style="background: #22c55e; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer;">Start Free Trial</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startTrial() {
+            // Redirect to main site for trial signup
+            window.location.href = 'https://customermindiq.com/';
+        }
+        
+        function playVideo(videoId) {
+            document.getElementById('videoModal').style.display = 'block';
+        }
+        
+        function closeVideo() {
+            document.getElementById('videoModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideo();
+            }
+        });
+    </script>
+</body>
+</html>
