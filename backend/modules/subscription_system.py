@@ -312,6 +312,20 @@ async def register_trial_user(trial_data: TrialRegistration):
         
         await db.users.insert_one(new_user)
         
+        # Schedule trial email sequence
+        try:
+            await schedule_trial_email_sequence(
+                user_email=trial_data.email,
+                user_id=user_id,
+                first_name=trial_data.first_name,
+                trial_start_date=datetime.utcnow(),
+                trial_end_date=trial_end,
+                login_password=temp_password
+            )
+        except Exception as e:
+            # Log email scheduling error but don't fail the registration
+            print(f"WARNING: Failed to schedule trial emails for {trial_data.email}: {str(e)}")
+        
         return {
             "status": "success",
             "message": "Trial user registered successfully",
