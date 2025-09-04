@@ -2333,6 +2333,7 @@ const AdminPortalEnhanced = () => {
                         <div className="text-slate-400">• Subscription continues until due date</div>
                         <div className="text-slate-400">• Refunds any prepaid account balance</div>
                         <div className="text-slate-400">• No more charges after due date</div>
+                        <div className="text-slate-400">• Processed in 1-2 business days</div>
                       </div>
                       
                       <div className="border-l-2 border-red-400 pl-3">
