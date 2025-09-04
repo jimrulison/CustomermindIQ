@@ -1143,14 +1143,22 @@ async def get_campaigns():
         raise HTTPException(status_code=500, detail=f"Customer Mind IQ campaigns error: {e}")
 
 @app.get("/api/analytics", response_model=AnalyticsData)
-async def get_analytics():
-    """Get comprehensive Customer Mind IQ analytics dashboard data"""
+async def get_analytics(current_user: UserProfile = Depends(get_current_user)):
+    """Get comprehensive Customer Mind IQ analytics dashboard data - filtered by user ownership"""
     try:
+        # Build filter based on user role
+        if current_user.role in ["admin", "super_admin"]:
+            # Admin can see all analytics
+            customer_filter = {}
+        else:
+            # Regular users can only see analytics for their own customers
+            customer_filter = {"owner_user_id": current_user.user_id}
+        
         # Get customer stats
-        total_customers = await db.customers.count_documents({})
+        total_customers = await db.customers.count_documents(customer_filter)
         
         # Calculate total revenue
-        customers = await db.customers.find().to_list(length=1000)
+        customers = await db.customers.find(customer_filter).to_list(length=1000)
         total_revenue = sum(c.get("total_spent", 0) for c in customers)
         
         # Top products analysis
