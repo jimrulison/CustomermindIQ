@@ -696,13 +696,13 @@ class CustomerCommunicationTester:
         
         # Test 2: POST /api/admin/api-keys (to create a test key)
         try:
-            test_key_data = {
-                "name": "Test API Key - Review Verification",
-                "description": "API key created during review testing to verify endpoint functionality",
-                "permissions": ["read", "write"],
-                "expires_in_days": 30
+            # The endpoint expects query parameters, not JSON body
+            params = {
+                "service_name": "Review Test Service",
+                "key_value": "test_key_12345_review_verification",
+                "description": "API key created during review testing to verify endpoint functionality"
             }
-            response = requests.post(f"{API_BASE}/admin/api-keys", json=test_key_data, headers=headers, timeout=60, verify=False)
+            response = requests.post(f"{API_BASE}/admin/api-keys", params=params, headers=headers, timeout=60, verify=False)
             if response.status_code in [200, 201]:
                 data = response.json()
                 api_key = data.get("api_key", {})
