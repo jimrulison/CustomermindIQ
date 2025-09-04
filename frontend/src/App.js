@@ -257,22 +257,23 @@ function AppContent() {
     console.log('Loading background data...');
     
     try {
-      // Load essential data with fast timeout
+      // Load essential data with fast timeout using authenticated API calls
       const [customersRes, campaignsRes, analyticsRes] = await Promise.allSettled([
-        axios.get(`${API_BASE_URL}/api/customers`, { timeout: 1500 }),
-        axios.get(`${API_BASE_URL}/api/campaigns`, { timeout: 1500 }),
-        axios.get(`${API_BASE_URL}/api/analytics`, { timeout: 1500 })
+        apiCall('/api/customers'),
+        apiCall('/api/campaigns'),
+        apiCall('/api/analytics')
       ]);
       
       // Update data if successful
       if (customersRes.status === 'fulfilled') {
-        setCustomers(customersRes.value.data);
+        setCustomers(customersRes.value);
+        console.log('Customers loaded:', customersRes.value.length);
       }
       if (campaignsRes.status === 'fulfilled') {
-        setCampaigns(campaignsRes.value.data);
+        setCampaigns(campaignsRes.value);
       }
       if (analyticsRes.status === 'fulfilled') {
-        setAnalytics(analyticsRes.value.data);
+        setAnalytics(analyticsRes.value);
       }
       
       console.log('Background data loaded successfully');
