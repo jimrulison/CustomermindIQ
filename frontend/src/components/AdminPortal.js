@@ -428,15 +428,28 @@ const AdminPortalEnhanced = () => {
                   key={tab.id}
                   onClick={() => {
                     if (tab.isDownload && tab.id === 'admin-manual') {
-                      // Download Admin Training Manual via API endpoint
+                      // Download Admin Training Manual
                       const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
                       const link = document.createElement('a');
-                      link.href = `${backendUrl}/api/download/admin-training-manual`;
-                      link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
-                      link.target = '_blank'; // Open in new tab for better download handling
-                      document.body.appendChild(link);
-                      link.click();
-                      document.body.removeChild(link);
+                      
+                      // Try API endpoint first, fallback to static file
+                      try {
+                        link.href = `${backendUrl}/api/download/admin-training-manual`;
+                        link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
+                        link.target = '_blank';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                      } catch (error) {
+                        console.log('API download failed, using static file fallback');
+                        // Fallback to static file
+                        link.href = '/admin-training-manual.html';
+                        link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
+                        link.target = '_blank';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                      }
                     } else {
                       setActiveTab(tab.id);
                     }
