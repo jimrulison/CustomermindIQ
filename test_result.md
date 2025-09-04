@@ -521,15 +521,18 @@ frontend:
 
   - task: "Growth Acceleration Video Integration - Training Center"
     implemented: true
-    working: "NA"
+    working: false
     file: "frontend/src/components/Training.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
       - working: "NA"
         agent: "testing"
         comment: "🚨 AUTHENTICATION BLOCKED TESTING (Jan 7, 2025): Cannot test Growth Acceleration video integration due to admin account deactivation preventing access to Training Center. FRONTEND IMPLEMENTATION VERIFIED: Code analysis shows Growth Acceleration Engine - Introduction video is implemented as featured video with ⭐ FEATURED badge, special green gradient styling (bg-gradient-to-br from-green-600/20 to-blue-600/20), correct video URL (https://customer-assets.emergentagent.com/job_customer-mind-iq-4/artifacts/anrdp8b3_Growth%20Acceleration%20intro%20slide%20show.mp4), available to all users (not restricted to annual subscribers), video modal functionality implemented with proper responsive design. INFRASTRUCTURE REQUIREMENT: Admin account reactivation needed to test video modal functionality, play button interaction, and responsive design verification."
+      - working: false
+        agent: "testing"
+        comment: "❌ GROWTH ACCELERATION VIDEO INTEGRATION TESTING (Sep 4, 2025): Admin authentication successful (admin@customermindiq.com / CustomerMindIQ2025!) but Training Center navigation failed with 'Element is not attached to DOM' error. AUTHENTICATION WORKING: Login completed successfully with 200 status, dashboard loaded properly. NAVIGATION ISSUE: Training navigation button detected but click failed due to DOM attachment issue, preventing access to Training Center and Growth Acceleration video testing. FRONTEND IMPLEMENTATION CONFIRMED: Code analysis shows complete implementation with featured video, ⭐ FEATURED badge, green gradient styling, correct video URL, and modal functionality. REQUIRES FIX: Navigation DOM attachment issue needs resolution to enable full video integration testing."
 
   - task: "Overage Approval System Integration - Dashboard"
     implemented: true
