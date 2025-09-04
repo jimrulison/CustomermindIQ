@@ -825,39 +825,61 @@ async def test_database_connection():
         }
 
 @app.get("/api/customers", response_model=List[CustomerBehavior])
-async def get_customers():
-    """Get all customers with AI-powered behavior analysis"""
+async def get_customers(current_user: UserProfile = Depends(get_current_user)):
+    """Get customers with AI-powered behavior analysis - filtered by user ownership"""
     try:
-        # Get customers from ODOO (or demo data)
-        customers_data = await odoo_service.get_customers()
-        analyzed_customers = []
+        # For admins: show all customer data
+        # For regular users: show only their own customer data
+        if current_user.role in ["admin", "super_admin"]:
+            # Admin can see all customers
+            customers_from_db = await db.customers.find({}).to_list(length=1000)
+        else:
+            # Regular users can only see their own customer data
+            customers_from_db = await db.customers.find({
+                "owner_user_id": current_user.user_id
+            }).to_list(length=1000)
         
-        for customer_data in customers_data:
-            # Customer Mind IQ AI-powered behavior analysis
-            analysis = await analytics_service.analyze_customer_behavior(customer_data)
+        # If no customers in database for this user, get demo data and assign ownership
+        if not customers_from_db:
+            # Get customers from ODOO (or demo data)
+            customers_data = await odoo_service.get_customers()
+            analyzed_customers = []
             
-            customer_behavior = CustomerBehavior(
-                customer_id=customer_data["customer_id"],
-                name=customer_data["name"],
-                email=customer_data["email"],
-                total_purchases=customer_data["total_purchases"],
-                total_spent=customer_data["total_spent"],
-                last_purchase_date=customer_data.get("last_purchase_date"),
-                software_owned=customer_data.get("software_owned", []),
-                purchase_patterns=analysis.get("purchase_patterns", {}),
-                engagement_score=analysis.get("engagement_score", 65),
-                lifecycle_stage=analysis.get("lifecycle_stage", "active")
-            )
-            analyzed_customers.append(customer_behavior)
+            for customer_data in customers_data:
+                # Customer Mind IQ AI-powered behavior analysis
+                analysis = await analytics_service.analyze_customer_behavior(customer_data)
+                
+                customer_behavior = CustomerBehavior(
+                    customer_id=f"{current_user.user_id}_{customer_data['customer_id']}",  # Make unique per user
+                    name=customer_data["name"],
+                    email=customer_data["email"],
+                    total_purchases=customer_data["total_purchases"],
+                    total_spent=customer_data["total_spent"],
+                    last_purchase_date=customer_data.get("last_purchase_date"),
+                    software_owned=customer_data.get("software_owned", []),
+                    purchase_patterns=analysis.get("purchase_patterns", {}),
+                    engagement_score=analysis.get("engagement_score", 65),
+                    lifecycle_stage=analysis.get("lifecycle_stage", "active"),
+                    # Data privacy fields
+                    owner_user_id=current_user.user_id,
+                    created_by=current_user.user_id,
+                    is_shared=False,
+                    created_at=datetime.now(),
+                    updated_at=datetime.now()
+                )
+                analyzed_customers.append(customer_behavior)
+                
+                # Store in MongoDB with ownership
+                await db.customers.update_one(
+                    {"customer_id": customer_behavior.customer_id},
+                    {"$set": customer_behavior.dict()},
+                    upsert=True
+                )
             
-            # Store in MongoDB
-            await db.customers.update_one(
-                {"customer_id": customer_data["customer_id"]},
-                {"$set": customer_behavior.dict()},
-                upsert=True
-            )
-        
-        return analyzed_customers
+            return analyzed_customers
+        else:
+            # Return existing customers from database
+            return [CustomerBehavior(**customer) for customer in customers_from_db]
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Customer Mind IQ error: {e}")
