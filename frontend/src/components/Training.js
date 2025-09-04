@@ -473,7 +473,8 @@ const Training = () => {
       'SEO': 'bg-purple-500/20 text-purple-400',
       'Management': 'bg-green-500/20 text-green-400',
       'Account': 'bg-cyan-500/20 text-cyan-400',
-      'Analytics': 'bg-pink-500/20 text-pink-400'
+      'Analytics': 'bg-pink-500/20 text-pink-400',
+      'Support': 'bg-indigo-500/20 text-indigo-400'
     };
     return colors[category] || 'bg-gray-500/20 text-gray-400';
   };
