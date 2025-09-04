@@ -14,7 +14,7 @@
 # Main and testing agents must follow this exact format to maintain testing data. 
 # The testing data must be entered in yaml format Below is the data structure:
 # 
-## user_problem_statement: {problem_statement}
+## user_problem_statement: "Performance optimization, latest LLM models integration (Claude Sonnet 4, GPT-5, Gemini 2.5 Pro), setup for top 5 email companies (Constant Contact, HubSpot, Brevo, Mailchimp, Active Campaign), and comprehensive system checking. Fix loading performance issues from login to platform."
 ## backend:
 ##   - task: "Task name"
 ##     implemented: true
