@@ -228,6 +228,11 @@ function AppContent() {
           segment_distribution: {}
         });
         
+        // Check for overage approvals needed
+        if (user?.email) {
+          checkOverageStatus(user.email);
+        }
+        
         console.log('Basic data loaded successfully');
         
       } catch (error) {
