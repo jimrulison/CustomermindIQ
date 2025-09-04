@@ -114,6 +114,10 @@ function AppContent() {
   // State for announcements
   const [announcements, setAnnouncements] = useState([]);
   const [roiForecastingData, setRoiForecastingData] = useState(null);
+  
+  // Overage approval state
+  const [showOverageApproval, setShowOverageApproval] = useState(false);
+  const [overageStatus, setOverageStatus] = useState(null);
 
   // Load announcements
   useEffect(() => {
