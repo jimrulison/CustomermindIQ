@@ -246,23 +246,32 @@ const SignIn = ({ onSignIn }) => {
       const trialData = await trialResponse.json();
 
       if (trialResponse.ok && trialData.status === 'success') {
-        // Auto-login the trial user with the returned password
-        const loginResult = await login(
-          signUpData.email.trim().toLowerCase(), 
-          trialData.user.password, 
-          false
-        );
-        if (loginResult.success) {
-          onSignIn(loginResult.user);
-        } else {
-          setError('Trial created but login failed. Please contact support.');
-        }
+        // Start celebration immediately when trial is successful
+        startCelebration();
+        
+        // Small delay to let celebration start, then auto-login
+        setTimeout(async () => {
+          const loginResult = await login(
+            signUpData.email.trim().toLowerCase(), 
+            trialData.user.password, 
+            false
+          );
+          if (loginResult.success) {
+            // Delay the redirect slightly to enjoy the celebration
+            setTimeout(() => {
+              onSignIn(loginResult.user);
+            }, 1500);
+          } else {
+            setError('Trial created but login failed. Please contact support.');
+            setLoading(false);
+          }
+        }, 500);
       } else {
         setError(trialData.detail || trialData.message || 'Failed to start trial');
+        setLoading(false);
       }
     } catch (error) {
       setError('Unable to connect to server. Please try again.');
-    } finally {
       setLoading(false);
     }
   };
