@@ -717,6 +717,27 @@ function AppContent() {
       )}
       
       <div className="container mx-auto px-6 py-8">
+        {/* Usage Status Banner - Show when user needs overage approval */}
+        {overageStatus?.approval_required && !showOverageApproval && (
+          <div className="mb-6">
+            <Alert className="bg-orange-500/10 border-orange-500/20">
+              <AlertTriangle className="h-4 w-4" />
+              <AlertDescription className="text-orange-300 flex items-center justify-between">
+                <span>
+                  You've exceeded your plan limits. Some features may be blocked until you approve additional charges.
+                </span>
+                <Button 
+                  onClick={() => setShowOverageApproval(true)}
+                  className="bg-orange-600 hover:bg-orange-700 text-white ml-4"
+                  size="sm"
+                >
+                  Review & Approve
+                </Button>
+              </AlertDescription>
+            </Alert>
+          </div>
+        )}
+        
         {currentPage === 'customer-analytics-dashboard' && (
           <CustomerAnalyticsDashboard 
             dashboardData={analytics}
