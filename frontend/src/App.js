@@ -1982,18 +1982,9 @@ function AppContent() {
 // Main App component wrapped with AuthProvider and Router
 function App() {
   return (
-    <Router>
-      <AuthProvider>
-        <Routes>
-          {/* Public Training Page - No authentication required */}
-          <Route path="/training-videos" element={<PublicTrainingPage />} />
-          
-          {/* Main application - Authentication required */}
-          <Route path="/" element={<AppContent />} />
-          <Route path="*" element={<AppContent />} />
-        </Routes>
-      </AuthProvider>
-    </Router>
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
