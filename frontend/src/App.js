@@ -1979,12 +1979,20 @@ function AppContent() {
   );
 }
 
-// Main App component wrapped with AuthProvider
+// Main App component wrapped with AuthProvider and Router
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <Router>
+      <AuthProvider>
+        <Routes>
+          {/* Public Training Page - No authentication required */}
+          <Route path="/training-videos" element={<PublicTrainingPage />} />
+          
+          {/* Main application - Authentication required */}
+          <Route path="/*" element={<AppContent />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
 }
 
