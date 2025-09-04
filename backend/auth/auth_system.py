@@ -664,10 +664,71 @@ async def request_password_reset(reset_request: PasswordReset):
     )
     
     # In production, send email with reset link
-    # For now, return token (remove in production)
+    # Send password reset email
+    try:
+        from modules.email_system import send_simple_email, SimpleBulkEmail, RecipientType
+        
+        reset_link = f"https://customermindiq.com/reset-password?token={reset_token}"
+        
+        password_reset_email = SimpleBulkEmail(
+            subject="Reset Your CustomerMind IQ Password",
+            html_content=f"""
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f8f9fa;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
+                    <img src="https://customer-assets.emergentagent.com/job_customer-mind-iq-4/artifacts/pntu3yqm_Customer%20Mind%20IQ%20logo.png" 
+                         alt="Customer Mind IQ" 
+                         style="height: 80px; width: auto; margin-bottom: 20px; object-fit: contain;" />
+                    <h1 style="color: white; margin: 0; font-size: 28px;">Reset Your Password</h1>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 18px; margin: 10px 0 0 0;">Secure access to your account</p>
+                </div>
+                
+                <div style="padding: 30px; background: white;">
+                    <p style="font-size: 16px; line-height: 1.6; color: #333; margin-bottom: 20px;">Hi there,</p>
+                    
+                    <p style="font-size: 16px; line-height: 1.6; color: #333;">
+                        We received a request to reset your CustomerMind IQ password. If you made this request, click the button below to reset your password:
+                    </p>
+                    
+                    <div style="text-align: center; margin: 30px 0;">
+                        <a href="{reset_link}" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block;">
+                            🔒 Reset My Password
+                        </a>
+                    </div>
+                    
+                    <p style="font-size: 16px; line-height: 1.6; color: #333;">
+                        This link will expire in 1 hour for security reasons.
+                    </p>
+                    
+                    <p style="font-size: 16px; line-height: 1.6; color: #333;">
+                        If you didn't request a password reset, you can safely ignore this email. Your password will remain unchanged.
+                    </p>
+                    
+                    <p style="font-size: 16px; line-height: 1.6; color: #333; margin-top: 30px;">
+                        Best regards,<br>
+                        <strong>The CustomerMind IQ Team</strong>
+                    </p>
+                    
+                    <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px; font-size: 14px; color: #666;">
+                        <p style="margin: 0;"><strong>Security tip:</strong> Always verify that emails requesting password changes are from CustomerMind IQ. If you're unsure, contact our support team.</p>
+                    </div>
+                </div>
+            </div>
+            """,
+            text_content=f"Reset your CustomerMind IQ password by visiting: {reset_link}",
+            recipient_type=RecipientType.SINGLE_USER,
+            single_email=reset_request.email
+        )
+        
+        # Send the email (this will use your configured email provider)
+        await send_simple_email(password_reset_email, background_tasks=None, current_user=None)
+        
+    except Exception as e:
+        # Log error but don't reveal to user
+        print(f"Failed to send password reset email: {str(e)}")
+    
     return {
-        "message": "Password reset instructions sent to email",
-        "reset_token": reset_token  # Remove this in production
+        "message": "Password reset instructions sent to email"
+        # Removed reset_token for security in production
     }
 
 # Admin endpoints
