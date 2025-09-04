@@ -428,10 +428,12 @@ const AdminPortalEnhanced = () => {
                   key={tab.id}
                   onClick={() => {
                     if (tab.isDownload && tab.id === 'admin-manual') {
-                      // Download Admin Training Manual
+                      // Download Admin Training Manual via API endpoint
+                      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
                       const link = document.createElement('a');
-                      link.href = '/admin_training_manual.html';
-                      link.download = 'Customer_Mind_IQ_Admin_Manual.html';
+                      link.href = `${backendUrl}/api/download/admin-training-manual`;
+                      link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
+                      link.target = '_blank'; // Open in new tab for better download handling
                       document.body.appendChild(link);
                       link.click();
                       document.body.removeChild(link);
