@@ -154,12 +154,11 @@ class UniversalIntelligenceService:
     async def generate_customer_insights(self, profile: UniversalCustomerProfile) -> List[CustomerInsight]:
         """Generate AI-powered insights for individual customer"""
         try:
-            chat = LlmChat(
-                api_key=self.api_key,
+            # Use premium LLM for customer analysis  
+            chat = llm_manager.create_intelligence_chat(
                 session_id=f"customer_insights_{profile.customer_id}",
-                system_message="""You are Customer Mind IQ's customer insight specialist. 
-                Analyze individual customer profiles to generate actionable, specific insights."""
-            ).with_model("openai", "gpt-4o-mini")
+                context="individual customer analysis"
+            )
             
             insight_prompt = f"""
             Generate specific insights for this customer:
