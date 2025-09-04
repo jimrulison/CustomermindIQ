@@ -51,17 +51,10 @@ class GrowthOpportunityScanner:
         AI-powered comprehensive growth opportunity scanning
         """
         try:
-            # Initialize AI chat for growth analysis
-            chat = LlmChat(
-                api_key=self.api_key,
-                session_id=f"growth_scanner_{customer_id}",
-                system_message="""You are the Growth Acceleration Engine AI, an expert in identifying 
-                high-impact revenue growth opportunities for businesses. You analyze customer data, market 
-                trends, and business metrics to identify untapped growth potential. You provide detailed, 
-                actionable recommendations with ROI projections and implementation strategies.
-                
-                Always respond in valid JSON format with comprehensive analysis."""
-            ).with_model("openai", "gpt-4o")
+            # Use premium Growth AI with GPT-5 for advanced analysis
+            chat = llm_manager.create_growth_chat(
+                session_id=f"growth_scanner_{customer_id}"
+            )
             
             # Prepare comprehensive analysis prompt
             analysis_prompt = f"""
