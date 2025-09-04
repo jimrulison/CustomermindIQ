@@ -685,6 +685,18 @@ function AppContent() {
         </div>
       ))}
       
+      {/* Overage Approval Modal */}
+      {showOverageApproval && (
+        <OverageApproval 
+          overageStatus={overageStatus}
+          onClose={() => setShowOverageApproval(false)}
+          onApprove={() => {
+            setShowOverageApproval(false);
+            setOverageStatus(null);
+          }}
+        />
+      )}
+      
       <div className="container mx-auto px-6 py-8">
         {currentPage === 'customer-analytics-dashboard' && (
           <CustomerAnalyticsDashboard 
