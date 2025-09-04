@@ -964,6 +964,10 @@ class CustomerCommunicationTester:
         # Group results by workflow
         workflows = {
             "🔐 Authentication Setup": ["Admin Authentication", "Test User Registration", "Test User Login"],
+            "🏥 System Health & Configuration": [
+                "Basic System Health", "Admin Manual Loading", "Templates Functionality", 
+                "Trial Email System", "API Keys Configuration"
+            ],
             "🎫 Support Ticket Workflow": [
                 "Support Ticket Creation", "Admin View Tickets", "Admin Ticket Response", 
                 "Customer Ticket Reply", "Ticket Conversation History", "Support Tier Information"
