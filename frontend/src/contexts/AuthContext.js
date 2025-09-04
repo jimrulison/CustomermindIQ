@@ -15,17 +15,11 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Get backend URL from environment with fallback fix
-  let backendUrl = process.env.REACT_APP_BACKEND_URL || window.location.origin;
-  
-  // TEMPORARY FIX: If the URL is pointing to the wrong domain, correct it
-  if (backendUrl.includes('mindiq-auth.emergent.host')) {
-    backendUrl = 'https://customer-mind-iq-5.preview.emergentagent.com';
-    console.log('AUTH CONTEXT - Corrected backend URL to:', backendUrl);
-  }
+  // TEMPORARY FIX: Force the correct backend URL since environment variable seems to be cached/overridden
+  const backendUrl = 'https://customer-mind-iq-5.preview.emergentagent.com';
   
   // Debug: Log the backend URL
-  console.log('AUTH CONTEXT - Backend URL:', backendUrl);
+  console.log('AUTH CONTEXT - Backend URL (forced):', backendUrl);
   console.log('AUTH CONTEXT - Environment REACT_APP_BACKEND_URL:', process.env.REACT_APP_BACKEND_URL);
 
   // Check for stored authentication on app start - optimized
