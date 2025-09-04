@@ -183,15 +183,16 @@ function AppContent() {
   // Check overage status function
   const checkOverageStatus = async (email) => {
     try {
-      const response = await apiCall(`/api/overage/check/${encodeURIComponent(email)}`);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/subscriptions/overage-review/${encodeURIComponent(email)}`);
       const data = await response.json();
       
-      if (data.needs_approval) {
+      if (data.status === 'success' && data.approval_required) {
         setOverageStatus(data);
         setShowOverageApproval(true);
       }
     } catch (error) {
       console.error('Error checking overage status:', error);
+      // Don't show modal on error - user can still use the system
     }
   };
 
