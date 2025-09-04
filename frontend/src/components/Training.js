@@ -87,6 +87,18 @@ const Training = () => {
   // Video training content
   const videoContent = [
     {
+      id: 0,
+      title: "Growth Acceleration Engine - Introduction",
+      description: "Complete introduction to the Growth Acceleration Engine and how it can accelerate your business growth",
+      duration: "Video",
+      difficulty: "All Levels",
+      category: "Growth",
+      thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=225&fit=crop",
+      videoUrl: "https://customer-assets.emergentagent.com/job_customer-mind-iq-4/artifacts/anrdp8b3_Growth%20Acceleration%20intro%20slide%20show.mp4",
+      topics: ["Growth Engine Overview", "Business Acceleration", "AI-Powered Growth", "Revenue Optimization"],
+      featured: true // Mark as featured to highlight it
+    },
+    {
       id: 1,
       title: "Getting Started with Website Intelligence Hub",
       description: "Complete overview of the platform and how to add your first website",
