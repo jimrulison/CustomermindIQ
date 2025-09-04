@@ -1273,3 +1273,304 @@ async def calculate_data_storage(user_email: str) -> float:
         return round(estimated_gb, 2)
     except:
         return 0.1  # Minimum usage
+
+# ==============================================================================
+# USER-CONTROLLED OVERAGE APPROVAL SYSTEM
+# ==============================================================================
+
+@router.get("/overage-review/{user_email}")
+async def get_overage_approval_review(user_email: str):
+    """Get pending overage approvals for user review"""
+    try:
+        user = await db.users.find_one({"email": user_email})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        # Get current usage details
+        usage_response = await get_detailed_usage(user_email)
+        usage_details = usage_response["usage_details"]
+        
+        # Extract items that are over limit
+        pending_approvals = []
+        total_potential_cost = 0
+        
+        for resource, details in usage_details.items():
+            if details["status"] == "over_limit" and details["overage"] > 0:
+                overage_cost = float(details["overage_cost"].replace("$", ""))
+                
+                pending_approvals.append({
+                    "resource_type": resource,
+                    "resource_name": resource.replace("_", " ").title(),
+                    "current_usage": details["current"],
+                    "plan_limit": details["limit"],
+                    "overage_amount": details["overage"],
+                    "monthly_cost": overage_cost,
+                    "description": get_overage_description(resource),
+                    "approved": False,  # Default to not approved
+                    "blocked_until_approved": True
+                })
+                total_potential_cost += overage_cost
+        
+        return {
+            "status": "success",
+            "user_email": user_email,
+            "plan_type": user.get("plan_type", "free"),
+            "pending_approvals": pending_approvals,
+            "total_potential_monthly_cost": f"${total_potential_cost:.2f}",
+            "approval_required": len(pending_approvals) > 0,
+            "message": "Review and approve additional services to continue using them" if pending_approvals else "All usage within plan limits"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Overage review failed: {str(e)}")
+
+@router.post("/approve-overages")
+async def approve_user_overages(approval_data: OverageApproval):
+    """User approves specific overage charges"""
+    try:
+        user = await db.users.find_one({"email": approval_data.user_email})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        # Process approvals
+        approved_items = []
+        total_approved_cost = 0
+        
+        for item in approval_data.approved_overages:
+            if item.get("approved", False):
+                approved_items.append({
+                    "resource_type": item["resource_type"],
+                    "overage_amount": item["overage_amount"],
+                    "monthly_cost": item["monthly_cost"],
+                    "approved_at": datetime.utcnow(),
+                    "effective_date": datetime.utcnow()
+                })
+                total_approved_cost += item["monthly_cost"]
+        
+        # Store approval record
+        approval_record = {
+            "approval_id": str(uuid.uuid4()),
+            "user_email": approval_data.user_email,
+            "approved_items": approved_items,
+            "total_monthly_cost": total_approved_cost,
+            "approval_date": datetime.utcnow(),
+            "billing_cycle_start": datetime.utcnow().replace(day=1),
+            "status": "active"
+        }
+        
+        await db.overage_approvals.insert_one(approval_record)
+        
+        # Update user's approved overages
+        await db.users.update_one(
+            {"email": approval_data.user_email},
+            {"$set": {
+                "approved_overages": approved_items,
+                "overage_approval_date": datetime.utcnow(),
+                "next_overage_billing": datetime.utcnow() + timedelta(days=30)
+            }}
+        )
+        
+        # Schedule billing notification email for tomorrow
+        await schedule_overage_billing_notification(
+            user_email=approval_data.user_email,
+            user_name=f"{user.get('first_name', '')} {user.get('last_name', '')}",
+            approved_items=approved_items,
+            regular_plan_cost=get_plan_cost(user.get("plan_type", "launch"), user.get("billing_cycle", "monthly")),
+            total_overage_cost=total_approved_cost
+        )
+        
+        return {
+            "status": "success",
+            "message": "Overage approvals processed successfully",
+            "approved_items": len(approved_items),
+            "total_monthly_cost": f"${total_approved_cost:.2f}",
+            "billing_notification": "You'll receive an email notification 24 hours before billing",
+            "access_granted": "Approved services are now available"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Overage approval failed: {str(e)}")
+
+@router.get("/user-dashboard-overage-status/{user_email}")
+async def get_user_overage_dashboard_status(user_email: str):
+    """Get overage status for user dashboard - shows what's blocked vs approved"""
+    try:
+        user = await db.users.find_one({"email": user_email})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        # Get current approvals
+        approved_overages = user.get("approved_overages", [])
+        
+        # Get current usage
+        usage_response = await get_detailed_usage(user_email) 
+        usage_details = usage_response["usage_details"]
+        
+        # Determine status for each resource
+        resource_status = {}
+        pending_approval_needed = False
+        
+        for resource, details in usage_details.items():
+            if details["status"] == "over_limit":
+                # Check if this overage is approved
+                is_approved = any(
+                    item["resource_type"] == resource 
+                    for item in approved_overages
+                )
+                
+                resource_status[resource] = {
+                    "status": "approved" if is_approved else "blocked",
+                    "current_usage": details["current"],
+                    "limit": details["limit"],
+                    "overage": details["overage"],
+                    "monthly_cost": details["overage_cost"],
+                    "message": f"Additional {resource.replace('_', ' ')} approved" if is_approved else f"Additional {resource.replace('_', ' ')} blocked - approval needed"
+                }
+                
+                if not is_approved:
+                    pending_approval_needed = True
+            else:
+                resource_status[resource] = {
+                    "status": "within_limit",
+                    "current_usage": details["current"],
+                    "limit": details["limit"],
+                    "message": f"{resource.replace('_', ' ').title()} usage within plan limits"
+                }
+        
+        return {
+            "status": "success",
+            "user_email": user_email,
+            "resource_status": resource_status,
+            "pending_approval_needed": pending_approval_needed,
+            "approved_monthly_overage_cost": f"${sum(item['monthly_cost'] for item in approved_overages):.2f}",
+            "next_billing_date": user.get("next_overage_billing", "").strftime("%Y-%m-%d") if user.get("next_overage_billing") else None
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Dashboard status failed: {str(e)}")
+
+# Helper functions
+def get_overage_description(resource_type: str) -> str:
+    """Get user-friendly description of what each overage provides"""
+    descriptions = {
+        "contacts": "Store and analyze additional customer contacts beyond your plan limit",
+        "websites": "Monitor and track additional websites for customer intelligence",
+        "keywords": "Track additional keywords for SEO and competitive analysis", 
+        "users": "Add additional team members to access your CustomerMind IQ account",
+        "api_calls_per_month": "Additional API calls for integrations and data sync",
+        "email_sends_per_month": "Send additional marketing and notification emails",
+        "data_storage_gb": "Additional data storage for your customer intelligence data"
+    }
+    return descriptions.get(resource_type, f"Additional {resource_type.replace('_', ' ')}")
+
+def get_plan_cost(plan_type: str, billing_cycle: str) -> float:
+    """Get the regular plan cost"""
+    plan_data = SUBSCRIPTION_FEATURES.get(plan_type, {})
+    return plan_data.get(f"{billing_cycle}_price", 0) / 100  # Convert cents to dollars
+
+async def schedule_overage_billing_notification(user_email: str, user_name: str, approved_items: List[Dict], regular_plan_cost: float, total_overage_cost: float):
+    """Schedule email notification for overage billing"""
+    try:
+        # Calculate tomorrow's date for notification
+        notification_date = datetime.utcnow() + timedelta(days=1)
+        
+        # Build overage breakdown
+        overage_breakdown = ""
+        for item in approved_items:
+            resource_name = item["resource_type"].replace("_", " ").title()
+            overage_breakdown += f"<li>{resource_name}: +{item['overage_amount']} units = ${item['monthly_cost']:.2f}/month</li>"
+        
+        # Create email content
+        email_subject = "CustomerMind IQ - Billing Notification (Tomorrow)"
+        email_html = f"""
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f8f9fa;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
+                <img src="https://customer-assets.emergentagent.com/job_customer-mind-iq-4/artifacts/pntu3yqm_Customer%20Mind%20IQ%20logo.png" 
+                     alt="Customer Mind IQ" 
+                     style="height: 80px; width: auto; margin-bottom: 20px; object-fit: contain;" />
+                <h1 style="color: white; margin: 0; font-size: 28px;">Billing Notification</h1>
+                <p style="color: rgba(255,255,255,0.9); font-size: 18px; margin: 10px 0 0 0;">Your account will be charged tomorrow</p>
+            </div>
+            
+            <div style="padding: 30px; background: white;">
+                <p style="font-size: 16px; line-height: 1.6; color: #333; margin-bottom: 20px;">Hi <strong>{user_name}</strong>,</p>
+                
+                <p style="font-size: 16px; line-height: 1.6; color: #333;">
+                    This is a friendly reminder that your CustomerMind IQ account will be charged tomorrow for your subscription and approved additional services.
+                </p>
+                
+                <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="color: #1976d2; margin: 0 0 15px 0;">💳 Billing Breakdown</h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <div style="font-weight: bold; color: #333;">Regular Subscription:</div>
+                        <div style="color: #666; margin-left: 20px;">${regular_plan_cost:.2f}/month</div>
+                    </div>
+                    
+                    {"<div><div style='font-weight: bold; color: #333;'>Approved Additional Services:</div><ul style='margin: 5px 0 0 20px; color: #666;'>" + overage_breakdown + "</ul></div>" if approved_items else ""}
+                    
+                    <div style="border-top: 1px solid #ddd; margin-top: 15px; padding-top: 15px;">
+                        <div style="font-weight: bold; font-size: 18px; color: #333;">
+                            Total: ${regular_plan_cost + total_overage_cost:.2f}/month
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="font-size: 16px; line-height: 1.6; color: #333;">
+                    <strong>Billing Date:</strong> {notification_date.strftime("%B %d, %Y")}
+                </p>
+                
+                <p style="font-size: 16px; line-height: 1.6; color: #333;">
+                    You approved these additional services to continue using them beyond your plan limits. You can adjust or cancel these at any time from your account dashboard.
+                </p>
+                
+                <div style="background: #fff3e0; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="color: #f57c00; margin: 0 0 10px 0;">❓ Questions?</h3>
+                    <p style="color: #333; margin: 0;">
+                        If you have any questions about this billing or your account, please email us and we'll reply within 24 hours.
+                    </p>
+                </div>
+                
+                <p style="font-size: 16px; line-height: 1.6; color: #333; margin-top: 30px;">
+                    Thank you for using CustomerMind IQ!
+                </p>
+                
+                <p style="font-size: 16px; line-height: 1.6; color: #333; margin-top: 20px;">
+                    Best regards,<br>
+                    <strong>The CustomerMind IQ Team</strong>
+                </p>
+            </div>
+        </div>
+        """
+        
+        # Create notification record
+        notification_record = {
+            "notification_id": str(uuid.uuid4()),
+            "user_email": user_email,
+            "notification_type": "overage_billing",
+            "scheduled_date": notification_date,
+            "subject": email_subject,
+            "html_content": email_html,
+            "regular_cost": regular_plan_cost,
+            "overage_cost": total_overage_cost,
+            "total_cost": regular_plan_cost + total_overage_cost,
+            "status": "scheduled",
+            "created_at": datetime.utcnow()
+        }
+        
+        await db.billing_notifications.insert_one(notification_record)
+        
+        # You can also trigger the email to be sent immediately or schedule it
+        # For now, we'll store it and process it via background task
+        
+        return True
+        
+    except Exception as e:
+        print(f"Failed to schedule billing notification: {str(e)}")
+        return False
