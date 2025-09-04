@@ -415,6 +415,7 @@ const AdminPortalEnhanced = () => {
                 { id: 'live-chat', name: 'Live Chat', icon: MessageCircle },
                 { id: 'contact-forms', name: 'Contact Forms', icon: Mail },
                 { id: 'emails', name: 'Email System', icon: Mail },
+                { id: 'trial-emails', name: 'Trial Emails', icon: Clock },
                 ...(user.role === 'super_admin' ? [
                   { id: 'api-keys', name: 'API Keys', icon: Key }
                 ] : []),
