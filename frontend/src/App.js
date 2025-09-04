@@ -211,79 +211,78 @@ function AppContent() {
       setLoading(true);
       console.log('Loading Customer Mind IQ data...');
       
-      // Simplified loading with single timeout mechanism
-      const loadingTimeout = setTimeout(() => {
-        console.log('Loading timeout reached - stopping loading screen');
-        setLoading(false);
-      }, 3000); // Reduced to 3 seconds for faster response
+      // IMMEDIATE UI LOAD - Load dashboard UI first with default data
+      const defaultAnalytics = {
+        total_customers: 0,
+        total_revenue: 0,
+        top_products: [],
+        conversion_metrics: {
+          email_open_rate: 0.28,
+          click_through_rate: 0.15,
+          conversion_rate: 0.095,
+          average_deal_size: 4200.0
+        },
+        segment_distribution: {}
+      };
       
-      // Load basic data with simpler error handling
-      try {
-        console.log('Loading basic dashboard data...');
-        
-        // Basic API calls with individual error handling
-        const [customersRes, campaignsRes, analyticsRes] = await Promise.allSettled([
-          axios.get(`${API_BASE_URL}/api/customers`, { timeout: 2000 }),
-          axios.get(`${API_BASE_URL}/api/campaigns`, { timeout: 2000 }),
-          axios.get(`${API_BASE_URL}/api/analytics`, { timeout: 2000 })
-        ]);
-        
-        // Process results with fallback data
-        setCustomers(customersRes.status === 'fulfilled' ? customersRes.value.data : []);
-        setCampaigns(campaignsRes.status === 'fulfilled' ? campaignsRes.value.data : []);
-        setAnalytics(analyticsRes.status === 'fulfilled' ? analyticsRes.value.data : {
-          total_customers: 0,
-          total_revenue: 0,
-          top_products: [],
-          conversion_metrics: {
-            email_open_rate: 0.28,
-            click_through_rate: 0.15,
-            conversion_rate: 0.095,
-            average_deal_size: 4200.0
-          },
-          segment_distribution: {}
-        });
-        
-        // Check for overage approvals needed
-        if (user?.email) {
-          checkOverageStatus(user.email);
-        }
-        
-        console.log('Basic data loaded successfully');
-        
-      } catch (error) {
-        console.error('Basic data loading failed:', error);
-        // Set fallback data
-        setCustomers([]);
-        setCampaigns([]);
-        setAnalytics({
-          total_customers: 0,
-          total_revenue: 0,
-          top_products: [],
-          conversion_metrics: {
-            email_open_rate: 0.28,
-            click_through_rate: 0.15,
-            conversion_rate: 0.095,
-            average_deal_size: 4200.0
-          },
-          segment_distribution: {}
-        });
+      // Set default data immediately to show UI
+      setCustomers([]);
+      setCampaigns([]);
+      setAnalytics(defaultAnalytics);
+      
+      // STOP LOADING IMMEDIATELY - Show dashboard with default data
+      setLoading(false);
+      console.log('Customer Mind IQ dashboard ready - immediate load');
+      
+      // Check for overage approvals immediately with default handling
+      if (user?.email) {
+        setTimeout(() => checkOverageStatus(user.email), 50);
       }
       
-      // Clear timeout and stop loading IMMEDIATELY
-      clearTimeout(loadingTimeout);
-      setLoading(false);
-      console.log('Customer Mind IQ dashboard ready - loading complete');
-      
-      // Load background modules WITHOUT affecting loading state
+      // Load real data in background WITHOUT affecting loading state
       setTimeout(() => {
-        loadBackgroundModules();
-      }, 100); // Start background loading after main UI is ready
+        loadBackgroundData();
+      }, 200); // Start data loading after UI is shown
       
     } catch (error) {
       console.error('Critical loading error:', error);
       setLoading(false); // Always stop loading on error
     }
+  };
+
+  // Background data loading - doesn't affect UI loading state
+  const loadBackgroundData = async () => {
+    console.log('Loading background data...');
+    
+    try {
+      // Load essential data with fast timeout
+      const [customersRes, campaignsRes, analyticsRes] = await Promise.allSettled([
+        axios.get(`${API_BASE_URL}/api/customers`, { timeout: 1500 }),
+        axios.get(`${API_BASE_URL}/api/campaigns`, { timeout: 1500 }),
+        axios.get(`${API_BASE_URL}/api/analytics`, { timeout: 1500 })
+      ]);
+      
+      // Update data if successful
+      if (customersRes.status === 'fulfilled') {
+        setCustomers(customersRes.value.data);
+      }
+      if (campaignsRes.status === 'fulfilled') {
+        setCampaigns(campaignsRes.value.data);
+      }
+      if (analyticsRes.status === 'fulfilled') {
+        setAnalytics(analyticsRes.value.data);
+      }
+      
+      console.log('Background data loaded successfully');
+      
+    } catch (error) {
+      console.log('Background data loading failed (non-critical):', error.message);
+    }
+    
+    // Load background modules after basic data
+    setTimeout(() => {
+      loadBackgroundModules();
+    }, 500);
   };
 
   // Separate function for background module loading
