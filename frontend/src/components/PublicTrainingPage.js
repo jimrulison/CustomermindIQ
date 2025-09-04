@@ -226,8 +226,8 @@ const PublicTrainingPage = () => {
   };
 
   const handleTrialSignup = () => {
-    // Redirect to main site trial signup
-    window.location.href = '/#trial-signup';
+    // Redirect to main site trial signup (current page)
+    window.location.href = '/';
   };
 
   return (
