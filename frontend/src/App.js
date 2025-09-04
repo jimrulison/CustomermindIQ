@@ -820,7 +820,7 @@ function AppContent() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {customers.map((customer) => (
+                      {Array.isArray(customers) && customers.length > 0 ? customers.map((customer) => (
                         <div 
                           key={customer.customer_id} 
                           className={`p-5 bg-slate-700/50 rounded-lg cursor-pointer transition-all hover:bg-slate-700/70 hover:scale-[1.02] ${
