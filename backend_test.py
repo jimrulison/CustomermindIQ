@@ -709,10 +709,9 @@ class CustomerCommunicationTester:
         
         headers = {"Authorization": f"Bearer {self.admin_token}"}
         template_endpoints = [
-            "/api/templates",
+            "/api/admin/email-templates",
             "/api/email/templates",
-            "/api/admin/templates",
-            "/api/email/email/templates"
+            "/api/templates"
         ]
         
         successful_endpoints = []
@@ -731,6 +730,8 @@ class CustomerCommunicationTester:
                     elif isinstance(data, dict):
                         if 'templates' in data:
                             template_count = len(data['templates']) if isinstance(data['templates'], list) else 1
+                        elif 'email_templates' in data:
+                            template_count = len(data['email_templates']) if isinstance(data['email_templates'], list) else 1
                         elif 'data' in data:
                             template_count = len(data['data']) if isinstance(data['data'], list) else 1
                         else:
