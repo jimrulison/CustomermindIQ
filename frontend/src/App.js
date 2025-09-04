@@ -180,6 +180,21 @@ function AppContent() {
     setCurrentPage(page);
   };
 
+  // Check overage status function
+  const checkOverageStatus = async (email) => {
+    try {
+      const response = await apiCall(`/api/overage/check/${encodeURIComponent(email)}`);
+      const data = await response.json();
+      
+      if (data.needs_approval) {
+        setOverageStatus(data);
+        setShowOverageApproval(true);
+      }
+    } catch (error) {
+      console.error('Error checking overage status:', error);
+    }
+  };
+
   // Data loading on authentication
   useEffect(() => {
     if (isAuthenticated) {
