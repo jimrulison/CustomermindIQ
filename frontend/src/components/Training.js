@@ -401,6 +401,8 @@ const Training = () => {
   const getCategoryColor = (category) => {
     const colors = {
       'Growth': 'bg-green-500/20 text-green-400',
+      'Getting Started': 'bg-blue-500/20 text-blue-400',
+      'Advanced Features': 'bg-purple-500/20 text-purple-400',
       'Overview': 'bg-blue-500/20 text-blue-400',
       'Performance': 'bg-orange-500/20 text-orange-400',
       'SEO': 'bg-purple-500/20 text-purple-400',
