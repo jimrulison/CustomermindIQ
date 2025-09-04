@@ -88,18 +88,6 @@ const Training = () => {
   // Video training content
   const videoContent = [
     {
-      id: 0,
-      title: "Growth Acceleration Engine - Introduction",
-      description: "Complete introduction to the Growth Acceleration Engine and how it can accelerate your business growth",
-      duration: "Video",
-      difficulty: "All Levels",
-      category: "Growth",
-      thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=225&fit=crop",
-      videoUrl: "https://customer-assets.emergentagent.com/job_customer-mind-iq-4/artifacts/anrdp8b3_Growth%20Acceleration%20intro%20slide%20show.mp4",
-      topics: ["Growth Engine Overview", "Business Acceleration", "AI-Powered Growth", "Revenue Optimization"],
-      featured: true // Mark as featured to highlight it
-    },
-    {
       id: 1,
       title: "Dashboard & Navigation Essentials",
       description: "Master the CustomerMind IQ dashboard and navigation system for efficient platform usage",
@@ -154,10 +142,22 @@ const Training = () => {
       duration: "Video",
       difficulty: "Beginner",
       category: "Support",
-      thumbnail: "https://images.unsplash.com/photo-1553028826-f4804151e0b2?w=400&h=225&fit=crop",
+      thumbnail: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=225&fit=crop",
       videoUrl: "https://customer-assets.emergentagent.com/job_mindiq-customer/artifacts/l407wb38_Training%20Video%205-%20Our%20Support%20System%21%21.mp4",
       topics: ["Support Channels", "Help Resources", "Live Chat System", "Knowledge Base Navigation", "Getting Quick Help"],
       featured: true // Mark as featured for new users needing support
+    },
+    {
+      id: 6,
+      title: "Growth Acceleration Engine - Introduction",
+      description: "Complete introduction to the Growth Acceleration Engine and how it can accelerate your business growth",
+      duration: "Video",
+      difficulty: "All Levels",
+      category: "Growth",
+      thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=225&fit=crop",
+      videoUrl: "https://customer-assets.emergentagent.com/job_customer-mind-iq-4/artifacts/anrdp8b3_Growth%20Acceleration%20intro%20slide%20show.mp4",
+      topics: ["Growth Engine Overview", "Business Acceleration", "AI-Powered Growth", "Revenue Optimization"],
+      featured: true // Mark as featured to highlight it
     }
   ];
 
