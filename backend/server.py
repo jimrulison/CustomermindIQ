@@ -1076,15 +1076,23 @@ async def delete_customer_data(customer_id: str, current_user: UserProfile = Dep
 
 @app.post("/api/campaigns", response_model=EmailCampaign)
 async def create_campaign(campaign: EmailCampaign, current_user: UserProfile = Depends(get_current_user), background_tasks: BackgroundTasks = BackgroundTasks()):
-    """Create a new AI-powered email campaign"""
+    """Create a new AI-powered email campaign - using only user's own customer data"""
     try:
         campaign.id = str(uuid.uuid4())
         campaign.created_at = datetime.now()
         
-        # Get target customers based on segment
-        customers = await db.customers.find({
-            "lifecycle_stage": campaign.target_segment
-        }).to_list(length=100)
+        # Get target customers based on segment - filtered by user ownership
+        if current_user.role in ["admin", "super_admin"]:
+            # Admin can create campaigns for all customers
+            customer_filter = {"lifecycle_stage": campaign.target_segment}
+        else:
+            # Regular users can only create campaigns for their own customers
+            customer_filter = {
+                "lifecycle_stage": campaign.target_segment,
+                "owner_user_id": current_user.user_id
+            }
+        
+        customers = await db.customers.find(customer_filter).to_list(length=100)
         
         campaign.target_customers = [c["customer_id"] for c in customers]
         
