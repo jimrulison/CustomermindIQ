@@ -936,7 +936,143 @@ async def get_customer_recommendations(customer_id: str, current_user: UserProfi
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Customer Mind IQ recommendations error: {e}")
 
-@app.post("/api/campaigns", response_model=EmailCampaign)
+class CustomerDataInput(BaseModel):
+    name: str = Field(..., max_length=200)
+    email: EmailStr
+    total_purchases: int = Field(default=0, ge=0)
+    total_spent: float = Field(default=0.0, ge=0)
+    software_owned: List[str] = Field(default_factory=list)
+    company_name: Optional[str] = None
+    phone: Optional[str] = None
+    notes: Optional[str] = None
+
+@app.post("/api/customers", response_model=CustomerBehavior)
+async def add_customer_data(customer_input: CustomerDataInput, current_user: UserProfile = Depends(get_current_user)):
+    """Add new customer data - private to the user who creates it"""
+    try:
+        # Generate unique customer ID for this user
+        customer_id = f"{current_user.user_id}_{str(uuid.uuid4())[:8]}"
+        
+        # AI analysis of the new customer data
+        customer_data_for_analysis = {
+            "customer_id": customer_id,
+            "name": customer_input.name,
+            "email": customer_input.email,
+            "total_purchases": customer_input.total_purchases,
+            "total_spent": customer_input.total_spent,
+            "software_owned": customer_input.software_owned,
+            "last_purchase_date": datetime.now() if customer_input.total_purchases > 0 else None
+        }
+        
+        # Get AI-powered behavior analysis
+        analysis = await analytics_service.analyze_customer_behavior(customer_data_for_analysis)
+        
+        # Create customer behavior record with ownership
+        customer_behavior = CustomerBehavior(
+            customer_id=customer_id,
+            name=customer_input.name,
+            email=customer_input.email,
+            total_purchases=customer_input.total_purchases,
+            total_spent=customer_input.total_spent,
+            last_purchase_date=datetime.now() if customer_input.total_purchases > 0 else None,
+            software_owned=customer_input.software_owned,
+            purchase_patterns=analysis.get("purchase_patterns", {}),
+            engagement_score=analysis.get("engagement_score", 65),
+            lifecycle_stage=analysis.get("lifecycle_stage", "new"),
+            # Privacy and ownership fields
+            owner_user_id=current_user.user_id,
+            created_by=current_user.user_id,
+            is_shared=False,
+            created_at=datetime.now(),
+            updated_at=datetime.now()
+        )
+        
+        # Store in MongoDB
+        await db.customers.insert_one(customer_behavior.dict())
+        
+        return customer_behavior
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to add customer data: {e}")
+
+@app.put("/api/customers/{customer_id}", response_model=CustomerBehavior)
+async def update_customer_data(
+    customer_id: str, 
+    customer_input: CustomerDataInput, 
+    current_user: UserProfile = Depends(get_current_user)
+):
+    """Update customer data - only owner or admin can update"""
+    try:
+        # Build query with ownership filter
+        if current_user.role in ["admin", "super_admin"]:
+            # Admin can access any customer
+            query = {"customer_id": customer_id}
+        else:
+            # Regular users can only access their own customers
+            query = {"customer_id": customer_id, "owner_user_id": current_user.user_id}
+        
+        existing_customer = await db.customers.find_one(query)
+        if not existing_customer:
+            raise HTTPException(status_code=404, detail="Customer not found or access denied")
+        
+        # Prepare updated data for AI analysis
+        customer_data_for_analysis = {
+            "customer_id": customer_id,
+            "name": customer_input.name,
+            "email": customer_input.email,
+            "total_purchases": customer_input.total_purchases,
+            "total_spent": customer_input.total_spent,
+            "software_owned": customer_input.software_owned,
+            "last_purchase_date": datetime.now() if customer_input.total_purchases > 0 else existing_customer.get("last_purchase_date")
+        }
+        
+        # Get fresh AI analysis
+        analysis = await analytics_service.analyze_customer_behavior(customer_data_for_analysis)
+        
+        # Update the customer record
+        updated_data = {
+            "name": customer_input.name,
+            "email": customer_input.email,
+            "total_purchases": customer_input.total_purchases,
+            "total_spent": customer_input.total_spent,
+            "software_owned": customer_input.software_owned,
+            "purchase_patterns": analysis.get("purchase_patterns", {}),
+            "engagement_score": analysis.get("engagement_score", 65),
+            "lifecycle_stage": analysis.get("lifecycle_stage", "active"),
+            "updated_at": datetime.now()
+        }
+        
+        # Update in MongoDB
+        await db.customers.update_one(query, {"$set": updated_data})
+        
+        # Get updated customer data
+        updated_customer = await db.customers.find_one(query)
+        return CustomerBehavior(**updated_customer)
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update customer data: {e}")
+
+@app.delete("/api/customers/{customer_id}")
+async def delete_customer_data(customer_id: str, current_user: UserProfile = Depends(get_current_user)):
+    """Delete customer data - only owner or admin can delete"""
+    try:
+        # Build query with ownership filter
+        if current_user.role in ["admin", "super_admin"]:
+            # Admin can access any customer
+            query = {"customer_id": customer_id}
+        else:
+            # Regular users can only access their own customers
+            query = {"customer_id": customer_id, "owner_user_id": current_user.user_id}
+        
+        result = await db.customers.delete_one(query)
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Customer not found or access denied")
+        
+        return {"message": "Customer data deleted successfully", "customer_id": customer_id}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to delete customer data: {e}")
 async def create_campaign(campaign: EmailCampaign, background_tasks: BackgroundTasks):
     """Create a new AI-powered email campaign"""
     try:
