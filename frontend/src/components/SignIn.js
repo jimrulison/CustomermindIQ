@@ -286,7 +286,25 @@ const SignIn = ({ onSignIn }) => {
   if (showSignUp) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
+        {/* Celebration Overlay */}
+        {showCelebration && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+            <div className="text-center text-white animate-bounce">
+              <div className="text-6xl mb-4">🎉</div>
+              <h2 className="text-4xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
+                Welcome to CustomerMind IQ!
+              </h2>
+              <p className="text-xl text-green-300 font-semibold">
+                Your 7-Day FREE Trial is Active!
+              </p>
+              <div className="mt-4 text-lg text-blue-300">
+                🚀 Preparing your dashboard...
+              </div>
+            </div>
+          </div>
+        )}
+        
+        <div className="w-full max-w-md">{/* rest of signup form */}
           {/* Header */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center mb-4">
