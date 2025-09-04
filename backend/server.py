@@ -278,8 +278,24 @@ async def startup_event():
             print("🔐 Login credentials - Email: admin@customermindiq.com, Password: CustomerMindIQ2025!")
         else:
             print("✅ Admin user already exists")
+            
+        # Start background tasks for trial email automation
+        from background_tasks import start_background_tasks
+        await start_background_tasks()
+        print("✅ Background tasks started (trial email automation)")
+        
     except Exception as e:
         print(f"❌ Startup initialization error: {e}")
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Cleanup on application shutdown"""
+    try:
+        from background_tasks import stop_background_tasks
+        await stop_background_tasks()
+        print("✅ Background tasks stopped")
+    except Exception as e:
+        print(f"❌ Shutdown cleanup error: {e}")
 
 # Pydantic models
 class CustomerBehavior(BaseModel):
