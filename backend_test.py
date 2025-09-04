@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """
-CustomerMind IQ - Complete Customer Communication Workflow Testing
-Testing Support Ticket System + Email System Integration
+CustomerMind IQ - Comprehensive Backend Testing for User-Reported Issues
+Testing specific areas mentioned in user review request
 
 Test Objectives:
-1. Complete Support Ticket Cycle (Create → Admin Response → Customer Reply)
-2. Simple Email System Demonstration (All Users, Subscription Tier, Custom)
-3. Integrated Communication Management (Admin Dashboard Integration)
+1. Admin manual loading - test API endpoints like /api/admin/manual or /api/training/manual
+2. Templates functionality - check /api/templates or /api/email/templates endpoints  
+3. Trial email system - test /api/email/trial/* endpoints
+4. API keys configuration - check /api/admin/api-keys or /api/keys endpoints
+5. Basic system health - verify core backend services
+6. Complete Support Ticket Cycle (Create → Admin Response → Customer Reply)
+7. Simple Email System Demonstration (All Users, Subscription Tier, Custom)
+8. Integrated Communication Management (Admin Dashboard Integration)
 """
 
 import asyncio
