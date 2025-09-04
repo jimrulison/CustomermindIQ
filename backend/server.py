@@ -2161,6 +2161,9 @@ app.include_router(support_router, prefix="/api/support", tags=["Support System"
 # Include Email System routes
 app.include_router(email_router, prefix="/api/email", tags=["Email System"])
 
+# Register Email Providers Router (NEW)
+app.include_router(email_providers_router, tags=["Email Providers"])
+
 # Include ODOO Integration routes (Contact Forms & CRM)
 app.include_router(odoo_router, prefix="/api/odoo", tags=["ODOO Integration"])
 
