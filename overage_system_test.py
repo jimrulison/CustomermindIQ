@@ -153,7 +153,7 @@ class OverageApprovalSystemTester:
             # Try to login with test user
             login_data = {
                 "email": self.test_user_email,
-                "password": getattr(self, 'test_user_password', 'TestPassword123!')
+                "password": "CQfYuoZQ_APrUXPFvCazfg"  # Use the known working password
             }
             
             headers = {"Content-Type": "application/json"}
