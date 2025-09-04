@@ -125,6 +125,18 @@ const Training = () => {
     },
     {
       id: 3,
+      title: "Advanced Analytics",
+      description: "Master the advanced analytics features and data visualization tools in CustomerMind IQ",
+      duration: "Video",
+      difficulty: "Advanced",
+      category: "Analytics",
+      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=225&fit=crop",
+      videoUrl: "https://customer-assets.emergentagent.com/job_mindiq-customer/artifacts/v9lp1wlj_Training%20Video%203%20Advanced%20Analytics.mp4",
+      topics: ["Advanced Analytics Dashboard", "Data Visualization", "Custom Reports", "Performance Metrics", "Business Intelligence"],
+      featured: true // Mark as featured for analytics training
+    },
+    {
+      id: 4,
       title: "Getting Started with Website Intelligence Hub",
       description: "Complete overview of the platform and how to add your first website",
       duration: "8:45",
