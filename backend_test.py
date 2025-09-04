@@ -658,8 +658,301 @@ class CustomerCommunicationTester:
             return False
 
     # =====================================================
-    # USER-REPORTED ISSUE TESTS
+    # SPECIFIC USER-REPORTED ISSUE TESTS (FROM REVIEW REQUEST)
     # =====================================================
+
+    async def test_api_keys_management_endpoints(self):
+        """Test specific API Keys Management endpoints mentioned in review"""
+        print("🔑 TESTING API KEYS MANAGEMENT ENDPOINTS (REVIEW REQUEST)")
+        print("=" * 50)
+        
+        if not self.admin_token:
+            self.log_result("API Keys Management Endpoints", False, "No admin token available")
+            return False
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        
+        # Test 1: GET /api/admin/api-keys (to list existing keys)
+        try:
+            response = requests.get(f"{API_BASE}/admin/api-keys", headers=headers, timeout=60, verify=False)
+            if response.status_code == 200:
+                data = response.json()
+                key_count = len(data.get("api_keys", [])) if isinstance(data.get("api_keys"), list) else 0
+                self.log_result(
+                    "GET /api/admin/api-keys", 
+                    True, 
+                    f"Successfully retrieved {key_count} API keys"
+                )
+                list_success = True
+            elif response.status_code == 404:
+                self.log_result("GET /api/admin/api-keys", False, "404 Not Found - endpoint not accessible")
+                list_success = False
+            else:
+                self.log_result("GET /api/admin/api-keys", False, f"Status: {response.status_code}", response.text[:200])
+                list_success = False
+        except Exception as e:
+            self.log_result("GET /api/admin/api-keys", False, f"Exception: {str(e)}")
+            list_success = False
+        
+        # Test 2: POST /api/admin/api-keys (to create a test key)
+        try:
+            test_key_data = {
+                "name": "Test API Key - Review Verification",
+                "description": "API key created during review testing to verify endpoint functionality",
+                "permissions": ["read", "write"],
+                "expires_in_days": 30
+            }
+            response = requests.post(f"{API_BASE}/admin/api-keys", json=test_key_data, headers=headers, timeout=60, verify=False)
+            if response.status_code in [200, 201]:
+                data = response.json()
+                api_key = data.get("api_key", {})
+                key_id = api_key.get("key_id", "unknown")
+                self.log_result(
+                    "POST /api/admin/api-keys", 
+                    True, 
+                    f"Successfully created API key: {key_id[:8]}..."
+                )
+                create_success = True
+            elif response.status_code == 404:
+                self.log_result("POST /api/admin/api-keys", False, "404 Not Found - endpoint not accessible")
+                create_success = False
+            else:
+                self.log_result("POST /api/admin/api-keys", False, f"Status: {response.status_code}", response.text[:200])
+                create_success = False
+        except Exception as e:
+            self.log_result("POST /api/admin/api-keys", False, f"Exception: {str(e)}")
+            create_success = False
+        
+        return list_success and create_success
+
+    async def test_email_templates_endpoints(self):
+        """Test specific Email Templates endpoints mentioned in review"""
+        print("📄 TESTING EMAIL TEMPLATES ENDPOINTS (REVIEW REQUEST)")
+        print("=" * 50)
+        
+        if not self.admin_token:
+            self.log_result("Email Templates Endpoints", False, "No admin token available")
+            return False
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        
+        # Test 1: GET /api/admin/email-templates (to list existing templates)
+        try:
+            response = requests.get(f"{API_BASE}/admin/email-templates", headers=headers, timeout=60, verify=False)
+            if response.status_code == 200:
+                data = response.json()
+                template_count = len(data.get("templates", [])) if isinstance(data.get("templates"), list) else 0
+                self.log_result(
+                    "GET /api/admin/email-templates", 
+                    True, 
+                    f"Successfully retrieved {template_count} email templates"
+                )
+                list_success = True
+            elif response.status_code == 404:
+                self.log_result("GET /api/admin/email-templates", False, "404 Not Found - endpoint not accessible")
+                list_success = False
+            else:
+                self.log_result("GET /api/admin/email-templates", False, f"Status: {response.status_code}", response.text[:200])
+                list_success = False
+        except Exception as e:
+            self.log_result("GET /api/admin/email-templates", False, f"Exception: {str(e)}")
+            list_success = False
+        
+        # Test 2: POST /api/admin/email-templates (to create a test template)
+        try:
+            test_template_data = {
+                "name": "Review Test Template",
+                "subject": "CustomerMind IQ - Review Testing Template",
+                "html_content": """
+                <h2>Review Testing Template</h2>
+                <p>Hello {{ user_name }},</p>
+                <p>This email template was created during review testing to verify the email templates endpoint functionality.</p>
+                <p>Template features:</p>
+                <ul>
+                    <li>Variable substitution: {{ user_name }}</li>
+                    <li>HTML formatting support</li>
+                    <li>Professional styling</li>
+                </ul>
+                <p>Best regards,<br>CustomerMind IQ Team</p>
+                """,
+                "text_content": "Hello {{ user_name }}, This is a review test template. Best regards, CustomerMind IQ Team",
+                "template_type": "notification",
+                "variables": ["user_name"],
+                "is_active": True
+            }
+            response = requests.post(f"{API_BASE}/admin/email-templates", json=test_template_data, headers=headers, timeout=60, verify=False)
+            if response.status_code in [200, 201]:
+                data = response.json()
+                template_id = data.get("template_id", "unknown")
+                self.log_result(
+                    "POST /api/admin/email-templates", 
+                    True, 
+                    f"Successfully created email template: {template_id[:8]}..."
+                )
+                create_success = True
+            elif response.status_code == 404:
+                self.log_result("POST /api/admin/email-templates", False, "404 Not Found - endpoint not accessible")
+                create_success = False
+            else:
+                self.log_result("POST /api/admin/email-templates", False, f"Status: {response.status_code}", response.text[:200])
+                create_success = False
+        except Exception as e:
+            self.log_result("POST /api/admin/email-templates", False, f"Exception: {str(e)}")
+            create_success = False
+        
+        return list_success and create_success
+
+    async def test_trial_email_system_endpoints(self):
+        """Test specific Trial Email System endpoints mentioned in review"""
+        print("📧 TESTING TRIAL EMAIL SYSTEM ENDPOINTS (REVIEW REQUEST)")
+        print("=" * 50)
+        
+        if not self.admin_token:
+            self.log_result("Trial Email System Endpoints", False, "No admin token available")
+            return False
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        
+        # Test 1: GET /api/email/trial/logs
+        try:
+            response = requests.get(f"{API_BASE}/email/trial/logs", headers=headers, timeout=60, verify=False)
+            if response.status_code == 200:
+                data = response.json()
+                log_count = len(data.get("logs", [])) if isinstance(data.get("logs"), list) else 0
+                self.log_result(
+                    "GET /api/email/trial/logs", 
+                    True, 
+                    f"Successfully retrieved {log_count} trial email logs"
+                )
+                logs_success = True
+            elif response.status_code == 500:
+                self.log_result("GET /api/email/trial/logs", False, "500 Internal Server Error - RUNTIME ERROR DETECTED")
+                logs_success = False
+            elif response.status_code == 404:
+                self.log_result("GET /api/email/trial/logs", False, "404 Not Found - endpoint not accessible")
+                logs_success = False
+            else:
+                self.log_result("GET /api/email/trial/logs", False, f"Status: {response.status_code}", response.text[:200])
+                logs_success = False
+        except Exception as e:
+            self.log_result("GET /api/email/trial/logs", False, f"Exception: {str(e)}")
+            logs_success = False
+        
+        # Test 2: GET /api/email/trial/stats
+        try:
+            response = requests.get(f"{API_BASE}/email/trial/stats", headers=headers, timeout=60, verify=False)
+            if response.status_code == 200:
+                data = response.json()
+                stats = data.get("statistics", {})
+                self.log_result(
+                    "GET /api/email/trial/stats", 
+                    True, 
+                    f"Successfully retrieved trial email stats: {stats}"
+                )
+                stats_success = True
+            elif response.status_code == 500:
+                self.log_result("GET /api/email/trial/stats", False, "500 Internal Server Error - RUNTIME ERROR DETECTED")
+                stats_success = False
+            elif response.status_code == 404:
+                self.log_result("GET /api/email/trial/stats", False, "404 Not Found - endpoint not accessible")
+                stats_success = False
+            else:
+                self.log_result("GET /api/email/trial/stats", False, f"Status: {response.status_code}", response.text[:200])
+                stats_success = False
+        except Exception as e:
+            self.log_result("GET /api/email/trial/stats", False, f"Exception: {str(e)}")
+            stats_success = False
+        
+        # Test 3: POST /api/subscriptions/trial/register (with sample data)
+        try:
+            test_trial_data = {
+                "email": f"reviewtest_{datetime.now().strftime('%H%M%S')}@example.com",
+                "first_name": "Review",
+                "last_name": "Tester",
+                "company_name": "Review Testing Company"
+            }
+            response = requests.post(f"{API_BASE}/subscriptions/trial/register", json=test_trial_data, timeout=60, verify=False)
+            if response.status_code in [200, 201]:
+                data = response.json()
+                user_id = data.get("user", {}).get("user_id", "unknown")
+                trial_end = data.get("trial_end", "unknown")
+                self.log_result(
+                    "POST /api/subscriptions/trial/register", 
+                    True, 
+                    f"Successfully registered trial user: {user_id}, trial ends: {trial_end}"
+                )
+                register_success = True
+            elif response.status_code == 500:
+                self.log_result("POST /api/subscriptions/trial/register", False, "500 Internal Server Error - RUNTIME ERROR DETECTED")
+                register_success = False
+            elif response.status_code == 404:
+                self.log_result("POST /api/subscriptions/trial/register", False, "404 Not Found - endpoint not accessible")
+                register_success = False
+            else:
+                self.log_result("POST /api/subscriptions/trial/register", False, f"Status: {response.status_code}", response.text[:200])
+                register_success = False
+        except Exception as e:
+            self.log_result("POST /api/subscriptions/trial/register", False, f"Exception: {str(e)}")
+            register_success = False
+        
+        return logs_success and stats_success and register_success
+
+    async def test_admin_manual_endpoints(self):
+        """Test specific Admin Manual endpoints mentioned in review"""
+        print("📚 TESTING ADMIN MANUAL ENDPOINTS (REVIEW REQUEST)")
+        print("=" * 50)
+        
+        if not self.admin_token:
+            self.log_result("Admin Manual Endpoints", False, "No admin token available")
+            return False
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        
+        # Test 1: GET /api/download/admin-training-manual
+        try:
+            response = requests.get(f"{BACKEND_URL}/api/download/admin-training-manual", headers=headers, timeout=60, verify=False)
+            if response.status_code == 200:
+                content_length = len(response.content)
+                content_type = response.headers.get('content-type', 'unknown')
+                self.log_result(
+                    "GET /api/download/admin-training-manual", 
+                    True, 
+                    f"Successfully downloaded admin manual ({content_length} bytes, {content_type})"
+                )
+                admin_manual_success = True
+            elif response.status_code == 404:
+                self.log_result("GET /api/download/admin-training-manual", False, "404 Not Found - manual file not accessible")
+                admin_manual_success = False
+            else:
+                self.log_result("GET /api/download/admin-training-manual", False, f"Status: {response.status_code}", response.text[:200])
+                admin_manual_success = False
+        except Exception as e:
+            self.log_result("GET /api/download/admin-training-manual", False, f"Exception: {str(e)}")
+            admin_manual_success = False
+        
+        # Test 2: GET /api/download/complete-training-manual
+        try:
+            response = requests.get(f"{BACKEND_URL}/api/download/complete-training-manual", headers=headers, timeout=60, verify=False)
+            if response.status_code == 200:
+                content_length = len(response.content)
+                content_type = response.headers.get('content-type', 'unknown')
+                self.log_result(
+                    "GET /api/download/complete-training-manual", 
+                    True, 
+                    f"Successfully downloaded complete manual ({content_length} bytes, {content_type})"
+                )
+                complete_manual_success = True
+            elif response.status_code == 404:
+                self.log_result("GET /api/download/complete-training-manual", False, "404 Not Found - manual file not accessible")
+                complete_manual_success = False
+            else:
+                self.log_result("GET /api/download/complete-training-manual", False, f"Status: {response.status_code}", response.text[:200])
+                complete_manual_success = False
+        except Exception as e:
+            self.log_result("GET /api/download/complete-training-manual", False, f"Exception: {str(e)}")
+            complete_manual_success = False
+        
+        return admin_manual_success and complete_manual_success
 
     async def test_admin_manual_loading(self):
         """Test admin manual accessibility via API endpoints"""
