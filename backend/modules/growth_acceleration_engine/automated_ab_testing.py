@@ -514,6 +514,33 @@ ab_testing_router = APIRouter(prefix="/api/growth/ab-tests", tags=["A/B Testing"
 # Initialize service
 testing_service = AutomatedABTestingService()
 
+@ab_testing_router.get("/")
+async def get_ab_testing_status():
+    """Get A/B testing service status - public endpoint for testing"""
+    try:
+        return {
+            "status": "success",
+            "service": "Automated A/B Testing Engine",
+            "version": "2.0.0", 
+            "llm_provider": "GPT-5 / Claude Sonnet 4",
+            "available_endpoints": [
+                "/generate - Generate AI-powered A/B test",
+                "/create - Create custom A/B test",
+                "/dashboard - Get testing dashboard",
+                "/{id} - Get test details",
+                "/{id}/start - Start test",  
+                "/{id}/stop - Stop test"
+            ],
+            "timestamp": datetime.now().isoformat()
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "service": "Automated A/B Testing Engine", 
+            "error": str(e),
+            "timestamp": datetime.now().isoformat()
+        }
+
 @ab_testing_router.post("/generate")
 async def generate_ab_test(request: Dict[str, Any]):
     """Generate AI-powered A/B test from opportunity"""
