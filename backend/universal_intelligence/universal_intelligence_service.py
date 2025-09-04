@@ -9,7 +9,7 @@ import asyncio
 import json
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 import os
-from ..modules.llm_manager import llm_manager, ModelType, LLMProvider
+from modules.llm_manager import llm_manager, ModelType, LLMProvider
 from motor.motor_asyncio import AsyncIOMotorClient
 from .universal_models import (
     UniversalCustomerProfile, CustomerInsight, BusinessIntelligence, 
