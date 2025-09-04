@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
   
   // Debug: Log the backend URL
-  console.log('AUTH CONTEXT - Backend URL (forced):', backendUrl);
+  console.log('AUTH CONTEXT - Backend URL (from env):', backendUrl);
   console.log('AUTH CONTEXT - Environment REACT_APP_BACKEND_URL:', process.env.REACT_APP_BACKEND_URL);
 
   // Check for stored authentication on app start - optimized
