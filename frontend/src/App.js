@@ -1421,24 +1421,24 @@ ${details.updateFrequency}
                     A/B Test Automation
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    AI-powered testing optimization
+                    AI-powered testing optimization - Click metrics for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('abtesting', 'active_tests', 'Active Tests', abTestingData?.dashboard?.active_tests || 8)}>
                       <span className="text-slate-300">Active Tests</span>
                       <span className="text-blue-400 font-semibold">
                         {abTestingData?.dashboard?.active_tests || 8}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('abtesting', 'win_rate', 'Winning Variants', abTestingData?.dashboard?.winning_variants || 12)}>
                       <span className="text-slate-300">Winning Variants</span>
                       <span className="text-green-400 font-semibold">
                         {abTestingData?.dashboard?.winning_variants || 12}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('abtesting', 'win_rate', 'Average Uplift Rate', abTestingData?.dashboard?.avg_uplift || '+18.3%')}>
                       <span className="text-slate-300">Uplift Rate</span>
                       <span className="text-green-400 font-semibold">
                         {abTestingData?.dashboard?.avg_uplift || '+18.3%'}
