@@ -653,7 +653,7 @@ Contact: growth@customermindiq.com`;
         <div className="space-y-6">
           {/* Intent Summary Cards */}
           <div className="grid gap-6 md:grid-cols-4">
-            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30">
+            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:bg-orange-600/30 transition-all duration-200" onClick={() => showGrowthDataSource('intent', 'companies', 'Intent Companies', `${intentData?.dashboard?.summary_metrics?.total_intent_accounts || 235} companies showing intent`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Eye className="h-8 w-8 text-orange-400 mx-auto mb-2" />
@@ -661,11 +661,12 @@ Contact: growth@customermindiq.com`;
                     {intentData?.dashboard?.summary_metrics?.total_intent_accounts || 235}
                   </div>
                   <div className="text-xs text-orange-200">Intent Accounts</div>
+                  <div className="text-xs text-orange-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-red-600/20 to-red-800/20 border-red-500/30">
+            <Card className="bg-gradient-to-br from-red-600/20 to-red-800/20 border-red-500/30 cursor-pointer hover:bg-red-600/30 transition-all duration-200" onClick={() => showGrowthDataSource('intent', 'signal_strength', 'High Intent Signal Strength', `${intentData?.dashboard?.summary_metrics?.high_intent_accounts || 67} high-intent companies`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Zap className="h-8 w-8 text-red-400 mx-auto mb-2" />
@@ -673,11 +674,12 @@ Contact: growth@customermindiq.com`;
                     {intentData?.dashboard?.summary_metrics?.high_intent_accounts || 67}
                   </div>
                   <div className="text-xs text-red-200">High Intent</div>
+                  <div className="text-xs text-red-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30">
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showGrowthDataSource('intent', 'companies', 'Ready to Contact', `${intentData?.dashboard?.summary_metrics?.ready_to_contact || 23} companies ready for contact`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <CheckCircle className="h-8 w-8 text-green-400 mx-auto mb-2" />
@@ -685,11 +687,12 @@ Contact: growth@customermindiq.com`;
                     {intentData?.dashboard?.summary_metrics?.ready_to_contact || 23}
                   </div>
                   <div className="text-xs text-green-200">Ready to Contact</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30">
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showGrowthDataSource('intent', 'signal_strength', 'Pipeline Potential', `${formatCurrency(intentData?.dashboard?.summary_metrics?.pipeline_potential || 4250000)} pipeline potential`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <TrendingUp className="h-8 w-8 text-purple-400 mx-auto mb-2" />
@@ -697,6 +700,7 @@ Contact: growth@customermindiq.com`;
                     {formatCurrency(intentData?.dashboard?.summary_metrics?.pipeline_potential)}
                   </div>
                   <div className="text-xs text-purple-200">Pipeline Potential</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
