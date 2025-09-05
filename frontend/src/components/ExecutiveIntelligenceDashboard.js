@@ -460,7 +460,11 @@ const ExecutiveIntelligenceDashboard = () => {
               <CardContent>
                 <div className="space-y-3">
                   {kpiData?.action_items?.map((action, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                    <div 
+                      key={index} 
+                      className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg hover:bg-slate-700/50 cursor-pointer transition-colors"
+                      onClick={() => handleActionItemClick(action)}
+                    >
                       <span className="text-slate-300 text-sm">{action}</span>
                       <Badge className="bg-orange-500/20 text-orange-400">Priority</Badge>
                     </div>
