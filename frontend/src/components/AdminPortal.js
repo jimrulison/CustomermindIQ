@@ -137,7 +137,7 @@ const AdminPortalEnhanced = () => {
       alert('Refund processed successfully!');
       setShowModal(false);
       setEditingItem(null);
-      await loadAdminData();
+      await loadDashboardData();
     } catch (error) {
       console.error('Process refund error:', error);
       alert('Refund processed successfully! (Demo mode)');
