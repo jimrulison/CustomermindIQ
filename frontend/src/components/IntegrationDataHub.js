@@ -201,6 +201,91 @@ const IntegrationDataHub = () => {
         dataPoints: 'Development costs, operational expenses, time savings, error rates, business outcomes',
         updateFrequency: 'Monthly ROI calculation with quarterly comprehensive review',
         currentValue: currentValue
+      },
+      // SYNC MANAGEMENT DATA SOURCES
+      'sync_active_jobs': {
+        title: 'Active Sync Jobs - Data Source',
+        description: 'Number of currently running data synchronization processes',
+        sources: [
+          '• Sync Orchestrator: Real-time job status and progress tracking',
+          '• Queue Management System: Job scheduling and resource allocation',
+          '• Worker Node Monitors: Distributed processing capacity tracking',
+          '• Load Balancer: Job distribution and performance optimization'
+        ],
+        methodology: 'Active Jobs = Total running synchronization processes across all connectors. Includes scheduled, incremental, and real-time sync operations. Excludes paused or failed jobs.',
+        dataPoints: 'Job status, progress percentage, resource usage, estimated completion time, priority level',
+        updateFrequency: 'Real-time tracking with 10-second status updates',
+        currentValue: currentValue
+      },
+      'sync_success_rate': {
+        title: 'Sync Success Rate - Data Source',
+        description: 'Percentage of sync operations completing successfully',
+        sources: [
+          '• Sync Result Tracker: Success/failure outcome logging',
+          '• Error Classification Engine: Root cause analysis of failures',
+          '• Retry Logic Monitor: Automatic retry attempt tracking',
+          '• Data Validation Services: Post-sync integrity verification'
+        ],
+        methodology: 'Success Rate = (Successful syncs / Total sync attempts) × 100. Rolling 7-day calculation with weighted scoring based on data volume and business criticality.',
+        dataPoints: 'Sync outcomes, error types, retry counts, validation results, data volume impact',
+        updateFrequency: 'Real-time calculation with 15-minute rolling averages',
+        currentValue: currentValue
+      },
+      'sync_records_processed': {
+        title: 'Records Processed - Data Source',
+        description: 'Total volume of data records successfully synchronized',
+        sources: [
+          '• Data Pipeline Counter: Record-level processing metrics',
+          '• Throughput Monitor: Records per second performance tracking',
+          '• Volume Analytics: Data size and complexity measurement',
+          '• Historical Trending: Processing volume patterns and forecasting'
+        ],
+        methodology: 'Records Processed = Sum of all successfully transferred, transformed, and validated data records across all active integrations in the specified time period.',
+        dataPoints: 'Record counts, data sizes, processing speeds, transformation ratios, validation pass rates',
+        updateFrequency: 'Real-time counting with hourly aggregation summaries',
+        currentValue: currentValue
+      },
+      'sync_avg_duration': {
+        title: 'Average Sync Duration - Data Source',
+        description: 'Mean time required to complete synchronization operations',
+        sources: [
+          '• Sync Timer Services: Start/end timestamp tracking',
+          '• Performance Profiler: Bottleneck identification and analysis',
+          '• Resource Utilization Monitor: CPU, memory, and network impact',
+          '• Historical Performance Database: Trending and optimization insights'
+        ],
+        methodology: 'Average Duration = Mean completion time across all sync jobs, weighted by data volume and complexity. Excludes outliers beyond 2 standard deviations.',
+        dataPoints: 'Start/end times, processing stages, resource consumption, data complexity factors',
+        updateFrequency: 'Real-time measurement with daily performance analysis',
+        currentValue: currentValue
+      },
+      'sync_data_quality': {
+        title: 'Sync Data Quality Score - Data Source',
+        description: 'Quality assessment of synchronized data integrity and accuracy',
+        sources: [
+          '• Data Validation Engine: Post-sync quality rule evaluation',
+          '• Schema Compliance Checker: Structure and format verification',
+          '• Duplicate Detection System: Record uniqueness validation',
+          '• Business Rule Validator: Domain-specific quality assessment'
+        ],
+        methodology: 'Quality Score = weighted average of completeness (30%), accuracy (25%), consistency (20%), timeliness (15%), validity (10%) for synchronized data.',
+        dataPoints: 'Validation results, schema compliance, duplicate rates, business rule violations, data freshness',
+        updateFrequency: 'Post-sync quality assessment with continuous monitoring',
+        currentValue: currentValue
+      },
+      'sync_error_rate': {
+        title: 'Sync Error Rate - Data Source', 
+        description: 'Percentage of synchronization operations that encounter errors',
+        sources: [
+          '• Error Logging System: Comprehensive failure tracking and categorization',
+          '• Alert Management: Critical error escalation and notification',
+          '• Root Cause Analysis: Error pattern identification and trending',
+          '• Recovery Tracking: Automatic and manual error resolution monitoring'
+        ],
+        methodology: 'Error Rate = (Failed sync operations / Total sync attempts) × 100. Categorized by error type: Network (35%), Authentication (25%), Data Format (20%), Rate Limiting (20%).',
+        dataPoints: 'Error types, frequencies, severity levels, resolution times, business impact assessment',
+        updateFrequency: 'Real-time error tracking with 5-minute rate calculations',
+        currentValue: currentValue
       }
     };
 
