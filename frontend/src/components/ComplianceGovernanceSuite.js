@@ -377,7 +377,7 @@ ${details.updateFrequency}
         <div className="space-y-6">
           {/* Summary Cards */}
           <div className="grid gap-6 md:grid-cols-4">
-            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30">
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showDataSource('overview', 'compliance_score', 'Overall Compliance Score', `${complianceData?.dashboard?.compliance_status?.overall_compliance_score || '0'}%`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Shield className="h-8 w-8 text-green-400 mx-auto mb-2" />
@@ -385,11 +385,12 @@ ${details.updateFrequency}
                     {complianceData?.dashboard?.compliance_status?.overall_compliance_score || '0'}%
                   </div>
                   <div className="text-xs text-green-200">Compliance Score</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30">
+            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showDataSource('overview', 'active_policies', 'Active Policies', auditData?.dashboard?.audit_overview?.completed_audits || '0')}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <FileText className="h-8 w-8 text-blue-400 mx-auto mb-2" />
@@ -397,11 +398,12 @@ ${details.updateFrequency}
                     {auditData?.dashboard?.audit_overview?.completed_audits || '0'}
                   </div>
                   <div className="text-xs text-blue-200">Completed Audits</div>
+                  <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30">
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showDataSource('overview', 'risk_level', 'Data Classification Coverage', `${governanceData?.dashboard?.governance_overview?.classification_coverage || '0'}%`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Database className="h-8 w-8 text-purple-400 mx-auto mb-2" />
@@ -409,11 +411,12 @@ ${details.updateFrequency}
                     {governanceData?.dashboard?.governance_overview?.classification_coverage || '0'}%
                   </div>
                   <div className="text-xs text-purple-200">Data Classification</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30">
+            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:bg-orange-600/30 transition-all duration-200" onClick={() => showDataSource('overview', 'audit_findings', 'Report Automation Rate', `${reportingData?.dashboard?.reporting_overview?.automation_rate || '0'}%`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <BookOpen className="h-8 w-8 text-orange-400 mx-auto mb-2" />
@@ -421,6 +424,7 @@ ${details.updateFrequency}
                     {reportingData?.dashboard?.reporting_overview?.automation_rate || '0'}%
                   </div>
                   <div className="text-xs text-orange-200">Report Automation</div>
+                  <div className="text-xs text-orange-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
