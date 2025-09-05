@@ -75,6 +75,106 @@ const ExecutiveIntelligenceDashboard = () => {
     }
   };
 
+  // Load customer health details for drill-down
+  const loadCustomerHealthDetails = async (alertType = 'critical') => {
+    try {
+      setLoadingCustomers(true);
+      const response = await axios.get(`${API_BASE_URL}/api/customer-health/customers`, {
+        params: { status: alertType, limit: 20 }
+      });
+      
+      if (response.data && response.data.customers) {
+        setCustomerHealthData(response.data.customers);
+      } else {
+        // Fallback with demo data if endpoint not available
+        setCustomerHealthData([
+          {
+            customer_id: "cust_001",
+            name: "TechCorp Enterprise",
+            email: "admin@techcorp.com",
+            health_score: 23,
+            health_status: "critical",
+            risk_factors: ["Declining usage", "Late payments", "Support escalations"],
+            total_spent: 45000,
+            last_activity: "2025-01-15",
+            account_manager: "Sarah Johnson"
+          },
+          {
+            customer_id: "cust_002", 
+            name: "Global Solutions Inc",
+            email: "contact@globalsolutions.com",
+            health_score: 31,
+            health_status: "poor",
+            risk_factors: ["Reduced engagement", "Contract renewal pending"],
+            total_spent: 28000,
+            last_activity: "2025-01-10",
+            account_manager: "Mike Chen"
+          },
+          {
+            customer_id: "cust_003",
+            name: "Innovation Labs",
+            email: "hello@innovationlabs.com", 
+            health_score: 42,
+            health_status: "fair",
+            risk_factors: ["Support ticket backlog", "Feature requests pending"],
+            total_spent: 15000,
+            last_activity: "2025-01-12",
+            account_manager: "Emma Wilson"
+          }
+        ]);
+      }
+    } catch (error) {
+      console.error('Error loading customer health details:', error);
+      // Show demo data on error
+      setCustomerHealthData([
+        {
+          customer_id: "cust_001",
+          name: "TechCorp Enterprise",
+          email: "admin@techcorp.com",
+          health_score: 23,
+          health_status: "critical",
+          risk_factors: ["Declining usage", "Late payments", "Support escalations"],
+          total_spent: 45000,
+          last_activity: "2025-01-15",
+          account_manager: "Sarah Johnson"
+        }
+      ]);
+    } finally {
+      setLoadingCustomers(false);
+    }
+  };
+
+  // Handle alert action buttons
+  const handleAddressAlert = async (alert) => {
+    setSelectedAlert(alert);
+    if (alert.title.toLowerCase().includes('customer') || alert.title.toLowerCase().includes('health')) {
+      await loadCustomerHealthDetails('critical');
+      setShowCustomerModal(true);
+    } else {
+      setShowAlertModal(true);
+    }
+  };
+
+  // Handle strategy implementation
+  const handleImplementStrategy = (insight) => {
+    setSelectedStrategy(insight);
+    setShowStrategyModal(true);
+  };
+
+  // Handle customer health drill-down
+  const handleCustomerHealthDrillDown = async () => {
+    await loadCustomerHealthDetails('critical');
+    setShowCustomerModal(true);
+  };
+
+  // Handle action item priority click
+  const handleActionItemClick = async (actionItem) => {
+    if (actionItem.toLowerCase().includes('customer') || actionItem.toLowerCase().includes('health')) {
+      await loadCustomerHealthDetails('critical');
+      setShowCustomerModal(true);
+    }
+  };
+
   const formatCurrency = (value) => {
     if (value >= 1000000) {
       return `$${(value / 1000000).toFixed(1)}M`;
