@@ -704,7 +704,7 @@ Contact: support@customermindiq.com`;
                     <Button 
                       size="sm" 
                       className="bg-blue-600 hover:bg-blue-700"
-                      onClick={() => handleCreateActionPlan(milestone.customer_id, milestone.risk_level)}
+                      onClick={() => handleCreateActionPlan(task.customer_id, task.priority)}
                     >
                       Assign
                     </Button>
