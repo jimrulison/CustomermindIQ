@@ -246,17 +246,22 @@ const Training = () => {
     {
       id: 5,
       title: "API Documentation",
-      description: "Technical documentation for developers and integrations",
+      description: "Technical documentation for developers and integrations (Scale & White Label tiers)",
       icon: ExternalLink,
       pages: 23,
-      lastUpdated: "December 2024",
-      downloadUrl: "#",
+      lastUpdated: "September 2025",
+      downloadUrl: "/api/admin/api-documentation",
+      pdfType: "api-documentation", 
+      filename: "CustomerMind_IQ_API_Documentation.html",
+      size: "HTML",
+      requiresTier: "Scale", // Show tier requirement
       sections: [
-        "Authentication & Setup",
-        "Endpoint Reference & Examples",
+        "Authentication & API Keys",
+        "Customer Management Endpoints",
+        "Analytics & Reporting API",
         "Webhook Configuration",
         "Rate Limits & Best Practices",
-        "SDK Documentation"
+        "SDK Documentation & Examples"
       ]
     },
     {
