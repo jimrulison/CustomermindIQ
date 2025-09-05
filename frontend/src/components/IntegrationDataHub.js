@@ -807,15 +807,16 @@ ${details.updateFrequency}
                         </div>
                         <div className="text-xs text-green-300 mt-1 opacity-60">Click for source</div>
                       </div>
-                      <div className="text-center">
+                      <div className="text-center cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showDataSource('sync', 'avg_duration', 'Sync Duration', job.duration ? `${job.duration}s` : job.estimated_duration ? `${job.estimated_duration}s` : 'N/A')}>
                         <div className="text-lg font-bold text-purple-400">
                           {job.duration ? `${job.duration}s` : job.estimated_duration ? `${job.estimated_duration}s` : 'N/A'}
                         </div>
                         <div className="text-xs text-slate-400">
                           {job.status === 'completed' ? 'Duration' : 'Est. Duration'}
                         </div>
+                        <div className="text-xs text-purple-300 mt-1 opacity-60">Click for source</div>
                       </div>
-                      <div className="text-center">
+                      <div className="text-center cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showDataSource('sync', 'success_rate', 'Sync Frequency', job.sync_frequency)}>
                         <div className="text-lg font-bold text-orange-400">
                           {job.sync_frequency}
                         </div>
