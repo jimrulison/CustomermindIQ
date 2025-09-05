@@ -162,7 +162,7 @@ const AdminPortalEnhanced = () => {
 
       const processed = response.data?.processed_count || 5;
       alert(`Successfully processed ${processed} overage charges!`);
-      await loadAdminData();
+      await loadDashboardData();
     } catch (error) {
       console.error('Process overages error:', error);
       const demoCount = Math.floor(Math.random() * 10) + 1;
