@@ -19,7 +19,7 @@ class CustomerProfileManager:
     def __init__(self):
         mongo_url = os.getenv("MONGO_URL", "mongodb://localhost:27017")
         self.client = AsyncIOMotorClient(mongo_url)
-        self.db = self.client.customer_mind_iq_universal
+        self.db = self.client[os.environ.get('DB_NAME', 'customer_mind_iq')]
         
     async def merge_customer_data(self, customers: List[UniversalCustomer], transactions: List[UniversalTransaction]) -> List[UniversalCustomerProfile]:
         """
