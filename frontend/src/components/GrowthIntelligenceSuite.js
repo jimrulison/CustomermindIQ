@@ -30,6 +30,158 @@ const GrowthIntelligenceSuite = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('abm');
 
+  // Growth Intelligence - Data source drill-down handlers
+  const showGrowthDataSource = (section, metricType, metricName, currentValue) => {
+    const sourceDetails = {
+      // ABM (ACCOUNT-BASED MARKETING) DATA SOURCES
+      'abm_target_accounts': {
+        title: 'Target Accounts - Data Source',
+        description: 'High-value accounts identified for personalized marketing and sales engagement',
+        sources: [
+          '• Account Intelligence Platform: Comprehensive account profiling and scoring',
+          '• CRM Integration: Account history, relationship mapping, and opportunity tracking',
+          '• Firmographic Database: Company size, industry, technology stack, and growth signals',
+          '• Intent Data Engine: Account-level buying signals and research behavior tracking'
+        ],
+        methodology: 'Target Accounts = Accounts scoring >70 on ICP fit (40%) + Intent signals (30%) + Engagement potential (20%) + Revenue opportunity (10%). AI models identify high-conversion prospects.',
+        dataPoints: 'Company data, employee counts, revenue estimates, technology usage, buying committee identification',
+        updateFrequency: 'Weekly account scoring with real-time intent signal integration',
+        currentValue: currentValue
+      },
+      'abm_engagement_rate': {
+        title: 'ABM Engagement Rate - Data Source',
+        description: 'Engagement effectiveness across personalized account-based marketing campaigns',
+        sources: [
+          '• Multi-Channel Analytics: Email, LinkedIn, display, and direct mail engagement tracking',
+          '• Account Engagement Platform: Personalized content interaction and response measurement',
+          '• Website Analytics: Account-specific website behavior and content consumption',
+          '• Sales Engagement CRM: Meeting acceptance, demo requests, and sales conversation rates'
+        ],
+        methodology: 'Engagement Rate = (Total meaningful interactions / Total touchpoint attempts) × 100. Weighted by interaction quality and progression toward sales conversation.',
+        dataPoints: 'Email opens/clicks, social engagement, website visits, content downloads, meeting requests',
+        updateFrequency: 'Real-time engagement tracking with daily campaign optimization',
+        currentValue: currentValue
+      },
+      'abm_pipeline_value': {
+        title: 'ABM Pipeline Value - Data Source',
+        description: 'Total revenue value of opportunities generated through account-based marketing',
+        sources: [
+          '• Sales Pipeline CRM: ABM-sourced opportunity tracking and revenue attribution',
+          '• Attribution Analytics: Multi-touch attribution for ABM campaign influence',
+          '• Revenue Intelligence: Deal progression and close probability analysis',
+          '• Account Scoring: Opportunity sizing based on account potential and engagement'
+        ],
+        methodology: 'Pipeline Value = sum of (Opportunity Value × Close Probability × ABM Attribution %). Opportunities must have >30% ABM campaign influence to qualify.',
+        dataPoints: 'Deal values, close probabilities, campaign attribution, sales stage progression, account engagement scores',
+        updateFrequency: 'Daily pipeline updates with weekly ABM attribution analysis',
+        currentValue: currentValue
+      },
+      // INTENT DATA SOURCES
+      'intent_companies': {
+        title: 'Intent Companies - Data Source',
+        description: 'Companies showing active buying intent signals for relevant product categories',
+        sources: [
+          '• Intent Data Providers: Third-party intent signal aggregation and analysis',
+          '• Website Analytics: First-party intent signals from website behavior',
+          '• Content Engagement: Research and educational content consumption patterns',
+          '• Search Intelligence: Keyword research and competitive analysis tracking'
+        ],
+        methodology: 'Intent Companies = Companies with intent score >60 based on topic relevance, signal frequency, and research intensity. ML models validate buying readiness.',
+        dataPoints: 'Intent topics, signal strength, research frequency, competitive analysis, buying committee engagement',
+        updateFrequency: 'Daily intent signal processing with real-time scoring updates',
+        currentValue: currentValue
+      },
+      'intent_signal_strength': {
+        title: 'Intent Signal Strength - Data Source',
+        description: 'Average strength of buying intent signals across identified companies',
+        sources: [
+          '• Signal Analytics Engine: Intent signal strength measurement and normalization',
+          '• Topic Relevance Scoring: Subject matter alignment with product offering',
+          '• Frequency Analysis: Signal consistency and intensity over time',
+          '• Competitive Intelligence: Intent signals for competitive research and comparison'
+        ],
+        methodology: 'Signal Strength = weighted average of topic relevance (40%) + signal frequency (30%) + research depth (20%) + competitive comparison (10%). Normalized 0-100 scale.',
+        dataPoints: 'Intent topics, signal frequency, research depth, competitive mentions, buying committee involvement',
+        updateFrequency: 'Real-time signal strength calculation with hourly trend analysis',
+        currentValue: currentValue
+      },
+      // PRODUCT-LED GROWTH DATA SOURCES
+      'plg_qualified_leads': {
+        title: 'Product Qualified Leads - Data Source',
+        description: 'Users who have demonstrated product value through usage-based qualification criteria',
+        sources: [
+          '• Product Analytics: Feature usage, adoption patterns, and engagement scoring',
+          '• User Behavior Analytics: In-app behavior and value realization tracking',
+          '• Usage Intelligence: Product usage intensity and breadth measurement',
+          '• Conversion Analytics: Free-to-paid conversion signals and readiness indicators'
+        ],
+        methodology: 'PQLs = Users with usage score >75 (feature adoption 40% + engagement depth 30% + usage frequency 30%) AND value milestone achievement >80%.',
+        dataPoints: 'Feature usage, session duration, value milestone completion, engagement patterns, conversion indicators',
+        updateFrequency: 'Real-time PQL scoring with daily qualification batch processing',
+        currentValue: currentValue
+      },
+      'plg_activation_rate': {
+        title: 'Product Activation Rate - Data Source',
+        description: 'Percentage of users reaching key product activation milestones',
+        sources: [
+          '• Activation Analytics: User onboarding and activation milestone tracking',
+          '• Product Usage Monitor: First value achievement and engagement measurement',
+          '• User Journey Analytics: Activation path optimization and bottleneck identification',
+          '• Cohort Analysis: Activation rate trends and improvement measurement'
+        ],
+        methodology: 'Activation Rate = (Users reaching activation milestone / Total new users) × 100. Activation defined as completing key onboarding steps and first value achievement.',
+        dataPoints: 'Onboarding completion, first value milestones, feature adoption, user engagement, activation timeline',
+        updateFrequency: 'Daily activation tracking with weekly cohort analysis',
+        currentValue: currentValue
+      },
+      'plg_expansion_revenue': {
+        title: 'PLG Expansion Revenue - Data Source',
+        description: 'Revenue generated from product-led upsells and usage-based expansion',
+        sources: [
+          '• Revenue Analytics: Usage-based billing and expansion revenue tracking',
+          '• Product Usage Intelligence: Feature usage correlation with revenue expansion',
+          '• Subscription Analytics: Plan upgrades and add-on revenue measurement',
+          '• Customer Success Platform: Product-led expansion opportunity identification'
+        ],
+        methodology: 'PLG Expansion = Revenue from usage-based billing increases + Feature-driven plan upgrades + Product-led add-on sales. Attribution requires >70% product usage correlation.',
+        dataPoints: 'Usage-based revenue, plan upgrades, add-on sales, feature adoption correlation, expansion triggers',
+        updateFrequency: 'Monthly expansion revenue analysis with weekly usage correlation tracking',
+        currentValue: currentValue
+      }
+    };
+
+    const key = `${section}_${metricType}`;
+    const details = sourceDetails[key] || {
+      title: `${metricName} - Data Source`,
+      description: 'Data source information for this growth intelligence metric',
+      sources: ['• Growth analytics platforms', '• Account intelligence systems', '• Intent data providers', '• Product usage analytics'],
+      methodology: 'Calculated using advanced growth intelligence and predictive analytics',
+      dataPoints: 'Account data, intent signals, product usage, engagement metrics',
+      updateFrequency: 'Updated based on growth intelligence monitoring schedules',
+      currentValue: currentValue
+    };
+
+    alert(`📊 ${details.title}
+
+Current Value: ${details.currentValue}
+
+${details.description}
+
+🔍 DATA SOURCES:
+${details.sources.join('\n')}
+
+⚙️ METHODOLOGY:
+${details.methodology}
+
+📈 KEY DATA POINTS:
+${details.dataPoints}
+
+🕐 UPDATE FREQUENCY:
+${details.updateFrequency}
+
+💡 This data helps optimize growth strategies and drive revenue expansion through intelligent targeting.`);
+  };
+
   useEffect(() => {
     loadGrowthData();
   }, []);
