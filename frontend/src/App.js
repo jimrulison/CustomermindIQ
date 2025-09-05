@@ -1977,21 +1977,42 @@ function AppContent() {
                     Analytics AI Insights
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Strategic analytics recommendations
+                    Actionable optimization recommendations
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     <Alert className="bg-blue-500/10 border-blue-500/20">
                       <TrendingUp className="h-4 w-4 text-blue-400" />
                       <AlertDescription className="text-blue-300 text-sm">
-                        Customer journey optimization could improve conversion by 24%
+                        <div className="font-medium mb-1">Customer Journey Optimization (+24% conversion)</div>
+                        <div className="text-blue-200/80">
+                          • Add exit-intent popup on pricing page (37% abandon rate)<br/>
+                          • Reduce form fields from 8 to 4 on signup (increases completion by 31%)<br/>
+                          • Send follow-up email within 6 hours (41% reactivation rate)
+                        </div>
                       </AlertDescription>
                     </Alert>
                     <Alert className="bg-green-500/10 border-green-500/20">
                       <DollarSign className="h-4 w-4 text-green-400" />
                       <AlertDescription className="text-green-300 text-sm">
-                        Attribution model shows email driving highest ROI at 4.4x
+                        <div className="font-medium mb-1">Revenue Attribution Optimization (4.4x ROI)</div>
+                        <div className="text-green-200/80">
+                          • Increase email budget by 40% (highest ROI channel)<br/>
+                          • Reduce paid social spend by 25% (negative ROI)<br/>
+                          • Launch email retargeting for trial dropoffs (+$23k/month)
+                        </div>
+                      </AlertDescription>
+                    </Alert>
+                    <Alert className="bg-purple-500/10 border-purple-500/20">
+                      <Target className="h-4 w-4 text-purple-400" />
+                      <AlertDescription className="text-purple-300 text-sm">
+                        <div className="font-medium mb-1">Customer Health Alert (125 at-risk customers)</div>
+                        <div className="text-purple-200/80">
+                          • Schedule calls with top 25 high-value accounts this week<br/>
+                          • Send feature adoption email series to low-usage customers<br/>
+                          • Implement win-back campaign for churned prospects
+                        </div>
                       </AlertDescription>
                     </Alert>
                   </div>
