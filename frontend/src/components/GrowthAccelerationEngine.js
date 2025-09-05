@@ -159,6 +159,24 @@ const GrowthAccelerationEngine = () => {
     }
   };
 
+  const handleUpgradeToAnnual = () => {
+    alert(`🚀 Upgrade to Annual Subscription
+
+💰 Special Offer Available:
+• Save 40% with annual billing
+• Growth Acceleration Engine ($249/month value) - FREE
+• Priority support and advanced features
+• No commitment - cancel anytime
+
+✨ Limited Time: First month 50% off!
+
+📞 Contact our sales team at sales@customermindiq.com
+📱 Call: 1-800-MINDIQ-1 
+💬 Or chat with us for instant pricing
+
+This upgrade will unlock the full Growth Acceleration Engine immediately!`);
+  };
+
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
