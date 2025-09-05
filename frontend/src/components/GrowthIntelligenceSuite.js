@@ -301,10 +301,30 @@ Contact: growth@customermindiq.com`;
           <h1 className="text-3xl font-bold text-white">Growth Intelligence Suite</h1>
           <p className="text-slate-400 mt-2">ABM, intent data analytics, and product-led growth intelligence</p>
         </div>
-        <div className="flex items-center space-x-2">
-          <Badge className="bg-purple-500/20 text-purple-400">ABM Intelligence</Badge>
-          <Badge className="bg-orange-500/20 text-orange-400">Intent Analytics</Badge>
-          <Badge className="bg-green-500/20 text-green-400">Product-Led Growth</Badge>
+        <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2">
+            <Badge className="bg-purple-500/20 text-purple-400">ABM Intelligence</Badge>
+            <Badge className="bg-orange-500/20 text-orange-400">Intent Analytics</Badge>
+            <Badge className="bg-green-500/20 text-green-400">Product-Led Growth</Badge>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Button 
+              onClick={() => handleImplementStrategy(activeTab === 'abm' ? 'ABM Campaign' : activeTab === 'intent' ? 'Intent-Based Marketing' : 'Product-Led Growth')}
+              className="bg-blue-600 hover:bg-blue-700"
+              size="sm"
+            >
+              <Zap className="w-4 h-4 mr-2" />
+              Implement Strategy
+            </Button>
+            <Button 
+              onClick={() => handleExportAnalysis(activeTab === 'abm' ? 'ABM' : activeTab === 'intent' ? 'Intent' : 'PLG')}
+              className="bg-emerald-600 hover:bg-emerald-700"
+              size="sm"
+            >
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Export Analysis
+            </Button>
+          </div>
         </div>
       </div>
 
