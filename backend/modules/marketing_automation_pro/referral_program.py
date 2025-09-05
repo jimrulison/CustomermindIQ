@@ -150,7 +150,7 @@ class ReferralProgramService:
         self.api_key = os.getenv("EMERGENT_LLM_KEY")
         mongo_url = os.getenv("MONGO_URL", "mongodb://localhost:27017")
         self.client = AsyncIOMotorClient(mongo_url)
-        self.db = self.client.customer_mind_iq
+        self.db = self.client[os.environ.get('DB_NAME', 'customer_mind_iq')]
 
     async def analyze_referral_propensity(self, customer_id: str, customer_data: Dict[str, Any] = None) -> CustomerReferralProfile:
         """Analyze customer's likelihood to make successful referrals using AI"""
