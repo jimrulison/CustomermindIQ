@@ -1553,7 +1553,7 @@ ${details.updateFrequency}
                 </CardContent>
               </Card>
 
-              {/* AI Insights */}
+              {/* AI Marketing Insights */}
               <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
@@ -1561,21 +1561,54 @@ ${details.updateFrequency}
                     AI Marketing Insights
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Strategic recommendations
+                    Strategic recommendations - Click insights for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <Alert className="bg-blue-500/10 border-blue-500/20">
+                    <Alert className="bg-blue-500/10 border-blue-500/20 cursor-pointer hover:bg-blue-500/20 transition-all duration-200" onClick={() => showMarketingDataSource('abtesting', 'win_rate', 'A/B Test Performance Analysis', '23% higher engagement with personalized subject lines')}>
                       <Brain className="h-4 w-4 text-blue-400" />
                       <AlertDescription className="text-blue-300 text-sm">
-                        A/B test shows 23% higher engagement with personalized subject lines
+                        <div className="font-medium mb-1">A/B Test Insight (+23% engagement boost)</div>
+                        <div className="text-blue-200/80">
+                          Personalized subject lines significantly outperform generic ones. Click to see data methodology and statistical confidence.
+                        </div>
                       </AlertDescription>
                     </Alert>
-                    <Alert className="bg-green-500/10 border-green-500/20">
+                    <Alert className="bg-green-500/10 border-green-500/20 cursor-pointer hover:bg-green-500/20 transition-all duration-200" onClick={() => showMarketingDataSource('multichannel', 'engagement_rate', 'Multi-Channel Campaign Performance', '47% outperformance vs single-channel')}>
                       <TrendingUp className="h-4 w-4 text-green-400" />
                       <AlertDescription className="text-green-300 text-sm">
-                        Multi-channel campaigns outperform single-channel by 47%
+                        <div className="font-medium mb-1">Multi-Channel Performance (+47% improvement)</div>
+                        <div className="text-green-200/80">
+                          Cross-channel campaigns deliver superior results. Click to explore data sources and measurement methodology.
+                        </div>
+                      </AlertDescription>
+                    </Alert>
+                    <Alert className="bg-purple-500/10 border-purple-500/20 cursor-pointer hover:bg-purple-500/20 transition-all duration-200" onClick={() => showMarketingDataSource('content', 'personalization_rate', 'Dynamic Content Optimization', '87.5% personalization rate driving +32.1% engagement')}>
+                      <Palette className="h-4 w-4 text-purple-400" />
+                      <AlertDescription className="text-purple-300 text-sm">
+                        <div className="font-medium mb-1">Content Personalization Impact (+32.1% engagement)</div>
+                        <div className="text-purple-200/80">
+                          Dynamic content personalization shows strong engagement uplift. Click for personalization engine data sources.
+                        </div>
+                      </AlertDescription>
+                    </Alert>
+                    <Alert className="bg-orange-500/10 border-orange-500/20 cursor-pointer hover:bg-orange-500/20 transition-all duration-200" onClick={() => showMarketingDataSource('leadscoring', 'score_accuracy', 'Lead Scoring Intelligence', '147 MQLs with 78/100 average score')}>
+                      <Target className="h-4 w-4 text-orange-400" />
+                      <AlertDescription className="text-orange-300 text-sm">
+                        <div className="font-medium mb-1">Lead Scoring Optimization (147 qualified leads)</div>
+                        <div className="text-orange-200/80">
+                          AI-powered lead scoring delivers 24.8% conversion rate. Click for scoring algorithm and data sources.
+                        </div>
+                      </AlertDescription>
+                    </Alert>
+                    <Alert className="bg-pink-500/10 border-pink-500/20 cursor-pointer hover:bg-pink-500/20 transition-all duration-200" onClick={() => showMarketingDataSource('referral', 'viral_coefficient', 'Referral Program Intelligence', 'Viral coefficient of 1.42 generating $24.7K revenue')}>
+                      <Gift className="h-4 w-4 text-pink-400" />
+                      <AlertDescription className="text-pink-300 text-sm">
+                        <div className="font-medium mb-1">Referral Program Success (1.42 viral coefficient)</div>
+                        <div className="text-pink-200/80">
+                          Referral program driving viral growth and $24,750 revenue impact. Click for viral analytics data sources.
+                        </div>
                       </AlertDescription>
                     </Alert>
                   </div>
