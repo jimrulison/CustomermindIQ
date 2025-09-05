@@ -2519,8 +2519,12 @@ const AdminPortalEnhanced = () => {
                       />
                     </div>
                     
-                    <button className="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg transition-colors">
-                      Process Refund
+                    <button 
+                      className="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg transition-colors"
+                      onClick={handleProcessRefund}
+                      disabled={loading}
+                    >
+                      {loading ? 'Processing...' : 'Process Refund'}
                     </button>
                   </div>
                   
