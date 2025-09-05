@@ -793,7 +793,7 @@ Contact: growth@customermindiq.com`;
         <div className="space-y-6">
           {/* PLG KPI Cards */}
           <div className="grid gap-6 md:grid-cols-4">
-            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30">
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showGrowthDataSource('plg', 'qualified_leads', 'Product Qualified Leads', `${plgData?.dashboard?.summary_metrics?.product_qualified_leads || 156} PQLs`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Users className="h-8 w-8 text-green-400 mx-auto mb-2" />
@@ -801,11 +801,12 @@ Contact: growth@customermindiq.com`;
                     {plgData?.dashboard?.summary_metrics?.product_qualified_leads || 156}
                   </div>
                   <div className="text-xs text-green-200">Product Qualified Leads</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30">
+            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showGrowthDataSource('plg', 'activation_rate', 'Product Activation Rate', `${plgData?.dashboard?.summary_metrics?.user_activation_rate || 67.8}% activation rate`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <TrendingUp className="h-8 w-8 text-blue-400 mx-auto mb-2" />
@@ -813,11 +814,12 @@ Contact: growth@customermindiq.com`;
                     {plgData?.dashboard?.summary_metrics?.user_activation_rate || 67.8}%
                   </div>
                   <div className="text-xs text-blue-200">Activation Rate</div>
+                  <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30">
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showGrowthDataSource('plg', 'activation_rate', 'Average Days to Value', `${plgData?.dashboard?.summary_metrics?.avg_time_to_value || 8.7} days average time to value`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Zap className="h-8 w-8 text-purple-400 mx-auto mb-2" />
@@ -825,11 +827,12 @@ Contact: growth@customermindiq.com`;
                     {plgData?.dashboard?.summary_metrics?.avg_time_to_value || 8.7}
                   </div>
                   <div className="text-xs text-purple-200">Days to Value</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30">
+            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:bg-orange-600/30 transition-all duration-200" onClick={() => showGrowthDataSource('plg', 'expansion_revenue', 'PLG Expansion Rate', `${plgData?.dashboard?.summary_metrics?.expansion_revenue_rate || 145.7}% expansion rate`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Activity className="h-8 w-8 text-orange-400 mx-auto mb-2" />
@@ -837,6 +840,7 @@ Contact: growth@customermindiq.com`;
                     {plgData?.dashboard?.summary_metrics?.expansion_revenue_rate || 145.7}%
                   </div>
                   <div className="text-xs text-orange-200">Expansion Rate</div>
+                  <div className="text-xs text-orange-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
