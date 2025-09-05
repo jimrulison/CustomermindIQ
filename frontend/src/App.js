@@ -601,7 +601,7 @@ ${details.updateFrequency}
         methodology: 'Engine Performance = weighted combination of recommendation accuracy (40%), click-through rate (30%), conversion rate (30%).',
         dataPoints: 'Recommendation accuracy, click-through rates, conversion rates, engagement metrics, personalization effectiveness',
         updateFrequency: 'Real-time personalization with continuous performance optimization',
-        currentValue: current
+        currentValue: currentValue
       },
       // ANOMALY DETECTION DATA SOURCES
       'anomaly_detection': {
