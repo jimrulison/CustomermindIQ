@@ -575,6 +575,240 @@ const ExecutiveIntelligenceDashboard = () => {
         </div>
       )}
     </div>
+
+    {/* Customer Health Details Modal */}
+    {showCustomerModal && (
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="bg-slate-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-white">Customer Health Details</h2>
+              <Button 
+                variant="ghost" 
+                onClick={() => setShowCustomerModal(false)}
+                className="text-slate-400 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+
+            {loadingCustomers ? (
+              <div className="flex items-center justify-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
+                <span className="ml-3 text-slate-400">Loading customer details...</span>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {customerHealthData.map((customer) => (
+                  <Card key={customer.customer_id} className="bg-slate-700/50 border-slate-600">
+                    <CardContent className="p-6">
+                      <div className="grid gap-6 md:grid-cols-2">
+                        <div>
+                          <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-lg font-semibold text-white">{customer.name}</h3>
+                            <Badge className={`${
+                              customer.health_status === 'critical' ? 'bg-red-500/20 text-red-400' :
+                              customer.health_status === 'poor' ? 'bg-orange-500/20 text-orange-400' :
+                              'bg-yellow-500/20 text-yellow-400'
+                            }`}>
+                              {customer.health_status.toUpperCase()}
+                            </Badge>
+                          </div>
+                          
+                          <div className="space-y-3">
+                            <div className="flex items-center text-sm">
+                              <Mail className="w-4 h-4 text-slate-400 mr-2" />
+                              <span className="text-slate-300">{customer.email}</span>
+                            </div>
+                            <div className="flex items-center text-sm">
+                              <DollarSign className="w-4 h-4 text-slate-400 mr-2" />
+                              <span className="text-slate-300">Total Spent: ${customer.total_spent?.toLocaleString()}</span>
+                            </div>
+                            <div className="flex items-center text-sm">
+                              <Users className="w-4 h-4 text-slate-400 mr-2" />
+                              <span className="text-slate-300">Account Manager: {customer.account_manager}</span>
+                            </div>
+                            <div className="flex items-center text-sm">
+                              <Calendar className="w-4 h-4 text-slate-400 mr-2" />
+                              <span className="text-slate-300">Last Activity: {customer.last_activity}</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <div className="mb-4">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-sm text-slate-400">Health Score</span>
+                              <span className="text-lg font-bold text-white">{customer.health_score}/100</span>
+                            </div>
+                            <div className="w-full bg-slate-600 rounded-full h-2">
+                              <div 
+                                className={`h-2 rounded-full ${
+                                  customer.health_score >= 70 ? 'bg-green-500' :
+                                  customer.health_score >= 50 ? 'bg-yellow-500' :
+                                  customer.health_score >= 30 ? 'bg-orange-500' : 'bg-red-500'
+                                }`}
+                                style={{ width: `${customer.health_score}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                          
+                          <div>
+                            <h4 className="text-sm font-semibold text-white mb-2">Risk Factors:</h4>
+                            <ul className="space-y-1">
+                              {customer.risk_factors?.map((factor, idx) => (
+                                <li key={idx} className="flex items-center text-sm text-red-300">
+                                  <AlertTriangle className="w-3 h-3 mr-2" />
+                                  {factor}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          
+                          <div className="mt-4 pt-4 border-t border-slate-600">
+                            <div className="flex space-x-2">
+                              <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                                <Mail className="w-4 h-4 mr-1" />
+                                Contact
+                              </Button>
+                              <Button size="sm" variant="outline" className="border-slate-600 text-slate-300">
+                                View Details
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Alert Details Modal */}
+    {showAlertModal && selectedAlert && (
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="bg-slate-800 rounded-xl max-w-2xl w-full">
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-white">Alert Details</h2>
+              <Button 
+                variant="ghost" 
+                onClick={() => setShowAlertModal(false)}
+                className="text-slate-400 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-2">{selectedAlert.title}</h3>
+                <Badge className={`${getAlertColor(selectedAlert.severity)} mb-3`}>
+                  {selectedAlert.severity.toUpperCase()}
+                </Badge>
+                <p className="text-slate-300">{selectedAlert.description}</p>
+              </div>
+              
+              <div className="bg-slate-700/50 p-4 rounded-lg">
+                <h4 className="font-semibold text-white mb-2">Impact Analysis</h4>
+                <p className="text-slate-300 text-sm">{selectedAlert.impact}</p>
+              </div>
+              
+              <div className="bg-slate-700/50 p-4 rounded-lg">
+                <h4 className="font-semibold text-white mb-2">Recommended Actions</h4>
+                <p className="text-slate-300 text-sm">{selectedAlert.action_required}</p>
+              </div>
+              
+              <div className="flex justify-end space-x-3 pt-4">
+                <Button variant="outline" className="border-slate-600 text-slate-300">
+                  Assign to Team
+                </Button>
+                <Button className="bg-blue-600 hover:bg-blue-700">
+                  Create Action Plan
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Strategy Implementation Modal */}
+    {showStrategyModal && selectedStrategy && (
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="bg-slate-800 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-white">Strategy Implementation</h2>
+              <Button 
+                variant="ghost" 
+                onClick={() => setShowStrategyModal(false)}
+                className="text-slate-400 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-2">{selectedStrategy.insight_category}</h3>
+                <div className="flex items-center space-x-2 mb-3">
+                  <Badge className={`${
+                    selectedStrategy.impact === 'Critical' ? 'bg-red-500/20 text-red-400' :
+                    selectedStrategy.impact === 'High' ? 'bg-orange-500/20 text-orange-400' :
+                    'bg-blue-500/20 text-blue-400'
+                  }`}>
+                    {selectedStrategy.impact} Impact
+                  </Badge>
+                  <Badge className="bg-green-500/20 text-green-400">
+                    {selectedStrategy.confidence}% Confidence
+                  </Badge>
+                </div>
+              </div>
+
+              <div className="bg-cyan-500/10 border border-cyan-500/20 p-4 rounded-lg">
+                <h4 className="font-semibold text-white mb-2">AI Insight</h4>
+                <p className="text-cyan-300">{selectedStrategy.insight}</p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="bg-slate-700/50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-white mb-2">Implementation Plan</h4>
+                  <p className="text-slate-300 text-sm mb-3">{selectedStrategy.recommendation}</p>
+                  <div className="text-xs text-slate-400">
+                    <p><strong>Complexity:</strong> {selectedStrategy.implementation_complexity}</p>
+                    <p><strong>Resources:</strong> {selectedStrategy.required_resources}</p>
+                  </div>
+                </div>
+                
+                <div className="bg-slate-700/50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-white mb-2">Expected Results</h4>
+                  <p className="text-green-400 text-sm font-medium mb-2">{selectedStrategy.potential_impact}</p>
+                  <div className="text-xs text-slate-400">
+                    <p><strong>Timeline:</strong> 3-6 months</p>
+                    <p><strong>Success Metrics:</strong> Revenue impact, customer satisfaction</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex justify-end space-x-3 pt-4 border-t border-slate-600">
+                <Button variant="outline" className="border-slate-600 text-slate-300">
+                  Save for Later
+                </Button>
+                <Button className="bg-cyan-600 hover:bg-cyan-700">
+                  Start Implementation
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
   );
 };
 
