@@ -530,7 +530,7 @@ Target: All customers with health score < 70
       )}
 
       {/* Quick Actions */}
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
         <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
@@ -539,7 +539,7 @@ Target: All customers with health score < 70
                 <p className="text-slate-400 text-sm">Deep dive into specific customer health</p>
               </div>
               <Button 
-                onClick={() => onNavigate('customers')}
+                onClick={() => onNavigate && onNavigate('customers')}
                 className="bg-blue-600 hover:bg-blue-700"
               >
                 <Target className="w-4 h-4 mr-2" />
@@ -557,10 +557,28 @@ Target: All customers with health score < 70
                 <p className="text-slate-400 text-sm">Launch targeted outreach for at-risk customers</p>
               </div>
               <Button 
-                onClick={() => onNavigate('create')}
+                onClick={() => onNavigate && onNavigate('create')}
                 className="bg-purple-600 hover:bg-purple-700"
               >
                 <Zap className="w-4 h-4 mr-2" />
+                Create
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-2">Create Alert</h3>
+                <p className="text-slate-400 text-sm">Set up custom health monitoring alerts</p>
+              </div>
+              <Button 
+                onClick={createAlert}
+                className="bg-orange-600 hover:bg-orange-700"
+              >
+                <Bell className="w-4 h-4 mr-2" />
                 Create
               </Button>
             </div>
@@ -575,7 +593,7 @@ Target: All customers with health score < 70
                 <p className="text-slate-400 text-sm">View detailed health trends and patterns</p>
               </div>
               <Button 
-                onClick={() => onNavigate('analytics')}
+                onClick={() => onNavigate && onNavigate('analytics')}
                 className="bg-green-600 hover:bg-green-700"
               >
                 <BarChart3 className="w-4 h-4 mr-2" />
