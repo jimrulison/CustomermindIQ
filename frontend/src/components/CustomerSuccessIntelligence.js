@@ -421,7 +421,11 @@ Contact: support@customermindiq.com`;
                         {customer.stuck_at_milestone} • {customer.potential_churn_risk.toFixed(1)}% churn risk
                       </div>
                     </div>
-                    <Button size="sm" className="bg-orange-600 hover:bg-orange-700">
+                    <Button 
+                      size="sm" 
+                      className="bg-orange-600 hover:bg-orange-700"
+                      onClick={() => handleContactCustomer(customer.customer_id, customer.customer_name)}
+                    >
                       Intervene
                     </Button>
                   </div>
