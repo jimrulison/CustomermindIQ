@@ -82,7 +82,7 @@ const AdminPortalEnhanced = () => {
       });
       alert('Cache cleared successfully!');
       // Refresh current data
-      await loadAdminData();
+      await loadDashboardData();
     } catch (error) {
       console.error('Clear cache error:', error);
       alert('Cache cleared successfully! (Demo mode)');
