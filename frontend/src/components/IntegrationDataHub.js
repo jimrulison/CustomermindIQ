@@ -791,19 +791,21 @@ ${details.updateFrequency}
                     )}
                     
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className="text-center">
+                      <div className="text-center cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showDataSource('sync', 'records_processed', 'Records Processed', job.records_processed?.toLocaleString() || 'N/A')}>
                         <div className="text-lg font-bold text-blue-400">
                           {job.records_processed?.toLocaleString() || 'N/A'}
                         </div>
                         <div className="text-xs text-slate-400">Records Processed</div>
+                        <div className="text-xs text-blue-300 mt-1 opacity-60">Click for source</div>
                       </div>
-                      <div className="text-center">
+                      <div className="text-center cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showDataSource('sync', 'records_processed', 'Records Remaining/Expected', job.records_remaining?.toLocaleString() || job.expected_records?.toLocaleString() || 'N/A')}>
                         <div className="text-lg font-bold text-green-400">
                           {job.records_remaining?.toLocaleString() || job.expected_records?.toLocaleString() || 'N/A'}
                         </div>
                         <div className="text-xs text-slate-400">
                           {job.status === 'running' ? 'Remaining' : 'Expected'}
                         </div>
+                        <div className="text-xs text-green-300 mt-1 opacity-60">Click for source</div>
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-bold text-purple-400">
