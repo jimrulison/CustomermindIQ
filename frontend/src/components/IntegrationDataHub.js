@@ -412,6 +412,62 @@ ${details.updateFrequency}
       {/* Data Connectors Tab */}
       {activeTab === 'connectors' && (
         <div className="space-y-6">
+          {/* Data Connectors Summary */}
+          <div className="grid gap-6 md:grid-cols-4">
+            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showDataSource('connectors', 'total_integrations', 'Total Integrations', connectorsData?.dashboard?.active_connectors?.length || 0)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <Database className="h-8 w-8 text-blue-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {connectorsData?.dashboard?.active_connectors?.length || 0}
+                  </div>
+                  <div className="text-xs text-blue-200">Total Integrations</div>
+                  <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showDataSource('connectors', 'api_health', 'API Health Score', `${connectorsData?.dashboard?.health_insights?.overall_system_health || 0}%`)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <Zap className="h-8 w-8 text-green-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {connectorsData?.dashboard?.health_insights?.overall_system_health || 0}%
+                  </div>
+                  <div className="text-xs text-green-200">API Health Score</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showDataSource('connectors', 'data_volume', 'Data Volume Processed', `${connectorsData?.dashboard?.active_connectors?.reduce((sum, c) => sum + (c.total_records || 0), 0).toLocaleString() || '0'} records`)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <Activity className="h-8 w-8 text-purple-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {(connectorsData?.dashboard?.active_connectors?.reduce((sum, c) => sum + (c.total_records || 0), 0) / 1000000).toFixed(1) || '0'}M
+                  </div>
+                  <div className="text-xs text-purple-200">Records Processed</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:bg-orange-600/30 transition-all duration-200" onClick={() => showDataSource('connectors', 'error_rate', 'Integration Error Rate', `${(connectorsData?.dashboard?.active_connectors?.filter(c => c.connection_status !== 'healthy').length / (connectorsData?.dashboard?.active_connectors?.length || 1) * 100).toFixed(1) || '0'}%`)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <AlertTriangle className="h-8 w-8 text-orange-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {((connectorsData?.dashboard?.active_connectors?.filter(c => c.connection_status !== 'healthy').length || 0) / (connectorsData?.dashboard?.active_connectors?.length || 1) * 100).toFixed(1) || '0'}%
+                  </div>
+                  <div className="text-xs text-orange-200">Error Rate</div>
+                  <div className="text-xs text-orange-300 mt-1 opacity-75">Click for data source</div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Individual Connector Cards */}
           <div className="grid gap-6 md:grid-cols-2">
             {connectorsData?.dashboard?.active_connectors?.map((connector, index) => (
               <Card key={index} className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
