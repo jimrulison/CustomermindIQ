@@ -27,6 +27,272 @@ const ComplianceGovernanceSuite = () => {
   const [reportingData, setReportingData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Data source drill-down handlers for Compliance & Governance Suite
+  const showDataSource = (section, metricType, metricName, currentValue) => {
+    const sourceDetails = {
+      // OVERVIEW DATA SOURCES
+      'overview_compliance_score': {
+        title: 'Overall Compliance Score - Data Source',
+        description: 'Comprehensive compliance assessment across all regulatory frameworks',
+        sources: [
+          '• Compliance Management System: Multi-framework compliance tracking',
+          '• Regulatory Intelligence Platform: Real-time regulation change monitoring',
+          '• Risk Assessment Engine: Continuous compliance risk evaluation',
+          '• Audit Trail Database: Historical compliance performance tracking'
+        ],
+        methodology: 'Compliance Score = weighted average across all active frameworks: GDPR (25%), SOX (20%), HIPAA (15%), SOC2 (15%), ISO27001 (10%), others (15%). Calculated using automated rule evaluation and manual audit results.',
+        dataPoints: 'Framework compliance percentages, policy violations, audit findings, remediation status, risk scores',
+        updateFrequency: 'Real-time policy evaluation with daily comprehensive scoring',
+        currentValue: currentValue
+      },
+      'overview_active_policies': {
+        title: 'Active Policies - Data Source',
+        description: 'Number of currently enforced compliance policies and procedures',
+        sources: [
+          '• Policy Management System: Policy lifecycle and version control',
+          '• Governance Database: Policy approval and enforcement tracking',
+          '• Workflow Engine: Policy implementation and review processes',
+          '• Document Management: Policy distribution and acknowledgment tracking'
+        ],
+        methodology: 'Active Policies = Total approved and enforced policies across all compliance domains. Includes data protection, security, operational, and regulatory policies with current effective dates.',
+        dataPoints: 'Policy status, approval dates, review cycles, enforcement metrics, acknowledgment rates',
+        updateFrequency: 'Real-time policy status updates with weekly review summaries',
+        currentValue: currentValue
+      },
+      'overview_risk_level': {
+        title: 'Overall Risk Level - Data Source',
+        description: 'Aggregated risk assessment across all compliance domains',
+        sources: [
+          '• Risk Management Platform: Comprehensive risk identification and scoring',
+          '• Threat Intelligence: External risk factor monitoring and analysis',
+          '• Incident Response System: Historical incident impact assessment',
+          '• Compliance Analytics: Predictive risk modeling and trend analysis'
+        ],
+        methodology: 'Risk Level = weighted combination of identified risks: Critical (weight 4), High (weight 3), Medium (weight 2), Low (weight 1). Normalized to risk categories: Critical (>80), High (60-80), Medium (40-60), Low (<40).',
+        dataPoints: 'Risk scores, threat indicators, incident history, vulnerability assessments, mitigation effectiveness',
+        updateFrequency: 'Continuous risk monitoring with hourly risk level updates',
+        currentValue: currentValue
+      },
+      'overview_audit_findings': {
+        title: 'Recent Audit Findings - Data Source',
+        description: 'Number of findings from recent compliance audits and assessments',
+        sources: [
+          '• Audit Management System: Finding tracking and resolution workflow',
+          '• Internal Audit Database: Self-assessment and review findings',
+          '• External Audit Integration: Third-party audit result consolidation',
+          '• Finding Classification Engine: Severity and impact categorization'
+        ],
+        methodology: 'Recent Findings = Total audit findings from last 90 days, categorized by severity. Includes internal audits, external assessments, and continuous monitoring alerts.',
+        dataPoints: 'Finding severity, categories, resolution status, aging analysis, remediation timelines',
+        updateFrequency: 'Real-time finding updates with daily aging reports',
+        currentValue: currentValue
+      },
+      // COMPLIANCE MONITORING DATA SOURCES
+      'compliance_framework_compliance': {
+        title: 'Framework Compliance Rate - Data Source',
+        description: 'Compliance percentage for specific regulatory frameworks',
+        sources: [
+          '• Framework Mapping Engine: Regulation-to-control mapping and assessment',
+          '• Evidence Collection System: Automated compliance evidence gathering',
+          '• Control Testing Platform: Continuous control effectiveness testing',
+          '• Regulatory Update Service: Framework requirement change tracking'
+        ],
+        methodology: 'Framework Compliance = (Compliant controls / Total required controls) × 100. Each framework assessed against specific requirements with evidence validation and testing results.',
+        dataPoints: 'Control test results, evidence quality, requirement mapping, exception tracking, remediation progress',
+        updateFrequency: 'Continuous control monitoring with weekly framework scoring',
+        currentValue: currentValue
+      },
+      'compliance_policy_violations': {
+        title: 'Policy Violations - Data Source',
+        description: 'Number of identified policy violations and compliance breaches',
+        sources: [
+          '• Policy Monitoring System: Real-time policy violation detection',
+          '• Data Loss Prevention (DLP): Policy breach identification and alerting',
+          '• Access Control Systems: Unauthorized access and privilege violations',
+          '• Behavioral Analytics: Anomalous activity pattern detection'
+        ],
+        methodology: 'Policy Violations = Total detected breaches of established policies. Categorized by severity, type, and business impact. Includes automated detection and manual reporting.',
+        dataPoints: 'Violation types, severity levels, affected systems, user behavior, incident timelines',
+        updateFrequency: 'Real-time violation detection with immediate alerting',
+        currentValue: currentValue
+      },
+      'compliance_remediation_rate': {
+        title: 'Remediation Success Rate - Data Source',
+        description: 'Percentage of compliance issues successfully resolved',
+        sources: [
+          '• Remediation Tracking System: Issue resolution workflow and progress',
+          '• Task Management Platform: Remediation task assignment and completion',
+          '• Validation Engine: Remediation effectiveness verification',
+          '• Performance Analytics: Resolution time and success rate analysis'
+        ],
+        methodology: 'Remediation Rate = (Successfully resolved issues / Total identified issues) × 100. Success defined as verified resolution with effectiveness validation.',
+        dataPoints: 'Issue resolution status, validation results, resolution times, success verification, re-occurrence rates',
+        updateFrequency: 'Real-time remediation tracking with daily success rate calculation',
+        currentValue: currentValue
+      },
+      // AUDIT MANAGEMENT DATA SOURCES
+      'audit_active_audits': {
+        title: 'Active Audits - Data Source',
+        description: 'Number of currently ongoing audit engagements and assessments',
+        sources: [
+          '• Audit Project Management: Audit lifecycle and milestone tracking',
+          '• Resource Allocation System: Auditor assignment and capacity planning',
+          '• Scope Management Database: Audit scope definition and change control',
+          '• Timeline Tracking: Audit schedule and progress monitoring'
+        ],
+        methodology: 'Active Audits = Total ongoing audit engagements including internal audits, external assessments, and continuous monitoring programs with active work streams.',
+        dataPoints: 'Audit phases, resource utilization, scope coverage, milestone completion, timeline adherence',
+        updateFrequency: 'Real-time audit status updates with daily progress reporting',
+        currentValue: currentValue
+      },
+      'audit_findings_open': {
+        title: 'Open Audit Findings - Data Source',
+        description: 'Number of audit findings awaiting resolution or remediation',
+        sources: [
+          '• Finding Management System: Finding lifecycle and resolution tracking',
+          '• Action Plan Database: Remediation plan creation and progress monitoring',
+          '• Priority Classification: Finding severity and business impact assessment',
+          '• Aging Analysis Engine: Finding age and escalation trigger monitoring'
+        ],
+        methodology: 'Open Findings = Total unresolved audit findings across all audits. Categorized by age, severity, and assigned responsibility with escalation protocols.',
+        dataPoints: 'Finding age, severity classification, assignment status, remediation progress, escalation triggers',
+        updateFrequency: 'Real-time finding status with daily aging and escalation analysis',
+        currentValue: currentValue
+      },
+      'audit_compliance_score': {
+        title: 'Audit Compliance Score - Data Source',
+        description: 'Overall compliance rating based on completed audit assessments',
+        sources: [
+          '• Audit Results Database: Historical audit outcome consolidation',
+          '• Scoring Algorithm Engine: Multi-audit compliance score calculation',
+          '• Benchmark Comparison: Industry and regulatory benchmark analysis',
+          '• Trend Analysis Platform: Compliance score trending and forecasting'
+        ],
+        methodology: 'Audit Compliance Score = weighted average of completed audit scores with recency weighting. Recent audits weighted higher with decay function over time.',
+        dataPoints: 'Audit scores, completion dates, scope coverage, finding severity, remediation success rates',
+        updateFrequency: 'Updated after each completed audit with monthly trend analysis',
+        currentValue: currentValue
+      },
+      // DATA GOVERNANCE DATA SOURCES  
+      'governance_data_quality': {
+        title: 'Data Quality Score - Data Source',
+        description: 'Assessment of data accuracy, completeness, and consistency',
+        sources: [
+          '• Data Quality Engine: Automated data profiling and validation',
+          '• Data Catalog System: Data lineage and quality metadata management',
+          '• Data Stewardship Platform: Manual data quality assessment and improvement',
+          '• Quality Rule Engine: Business rule validation and exception tracking'
+        ],
+        methodology: 'Data Quality Score = weighted average of completeness (25%), accuracy (25%), consistency (20%), timeliness (15%), validity (15%). Automated and manual quality assessments.',
+        dataPoints: 'Data completeness rates, accuracy measurements, consistency checks, validation results, stewardship activities',
+        updateFrequency: 'Continuous data quality monitoring with daily score updates',
+        currentValue: currentValue
+      },
+      'governance_policy_compliance': {
+        title: 'Data Policy Compliance - Data Source',
+        description: 'Adherence to established data governance policies and standards',
+        sources: [
+          '• Data Policy Engine: Policy rule enforcement and compliance checking',
+          '• Data Access Controls: Permission and usage policy compliance monitoring',
+          '• Privacy Controls: Data protection and privacy policy adherence tracking',
+          '• Retention Management: Data lifecycle and retention policy compliance'
+        ],
+        methodology: 'Policy Compliance = (Compliant data operations / Total data operations) × 100. Includes access, usage, retention, and privacy policy adherence.',
+        dataPoints: 'Policy rule compliance, access violations, retention adherence, privacy controls effectiveness',
+        updateFrequency: 'Real-time policy compliance monitoring with hourly reporting',
+        currentValue: currentValue
+      },
+      'governance_data_lineage': {
+        title: 'Data Lineage Coverage - Data Source',
+        description: 'Percentage of data assets with documented lineage and provenance',
+        sources: [
+          '• Data Lineage Tool: Automated lineage discovery and documentation',
+          '• Metadata Management: Data asset catalog and relationship mapping',
+          '• ETL/Pipeline Monitoring: Data transformation and flow tracking',
+          '• Manual Documentation: Steward-maintained lineage information'
+        ],
+        methodology: 'Lineage Coverage = (Data assets with documented lineage / Total data assets) × 100. Includes automated discovery and manual documentation.',
+        dataPoints: 'Lineage documentation status, data flow mapping, transformation tracking, asset relationships',
+        updateFrequency: 'Daily lineage discovery with weekly coverage analysis',
+        currentValue: currentValue
+      },
+      // REGULATORY REPORTING DATA SOURCES
+      'reporting_reports_generated': {
+        title: 'Reports Generated - Data Source',
+        description: 'Number of regulatory reports produced for compliance requirements',
+        sources: [
+          '• Report Generation Engine: Automated regulatory report creation',
+          '• Reporting Calendar: Scheduled and ad-hoc report tracking',
+          '• Data Aggregation Platform: Report data collection and validation',
+          '• Submission Tracking: Report delivery and acknowledgment monitoring'
+        ],
+        methodology: 'Reports Generated = Total regulatory reports created including scheduled periodic reports, ad-hoc requests, and incident-related reporting.',
+        dataPoints: 'Report types, generation timestamps, data sources, validation status, submission confirmations',
+        updateFrequency: 'Real-time report generation tracking with daily summary reporting',
+        currentValue: currentValue
+      },
+      'reporting_submission_rate': {
+        title: 'On-time Submission Rate - Data Source',
+        description: 'Percentage of regulatory reports submitted within required deadlines',
+        sources: [
+          '• Deadline Management: Regulatory deadline tracking and alert system',
+          '• Submission Monitor: Report delivery confirmation and timing analysis',
+          '• Calendar Integration: Regulatory calendar and deadline synchronization',
+          '• Performance Analytics: Historical submission performance tracking'
+        ],
+        methodology: 'Submission Rate = (Reports submitted on-time / Total required reports) × 100. On-time defined as submission before regulatory deadline.',
+        dataPoints: 'Submission timestamps, deadline dates, delivery confirmations, late submission penalties',
+        updateFrequency: 'Real-time submission tracking with daily performance analysis',
+        currentValue: currentValue
+      },
+      'reporting_accuracy_rate': {
+        title: 'Report Accuracy Rate - Data Source',
+        description: 'Percentage of reports passing accuracy validation and regulatory review',
+        sources: [
+          '• Data Validation Engine: Report data accuracy and completeness checking',
+          '• Quality Assurance Platform: Pre-submission report review and validation',
+          '• Regulatory Feedback System: Post-submission accuracy assessment',
+          '• Historical Analysis: Accuracy trend tracking and improvement monitoring'
+        ],
+        methodology: 'Accuracy Rate = (Reports passing validation / Total reports generated) × 100. Includes pre-submission validation and post-submission feedback.',
+        dataPoints: 'Validation results, accuracy scores, feedback from regulators, error classifications, improvement trends',
+        updateFrequency: 'Post-submission accuracy assessment with weekly trend analysis',
+        currentValue: currentValue
+      }
+    };
+
+    const key = `${section}_${metricType}`;
+    const details = sourceDetails[key] || {
+      title: `${metricName} - Data Source`,
+      description: 'Data source information for this compliance metric',
+      sources: ['• Compliance monitoring systems', '• Regulatory tracking platforms', '• Audit management tools', '• Governance databases'],
+      methodology: 'Calculated using advanced compliance analytics and regulatory requirements',
+      dataPoints: 'Compliance status, policy adherence, audit results, regulatory submissions',
+      updateFrequency: 'Updated based on compliance monitoring schedules',
+      currentValue: currentValue
+    };
+
+    alert(`📊 ${details.title}
+
+Current Value: ${details.currentValue}
+
+${details.description}
+
+🔍 DATA SOURCES:
+${details.sources.join('\n')}
+
+⚙️ METHODOLOGY:
+${details.methodology}
+
+📈 KEY DATA POINTS:
+${details.dataPoints}
+
+🕐 UPDATE FREQUENCY:
+${details.updateFrequency}
+
+💡 This data helps ensure regulatory compliance and effective governance oversight.`);
+  };
+
   useEffect(() => {
     loadComplianceData();
   }, []);
