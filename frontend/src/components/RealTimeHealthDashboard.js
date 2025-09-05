@@ -210,9 +210,10 @@ Expected Results:
 • 60%+ customer engagement increase
 • Recovery of $125K+ at-risk revenue
 
-Campaign Status: Active & Monitoring`);
-    }
   };
+
+  // Create alert function
+  const createAlert = async () => {
     try {
       const alertData = {
         customer_id: 'customer_001',
