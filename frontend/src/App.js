@@ -1309,7 +1309,7 @@ ${details.updateFrequency}
 
             {/* Marketing Dashboard Summary */}
             <div className="grid gap-6 md:grid-cols-5">
-              <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30">
+              <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showMarketingDataSource('overview', 'multi_channel', 'Multi-Channel Campaigns', multiChannelData?.dashboard?.campaigns_count || 15)}>
                 <CardContent className="p-4">
                   <div className="text-center">
                     <Megaphone className="h-8 w-8 text-purple-400 mx-auto mb-2" />
@@ -1317,11 +1317,12 @@ ${details.updateFrequency}
                       {multiChannelData?.dashboard?.campaigns_count || 15}
                     </div>
                     <div className="text-xs text-purple-200">Multi-Channel</div>
+                    <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30">
+              <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showMarketingDataSource('overview', 'ab_tests', 'Active A/B Tests', abTestingData?.dashboard?.active_tests || 8)}>
                 <CardContent className="p-4">
                   <div className="text-center">
                     <TestTube className="h-8 w-8 text-blue-400 mx-auto mb-2" />
@@ -1329,11 +1330,12 @@ ${details.updateFrequency}
                       {abTestingData?.dashboard?.active_tests || 8}
                     </div>
                     <div className="text-xs text-blue-200">A/B Tests</div>
+                    <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30">
+              <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showMarketingDataSource('overview', 'dynamic_content', 'Dynamic Content Templates', dynamicContentData?.dashboard?.templates_count || 24)}>
                 <CardContent className="p-4">
                   <div className="text-center">
                     <Palette className="h-8 w-8 text-green-400 mx-auto mb-2" />
@@ -1341,11 +1343,12 @@ ${details.updateFrequency}
                       {dynamicContentData?.dashboard?.templates_count || 24}
                     </div>
                     <div className="text-xs text-green-200">Dynamic Content</div>
+                    <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30">
+              <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:bg-orange-600/30 transition-all duration-200" onClick={() => showMarketingDataSource('overview', 'lead_scoring', 'Qualified Leads (MQL)', leadScoringData?.dashboard?.qualified_leads || 147)}>
                 <CardContent className="p-4">
                   <div className="text-center">
                     <Target className="h-8 w-8 text-orange-400 mx-auto mb-2" />
@@ -1353,11 +1356,12 @@ ${details.updateFrequency}
                       {leadScoringData?.dashboard?.qualified_leads || 147}
                     </div>
                     <div className="text-xs text-orange-200">Lead Scoring</div>
+                    <div className="text-xs text-orange-300 mt-1 opacity-75">Click for data source</div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-pink-600/20 to-pink-800/20 border-pink-500/30">
+              <Card className="bg-gradient-to-br from-pink-600/20 to-pink-800/20 border-pink-500/30 cursor-pointer hover:bg-pink-600/30 transition-all duration-200" onClick={() => showMarketingDataSource('overview', 'referral_program', 'Active Referrals', referralData?.dashboard?.active_referrals || 89)}>
                 <CardContent className="p-4">
                   <div className="text-center">
                     <Gift className="h-8 w-8 text-pink-400 mx-auto mb-2" />
@@ -1365,6 +1369,7 @@ ${details.updateFrequency}
                       {referralData?.dashboard?.active_referrals || 89}
                     </div>
                     <div className="text-xs text-pink-200">Referral Program</div>
+                    <div className="text-xs text-pink-300 mt-1 opacity-75">Click for data source</div>
                   </div>
                 </CardContent>
               </Card>
