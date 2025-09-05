@@ -843,7 +843,24 @@ Powered by AI Intelligence Systems`;
                         </div>
                         
                         <div className="mt-4 pt-4 border-t border-slate-700">
-                          <Button variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-700">
+                          <Button 
+                            variant="outline" 
+                            className="border-slate-600 text-slate-300 hover:bg-slate-700"
+                            onClick={() => {
+                              alert(`📖 Educational Article: ${content.title}
+
+📚 This comprehensive article covers:
+${content.keyPoints?.map((point, idx) => `• ${point}`).join('\n')}
+
+📖 Reading Time: ${content.readTime}
+📊 Difficulty: ${content.difficulty}
+🎯 Category: ${content.category}
+
+💡 This article would provide in-depth knowledge about ${content.title.toLowerCase()}. Full articles are available in our knowledge base.
+
+🔓 Access full articles with any subscription plan!`);
+                            }}
+                          >
                             <BookOpen className="w-4 h-4 mr-2" />
                             Read Article
                           </Button>
