@@ -57,7 +57,7 @@ class CrossSellIntelligenceService:
         self.api_key = os.getenv("EMERGENT_LLM_KEY")
         mongo_url = os.getenv("MONGO_URL", "mongodb://localhost:27017")
         self.client = AsyncIOMotorClient(mongo_url)
-        self.db = self.client.customer_mind_iq
+        self.db = self.client[os.environ.get('DB_NAME', 'customer_mind_iq')]
         
     async def identify_cross_sell_opportunities(self, customers_data: List[Dict]) -> List[CrossSellOpportunity]:
         """Identify cross-sell and upsell opportunities for all customers"""
