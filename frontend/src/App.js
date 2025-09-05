@@ -1491,24 +1491,24 @@ ${details.updateFrequency}
                     Lead Scoring Enhancement
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    AI-driven lead qualification
+                    AI-driven lead qualification - Click metrics for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('leadscoring', 'qualified_leads', 'Marketing Qualified Leads', leadScoringData?.dashboard?.qualified_leads || 147)}>
                       <span className="text-slate-300">Qualified Leads</span>
                       <span className="text-orange-400 font-semibold">
                         {leadScoringData?.dashboard?.qualified_leads || 147}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('leadscoring', 'score_accuracy', 'Average Lead Score', `${leadScoringData?.dashboard?.average_score || 78}/100`)}>
                       <span className="text-slate-300">Avg Score</span>
                       <span className="text-blue-400 font-semibold">
                         {leadScoringData?.dashboard?.average_score || 78}/100
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('leadscoring', 'score_accuracy', 'Lead Conversion Rate', leadScoringData?.dashboard?.conversion_rate || '24.8%')}>
                       <span className="text-slate-300">Conversion Rate</span>
                       <span className="text-green-400 font-semibold">
                         {leadScoringData?.dashboard?.conversion_rate || '24.8%'}
