@@ -751,13 +751,15 @@ ${details.updateFrequency}
             <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
               <CardHeader>
                 <CardTitle className="text-white">ROI Overview</CardTitle>
+                <CardDescription className="text-slate-400">Click for data source details</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-center mb-4">
+                <div className="text-center mb-4 cursor-pointer hover:bg-slate-700/30 p-3 rounded transition-all duration-200" onClick={() => showDataSource('analytics', 'total_roi', 'Total ROI', `${analyticsData?.dashboard?.roi_analysis?.total_roi || 0}%`)}>
                   <div className="text-4xl font-bold text-green-400">
                     {analyticsData?.dashboard?.roi_analysis?.total_roi || 0}%
                   </div>
                   <div className="text-slate-400">Total ROI</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-60">Click for source</div>
                 </div>
                 <div className="space-y-2">
                   {analyticsData?.dashboard?.roi_analysis?.roi_by_category?.map((category, index) => (
