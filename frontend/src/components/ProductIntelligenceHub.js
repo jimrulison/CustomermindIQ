@@ -692,19 +692,20 @@ ${details.updateFrequency}
         <div className="space-y-6">
           {/* PMF Overview */}
           <div className="grid gap-6 md:grid-cols-4">
-            <Card className="bg-gradient-to-br from-gold-600/20 to-gold-800/20 border-gold-500/30">
+            <Card className="bg-gradient-to-br from-yellow-600/20 to-yellow-800/20 border-yellow-500/30 cursor-pointer hover:bg-yellow-600/30 transition-all duration-200" onClick={() => showDataSource('pmf', 'overall_score', 'Overall PMF Score', pmfData?.dashboard?.pmf_core_metrics?.overall_pmf_score || 78.4)}>
               <CardContent className="p-4">
                 <div className="text-center">
-                  <Star className="h-8 w-8 text-gold-400 mx-auto mb-2" />
+                  <Star className="h-8 w-8 text-yellow-400 mx-auto mb-2" />
                   <div className="text-2xl font-bold text-white">
                     {pmfData?.dashboard?.pmf_core_metrics?.overall_pmf_score || 78.4}
                   </div>
-                  <div className="text-xs text-gold-200">PMF Score</div>
+                  <div className="text-xs text-yellow-200">PMF Score</div>
+                  <div className="text-xs text-yellow-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30">
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showDataSource('pmf', 'nps_score', 'Net Promoter Score', pmfData?.dashboard?.pmf_core_metrics?.nps_score || 67)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <TrendingUp className="h-8 w-8 text-green-400 mx-auto mb-2" />
@@ -712,11 +713,12 @@ ${details.updateFrequency}
                     {pmfData?.dashboard?.pmf_core_metrics?.nps_score || 67}
                   </div>
                   <div className="text-xs text-green-200">NPS Score</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30">
+            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showDataSource('pmf', 'customer_satisfaction', 'Customer Satisfaction', `${(pmfData?.dashboard?.pmf_core_metrics?.product_stickiness || 0.87) * 100}%`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Activity className="h-8 w-8 text-blue-400 mx-auto mb-2" />
@@ -724,11 +726,12 @@ ${details.updateFrequency}
                     {pmfData?.dashboard?.pmf_core_metrics?.product_stickiness || 0.87}
                   </div>
                   <div className="text-xs text-blue-200">Product Stickiness</div>
+                  <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30">
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showDataSource('pmf', 'market_penetration', 'Market Penetration', `${pmfData?.dashboard?.pmf_core_metrics?.time_to_value_avg || 8.7}d`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Zap className="h-8 w-8 text-purple-400 mx-auto mb-2" />
@@ -736,6 +739,7 @@ ${details.updateFrequency}
                     {pmfData?.dashboard?.pmf_core_metrics?.time_to_value_avg || 8.7}d
                   </div>
                   <div className="text-xs text-purple-200">Time to Value</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
