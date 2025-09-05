@@ -2651,11 +2651,20 @@ const AdminPortalEnhanced = () => {
                 </div>
                 
                 <div className="flex gap-3 mt-4">
-                  <button className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
-                    Process All Overages
+                  <button 
+                    className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
+                    onClick={handleProcessAllOverages}
+                    disabled={loading}
+                  >
+                    {loading ? 'Processing...' : 'Process All Overages'}
                   </button>
-                  <button className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
-                    Export Overage Report
+                  <button 
+                    className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
+                    onClick={handleExportOverageReport}
+                    disabled={loading}
+                  >
+                    {loading ? 'Exporting...' : 'Export Overage Report'}
+                  </button>
                   </button>
                 </div>
               </div>
