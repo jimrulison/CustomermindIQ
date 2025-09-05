@@ -457,7 +457,11 @@ Contact: growth@customermindiq.com`;
                         {formatCurrency(account.estimated_deal_value)} potential
                       </div>
                     </div>
-                    <Button size="sm" className="bg-purple-600 hover:bg-purple-700">
+                    <Button 
+                      size="sm" 
+                      className="bg-purple-600 hover:bg-purple-700"
+                      onClick={() => handleEngageAccount(account)}
+                    >
                       Engage
                     </Button>
                   </div>
