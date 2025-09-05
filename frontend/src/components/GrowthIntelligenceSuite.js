@@ -510,7 +510,7 @@ Contact: growth@customermindiq.com`;
         <div className="space-y-6">
           {/* ABM Summary Cards */}
           <div className="grid gap-6 md:grid-cols-4">
-            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30">
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showGrowthDataSource('abm', 'target_accounts', 'Target Accounts', `${abmData?.dashboard?.summary_metrics?.total_target_accounts || 837} accounts`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Target className="h-8 w-8 text-purple-400 mx-auto mb-2" />
@@ -518,11 +518,12 @@ Contact: growth@customermindiq.com`;
                     {abmData?.dashboard?.summary_metrics?.total_target_accounts || 837}
                   </div>
                   <div className="text-xs text-purple-200">Target Accounts</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30">
+            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showGrowthDataSource('abm', 'engagement_rate', 'ABM Engagement Rate', `${abmData?.dashboard?.summary_metrics?.engaged_accounts || 309} engaged accounts`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Users className="h-8 w-8 text-blue-400 mx-auto mb-2" />
@@ -530,11 +531,12 @@ Contact: growth@customermindiq.com`;
                     {abmData?.dashboard?.summary_metrics?.engaged_accounts || 309}
                   </div>
                   <div className="text-xs text-blue-200">Engaged Accounts</div>
+                  <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30">
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showGrowthDataSource('abm', 'engagement_rate', 'Qualified Accounts', `${abmData?.dashboard?.summary_metrics?.qualified_accounts || 119} qualified accounts`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <CheckCircle className="h-8 w-8 text-green-400 mx-auto mb-2" />
@@ -542,11 +544,12 @@ Contact: growth@customermindiq.com`;
                     {abmData?.dashboard?.summary_metrics?.qualified_accounts || 119}
                   </div>
                   <div className="text-xs text-green-200">Qualified Accounts</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30">
+            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:bg-orange-600/30 transition-all duration-200" onClick={() => showGrowthDataSource('abm', 'pipeline_value', 'ABM Pipeline Value', `${formatCurrency(abmData?.dashboard?.summary_metrics?.pipeline_value || 2850000)} pipeline value`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <BarChart3 className="h-8 w-8 text-orange-400 mx-auto mb-2" />
@@ -554,6 +557,7 @@ Contact: growth@customermindiq.com`;
                     {formatCurrency(abmData?.dashboard?.summary_metrics?.pipeline_value)}
                   </div>
                   <div className="text-xs text-orange-200">Pipeline Value</div>
+                  <div className="text-xs text-orange-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
