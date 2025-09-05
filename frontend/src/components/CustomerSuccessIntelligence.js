@@ -246,8 +246,36 @@ ${details.updateFrequency}
     return colors[segment] || 'bg-slate-500/20 text-slate-400 border-slate-500/30';
   };
 
-  // Contact customer functionality
-  const handleContactCustomer = (customerId, customerName) => {
+  // View customer details functionality
+  const handleViewCustomerDetails = (customerId, customerName) => {
+    alert(`🔍 Customer Details: ${customerName}
+
+Customer ID: ${customerId}
+
+📊 COMPREHENSIVE CUSTOMER PROFILE:
+• Health Score Analysis: Real-time scoring with trend analysis
+• Product Usage Analytics: Feature adoption and engagement metrics
+• Support Interaction History: Complete ticket and communication log
+• Revenue Analysis: MRR, expansion opportunities, and churn risk
+• Success Milestone Progress: Achievement tracking and next steps
+• CSM Interaction Log: Complete relationship and intervention history
+
+📈 DATA SOURCES:
+• Customer Health Engine: Multi-dimensional health scoring
+• Product Analytics Platform: Usage and adoption tracking
+• Support System Integration: Interaction and satisfaction data
+• Revenue Intelligence: Financial health and expansion signals
+• Success Milestone Tracker: Goal achievement and progress
+• CSM CRM: Relationship management and intervention tracking
+
+🎯 ACTIONABLE INSIGHTS:
+• Risk Assessment: AI-powered churn prediction and intervention recommendations
+• Expansion Opportunities: Upsell and cross-sell readiness indicators
+• Health Improvement: Specific recommendations for score optimization
+• Success Path: Personalized milestone recommendations and timeline
+
+💡 This comprehensive view combines all customer success data points to provide a 360-degree understanding of customer health, engagement, and growth potential.`);
+  };
     alert(`📞 Contacting Customer: ${customerName || customerId}
 
 ✅ CONTACT INITIATED:
