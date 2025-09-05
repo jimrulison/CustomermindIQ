@@ -19,13 +19,13 @@ All admin functionality is broken in production due to Kubernetes ingress NOT ro
 ### ❌ **EXTERNAL ROUTING IS BROKEN**
 ```bash
 # All these fail externally:
-❌ GET https://mindiq-frontend.preview.emergentagent.com/api/admin/banners 
+❌ GET https://mind-intelligence.preview.emergentagent.com/api/admin/banners 
    → {"detail":"Could not validate credentials"}
-❌ GET https://mindiq-frontend.preview.emergentagent.com/api/admin/discounts
+❌ GET https://mind-intelligence.preview.emergentagent.com/api/admin/discounts
    → {"detail":"Could not validate credentials"}  
-❌ GET https://mindiq-frontend.preview.emergentagent.com/api/auth/login
+❌ GET https://mind-intelligence.preview.emergentagent.com/api/auth/login
    → 404 page not found
-❌ GET https://mindiq-frontend.preview.emergentagent.com/api/health
+❌ GET https://mind-intelligence.preview.emergentagent.com/api/health
    → 404 page not found
 ```
 
@@ -37,12 +37,12 @@ All admin functionality is broken in production due to Kubernetes ingress NOT ro
 ```
 
 ## **CURRENT KUBERNETES ROUTING**
-- ✅ Frontend routes: `https://mindiq-frontend.preview.emergentagent.com/` → port 3000 ✓
-- ❌ API routes: `https://mindiq-frontend.preview.emergentagent.com/api/*` → NOT reaching port 8001 ✗
+- ✅ Frontend routes: `https://mind-intelligence.preview.emergentagent.com/` → port 3000 ✓
+- ❌ API routes: `https://mind-intelligence.preview.emergentagent.com/api/*` → NOT reaching port 8001 ✗
 
 ## **EXPECTED KUBERNETES ROUTING**
-- ✅ Frontend routes: `https://mindiq-frontend.preview.emergentagent.com/` → port 3000
-- ✅ API routes: `https://mindiq-frontend.preview.emergentagent.com/api/*` → port 8001
+- ✅ Frontend routes: `https://mind-intelligence.preview.emergentagent.com/` → port 3000
+- ✅ API routes: `https://mind-intelligence.preview.emergentagent.com/api/*` → port 8001
 
 ## **IMPACT**
 All admin features broken:
@@ -62,7 +62,7 @@ All admin features broken:
 
 ## **REQUIRED FIX**
 Kubernetes ingress must route:
-`https://mindiq-frontend.preview.emergentagent.com/api/*` → `backend:8001`
+`https://mind-intelligence.preview.emergentagent.com/api/*` → `backend:8001`
 
 ## **URGENCY: CRITICAL**
 The application code is 100% functional - this is purely an infrastructure routing issue.

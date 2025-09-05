@@ -24,7 +24,7 @@ sys.path.append('/app/backend')
 class GrowthEngineFixTester:
     def __init__(self):
         # Use the external URL from frontend/.env
-        self.base_url = "https://mindiq-frontend.preview.emergentagent.com"
+        self.base_url = "https://mind-intelligence.preview.emergentagent.com"
         try:
             with open('/app/frontend/.env', 'r') as f:
                 for line in f:
