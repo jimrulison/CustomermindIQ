@@ -773,32 +773,37 @@ ${details.updateFrequency}
             <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
               <CardHeader>
                 <CardTitle className="text-white">Performance Metrics</CardTitle>
+                <CardDescription className="text-slate-400">Click metrics for data source details</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center">
+                  <div className="text-center cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showDataSource('analytics', 'system_health', 'System Health Score', `${analyticsData?.dashboard?.performance_overview?.overall_health_score || 0}%`)}>
                     <div className="text-xl font-bold text-blue-400">
                       {analyticsData?.dashboard?.performance_overview?.overall_health_score || 0}%
                     </div>
                     <div className="text-xs text-slate-400">System Health</div>
+                    <div className="text-xs text-blue-300 mt-1 opacity-60">Click for source</div>
                   </div>
-                  <div className="text-center">
+                  <div className="text-center cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showDataSource('analytics', 'uptime_percentage', 'System Uptime', `${analyticsData?.dashboard?.performance_overview?.uptime_percentage || 0}%`)}>
                     <div className="text-xl font-bold text-green-400">
                       {analyticsData?.dashboard?.performance_overview?.uptime_percentage || 0}%
                     </div>
                     <div className="text-xs text-slate-400">Uptime</div>
+                    <div className="text-xs text-green-300 mt-1 opacity-60">Click for source</div>
                   </div>
-                  <div className="text-center">
+                  <div className="text-center cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showDataSource('analytics', 'avg_response_time', 'Average Response Time', `${analyticsData?.dashboard?.performance_overview?.avg_response_time || 0}s`)}>
                     <div className="text-xl font-bold text-purple-400">
                       {analyticsData?.dashboard?.performance_overview?.avg_response_time || 0}s
                     </div>
                     <div className="text-xs text-slate-400">Avg Response</div>
+                    <div className="text-xs text-purple-300 mt-1 opacity-60">Click for source</div>
                   </div>
-                  <div className="text-center">
+                  <div className="text-center cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showDataSource('analytics', 'error_rate', 'Integration Error Rate', `${analyticsData?.dashboard?.performance_overview?.error_rate || 0}%`)}>
                     <div className="text-xl font-bold text-orange-400">
                       {analyticsData?.dashboard?.performance_overview?.error_rate || 0}%
                     </div>
                     <div className="text-xs text-slate-400">Error Rate</div>
+                    <div className="text-xs text-orange-300 mt-1 opacity-60">Click for source</div>
                   </div>
                 </div>
               </CardContent>
