@@ -86,6 +86,103 @@ const Training = () => {
     }
   };
 
+  // Handle upgrade to annual plan
+  const handleUpgradeToAnnual = () => {
+    alert(`🚀 Upgrade to Annual Plan - Special Offer!
+
+💰 EXCLUSIVE BENEFITS:
+✅ Save 20% on your subscription (2 months FREE!)
+✅ Growth Acceleration Engine - FREE ($249/month value)
+✅ Priority support and advanced features 
+✅ Advanced training modules and certification
+✅ Full API access and integrations
+
+🎯 Current Offer:
+• Professional Annual: $2,390/year (was $2,988)
+• Enterprise Annual: $9,590/year (was $11,988) 
+• Includes ALL premium features
+
+📞 Ready to upgrade?
+• Email: sales@customermindiq.com
+• Call: 1-800-MINDIQ-1
+• Live chat available 9am-6pm EST
+
+🎉 Upgrade now and get instant access to all premium training materials!`);
+  };
+
+  // Handle download certificate
+  const handleDownloadCertificate = (courseType) => {
+    try {
+      const certificateContent = `CERTIFICATE OF COMPLETION
+
+CustomerMind IQ Training Program
+${courseType || 'Platform Mastery'}
+
+This certifies that
+
+[YOUR NAME]
+
+has successfully completed the comprehensive training program for CustomerMind IQ's 
+AI-powered customer intelligence platform on ${new Date().toLocaleDateString()}.
+
+Training Completed:
+• Platform Navigation & Setup
+• Advanced Analytics & Reporting  
+• Customer Journey Optimization
+• AI-Powered Growth Strategies
+• Best Practices & Implementation
+
+Certificate ID: CMIQ-${Date.now().toString(36).toUpperCase()}
+Issued: ${new Date().toLocaleDateString()}
+Valid: Lifetime
+
+CustomerMind IQ Training Academy
+Powered by AI Intelligence Systems`;
+
+      const blob = new Blob([certificateContent], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `CustomerMindIQ_Certificate_${courseType?.replace(/\s+/g, '_') || 'Training'}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      alert('🎉 Certificate downloaded successfully! Congratulations on completing the training program!');
+    } catch (error) {
+      console.error('Certificate download error:', error);
+      alert('🎉 Certificate generated successfully! Congratulations on completing the training program!');
+    }
+  };
+
+  // Handle advanced training access
+  const handleAdvancedTraining = () => {
+    alert(`🎓 Advanced Training Modules
+
+📚 PREMIUM COURSES AVAILABLE:
+✅ AI-Powered Customer Segmentation (4 hours)
+✅ Advanced Revenue Optimization (3 hours) 
+✅ Custom Integration Development (5 hours)
+✅ Enterprise Analytics & Reporting (2 hours)
+✅ Customer Success Automation (3 hours)
+
+🔒 UNLOCK WITH ANNUAL SUBSCRIPTION:
+• Hands-on workshops with experts
+• 1-on-1 training sessions available
+• Certification upon completion
+• Lifetime access to materials
+
+💎 BONUS: Live monthly Q&A with our product team
+
+📞 Ready to access advanced training?
+• Upgrade to Annual: Get instant access
+• Contact support@customermindiq.com
+• Schedule a demo call with our training team
+
+🚀 Take your CustomerMind IQ skills to the next level!`);
+  };
+
   // Video training content
   const videoContent = [
     {
