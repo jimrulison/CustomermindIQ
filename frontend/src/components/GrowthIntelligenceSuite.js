@@ -593,7 +593,11 @@ Contact: growth@customermindiq.com`;
                         {prospect.contact_readiness} to contact
                       </div>
                     </div>
-                    <Button size="sm" className="bg-orange-600 hover:bg-orange-700">
+                    <Button 
+                      size="sm" 
+                      className="bg-orange-600 hover:bg-orange-700"
+                      onClick={() => handleContactProspect(prospect)}
+                    >
                       Contact
                     </Button>
                   </div>
