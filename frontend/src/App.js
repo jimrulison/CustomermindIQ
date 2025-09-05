@@ -1386,24 +1386,24 @@ ${details.updateFrequency}
                     Multi-Channel Orchestration
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Cross-channel campaign management
+                    Cross-channel campaign management - Click metrics for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('multichannel', 'campaigns_count', 'Active Campaigns', multiChannelData?.dashboard?.campaigns_count || 15)}>
                       <span className="text-slate-300">Active Campaigns</span>
                       <span className="text-purple-400 font-semibold">
                         {multiChannelData?.dashboard?.campaigns_count || 15}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('multichannel', 'campaigns_count', 'Marketing Channels', multiChannelData?.dashboard?.channels_count || 5)}>
                       <span className="text-slate-300">Channels</span>
                       <span className="text-green-400 font-semibold">
                         {multiChannelData?.dashboard?.channels_count || 5}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('multichannel', 'engagement_rate', 'Average Engagement Rate', multiChannelData?.dashboard?.avg_engagement || '24.5%')}>
                       <span className="text-slate-300">Avg Engagement</span>
                       <span className="text-blue-400 font-semibold">
                         {multiChannelData?.dashboard?.avg_engagement || '24.5%'}
