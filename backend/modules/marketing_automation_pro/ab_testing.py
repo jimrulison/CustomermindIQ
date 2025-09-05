@@ -135,7 +135,7 @@ class ABTestingService:
         self.api_key = os.getenv("EMERGENT_LLM_KEY")
         mongo_url = os.getenv("MONGO_URL", "mongodb://localhost:27017")
         self.client = AsyncIOMotorClient(mongo_url)
-        self.db = self.client.customer_mind_iq
+        self.db = self.client[os.environ.get('DB_NAME', 'customer_mind_iq')]
 
     async def create_ai_powered_ab_test(self, test_data: Dict[str, Any]) -> ABTest:
         """Create A/B test with AI-generated variants and optimization"""
