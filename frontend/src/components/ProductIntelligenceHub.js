@@ -440,7 +440,7 @@ ${details.updateFrequency}
         <div className="space-y-6">
           {/* Feature Usage Summary */}
           <div className="grid gap-6 md:grid-cols-4">
-            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30">
+            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showDataSource('features', 'total_features', 'Total Features', featureData?.dashboard?.summary_metrics?.total_features || 12)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <BarChart3 className="h-8 w-8 text-blue-400 mx-auto mb-2" />
@@ -448,11 +448,12 @@ ${details.updateFrequency}
                     {featureData?.dashboard?.summary_metrics?.total_features || 12}
                   </div>
                   <div className="text-xs text-blue-200">Total Features</div>
+                  <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30">
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showDataSource('features', 'avg_adoption_rate', 'Average Adoption Rate', `${featureData?.dashboard?.summary_metrics?.avg_feature_adoption_rate || 63.2}%`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <TrendingUp className="h-8 w-8 text-green-400 mx-auto mb-2" />
@@ -460,11 +461,12 @@ ${details.updateFrequency}
                     {featureData?.dashboard?.summary_metrics?.avg_feature_adoption_rate || 63.2}%
                   </div>
                   <div className="text-xs text-green-200">Avg Adoption Rate</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30">
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showDataSource('features', 'power_users', 'Power Users Percentage', `${featureData?.dashboard?.summary_metrics?.power_users_percentage || 35.8}%`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Users className="h-8 w-8 text-purple-400 mx-auto mb-2" />
@@ -472,11 +474,12 @@ ${details.updateFrequency}
                     {featureData?.dashboard?.summary_metrics?.power_users_percentage || 35.8}%
                   </div>
                   <div className="text-xs text-purple-200">Power Users</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30">
+            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:bg-orange-600/30 transition-all duration-200" onClick={() => showDataSource('features', 'stickiness_score', 'Feature Stickiness Score', featureData?.dashboard?.summary_metrics?.feature_stickiness_score || 68.9)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Activity className="h-8 w-8 text-orange-400 mx-auto mb-2" />
@@ -484,6 +487,7 @@ ${details.updateFrequency}
                     {featureData?.dashboard?.summary_metrics?.feature_stickiness_score || 68.9}
                   </div>
                   <div className="text-xs text-orange-200">Stickiness Score</div>
+                  <div className="text-xs text-orange-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
