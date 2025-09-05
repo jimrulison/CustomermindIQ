@@ -821,6 +821,7 @@ ${details.updateFrequency}
                           {job.sync_frequency}
                         </div>
                         <div className="text-xs text-slate-400">Frequency</div>
+                        <div className="text-xs text-orange-300 mt-1 opacity-60">Click for source</div>
                       </div>
                     </div>
                     
