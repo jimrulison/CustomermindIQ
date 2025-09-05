@@ -2209,17 +2209,29 @@ const AdminPortalEnhanced = () => {
                 <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
                   <h3 className="text-lg font-semibold text-white mb-4">System Maintenance</h3>
                   <div className="space-y-4">
-                    <button className="w-full flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    <button 
+                      className="w-full flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                      onClick={handleBackupDatabase}
+                      disabled={loading}
+                    >
                       <Download className="w-4 h-4 mr-2" />
-                      Backup Database
+                      {loading ? 'Processing...' : 'Backup Database'}
                     </button>
-                    <button className="w-full flex items-center justify-center px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700">
+                    <button 
+                      className="w-full flex items-center justify-center px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700"
+                      onClick={handleClearCache}
+                      disabled={loading}
+                    >
                       <RefreshCw className="w-4 h-4 mr-2" />
-                      Clear Cache
+                      {loading ? 'Clearing...' : 'Clear Cache'}
                     </button>
-                    <button className="w-full flex items-center justify-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                    <button 
+                      className="w-full flex items-center justify-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                      onClick={handleHealthCheck}
+                      disabled={loading}
+                    >
                       <CheckCircle className="w-4 h-4 mr-2" />
-                      Run Health Check
+                      {loading ? 'Checking...' : 'Run Health Check'}
                     </button>
                   </div>
                 </div>
