@@ -419,7 +419,8 @@ Contact: support@customermindiq.com`;
     }
   };
 
-  if (loading) {
+  // Data loading and component logic
+  useEffect(() => {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
