@@ -87,9 +87,262 @@ function AppContent() {
   const [marketingDashboard, setMarketingDashboard] = useState(null);
   const [multiChannelData, setMultiChannelData] = useState(null);
   const [abTestingData, setAbTestingData] = useState(null);
-  const [dynamicContentData, setDynamicContentData] = useState(null);
+  const [dynamicContentData, setDynamicContentData] = useState(null);  
   const [leadScoringData, setLeadScoringData] = useState(null);
   const [referralData, setReferralData] = useState(null);
+
+  // Marketing Automation Pro - Data source drill-down handlers
+  const showMarketingDataSource = (section, metricType, metricName, currentValue) => {
+    const sourceDetails = {
+      // OVERVIEW SUMMARY DATA SOURCES
+      'overview_multi_channel': {
+        title: 'Multi-Channel Campaigns - Data Source',
+        description: 'Number of active cross-channel marketing campaigns running simultaneously',
+        sources: [
+          '• Campaign Management Platform: Multi-channel campaign orchestration and tracking',
+          '• Marketing Automation Engine: Cross-platform campaign execution and monitoring',
+          '• Channel Integration APIs: Email, SMS, social media, and web push integration',
+          '• Campaign Analytics Database: Performance tracking across all marketing channels'
+        ],
+        methodology: 'Multi-Channel Campaigns = Total active campaigns spanning 2+ marketing channels (email, SMS, social, web, mobile). Includes scheduled, running, and optimization phases.',
+        dataPoints: 'Campaign status, channel coverage, audience reach, engagement rates, conversion tracking',
+        updateFrequency: 'Real-time campaign status updates with hourly performance summaries',
+        currentValue: currentValue
+      },
+      'overview_ab_tests': {
+        title: 'Active A/B Tests - Data Source',
+        description: 'Number of currently running multivariate and A/B testing experiments',
+        sources: [
+          '• A/B Testing Platform: Experiment design, execution, and statistical analysis',
+          '• Conversion Tracking System: Test variant performance and outcome measurement',
+          '• Statistical Engine: Significance testing and confidence interval calculation',
+          '• Experiment Database: Historical test results and learning repository'
+        ],
+        methodology: 'Active A/B Tests = Total running experiments with statistical validity requirements. Includes email subject lines, landing pages, ad creatives, and user experience tests.',
+        dataPoints: 'Test variants, sample sizes, conversion rates, statistical significance, confidence levels',
+        updateFrequency: 'Real-time test performance tracking with daily statistical analysis',
+        currentValue: currentValue
+      },
+      'overview_dynamic_content': {
+        title: 'Dynamic Content Templates - Data Source',
+        description: 'Number of personalized content templates available for dynamic marketing',
+        sources: [
+          '• Content Management System: Template creation, versioning, and deployment',
+          '• Personalization Engine: Dynamic content rule engine and audience targeting',
+          '• Asset Library: Creative assets, copy variations, and multimedia resources',
+          '• Performance Analytics: Template effectiveness and engagement measurement'
+        ],
+        methodology: 'Dynamic Content Templates = Total personalized templates across all channels with active targeting rules. Includes email templates, web content, ad creatives, and push notifications.',
+        dataPoints: 'Template usage, personalization rules, audience segments, engagement metrics, conversion attribution',
+        updateFrequency: 'Real-time template performance with daily optimization recommendations',
+        currentValue: currentValue
+      },
+      'overview_lead_scoring': {
+        title: 'Qualified Leads - Data Source',
+        description: 'Number of marketing qualified leads (MQLs) based on AI scoring algorithms',
+        sources: [
+          '• Lead Scoring Engine: AI-powered lead qualification and ranking system',
+          '• Behavioral Analytics: Website, email, and engagement behavior tracking',
+          '• CRM Integration: Sales qualification feedback and conversion data',
+          '• Predictive Models: Machine learning models for lead quality prediction'
+        ],
+        methodology: 'Qualified Leads = Leads scoring above MQL threshold (typically 70+ points) based on demographic, behavioral, and engagement factors. AI models continuously refine scoring algorithms.',
+        dataPoints: 'Lead scores, engagement metrics, demographic data, behavioral patterns, conversion probabilities',
+        updateFrequency: 'Real-time lead scoring with hourly qualification updates',
+        currentValue: currentValue
+      },
+      'overview_referral_program': {
+        title: 'Active Referrals - Data Source',
+        description: 'Number of active referral program participants and ongoing referrals',
+        sources: [
+          '• Referral Management Platform: Referral tracking, rewards, and program analytics',
+          '• Customer Database: Referrer and referee relationship mapping',
+          '• Reward System: Points, discounts, and incentive distribution tracking',
+          '• Social Sharing Analytics: Referral link sharing and viral coefficient measurement'
+        ],
+        methodology: 'Active Referrals = Total referral participants with pending or completed referrals in current period. Includes referrers actively sharing and referees in conversion funnel.',
+        dataPoints: 'Referral links, sharing activity, conversion rates, reward redemption, viral coefficients',
+        updateFrequency: 'Real-time referral tracking with daily program performance analysis',
+        currentValue: currentValue
+      },
+      // MULTI-CHANNEL ORCHESTRATION DATA SOURCES
+      'multichannel_campaigns_count': {
+        title: 'Campaign Volume - Data Source',
+        description: 'Total number of coordinated multi-channel marketing campaigns',
+        sources: [
+          '• Campaign Orchestration Platform: Cross-channel campaign planning and execution',
+          '• Workflow Management: Campaign timeline, dependencies, and resource allocation',
+          '• Channel APIs: Integration with email, SMS, social, web, and mobile platforms',
+          '• Performance Dashboard: Real-time campaign monitoring and optimization'
+        ],
+        methodology: 'Campaign Count = Active campaigns utilizing 2+ marketing channels with coordinated messaging and timing. Includes awareness, nurture, conversion, and retention campaigns.',
+        dataPoints: 'Campaign objectives, channel mix, audience targeting, message personalization, performance metrics',
+        updateFrequency: 'Real-time campaign tracking with automated performance optimization',
+        currentValue: currentValue
+      },
+      'multichannel_engagement_rate': {
+        title: 'Cross-Channel Engagement Rate - Data Source',
+        description: 'Average engagement rate across all marketing channels and touchpoints',
+        sources: [
+          '• Engagement Analytics Engine: Multi-channel interaction tracking and analysis',
+          '• Customer Journey Mapping: Touchpoint engagement correlation and attribution',
+          '• Channel Performance Monitor: Individual channel engagement optimization',
+          '• Unified Customer Profile: Cross-channel behavior aggregation and insights'
+        ],
+        methodology: 'Engagement Rate = (Total interactions / Total impressions) × 100 across all channels, weighted by channel importance and audience quality.',
+        dataPoints: 'Click-through rates, open rates, social engagement, website interactions, conversion events',
+        updateFrequency: 'Real-time engagement tracking with 15-minute rolling averages',
+        currentValue: currentValue
+      },
+      // A/B TESTING DATA SOURCES
+      'abtesting_active_tests': {
+        title: 'Active Test Volume - Data Source',
+        description: 'Number of concurrent A/B and multivariate tests running across campaigns',
+        sources: [
+          '• Experimentation Platform: Test design, randomization, and statistical analysis',
+          '• Conversion Tracking: Outcome measurement and attribution across test variants',
+          '• Statistical Computing: Power analysis, significance testing, and confidence intervals',
+          '• Learning Repository: Historical test results and optimization insights'
+        ],
+        methodology: 'Active Tests = Concurrent experiments with adequate sample sizes and statistical power (>80%). Includes email, landing page, ad creative, and user experience tests.',
+        dataPoints: 'Test variants, sample sizes, conversion rates, statistical significance, effect sizes',
+        updateFrequency: 'Real-time test monitoring with automated statistical analysis',
+        currentValue: currentValue
+      },
+      'abtesting_win_rate': {
+        title: 'Test Win Rate - Data Source',
+        description: 'Percentage of A/B tests showing statistically significant improvements',
+        sources: [
+          '• Test Results Database: Historical experiment outcomes and statistical significance',
+          '• Performance Comparison Engine: Variant performance analysis and ranking',
+          '• Statistical Validation: Confidence interval calculation and significance testing',
+          '• Optimization Intelligence: Pattern recognition in winning test characteristics'
+        ],
+        methodology: 'Win Rate = (Tests with statistically significant positive results / Total completed tests) × 100. Significance threshold typically set at 95% confidence level.',
+        dataPoints: 'Test outcomes, statistical significance, effect sizes, confidence levels, improvement magnitudes',
+        updateFrequency: 'Updated immediately upon test completion with weekly trend analysis',
+        currentValue: currentValue
+      },
+      // DYNAMIC CONTENT DATA SOURCES
+      'content_templates_count': {
+        title: 'Template Library Size - Data Source',
+        description: 'Total number of dynamic content templates available for personalization',
+        sources: [
+          '• Content Management System: Template creation, versioning, and asset library',
+          '• Personalization Engine: Dynamic rule engine and audience targeting logic',
+          '• Creative Asset Database: Images, copy variations, and multimedia resources',
+          '• Template Performance Analytics: Usage statistics and effectiveness measurement'
+        ],
+        methodology: 'Template Count = Total active templates across all channels with personalization rules. Includes email templates, web content, ad variations, and mobile push templates.',
+        dataPoints: 'Template usage frequency, personalization rules, audience targeting, engagement metrics, conversion rates',
+        updateFrequency: 'Real-time template management with daily performance optimization',
+        currentValue: currentValue
+      },
+      'content_personalization_rate': {
+        title: 'Content Personalization Rate - Data Source',
+        description: 'Percentage of marketing content delivered with personalized elements',
+        sources: [
+          '• Personalization Analytics: Content customization tracking and measurement',
+          '• Customer Data Platform: Individual customer preference and behavior data',
+          '• Dynamic Content Engine: Real-time content assembly and delivery',
+          '• Engagement Correlation: Personalization impact on engagement and conversion'
+        ],
+        methodology: 'Personalization Rate = (Personalized content impressions / Total content impressions) × 100. Includes demographic, behavioral, and contextual personalization.',
+        dataPoints: 'Personalization triggers, content variants, audience segments, engagement lift, conversion impact',
+        updateFrequency: 'Real-time personalization tracking with continuous optimization',
+        currentValue: currentValue
+      },
+      // LEAD SCORING DATA SOURCES
+      'leadscoring_qualified_leads': {
+        title: 'Marketing Qualified Leads - Data Source',
+        description: 'Number of leads meeting qualification criteria based on AI scoring models',
+        sources: [
+          '• Lead Scoring Engine: AI-powered qualification algorithms and predictive models',
+          '• Behavioral Analytics: Website activity, content engagement, and interaction tracking',
+          '• Demographic Intelligence: Firmographic and demographic scoring factors',
+          '• Sales Feedback Loop: Conversion data and qualification validation from sales team'
+        ],
+        methodology: 'Qualified Leads = Leads scoring above MQL threshold (typically 70+ points) based on weighted scoring model: Demographics (25%), Behavior (40%), Engagement (35%).',
+        dataPoints: 'Lead scores, behavioral indicators, demographic fit, engagement history, conversion probability',
+        updateFrequency: 'Real-time lead scoring with hourly qualification batch processing',
+        currentValue: currentValue
+      },
+      'leadscoring_score_accuracy': {
+        title: 'Scoring Model Accuracy - Data Source',
+        description: 'Accuracy rate of lead scoring predictions versus actual sales outcomes',
+        sources: [
+          '• Model Performance Analytics: Prediction accuracy tracking and validation',
+          '• Sales Outcome Database: Actual conversion results and deal closure data',
+          '• Machine Learning Pipeline: Model training, validation, and performance monitoring',
+          '• Feedback Loop Analytics: Continuous model improvement and calibration'
+        ],
+        methodology: 'Score Accuracy = (Correct predictions / Total predictions) × 100. Measured by comparing predicted lead quality with actual sales conversion outcomes.',
+        dataPoints: 'Prediction accuracy, false positive/negative rates, model confidence scores, calibration metrics',
+        updateFrequency: 'Weekly model performance analysis with monthly accuracy reporting',
+        currentValue: currentValue
+      },
+      // REFERRAL PROGRAM DATA SOURCES
+      'referral_active_referrals': {
+        title: 'Active Referral Participants - Data Source',
+        description: 'Number of customers actively participating in referral programs',
+        sources: [
+          '• Referral Management Platform: Participant tracking and reward distribution',
+          '• Customer Engagement Database: Referral sharing activity and social metrics',
+          '• Conversion Tracking: Referee onboarding and qualification measurement',
+          '• Reward Analytics: Incentive effectiveness and redemption analysis'
+        ],
+        methodology: 'Active Referrals = Customers with active referral links and participants in conversion funnel. Includes both referrers and referees in active referral cycles.',
+        dataPoints: 'Referral link generation, sharing activity, click-through rates, conversion rates, reward redemption',
+        updateFrequency: 'Real-time referral activity tracking with daily program performance updates',
+        currentValue: currentValue
+      },
+      'referral_viral_coefficient': {
+        title: 'Viral Coefficient - Data Source',
+        description: 'Average number of new customers acquired per existing customer referral',
+        sources: [
+          '• Viral Growth Analytics: Customer acquisition through referral tracking',
+          '• Network Effect Measurement: Referral chain analysis and viral loop optimization',
+          '• Customer Lifetime Value: Long-term value impact of referred customers',
+          '• Social Sharing Intelligence: Referral link distribution and engagement analysis'
+        ],
+        methodology: 'Viral Coefficient = Total new customers acquired through referrals / Total referring customers. Values >1.0 indicate exponential viral growth.',
+        dataPoints: 'Referral conversion rates, customer acquisition costs, viral loop efficiency, network growth metrics',
+        updateFrequency: 'Weekly viral coefficient calculation with monthly trend analysis',
+        currentValue: currentValue
+      }
+    };
+
+    const key = `${section}_${metricType}`;
+    const details = sourceDetails[key] || {
+      title: `${metricName} - Data Source`,
+      description: 'Data source information for this marketing automation metric',
+      sources: ['• Marketing automation platforms', '• Campaign management systems', '• Analytics and tracking tools', '• Customer engagement databases'],
+      methodology: 'Calculated using advanced marketing analytics and automation algorithms',
+      dataPoints: 'Campaign performance, customer engagement, conversion rates, attribution data',
+      updateFrequency: 'Updated based on marketing automation monitoring schedules',
+      currentValue: currentValue
+    };
+
+    alert(`📊 ${details.title}
+
+Current Value: ${details.currentValue}
+
+${details.description}
+
+🔍 DATA SOURCES:
+${details.sources.join('\n')}
+
+⚙️ METHODOLOGY:
+${details.methodology}
+
+📈 KEY DATA POINTS:
+${details.dataPoints}
+
+🕐 UPDATE FREQUENCY:
+${details.updateFrequency}
+
+💡 This data helps optimize marketing campaigns and improve customer acquisition and engagement.`);
+  };
 
   // Advanced Features Expansion state
   const [advancedDashboard, setAdvancedDashboard] = useState(null);
