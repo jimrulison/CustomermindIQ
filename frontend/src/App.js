@@ -1825,24 +1825,24 @@ ${details.updateFrequency}
                     Revenue Forecasting
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    AI-powered revenue predictions
+                    AI-powered predictions - Click metrics for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showRevenueDataSource('forecasting', 'accuracy', 'Forecast Accuracy', `${revenueForecastingData?.dashboard?.accuracy || '88.7%'}`)}>
                       <span className="text-slate-300">Forecast Accuracy</span>
                       <span className="text-green-400 font-semibold">
                         {revenueForecastingData?.dashboard?.accuracy || '88.7%'}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showRevenueDataSource('forecasting', 'predicted_revenue', 'Next Quarter Revenue Prediction', `$${(revenueForecastingData?.dashboard?.next_quarter || 542000).toLocaleString()}`)}>
                       <span className="text-slate-300">Next Quarter</span>
                       <span className="text-blue-400 font-semibold">
                         ${(revenueForecastingData?.dashboard?.next_quarter || 542000).toLocaleString()}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showRevenueDataSource('forecasting', 'predicted_revenue', 'Revenue Growth Rate', `${revenueForecastingData?.dashboard?.growth_rate || '+24.1%'}`)}>
                       <span className="text-slate-300">Growth Rate</span>
                       <span className="text-green-400 font-semibold">
                         {revenueForecastingData?.dashboard?.growth_rate || '+24.1%'}
