@@ -504,7 +504,7 @@ ${details.updateFrequency}
             <CardContent>
               <div className="space-y-4">
                 {featureData?.dashboard?.feature_usage_matrix?.slice(0, 8).map((feature, index) => (
-                  <div key={index} className="p-4 bg-slate-700/30 rounded-lg">
+                  <div key={index} className="p-4 bg-slate-700/30 rounded-lg cursor-pointer hover:bg-slate-700/50 transition-all duration-200" onClick={() => showFeatureDetails(feature)}>
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center space-x-3">
                         <h4 className="text-white font-medium">{feature.feature_name}</h4>
@@ -517,6 +517,7 @@ ${details.updateFrequency}
                           {feature.adoption_rate}% adopted
                         </Badge>
                         {getTrendIcon('improving')}
+                        <div className="text-xs text-slate-400 ml-2">Click for details</div>
                       </div>
                     </div>
                     <div className="grid grid-cols-5 gap-4 text-sm">
