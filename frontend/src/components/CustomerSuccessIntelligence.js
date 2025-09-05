@@ -426,7 +426,7 @@ Contact: support@customermindiq.com`;
         <div className="space-y-6">
           {/* Health Summary Cards */}
           <div className="grid gap-6 md:grid-cols-4">
-            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30">
+            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showCustomerSuccessDataSource('health', 'score_overview', 'Total Customers', `${healthData?.dashboard?.summary_metrics?.total_customers || 1247} customers`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Users className="h-8 w-8 text-blue-400 mx-auto mb-2" />
@@ -434,11 +434,12 @@ Contact: support@customermindiq.com`;
                     {healthData?.dashboard?.summary_metrics?.total_customers || 1247}
                   </div>
                   <div className="text-xs text-blue-200">Total Customers</div>
+                  <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30">
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showCustomerSuccessDataSource('health', 'score_overview', 'Average Health Score', `${healthData?.dashboard?.summary_metrics?.average_health_score || 73.2}/100`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <TrendingUp className="h-8 w-8 text-green-400 mx-auto mb-2" />
@@ -446,11 +447,12 @@ Contact: support@customermindiq.com`;
                     {healthData?.dashboard?.summary_metrics?.average_health_score || 73.2}
                   </div>
                   <div className="text-xs text-green-200">Avg Health Score</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30">
+            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:bg-orange-600/30 transition-all duration-200" onClick={() => showCustomerSuccessDataSource('health', 'at_risk_customers', 'Customers At Risk', `${healthData?.dashboard?.summary_metrics?.customers_at_risk || 499} at-risk customers`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <AlertTriangle className="h-8 w-8 text-orange-400 mx-auto mb-2" />
@@ -458,11 +460,12 @@ Contact: support@customermindiq.com`;
                     {healthData?.dashboard?.summary_metrics?.customers_at_risk || 499}
                   </div>
                   <div className="text-xs text-orange-200">Customers At Risk</div>
+                  <div className="text-xs text-orange-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30">
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showCustomerSuccessDataSource('health', 'expansion_ready', 'MRR At Risk', `$${(healthData?.dashboard?.summary_metrics?.mrr_at_risk || 892000).toLocaleString()} at risk`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <DollarSign className="h-8 w-8 text-purple-400 mx-auto mb-2" />
@@ -470,6 +473,7 @@ Contact: support@customermindiq.com`;
                     ${(healthData?.dashboard?.summary_metrics?.mrr_at_risk || 892000).toLocaleString()}
                   </div>
                   <div className="text-xs text-purple-200">MRR At Risk</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
