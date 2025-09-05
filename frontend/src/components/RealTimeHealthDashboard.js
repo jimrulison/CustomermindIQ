@@ -443,7 +443,11 @@ Target: All customers with health score < 70
                         <Eye className="w-4 h-4 mr-1" />
                         View
                       </Button>
-                      <Button size="sm" className="bg-green-600 hover:bg-green-700">
+                      <Button 
+                        size="sm" 
+                        className="bg-green-600 hover:bg-green-700"
+                        onClick={() => contactCustomer(customer.customer_id)}
+                      >
                         <Phone className="w-4 h-4 mr-1" />
                         Contact
                       </Button>
