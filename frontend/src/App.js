@@ -2002,21 +2002,36 @@ ${details.updateFrequency}
                     Revenue AI Insights
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Strategic revenue optimization
+                    Strategic revenue optimization - Click insights for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <Alert className="bg-green-500/10 border-green-500/20">
+                    <Alert className="bg-green-500/10 border-green-500/20 cursor-pointer hover:bg-green-500/20 transition-all duration-200" onClick={() => showRevenueDataSource('forecasting', 'predicted_revenue', 'Q4 Revenue Performance', 'Q4 revenue trending 24% above forecast')}>
                       <TrendingUp className="h-4 w-4 text-green-400" />
                       <AlertDescription className="text-green-300 text-sm">
-                        Q4 revenue trending 24% above forecast
+                        <div className="font-medium mb-1">Q4 Revenue Trending (+24% above forecast)</div>
+                        <div className="text-green-200/80">
+                          Q4 performance exceeding predictions. Click for forecasting methodology and confidence intervals.
+                        </div>
                       </AlertDescription>
                     </Alert>
-                    <Alert className="bg-blue-500/10 border-blue-500/20">
+                    <Alert className="bg-blue-500/10 border-blue-500/20 cursor-pointer hover:bg-blue-500/20 transition-all duration-200" onClick={() => showRevenueDataSource('pricing', 'optimization_impact', 'Price Optimization Opportunity', 'Price optimization identified $47K revenue opportunity')}>
                       <DollarSign className="h-4 w-4 text-blue-400" />
                       <AlertDescription className="text-blue-300 text-sm">
-                        Price optimization identified $47K opportunity
+                        <div className="font-medium mb-1">Price Optimization Opportunity ($47K identified)</div>
+                        <div className="text-blue-200/80">
+                          Dynamic pricing analysis reveals significant revenue uplift potential. Click for optimization algorithm details.
+                        </div>
+                      </AlertDescription>
+                    </Alert>
+                    <Alert className="bg-purple-500/10 border-purple-500/20 cursor-pointer hover:bg-purple-500/20 transition-all duration-200" onClick={() => showRevenueDataSource('clv', 'average_value', 'Customer Lifetime Value Intelligence', 'Average CLV increased by 18.7% through retention optimization')}>
+                      <Users className="h-4 w-4 text-purple-400" />
+                      <AlertDescription className="text-purple-300 text-sm">
+                        <div className="font-medium mb-1">CLV Optimization (+18.7% improvement)</div>
+                        <div className="text-purple-200/80">
+                          Customer lifetime value improvements through targeted retention. Click for CLV calculation methodology.
+                        </div>
                       </AlertDescription>
                     </Alert>
                   </div>
