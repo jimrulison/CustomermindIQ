@@ -537,7 +537,11 @@ Contact: support@customermindiq.com`;
                         ${customer.mrr.toLocaleString()} MRR • {customer.csm_assigned}
                       </div>
                     </div>
-                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                    <Button 
+                      size="sm" 
+                      className="bg-blue-600 hover:bg-blue-700"
+                      onClick={() => handleViewCustomerDetails(customer.customer_id, customer.customer_name)}
+                    >
                       <ArrowRight className="w-4 h-4" />
                     </Button>
                   </div>
