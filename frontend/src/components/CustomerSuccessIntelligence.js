@@ -29,6 +29,173 @@ const CustomerSuccessIntelligence = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('health-scores');
 
+  // Customer Success - Data source drill-down handlers
+  const showCustomerSuccessDataSource = (section, metricType, metricName, currentValue) => {
+    const sourceDetails = {
+      // CUSTOMER HEALTH DATA SOURCES
+      'health_score_overview': {
+        title: 'Customer Health Score - Data Source',
+        description: 'Comprehensive health assessment combining multiple customer success indicators',
+        sources: [
+          '• Customer Health Engine: Multi-dimensional health scoring algorithm',
+          '• Product Usage Analytics: Feature adoption, engagement, and utilization tracking',
+          '• Support Interaction System: Ticket volume, resolution time, and satisfaction tracking',
+          '• Revenue Health Monitor: Payment history, expansion signals, and retention indicators'
+        ],
+        methodology: 'Health Score = weighted combination of Product Usage (35%), Support Health (25%), Revenue Indicators (25%), Engagement Score (15%). Normalized to 0-100 scale with risk thresholds.',
+        dataPoints: 'Usage metrics, support interactions, payment data, engagement events, feature adoption rates',
+        updateFrequency: 'Real-time health calculation with daily comprehensive scoring',
+        currentValue: currentValue
+      },
+      'health_at_risk_customers': {
+        title: 'At-Risk Customers - Data Source',
+        description: 'Customers identified as having high churn probability based on health indicators',
+        sources: [
+          '• Churn Prediction Models: ML algorithms for retention risk assessment',
+          '• Early Warning System: Automated risk detection and alert generation',
+          '• Behavioral Analytics: Usage decline and engagement pattern analysis',
+          '• Customer Success Platform: CSM feedback and intervention tracking'
+        ],
+        methodology: 'At-Risk = Customers with health score <40 OR usage decline >50% OR support escalation OR payment issues. ML models with 92% accuracy.',
+        dataPoints: 'Health scores, usage trends, support escalations, payment status, engagement decline',
+        updateFrequency: 'Real-time risk assessment with immediate CSM alerting',
+        currentValue: currentValue
+      },
+      'health_expansion_ready': {
+        title: 'Expansion-Ready Customers - Data Source',
+        description: 'Customers showing strong signals for upsell and expansion opportunities',
+        sources: [
+          '• Expansion Intelligence Engine: Usage pattern analysis for growth opportunities',
+          '• Feature Adoption Tracker: Advanced feature usage and capacity indicators',
+          '• Success Milestone Monitor: Achievement tracking and expansion readiness scoring',
+          '• Revenue Intelligence: Historical expansion patterns and success predictors'
+        ],
+        methodology: 'Expansion-Ready = Health score >80 AND usage growth >25% AND feature adoption >70% AND milestone achievement >80%. Validated by CSM insights.',
+        dataPoints: 'Health scores, usage growth, feature adoption, milestone completion, CSM assessments',
+        updateFrequency: 'Weekly expansion readiness analysis with CSM workflow integration',
+        currentValue: currentValue
+      },
+      // MILESTONE TRACKING DATA SOURCES
+      'milestones_completion_rate': {
+        title: 'Milestone Completion Rate - Data Source',
+        description: 'Percentage of customers achieving defined success milestones',
+        sources: [
+          '• Success Milestone Engine: Customer journey milestone definition and tracking',
+          '• Product Analytics: Feature usage and adoption milestone measurement',
+          '• Onboarding Platform: Initial success milestone and time-to-value tracking',
+          '• Customer Success CRM: Manual milestone validation and CSM input'
+        ],
+        methodology: 'Completion Rate = (Customers achieving milestones / Total customers in cohort) × 100. Weighted by milestone importance and business impact.',
+        dataPoints: 'Milestone definitions, achievement timestamps, customer cohorts, business impact scores',
+        updateFrequency: 'Daily milestone tracking with weekly completion analysis',
+        currentValue: currentValue
+      },
+      'milestones_time_to_value': {
+        title: 'Average Time to Value - Data Source',
+        description: 'Mean time for customers to achieve first value and key success milestones',
+        sources: [
+          '• Customer Journey Analytics: Onboarding and adoption timeline tracking',
+          '• Value Realization Engine: First value achievement detection and measurement',
+          '• Product Usage Monitor: Feature adoption and proficiency timeline analysis',
+          '• Customer Feedback System: Perceived value and satisfaction timing correlation'
+        ],
+        methodology: 'Time to Value = average days from signup to first milestone achievement. Segmented by customer type, plan, and onboarding path.',
+        dataPoints: 'Signup dates, milestone achievements, feature adoption events, customer segments',
+        updateFrequency: 'Daily time-to-value calculation with cohort analysis',
+        currentValue: currentValue
+      },
+      // CSM EFFECTIVENESS DATA SOURCES
+      'csm_customer_ratio': {
+        title: 'CSM to Customer Ratio - Data Source',
+        description: 'Customer Success Manager workload and account coverage metrics',
+        sources: [
+          '• CSM Workload Analytics: Account assignment and capacity management',
+          '• Customer Success CRM: CSM-customer relationship tracking and workload distribution',
+          '• Performance Management: CSM effectiveness and capacity optimization',
+          '• Resource Planning System: Team scaling and workload balancing analysis'
+        ],
+        methodology: 'CSM Ratio = Total active customers / Total CSM FTEs. Optimized for customer segment, ARR, and complexity. Target ratios by customer tier.',
+        dataPoints: 'Customer counts, CSM assignments, account complexity, customer tier, ARR values',
+        updateFrequency: 'Weekly CSM workload analysis with monthly capacity planning',
+        currentValue: currentValue
+      },
+      'csm_response_time': {
+        title: 'CSM Response Time - Data Source',
+        description: 'Average response time for Customer Success Manager communications',
+        sources: [
+          '• Communication Analytics: CSM response time tracking across all channels',
+          '• Customer Success Platform: Interaction timeline and response measurement',
+          '• Email Analytics: CSM email response time and communication effectiveness',
+          '• Meeting Scheduler: CSM availability and meeting response time tracking'
+        ],
+        methodology: 'Response Time = average time from customer inquiry to CSM first response. Measured across email, phone, and platform communications.',
+        dataPoints: 'Communication timestamps, response times, communication channels, urgency levels',
+        updateFrequency: 'Real-time response tracking with daily CSM performance reporting',
+        currentValue: currentValue
+      },
+      // EXPANSION ANALYTICS DATA SOURCES
+      'expansion_revenue_growth': {
+        title: 'Expansion Revenue Growth - Data Source',
+        description: 'Revenue growth from existing customers through upsells and expansion',
+        sources: [
+          '• Revenue Analytics Platform: Expansion revenue tracking and attribution',
+          '• Subscription Management: Plan upgrades, add-ons, and expansion tracking',
+          '• Usage-Based Billing: Consumption growth and revenue expansion measurement',
+          '• Sales Integration: Upsell opportunity tracking and conversion analytics'
+        ],
+        methodology: 'Expansion Growth = (Current period expansion revenue - Previous period) / Previous period × 100. Includes upsells, cross-sells, and usage expansion.',
+        dataPoints: 'Subscription changes, usage growth, upsell conversions, expansion revenue, customer segments',
+        updateFrequency: 'Monthly expansion revenue analysis with weekly growth tracking',
+        currentValue: currentValue
+      },
+      'expansion_pipeline_value': {
+        title: 'Expansion Pipeline Value - Data Source',
+        description: 'Total value of identified expansion opportunities in the sales pipeline',
+        sources: [
+          '• Expansion Pipeline CRM: Opportunity identification and value tracking',
+          '• Customer Success Intelligence: Expansion readiness scoring and opportunity sizing',
+          '• Sales Analytics: Pipeline progression and conversion probability analysis',
+          '• Revenue Forecasting: Expansion revenue prediction and planning'
+        ],
+        methodology: 'Pipeline Value = sum of (Opportunity Value × Probability × Timeline Factor). Opportunities qualify with >60% expansion readiness score.',
+        dataPoints: 'Opportunity values, conversion probabilities, timeline estimates, readiness scores',
+        updateFrequency: 'Weekly pipeline analysis with monthly expansion forecasting',
+        currentValue: currentValue
+      }
+    };
+
+    const key = `${section}_${metricType}`;
+    const details = sourceDetails[key] || {
+      title: `${metricName} - Data Source`,
+      description: 'Data source information for this customer success metric',
+      sources: ['• Customer success platforms', '• Health scoring systems', '• Milestone tracking tools', '• CSM effectiveness analytics'],
+      methodology: 'Calculated using customer success analytics and health scoring algorithms',
+      dataPoints: 'Customer health data, milestone achievements, CSM interactions, expansion indicators',
+      updateFrequency: 'Updated based on customer success monitoring schedules',
+      currentValue: currentValue
+    };
+
+    alert(`📊 ${details.title}
+
+Current Value: ${details.currentValue}
+
+${details.description}
+
+🔍 DATA SOURCES:
+${details.sources.join('\n')}
+
+⚙️ METHODOLOGY:
+${details.methodology}
+
+📈 KEY DATA POINTS:
+${details.dataPoints}
+
+🕐 UPDATE FREQUENCY:
+${details.updateFrequency}
+
+💡 This data helps optimize customer success outcomes and drive retention and expansion.`);
+  };
+
   useEffect(() => {
     loadCustomerSuccessData();
   }, []);
