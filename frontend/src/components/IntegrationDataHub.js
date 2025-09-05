@@ -263,7 +263,7 @@ ${details.updateFrequency}
         <div className="space-y-6">
           {/* Summary Cards */}
           <div className="grid gap-6 md:grid-cols-4">
-            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30">
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showDataSource('overview', 'active_connectors', 'Active Connectors', connectorsData?.dashboard?.health_insights?.total_active_connectors || '0')}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Link className="h-8 w-8 text-green-400 mx-auto mb-2" />
@@ -271,11 +271,12 @@ ${details.updateFrequency}
                     {connectorsData?.dashboard?.health_insights?.total_active_connectors || '0'}
                   </div>
                   <div className="text-xs text-green-200">Active Connectors</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30">
+            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showDataSource('overview', 'sync_success_rate', 'Sync Success Rate', `${syncData?.dashboard?.sync_overview?.sync_success_rate || '0'}%`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <RefreshCw className="h-8 w-8 text-blue-400 mx-auto mb-2" />
@@ -283,11 +284,12 @@ ${details.updateFrequency}
                     {syncData?.dashboard?.sync_overview?.sync_success_rate || '0'}%
                   </div>
                   <div className="text-xs text-blue-200">Sync Success Rate</div>
+                  <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30">
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showDataSource('overview', 'quality_score', 'Data Quality Score', qualityData?.dashboard?.quality_overview?.overall_quality_score || '0')}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Shield className="h-8 w-8 text-purple-400 mx-auto mb-2" />
@@ -295,11 +297,12 @@ ${details.updateFrequency}
                     {qualityData?.dashboard?.quality_overview?.overall_quality_score || '0'}
                   </div>
                   <div className="text-xs text-purple-200">Quality Score</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30">
+            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:bg-orange-600/30 transition-all duration-200" onClick={() => showDataSource('overview', 'integration_roi', 'Integration ROI', `${analyticsData?.dashboard?.roi_analysis?.total_roi || '0'}%`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <TrendingUp className="h-8 w-8 text-orange-400 mx-auto mb-2" />
@@ -307,6 +310,7 @@ ${details.updateFrequency}
                     {analyticsData?.dashboard?.roi_analysis?.total_roi || '0'}%
                   </div>
                   <div className="text-xs text-orange-200">Integration ROI</div>
+                  <div className="text-xs text-orange-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
