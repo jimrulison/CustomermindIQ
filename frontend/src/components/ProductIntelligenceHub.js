@@ -822,7 +822,7 @@ ${details.updateFrequency}
         <div className="space-y-6">
           {/* Journey Health Summary */}
           <div className="grid gap-6 md:grid-cols-4">
-            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30">
+            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showDataSource('journeys', 'total_paths', 'Total Journey Paths', journeyData?.dashboard?.journey_health?.overall_journey_health_score || 72.8)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Route className="h-8 w-8 text-blue-400 mx-auto mb-2" />
@@ -830,11 +830,12 @@ ${details.updateFrequency}
                     {journeyData?.dashboard?.journey_health?.overall_journey_health_score || 72.8}
                   </div>
                   <div className="text-xs text-blue-200">Journey Health</div>
+                  <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30">
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showDataSource('journeys', 'avg_completion_rate', 'Average Completion Rate', '+8.4%')}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <TrendingUp className="h-8 w-8 text-green-400 mx-auto mb-2" />
@@ -842,11 +843,12 @@ ${details.updateFrequency}
                     +8.4%
                   </div>
                   <div className="text-xs text-green-200">Velocity Improvement</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30">
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showDataSource('journeys', 'avg_steps_to_conversion', 'Average Steps to Conversion', '-12.7%')}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Target className="h-8 w-8 text-purple-400 mx-auto mb-2" />
@@ -854,11 +856,12 @@ ${details.updateFrequency}
                     -12.7%
                   </div>
                   <div className="text-xs text-purple-200">Drop-off Reduction</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30">
+            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:bg-orange-600/30 transition-all duration-200" onClick={() => showDataSource('journeys', 'optimization_score', 'Journey Optimization Score', '7.9')}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Star className="h-8 w-8 text-orange-400 mx-auto mb-2" />
@@ -866,6 +869,7 @@ ${details.updateFrequency}
                     7.9
                   </div>
                   <div className="text-xs text-orange-200">Flow Satisfaction</div>
+                  <div className="text-xs text-orange-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
