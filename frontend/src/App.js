@@ -2385,24 +2385,24 @@ ${details.updateFrequency}
                     Churn Prevention AI
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Predictive churn modeling
+                    Predictive churn modeling - Click metrics for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('churn', 'at_risk_customers', 'At-Risk Customers', `${churnPreventionData?.dashboard?.summary_metrics?.at_risk_customers || 25} customers at risk`)}>
                       <span className="text-slate-300">At-Risk Customers</span>
                       <span className="text-red-400 font-semibold">
                         {churnPreventionData?.dashboard?.summary_metrics?.at_risk_customers || 25}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('churn', 'prevention_rate', 'Churn Prevention Success Rate', `${churnPreventionData?.dashboard?.success_metrics?.retention_success_rate || '78.4'}%`)}>
                       <span className="text-slate-300">Prevention Rate</span>
                       <span className="text-green-400 font-semibold">
                         {churnPreventionData?.dashboard?.success_metrics?.retention_success_rate || '78.4'}%
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('churn', 'critical_cases', 'Critical Risk Cases', `${churnPreventionData?.dashboard?.summary_metrics?.critical_risk_count || 7} critical cases`)}>
                       <span className="text-slate-300">Critical Cases</span>
                       <span className="text-orange-400 font-semibold">
                         {churnPreventionData?.dashboard?.summary_metrics?.critical_risk_count || 7}
