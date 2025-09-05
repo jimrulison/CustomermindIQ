@@ -212,10 +212,19 @@ Contact: support@customermindiq.com`;
           <h1 className="text-3xl font-bold text-white">Customer Success Intelligence</h1>
           <p className="text-slate-400 mt-2">AI-powered customer health, success milestones, and expansion intelligence</p>
         </div>
-        <div className="flex items-center space-x-2">
-          <Badge className="bg-green-500/20 text-green-400">AI Health Scoring</Badge>
-          <Badge className="bg-blue-500/20 text-blue-400">Automated Workflows</Badge>
-          <Badge className="bg-purple-500/20 text-purple-400">Expansion Intelligence</Badge>
+        <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2">
+            <Badge className="bg-green-500/20 text-green-400">AI Health Scoring</Badge>
+            <Badge className="bg-blue-500/20 text-blue-400">Automated Workflows</Badge>
+            <Badge className="bg-purple-500/20 text-purple-400">Expansion Intelligence</Badge>
+          </div>
+          <Button 
+            onClick={() => handleExportReport('Customer_Success_Dashboard')}
+            className="bg-emerald-600 hover:bg-emerald-700"
+          >
+            <ArrowRight className="w-4 h-4 mr-2" />
+            Export Report
+          </Button>
         </div>
       </div>
 
