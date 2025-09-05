@@ -526,6 +526,132 @@ ${details.updateFrequency}
 💡 This data helps optimize revenue performance and drive strategic business decisions.`);
   };
 
+  // Advanced Features - Data source drill-down handlers
+  const showAdvancedDataSource = (section, metricType, metricName, currentValue) => {
+    const sourceDetails = {
+      // BEHAVIORAL CLUSTERING DATA SOURCES
+      'clustering_customers_analyzed': {
+        title: 'Customers Analyzed - Data Source',
+        description: 'Total customers processed through AI behavioral clustering algorithms',
+        sources: [
+          '• Customer Data Platform: Comprehensive customer behavior and interaction data',
+          '• Machine Learning Pipeline: Advanced clustering algorithms and pattern recognition',
+          '• Behavioral Analytics Engine: Customer action tracking and behavioral scoring',
+          '• Data Quality Systems: Customer data validation and preprocessing'
+        ],
+        methodology: 'Customers Analyzed = Total unique customers with sufficient behavioral data for clustering analysis. Requires minimum 30 days of interaction data and 5+ touchpoints.',
+        dataPoints: 'Customer interactions, behavioral patterns, engagement metrics, transaction history, touchpoint data',
+        updateFrequency: 'Daily clustering analysis with weekly model retraining',
+        currentValue: currentValue
+      },
+      'clustering_segments': {
+        title: 'Behavioral Clusters - Data Source',
+        description: 'AI-identified customer segments based on behavioral patterns',
+        sources: [
+          '• Clustering Algorithm Engine: K-means, hierarchical, and density-based clustering',
+          '• Feature Engineering Platform: Behavioral feature extraction and transformation',
+          '• Validation Systems: Cluster quality metrics and silhouette analysis',
+          '• Segment Analytics: Cluster characterization and business value assessment'
+        ],
+        methodology: 'Clusters = Optimal number determined using elbow method, silhouette analysis, and business interpretability. Validated using within-cluster sum of squares.',
+        dataPoints: 'Behavioral features, cluster assignments, cluster centers, validation metrics, business impact',
+        updateFrequency: 'Weekly clustering with monthly cluster validation and optimization',
+        currentValue: currentValue
+      },
+      // PREDICTIVE MODELING DATA SOURCES
+      'predictive_accuracy': {
+        title: 'Model Accuracy - Data Source',
+        description: 'Accuracy of predictive models for customer behavior and outcomes',
+        sources: [
+          '• Model Performance Analytics: Prediction accuracy tracking and validation',
+          '• Cross-Validation Systems: Model robustness testing and performance metrics',
+          '• Feature Importance Analysis: Model interpretability and feature contribution',
+          '• A/B Testing Platform: Model performance comparison and optimization'
+        ],
+        methodology: 'Model Accuracy = (Correct predictions / Total predictions) × 100. Measured using cross-validation, precision, recall, and F1-score metrics.',
+        dataPoints: 'Prediction outcomes, accuracy metrics, confusion matrices, feature importance, model confidence',
+        updateFrequency: 'Real-time prediction tracking with weekly model performance analysis',
+        currentValue: currentValue
+      },
+      // SENTIMENT ANALYSIS DATA SOURCES
+      'sentiment_coverage': {
+        title: 'Sentiment Analysis Coverage - Data Source',
+        description: 'Percentage of customer interactions analyzed for sentiment',
+        sources: [
+          '• Natural Language Processing Engine: Text analysis and sentiment classification',
+          '• Customer Communication Platform: Email, chat, and support interaction data',
+          '• Social Media Monitoring: Brand mention and sentiment tracking',
+          '• Feedback Analysis System: Survey and review sentiment processing'
+        ],
+        methodology: 'Coverage = (Interactions with sentiment analysis / Total customer interactions) × 100. Includes text, voice, and structured feedback.',
+        dataPoints: 'Text interactions, sentiment scores, emotion classification, confidence levels, communication channels',
+        updateFrequency: 'Real-time sentiment analysis with daily coverage reporting',
+        currentValue: currentValue
+      },
+      // REAL-TIME PERSONALIZATION DATA SOURCES
+      'personalization_engine': {
+        title: 'Personalization Engine Performance - Data Source',
+        description: 'Real-time personalization effectiveness and recommendation accuracy',
+        sources: [
+          '• Recommendation Engine: AI-powered content and product recommendations',
+          '• Real-time Decision Engine: Dynamic personalization and content optimization',
+          '• User Behavior Analytics: Real-time interaction tracking and preference learning',
+          '• Performance Measurement: Recommendation effectiveness and engagement impact'
+        ],
+        methodology: 'Engine Performance = weighted combination of recommendation accuracy (40%), click-through rate (30%), conversion rate (30%).',
+        dataPoints: 'Recommendation accuracy, click-through rates, conversion rates, engagement metrics, personalization effectiveness',
+        updateFrequency: 'Real-time personalization with continuous performance optimization',
+        currentValue: current
+      },
+      // ANOMALY DETECTION DATA SOURCES
+      'anomaly_detection': {
+        title: 'Anomaly Detection System - Data Source',
+        description: 'AI-powered detection of unusual patterns in customer behavior',
+        sources: [
+          '• Anomaly Detection Engine: Statistical and ML-based anomaly identification',
+          '• Behavioral Baseline System: Normal behavior pattern establishment',
+          '• Alert Management Platform: Anomaly notification and escalation system',
+          '• Investigation Tools: Anomaly analysis and root cause identification'
+        ],
+        methodology: 'Anomaly Detection = statistical deviation analysis combined with machine learning models. Uses isolation forests and autoencoder techniques.',
+        dataPoints: 'Behavioral deviations, statistical thresholds, anomaly scores, alert frequencies, investigation outcomes',
+        updateFrequency: 'Real-time anomaly detection with immediate alerting',
+        currentValue: currentValue
+      }
+    };
+
+    const key = `${section}_${metricType}`;
+    const details = sourceDetails[key] || {
+      title: `${metricName} - Data Source`,
+      description: 'Data source information for this advanced analytics metric',
+      sources: ['• Advanced analytics platforms', '• Machine learning systems', '• AI processing engines', '• Behavioral analysis tools'],
+      methodology: 'Calculated using advanced AI algorithms and machine learning models',
+      dataPoints: 'Customer behavior, AI model outputs, analytical insights, performance metrics',
+      updateFrequency: 'Updated based on advanced analytics processing schedules',
+      currentValue: currentValue
+    };
+
+    alert(`📊 ${details.title}
+
+Current Value: ${details.currentValue}
+
+${details.description}
+
+🔍 DATA SOURCES:
+${details.sources.join('\n')}
+
+⚙️ METHODOLOGY:
+${details.methodology}
+
+📈 KEY DATA POINTS:
+${details.dataPoints}
+
+🕐 UPDATE FREQUENCY:
+${details.updateFrequency}
+
+💡 This data helps drive advanced AI-powered customer intelligence and strategic insights.`);
+  };
+
   // Advanced Features Expansion state
   const [advancedDashboard, setAdvancedDashboard] = useState(null);
   const [behavioralClusteringData, setBehavioralClusteringData] = useState(null);
