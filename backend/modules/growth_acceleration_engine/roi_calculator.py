@@ -33,7 +33,7 @@ class ROICalculator:
         self.api_key = os.getenv("EMERGENT_LLM_KEY")
         self.mongo_url = os.getenv("MONGO_URL", "mongodb://localhost:27017")
         self.client = AsyncIOMotorClient(self.mongo_url)
-        self.db = self.client.customer_mind_iq
+        self.db = self.client[os.environ.get('DB_NAME', 'customer_mind_iq')]
         
         if not self.api_key:
             raise ValueError("EMERGENT_LLM_KEY not found in environment variables")
