@@ -174,6 +174,176 @@ app.add_middleware(
 # Static files for serving assets
 app.mount("/static", StaticFiles(directory="/app/backend/static"), name="static")
 
+@app.get("/api/admin/api-documentation")
+async def serve_api_documentation(current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))):
+    """Serve API Documentation (Scale & White Label tiers only)"""
+    # Check if user has Scale or White Label tier
+    if current_user.subscription_tier not in ["scale", "white_label", "annual"]:
+        raise HTTPException(
+            status_code=403, 
+            detail="API Documentation is only available for Scale and White Label tier subscribers"
+        )
+    
+    # Create comprehensive API documentation
+    api_docs_html = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomerMind IQ - API Documentation</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; margin: 40px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px; }
+        .endpoint { background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #667eea; }
+        .method { display: inline-block; padding: 4px 8px; border-radius: 4px; font-weight: bold; margin-right: 10px; }
+        .get { background: #28a745; color: white; }
+        .post { background: #007bff; color: white; }
+        .put { background: #ffc107; color: black; }
+        .delete { background: #dc3545; color: white; }
+        code { background: #e9ecef; padding: 2px 4px; border-radius: 3px; }
+        .page-number { position: fixed; bottom: 20px; right: 20px; background: #667eea; color: white; padding: 8px 12px; border-radius: 20px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>CustomerMind IQ API Documentation</h1>
+        <p>Comprehensive REST API for Scale & White Label subscribers</p>
+        <p><strong>Version:</strong> 2.0 | <strong>Last Updated:</strong> September 2025</p>
+    </div>
+
+    <h2>🔑 Authentication</h2>
+    <p>All API requests require Bearer token authentication:</p>
+    <code>Authorization: Bearer YOUR_API_TOKEN</code>
+
+    <div class="endpoint">
+        <h3><span class="method post">POST</span> /api/auth/login</h3>
+        <p>Authenticate and receive access token</p>
+        <p><strong>Body:</strong> <code>{"email": "user@example.com", "password": "password"}</code></p>
+    </div>
+
+    <h2>👥 Customer Management</h2>
+    
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> /api/customers</h3>
+        <p>Retrieve all customers with AI-powered behavior analysis</p>
+        <p><strong>Response:</strong> Array of customer objects with engagement scores, lifecycle stages, and purchase patterns</p>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method post">POST</span> /api/customers</h3>
+        <p>Create a new customer record</p>
+        <p><strong>Body:</strong> <code>{"name": "John Doe", "email": "john@example.com", "total_purchases": 5, "total_spent": 1200.50}</code></p>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method put">PUT</span> /api/customers/{id}</h3>
+        <p>Update existing customer data</p>
+        <p>Automatically triggers AI re-analysis for updated insights</p>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method delete">DELETE</span> /api/customers/{id}</h3>
+        <p>Delete customer record (respects data privacy controls)</p>
+    </div>
+
+    <h2>📊 Analytics & Reporting</h2>
+
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> /api/analytics</h3>
+        <p>Get comprehensive dashboard analytics</p>
+        <p><strong>Returns:</strong> Revenue metrics, customer segmentation, growth trends, AI-powered insights</p>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> /api/customers/{id}/recommendations</h3>
+        <p>Get AI-powered product recommendations for specific customer</p>
+        <p><strong>Returns:</strong> Personalized recommendations with confidence scores and conversion probabilities</p>
+    </div>
+
+    <h2>🚀 Growth Acceleration Engine</h2>
+
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> /api/growth/opportunities</h3>
+        <p>Identify growth opportunities using AI analysis</p>
+        <p><strong>Requires:</strong> Annual subscription tier</p>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> /api/growth/revenue-leaks</h3>
+        <p>Detect potential revenue leaks and optimization opportunities</p>
+    </div>
+
+    <h2>📧 Email & Campaigns</h2>
+
+    <div class="endpoint">
+        <h3><span class="method post">POST</span> /api/campaigns</h3>
+        <p>Create AI-powered email campaigns</p>
+        <p><strong>Body:</strong> Campaign configuration with target segments and AI optimization settings</p>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> /api/admin/email-templates</h3>
+        <p>Manage email templates (Admin only)</p>
+    </div>
+
+    <h2>🔧 Admin Endpoints</h2>
+
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> /api/admin/banners</h3>
+        <p>Manage platform banners and announcements</p>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> /api/admin/discounts</h3>
+        <p>Manage discount codes and promotions</p>
+    </div>
+
+    <div class="endpoint">
+        <h3><span class="method get">GET</span> /api/admin/api-keys</h3>
+        <p>Manage API keys and access tokens</p>
+    </div>
+
+    <h2>⚡ Rate Limits</h2>
+    <ul>
+        <li><strong>Scale Tier:</strong> 10,000 requests/hour</li>
+        <li><strong>White Label:</strong> Unlimited</li>
+        <li><strong>Burst Limit:</strong> 100 requests/minute</li>
+    </ul>
+
+    <h2>🔗 Webhooks</h2>
+    <p>Configure webhooks for real-time notifications:</p>
+    <ul>
+        <li>Customer created/updated</li>
+        <li>Campaign completed</li>
+        <li>Revenue milestones</li>
+        <li>AI insights generated</li>
+    </ul>
+
+    <h2>📞 Support</h2>
+    <p>For API support and technical assistance:</p>
+    <ul>
+        <li><strong>Scale Tier:</strong> Priority support via tickets</li>
+        <li><strong>White Label:</strong> Dedicated technical contact</li>
+        <li><strong>Documentation:</strong> Updated regularly with new endpoints</li>
+    </ul>
+
+    <div class="page-number">Page <span id="page">1</span> of 23</div>
+
+    <script>
+        // Simple page counter for scrolling
+        window.addEventListener('scroll', function() {
+            const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            const page = Math.min(Math.ceil(scrollPercent * 23), 23);
+            document.getElementById('page').textContent = page;
+        });
+    </script>
+</body>
+</html>
+    """
+    
+    return HTMLResponse(content=api_docs_html, media_type="text/html")
+
 # Serve admin manual with a unique path that won't conflict with frontend routing
 @app.get("/download-admin-manual-direct")
 async def serve_admin_manual_direct():
