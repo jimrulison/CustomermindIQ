@@ -2218,6 +2218,7 @@ test_plan:
     - "Phase 2 Enhanced CRM - Integration Status Update"
     - "Dashboard Loading Issue Fix"
     - "Overall Platform Stability - Comprehensive Review Testing"
+    - "Dashboard Endpoints Verification - Comprehensive Backend Testing"
   stuck_tasks:
     - "Customer Intelligence Frontend Data Display"
     - "Phase 2 Enhanced CRM - Lead Stage Updates"
