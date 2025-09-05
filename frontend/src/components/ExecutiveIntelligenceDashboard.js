@@ -561,7 +561,10 @@ const ExecutiveIntelligenceDashboard = () => {
                   </div>
                   
                   <div className="flex justify-end">
-                    <Button className="bg-cyan-600 hover:bg-cyan-700">
+                    <Button 
+                      className="bg-cyan-600 hover:bg-cyan-700"
+                      onClick={() => handleImplementStrategy(insight)}
+                    >
                       Implement Strategy
                     </Button>
                   </div>
