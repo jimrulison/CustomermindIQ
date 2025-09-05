@@ -18,7 +18,12 @@ import {
   ArrowUp,
   ArrowDown,
   Calendar,
-  Star
+  Star,
+  X,
+  Mail,
+  Phone,
+  Building,
+  TrendingDown
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -29,6 +34,16 @@ const ExecutiveIntelligenceDashboard = () => {
   const [kpiData, setKpiData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeView, setActiveView] = useState('overview');
+  
+  // Modal states
+  const [showCustomerModal, setShowCustomerModal] = useState(false);
+  const [showAlertModal, setShowAlertModal] = useState(false);
+  const [showStrategyModal, setShowStrategyModal] = useState(false);
+  const [selectedCustomers, setSelectedCustomers] = useState([]);
+  const [selectedAlert, setSelectedAlert] = useState(null);
+  const [selectedStrategy, setSelectedStrategy] = useState(null);
+  const [customerHealthData, setCustomerHealthData] = useState([]);
+  const [loadingCustomers, setLoadingCustomers] = useState(false);
 
   useEffect(() => {
     loadExecutiveData();
