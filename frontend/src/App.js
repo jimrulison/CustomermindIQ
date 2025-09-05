@@ -1526,24 +1526,24 @@ ${details.updateFrequency}
                     Referral Program
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Viral marketing optimization
+                    Viral marketing optimization - Click metrics for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('referral', 'active_referrals', 'Active Referral Participants', referralData?.dashboard?.active_referrals || 89)}>
                       <span className="text-slate-300">Active Referrals</span>
                       <span className="text-pink-400 font-semibold">
                         {referralData?.dashboard?.active_referrals || 89}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('referral', 'viral_coefficient', 'Viral Growth Coefficient', referralData?.dashboard?.viral_coefficient || '1.42')}>
                       <span className="text-slate-300">Viral Coefficient</span>
                       <span className="text-green-400 font-semibold">
                         {referralData?.dashboard?.viral_coefficient || '1.42'}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('referral', 'viral_coefficient', 'Revenue Impact from Referrals', `$${(referralData?.dashboard?.revenue_impact || 24750).toLocaleString()}`)}>
                       <span className="text-slate-300">Revenue Impact</span>
                       <span className="text-green-400 font-semibold">
                         ${(referralData?.dashboard?.revenue_impact || 24750).toLocaleString()}
