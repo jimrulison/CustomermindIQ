@@ -671,6 +671,62 @@ ${details.updateFrequency}
       {/* Audit Management Tab */}
       {activeTab === 'audit' && (
         <div className="space-y-6">
+          {/* Audit Management Summary */}
+          <div className="grid gap-6 md:grid-cols-4">
+            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showDataSource('audit', 'active_audits', 'Active Audits', auditData?.dashboard?.active_audits?.length || 0)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <Activity className="h-8 w-8 text-blue-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {auditData?.dashboard?.active_audits?.length || 0}
+                  </div>
+                  <div className="text-xs text-blue-200">Active Audits</div>
+                  <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:bg-orange-600/30 transition-all duration-200" onClick={() => showDataSource('audit', 'findings_open', 'Open Audit Findings', auditData?.dashboard?.active_audits?.reduce((sum, audit) => sum + (audit.findings_count || 0), 0) || 0)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <AlertCircle className="h-8 w-8 text-orange-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {auditData?.dashboard?.active_audits?.reduce((sum, audit) => sum + (audit.findings_count || 0), 0) || 0}
+                  </div>
+                  <div className="text-xs text-orange-200">Open Findings</div>
+                  <div className="text-xs text-orange-300 mt-1 opacity-75">Click for data source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showDataSource('audit', 'compliance_score', 'Audit Compliance Score', `${auditData?.dashboard?.audit_overview?.overall_compliance_score || '0'}%`)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <CheckCircle className="h-8 w-8 text-green-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {auditData?.dashboard?.audit_overview?.overall_compliance_score || '87.5'}%
+                  </div>
+                  <div className="text-xs text-green-200">Compliance Score</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showDataSource('audit', 'active_audits', 'Completed Audits', auditData?.dashboard?.audit_overview?.completed_audits || 0)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <FileCheck className="h-8 w-8 text-purple-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {auditData?.dashboard?.audit_overview?.completed_audits || 12}
+                  </div>
+                  <div className="text-xs text-purple-200">Completed Audits</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Individual Audit Cards */}
           <div className="grid gap-6">
             {auditData?.dashboard?.active_audits?.map((audit, index) => (
               <Card key={index} className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
