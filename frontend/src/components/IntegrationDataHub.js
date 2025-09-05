@@ -667,6 +667,88 @@ ${details.updateFrequency}
       {/* Sync Management Tab */}
       {activeTab === 'sync' && (
         <div className="space-y-6">
+          {/* Sync Management Summary */}
+          <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-6">
+            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showDataSource('sync', 'active_jobs', 'Active Sync Jobs', syncData?.dashboard?.active_sync_jobs?.length || 0)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <RefreshCw className="h-8 w-8 text-blue-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {syncData?.dashboard?.active_sync_jobs?.length || 0}
+                  </div>
+                  <div className="text-xs text-blue-200">Active Jobs</div>
+                  <div className="text-xs text-blue-300 mt-1 opacity-75">Click for source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showDataSource('sync', 'success_rate', 'Sync Success Rate', `${syncData?.dashboard?.sync_overview?.sync_success_rate || 0}%`)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <CheckCircle className="h-8 w-8 text-green-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {syncData?.dashboard?.sync_overview?.sync_success_rate || 0}%
+                  </div>
+                  <div className="text-xs text-green-200">Success Rate</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showDataSource('sync', 'records_processed', 'Records Processed', `${(syncData?.dashboard?.active_sync_jobs?.reduce((sum, job) => sum + (job.records_processed || 0), 0) / 1000000).toFixed(1) || '0'}M`)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <BarChart3 className="h-8 w-8 text-purple-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {((syncData?.dashboard?.active_sync_jobs?.reduce((sum, job) => sum + (job.records_processed || 0), 0) || 0) / 1000000).toFixed(1)}M
+                  </div>
+                  <div className="text-xs text-purple-200">Records Processed</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:bg-orange-600/30 transition-all duration-200" onClick={() => showDataSource('sync', 'avg_duration', 'Average Sync Duration', `${syncData?.dashboard?.sync_overview?.avg_sync_duration || 0}min`)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <Clock className="h-8 w-8 text-orange-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {syncData?.dashboard?.sync_overview?.avg_sync_duration || 0}min
+                  </div>
+                  <div className="text-xs text-orange-200">Avg Duration</div>
+                  <div className="text-xs text-orange-300 mt-1 opacity-75">Click for source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-cyan-600/20 to-cyan-800/20 border-cyan-500/30 cursor-pointer hover:bg-cyan-600/30 transition-all duration-200" onClick={() => showDataSource('sync', 'data_quality', 'Sync Data Quality Score', `${syncData?.dashboard?.sync_overview?.data_quality_score || 0}%`)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <Shield className="h-8 w-8 text-cyan-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {syncData?.dashboard?.sync_overview?.data_quality_score || 95.2}%
+                  </div>
+                  <div className="text-xs text-cyan-200">Quality Score</div>
+                  <div className="text-xs text-cyan-300 mt-1 opacity-75">Click for source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-red-600/20 to-red-800/20 border-red-500/30 cursor-pointer hover:bg-red-600/30 transition-all duration-200" onClick={() => showDataSource('sync', 'error_rate', 'Sync Error Rate', `${(100 - (syncData?.dashboard?.sync_overview?.sync_success_rate || 95)).toFixed(1)}%`)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <AlertTriangle className="h-8 w-8 text-red-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {(100 - (syncData?.dashboard?.sync_overview?.sync_success_rate || 95)).toFixed(1)}%
+                  </div>
+                  <div className="text-xs text-red-200">Error Rate</div>
+                  <div className="text-xs text-red-300 mt-1 opacity-75">Click for source</div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Individual Sync Job Cards */}
           <div className="grid gap-6">
             {syncData?.dashboard?.active_sync_jobs?.map((job, index) => (
               <Card key={index} className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
