@@ -276,6 +276,9 @@ Customer ID: ${customerId}
 
 💡 This comprehensive view combines all customer success data points to provide a 360-degree understanding of customer health, engagement, and growth potential.`);
   };
+
+  // Contact customer functionality
+  const handleContactCustomer = (customerId, customerName) => {
     alert(`📞 Contacting Customer: ${customerName || customerId}
 
 ✅ CONTACT INITIATED:
