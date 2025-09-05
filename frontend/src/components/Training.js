@@ -949,7 +949,10 @@ Powered by AI Intelligence Systems`;
                       Upgrade to an Annual plan today and unlock the Growth Acceleration Engine 
                       plus save 20% on your subscription.
                     </p>
-                    <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 text-lg">
+                    <Button 
+                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 text-lg"
+                      onClick={handleUpgradeToAnnual}
+                    >
                       Upgrade to Annual Plan →
                     </Button>
                   </div>
