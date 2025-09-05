@@ -2455,24 +2455,24 @@ ${details.updateFrequency}
                     Pricing Optimization
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    AI-driven price sensitivity
+                    AI-driven price sensitivity - Click metrics for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('pricing', 'analyzed_customers', 'Customers Analyzed for Pricing', `${advancedPricingData?.dashboard?.summary_metrics?.total_customers_analyzed || 684} customers analyzed`)}>
                       <span className="text-slate-300">Analyzed</span>
                       <span className="text-purple-400 font-semibold">
                         {advancedPricingData?.dashboard?.summary_metrics?.total_customers_analyzed || 684}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('pricing', 'pricing_experiments', 'Active Pricing Experiments', `${advancedPricingData?.dashboard?.summary_metrics?.active_pricing_experiments || 2} active experiments`)}>
                       <span className="text-slate-300">Experiments</span>
                       <span className="text-blue-400 font-semibold">
                         {advancedPricingData?.dashboard?.summary_metrics?.active_pricing_experiments || 2}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('pricing', 'revenue_boost', 'Pricing Revenue Optimization', `$${(advancedPricingData?.dashboard?.summary_metrics?.revenue_optimization_this_month || 47800).toLocaleString()} this month`)}>
                       <span className="text-slate-300">Revenue Boost</span>
                       <span className="text-green-400 font-semibold">
                         ${(advancedPricingData?.dashboard?.summary_metrics?.revenue_optimization_this_month || 47800).toLocaleString()}
