@@ -43,7 +43,7 @@ class SentimentAnalysisService:
         self.api_key = os.getenv("EMERGENT_LLM_KEY")
         mongo_url = os.getenv("MONGO_URL", "mongodb://localhost:27017")
         self.client = AsyncIOMotorClient(mongo_url)
-        self.db = self.client.customer_mind_iq
+        self.db = self.client[os.environ.get('DB_NAME', 'customer_mind_iq')]
     
     async def analyze_customer_sentiment(self, customers_data: List[Dict]) -> List[SentimentProfile]:
         """Analyze sentiment for all customers using AI"""
