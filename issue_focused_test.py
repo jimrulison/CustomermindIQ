@@ -16,7 +16,7 @@ from datetime import datetime
 import time
 
 class IssueFocusedTester:
-    def __init__(self, base_url="https://mindiq-customer-1.preview.emergentagent.com"):
+    def __init__(self, base_url="https://mindiq-frontend.preview.emergentagent.com"):
         self.base_url = base_url
         self.issues_found = []
         self.fixes_needed = []

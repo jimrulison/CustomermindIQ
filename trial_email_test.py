@@ -10,7 +10,7 @@ import sys
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://mindiq-customer-1.preview.emergentagent.com"
+BASE_URL = "https://mindiq-frontend.preview.emergentagent.com"
 ADMIN_EMAIL = "admin@customermindiq.com"
 ADMIN_PASSWORD = "CustomerMindIQ2025!"
 
