@@ -736,7 +736,11 @@ Contact: growth@customermindiq.com`;
                         {formatCurrency(pql.estimated_deal_value)} potential
                       </div>
                     </div>
-                    <Button size="sm" className="bg-green-600 hover:bg-green-700">
+                    <Button 
+                      size="sm" 
+                      className="bg-green-600 hover:bg-green-700"
+                      onClick={() => handleConvertPQL(pql)}
+                    >
                       Convert
                     </Button>
                   </div>
