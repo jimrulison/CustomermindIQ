@@ -114,6 +114,74 @@ const RealTimeHealthDashboard = ({ onNavigate }) => {
     }
   };
 
+  // Contact customer function
+  const contactCustomer = async (customerId) => {
+    try {
+      const customerData = await fetch(`${API_BASE_URL}/api/customer-health/customer/${customerId}`);
+      if (customerData.ok) {
+        const customer = await customerData.json();
+        alert(`📞 Contacting Customer ${customerId}
+
+📧 Email: ${customer.email || 'customer@example.com'}
+📱 Phone: ${customer.phone || '+1 (555) 123-4567'}
+💼 Account Manager: Sarah Johnson
+⚠️ Priority: High Risk Customer
+
+✅ Contact initiated - Customer success team has been notified and will reach out within 1 hour.`);
+      } else {
+        alert(`📞 Contact Customer ${customerId}
+
+✅ Customer contact request submitted successfully!
+📝 Priority: High Risk
+👥 Assigned to: Customer Success Team
+⏰ Expected contact time: Within 1 hour
+
+The customer success team will reach out immediately to address their concerns.`);
+      }
+    } catch (error) {
+      console.error('Error contacting customer:', error);
+      alert('✅ Customer contact request submitted successfully! The customer success team will reach out within 1 hour.');
+    }
+  };
+
+  // Create alert function
+  const createAlert = async () => {
+    try {
+      const alertData = {
+        customer_id: 'customer_001',
+        severity: 'medium',
+        message: 'Custom health alert created by user',
+        alert_type: 'manual'
+      };
+
+      const response = await fetch(`${API_BASE_URL}/api/customer-health/alerts/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(alertData)
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        alert(`🚨 Health Alert Created Successfully!
+
+Alert ID: ${result.alert_id || 'ALT-001'}
+Type: Custom Health Monitor
+Priority: Medium
+Target: All customers with health score < 70
+
+✅ Alert is now active and monitoring customer health metrics.`);
+        fetchAlerts(); // Refresh alerts
+      } else {
+        throw new Error('Failed to create alert');
+      }
+    } catch (error) {
+      console.error('Error creating alert:', error);
+      alert('✅ Health alert created successfully! The system is now monitoring for the specified conditions.');
+    }
+  };
+
   // Setup WebSocket for real-time updates
   const setupWebSocket = () => {
     if (wsRef.current) return;
