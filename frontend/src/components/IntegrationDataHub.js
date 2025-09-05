@@ -144,6 +144,63 @@ const IntegrationDataHub = () => {
         dataPoints: 'Error types, frequency, severity levels, resolution times, impact assessment',
         updateFrequency: 'Real-time error tracking with 15-minute rate calculations',
         currentValue: currentValue
+      },
+      // INTEGRATION ANALYTICS DATA SOURCES
+      'analytics_system_health': {
+        title: 'System Health Score - Data Source',
+        description: 'Overall health assessment of integration infrastructure',
+        sources: [
+          '• System Monitoring Suite: CPU, memory, and resource utilization tracking',
+          '• Health Check Services: Automated endpoint and service availability tests',
+          '• Performance Baselines: Historical comparison and anomaly detection',
+          '• Alert Management: Critical issue identification and escalation'
+        ],
+        methodology: 'Health Score = weighted average of uptime (30%), response time (25%), error rate (20%), resource usage (15%), security posture (10%). AI-powered predictive health modeling.',
+        dataPoints: 'Service uptime, response times, resource metrics, security events, performance trends',
+        updateFrequency: 'Real-time monitoring with 2-minute health score updates',
+        currentValue: currentValue
+      },
+      'analytics_uptime_percentage': {
+        title: 'System Uptime - Data Source',
+        description: 'Percentage of time all integration services are operational',
+        sources: [
+          '• Uptime Monitors: 24/7 service availability tracking from multiple locations',
+          '• Service Health Checks: Automated functionality and response validation',
+          '• Incident Management: Downtime classification and root cause analysis',
+          '• SLA Compliance Tracking: Service level agreement monitoring'
+        ],
+        methodology: 'Uptime = (Total operational time / Total monitoring time) × 100. Measured from multiple geographic locations with consensus-based availability determination.',
+        dataPoints: 'Service status, downtime events, maintenance windows, response codes, geographic availability',
+        updateFrequency: 'Continuous monitoring with 1-minute uptime calculations',
+        currentValue: currentValue
+      },
+      'analytics_avg_response_time': {
+        title: 'Average Response Time - Data Source',
+        description: 'Mean response time across all integration endpoints',
+        sources: [
+          '• Performance Monitoring: End-to-end request/response time measurement',
+          '• Load Testing Results: Stress testing and capacity planning data',
+          '• Geographic Performance: Multi-region response time analysis',
+          '• Cache Performance: CDN and caching layer effectiveness measurement'
+        ],
+        methodology: 'Average Response Time = weighted mean of all API calls, database queries, and service interactions. Excludes maintenance periods and outliers beyond 3 standard deviations.',
+        dataPoints: 'Request timestamps, response times, endpoint performance, geographic latency, cache hit rates',
+        updateFrequency: 'Real-time measurement with 5-minute rolling averages',
+        currentValue: currentValue
+      },
+      'analytics_total_roi': {
+        title: 'Total ROI - Data Source',
+        description: 'Comprehensive return on investment from integration platform',
+        sources: [
+          '• Financial Analytics: Cost tracking and benefit quantification',
+          '• Productivity Metrics: Time savings and efficiency improvements',
+          '• Business Impact Analysis: Revenue attribution and cost avoidance',
+          '• Comparative Analysis: vs. manual processes and alternative solutions'
+        ],
+        methodology: 'ROI = ((Benefits - Costs) / Costs) × 100. Benefits include time savings, error reduction, revenue enablement. Costs include platform, development, and maintenance.',
+        dataPoints: 'Development costs, operational expenses, time savings, error rates, business outcomes',
+        updateFrequency: 'Monthly ROI calculation with quarterly comprehensive review',
+        currentValue: currentValue
       }
     };
 
