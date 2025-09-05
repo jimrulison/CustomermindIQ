@@ -617,6 +617,178 @@ ${details.updateFrequency}
         dataPoints: 'Behavioral deviations, statistical thresholds, anomaly scores, alert frequencies, investigation outcomes',
         updateFrequency: 'Real-time anomaly detection with immediate alerting',
         currentValue: currentValue
+      },
+      // CHURN PREVENTION DATA SOURCES
+      'churn_at_risk_customers': {
+        title: 'At-Risk Customers - Data Source',
+        description: 'Customers identified as having high churn probability through AI prediction models',
+        sources: [
+          '• Churn Prediction ML Models: Advanced algorithms for churn risk assessment',
+          '• Customer Health Scoring: Multi-dimensional health metrics and risk indicators',
+          '• Behavioral Analytics: Usage decline patterns and engagement analysis',
+          '• Early Warning Systems: Automated risk detection and alert generation'
+        ],
+        methodology: 'At-Risk = Customers with churn probability >60% based on ML models using gradient boosting, random forest, and neural networks.',
+        dataPoints: 'Usage patterns, engagement metrics, support interactions, payment history, behavioral changes',
+        updateFrequency: 'Daily churn risk scoring with real-time model updates',
+        currentValue: currentValue
+      },
+      'churn_prevention_rate': {
+        title: 'Churn Prevention Success Rate - Data Source',
+        description: 'Effectiveness of churn prevention interventions and retention campaigns',
+        sources: [
+          '• Retention Campaign Analytics: Success rate tracking for churn prevention initiatives',
+          '• Customer Success Platform: Intervention effectiveness and outcome measurement',
+          '• Predictive Model Validation: Prevention success prediction accuracy',
+          '• Cohort Analysis: Retention improvement measurement over time'
+        ],
+        methodology: 'Prevention Rate = (Successfully retained at-risk customers / Total churn prevention interventions) × 100.',
+        dataPoints: 'Intervention outcomes, retention rates, campaign effectiveness, customer feedback, satisfaction improvements',
+        updateFrequency: 'Weekly retention analysis with monthly intervention effectiveness review',
+        currentValue: currentValue
+      },
+      'churn_critical_cases': {
+        title: 'Critical Risk Cases - Data Source',
+        description: 'Customers at extremely high risk requiring immediate intervention',
+        sources: [
+          '• Critical Risk Scoring: Highest-priority churn risk identification',
+          '• Emergency Alert System: Immediate notification for critical cases',
+          '• Account Management CRM: Critical account tracking and escalation',
+          '• Intervention Queue: Priority-based intervention scheduling'
+        ],
+        methodology: 'Critical Cases = Customers with churn probability >85% AND high revenue impact AND immediate action required.',
+        dataPoints: 'Risk scores, revenue impact, intervention urgency, escalation status, success probability',
+        updateFrequency: 'Real-time critical risk monitoring with immediate alerting',
+        currentValue: currentValue
+      },
+      // CROSS-SELL INTELLIGENCE DATA SOURCES
+      'cross_sell_opportunities': {
+        title: 'Cross-Sell Opportunities - Data Source',
+        description: 'AI-identified opportunities for product recommendations and upselling',
+        sources: [
+          '• Recommendation Engine: ML-powered product affinity and cross-sell analysis',
+          '• Customer Profile Analytics: Purchase history and preference modeling',
+          '• Product Usage Intelligence: Feature adoption and expansion signals',
+          '• Market Basket Analysis: Product combination and bundling opportunities'
+        ],
+        methodology: 'Opportunities = Customers with cross-sell propensity >50% based on collaborative filtering, content-based recommendations, and behavioral analysis.',
+        dataPoints: 'Purchase history, product affinities, usage patterns, recommendation scores, conversion probabilities',
+        updateFrequency: 'Daily opportunity identification with real-time recommendation updates',
+        currentValue: currentValue
+      },
+      'cross_sell_potential_revenue': {
+        title: 'Cross-Sell Revenue Potential - Data Source',
+        description: 'Estimated revenue from identified cross-sell opportunities',
+        sources: [
+          '• Revenue Modeling Engine: Cross-sell revenue prediction and sizing',
+          '• Pricing Intelligence: Product pricing and bundle optimization',
+          '• Customer Value Analytics: CLV impact and revenue uplift calculation',
+          '• Conversion Analytics: Cross-sell success rate and revenue realization'
+        ],
+        methodology: 'Revenue Potential = sum of (Opportunity Value × Conversion Probability × Average Deal Size) across all identified opportunities.',
+        dataPoints: 'Opportunity values, conversion rates, average deal sizes, revenue projections, timing estimates',
+        updateFrequency: 'Weekly revenue potential analysis with monthly forecast updates',
+        currentValue: currentValue
+      },
+      'cross_sell_conversion_rate': {
+        title: 'Cross-Sell Conversion Rate - Data Source',
+        description: 'Success rate of cross-sell recommendations and campaigns',
+        sources: [
+          '• Conversion Tracking Platform: Cross-sell campaign performance measurement',
+          '• Recommendation Analytics: Recommendation acceptance and conversion rates',
+          '• Sales Performance CRM: Cross-sell deal closure and success tracking',
+          '• Customer Response Analytics: Recommendation engagement and response rates'
+        ],
+        methodology: 'Conversion Rate = (Successful cross-sell conversions / Total cross-sell opportunities presented) × 100.',
+        dataPoints: 'Recommendation presentations, customer responses, conversion outcomes, deal values, campaign effectiveness',
+        updateFrequency: 'Real-time conversion tracking with weekly performance analysis',
+        currentValue: currentValue
+      },
+      // ADVANCED PRICING DATA SOURCES
+      'pricing_analyzed_customers': {
+        title: 'Customers Analyzed for Pricing - Data Source',
+        description: 'Customers included in pricing sensitivity and optimization analysis',
+        sources: [
+          '• Price Sensitivity Engine: Customer price elasticity analysis and modeling',
+          '• Behavioral Economics Platform: Purchase decision and price response tracking',
+          '• Market Research Integration: External pricing benchmarks and competitive analysis',
+          '• A/B Testing Framework: Price experiment design and analysis'
+        ],
+        methodology: 'Analyzed Customers = Active customers with sufficient purchase history for price sensitivity modeling (minimum 3 transactions).',
+        dataPoints: 'Purchase history, price responses, elasticity coefficients, competitor pricing, willingness to pay',
+        updateFrequency: 'Monthly pricing analysis with quarterly sensitivity model updates',
+        currentValue: currentValue
+      },
+      'pricing_pricing_experiments': {
+        title: 'Active Pricing Experiments - Data Source',
+        description: 'Ongoing A/B tests and pricing optimization experiments',
+        sources: [
+          '• Experimentation Platform: A/B testing framework for pricing strategies',
+          '• Statistical Analysis Engine: Experiment design and statistical significance testing',
+          '• Revenue Impact Measurement: Pricing experiment outcome tracking',
+          '• Optimization Algorithm: Dynamic pricing and experiment optimization'
+        ],
+        methodology: 'Active Experiments = Currently running price tests with statistical validity and minimum 95% confidence intervals.',
+        dataPoints: 'Test designs, sample sizes, statistical significance, revenue impacts, conversion rates',
+        updateFrequency: 'Real-time experiment monitoring with weekly performance reviews',
+        currentValue: currentValue
+      },
+      'pricing_revenue_boost': {
+        title: 'Pricing Revenue Optimization - Data Source',
+        description: 'Additional revenue generated through pricing optimization strategies',
+        sources: [
+          '• Revenue Attribution Platform: Pricing optimization impact measurement',
+          '• Dynamic Pricing Engine: Real-time price optimization and revenue tracking',
+          '• Margin Analysis System: Profit margin improvement measurement',
+          '• Performance Comparison: Before/after pricing optimization analysis'
+        ],
+        methodology: 'Revenue Boost = Total additional revenue attributed to pricing optimization compared to baseline pricing strategies.',
+        dataPoints: 'Revenue increases, margin improvements, price optimization effects, customer response, competitive positioning',
+        updateFrequency: 'Daily revenue tracking with monthly optimization impact analysis',
+        currentValue: currentValue
+      },
+      // SENTIMENT ANALYSIS DATA SOURCES
+      'sentiment_communications_analyzed': {
+        title: 'Communications Analyzed - Data Source',
+        description: 'Customer communications processed through sentiment analysis algorithms',
+        sources: [
+          '• Natural Language Processing Engine: Multi-channel communication analysis',
+          '• Text Analytics Platform: Sentiment classification and emotion detection',
+          '• Communication Aggregation: Email, chat, social media, and support integration',
+          '• Voice Analytics: Call sentiment analysis and conversation intelligence'
+        ],
+        methodology: 'Communications = Total customer interactions processed through NLP models including text, voice, and structured feedback.',
+        dataPoints: 'Text messages, voice calls, emails, social posts, support tickets, sentiment scores',
+        updateFrequency: 'Real-time communication analysis with continuous sentiment processing',
+        currentValue: currentValue
+      },
+      'sentiment_positive_sentiment': {
+        title: 'Positive Sentiment Analysis - Data Source',
+        description: 'Percentage of customer communications expressing positive sentiment',
+        sources: [
+          '• Sentiment Classification Models: Advanced NLP models for emotion detection',
+          '• Multi-language Processing: Global sentiment analysis across languages',
+          '• Context Analysis Engine: Contextual sentiment interpretation and scoring',
+          '• Trend Analysis Platform: Sentiment trend tracking and pattern recognition'
+        ],
+        methodology: 'Positive Sentiment = (Communications with positive sentiment / Total analyzed communications) × 100. Uses transformer-based models.',
+        dataPoints: 'Sentiment scores, emotion classifications, confidence levels, contextual factors, trend patterns',
+        updateFrequency: 'Real-time sentiment scoring with daily trend analysis',
+        currentValue: currentValue
+      },
+      'sentiment_active_alerts': {
+        title: 'Sentiment Analysis Alerts - Data Source',
+        description: 'Active alerts for negative sentiment or concerning communication patterns',
+        sources: [
+          '• Alert Management System: Automated sentiment-based alert generation',
+          '• Threshold Monitoring: Sentiment score threshold tracking and notifications',
+          '• Escalation Engine: Alert prioritization and routing system',
+          '• Response Tracking: Alert resolution and follow-up monitoring'
+        ],
+        methodology: 'Active Alerts = Communications with sentiment scores below -0.5 OR high-priority negative feedback requiring immediate attention.',
+        dataPoints: 'Alert triggers, sentiment thresholds, escalation levels, response times, resolution outcomes',
+        updateFrequency: 'Real-time alert generation with immediate notification delivery',
+        currentValue: currentValue
       }
     };
 
