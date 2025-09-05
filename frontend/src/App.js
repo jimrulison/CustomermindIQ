@@ -2490,24 +2490,24 @@ ${details.updateFrequency}
                     Sentiment Analysis
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    NLP communication analysis
+                    NLP communication analysis - Click metrics for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('sentiment', 'communications_analyzed', 'Communications Analyzed', `${sentimentAnalysisData?.dashboard?.summary_metrics?.total_communications_analyzed || 568} communications analyzed`)}>
                       <span className="text-slate-300">Communications</span>
                       <span className="text-cyan-400 font-semibold">
                         {sentimentAnalysisData?.dashboard?.summary_metrics?.total_communications_analyzed || 568}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('sentiment', 'positive_sentiment', 'Positive Sentiment Analysis', `${sentimentAnalysisData?.dashboard?.summary_metrics?.positive_sentiment_percentage || '41.2'}% positive sentiment`)}>
                       <span className="text-slate-300">Positive Sentiment</span>
                       <span className="text-green-400 font-semibold">
                         {sentimentAnalysisData?.dashboard?.summary_metrics?.positive_sentiment_percentage || '41.2'}%
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('sentiment', 'active_alerts', 'Sentiment Analysis Alerts', `${sentimentAnalysisData?.dashboard?.summary_metrics?.active_alerts || 4} active alerts`)}>
                       <span className="text-slate-300">Active Alerts</span>
                       <span className="text-orange-400 font-semibold">
                         {sentimentAnalysisData?.dashboard?.summary_metrics?.active_alerts || 4}
