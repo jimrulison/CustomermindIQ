@@ -2420,24 +2420,24 @@ ${details.updateFrequency}
                     Cross-Sell Intelligence
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    AI product recommendations
+                    AI product recommendations - Click metrics for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('cross_sell', 'opportunities', 'Cross-Sell Opportunities', `${crossSellIntelligenceData?.dashboard?.summary_metrics?.total_cross_sell_opportunities || 385} opportunities`)}>
                       <span className="text-slate-300">Opportunities</span>
                       <span className="text-green-400 font-semibold">
                         {crossSellIntelligenceData?.dashboard?.summary_metrics?.total_cross_sell_opportunities || 385}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('cross_sell', 'potential_revenue', 'Cross-Sell Revenue Potential', `$${(crossSellIntelligenceData?.dashboard?.summary_metrics?.total_potential_revenue || 74575).toLocaleString()} potential`)}>
                       <span className="text-slate-300">Potential Revenue</span>
                       <span className="text-blue-400 font-semibold">
                         ${(crossSellIntelligenceData?.dashboard?.summary_metrics?.total_potential_revenue || 74575).toLocaleString()}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('cross_sell', 'conversion_rate', 'Cross-Sell Conversion Rate', `${crossSellIntelligenceData?.dashboard?.summary_metrics?.avg_cross_sell_conversion_rate || '24.6'}% conversion rate`)}>
                       <span className="text-slate-300">Conversion Rate</span>
                       <span className="text-purple-400 font-semibold">
                         {crossSellIntelligenceData?.dashboard?.summary_metrics?.avg_cross_sell_conversion_rate || '24.6'}%
