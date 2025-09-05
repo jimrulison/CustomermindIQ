@@ -2350,24 +2350,24 @@ ${details.updateFrequency}
                     Behavioral Clustering
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    AI customer segmentation
+                    AI customer segmentation - Click metrics for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('clustering', 'customers_analyzed', 'Customers Analyzed', `${behavioralClusteringData?.dashboard?.summary_metrics?.total_customers_analyzed || 574} customers`)}>
                       <span className="text-slate-300">Customers Analyzed</span>
                       <span className="text-blue-400 font-semibold">
                         {behavioralClusteringData?.dashboard?.summary_metrics?.total_customers_analyzed || 574}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('clustering', 'segments', 'Behavioral Clusters Identified', `${behavioralClusteringData?.dashboard?.summary_metrics?.clusters_identified || 5} clusters`)}>
                       <span className="text-slate-300">Clusters Found</span>
                       <span className="text-green-400 font-semibold">
                         {behavioralClusteringData?.dashboard?.summary_metrics?.clusters_identified || 5}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showAdvancedDataSource('clustering', 'segments', 'Average Conversion Rate', `${behavioralClusteringData?.dashboard?.summary_metrics?.average_conversion_rate || '56.4'}%`)}>
                       <span className="text-slate-300">Conversion Rate</span>
                       <span className="text-purple-400 font-semibold">
                         {behavioralClusteringData?.dashboard?.summary_metrics?.average_conversion_rate || '56.4'}%
