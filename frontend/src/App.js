@@ -344,6 +344,188 @@ ${details.updateFrequency}
 💡 This data helps optimize marketing campaigns and improve customer acquisition and engagement.`);
   };
 
+  // Revenue Analytics Suite - Data source drill-down handlers
+  const showRevenueDataSource = (section, metricType, metricName, currentValue) => {
+    const sourceDetails = {
+      // REVENUE FORECASTING DATA SOURCES
+      'forecasting_accuracy': {
+        title: 'Forecast Accuracy - Data Source',
+        description: 'Accuracy rate of AI-powered revenue predictions versus actual outcomes',
+        sources: [
+          '• Predictive Analytics Engine: ML models for revenue trend analysis and forecasting',
+          '• Historical Revenue Database: Multi-year revenue data and seasonal pattern analysis',
+          '• Market Intelligence: External economic indicators and industry trend integration',
+          '• Sales Pipeline Analytics: Deal progression and conversion probability modeling'
+        ],
+        methodology: 'Forecast Accuracy = (Accurate predictions within ±5% margin / Total predictions) × 100. Uses ensemble ML models with time series analysis, seasonal decomposition, and market factor weighting.',
+        dataPoints: 'Historical revenue trends, pipeline data, market indicators, seasonal patterns, economic factors',
+        updateFrequency: 'Daily model training with weekly accuracy validation and monthly model optimization',
+        currentValue: currentValue
+      },
+      'forecasting_predicted_revenue': {
+        title: 'Predicted Revenue - Data Source',
+        description: 'AI-generated revenue forecasts for upcoming quarters based on multiple data streams',
+        sources: [
+          '• Revenue Prediction Models: Advanced ML algorithms for revenue forecasting',
+          '• Pipeline Conversion Analytics: Deal probability and timeline prediction',
+          '• Customer Lifecycle Models: Expansion, renewal, and churn probability analysis',
+          '• Market Dynamics Engine: Competitive and economic impact modeling'
+        ],
+        methodology: 'Predicted Revenue = sum of (Deal Value × Conversion Probability × Timeline Factor) + Recurring Revenue - Predicted Churn. Weighted by confidence intervals and market conditions.',
+        dataPoints: 'Pipeline values, conversion rates, customer lifetime value, market trends, competitive analysis',
+        updateFrequency: 'Real-time pipeline updates with daily forecast recalculation',
+        currentValue: currentValue
+      },
+      // CUSTOMER LIFETIME VALUE DATA SOURCES
+      'clv_average_value': {
+        title: 'Average Customer Lifetime Value - Data Source',
+        description: 'Mean predicted lifetime value across all customer segments',
+        sources: [
+          '• Customer Analytics Platform: Comprehensive customer behavior and transaction analysis',
+          '• Retention Modeling Engine: Churn prediction and lifetime duration calculation',
+          '• Revenue Attribution System: Customer-specific revenue tracking and attribution',
+          '• Segmentation Analytics: Customer cohort and behavioral segment analysis'
+        ],
+        methodology: 'Average CLV = (Average Order Value × Purchase Frequency × Customer Lifespan) - Customer Acquisition Cost. Segmented by customer type, acquisition channel, and engagement level.',
+        dataPoints: 'Transaction history, purchase patterns, retention rates, acquisition costs, engagement metrics',
+        updateFrequency: 'Weekly CLV calculation with monthly cohort analysis and quarterly model updates',
+        currentValue: currentValue
+      },
+      'clv_segment_performance': {
+        title: 'CLV Segment Performance - Data Source',
+        description: 'Lifetime value performance across different customer segments',
+        sources: [
+          '• Customer Segmentation Engine: Behavioral and demographic segmentation analysis',
+          '• Value-Based Analytics: Revenue contribution by customer segment',
+          '• Engagement Correlation: Relationship between engagement and lifetime value',
+          '• Acquisition Channel Analysis: CLV performance by acquisition source'
+        ],
+        methodology: 'Segment Performance = Average CLV per segment weighted by segment size and growth rate. Includes segment-specific retention rates, expansion opportunities, and acquisition costs.',
+        dataPoints: 'Segment revenue, retention rates, expansion revenue, acquisition costs, engagement scores',
+        updateFrequency: 'Monthly segment analysis with quarterly strategic review',
+        currentValue: currentValue
+      },
+      // CHURN PREDICTION DATA SOURCES
+      'churn_risk_score': {
+        title: 'Churn Risk Assessment - Data Source',
+        description: 'AI-powered prediction of customer churn probability and risk levels',
+        sources: [
+          '• Churn Prediction Models: ML algorithms for customer retention risk analysis',
+          '• Behavioral Analytics Engine: Customer engagement and usage pattern tracking',
+          '• Health Score System: Customer satisfaction and success metric integration',
+          '• Early Warning System: Automated churn risk detection and alerting'
+        ],
+        methodology: 'Churn Risk = weighted combination of usage decline (30%), engagement drop (25%), support tickets (20%), payment issues (15%), competitor activity (10%). ML models with 90%+ accuracy.',
+        dataPoints: 'Usage patterns, engagement metrics, support interactions, payment history, satisfaction scores',
+        updateFrequency: 'Real-time risk assessment with daily high-risk customer identification',
+        currentValue: currentValue
+      },
+      'churn_prevention_rate': {
+        title: 'Churn Prevention Success Rate - Data Source',
+        description: 'Effectiveness of retention campaigns and intervention strategies',
+        sources: [
+          '• Retention Campaign Analytics: Success tracking of churn prevention initiatives',
+          '• Customer Success Platform: Intervention effectiveness and outcome measurement',
+          '• Win-back Campaign Results: Recovery rate tracking and optimization analysis',
+          '• Customer Health Recovery: Health score improvement and retention correlation'
+        ],
+        methodology: 'Prevention Rate = (Customers retained after intervention / Customers identified at-risk) × 100. Includes intervention timeliness, method effectiveness, and long-term retention impact.',
+        dataPoints: 'Intervention outcomes, retention rates, health score improvements, campaign effectiveness',
+        updateFrequency: 'Weekly prevention campaign analysis with monthly retention strategy optimization',
+        currentValue: currentValue
+      },
+      // REVENUE ATTRIBUTION DATA SOURCES
+      'attribution_channel_performance': {
+        title: 'Channel Attribution Performance - Data Source',
+        description: 'Revenue attribution across marketing channels and customer touchpoints',
+        sources: [
+          '• Multi-Touch Attribution Engine: Customer journey and touchpoint revenue attribution',
+          '• Marketing Analytics Platform: Channel performance and ROI measurement',
+          '• Customer Journey Mapping: Touchpoint influence and conversion attribution',
+          '• Cross-Channel Analytics: Attribution modeling across online and offline channels'
+        ],
+        methodology: 'Channel Attribution = revenue attributed using time-decay and position-based models. Weighted by touchpoint influence, conversion proximity, and channel interaction patterns.',
+        dataPoints: 'Touchpoint interactions, conversion paths, channel spend, revenue attribution, customer journeys',
+        updateFrequency: 'Real-time attribution tracking with weekly channel performance analysis',
+        currentValue: currentValue
+      },
+      'attribution_roi_analysis': {
+        title: 'Marketing ROI Analysis - Data Source',
+        description: 'Return on investment analysis for marketing channels and campaigns',
+        sources: [
+          '• ROI Calculation Engine: Revenue attribution and cost analysis across channels',
+          '• Marketing Spend Analytics: Channel investment tracking and optimization',
+          '• Campaign Performance Database: Historical ROI data and trend analysis',
+          '• Customer Acquisition Cost Analysis: Acquisition efficiency and lifetime value correlation'
+        ],
+        methodology: 'Marketing ROI = (Attributed Revenue - Marketing Spend) / Marketing Spend × 100. Includes direct and indirect attribution, customer lifetime value impact, and channel synergies.',
+        dataPoints: 'Marketing spend, attributed revenue, acquisition costs, lifetime value, campaign performance',
+        updateFrequency: 'Weekly ROI calculation with monthly channel optimization analysis',
+        currentValue: currentValue
+      },
+      // PRICING OPTIMIZATION DATA SOURCES
+      'pricing_elasticity': {
+        title: 'Price Elasticity Analysis - Data Source',
+        description: 'Customer response to pricing changes and optimization opportunities',
+        sources: [
+          '• Price Elasticity Engine: Customer price sensitivity analysis and modeling',
+          '• A/B Testing Platform: Price testing and customer response measurement',
+          '• Competitive Pricing Intelligence: Market pricing analysis and positioning',
+          '• Customer Value Perception: Willingness to pay and value-based pricing insights'
+        ],
+        methodology: 'Price Elasticity = % change in quantity demanded / % change in price. Segmented by customer type, product category, and market conditions with statistical significance testing.',
+        dataPoints: 'Price changes, demand response, conversion rates, competitive pricing, customer feedback',
+        updateFrequency: 'Monthly elasticity analysis with quarterly pricing strategy optimization',
+        currentValue: currentValue
+      },
+      'pricing_optimization_impact': {
+        title: 'Pricing Optimization Impact - Data Source',
+        description: 'Revenue impact from dynamic pricing and optimization strategies',
+        sources: [
+          '• Dynamic Pricing Engine: Automated pricing optimization and revenue impact tracking',
+          '• Revenue Impact Analytics: Pricing change revenue attribution and measurement',
+          '• Customer Response Analysis: Pricing sensitivity and behavior change tracking',
+          '• Optimization Algorithm Performance: ML model effectiveness and revenue improvement'
+        ],
+        methodology: 'Optimization Impact = (Revenue with optimized pricing - Revenue with previous pricing) / Revenue with previous pricing × 100. Accounts for volume changes and customer retention.',
+        dataPoints: 'Pricing changes, revenue impact, volume changes, customer retention, competitive response',
+        updateFrequency: 'Real-time pricing optimization with weekly impact analysis',
+        currentValue: currentValue
+      }
+    };
+
+    const key = `${section}_${metricType}`;
+    const details = sourceDetails[key] || {
+      title: `${metricName} - Data Source`,
+      description: 'Data source information for this revenue analytics metric',
+      sources: ['• Revenue analytics platforms', '• Predictive modeling systems', '• Customer data platforms', '• Financial tracking systems'],
+      methodology: 'Calculated using advanced revenue analytics and predictive modeling algorithms',
+      dataPoints: 'Revenue data, customer behavior, market trends, financial performance',
+      updateFrequency: 'Updated based on revenue analytics monitoring schedules',
+      currentValue: currentValue
+    };
+
+    alert(`📊 ${details.title}
+
+Current Value: ${details.currentValue}
+
+${details.description}
+
+🔍 DATA SOURCES:
+${details.sources.join('\n')}
+
+⚙️ METHODOLOGY:
+${details.methodology}
+
+📈 KEY DATA POINTS:
+${details.dataPoints}
+
+🕐 UPDATE FREQUENCY:
+${details.updateFrequency}
+
+💡 This data helps optimize revenue performance and drive strategic business decisions.`);
+  };
+
   // Advanced Features Expansion state
   const [advancedDashboard, setAdvancedDashboard] = useState(null);
   const [behavioralClusteringData, setBehavioralClusteringData] = useState(null);
