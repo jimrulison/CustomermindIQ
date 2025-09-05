@@ -1456,24 +1456,24 @@ ${details.updateFrequency}
                     Dynamic Content
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Real-time personalization
+                    Real-time personalization - Click metrics for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('content', 'templates_count', 'Content Templates', dynamicContentData?.dashboard?.templates_count || 24)}>
                       <span className="text-slate-300">Templates</span>
                       <span className="text-green-400 font-semibold">
                         {dynamicContentData?.dashboard?.templates_count || 24}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('content', 'personalization_rate', 'Personalization Rate', dynamicContentData?.dashboard?.personalization_rate || '87.5%')}>
                       <span className="text-slate-300">Personalization</span>
                       <span className="text-purple-400 font-semibold">
                         {dynamicContentData?.dashboard?.personalization_rate || '87.5%'}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showMarketingDataSource('content', 'personalization_rate', 'Engagement Uplift', dynamicContentData?.dashboard?.engagement_uplift || '+32.1%')}>
                       <span className="text-slate-300">Engagement</span>
                       <span className="text-blue-400 font-semibold">
                         {dynamicContentData?.dashboard?.engagement_uplift || '+32.1%'}
