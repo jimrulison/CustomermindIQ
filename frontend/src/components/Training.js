@@ -298,6 +298,46 @@ const Training = () => {
         "Support & Troubleshooting Quiz",
         "Complete Answer Key"
       ]
+    },
+    {
+      id: 6,
+      title: "CustomerMind IQ FAQ Document",
+      description: "Frequently asked questions and comprehensive troubleshooting guide",
+      icon: FileText,
+      pages: "PDF",
+      lastUpdated: "September 2025",
+      downloadUrl: "https://customer-assets.emergentagent.com/job_customer-mind-iq-5/artifacts/gwct7ki3_Customer%20Mind%20IQ%20FAQ.docx",
+      pdfType: "faq-document",
+      filename: "Customer_Mind_IQ_FAQ.docx",
+      size: "DOCX",
+      isExternalDownload: true,
+      sections: [
+        "Common Setup Questions",
+        "Feature Usage FAQ",
+        "Troubleshooting Guide",
+        "Billing & Subscription FAQ",
+        "Technical Support Information"
+      ]
+    },
+    {
+      id: 7,
+      title: "Training Quiz & Answers",
+      description: "Test your knowledge with our comprehensive training quiz and answer key",
+      icon: CheckSquare,
+      pages: "PDF", 
+      lastUpdated: "September 2025",
+      downloadUrl: "https://customer-assets.emergentagent.com/job_mindiq-customer/artifacts/s9mm15oh_Customer%20Mind%20quiz%20and%20answers.docx",
+      pdfType: "training-quiz",
+      filename: "Customer_Mind_Quiz_and_Answers.docx", 
+      size: "DOCX",
+      isExternalDownload: true,
+      sections: [
+        "Platform Navigation Quiz",
+        "Feature Knowledge Assessment", 
+        "Advanced Analytics Questions",
+        "Best Practices Scenarios",
+        "Complete Answer Key"
+      ]
     }
   ];
 
