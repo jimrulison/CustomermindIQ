@@ -40,7 +40,7 @@ class GrowthEngineDashboard:
         self.api_key = os.getenv("EMERGENT_LLM_KEY")
         self.mongo_url = os.getenv("MONGO_URL", "mongodb://localhost:27017")
         self.client = AsyncIOMotorClient(self.mongo_url)
-        self.db = self.client.customer_mind_iq
+        self.db = self.client[os.environ.get('DB_NAME', 'customer_mind_iq')]
         
         # Initialize component services
         self.opportunity_scanner = GrowthOpportunityScanner()
