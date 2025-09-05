@@ -521,7 +521,11 @@ Contact: support@customermindiq.com`;
                         {task.customer_name} • {task.assigned_csm} • {task.estimated_time}
                       </div>
                     </div>
-                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                    <Button 
+                      size="sm" 
+                      className="bg-blue-600 hover:bg-blue-700"
+                      onClick={() => handleCreateActionPlan(milestone.customer_id, milestone.risk_level)}
+                    >
                       Assign
                     </Button>
                   </div>
