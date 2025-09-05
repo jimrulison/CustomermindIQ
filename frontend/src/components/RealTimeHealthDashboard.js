@@ -624,7 +624,7 @@ Target: All customers with health score < 70
                 <p className="text-slate-400 text-sm">Launch targeted outreach for at-risk customers</p>
               </div>
               <Button 
-                onClick={() => onNavigate && onNavigate('create')}
+                onClick={createInterventionCampaign}
                 className="bg-purple-600 hover:bg-purple-700"
               >
                 <Zap className="w-4 h-4 mr-2" />
