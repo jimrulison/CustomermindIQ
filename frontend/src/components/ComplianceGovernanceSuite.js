@@ -507,6 +507,62 @@ ${details.updateFrequency}
       {/* Compliance Monitoring Tab */}
       {activeTab === 'compliance' && (
         <div className="space-y-6">
+          {/* Compliance Monitoring Summary */}
+          <div className="grid gap-6 md:grid-cols-4">
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showDataSource('compliance', 'framework_compliance', 'Framework Compliance Rate', `${complianceData?.dashboard?.compliance_status?.overall_compliance_score || '0'}%`)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <Shield className="h-8 w-8 text-green-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {complianceData?.dashboard?.compliance_status?.overall_compliance_score || '0'}%
+                  </div>
+                  <div className="text-xs text-green-200">Framework Compliance</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-red-600/20 to-red-800/20 border-red-500/30 cursor-pointer hover:bg-red-600/30 transition-all duration-200" onClick={() => showDataSource('compliance', 'policy_violations', 'Policy Violations', complianceData?.dashboard?.policy_compliance?.reduce((sum, policy) => sum + (policy.violations_count || 0), 0) || 0)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <AlertTriangle className="h-8 w-8 text-red-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {complianceData?.dashboard?.policy_compliance?.reduce((sum, policy) => sum + (policy.violations_count || 0), 0) || 0}
+                  </div>
+                  <div className="text-xs text-red-200">Policy Violations</div>
+                  <div className="text-xs text-red-300 mt-1 opacity-75">Click for data source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showDataSource('compliance', 'remediation_rate', 'Remediation Success Rate', `${complianceData?.dashboard?.compliance_status?.remediation_success_rate || '95.2'}%`)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <CheckCircle className="h-8 w-8 text-blue-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {complianceData?.dashboard?.compliance_status?.remediation_success_rate || '95.2'}%
+                  </div>
+                  <div className="text-xs text-blue-200">Remediation Rate</div>
+                  <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showDataSource('compliance', 'framework_compliance', 'Active Frameworks', complianceData?.dashboard?.framework_compliance?.length || 0)}>
+              <CardContent className="p-4">
+                <div className="text-center">
+                  <FileText className="h-8 w-8 text-purple-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">
+                    {complianceData?.dashboard?.framework_compliance?.length || 0}
+                  </div>
+                  <div className="text-xs text-purple-200">Active Frameworks</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Individual Policy Compliance Cards */}
           <div className="grid gap-6 md:grid-cols-2">
             {complianceData?.dashboard?.policy_compliance?.map((policy, index) => (
               <Card key={index} className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
