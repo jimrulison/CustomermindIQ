@@ -555,7 +555,7 @@ ${details.updateFrequency}
         <div className="space-y-6">
           {/* Onboarding Summary */}
           <div className="grid gap-6 md:grid-cols-4">
-            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30">
+            <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 cursor-pointer hover:bg-green-600/30 transition-all duration-200" onClick={() => showDataSource('onboarding', 'completion_rate', 'Onboarding Completion Rate', `${onboardingData?.dashboard?.summary_metrics?.overall_completion_rate || 41.2}%`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <CheckCircle className="h-8 w-8 text-green-400 mx-auto mb-2" />
@@ -563,11 +563,12 @@ ${details.updateFrequency}
                     {onboardingData?.dashboard?.summary_metrics?.overall_completion_rate || 41.2}%
                   </div>
                   <div className="text-xs text-green-200">Completion Rate</div>
+                  <div className="text-xs text-green-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30">
+            <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:bg-blue-600/30 transition-all duration-200" onClick={() => showDataSource('onboarding', 'avg_time_to_complete', 'Average Time to Complete', `${onboardingData?.dashboard?.summary_metrics?.avg_time_to_complete || 14.8}d`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Clock className="h-8 w-8 text-blue-400 mx-auto mb-2" />
@@ -575,11 +576,12 @@ ${details.updateFrequency}
                     {onboardingData?.dashboard?.summary_metrics?.avg_time_to_complete || 14.8}d
                   </div>
                   <div className="text-xs text-blue-200">Avg Time to Complete</div>
+                  <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30">
+            <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:bg-purple-600/30 transition-all duration-200" onClick={() => showDataSource('onboarding', 'drop_off_rate', 'Drop-off Rate', `${100 - (onboardingData?.dashboard?.summary_metrics?.overall_completion_rate || 41.2)}%`)}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <Star className="h-8 w-8 text-purple-400 mx-auto mb-2" />
@@ -587,11 +589,12 @@ ${details.updateFrequency}
                     {onboardingData?.dashboard?.summary_metrics?.user_satisfaction_score || 7.9}
                   </div>
                   <div className="text-xs text-purple-200">Satisfaction Score</div>
+                  <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30">
+            <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:bg-orange-600/30 transition-all duration-200" onClick={() => showDataSource('onboarding', 'feature_discovery', 'Feature Discovery Rate', onboardingData?.dashboard?.summary_metrics?.month_over_month_improvement || '+8.4%')}>
               <CardContent className="p-4">
                 <div className="text-center">
                   <TrendingUp className="h-8 w-8 text-orange-400 mx-auto mb-2" />
@@ -599,6 +602,7 @@ ${details.updateFrequency}
                     {onboardingData?.dashboard?.summary_metrics?.month_over_month_improvement || '+8.4%'}
                   </div>
                   <div className="text-xs text-orange-200">MoM Improvement</div>
+                  <div className="text-xs text-orange-300 mt-1 opacity-75">Click for data source</div>
                 </div>
               </CardContent>
             </Card>
