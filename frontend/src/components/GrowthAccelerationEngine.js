@@ -427,7 +427,10 @@ This upgrade will unlock the full Growth Acceleration Engine immediately!`);
                     <li>• Unified growth dashboard with AI insights</li>
                   </ul>
                 </div>
-                <button className="bg-white text-orange-600 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors">
+                <button 
+                  className="bg-white text-orange-600 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors"
+                  onClick={handleUpgradeToAnnual}
+                >
                   Upgrade to Annual Subscription
                 </button>
                 <p className="text-xs mt-4 opacity-90">
