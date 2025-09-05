@@ -1860,24 +1860,24 @@ ${details.updateFrequency}
                     Price Optimization
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Dynamic pricing strategies
+                    Dynamic pricing strategies - Click metrics for data sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showRevenueDataSource('pricing', 'elasticity', 'Active Price Tests', `${priceOptimizationData?.dashboard?.active_tests || 12} tests`)}>
                       <span className="text-slate-300">Price Tests</span>
                       <span className="text-blue-400 font-semibold">
                         {priceOptimizationData?.dashboard?.active_tests || 12}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showRevenueDataSource('pricing', 'optimization_impact', 'Revenue Uplift from Optimization', `${priceOptimizationData?.dashboard?.revenue_uplift || '+18.5%'}`)}>
                       <span className="text-slate-300">Revenue Uplift</span>
                       <span className="text-green-400 font-semibold">
                         {priceOptimizationData?.dashboard?.revenue_uplift || '+18.5%'}
                       </span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between cursor-pointer hover:bg-slate-700/30 p-2 rounded transition-all duration-200" onClick={() => showRevenueDataSource('pricing', 'optimization_impact', 'Optimized Products', `${priceOptimizationData?.dashboard?.optimized_products || 47} products`)}>
                       <span className="text-slate-300">Optimal Prices</span>
                       <span className="text-purple-400 font-semibold">
                         {priceOptimizationData?.dashboard?.optimized_products || 47}
