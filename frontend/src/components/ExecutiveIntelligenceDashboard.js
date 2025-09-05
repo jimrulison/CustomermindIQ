@@ -344,7 +344,11 @@ const ExecutiveIntelligenceDashboard = () => {
                           <strong>Action Required:</strong> {alert.action_required}
                         </p>
                       </div>
-                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700 ml-4">
+                      <Button 
+                        size="sm" 
+                        className="bg-blue-600 hover:bg-blue-700 ml-4"
+                        onClick={() => handleAddressAlert(alert)}
+                      >
                         Address
                       </Button>
                     </div>
