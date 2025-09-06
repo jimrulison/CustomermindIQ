@@ -26,7 +26,7 @@ import {
   Bell
 } from 'lucide-react';
 
-const Header = ({ currentPage, onNavigate, onSignOut, user }) => {
+const Header = ({ currentPage, onNavigate, onSignOut, user, onGoBack }) => {
   const [waitingChatsCount, setWaitingChatsCount] = useState(0);
   
   // Check for waiting chats if user is admin
