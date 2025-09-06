@@ -74,6 +74,7 @@ function AppContent() {
 
   // Application state
   const [currentPage, setCurrentPage] = useState('customer-analytics-dashboard');
+  const [pageHistory, setPageHistory] = useState(['customer-analytics-dashboard']); // Track page history
   const [analyticsSection, setAnalyticsSection] = useState('customer'); // 'customer' or 'website'
   const [customers, setCustomers] = useState([]);
   const [campaigns, setCampaigns] = useState([]);
