@@ -1,6 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import { 
+  Zap, 
+  TrendingUp, 
+  DollarSign, 
+  BarChart3, 
+  Target,
+  Lightbulb,
+  AlertTriangle,
+  CheckCircle,
+  ArrowRight,
+  RefreshCw,
+  Eye,
+  Play,
+  Pause,
+  Award,
+  Brain,
+  Sparkles,
+  Database,
+  Activity,
+  Crown
+} from 'lucide-react';
 
 const GrowthAccelerationEngine = () => {
   const { user } = useAuth();
