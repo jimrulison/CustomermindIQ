@@ -471,35 +471,63 @@ ${info.updateFrequency}
   );
 
   const LeakCard = ({ leak }) => (
-    <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+    <div className="bg-slate-800/50 backdrop-blur-xl border-slate-700 border p-6 rounded-lg shadow-sm hover:shadow-lg transition-all duration-200">
       <div className="flex justify-between items-start mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">{leak.title}</h3>
-        <span className={`px-2 py-1 text-xs rounded-full ${
-          leak.status === 'active' ? 'bg-red-100 text-red-800' :
-          'bg-green-100 text-green-800'
+        <h3 className="text-lg font-semibold text-white flex items-center">
+          <AlertTriangle className="w-5 h-5 mr-2 text-red-400" />
+          {leak.title}
+        </h3>
+        <span className={`px-3 py-1 text-xs rounded-full font-medium ${
+          leak.status === 'active' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
+          'bg-green-500/20 text-green-400 border border-green-500/30'
         }`}>
-          {leak.status}
+          {leak.status?.toUpperCase()}
         </span>
       </div>
-      <p className="text-gray-600 mb-4">{leak.description}</p>
+      <p className="text-slate-300 mb-4 leading-relaxed">{leak.description}</p>
       
       <div className="grid grid-cols-2 gap-4 mb-4">
-        <div>
-          <span className="text-sm text-gray-500">Monthly Impact</span>
-          <div className="text-lg font-bold text-red-600">
+        <div className="bg-slate-700/50 p-3 rounded-lg">
+          <span className="text-sm text-slate-400 flex items-center mb-1">
+            <DollarSign className="w-4 h-4 mr-1" />
+            Monthly Impact
+          </span>
+          <div className="text-lg font-bold text-red-400">
             {formatCurrency(leak.monthly_impact)}
           </div>
         </div>
-        <div>
-          <span className="text-sm text-gray-500">Users Affected</span>
-          <div className="text-lg font-bold text-orange-600">
+        <div className="bg-slate-700/50 p-3 rounded-lg">
+          <span className="text-sm text-slate-400 flex items-center mb-1">
+            <Users className="w-4 h-4 mr-1" />
+            Users Affected
+          </span>
+          <div className="text-lg font-bold text-orange-400">
             {leak.users_affected?.toLocaleString() || 0}
           </div>
         </div>
       </div>
 
-      <div className="text-sm text-gray-600">
-        <strong>Location:</strong> {leak.location}
+      <div className="text-sm text-slate-300 mb-4 bg-slate-700/30 p-3 rounded-lg">
+        <strong className="text-white">Location:</strong> {leak.location}
+      </div>
+
+      <div className="flex space-x-2">
+        <button
+          onClick={() => alert(`🔍 Revenue Leak Details: ${leak.title}\n\n💰 Monthly Impact: ${formatCurrency(leak.monthly_impact)}\n👥 Users Affected: ${leak.users_affected?.toLocaleString()}\n📍 Location: ${leak.location}\n📊 Status: ${leak.status}\n\n${leak.description}\n\n${leak.status === 'active' ? '⚠️ This leak requires immediate attention to prevent continued revenue loss.' : '✅ This leak has been successfully resolved.'}`)}
+          className="flex items-center px-3 py-2 bg-red-600/20 text-red-400 text-sm rounded-lg hover:bg-red-600/30 transition-all duration-200 border border-red-600/30"
+        >
+          <Eye className="w-4 h-4 mr-1" />
+          View Details
+        </button>
+        {leak.status === 'active' && (
+          <button
+            onClick={() => alert(`🛠️ Fix Revenue Leak: ${leak.title}\n\nInitiating automated fix process...\n\n🔧 REPAIR ACTIONS:\n• Identifying root cause\n• Implementing solution\n• Testing fix effectiveness\n• Monitoring for recurrence\n\n⏱️ Estimated fix time: 2-4 hours\n💰 Expected monthly savings: ${formatCurrency(leak.monthly_impact)}`)}
+            className="flex items-center px-3 py-2 bg-green-600/20 text-green-400 text-sm rounded-lg hover:bg-green-600/30 transition-all duration-200 border border-green-600/30"
+          >
+            <CheckCircle className="w-4 h-4 mr-1" />
+            Fix Leak
+          </button>
+        )}
       </div>
     </div>
   );
