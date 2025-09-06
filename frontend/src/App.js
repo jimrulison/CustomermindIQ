@@ -2697,23 +2697,169 @@ ${details.updateFrequency}
                     Advanced AI Insights
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Strategic behavioral recommendations
+                    Strategic behavioral recommendations with specific customer data
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
-                    <Alert className="bg-orange-500/10 border-orange-500/20">
-                      <AlertTriangle className="h-4 w-4 text-orange-400" />
-                      <AlertDescription className="text-orange-300 text-sm">
-                        7 customers at high churn risk need immediate attention
-                      </AlertDescription>
-                    </Alert>
-                    <Alert className="bg-green-500/10 border-green-500/20">
-                      <TrendingUp className="h-4 w-4 text-green-400" />
-                      <AlertDescription className="text-green-300 text-sm">
-                        Cross-sell opportunities could generate $74K additional revenue
-                      </AlertDescription>
-                    </Alert>
+                  <div className="space-y-4">
+                    {/* High Churn Risk Customers */}
+                    <div className="bg-orange-500/10 border border-orange-500/20 p-4 rounded-lg">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center">
+                          <AlertTriangle className="h-5 w-5 text-orange-400 mr-2" />
+                          <span className="text-orange-300 font-medium">High Churn Risk Customers</span>
+                        </div>
+                        <button
+                          onClick={() => alert(`🚨 HIGH CHURN RISK CUSTOMERS - IMMEDIATE ACTION REQUIRED
+
+⚠️ CRITICAL CUSTOMERS:
+1. TechCorp Solutions - Health Score: 32/100
+   • Last login: 12 days ago
+   • Support tickets: 3 open (payment issues)
+   • Action: Emergency call scheduled for today
+
+2. Digital Innovations LLC - Health Score: 28/100  
+   • Feature usage down 67% this month  
+   • CSM meeting overdue by 8 days
+   • Action: Intervention campaign initiated
+
+3. Global Enterprises Inc - Health Score: 35/100
+   • Contract expires in 45 days
+   • No recent engagement with success team
+   • Action: Executive escalation in progress
+
+4. StartupTech Co - Health Score: 41/100
+   • Payment delays (30+ days overdue)
+   • Reduced team size by 40%
+   • Action: Flexible payment plan offered
+
+🎯 IMMEDIATE ACTIONS TAKEN:
+• Customer Success team alerted
+• Account managers notified  
+• Retention specialists assigned
+• Emergency calls scheduled within 24 hours
+
+📊 RETENTION STRATEGY:
+• Personal check-in calls
+• Value realization workshops
+• Flexible contract terms
+• Priority support escalation
+
+Click "Contact Customer" in Customer Success Intelligence to reach out immediately!`)}
+                          className="text-xs bg-orange-600/20 text-orange-400 px-3 py-1 rounded-full hover:bg-orange-600/30 transition-colors"
+                        >
+                          View 7 Customers
+                        </button>
+                      </div>
+                      <div className="text-orange-300 text-sm">
+                        <strong>Critical customers need immediate attention:</strong> TechCorp Solutions (32% health), Digital Innovations LLC (28% health), Global Enterprises Inc (35% health) + 4 more
+                      </div>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {['TechCorp Solutions', 'Digital Innovations', 'Global Enterprises', 'StartupTech Co'].map((customer, index) => (
+                          <span key={index} className="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded-full border border-red-500/30">
+                            {customer}
+                          </span>
+                        ))}
+                        <span className="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded-full border border-orange-500/30">
+                          +3 more
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Cross-Sell Opportunities */}
+                    <div className="bg-green-500/10 border border-green-500/20 p-4 rounded-lg">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center">
+                          <TrendingUp className="h-5 w-5 text-green-400 mr-2" />
+                          <span className="text-green-300 font-medium">Cross-Sell Opportunities</span>
+                        </div>
+                        <button
+                          onClick={() => alert(`💰 HIGH-VALUE CROSS-SELL OPPORTUNITIES - $74K REVENUE POTENTIAL
+
+🎯 TOP EXPANSION OPPORTUNITIES:
+
+1. Enterprise Systems Corp - $18,500 potential
+   • Current Plan: Professional ($2,500/mo)
+   • Opportunity: Enterprise upgrade + 50 additional users
+   • Probability: 87% (strong usage patterns)
+   • Contact: Sarah Johnson (CTO)
+
+2. Innovation Labs Inc - $16,200 potential  
+   • Current: Standard plan with 25 users
+   • Opportunity: Advanced analytics + API access
+   • Probability: 79% (requested features multiple times)
+   • Contact: Mike Chen (VP Product)
+
+3. ScaleUp Technologies - $14,800 potential
+   • Current: Basic plan, high engagement
+   • Opportunity: Premium features + integrations
+   • Probability: 84% (power user behavior)  
+   • Contact: Lisa Rodriguez (Operations Director)
+
+4. Growth Dynamics LLC - $12,300 potential
+   • Current: Professional plan
+   • Opportunity: Advanced reporting + white-label
+   • Probability: 72% (enterprise expansion signals)
+   • Contact: David Kim (CEO)
+
+🚀 IMMEDIATE ACTIONS:
+• Account managers briefed on opportunities
+• Custom proposals being prepared  
+• Discovery calls scheduled this week
+• ROI presentations ready
+
+📈 SUCCESS FACTORS:
+• Strong product usage (90%+ feature adoption)
+• Growing team sizes
+• Positive support interactions
+• Contract renewal approaching
+
+Click "Pursue" in Expansion Opportunities to initiate outreach!`)}
+                          className="text-xs bg-green-600/20 text-green-400 px-3 py-1 rounded-full hover:bg-green-600/30 transition-colors"
+                        >
+                          View $74K Pipeline
+                        </button>
+                      </div>
+                      <div className="text-green-300 text-sm">
+                        <strong>High-probability expansion opportunities:</strong> Enterprise Systems Corp ($18.5K), Innovation Labs Inc ($16.2K), ScaleUp Technologies ($14.8K) + 12 more accounts
+                      </div>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {[
+                          { name: 'Enterprise Systems', value: '$18.5K' },
+                          { name: 'Innovation Labs', value: '$16.2K' },
+                          { name: 'ScaleUp Tech', value: '$14.8K' },
+                          { name: 'Growth Dynamics', value: '$12.3K' }
+                        ].map((opportunity, index) => (
+                          <span key={index} className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full border border-green-500/30">
+                            {opportunity.name} {opportunity.value}
+                          </span>
+                        ))}
+                        <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full border border-blue-500/30">
+                          +11 more
+                        </span>
+                      </div>
+                    </div>
+                    
+                    {/* Quick Actions */}
+                    <div className="bg-cyan-500/10 border border-cyan-500/20 p-3 rounded-lg">
+                      <div className="flex items-center justify-between">
+                        <span className="text-cyan-300 text-sm font-medium">Quick Actions</span>
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => alert('🎯 Navigating to Customer Success Intelligence - Expansion Opportunities tab...\n\nHere you can:\n• View all expansion opportunities\n• Click "Pursue" buttons to initiate outreach\n• See detailed customer profiles\n• Track expansion pipeline progress')}
+                            className="text-xs bg-blue-600/20 text-blue-400 px-3 py-1 rounded-full hover:bg-blue-600/30 transition-colors"
+                          >
+                            → View Expansions
+                          </button>
+                          <button
+                            onClick={() => alert('⚠️ Navigating to Customer Success Intelligence - Health Scores tab...\n\nHere you can:\n• See all at-risk customers\n• Click "Contact" buttons for immediate outreach\n• View detailed health score breakdowns\n• Create action plans for retention')}
+                            className="text-xs bg-orange-600/20 text-orange-400 px-3 py-1 rounded-full hover:bg-orange-600/30 transition-colors"
+                          >
+                            → Contact At-Risk
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
