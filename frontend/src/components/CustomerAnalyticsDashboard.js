@@ -52,6 +52,21 @@ const CustomerAnalyticsDashboard = ({
   // Customer Analytics focused modules
   const customerModules = [
     {
+      id: 'ai-insights',
+      title: 'AI Business Insights',
+      description: 'Custom AI-powered business analysis with intelligent prompts and recommendations',
+      icon: Lightbulb,
+      color: 'from-yellow-600/20 to-yellow-800/20',
+      borderColor: 'border-yellow-500/30',
+      iconColor: 'text-yellow-400',
+      metrics: {
+        prompts: '25+ Templates',
+        accuracy: '94.8%',
+        insights: 'Real-time'
+      },
+      features: ['Custom Prompts', 'Data Analysis', 'AI Recommendations', 'Business Intelligence']
+    },
+    {
       id: 'customers',
       title: 'Customer Intelligence AI',
       description: 'AI-powered customer behavior analysis and predictive insights',
