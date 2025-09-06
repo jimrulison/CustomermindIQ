@@ -1449,6 +1449,7 @@ ${details.updateFrequency}
         currentPage={currentPage}
         onNavigate={handleNavigate}
         onSignOut={handleSignOut}
+        onGoBack={pageHistory.length > 1 ? handleGoBack : null}
         user={user}
         analyticsSection={analyticsSection}
       />
