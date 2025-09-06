@@ -329,7 +329,7 @@ const CustomerAnalyticsDashboard = ({
       </Alert>
 
       {/* Customer Analytics Modules Grid */}
-      <div className="grid gap-6 grid-cols-1">{/* Temporary: Single column to test visibility */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {customerModules.map((module) => {
           const Icon = module.icon;
           return (
