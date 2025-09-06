@@ -679,11 +679,11 @@ Your request will be handled by our admin team within 2 hours.`);
                 Our support team is here to assist you with any subscription or billing questions.
               </p>
               <div className="flex justify-center space-x-4">
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" onClick={handleViewLegalDocs}>
                   <Shield className="h-4 w-4 mr-2" />
                   View Legal Docs
                 </Button>
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" onClick={handleContactSupport}>
                   <Headphones className="h-4 w-4 mr-2" />
                   Contact Support
                 </Button>
