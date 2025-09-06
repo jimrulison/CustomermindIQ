@@ -15,7 +15,11 @@ import {
   Users,
   TrendingUp,
   CheckCircle,
-  AlertTriangle
+  AlertTriangle,
+  Database,
+  Lightbulb,
+  Copy,
+  Sparkles
 } from 'lucide-react';
 
 const CreateCampaign = ({ 
