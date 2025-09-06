@@ -329,7 +329,7 @@ const CustomerAnalyticsDashboard = ({
       </Alert>
 
       {/* Customer Analytics Modules Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{/* Expanded grid to show more modules */}
         {customerModules.map((module) => {
           const Icon = module.icon;
           return (
