@@ -314,8 +314,11 @@ const CustomerAnalyticsDashboard = ({
 
       {/* Customer Analytics Modules Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {console.log('CustomerModules count:', customerModules.length)}
+        {console.log('CustomerModules:', customerModules.map(m => m.title))}
         {customerModules.map((module) => {
           const Icon = module.icon;
+          console.log('Rendering module:', module.title, 'with icon:', Icon);
           return (
             <Card key={module.id} className={`bg-gradient-to-br ${module.color} ${module.borderColor} hover:scale-105 transform transition-all duration-200 cursor-pointer`}
                   onClick={() => onNavigate(module.id)}>
