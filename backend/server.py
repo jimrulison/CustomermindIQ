@@ -29,6 +29,9 @@ from modules.competitive_customer_intelligence import router as competitive_cust
 # Import AI Business Insights System
 from modules.ai_business_insights import router as ai_business_insights_router
 
+# Import Productivity Intelligence System
+from modules.productivity_intelligence import router as productivity_intelligence_router
+
 # Import Customer Intelligence AI Module (Legacy - for backward compatibility)
 from modules.customer_intelligence_ai import (
     BehavioralClusteringService,
