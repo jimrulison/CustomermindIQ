@@ -33,6 +33,7 @@ import {
   Star,
   Award,
   Sparkles,
+  Lightbulb,
   Heart,
   Route,
   Sword
