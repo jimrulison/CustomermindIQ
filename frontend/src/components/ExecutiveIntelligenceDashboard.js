@@ -938,10 +938,17 @@ Full customer profile available in CRM system.`);
                 </div>
                 
                 <div className="flex justify-end space-x-3 pt-4">
-                  <Button variant="outline" className="border-slate-600 text-slate-300">
+                  <Button 
+                    variant="outline" 
+                    className="border-slate-600 text-slate-300 hover:bg-slate-700"
+                    onClick={() => handleAssignToTeam(selectedAlert)}
+                  >
                     Assign to Team
                   </Button>
-                  <Button className="bg-blue-600 hover:bg-blue-700">
+                  <Button 
+                    className="bg-blue-600 hover:bg-blue-700"
+                    onClick={() => handleCreateActionPlan(selectedAlert)}
+                  >
                     Create Action Plan
                   </Button>
                 </div>
