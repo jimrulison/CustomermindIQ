@@ -69,7 +69,7 @@ const CustomerAnalyticsDashboard = ({
       id: 'ai-insights',
       title: 'AI Business Insights',
       description: 'Custom AI-powered business analysis with intelligent prompts and recommendations',
-      icon: Sparkles,
+      icon: Brain,
       color: 'from-yellow-600/20 to-yellow-800/20',
       borderColor: 'border-yellow-500/30',
       iconColor: 'text-yellow-400',
