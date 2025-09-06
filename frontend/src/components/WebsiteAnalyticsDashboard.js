@@ -80,6 +80,21 @@ const WebsiteAnalyticsDashboard = ({
       features: ['Performance Analysis', 'SEO Intelligence', 'Technical Audits', 'Mobile Optimization']
     },
     {
+      id: 'ai-insights',
+      title: 'AI Website Insights',
+      description: 'Custom AI-powered website analysis with intelligent prompts and recommendations',
+      icon: Sparkles,
+      color: 'from-yellow-600/20 to-yellow-800/20',
+      borderColor: 'border-yellow-500/30',
+      iconColor: 'text-yellow-400',
+      metrics: {
+        prompts: '25+ Templates',
+        accuracy: '94.8%',
+        insights: 'Real-time'
+      },
+      features: ['Website Prompts', 'SEO Analysis', 'Performance Insights', 'Technical Recommendations']
+    },
+    {
       id: 'analytics',
       title: 'Analytics & Insights',
       description: 'Customer journey mapping, attribution analysis, and competitive intelligence',
