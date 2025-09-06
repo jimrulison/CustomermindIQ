@@ -771,12 +771,12 @@ A successful CustomerMind IQ implementation transforms your organization's relat
           </div>
 
           <div className="articles-grid">
-            {/* Show Training Materials if training category is selected */}
-            {selectedCategory === 'training' && (
+            {/* Show Training Materials if training or prompts category is selected */}
+            {(selectedCategory === 'training' || selectedCategory === 'prompts') && (
               <>
                 <div className="training-materials-header">
-                  <h3>📚 Professional PDF Training Materials</h3>
-                  <p>Download comprehensive training guides for CustomerMind IQ platform mastery</p>
+                  <h3>📚 {selectedCategory === 'prompts' ? 'AI Business & Productivity Prompt Guides' : 'Professional PDF Training Materials'}</h3>
+                  <p>{selectedCategory === 'prompts' ? 'Complete collection of AI prompts for business intelligence and productivity optimization' : 'Download comprehensive training guides for CustomerMind IQ platform mastery'}</p>
                 </div>
                 
                 <div className="training-materials-grid">
