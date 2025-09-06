@@ -407,37 +407,66 @@ ${info.updateFrequency}
   );
 
   const TestCard = ({ test }) => (
-    <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+    <div className="bg-slate-800/50 backdrop-blur-xl border-slate-700 border p-6 rounded-lg shadow-sm hover:shadow-lg transition-all duration-200">
       <div className="flex justify-between items-start mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">{test.name}</h3>
-        <span className={`px-2 py-1 text-xs rounded-full ${
-          test.status === 'running' ? 'bg-green-100 text-green-800' :
-          test.status === 'completed' ? 'bg-blue-100 text-blue-800' :
-          'bg-gray-100 text-gray-800'
+        <h3 className="text-lg font-semibold text-white flex items-center">
+          <Target className="w-5 h-5 mr-2 text-blue-400" />
+          {test.name}
+        </h3>
+        <span className={`px-3 py-1 text-xs rounded-full font-medium ${
+          test.status === 'running' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+          test.status === 'completed' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+          'bg-slate-500/20 text-slate-400 border border-slate-500/30'
         }`}>
-          {test.status}
+          {test.status?.toUpperCase()}
         </span>
       </div>
-      <p className="text-gray-600 mb-4">{test.hypothesis}</p>
+      <p className="text-slate-300 mb-4 leading-relaxed">{test.hypothesis}</p>
       
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <span className="text-sm text-gray-500">Success Metric</span>
-          <div className="font-medium">{test.success_metric}</div>
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="bg-slate-700/50 p-3 rounded-lg">
+          <span className="text-sm text-slate-400 flex items-center mb-1">
+            <BarChart3 className="w-4 h-4 mr-1" />
+            Success Metric
+          </span>
+          <div className="font-medium text-white">{test.success_metric}</div>
         </div>
-        <div>
-          <span className="text-sm text-gray-500">Duration</span>
-          <div className="font-medium">{test.estimated_duration_days} days</div>
+        <div className="bg-slate-700/50 p-3 rounded-lg">
+          <span className="text-sm text-slate-400 flex items-center mb-1">
+            <Activity className="w-4 h-4 mr-1" />
+            Duration
+          </span>
+          <div className="font-medium text-white">{test.estimated_duration_days} days</div>
         </div>
       </div>
 
       {test.improvement_percentage && (
-        <div className="mt-4 p-3 bg-green-50 rounded-lg">
-          <div className="text-sm text-green-800">
+        <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+          <div className="text-sm text-green-400 flex items-center">
+            <CheckCircle className="w-4 h-4 mr-2" />
             <strong>Result:</strong> {formatPercentage(test.improvement_percentage / 100)} improvement
           </div>
         </div>
       )}
+
+      <div className="flex space-x-2 mt-4">
+        <button
+          onClick={() => alert(`📊 Test Details: ${test.name}\n\n${test.status === 'running' ? '⏳ Test is currently running...' : '✅ Test completed successfully!'}\n\nHypothesis: ${test.hypothesis}\nMetric: ${test.success_metric}\nDuration: ${test.estimated_duration_days} days`)}
+          className="flex items-center px-3 py-2 bg-blue-600/20 text-blue-400 text-sm rounded-lg hover:bg-blue-600/30 transition-all duration-200 border border-blue-600/30"
+        >
+          <Eye className="w-4 h-4 mr-1" />
+          View Details
+        </button>
+        {test.status === 'running' && (
+          <button
+            onClick={() => alert(`⏸️ Pausing test: ${test.name}\n\nTest will be paused safely at the next statistical checkpoint to preserve data integrity.`)}
+            className="flex items-center px-3 py-2 bg-yellow-600/20 text-yellow-400 text-sm rounded-lg hover:bg-yellow-600/30 transition-all duration-200 border border-yellow-600/30"
+          >
+            <Pause className="w-4 h-4 mr-1" />
+            Pause Test
+          </button>
+        )}
+      </div>
     </div>
   );
 
