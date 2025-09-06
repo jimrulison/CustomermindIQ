@@ -780,7 +780,9 @@ A successful CustomerMind IQ implementation transforms your organization's relat
                 </div>
                 
                 <div className="training-materials-grid">
-                  {trainingMaterials.map(material => (
+                  {trainingMaterials
+                    .filter(material => selectedCategory === 'prompts' ? material.id.includes('prompts') : true)
+                    .map(material => (
                     <div key={material.id} className="training-material-card">
                       <div className="material-header">
                         <h4 className="material-title">{material.title}</h4>
