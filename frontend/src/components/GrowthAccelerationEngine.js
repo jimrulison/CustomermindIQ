@@ -20,7 +20,8 @@ import {
   Sparkles,
   Database,
   Activity,
-  Crown
+  Crown,
+  Users
 } from 'lucide-react';
 
 const GrowthAccelerationEngine = () => {
