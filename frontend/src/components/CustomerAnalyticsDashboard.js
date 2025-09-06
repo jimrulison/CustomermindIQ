@@ -67,6 +67,21 @@ const CustomerAnalyticsDashboard = ({
       features: ['Behavioral Analysis', 'Purchase Predictions', 'Engagement Scoring', 'Lifecycle Tracking']
     },
     {
+      id: 'test-module',
+      title: 'TEST MODULE',
+      description: 'This is a test module to verify rendering',
+      icon: Brain,
+      color: 'from-red-600/20 to-red-800/20',
+      borderColor: 'border-red-500/30',
+      iconColor: 'text-red-400',
+      metrics: {
+        test: 'Working',
+        status: 'Active',
+        check: 'OK'
+      },
+      features: ['Test Feature 1', 'Test Feature 2', 'Test Feature 3', 'Test Feature 4']
+    },
+    {
       id: 'ai-insights',
       title: 'AI Business Insights',
       description: 'Custom AI-powered business analysis with intelligent prompts and recommendations',
