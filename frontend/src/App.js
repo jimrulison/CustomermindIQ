@@ -65,6 +65,7 @@ import SubscriptionManager from './components/SubscriptionManager';
 import LiveChatWidget from './components/LiveChatWidget';
 import PublicTrainingPage from './components/PublicTrainingPage';
 import AIBusinessInsights from './components/AIBusinessInsights';
+import ProductivityIntelligence from './components/ProductivityIntelligence';
 import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
