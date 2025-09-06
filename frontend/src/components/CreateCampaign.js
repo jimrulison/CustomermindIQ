@@ -345,7 +345,17 @@ const CreateCampaign = ({
 
               {/* Subject Line (for email campaigns) */}
               <div>
-                <Label htmlFor="subject" className="text-slate-300">Email Subject Line</Label>
+                <div className="flex items-center justify-between mb-2">
+                  <Label htmlFor="subject" className="text-slate-300">Email Subject Line</Label>
+                  <Button
+                    type="button"
+                    onClick={() => setShowSubjectLineOptions(!showSubjectLineOptions)}
+                    className="text-xs bg-purple-600/20 text-purple-400 hover:bg-purple-600/30 px-3 py-1"
+                  >
+                    <Lightbulb className="w-3 h-3 mr-1" />
+                    AI Suggestions
+                  </Button>
+                </div>
                 <Input
                   id="subject"
                   value={newCampaign?.subject || ''}
@@ -353,6 +363,59 @@ const CreateCampaign = ({
                   placeholder="Enter compelling subject line"
                   className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400"
                 />
+                
+                {/* Subject Line Suggestions */}
+                {showSubjectLineOptions && (
+                  <Card className="mt-3 bg-slate-700/50 border-slate-600">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-white text-sm flex items-center">
+                        <Sparkles className="w-4 h-4 mr-2 text-purple-400" />
+                        AI-Generated Subject Lines
+                      </CardTitle>
+                      <CardDescription className="text-slate-400 text-xs">
+                        Choose from these high-converting subject lines optimized for {newCampaign?.target_segment || 'your audience'}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      {getSubjectLineSuggestions().map((suggestion, index) => (
+                        <div 
+                          key={index}
+                          className="flex items-center justify-between p-2 bg-slate-800/50 rounded-lg hover:bg-slate-800/70 transition-all cursor-pointer"
+                          onClick={() => handleSubjectLineSelect(suggestion)}
+                        >
+                          <span className="text-slate-300 text-sm flex-1">{suggestion}</span>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                copyToClipboard(suggestion);
+                              }}
+                              className="text-xs bg-transparent hover:bg-slate-600/50 text-slate-400 hover:text-white p-1"
+                            >
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                            <Button
+                              type="button"
+                              onClick={() => handleSubjectLineSelect(suggestion)}
+                              className="text-xs bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 px-2 py-1"
+                            >
+                              Use This
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                      <div className="mt-3 pt-3 border-t border-slate-600">
+                        <Alert className="bg-blue-500/10 border-blue-500/20">
+                          <Database className="h-4 w-4 text-blue-400" />
+                          <AlertDescription className="text-blue-300 text-xs">
+                            <strong>Personalization tokens:</strong> {'{FIRST_NAME}'}, {'{LAST_NAME}'}, {'{COMPANY_NAME}'}, {'{INDUSTRY}'} will be automatically replaced with customer data from your database.
+                          </AlertDescription>
+                        </Alert>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
               </div>
 
               {/* Campaign Content */}
