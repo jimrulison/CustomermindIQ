@@ -1239,9 +1239,9 @@ A successful CustomerMind IQ implementation transforms your organization's relat
         }
 
         .training-material-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-          border-color: rgba(102, 126, 234, 0.4);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+          border-color: #3b82f6;
         }
 
         .material-header {
