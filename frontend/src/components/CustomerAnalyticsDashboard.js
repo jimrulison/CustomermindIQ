@@ -240,7 +240,7 @@ const CustomerAnalyticsDashboard = ({
         <div>
           <h1 className="text-4xl font-bold text-white flex items-center">
             <Brain className="w-10 h-10 mr-4 text-blue-400" />
-            🔥🔥🔥 TESTING - IF YOU SEE THIS, CHANGES ARE WORKING! 🔥🔥🔥
+            Customer Analytics Intelligence
           </h1>
           <p className="text-slate-400 mt-2 text-lg">
             AI-powered customer behavior analysis and purchase optimization platform
