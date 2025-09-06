@@ -314,13 +314,28 @@ const Header = ({ currentPage, onNavigate, onSignOut, user, onGoBack }) => {
                 </div>
               )}
             </div>
+            {/* Go Back Button */}
+            {onGoBack && (
+              <Button
+                onClick={onGoBack}
+                variant="ghost"
+                size="sm"
+                className="text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 mr-2"
+              >
+                <ArrowLeft className="w-4 h-4 mr-1" />
+                <span className="text-xs">Go Back</span>
+              </Button>
+            )}
+            
+            {/* Sign Out Button */}
             <Button
               onClick={onSignOut}
               variant="ghost"
               size="sm"
               className="text-slate-400 hover:text-red-400 hover:bg-red-500/10"
             >
-              <LogOut className="w-4 h-4" />
+              <span className="text-xs mr-1">signout</span>
+              <LogOut className="w-3 h-3" />
             </Button>
           </div>
         </div>
