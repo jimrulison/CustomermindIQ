@@ -1229,13 +1229,13 @@ A successful CustomerMind IQ implementation transforms your organization's relat
         }
 
         .training-material-card {
-          background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 255, 0.95));
-          backdrop-filter: blur(10px);
-          border: 2px solid rgba(102, 126, 234, 0.2);
+          background: #ffffff;
+          border: 2px solid #e2e8f0;
           border-radius: 15px;
           padding: 25px;
           transition: all 0.3s ease;
-          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          margin-bottom: 20px;
         }
 
         .training-material-card:hover {
