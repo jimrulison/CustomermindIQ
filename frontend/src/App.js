@@ -1564,6 +1564,12 @@ ${details.updateFrequency}
           />
         )}
         
+        {currentPage === 'productivity' && (
+          <ProductivityIntelligence 
+            onNavigate={handleNavigate}
+          />
+        )}
+        
         {currentPage === 'website-analytics-dashboard' && (
           <WebsiteAnalyticsDashboard 
             analyticsInsightsDashboard={analyticsInsightsDashboard}
