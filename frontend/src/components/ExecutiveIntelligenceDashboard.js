@@ -1017,10 +1017,17 @@ Full customer profile available in CRM system.`);
                 </div>
                 
                 <div className="flex justify-end space-x-3 pt-4 border-t border-slate-600">
-                  <Button variant="outline" className="border-slate-600 text-slate-300">
+                  <Button 
+                    variant="outline" 
+                    className="border-slate-600 text-slate-300 hover:bg-slate-700"
+                    onClick={() => handleSaveForLater(selectedStrategy)}
+                  >
                     Save for Later
                   </Button>
-                  <Button className="bg-cyan-600 hover:bg-cyan-700">
+                  <Button 
+                    className="bg-cyan-600 hover:bg-cyan-700"
+                    onClick={() => handleStartImplementation(selectedStrategy)}
+                  >
                     Start Implementation
                   </Button>
                 </div>
