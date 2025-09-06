@@ -246,44 +246,47 @@ const Header = ({ currentPage, onNavigate, onSignOut, user, onGoBack }) => {
 
           {/* User Info & Admin & Training & Support & Sign Out */}
           <div className="flex items-center space-x-4">
-            {/* Training Button */}
+            {/* Productivity Intelligence Button */}
             <button
-              onClick={() => onNavigate('training')}
+              onClick={() => onNavigate('productivity')}
               className={`flex items-center px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
-                currentPage === 'training'
-                  ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg'
-                  : 'bg-slate-800/50 text-slate-300 hover:bg-green-600/20 hover:text-green-400 border border-slate-600'
+                currentPage === 'productivity'
+                  ? 'bg-gradient-to-r from-yellow-600 to-yellow-700 text-white shadow-lg'
+                  : 'bg-slate-800/50 text-slate-300 hover:bg-yellow-600/20 hover:text-yellow-400 border border-slate-600'
               }`}
             >
-              <GraduationCap className="w-4 h-4 mr-2" />
-              Training
+              <Zap className="w-4 h-4 mr-2" />
+              PRODUCTIVITY
             </button>
 
-            {/* Knowledge Base Button */}
-            <button
-              onClick={() => onNavigate('knowledge-base')}
-              className={`flex items-center px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
-                currentPage === 'knowledge-base'
-                  ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg'
-                  : 'bg-slate-800/50 text-slate-300 hover:bg-purple-600/20 hover:text-purple-400 border border-slate-600'
-              }`}
-            >
-              <BookOpen className="w-4 h-4 mr-2" />
-              Knowledge Base
-            </button>
+            {/* Training & Support Stacked */}
+            <div className="flex flex-col space-y-1">
+              {/* Training Button */}
+              <button
+                onClick={() => onNavigate('training')}
+                className={`flex items-center px-3 py-1.5 rounded-lg font-medium text-xs transition-all duration-200 ${
+                  currentPage === 'training'
+                    ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg'
+                    : 'bg-slate-800/50 text-slate-300 hover:bg-green-600/20 hover:text-green-400 border border-slate-600'
+                }`}
+              >
+                <GraduationCap className="w-3 h-3 mr-1" />
+                Training
+              </button>
 
-            {/* Support Button */}
-            <button
-              onClick={() => onNavigate('support')}
-              className={`flex items-center px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
-                currentPage === 'support'
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg'
-                  : 'bg-slate-800/50 text-slate-300 hover:bg-blue-600/20 hover:text-blue-400 border border-slate-600'
-              }`}
-            >
-              <HelpCircle className="w-4 h-4 mr-2" />
-              Support
-            </button>
+              {/* Support Button */}
+              <button
+                onClick={() => onNavigate('support')}
+                className={`flex items-center px-3 py-1.5 rounded-lg font-medium text-xs transition-all duration-200 ${
+                  currentPage === 'support'
+                    ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg'
+                    : 'bg-slate-800/50 text-slate-300 hover:bg-blue-600/20 hover:text-blue-400 border border-slate-600'
+                }`}
+              >
+                <HelpCircle className="w-3 h-3 mr-1" />
+                Support
+              </button>
+            </div>
             
             <div className="hidden sm:flex items-center space-x-2 text-slate-300">
               <User className="w-4 h-4" />
