@@ -90,6 +90,22 @@ const KnowledgeBase = () => {
         'Security & compliance features',
         'Support & escalation procedures'
       ]
+    },
+    {
+      id: 'business-prompts',
+      title: '🧠 AI Business Prompts Guide',
+      description: 'Collection of proven AI prompts for business intelligence and data analysis',
+      size: '15KB',
+      pdfType: 'business-prompts-guide',
+      filename: 'CustomerMind_IQ_Business_Prompts.docx',
+      features: [
+        'Customer analysis prompts',
+        'Revenue optimization strategies',
+        'Marketing performance insights',
+        'Operational improvement queries',
+        'Competitive analysis frameworks',
+        'Growth strategy development'
+      ]
     }
   ];
 
