@@ -97,21 +97,6 @@ const CustomerAnalyticsDashboard = ({
       features: ['Test Feature 1', 'Test Feature 2', 'Test Feature 3', 'Test Feature 4']
     },
     {
-      id: 'ai-insights',
-      title: 'AI Business Insights',
-      description: 'Custom AI-powered business analysis with intelligent prompts and recommendations',
-      icon: Lightbulb,
-      color: 'from-yellow-600/20 to-yellow-800/20',
-      borderColor: 'border-yellow-500/30',
-      iconColor: 'text-yellow-400',
-      metrics: {
-        prompts: '25+ Templates',
-        accuracy: '94.8%',
-        insights: 'Real-time'
-      },
-      features: ['Custom Prompts', 'Data Analysis', 'AI Recommendations', 'Business Intelligence']
-    },
-    {
       id: 'marketing',
       title: 'Marketing Automation Pro',
       description: 'AI-powered multi-channel marketing orchestration and campaign management',
