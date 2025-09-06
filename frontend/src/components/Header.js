@@ -23,8 +23,7 @@ import {
   BookOpen,
   CreditCard,
   ArrowLeft,
-  Bell,
-  Zap
+  Bell
 } from 'lucide-react';
 
 const Header = ({ currentPage, onNavigate, onSignOut, user, onGoBack }) => {
