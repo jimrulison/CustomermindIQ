@@ -21,6 +21,7 @@ import {
   CheckCircle,
   Brain,
   Sparkles,
+  Lightbulb,
   Award,
   RefreshCw,
   Clock
