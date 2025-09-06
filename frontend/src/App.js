@@ -1557,6 +1557,12 @@ ${details.updateFrequency}
           />
         )}
         
+        {currentPage === 'ai-insights' && (
+          <AIBusinessInsights 
+            onNavigate={handleNavigate}
+          />
+        )}
+        
         {currentPage === 'website-analytics-dashboard' && (
           <WebsiteAnalyticsDashboard 
             analyticsInsightsDashboard={analyticsInsightsDashboard}
