@@ -837,7 +837,7 @@ A successful CustomerMind IQ implementation transforms your organization's relat
             ))}
           </div>
 
-          {selectedCategory !== 'training' && filteredArticles.length === 0 && (
+          {selectedCategory !== 'training' && selectedCategory !== 'prompts' && filteredArticles.length === 0 && (
             <div className="no-results">
               <h3>No articles found</h3>
               <p>Try adjusting your search terms or browse different categories.</p>
