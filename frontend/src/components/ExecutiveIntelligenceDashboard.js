@@ -881,11 +881,20 @@ Full customer profile available in CRM system.`);
                             
                             <div className="mt-4 pt-4 border-t border-slate-600">
                               <div className="flex space-x-2">
-                                <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                                <Button 
+                                  size="sm" 
+                                  className="bg-blue-600 hover:bg-blue-700"
+                                  onClick={() => handleContactCustomer(customer)}
+                                >
                                   <Mail className="w-4 h-4 mr-1" />
                                   Contact
                                 </Button>
-                                <Button size="sm" variant="outline" className="border-slate-600 text-slate-300">
+                                <Button 
+                                  size="sm" 
+                                  variant="outline" 
+                                  className="border-slate-600 text-slate-300 hover:bg-slate-700"
+                                  onClick={() => handleViewCustomerDetails(customer)}
+                                >
                                   View Details
                                 </Button>
                               </div>
