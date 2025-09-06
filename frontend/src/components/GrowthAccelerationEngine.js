@@ -349,46 +349,57 @@ ${info.updateFrequency}
   };
 
   const OpportunityCard = ({ opportunity, onGenerateTest }) => (
-    <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+    <div className="bg-slate-800/50 backdrop-blur-xl border-slate-700 border p-6 rounded-lg shadow-sm hover:shadow-lg transition-all duration-200">
       <div className="flex justify-between items-start mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">{opportunity.title}</h3>
-        <span className={`px-2 py-1 text-xs rounded-full ${
-          opportunity.priority === 'urgent' ? 'bg-red-100 text-red-800' :
-          opportunity.priority === 'high' ? 'bg-orange-100 text-orange-800' :
-          'bg-yellow-100 text-yellow-800'
+        <h3 className="text-lg font-semibold text-white flex items-center">
+          <Lightbulb className="w-5 h-5 mr-2 text-yellow-400" />
+          {opportunity.title}
+        </h3>
+        <span className={`px-3 py-1 text-xs rounded-full font-medium ${
+          opportunity.priority === 'urgent' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
+          opportunity.priority === 'high' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' :
+          'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
         }`}>
-          {opportunity.priority}
+          {opportunity.priority?.toUpperCase()} PRIORITY
         </span>
       </div>
-      <p className="text-gray-600 mb-4">{opportunity.description}</p>
+      <p className="text-slate-300 mb-4 leading-relaxed">{opportunity.description}</p>
       
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <div>
-          <span className="text-sm text-gray-500">Projected Impact</span>
-          <div className="text-lg font-bold text-green-600">
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="bg-slate-700/50 p-3 rounded-lg">
+          <span className="text-sm text-slate-400 flex items-center mb-1">
+            <DollarSign className="w-4 h-4 mr-1" />
+            Projected Impact
+          </span>
+          <div className="text-lg font-bold text-green-400">
             {formatCurrency(opportunity.projected_revenue_impact)}
           </div>
         </div>
-        <div>
-          <span className="text-sm text-gray-500">Confidence</span>
-          <div className="text-lg font-bold text-blue-600">
+        <div className="bg-slate-700/50 p-3 rounded-lg">
+          <span className="text-sm text-slate-400 flex items-center mb-1">
+            <Target className="w-4 h-4 mr-1" />
+            AI Confidence
+          </span>
+          <div className="text-lg font-bold text-blue-400">
             {formatPercentage(opportunity.confidence_score)}
           </div>
         </div>
       </div>
 
       <div className="flex justify-between items-center">
-        <span className={`px-2 py-1 text-xs rounded-full ${
-          opportunity.implementation_effort === 'low' ? 'bg-green-100 text-green-800' :
-          opportunity.implementation_effort === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-          'bg-red-100 text-red-800'
+        <span className={`px-3 py-1 text-xs rounded-full font-medium ${
+          opportunity.implementation_effort === 'low' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+          opportunity.implementation_effort === 'medium' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
+          'bg-red-500/20 text-red-400 border border-red-500/30'
         }`}>
-          {opportunity.implementation_effort} effort
+          <Activity className="w-3 h-3 inline mr-1" />
+          {opportunity.implementation_effort?.toUpperCase()} EFFORT
         </span>
         <button
           onClick={() => onGenerateTest(opportunity.id)}
-          className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
+          className="flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg"
         >
+          <Play className="w-4 h-4 mr-1" />
           Generate A/B Test
         </button>
       </div>
