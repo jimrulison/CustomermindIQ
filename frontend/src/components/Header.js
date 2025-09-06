@@ -22,6 +22,7 @@ import {
   Settings,
   BookOpen,
   CreditCard,
+  ArrowLeft,
   Bell
 } from 'lucide-react';
 
