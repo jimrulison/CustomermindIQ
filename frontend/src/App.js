@@ -912,8 +912,33 @@ ${details.updateFrequency}
     }
   };
 
-  const handleNavigate = (page) => {
+  const handleNavigate = (page, section = null) => {
+    // Add current page to history before navigating
+    setPageHistory(prev => [...prev, currentPage]);
+    
     setCurrentPage(page);
+    if (section) {
+      setAnalyticsSection(section);
+    }
+    
+    // Reset states when switching pages
+    setSelectedCustomer(null);
+    setActiveTab('dashboard');
+  };
+
+  // Go back to previous page
+  const handleGoBack = () => {
+    if (pageHistory.length > 1) {
+      const previousPage = pageHistory[pageHistory.length - 1];
+      const newHistory = pageHistory.slice(0, -1); // Remove last entry
+      
+      setPageHistory(newHistory);
+      setCurrentPage(previousPage);
+      
+      // Reset states when going back
+      setSelectedCustomer(null);
+      setActiveTab('dashboard');
+    }
   };
 
   // Check overage status function
