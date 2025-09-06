@@ -106,6 +106,22 @@ const KnowledgeBase = () => {
         'Competitive analysis frameworks',
         'Growth strategy development'
       ]
+    },
+    {
+      id: 'productivity-prompts',
+      title: '⚡ Daily Productivity Prompts Guide',
+      description: 'Comprehensive productivity and workflow optimization prompts for maximum business efficiency',
+      size: '25KB',
+      pdfType: 'productivity-prompts-guide',
+      filename: 'CustomerMind_IQ_Productivity_Prompts.docx',
+      features: [
+        'Getting started prompts (first 30 days)',
+        'Daily monitoring and review prompts',
+        'Weekly analysis and planning prompts',
+        'Monthly strategic prompts',
+        'Immediate attention and crisis alerts',
+        'Workflow optimization strategies'
+      ]
     }
   ];
 
