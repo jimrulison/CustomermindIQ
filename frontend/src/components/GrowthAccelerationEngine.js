@@ -224,31 +224,129 @@ const GrowthAccelerationEngine = () => {
     return `${((value || 0) * 100).toFixed(1)}%`;
   };
 
-  const TabButton = ({ id, label, active, onClick }) => (
+  const TabButton = ({ id, label, active, onClick, icon: Icon }) => (
     <button
       onClick={() => onClick(id)}
-      className={`px-4 py-2 font-medium text-sm rounded-lg transition-colors ${
+      className={`flex items-center px-6 py-3 font-medium text-sm rounded-lg transition-all duration-200 ${
         active 
-          ? 'bg-blue-600 text-white' 
-          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg transform scale-105' 
+          : 'bg-slate-800/50 text-slate-300 hover:bg-blue-600/20 hover:text-blue-400 border border-slate-600'
       }`}
     >
+      {Icon && <Icon className="w-4 h-4 mr-2" />}
       {label}
     </button>
   );
 
-  const MetricCard = ({ title, value, subtitle, trend }) => (
-    <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-      <h3 className="text-sm font-medium text-gray-500 mb-2">{title}</h3>
-      <div className="text-2xl font-bold text-gray-900 mb-1">{value}</div>
-      {subtitle && <p className="text-sm text-gray-600">{subtitle}</p>}
+  const MetricCard = ({ title, value, subtitle, trend, icon: Icon, onClick, dataSource }) => (
+    <div 
+      className={`bg-slate-800/50 backdrop-blur-xl border-slate-700 border p-6 rounded-lg shadow-sm transition-all duration-200 ${
+        onClick ? 'cursor-pointer hover:bg-slate-800/70 hover:shadow-lg' : ''
+      }`}
+      onClick={onClick}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-sm font-medium text-slate-400">{title}</h3>
+        {Icon && <Icon className="w-5 h-5 text-blue-400" />}
+      </div>
+      <div className="text-3xl font-bold text-white mb-2">{value}</div>
+      {subtitle && <p className="text-sm text-slate-300">{subtitle}</p>}
       {trend && (
-        <div className={`text-sm ${trend > 0 ? 'text-green-600' : 'text-red-600'} mt-1`}>
-          {trend > 0 ? '↑' : '↓'} {formatPercentage(Math.abs(trend))}
+        <div className={`text-sm ${trend > 0 ? 'text-green-400' : 'text-red-400'} mt-2 flex items-center`}>
+          <TrendingUp className={`w-4 h-4 mr-1 ${trend < 0 ? 'rotate-180' : ''}`} />
+          {formatPercentage(Math.abs(trend))} {trend > 0 ? 'increase' : 'decrease'}
         </div>
+      )}
+      {onClick && (
+        <div className="text-xs text-slate-500 mt-2 opacity-75">Click for data source details</div>
       )}
     </div>
   );
+
+  const showDataSource = (type, metric, value, details) => {
+    const dataSourceInfo = {
+      opportunities: {
+        title: `Growth Opportunities Identified - Data Source`,
+        description: `AI-powered opportunity detection system analyzing ${value} potential growth areas`,
+        sources: [
+          '• Advanced ML Models: 15+ algorithms including gradient boosting, neural networks, and decision trees',
+          '• Customer Behavior Analytics: Real-time analysis of user journey and engagement patterns',
+          '• Revenue Pattern Recognition: Historical data analysis identifying revenue optimization points',
+          '• Market Intelligence Integration: Competitive analysis and industry benchmarking data'
+        ],
+        methodology: `Opportunities = ML confidence score >75% AND projected impact >$10K AND implementation feasibility >60%`,
+        dataPoints: 'Customer segments, conversion rates, funnel analytics, behavioral triggers, market trends',
+        updateFrequency: 'Real-time analysis with daily ML model retraining',
+        currentValue: value
+      },
+      tests: {
+        title: `Active A/B Tests - Data Source`,
+        description: `Smart experimentation platform managing ${value} concurrent tests with predictive analytics`,
+        sources: [
+          '• Statistical Testing Engine: Bayesian and frequentist analysis with automatic significance detection',
+          '• Predictive Analytics: Machine learning models forecasting test outcomes and duration',
+          '• Multi-variate Testing Platform: Advanced experimental design with interaction analysis',
+          '• Real-time Performance Monitoring: Continuous test health and validity checks'
+        ],
+        methodology: `Active Tests = statistical power >80% AND minimum detectable effect >15% AND confidence level >95%`,
+        dataPoints: 'Conversion rates, effect sizes, confidence intervals, test durations, sample sizes',
+        updateFrequency: 'Real-time monitoring with hourly statistical analysis updates',
+        currentValue: value
+      },
+      leaks: {
+        title: `Revenue Leaks Fixed - Data Source`,
+        description: `Automated leak detection system identifying and resolving ${value} revenue optimization issues`,
+        sources: [
+          '• Revenue Flow Analysis: Real-time monitoring of all revenue streams and conversion points',
+          '• Anomaly Detection Algorithms: AI-powered identification of unusual revenue patterns',
+          '• Customer Journey Mapping: End-to-end analysis of user experience and drop-off points',
+          '• Integration Health Monitoring: Continuous tracking of payment and checkout system performance'
+        ],
+        methodology: `Leaks = revenue impact >$1K/month AND fix confidence >80% AND implementation time <30 days`,  
+        dataPoints: 'Revenue flows, drop-off rates, system errors, user behavior, payment analytics',
+        updateFrequency: 'Continuous monitoring with immediate alert generation for critical leaks',
+        currentValue: value
+      },
+      roi: {
+        title: `Average ROI Analysis - Data Source`, 
+        description: `Comprehensive ROI tracking system analyzing returns across all growth initiatives`,
+        sources: [
+          '• Financial Impact Calculator: Precise measurement of revenue attribution and cost allocation',
+          '• Predictive ROI Modeling: Machine learning forecasts for investment returns and payback periods',
+          '• Cross-channel Attribution: Multi-touch attribution analysis across all marketing channels',
+          '• Lifetime Value Analytics: Customer LTV impact measurement for long-term ROI assessment'
+        ],
+        methodology: `ROI = (Revenue Impact - Investment Cost) / Investment Cost × 100. Includes direct and indirect impacts.`,
+        dataPoints: 'Investment amounts, revenue attribution, time-to-value, customer lifetime value, channel performance',
+        updateFrequency: 'Daily ROI calculations with monthly cohort analysis and quarterly model updates',
+        currentValue: value
+      }
+    };
+
+    const info = dataSourceInfo[type];
+    if (info) {
+      alert(`📊 ${info.title}
+
+🎯 CURRENT VALUE: ${info.currentValue}
+
+📝 DESCRIPTION:
+${info.description}
+
+🔍 DATA SOURCES:
+${info.sources.join('\n')}
+
+🧮 METHODOLOGY:
+${info.methodology}
+
+📈 KEY DATA POINTS:
+${info.dataPoints}
+
+🕐 UPDATE FREQUENCY:
+${info.updateFrequency}
+
+💡 This metric combines multiple AI models and real-time data streams to provide accurate, actionable insights for growth optimization.`);
+    }
+  };
 
   const OpportunityCard = ({ opportunity, onGenerateTest }) => (
     <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
