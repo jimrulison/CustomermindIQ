@@ -30,12 +30,79 @@ const CreateCampaign = ({
   onNavigateToEmailCampaigns 
 }) => {
   const [activeTab, setActiveTab] = useState('create');
+  const [showPersonalizationGuide, setShowPersonalizationGuide] = useState(false);
+  const [showSubjectLineOptions, setShowSubjectLineOptions] = useState(false);
+
+  // Engaging subject line suggestions based on campaign type and target
+  const getSubjectLineSuggestions = () => {
+    const campaignType = newCampaign?.type || 'email';
+    const targetSegment = newCampaign?.target_segment || 'all';
+    
+    const suggestions = {
+      email: {
+        all: [
+          "🎯 {FIRST_NAME}, exclusive offer just for you!",
+          "💡 Transform your business with {COMPANY_NAME}'s latest insights",
+          "⚡ {FIRST_NAME}, don't miss out - 48 hours left!",
+          "🚀 Ready to boost your results by 40%? {FIRST_NAME}",
+          "✨ Your personalized solution awaits, {FIRST_NAME}"
+        ],
+        new: [
+          "🎉 Welcome {FIRST_NAME}! Your journey starts here",
+          "👋 {FIRST_NAME}, let's make your first experience amazing",
+          "🌟 New member exclusive: {FIRST_NAME}, this is for you",
+          "🎁 {FIRST_NAME}, your welcome gift is waiting",
+          "💪 Ready to get started, {FIRST_NAME}? We're here to help"
+        ],
+        existing: [
+          "💎 {FIRST_NAME}, unlock your next level of success",
+          "📈 {FIRST_NAME}, your results are about to get better",
+          "🔥 Hot update for {COMPANY_NAME}: You'll love this",
+          "⭐ {FIRST_NAME}, exclusive member benefits inside",
+          "🎯 Based on your history, {FIRST_NAME}, you need to see this"
+        ],
+        'high-value': [
+          "👑 VIP exclusive: {FIRST_NAME}, this changes everything",
+          "💼 {FIRST_NAME}, premium insights for top performers",
+          "🏆 Elite member update: {FIRST_NAME}, you earned this",
+          "💰 {FIRST_NAME}, maximize your ROI with this insider tip",
+          "🎖️ Top-tier exclusive: {FIRST_NAME}, your competitive edge"
+        ],
+        'at-risk': [
+          "❤️ We miss you, {FIRST_NAME} - let's reconnect",
+          "🤝 {FIRST_NAME}, we want to make things right",
+          "💡 {FIRST_NAME}, discover what you might be missing",
+          "🎁 Special offer to welcome you back, {FIRST_NAME}",
+          "⚡ {FIRST_NAME}, one more chance to transform your results"
+        ],
+        prospects: [
+          "🚀 {FIRST_NAME}, see what {COMPANY_NAME} is missing out on",
+          "💡 {FIRST_NAME}, this could be your breakthrough moment",
+          "🎯 {FIRST_NAME}, join 10,000+ successful businesses",
+          "✨ {FIRST_NAME}, your competition is already using this",
+          "🔥 {FIRST_NAME}, limited spots available - secure yours now"
+        ]
+      }
+    };
+    
+    return suggestions[campaignType]?.[targetSegment] || suggestions.email.all;
+  };
 
   const handleInputChange = (field, value) => {
     setNewCampaign(prev => ({
       ...prev,
       [field]: value
     }));
+  };
+
+  const handleSubjectLineSelect = (subjectLine) => {
+    handleInputChange('subject', subjectLine);
+    setShowSubjectLineOptions(false);
+  };
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+    // You could add a toast notification here
   };
 
   if (activeTab === 'email') {
