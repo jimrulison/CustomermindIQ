@@ -83,7 +83,7 @@ const WebsiteAnalyticsDashboard = ({
       id: 'ai-insights',
       title: 'AI Website Insights',
       description: 'Custom AI-powered website analysis with intelligent prompts and recommendations',
-      icon: Sparkles,
+      icon: Lightbulb,
       color: 'from-yellow-600/20 to-yellow-800/20',
       borderColor: 'border-yellow-500/30',
       iconColor: 'text-yellow-400',
