@@ -420,7 +420,17 @@ const CreateCampaign = ({
 
               {/* Campaign Content */}
               <div>
-                <Label htmlFor="content" className="text-slate-300">Campaign Content</Label>
+                <div className="flex items-center justify-between mb-2">
+                  <Label htmlFor="content" className="text-slate-300">Campaign Content</Label>
+                  <Button
+                    type="button"
+                    onClick={() => setShowPersonalizationGuide(!showPersonalizationGuide)}
+                    className="text-xs bg-green-600/20 text-green-400 hover:bg-green-600/30 px-3 py-1"
+                  >
+                    <Database className="w-3 h-3 mr-1" />
+                    Personalization Guide
+                  </Button>
+                </div>
                 <Textarea
                   id="content"
                   value={newCampaign?.content || ''}
@@ -429,6 +439,162 @@ const CreateCampaign = ({
                   rows={6}
                   className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-400"
                 />
+                
+                {/* Personalization Guide */}
+                {showPersonalizationGuide && (
+                  <Card className="mt-3 bg-slate-700/50 border-slate-600">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-white text-sm flex items-center">
+                        <Database className="w-4 h-4 mr-2 text-green-400" />
+                        Personalization & Database Integration Guide
+                      </CardTitle>
+                      <CardDescription className="text-slate-400 text-xs">
+                        Learn how to connect your customer data and create personalized campaigns
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      
+                      {/* Available Personalization Tokens */}
+                      <div>
+                        <h4 className="text-white text-sm font-medium mb-2">📊 Available Customer Data Fields</h4>
+                        <div className="grid grid-cols-2 gap-2 text-xs">
+                          <div className="bg-slate-800/50 p-2 rounded flex items-center justify-between">
+                            <span className="text-slate-300">{'{FIRST_NAME}'}</span>
+                            <Button
+                              type="button"
+                              onClick={() => copyToClipboard('{FIRST_NAME}')}
+                              className="text-xs bg-transparent hover:bg-slate-600/50 text-slate-400 hover:text-white p-1"
+                            >
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                          </div>
+                          <div className="bg-slate-800/50 p-2 rounded flex items-center justify-between">
+                            <span className="text-slate-300">{'{LAST_NAME}'}</span>
+                            <Button
+                              type="button"
+                              onClick={() => copyToClipboard('{LAST_NAME}')}
+                              className="text-xs bg-transparent hover:bg-slate-600/50 text-slate-400 hover:text-white p-1"
+                            >
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                          </div>
+                          <div className="bg-slate-800/50 p-2 rounded flex items-center justify-between">
+                            <span className="text-slate-300">{'{COMPANY_NAME}'}</span>
+                            <Button
+                              type="button"
+                              onClick={() => copyToClipboard('{COMPANY_NAME}')}
+                              className="text-xs bg-transparent hover:bg-slate-600/50 text-slate-400 hover:text-white p-1"
+                            >
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                          </div>
+                          <div className="bg-slate-800/50 p-2 rounded flex items-center justify-between">
+                            <span className="text-slate-300">{'{EMAIL}'}</span>
+                            <Button
+                              type="button"
+                              onClick={() => copyToClipboard('{EMAIL}')}
+                              className="text-xs bg-transparent hover:bg-slate-600/50 text-slate-400 hover:text-white p-1"
+                            >
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                          </div>
+                          <div className="bg-slate-800/50 p-2 rounded flex items-center justify-between">
+                            <span className="text-slate-300">{'{INDUSTRY}'}</span>
+                            <Button
+                              type="button"
+                              onClick={() => copyToClipboard('{INDUSTRY}')}
+                              className="text-xs bg-transparent hover:bg-slate-600/50 text-slate-400 hover:text-white p-1"
+                            >
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                          </div>
+                          <div className="bg-slate-800/50 p-2 rounded flex items-center justify-between">
+                            <span className="text-slate-300">{'{PHONE}'}</span>
+                            <Button
+                              type="button"
+                              onClick={() => copyToClipboard('{PHONE}')}
+                              className="text-xs bg-transparent hover:bg-slate-600/50 text-slate-400 hover:text-white p-1"
+                            >
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                          </div>
+                          <div className="bg-slate-800/50 p-2 rounded flex items-center justify-between">
+                            <span className="text-slate-300">{'{PURCHASE_DATE}'}</span>
+                            <Button
+                              type="button"
+                              onClick={() => copyToClipboard('{PURCHASE_DATE}')}
+                              className="text-xs bg-transparent hover:bg-slate-600/50 text-slate-400 hover:text-white p-1"
+                            >
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                          </div>
+                          <div className="bg-slate-800/50 p-2 rounded flex items-center justify-between">
+                            <span className="text-slate-300">{'{LAST_LOGIN}'}</span>
+                            <Button
+                              type="button"
+                              onClick={() => copyToClipboard('{LAST_LOGIN}')}
+                              className="text-xs bg-transparent hover:bg-slate-600/50 text-slate-400 hover:text-white p-1"
+                            >
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Example Usage */}
+                      <div>
+                        <h4 className="text-white text-sm font-medium mb-2">✨ Example Personalized Content</h4>
+                        <div className="bg-slate-800/50 p-3 rounded text-xs text-slate-300">
+                          <p>"Hi {'{FIRST_NAME}'}, we noticed that {'{COMPANY_NAME}'} hasn't logged in since {'{LAST_LOGIN}'}. As a valued partner in the {'{INDUSTRY}'} industry, we want to make sure you're getting the most out of our platform..."</p>
+                        </div>
+                      </div>
+
+                      {/* Database Connection Guide */}
+                      <div>
+                        <h4 className="text-white text-sm font-medium mb-2">🔗 Database Connection Requirements</h4>
+                        <div className="space-y-2 text-xs">
+                          <Alert className="bg-blue-500/10 border-blue-500/20">
+                            <Database className="h-4 w-4 text-blue-400" />
+                            <AlertDescription className="text-blue-300">
+                              <strong>Customer Database:</strong> Ensure your customer data includes fields like first_name, last_name, company_name, email, industry for full personalization.
+                            </AlertDescription>
+                          </Alert>
+                          <Alert className="bg-green-500/10 border-green-500/20">
+                            <Database className="h-4 w-4 text-green-400" />
+                            <AlertDescription className="text-green-300">
+                              <strong>Integration Status:</strong> Your database is connected via CustomerMind IQ's secure API. All personalization tokens will be automatically replaced during send.
+                            </AlertDescription>
+                          </Alert>
+                          <Alert className="bg-orange-500/10 border-orange-500/20">
+                            <Database className="h-4 w-4 text-orange-400" />
+                            <AlertDescription className="text-orange-300">
+                              <strong>Fallback Values:</strong> If a field is empty, we'll use fallback values like "Valued Customer" for missing names.
+                            </AlertDescription>
+                          </Alert>
+                        </div>
+                      </div>
+
+                      {/* Advanced Personalization */}
+                      <div>
+                        <h4 className="text-white text-sm font-medium mb-2">🚀 Advanced Personalization Options</h4>
+                        <div className="grid grid-cols-1 gap-2 text-xs">
+                          <div className="bg-slate-800/50 p-2 rounded">
+                            <span className="text-green-400 font-medium">Behavioral Triggers:</span>
+                            <span className="text-slate-300 ml-2">{'{LAST_PURCHASE}'}, {'{PRODUCT_INTEREST}'}, {'{ENGAGEMENT_SCORE}'}</span>
+                          </div>
+                          <div className="bg-slate-800/50 p-2 rounded">
+                            <span className="text-purple-400 font-medium">Geographic Data:</span>
+                            <span className="text-slate-300 ml-2">{'{CITY}'}, {'{STATE}'}, {'{COUNTRY}'}, {'{TIMEZONE}'}</span>
+                          </div>
+                          <div className="bg-slate-800/50 p-2 rounded">
+                            <span className="text-blue-400 font-medium">Subscription Data:</span>
+                            <span className="text-slate-300 ml-2">{'{PLAN_TYPE}'}, {'{SUBSCRIPTION_DATE}'}, {'{RENEWAL_DATE}'}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
               </div>
 
               {/* Schedule */}
