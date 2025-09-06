@@ -2479,6 +2479,9 @@ app.include_router(customer_journey_router, prefix="/api/customer-journey", tags
 # Competitive Customer Intelligence System
 app.include_router(competitive_customer_intelligence_router, prefix="/api/competitive-intelligence", tags=["Competitive Intelligence"])
 
+# AI Business Insights API
+app.include_router(ai_business_insights_router, prefix="/api/ai-insights", tags=["AI Business Insights"])
+
 # ============= REVENUE ANALYTICS SUITE =============
 app.include_router(revenue_forecasting_router, prefix="/api/revenue", tags=["Revenue Forecasting"])
 app.include_router(price_optimization_router, prefix="/api/revenue", tags=["Price Optimization"])
