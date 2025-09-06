@@ -504,7 +504,7 @@ const LiveChatWidget = () => {
   if (!hasAccess) {
     // Show upgrade prompt for restricted users
     return (
-      <div className="fixed bottom-4 right-4 z-50">
+      <div className="fixed bottom-6 right-6 z-40">
         <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 max-w-sm shadow-xl">
           <div className="flex items-center mb-2">
             <Crown className="w-5 h-5 text-yellow-400 mr-2" />
