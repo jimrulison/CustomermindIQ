@@ -810,8 +810,8 @@ A successful CustomerMind IQ implementation transforms your organization's relat
               </>
             )}
 
-            {/* Show regular articles if not training category */}
-            {selectedCategory !== 'training' && filteredArticles.map(article => (
+            {/* Show regular articles for all categories except prompts */}
+            {selectedCategory !== 'prompts' && filteredArticles.map(article => (
               <div key={article.id} className="article-card">
                 <div className="article-card-header">
                   <span className="category-badge">{article.categoryLabel}</span>
