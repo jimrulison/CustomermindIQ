@@ -644,6 +644,7 @@ A successful CustomerMind IQ implementation transforms your organization's relat
 
   const categories = [
     { id: 'all', label: 'All Articles', count: articles.length },
+    { id: 'prompts', label: 'PROMPTS', count: trainingMaterials.length },
     { id: 'training', label: 'Training Materials', count: articles.filter(a => a.category === 'training').length + trainingMaterials.length },
     { id: 'getting-started', label: 'Getting Started', count: articles.filter(a => a.category === 'getting-started').length },
     { id: 'how-it-works', label: 'How It Works', count: articles.filter(a => a.category === 'how-it-works').length },
