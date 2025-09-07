@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomerMind IQ - Affiliate Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="/favicon.ico" />
+</head>
+<body class="bg-gray-50">
+    <div id="affiliate-app">
+        <div class="min-h-screen flex items-center justify-center">
+            <div class="text-center">
+                <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p class="text-gray-600">Loading Affiliate Portal...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Redirect to main app with affiliate parameter
+        window.location.href = window.location.origin + '?affiliate=true';
+    </script>
+</body>
+</html>
