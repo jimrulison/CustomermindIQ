@@ -1101,6 +1101,36 @@ async def get_affiliate_resources():
                 "Use for objection handling during sales calls",
                 "Share specific sections that address prospect concerns"
             ]
+        },
+        {
+            "id": "white_paper",
+            "title": "CMIQ White Paper",
+            "description": "Professional white paper demonstrating Customer Mind IQ's value and methodology",
+            "type": "document",
+            "file_type": "docx", 
+            "download_url": "https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/o86gio0n_CMIQ%20White%20Paper.docx",
+            "category": "content",
+            "usage_tips": [
+                "Use as lead magnets in marketing campaigns",
+                "Share with enterprise prospects to demonstrate expertise",
+                "Include in proposal presentations to add credibility",
+                "Post on LinkedIn and industry forums to build authority"
+            ]
+        },
+        {
+            "id": "pricing_schedule",
+            "title": "Customer Mind Pricing Schedule", 
+            "description": "Detailed pricing guide with all plans, features, and implementation costs",
+            "type": "document",
+            "file_type": "docx",
+            "download_url": "https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/kaakxy6c_Customer%20Mind%20Pricing%20Schedule.docx",
+            "category": "sales",
+            "usage_tips": [
+                "Reference during pricing discussions with prospects",
+                "Use to create custom quotes and proposals",
+                "Share with qualified leads to demonstrate value tiers",
+                "Include in sales presentations and follow-up materials"
+            ]
         }
     ]
     
