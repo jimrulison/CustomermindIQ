@@ -148,7 +148,7 @@ const AffiliateAuth = () => {
                                 <Sparkles className="h-6 w-6 text-white" />
                             </div>
                             <h3 className="text-xl font-semibold text-white mb-2">Premium Product</h3>
-                            <p className="text-indigo-200">Promote cutting-edge AI-powered customer analytics that customers love</p>
+                            <p className="text-gray-100">Promote cutting-edge AI-powered customer analytics that customers love</p>
                         </div>
                     </div>
 
