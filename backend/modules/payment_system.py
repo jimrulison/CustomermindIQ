@@ -296,6 +296,20 @@ async def confirm_payment(payment_data: dict):
         
         await db.payments.insert_one(payment_record)
         
+        # Handle affiliate conversion tracking if applicable
+        try:
+            from modules.affiliate_system import handle_conversion_event
+            await handle_conversion_event({
+                "affiliate_id": payment_data.get("affiliate_id"),
+                "customer_id": user_email,
+                "plan_type": plan_type, 
+                "billing_cycle": billing_cycle,
+                "amount": intent.amount / 100,  # Convert from cents to dollars
+                "session_id": payment_data.get("session_id")
+            })
+        except Exception as e:
+            print(f"Affiliate tracking error (non-critical): {e}")
+        
         return {
             "status": "success",
             "message": "Payment confirmed and subscription activated",
