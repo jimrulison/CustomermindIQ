@@ -390,33 +390,165 @@ const AffiliatePortal = () => {
                 </div>
             </div>
 
-            {/* Recent Activity */}
+            {/* Recent Commissions with Customer Details */}
             <div className="bg-white rounded-lg p-6 shadow-sm border">
                 <h3 className="text-lg font-semibold mb-4 flex items-center">
                     <Award className="h-5 w-5 mr-2 text-green-600" />
-                    Recent Activity
+                    Recent Commissions
                 </h3>
                 <div className="space-y-3">
-                    {affiliateData.recent_activity.map((activity, index) => (
-                        <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                            <div>
-                                <p className="font-medium">{activity.customer}</p>
-                                <p className="text-sm text-gray-600">
-                                    Upgraded to {activity.plan} plan
+                    {realTimeData.recentCommissions.map((commission, index) => (
+                        <div key={commission.id || index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border-l-4 border-l-green-500">
+                            <div className="flex-1">
+                                <div className="flex items-center justify-between mb-2">
+                                    <p className="font-semibold text-gray-900">{commission.customer_name}</p>
+                                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                        commission.status === 'approved' ? 'bg-green-100 text-green-800' :
+                                        commission.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                                        'bg-gray-100 text-gray-800'
+                                    }`}>
+                                        {commission.status}
+                                    </span>
+                                </div>
+                                <p className="text-sm text-gray-600 mb-1">
+                                    {commission.customer_email}
                                 </p>
+                                <div className="flex items-center space-x-4 text-xs text-gray-500">
+                                    <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                        {commission.plan_type} • {commission.billing_cycle}
+                                    </span>
+                                    <span>
+                                        {commission.commission_rate}% of ${commission.base_amount}
+                                    </span>
+                                </div>
                             </div>
-                            <div className="text-right">
-                                <p className="font-semibold text-green-600">
-                                    +${activity.commission.toFixed(2)}
+                            <div className="text-right ml-4">
+                                <p className="font-bold text-lg text-green-600">
+                                    +${commission.commission_amount.toFixed(2)}
                                 </p>
                                 <p className="text-xs text-gray-500">
-                                    {new Date(activity.date).toLocaleDateString()}
+                                    {new Date(commission.earned_date).toLocaleDateString()}
                                 </p>
                             </div>
                         </div>
                     ))}
+                    
+                    {realTimeData.recentCommissions.length === 0 && (
+                        <div className="text-center py-8 text-gray-500">
+                            <Award className="h-12 w-12 mx-auto mb-4 opacity-30" />
+                            <p>No commissions yet. Start promoting to earn your first commission!</p>
+                        </div>
+                    )}
                 </div>
             </div>
+
+            {/* Customer Details */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border">
+                <h3 className="text-lg font-semibold mb-4 flex items-center">
+                    <Users className="h-5 w-5 mr-2 text-blue-600" />
+                    Your Referrals ({realTimeData.customerDetails.length})
+                </h3>
+                <div className="space-y-3">
+                    {realTimeData.customerDetails.map((customer, index) => (
+                        <div key={customer.customer_id || index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div className="flex items-center space-x-4">
+                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                    <span className="text-white text-sm font-bold">
+                                        {customer.name.charAt(0)}
+                                    </span>
+                                </div>
+                                <div>
+                                    <p className="font-semibold text-gray-900">{customer.name}</p>
+                                    <p className="text-sm text-gray-600">{customer.email}</p>
+                                    <div className="flex items-center space-x-2 mt-1">
+                                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                            customer.status === 'active' ? 'bg-green-100 text-green-800' :
+                                            customer.status === 'trial' ? 'bg-blue-100 text-blue-800' :
+                                            'bg-gray-100 text-gray-800'
+                                        }`}>
+                                            {customer.status}
+                                        </span>
+                                        <span className="text-xs text-gray-500">
+                                            {customer.plan} plan
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="text-right">
+                                <p className="font-semibold text-gray-900">
+                                    ${customer.total_spent.toFixed(2)}
+                                </p>
+                                <p className="text-xs text-gray-500">
+                                    LTV: ${customer.lifetime_value.toFixed(2)}
+                                </p>
+                                <p className="text-xs text-gray-400">
+                                    Since {new Date(customer.signup_date).toLocaleDateString()}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+
+                    {realTimeData.customerDetails.length === 0 && (
+                        <div className="text-center py-8 text-gray-500">
+                            <Users className="h-12 w-12 mx-auto mb-4 opacity-30" />
+                            <p>No referrals yet. Share your affiliate links to start earning!</p>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {/* Performance Metrics */}
+            {realTimeData.performanceMetrics && Object.keys(realTimeData.performanceMetrics).length > 0 && (
+                <div className="bg-white rounded-lg p-6 shadow-sm border">
+                    <h3 className="text-lg font-semibold mb-4 flex items-center">
+                        <BarChart3 className="h-5 w-5 mr-2 text-purple-600" />
+                        Performance Insights
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="text-center p-4 bg-purple-50 rounded-lg">
+                            <p className="text-2xl font-bold text-purple-600">
+                                {realTimeData.performanceMetrics.conversion_rate?.toFixed(1)}%
+                            </p>
+                            <p className="text-sm text-gray-600">Conversion Rate</p>
+                        </div>
+                        <div className="text-center p-4 bg-green-50 rounded-lg">
+                            <p className="text-2xl font-bold text-green-600">
+                                ${realTimeData.performanceMetrics.avg_order_value?.toFixed(0)}
+                            </p>
+                            <p className="text-sm text-gray-600">Avg Order Value</p>
+                        </div>
+                        <div className="text-center p-4 bg-blue-50 rounded-lg">
+                            <p className="text-2xl font-bold text-blue-600">
+                                ${realTimeData.performanceMetrics.customer_lifetime_value?.toFixed(0)}
+                            </p>
+                            <p className="text-sm text-gray-600">Customer LTV</p>
+                        </div>
+                    </div>
+
+                    {/* Traffic Sources */}
+                    {realTimeData.performanceMetrics.top_traffic_sources && (
+                        <div className="mt-6">
+                            <h4 className="font-medium mb-3">Top Traffic Sources</h4>
+                            <div className="space-y-2">
+                                {realTimeData.performanceMetrics.top_traffic_sources.map((source, index) => (
+                                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                        <div className="flex items-center">
+                                            <span className="w-3 h-3 bg-blue-500 rounded-full mr-3"></span>
+                                            <span className="font-medium capitalize">{source.source}</span>
+                                        </div>
+                                        <div className="text-right">
+                                            <span className="text-sm font-semibold">{source.clicks} clicks</span>
+                                            <span className="text-xs text-gray-500 ml-2">
+                                                • {source.conversions} conversions
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 
