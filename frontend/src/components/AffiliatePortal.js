@@ -15,6 +15,7 @@ import {
     Award,
     BarChart3
 } from 'lucide-react';
+import AffiliateChatWidget from './AffiliateChatWidget';
 
 const AffiliatePortal = () => {
     const [currentView, setCurrentView] = useState('dashboard');
