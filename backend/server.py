@@ -2651,6 +2651,12 @@ app.include_router(payment_router, prefix="/api/payments", tags=["Payment System
 # Affiliate System Router
 app.include_router(affiliate_router, tags=["Affiliate System"])
 
+# Import Affiliate Chat System Module
+from modules.affiliate_chat import router as affiliate_chat_router
+
+# Affiliate Chat System Router
+app.include_router(affiliate_chat_router, tags=["Affiliate Chat"])
+
 # Include Authentication System routes
 app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
 
