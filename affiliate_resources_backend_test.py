@@ -310,6 +310,7 @@ class AffiliateResourcesTester:
             print("   Testing materials endpoint...")
             response = self.session.get(
                 f"{API_BASE}/affiliate/materials",
+                params={"affiliate_id": test_affiliate_id},
                 timeout=30
             )
             
