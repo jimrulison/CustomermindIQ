@@ -2648,6 +2648,9 @@ app.include_router(growth_dashboard_router)
 # Include Payment System routes
 app.include_router(payment_router, prefix="/api/payments", tags=["Payment System"])
 
+# Affiliate System Router
+app.include_router(affiliate_router, tags=["Affiliate System"])
+
 # Include Authentication System routes
 app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
 
