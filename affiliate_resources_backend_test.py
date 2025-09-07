@@ -208,16 +208,71 @@ class AffiliateResourcesTester:
             self.log_test("Resource Download Tracking", False, f"Exception: {str(e)}")
             return False
 
+    def create_test_affiliate(self) -> str:
+        """Create a test affiliate for testing purposes"""
+        try:
+            print("👤 Creating test affiliate...")
+            
+            test_affiliate_data = {
+                "first_name": "Test",
+                "last_name": "Affiliate",
+                "email": f"test.affiliate.{datetime.now().strftime('%Y%m%d%H%M%S')}@example.com",
+                "phone": "+1-555-123-4567",
+                "website": "https://testaffiliate.com",
+                "promotion_method": "social",
+                "password": "TestPassword123!",
+                "address": {
+                    "street": "123 Test Street",
+                    "city": "Test City",
+                    "state": "CA",
+                    "zip_code": "12345",
+                    "country": "US"
+                },
+                "payment_method": "paypal",
+                "payment_details": {
+                    "paypal_email": "test@paypal.com"
+                }
+            }
+            
+            response = self.session.post(
+                f"{API_BASE}/affiliate/auth/register",
+                json=test_affiliate_data,
+                timeout=30
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                affiliate_id = data.get("affiliate_id")
+                if affiliate_id:
+                    self.log_test("Create Test Affiliate", True, f"Created affiliate: {affiliate_id}")
+                    return affiliate_id
+                else:
+                    self.log_test("Create Test Affiliate", False, "No affiliate_id in response")
+                    return None
+            else:
+                self.log_test("Create Test Affiliate", False, f"HTTP {response.status_code}: {response.text}")
+                return None
+                
+        except Exception as e:
+            self.log_test("Create Test Affiliate", False, f"Exception: {str(e)}")
+            return None
+
     def test_existing_affiliate_endpoints(self) -> bool:
         """Test key existing affiliate endpoints to ensure they still work"""
         try:
             print("🔄 Testing existing affiliate system endpoints...")
             
+            # First create a test affiliate
+            test_affiliate_id = self.create_test_affiliate()
+            if not test_affiliate_id:
+                print("   Cannot test affiliate endpoints without a valid affiliate")
+                return False
+            
             # Test affiliate dashboard endpoint
             print("   Testing affiliate dashboard...")
             response = self.session.get(
                 f"{API_BASE}/affiliate/dashboard",
-                params={"affiliate_id": "test_affiliate_123"},
+                params={"affiliate_id": test_affiliate_id},
                 timeout=30
             )
             
@@ -233,7 +288,7 @@ class AffiliateResourcesTester:
             response = self.session.post(
                 f"{API_BASE}/affiliate/generate-link",
                 json={
-                    "affiliate_id": "test_affiliate_123",
+                    "affiliate_id": test_affiliate_id,
                     "link_type": "trial",
                     "campaign": "test_campaign"
                 },
