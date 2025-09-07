@@ -589,6 +589,7 @@ const AdminPortalEnhanced = () => {
                 { id: 'workflows', name: 'Automated Workflows', icon: Workflow },
                 { id: 'support', name: 'Support Tickets', icon: Headphones },
                 { id: 'live-chat', name: 'Live Chat', icon: MessageCircle },
+                { id: 'affiliate-chat', name: 'Affiliate Chat', icon: Users },
                 { id: 'contact-forms', name: 'Contact Forms', icon: Mail },
                 { id: 'emails', name: 'Email System', icon: Mail },
                 { id: 'trial-emails', name: 'Trial Emails', icon: Clock },
