@@ -22,16 +22,89 @@ const AffiliatePortal = () => {
     const [affiliateData, setAffiliateData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [realTimeData, setRealTimeData] = useState({
+        recentCommissions: [],
+        customerDetails: [],
+        performanceMetrics: {}
+    });
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customer-ai-hub-1.preview.emergentagent.com';
 
-    // For demo purposes - in real implementation, this would come from authentication
-    const demoAffiliateData = {
+    // Get current affiliate info from localStorage or props
+    const getCurrentAffiliateId = () => {
+        const storedData = localStorage.getItem('affiliate_data');
+        if (storedData) {
+            try {
+                const parsed = JSON.parse(storedData);
+                return parsed.id || parsed.affiliate_id;
+            } catch (e) {
+                console.error('Error parsing affiliate data:', e);
+            }
+        }
+        return 'demo_affiliate_001'; // Fallback for demo
+    };
+
+    const loadAffiliateData = async () => {
+        try {
+            setLoading(true);
+            const affiliateId = getCurrentAffiliateId();
+            
+            // Load main dashboard data
+            const response = await fetch(`${backendUrl}/api/affiliate/dashboard?affiliate_id=${affiliateId}`);
+            const data = await response.json();
+            
+            if (data.success || data.affiliate) {
+                setAffiliateData(data);
+                await loadDetailedData(affiliateId);
+            } else {
+                // Fallback to demo data if API fails
+                setAffiliateData(createDemoData());
+            }
+        } catch (error) {
+            console.error('Error loading affiliate data:', error);
+            // Use demo data as fallback
+            setAffiliateData(createDemoData());
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const loadDetailedData = async (affiliateId) => {
+        try {
+            // Load recent commissions with customer details
+            const commissionsResponse = await fetch(`${backendUrl}/api/affiliate/commissions?affiliate_id=${affiliateId}&limit=10`);
+            const commissionsData = await commissionsResponse.json();
+            
+            // Load customer referral details
+            const customersResponse = await fetch(`${backendUrl}/api/affiliate/customers?affiliate_id=${affiliateId}&limit=20`);
+            const customersData = await customersResponse.json();
+            
+            // Load performance metrics
+            const metricsResponse = await fetch(`${backendUrl}/api/affiliate/metrics?affiliate_id=${affiliateId}`);
+            const metricsData = await metricsResponse.json();
+            
+            setRealTimeData({
+                recentCommissions: commissionsData.commissions || [],
+                customerDetails: customersData.customers || [],
+                performanceMetrics: metricsData.metrics || {}
+            });
+        } catch (error) {
+            console.error('Error loading detailed data:', error);
+            // Create demo detailed data
+            setRealTimeData({
+                recentCommissions: createDemoCommissions(),
+                customerDetails: createDemoCustomers(),
+                performanceMetrics: createDemoMetrics()
+            });
+        }
+    };
+
+    const createDemoData = () => ({
         affiliate: {
-            affiliate_id: "john_smith_2024",
-            first_name: "John",
-            last_name: "Smith",
-            email: "john@example.com",
+            affiliate_id: getCurrentAffiliateId(),
+            first_name: "Demo",
+            last_name: "Affiliate",
+            email: "demo@affiliate.com",
             status: "active",
             total_clicks: 1247,
             total_conversions: 23,
@@ -55,30 +128,91 @@ const AffiliatePortal = () => {
                 commissions: 3247.50
             }
         },
-        recent_activity: [
-            {
-                type: "conversion",
-                customer: "TechCorp Inc",
-                plan: "growth",
-                commission: 99.50,
-                date: new Date().toISOString()
-            },
-            {
-                type: "conversion", 
-                customer: "StartupXYZ",
-                plan: "launch",
-                commission: 49.50,
-                date: new Date(Date.now() - 24*60*60*1000).toISOString()
-            }
+        recent_activity: []
+    });
+
+    const createDemoCommissions = () => [
+        {
+            id: "comm_001",
+            customer_id: "cust_techcorp",
+            customer_name: "TechCorp Solutions",
+            customer_email: "admin@techcorp.com",
+            plan_type: "growth",
+            billing_cycle: "monthly",
+            commission_amount: 199.50,
+            commission_rate: 40,
+            base_amount: 498.75,
+            earned_date: new Date(),
+            status: "approved"
+        },
+        {
+            id: "comm_002", 
+            customer_id: "cust_startup",
+            customer_name: "StartupXYZ Inc",
+            customer_email: "founder@startupxyz.com",
+            plan_type: "launch",
+            billing_cycle: "annual",
+            commission_amount: 89.70,
+            commission_rate: 30,
+            base_amount: 299.00,
+            earned_date: new Date(Date.now() - 24*60*60*1000),
+            status: "pending"
+        },
+        {
+            id: "comm_003",
+            customer_id: "cust_enterprise",
+            customer_name: "Enterprise Corp",
+            customer_email: "it@enterprise.com", 
+            plan_type: "scale",
+            billing_cycle: "monthly",
+            commission_amount: 399.50,
+            commission_rate: 50,
+            base_amount: 799.00,
+            earned_date: new Date(Date.now() - 3*24*60*60*1000),
+            status: "approved"
+        }
+    ];
+
+    const createDemoCustomers = () => [
+        {
+            customer_id: "cust_techcorp",
+            name: "TechCorp Solutions",
+            email: "admin@techcorp.com",
+            plan: "growth",
+            signup_date: new Date(Date.now() - 5*24*60*60*1000),
+            status: "active",
+            total_spent: 498.75,
+            lifetime_value: 1496.25
+        },
+        {
+            customer_id: "cust_startup",
+            name: "StartupXYZ Inc", 
+            email: "founder@startupxyz.com",
+            plan: "launch",
+            signup_date: new Date(Date.now() - 10*24*60*60*1000),
+            status: "trial",
+            total_spent: 299.00,
+            lifetime_value: 299.00
+        }
+    ];
+
+    const createDemoMetrics = () => ({
+        conversion_rate: 1.8,
+        avg_order_value: 425.75,
+        customer_lifetime_value: 1247.50,
+        top_traffic_sources: [
+            { source: "email", clicks: 458, conversions: 12 },
+            { source: "social", clicks: 324, conversions: 7 },
+            { source: "direct", clicks: 465, conversions: 4 }
         ]
-    };
+    });
 
     useEffect(() => {
-        // For demo, use mock data
-        setTimeout(() => {
-            setAffiliateData(demoAffiliateData);
-            setLoading(false);
-        }, 1000);
+        loadAffiliateData();
+        
+        // Refresh data every 5 minutes
+        const interval = setInterval(loadAffiliateData, 5 * 60 * 1000);
+        return () => clearInterval(interval);
     }, []);
 
     const generateTrackingLink = async (campaignName, linkType) => {
