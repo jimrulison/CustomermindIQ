@@ -823,3 +823,232 @@ async def link_customer_to_affiliate(customer_data: Dict[str, Any]):
     except Exception as e:
         print(f"Customer linking error: {e}")
         return {"success": False, "error": str(e)}
+
+# ========== DETAILED DATA ENDPOINTS ==========
+
+@router.get("/commissions")
+async def get_affiliate_commissions(
+    affiliate_id: str = Query(...),
+    limit: int = Query(default=10, le=50),
+    status: Optional[str] = None
+):
+    """Get detailed commission history for affiliate"""
+    try:
+        query = {"affiliate_id": affiliate_id}
+        if status:
+            query["status"] = status
+        
+        commissions = await db.commissions.find(query).sort("earned_date", -1).limit(limit).to_list(length=limit)
+        
+        # Enrich commissions with customer details
+        enriched_commissions = []
+        for commission in commissions:
+            # Get customer details
+            customer_id = commission.get("customer_id")
+            customer_name = f"Customer {customer_id[:8]}..." if customer_id else "Unknown Customer"
+            customer_email = f"{customer_id}@example.com" if customer_id else "unknown@example.com"
+            
+            # Try to get real customer data
+            customer = await db.customers.find_one({"customer_id": customer_id}) if customer_id else None
+            if customer:
+                customer_name = customer.get("company_name") or customer.get("name") or customer_name
+                customer_email = customer.get("email") or customer_email
+            
+            enriched_commission = {
+                "id": commission.get("id"),
+                "customer_id": customer_id,
+                "customer_name": customer_name,
+                "customer_email": customer_email,
+                "plan_type": commission.get("plan_type"),
+                "billing_cycle": commission.get("billing_cycle"),
+                "commission_amount": commission.get("commission_amount"),
+                "commission_rate": commission.get("commission_rate"),
+                "base_amount": commission.get("base_amount"),
+                "earned_date": commission.get("earned_date"),
+                "status": commission.get("status"),
+                "billing_month": commission.get("billing_month", 1)
+            }
+            enriched_commissions.append(enriched_commission)
+        
+        return {
+            "success": True,
+            "commissions": enriched_commissions,
+            "total": len(enriched_commissions)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get commissions: {str(e)}")
+
+@router.get("/customers")
+async def get_affiliate_customers(
+    affiliate_id: str = Query(...),
+    limit: int = Query(default=20, le=100)
+):
+    """Get customers referred by affiliate"""
+    try:
+        # Find customers referred by this affiliate
+        customers = await db.customers.find(
+            {"referred_by_affiliate": affiliate_id}
+        ).sort("created_at", -1).limit(limit).to_list(length=limit)
+        
+        # Enrich customer data with spending info
+        enriched_customers = []
+        for customer in customers:
+            # Calculate total spent and lifetime value
+            customer_id = customer.get("customer_id")
+            
+            # Get payment history for this customer
+            payments = await db.payments.find({"user_email": customer.get("email")}).to_list(length=None)
+            total_spent = sum(payment.get("amount", 0) / 100 for payment in payments)  # Convert from cents
+            
+            # Estimate lifetime value (could be more sophisticated)
+            months_active = max(1, (datetime.now(timezone.utc) - customer.get("created_at", datetime.now(timezone.utc))).days // 30)
+            lifetime_value = total_spent * max(1, 12 / months_active)  # Annualized estimate
+            
+            enriched_customer = {
+                "customer_id": customer_id,
+                "name": customer.get("company_name") or customer.get("name") or f"Customer {customer_id[:8]}...",
+                "email": customer.get("email"),
+                "plan": customer.get("subscription_tier", "launch"),
+                "signup_date": customer.get("created_at"),
+                "status": "active" if customer.get("is_active", True) else "inactive",
+                "total_spent": total_spent,
+                "lifetime_value": lifetime_value
+            }
+            enriched_customers.append(enriched_customer)
+        
+        return {
+            "success": True,
+            "customers": enriched_customers,
+            "total": len(enriched_customers)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get customers: {str(e)}")
+
+@router.get("/metrics")
+async def get_affiliate_metrics(affiliate_id: str = Query(...)):
+    """Get performance metrics for affiliate"""
+    try:
+        # Get affiliate data
+        affiliate = await db.affiliates.find_one({"affiliate_id": affiliate_id})
+        if not affiliate:
+            raise HTTPException(status_code=404, detail="Affiliate not found")
+        
+        # Calculate conversion rate
+        total_clicks = affiliate.get("total_clicks", 0)
+        total_conversions = affiliate.get("total_conversions", 0)
+        conversion_rate = (total_conversions / total_clicks * 100) if total_clicks > 0 else 0
+        
+        # Get commission data for calculations
+        commissions = await db.commissions.find({"affiliate_id": affiliate_id}).to_list(length=None)
+        
+        # Calculate average order value
+        if commissions:
+            total_base = sum(c.get("base_amount", 0) for c in commissions)
+            avg_order_value = total_base / len(commissions)
+        else:
+            avg_order_value = 0
+        
+        # Get customer data for LTV
+        customers = await db.customers.find({"referred_by_affiliate": affiliate_id}).to_list(length=None)
+        if customers:
+            customer_lifetime_value = sum(
+                max(299, len([c for c in commissions if c.get("customer_id") == customer.get("customer_id")]) * 50)
+                for customer in customers
+            ) / len(customers)
+        else:
+            customer_lifetime_value = 0
+        
+        # Get traffic source data from click tracking
+        traffic_sources = await db.click_tracking.aggregate([
+            {"$match": {"affiliate_id": affiliate_id}},
+            {"$group": {
+                "_id": {"$ifNull": ["$utm_source", "direct"]},
+                "clicks": {"$sum": 1},
+                "conversions": {"$sum": {"$cond": ["$converted", 1, 0]}}
+            }},
+            {"$sort": {"clicks": -1}},
+            {"$limit": 5}
+        ]).to_list(length=5)
+        
+        top_traffic_sources = [
+            {
+                "source": source["_id"],
+                "clicks": source["clicks"], 
+                "conversions": source["conversions"]
+            }
+            for source in traffic_sources
+        ]
+        
+        metrics = {
+            "conversion_rate": conversion_rate,
+            "avg_order_value": avg_order_value,
+            "customer_lifetime_value": customer_lifetime_value,
+            "top_traffic_sources": top_traffic_sources,
+            "total_customers": len(customers),
+            "active_customers": len([c for c in customers if c.get("is_active", True)]),
+            "monthly_recurring_revenue": sum(c.get("commission_amount", 0) for c in commissions if c.get("billing_cycle") == "monthly"),
+            "annual_recurring_revenue": sum(c.get("commission_amount", 0) for c in commissions if c.get("billing_cycle") == "annual")
+        }
+        
+        return {
+            "success": True,
+            "metrics": metrics
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get metrics: {str(e)}")
+
+@router.get("/performance/chart")
+async def get_affiliate_performance_chart(
+    affiliate_id: str = Query(...),
+    period: str = Query(default="30d", regex="^(7d|30d|90d|1y)$")
+):
+    """Get performance chart data for affiliate"""
+    try:
+        # Calculate date range
+        days = {"7d": 7, "30d": 30, "90d": 90, "1y": 365}[period]
+        start_date = datetime.now(timezone.utc) - timedelta(days=days)
+        
+        # Get daily metrics
+        pipeline = [
+            {"$match": {
+                "affiliate_id": affiliate_id,
+                "clicked_at": {"$gte": start_date}
+            }},
+            {"$group": {
+                "_id": {
+                    "year": {"$year": "$clicked_at"},
+                    "month": {"$month": "$clicked_at"},
+                    "day": {"$dayOfMonth": "$clicked_at"}
+                },
+                "clicks": {"$sum": 1},
+                "conversions": {"$sum": {"$cond": ["$converted", 1, 0]}}
+            }},
+            {"$sort": {"_id": 1}}
+        ]
+        
+        daily_data = await db.click_tracking.aggregate(pipeline).to_list(length=None)
+        
+        # Format for chart
+        chart_data = []
+        for data in daily_data:
+            date = datetime(data["_id"]["year"], data["_id"]["month"], data["_id"]["day"])
+            chart_data.append({
+                "date": date.strftime("%Y-%m-%d"),
+                "clicks": data["clicks"],
+                "conversions": data["conversions"],
+                "conversion_rate": (data["conversions"] / data["clicks"] * 100) if data["clicks"] > 0 else 0
+            })
+        
+        return {
+            "success": True,
+            "chart_data": chart_data,
+            "period": period
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get chart data: {str(e)}")
