@@ -269,17 +269,36 @@ const AffiliatePortal = () => {
 
     const renderDashboard = () => (
         <div className="space-y-6">
-            {/* Welcome Header */}
+            {/* Welcome Header with Refresh */}
             <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6 text-white">
-                <h1 className="text-2xl font-bold">
-                    Welcome back, {affiliateData.affiliate.first_name}! 👋
-                </h1>
-                <p className="mt-2 opacity-90">
-                    Your affiliate ID: <span className="font-mono bg-white/20 px-2 py-1 rounded">{affiliateData.affiliate.affiliate_id}</span>
-                </p>
-                <p className="mt-1 text-sm opacity-75">
-                    Status: <span className="capitalize font-semibold">{affiliateData.affiliate.status}</span>
-                </p>
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h1 className="text-2xl font-bold">
+                            Welcome back, {affiliateData.affiliate.first_name}! 👋
+                        </h1>
+                        <p className="mt-2 opacity-90">
+                            Your affiliate ID: <span className="font-mono bg-white/20 px-2 py-1 rounded">{affiliateData.affiliate.affiliate_id}</span>
+                        </p>
+                        <div className="flex items-center mt-2 space-x-4">
+                            <p className="text-sm opacity-75">
+                                Status: <span className="capitalize font-semibold">{affiliateData.affiliate.status}</span>
+                            </p>
+                            <div className="flex items-center text-sm opacity-75">
+                                <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+                                Live Data
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button
+                        onClick={loadAffiliateData}
+                        disabled={loading}
+                        className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors flex items-center disabled:opacity-50"
+                    >
+                        <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+                        Refresh
+                    </button>
+                </div>
             </div>
 
             {/* Key Metrics */}
