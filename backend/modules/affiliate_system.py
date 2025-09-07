@@ -1154,7 +1154,7 @@ async def get_affiliate_resources():
         "success": True,
         "resources": resources,
         "total_resources": len(resources),
-        "categories": ["tools", "content", "support", "sales"],
+        "categories": ["tools", "content", "support", "sales", "marketing"],
         "message": "Affiliate resources retrieved successfully"
     }
 
