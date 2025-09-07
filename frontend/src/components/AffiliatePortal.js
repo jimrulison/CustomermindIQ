@@ -728,6 +728,87 @@ const AffiliatePortal = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Affiliate Resources Section */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border">
+                <h2 className="text-xl font-bold mb-4 flex items-center">
+                    <BookOpen className="h-6 w-6 mr-2 text-purple-600" />
+                    Affiliate Resources
+                </h2>
+                <p className="text-gray-600 mb-6">
+                    Essential tools and materials for affiliate success
+                </p>
+                
+                <div className="space-y-4">
+                    {/* ROI Calculator */}
+                    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-green-600/20 to-green-800/20 border border-green-500/30 rounded-lg">
+                        <div className="flex items-center space-x-3">
+                            <Calculator className="w-6 h-6 text-green-400" />
+                            <div>
+                                <h4 className="text-gray-900 font-medium">Affiliate ROI Calculator</h4>
+                                <p className="text-gray-600 text-sm">Calculate your potential earnings and ROI</p>
+                            </div>
+                        </div>
+                        <button 
+                            className="px-4 py-2 border border-green-500/30 text-green-600 hover:bg-green-600/20 rounded-lg flex items-center"
+                            onClick={() => window.open('https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/rjb3ex4l_Affiliate%20ROI%20Calculator.xlsx', '_blank')}
+                        >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                        </button>
+                    </div>
+
+                    {/* Customer IQ Articles */}
+                    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-600/20 to-blue-800/20 border border-blue-500/30 rounded-lg">
+                        <div className="flex items-center space-x-3">
+                            <FileText className="w-6 h-6 text-blue-400" />
+                            <div>
+                                <h4 className="text-gray-900 font-medium">Customer IQ Articles</h4>
+                                <p className="text-gray-600 text-sm">Educational content and marketing materials</p>
+                            </div>
+                        </div>
+                        <button 
+                            className="px-4 py-2 border border-blue-500/30 text-blue-600 hover:bg-blue-600/20 rounded-lg flex items-center"
+                            onClick={() => window.open('https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/6u3fbl33_Customer%20IQ%20Articles.docx', '_blank')}
+                        >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                        </button>
+                    </div>
+
+                    {/* FAQ Document */}
+                    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-600/20 to-purple-800/20 border border-purple-500/30 rounded-lg">
+                        <div className="flex items-center space-x-3">
+                            <HelpCircle className="w-6 h-6 text-purple-400" />
+                            <div>
+                                <h4 className="text-gray-900 font-medium">Customer Mind IQ FAQ</h4>
+                                <p className="text-gray-600 text-sm">Frequently asked questions and answers</p>
+                            </div>
+                        </div>
+                        <button 
+                            className="px-4 py-2 border border-purple-500/30 text-purple-600 hover:bg-purple-600/20 rounded-lg flex items-center"
+                            onClick={() => window.open('https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/ykt0gvbj_Customer%20Mind%20IQ%20FAQ.docx', '_blank')}
+                        >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                        </button>
+                    </div>
+
+                    {/* Resource Usage Tips */}
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mt-4">
+                        <h5 className="text-gray-900 font-medium mb-2 flex items-center">
+                            <Lightbulb className="w-4 h-4 mr-2 text-yellow-500" />
+                            Resource Usage Tips
+                        </h5>
+                        <ul className="text-gray-700 text-sm space-y-1">
+                            <li>• Use the ROI Calculator to show prospects their potential returns</li>
+                            <li>• Share Customer IQ Articles on social media and in email campaigns</li>
+                            <li>• Reference the FAQ to answer common prospect questions</li>
+                            <li>• These resources help build trust and demonstrate value</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 
