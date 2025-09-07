@@ -131,6 +131,9 @@ from modules.growth_acceleration_engine import (
 # Import Payment System Module
 from modules.payment_system import router as payment_router
 
+# Import Affiliate System Module
+from modules.affiliate_system import router as affiliate_router
+
 # Import Authentication System
 from auth.auth_system import router as auth_router, create_default_admin, UserProfile, get_current_user, require_role, UserRole
 
