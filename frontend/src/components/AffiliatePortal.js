@@ -807,6 +807,58 @@ const AffiliatePortal = () => {
                             <li>• These resources help build trust and demonstrate value</li>
                         </ul>
                     </div>
+
+                    {/* White Paper */}
+                    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-indigo-600/20 to-indigo-800/20 border border-indigo-500/30 rounded-lg">
+                        <div className="flex items-center space-x-3">
+                            <FileText className="w-6 h-6 text-indigo-400" />
+                            <div>
+                                <h4 className="text-gray-900 font-medium">CMIQ White Paper</h4>
+                                <p className="text-gray-600 text-sm">Professional white paper demonstrating value and methodology</p>
+                            </div>
+                        </div>
+                        <button 
+                            className="px-4 py-2 border border-indigo-500/30 text-indigo-600 hover:bg-indigo-600/20 rounded-lg flex items-center"
+                            onClick={() => window.open('https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/o86gio0n_CMIQ%20White%20Paper.docx', '_blank')}
+                        >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                        </button>
+                    </div>
+
+                    {/* Pricing Schedule */}
+                    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-orange-600/20 to-orange-800/20 border border-orange-500/30 rounded-lg">
+                        <div className="flex items-center space-x-3">
+                            <DollarSign className="w-6 h-6 text-orange-400" />
+                            <div>
+                                <h4 className="text-gray-900 font-medium">Customer Mind Pricing Schedule</h4>
+                                <p className="text-gray-600 text-sm">Detailed pricing guide with all plans and implementation costs</p>
+                            </div>
+                        </div>
+                        <button 
+                            className="px-4 py-2 border border-orange-500/30 text-orange-600 hover:bg-orange-600/20 rounded-lg flex items-center"
+                            onClick={() => window.open('https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/kaakxy6c_Customer%20Mind%20Pricing%20Schedule.docx', '_blank')}
+                        >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                        </button>
+                    </div>
+
+                    {/* Updated Resource Usage Tips */}
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mt-4">
+                        <h5 className="text-gray-900 font-medium mb-2 flex items-center">
+                            <Lightbulb className="w-4 h-4 mr-2 text-yellow-500" />
+                            Resource Usage Tips
+                        </h5>
+                        <ul className="text-gray-700 text-sm space-y-1">
+                            <li>• Use the ROI Calculator to show prospects their potential returns</li>
+                            <li>• Share Customer IQ Articles on social media and in email campaigns</li>
+                            <li>• Reference the FAQ to answer common prospect questions</li>
+                            <li>• Use the White Paper as lead magnets and for enterprise prospects</li>
+                            <li>• Reference the Pricing Schedule during sales discussions</li>
+                            <li>• These resources help build trust and demonstrate value</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
