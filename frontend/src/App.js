@@ -1572,6 +1572,22 @@ ${details.updateFrequency}
           />
         )}
         
+        {currentPage === 'affiliate-portal' && (
+          <AffiliatePortal 
+            onNavigate={handleNavigate}
+          />
+        )}
+        
+        {currentPage === 'affiliate-registration' && (
+          <AffiliateRegistration 
+            onRegistrationComplete={(data) => {
+              // Handle successful registration
+              alert(`Registration successful! Affiliate ID: ${data.affiliate_id}`);
+              handleNavigate('affiliate-portal');
+            }}
+          />
+        )}
+        
         {currentPage === 'website-analytics-dashboard' && (
           <WebsiteAnalyticsDashboard 
             analyticsInsightsDashboard={analyticsInsightsDashboard}
