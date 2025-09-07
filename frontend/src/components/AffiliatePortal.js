@@ -14,7 +14,11 @@ import {
     Target,
     Award,
     BarChart3,
-    RefreshCw
+    RefreshCw,
+    BookOpen,
+    Calculator,
+    HelpCircle,
+    Lightbulb
 } from 'lucide-react';
 import AffiliateChatWidget from './AffiliateChatWidget';
 
