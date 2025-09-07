@@ -1528,6 +1528,19 @@ const AdminPortalEnhanced = () => {
             <AdminChatDashboard />
           )}
 
+          {/* Affiliate Chat Tab */}
+          {activeTab === 'affiliate-chat' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">Affiliate Chat Management</h2>
+                <div className="text-slate-400 text-sm">
+                  Real-time affiliate support and communication
+                </div>
+              </div>
+              <AdminAffiliateChatManager currentAdmin={user} />
+            </div>
+          )}
+
           {/* Contact Forms Tab */}
           {activeTab === 'contact-forms' && (
             <div className="space-y-6">
