@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import AdminChatDashboard from './AdminChatDashboard';
+import AdminAffiliateChatManager from './AdminAffiliateChatManager';
 
 const AdminPortalEnhanced = () => {
   const { user } = useAuth();
