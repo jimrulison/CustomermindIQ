@@ -13,7 +13,8 @@ import {
     Calendar,
     Target,
     Award,
-    BarChart3
+    BarChart3,
+    RefreshCw
 } from 'lucide-react';
 import AffiliateChatWidget from './AffiliateChatWidget';
 
