@@ -140,7 +140,7 @@ const AffiliateAuth = () => {
                                 <TrendingUp className="h-6 w-6 text-white" />
                             </div>
                             <h3 className="text-xl font-semibold text-white mb-2">Growing Market</h3>
-                            <p className="text-indigo-200">Customer intelligence is a $50B+ market with massive growth potential</p>
+                            <p className="text-gray-100">Customer intelligence is a $50B+ market with massive growth potential</p>
                         </div>
 
                         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
