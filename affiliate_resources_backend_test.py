@@ -287,10 +287,10 @@ class AffiliateResourcesTester:
             print("   Testing generate link...")
             response = self.session.post(
                 f"{API_BASE}/affiliate/generate-link",
+                params={"affiliate_id": test_affiliate_id},
                 json={
-                    "affiliate_id": test_affiliate_id,
                     "link_type": "trial",
-                    "campaign": "test_campaign"
+                    "campaign_name": "test_campaign"
                 },
                 timeout=30
             )
