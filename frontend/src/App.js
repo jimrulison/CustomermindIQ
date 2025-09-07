@@ -1589,6 +1589,10 @@ ${details.updateFrequency}
           />
         )}
         
+        {currentPage === 'affiliate-auth' && (
+          <AffiliateAuth />
+        )}
+        
         {currentPage === 'website-analytics-dashboard' && (
           <WebsiteAnalyticsDashboard 
             analyticsInsightsDashboard={analyticsInsightsDashboard}
