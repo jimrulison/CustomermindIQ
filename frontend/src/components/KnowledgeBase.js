@@ -777,9 +777,6 @@ A successful CustomerMind IQ implementation transforms your organization's relat
                 <div className="training-materials-header">
                   <h3>📚 {selectedCategory === 'prompts' ? 'AI Business & Productivity Prompt Guides' : 'Professional PDF Training Materials'}</h3>
                   <p>{selectedCategory === 'prompts' ? 'Complete collection of AI prompts for business intelligence and productivity optimization' : 'Download comprehensive training guides for CustomerMind IQ platform mastery'}</p>
-                  <p style={{color: 'red', fontSize: '18px', fontWeight: 'bold'}}>
-                    DEBUG: Found {trainingMaterials.filter(material => selectedCategory === 'prompts' ? material.id.includes('prompts') : true).length} materials
-                  </p>
                 </div>
                 
                 <div className="training-materials-grid">
