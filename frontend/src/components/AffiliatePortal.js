@@ -856,8 +856,27 @@ const AffiliatePortal = () => {
                             <li>• Reference the FAQ to answer common prospect questions</li>
                             <li>• Use the White Paper as lead magnets and for enterprise prospects</li>
                             <li>• Reference the Pricing Schedule during sales discussions</li>
+                            <li>• Use professional banners for all your marketing campaigns</li>
                             <li>• These resources help build trust and demonstrate value</li>
                         </ul>
+                    </div>
+
+                    {/* Marketing Banners */}
+                    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-pink-600/20 to-pink-800/20 border border-pink-500/30 rounded-lg">
+                        <div className="flex items-center space-x-3">
+                            <Target className="w-6 h-6 text-pink-400" />
+                            <div>
+                                <h4 className="text-gray-900 font-medium">Affiliate Marketing Banners</h4>
+                                <p className="text-gray-600 text-sm">10 high-converting banner designs for social media, email, and web</p>
+                            </div>
+                        </div>
+                        <button 
+                            className="px-4 py-2 border border-pink-500/30 text-pink-600 hover:bg-pink-600/20 rounded-lg flex items-center"
+                            onClick={() => window.open('/affiliate-banners.html', '_blank')}
+                        >
+                            <Eye className="w-4 h-4 mr-2" />
+                            View Banners
+                        </button>
                     </div>
                 </div>
             </div>
