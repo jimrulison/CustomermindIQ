@@ -962,6 +962,19 @@ ${details.updateFrequency}
     }
   };
 
+  // Check URL for affiliate access
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const affiliateAccess = urlParams.get('affiliate');
+    const currentPath = window.location.pathname;
+    
+    if (affiliateAccess === 'true' || currentPath === '/affiliates') {
+      setCurrentPage('affiliate-auth');
+      setLoading(false);
+      return;
+    }
+  }, []);
+
   // Data loading on authentication
   useEffect(() => {
     if (isAuthenticated) {
