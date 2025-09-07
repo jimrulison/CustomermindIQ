@@ -161,7 +161,7 @@ const AffiliateAuth = () => {
                                     <h4 className="text-lg font-semibold text-green-300">Launch Plan</h4>
                                     <p className="text-2xl font-bold text-green-400">30%</p>
                                 </div>
-                                <p className="text-sm text-indigo-200">Initial + 20% recurring (2-12 months) + 10% (13-24 months)</p>
+                                <p className="text-sm text-gray-200">Initial + 20% recurring (2-12 months) + 10% (13-24 months)</p>
                             </div>
                             
                             <div className="text-center">
