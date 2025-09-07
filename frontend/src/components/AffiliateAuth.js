@@ -202,12 +202,14 @@ const AffiliateAuth = () => {
 
                     {/* Additional Info */}
                     <div className="text-center mt-12">
-                        <p className="text-indigo-200 text-sm">
-                            Questions? Contact our affiliate team at{' '}
-                            <a href="mailto:affiliates@customermindiq.com" className="text-blue-300 hover:text-blue-200 underline">
-                                affiliates@customermindiq.com
-                            </a>
-                        </p>
+                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                            <p className="text-white text-sm font-medium">
+                                Questions? Contact our affiliate team at{' '}
+                                <a href="mailto:affiliates@customermindiq.com" className="text-blue-300 hover:text-blue-100 underline font-semibold">
+                                    affiliates@customermindiq.com
+                                </a>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
