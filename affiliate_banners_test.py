@@ -10,7 +10,7 @@ import sys
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://None.preview.emergentagent.com/api"
+BACKEND_URL = "http://localhost:8001/api"
 
 def test_affiliate_resources_endpoint():
     """Test GET /api/affiliate/resources - should return 6 resources including new banners"""
