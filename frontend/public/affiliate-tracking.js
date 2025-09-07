@@ -2,7 +2,7 @@
 class AffiliateTracker {
     constructor() {
         this.sessionId = this.generateSessionId();
-        this.backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customer-ai-hub-1.preview.emergentagent.com';
+        this.backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://reftrack-1.preview.emergentagent.com';
         this.trackPageView();
     }
 

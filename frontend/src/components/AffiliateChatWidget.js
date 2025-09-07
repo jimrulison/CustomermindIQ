@@ -24,7 +24,7 @@ const AffiliateChatWidget = ({ affiliateId, affiliateName, affiliateEmail }) => 
     
     const messagesEndRef = useRef(null);
     const wsRef = useRef(null);
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customer-ai-hub-1.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://reftrack-1.preview.emergentagent.com';
 
     // Scroll to bottom of messages
     const scrollToBottom = () => {

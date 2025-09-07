@@ -1,0 +1,65 @@
+<analysis>
+The trajectory details the evolution of the Customer Mind IQ application, moving from initial AI-powered features to a comprehensive affiliate tracking system. The previous AI engineer successfully implemented AI Business Insights and Daily Productivity Intelligence, integrated prompt guides into the Knowledge Base (solving a critical CSS rendering bug), and reorganized the Header. The current AI engineer then took over, initially confirming previous work and then developing the affiliate system in several phases: backend core (DB schema, API, Stripe integration), frontend components (portal, registration, tracking script), integration with the main app (header, routing), a real-time chat system for affiliates/admin, and independent affiliate access (separate auth, public landing page). Subsequently, text readability on the affiliate landing page was improved, and the affiliate dashboard was connected to dynamic, real-time customer and commission data. The most recent interaction focused on providing deployment-specific URLs and configuration guidance to the user.
+</analysis>
+
+<product_requirements>
+The Customer Mind IQ platform is an AI-driven customer intelligence system. Initial features included:
+*   **AI Business Insights & Daily Productivity Intelligence:** Modules for LLM-powered data analysis from database/website, with prompt forms and templates.
+*   **Knowledge Base Enhancement:** Integration of AI prompt guides under a PROMPTS category.
+*   **Header Reorganization:** Vertical stacking of Training/Support and a new PRODUCTIVITY button.
+*   **Initial Bug Fixes:** Login loop, Go Back button, subscription errors, Kubernetes ingress routing (pending).
+
+The *new* core requirement from the current trajectory is a **Comprehensive Affiliate Tracking System**, including:
+*   A standalone module/subdomain for affiliates.
+*   Registration and sign-in pages, independent of the main app.
+*   Real-time statistics, earnings, and customer information displayed on the affiliate dashboard.
+*   A chat room for affiliates, with comments visible in the admin platform.
+*   Fixing UI issues like unreadable text on the affiliate landing page.
+</product_requirements>
+
+<key_technical_concepts>
+-   **Full-Stack Architecture**: React (frontend), FastAPI (backend), MongoDB (database).
+-   **Deployment & Routing**: Kubernetes, Supervisor,  prefix, environment variables, URL parameters.
+-   **State Management**: React , , .
+-   **API Integration**: Stripe for payment processing.
+-   **Real-time Communication**: WebSockets for chat.
+-   **UI/UX**: Tailwind CSS,  for icons.
+-   **Database Interaction**: MongoDB collections, Pydantic for data validation.
+-   **Authentication**: JWT for secure sessions.
+</key_technical_concepts>
+
+<code_architecture>
+
+
+**Key Files and Changes:**
+*   : **NEW**. Core backend for affiliate management (registration, tracking links, commissions, data retrieval).
+*   : **NEW**. Backend for real-time affiliate chat functionality, managing messages and sessions.
+*   : **MODIFIED**. Registers  and  to expose new API endpoints.
+*   : **MODIFIED**. Added  for payment integration.
+*   : **MODIFIED**. Added  helper function to integrate affiliate tracking with existing payment flows.
+*   : **NEW**. Basic JavaScript for client-side tracking.
+*   : **NEW**. A public HTML landing page serving as an independent entry point for affiliates. This file also had text visibility fixes.
+*   : **NEW**. Main frontend component for the affiliate dashboard, displaying statistics, links, and integrating the chat widget. It was updated to show real-time dynamic data.
+*   : **NEW**. Handles the multi-step registration process for new affiliates.
+*   : **NEW**. Provides the real-time chat interface within the Affiliate Portal.
+*   : **NEW**. Manages independent authentication (login/signup) for affiliates outside the main platform.
+*   : **NEW**. Provides the interface for administrators to manage affiliate chat sessions within the Admin Portal.
+*   : **MODIFIED**. Central routing logic was updated to include  and  routes, and to render  and  based on the URL.
+*   : **MODIFIED**. A new AFFILIATES button was added for navigation.
+*   : **MODIFIED**. A new Affiliate Chat tab was added to the navigation sidebar to access .
+</code_architecture>
+
+<pending_tasks>
+-   **Kubernetes Ingress Routing Fix**: The underlying infrastructure issue causing external  calls to potentially fail remains unresolved.
+-   **Complete Advanced Features Enhancement**: Ensure all remaining cards beyond Behavioral Clustering have fully robust data source transparency.
+</pending_tasks>
+
+<current_work>
+Immediately before this summary, the AI engineer had successfully completed the implementation of the comprehensive affiliate system, including its core functionality, a real-time chat system, and independent access for affiliates (separate registration/login and public landing page). The affiliate dashboard was enhanced to display dynamic, real-time customer and commission data, replacing static mock-ups. Furthermore, readability issues on the affiliate landing page () were addressed by adjusting text colors and adding background contrast.
+
+The last specific action taken was providing the user with detailed production URLs and configuration instructions for deploying the affiliate system to their domain, . This included specific examples for primary access, alternative paths, marketing campaign links, necessary updates to the  environment variable, admin access points, and the configured affiliate contact email. This information was provided to guide the user through the deployment process.
+</current_work>
+
+<optional_next_step>
+Confirm if the user needs assistance with configuring the  for their production environment or with any deployment steps.
+</optional_next_step>
