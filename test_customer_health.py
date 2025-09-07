@@ -7,7 +7,7 @@ from datetime import datetime
 import time
 
 class CustomerHealthTester:
-    def __init__(self, base_url="https://customer-success-ai.preview.emergentagent.com"):
+    def __init__(self, base_url="https://customer-ai-hub-1.preview.emergentagent.com"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0

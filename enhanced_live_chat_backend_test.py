@@ -28,7 +28,7 @@ from datetime import datetime
 from pathlib import Path
 
 # Configuration
-BACKEND_URL = "https://customer-success-ai.preview.emergentagent.com/api"
+BACKEND_URL = "https://customer-ai-hub-1.preview.emergentagent.com/api"
 ADMIN_EMAIL = "admin@customermindiq.com"
 ADMIN_PASSWORD = "CustomerMindIQ2025!"
 

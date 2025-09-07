@@ -13,7 +13,7 @@ import time
 class BackendHealthChecker:
     def __init__(self):
         # Use the actual backend URL from frontend .env
-        self.base_url = "https://customer-success-ai.preview.emergentagent.com"
+        self.base_url = "https://customer-ai-hub-1.preview.emergentagent.com"
         self.tests_run = 0
         self.tests_passed = 0
         
