@@ -132,7 +132,7 @@ const AffiliateAuth = () => {
                                 <DollarSign className="h-6 w-6 text-white" />
                             </div>
                             <h3 className="text-xl font-semibold text-white mb-2">High Commissions</h3>
-                            <p className="text-indigo-200">Earn up to 50% initial commission + 20% recurring for 12 months + 10% for months 13-24</p>
+                            <p className="text-gray-100">Earn up to 50% initial commission + 20% recurring for 12 months + 10% for months 13-24</p>
                         </div>
 
                         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
