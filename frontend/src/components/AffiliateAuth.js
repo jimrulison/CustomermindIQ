@@ -338,25 +338,7 @@ const AffiliateAuth = () => {
                     </div>
                 </div>
                 
-                {/* Mock affiliate data for portal */}
-                <AffiliatePortal 
-                    affiliateData={{
-                        affiliate: {
-                            affiliate_id: affiliateData.id || "demo_affiliate",
-                            first_name: affiliateData.name?.split(' ')[0] || "Demo",
-                            last_name: affiliateData.name?.split(' ')[1] || "Affiliate", 
-                            email: "demo@affiliate.com",
-                            status: "active",
-                            total_clicks: 1247,
-                            total_conversions: 23,
-                            total_commissions: 3247.50,
-                            pending_commissions: 892.30,
-                            paid_commissions: 2355.20,
-                            created_at: new Date('2024-01-15'),
-                            last_login: new Date()
-                        }
-                    }}
-                />
+                <AffiliatePortal />
             </div>
         );
     }
