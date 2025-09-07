@@ -1052,3 +1052,87 @@ async def get_affiliate_performance_chart(
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to get chart data: {str(e)}")
+
+@router.get("/resources")
+async def get_affiliate_resources():
+    """Get affiliate resources and materials"""
+    resources = [
+        {
+            "id": "roi_calculator",
+            "title": "Affiliate ROI Calculator",
+            "description": "Interactive Excel calculator to demonstrate potential returns to prospects",
+            "type": "spreadsheet",
+            "file_type": "xlsx",
+            "download_url": "https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/rjb3ex4l_Affiliate%20ROI%20Calculator.xlsx",
+            "category": "tools",
+            "usage_tips": [
+                "Show prospects their potential returns with detailed calculations",
+                "Use during sales presentations to demonstrate value",
+                "Include in follow-up emails to prospects",
+                "Customize the calculator for specific customer scenarios"
+            ]
+        },
+        {
+            "id": "customer_iq_articles",
+            "title": "Customer IQ Articles",
+            "description": "Professional content and marketing materials for campaigns",
+            "type": "document",
+            "file_type": "docx",
+            "download_url": "https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/6u3fbl33_Customer%20IQ%20Articles.docx",
+            "category": "content",
+            "usage_tips": [
+                "Share on social media platforms to build authority",
+                "Use content in email marketing campaigns",
+                "Repurpose articles for blog posts and newsletters",
+                "Reference in prospect conversations to educate"
+            ]
+        },
+        {
+            "id": "faq_document",
+            "title": "Customer Mind IQ FAQ",
+            "description": "Comprehensive FAQ covering all features and common questions",
+            "type": "document", 
+            "file_type": "docx",
+            "download_url": "https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/ykt0gvbj_Customer%20Mind%20IQ%20FAQ.docx",
+            "category": "support",
+            "usage_tips": [
+                "Reference when answering prospect questions",
+                "Include relevant answers in email responses",
+                "Use for objection handling during sales calls",
+                "Share specific sections that address prospect concerns"
+            ]
+        }
+    ]
+    
+    return {
+        "success": True,
+        "resources": resources,
+        "total_resources": len(resources),
+        "categories": ["tools", "content", "support"],
+        "message": "Affiliate resources retrieved successfully"
+    }
+
+@router.post("/resources/{resource_id}/download")
+async def track_resource_download(resource_id: str, affiliate_id: str = None):
+    """Track resource downloads for analytics"""
+    try:
+        download_record = {
+            "resource_id": resource_id,
+            "affiliate_id": affiliate_id,
+            "download_timestamp": datetime.now(),
+            "ip_address": "tracking_enabled",
+            "user_agent": "tracking_enabled"
+        }
+        
+        # Insert download tracking record
+        await db.resource_downloads.insert_one(download_record)
+        
+        return {
+            "success": True,
+            "message": "Download tracked successfully"
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "message": f"Error tracking download: {str(e)}"
+        }
