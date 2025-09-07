@@ -1131,6 +1131,22 @@ async def get_affiliate_resources():
                 "Share with qualified leads to demonstrate value tiers",
                 "Include in sales presentations and follow-up materials"
             ]
+        },
+        {
+            "id": "affiliate_banners",
+            "title": "Affiliate Marketing Banners",
+            "description": "10 high-converting banner designs for social media, email, and web advertising",
+            "type": "webpage",
+            "file_type": "html",
+            "download_url": f"{os.environ.get('REACT_APP_BACKEND_URL', 'http://localhost:3000')}/affiliate-banners.html",
+            "category": "marketing",
+            "usage_tips": [
+                "Use different banners for different platforms (email, social, ads)",
+                "Right-click banners to save as images for your campaigns",
+                "Test different headlines and CTAs to optimize performance",
+                "Replace emoji icons with your logo for brand consistency",
+                "Focus on Growth Acceleration module as key differentiator"
+            ]
         }
     ]
     
