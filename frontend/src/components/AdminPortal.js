@@ -679,32 +679,40 @@ const AdminPortalEnhanced = () => {
                 { id: 'exports', name: 'Data Export', icon: Download },
                 { id: 'settings', name: 'Settings', icon: Settings }
               ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => {
-                    if (tab.isDownload && tab.id === 'admin-manual') {
-                      // Download Admin Training Manual using direct backend endpoint
-                      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
-                      const link = document.createElement('a');
-                      link.href = `${backendUrl}/download-admin-manual-direct`;
-                      link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
-                      link.target = '_blank';
-                      document.body.appendChild(link);
-                      link.click();
-                      document.body.removeChild(link);
-                    } else {
-                      setActiveTab(tab.id);
-                    }
-                  }}
-                  className={`w-full flex items-center px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeTab === tab.id
-                      ? 'bg-blue-600 text-white'
-                      : 'text-slate-300 hover:bg-slate-700/50 hover:text-white'
-                  }`}
-                >
-                  <tab.icon className="w-5 h-5 mr-3" />
-                  {tab.name}
-                </button>
+                <div key={tab.id} className="relative">
+                  <button
+                    onClick={() => {
+                      if (tab.isDownload && tab.id === 'admin-manual') {
+                        // Download Admin Training Manual using direct backend endpoint
+                        const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+                        const link = document.createElement('a');
+                        link.href = `${backendUrl}/download-admin-manual-direct`;
+                        link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
+                        link.target = '_blank';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                      } else {
+                        setActiveTab(tab.id);
+                      }
+                    }}
+                    className={`w-full flex items-center px-3 py-2 rounded-lg text-left transition-colors ${
+                      activeTab === tab.id
+                        ? 'bg-blue-600 text-white'
+                        : 'text-slate-300 hover:bg-slate-700/50 hover:text-white'
+                    }`}
+                  >
+                    <tab.icon className="w-5 h-5 mr-3" />
+                    {tab.name}
+                  </button>
+                  
+                  {/* Notification Badges */}
+                  {tab.id === 'support' && <NotificationBadge count={notifications.supportTickets} />}
+                  {tab.id === 'live-chat' && <NotificationBadge count={notifications.liveChat} />}
+                  {tab.id === 'affiliate-chat' && <NotificationBadge count={notifications.affiliateChat} />}
+                  {tab.id === 'contact-forms' && <NotificationBadge count={notifications.contactForms} />}
+                  {tab.id === 'emails' && <NotificationBadge count={notifications.emails} />}
+                </div>
               ))}
             </nav>
           </div>
