@@ -477,35 +477,6 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
         <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl mx-auto">
                 <div className="bg-white rounded-lg shadow-sm border p-8">
-                    {/* Progress Bar */}
-                    <div className="mb-8">
-                        <div className="flex items-center justify-between">
-                            {[1, 2, 3].map((stepNumber) => (
-                                <div key={stepNumber} className="flex items-center">
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                                        step === stepNumber 
-                                            ? 'bg-blue-600 text-white' 
-                                            : step > stepNumber 
-                                                ? 'bg-green-600 text-white' 
-                                                : 'bg-gray-300 text-gray-600'
-                                    }`}>
-                                        {step > stepNumber ? <Check className="h-4 w-4" /> : stepNumber}
-                                    </div>
-                                    {stepNumber < 3 && (
-                                        <div className={`w-20 h-1 mx-2 ${
-                                            step > stepNumber ? 'bg-green-600' : 'bg-gray-300'
-                                        }`} />
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                        <div className="flex justify-between mt-2 text-xs text-gray-600">
-                            <span>Personal Info</span>
-                            <span>Address</span>
-                            <span>Payment</span>
-                        </div>
-                    </div>
-
                     {/* Error Message */}
                     {error && (
                         <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
