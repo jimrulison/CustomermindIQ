@@ -117,7 +117,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
     const renderStep1 = () => (
         <div className="space-y-6">
             <div className="text-center">
-                <h2 className="text-2xl font-bold text-gray-900">Personal Information</h2>
+                <h2 className="text-2xl font-bold text-gray-900">🔥 TEST - Personal Information (Modified by Dev)</h2>
                 <p className="mt-2 text-gray-600">Let's start with your basic information</p>
             </div>
 
