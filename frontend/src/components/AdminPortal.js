@@ -602,6 +602,18 @@ const AdminPortalEnhanced = () => {
     }
   }, [activeTab, searchTerm, filters]);
 
+  // ===== NOTIFICATION BADGE COMPONENT =====
+  
+  const NotificationBadge = ({ count, className = "" }) => {
+    if (!count || count === 0) return null;
+    
+    return (
+      <span className={`absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full min-w-[20px] h-5 flex items-center justify-center font-bold animate-pulse ${className}`}>
+        {count > 99 ? '99+' : count}
+      </span>
+    );
+  };
+
   if (!hasAdminAccess) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
