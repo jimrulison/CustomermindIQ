@@ -11,7 +11,6 @@ import {
     Eye,
     EyeOff
 } from 'lucide-react';
-import TestPasswordField from './TestPasswordField';
 
 const AffiliateRegistration = ({ onRegistrationComplete }) => {
     const [step, setStep] = useState(1);
