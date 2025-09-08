@@ -2653,6 +2653,7 @@ app.include_router(affiliate_router, tags=["Affiliate System"])
 
 # Import Affiliate Chat System Module
 from modules.affiliate_chat import router as affiliate_chat_router
+from modules.affiliate_landing_pages import affiliate_pages_router
 
 # Affiliate Chat System Router
 app.include_router(affiliate_chat_router, tags=["Affiliate Chat"])
