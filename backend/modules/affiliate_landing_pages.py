@@ -292,6 +292,15 @@ async def get_affiliate_pages(affiliate_id: str):
             {"affiliate_id": affiliate_id}
         ).to_list(length=None)
         
+        # Convert ObjectId to string and clean up the data
+        for page in pages:
+            if '_id' in page:
+                del page['_id']  # Remove MongoDB ObjectId
+            if 'created_at' in page and page['created_at']:
+                page['created_at'] = page['created_at'].isoformat() if hasattr(page['created_at'], 'isoformat') else str(page['created_at'])
+            if 'updated_at' in page and page['updated_at']:
+                page['updated_at'] = page['updated_at'].isoformat() if hasattr(page['updated_at'], 'isoformat') else str(page['updated_at'])
+        
         return {
             "success": True,
             "pages": pages,
