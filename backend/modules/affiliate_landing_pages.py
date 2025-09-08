@@ -354,6 +354,10 @@ async def render_affiliate_page(affiliate_number: str, page_slug: str):
         if not page:
             raise HTTPException(status_code=404, detail="Page not found or not published")
         
+        # Clean up ObjectId
+        if '_id' in page:
+            del page['_id']
+        
         # Increment view count
         await db.affiliate_pages.update_one(
             {"page_id": page["page_id"]},
@@ -375,8 +379,15 @@ async def render_affiliate_page(affiliate_number: str, page_slug: str):
             "html_content": rendered_html,
             "css_content": template_content["css_content"],
             "js_content": template_content["js_content"],
-            "page_data": page
+            "page_data": {
+                "page_id": page["page_id"],
+                "affiliate_number": page["affiliate_number"],
+                "page_title": page["page_title"],
+                "view_count": page.get("view_count", 0) + 1
+            }
         }
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to render page: {str(e)}")
 
