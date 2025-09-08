@@ -117,8 +117,8 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
     const renderStep1 = () => (
         <div className="space-y-6">
             <div className="text-center">
-                <h2 className="text-2xl font-bold text-gray-900">🚀 CACHE-BUSTED V3 - Personal Information</h2>
-                <p className="mt-2 text-gray-600">Let's start with your basic information - NO PROGRESS BAR VERSION</p>
+                <h2 className="text-2xl font-bold text-gray-900">Personal Information</h2>
+                <p className="mt-2 text-gray-600">Let's start with your basic information</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
