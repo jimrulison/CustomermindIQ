@@ -18,7 +18,10 @@ import {
     BookOpen,
     Calculator,
     HelpCircle,
-    Lightbulb
+    Lightbulb,
+    Layout,
+    Palette,
+    Edit
 } from 'lucide-react';
 import AffiliateChatWidget from './AffiliateChatWidget';
 
