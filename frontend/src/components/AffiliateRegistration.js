@@ -41,8 +41,8 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(true);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(true);
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://pagebuilder-iq.preview.emergentagent.com';
 
