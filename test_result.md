@@ -2304,6 +2304,7 @@ test_plan:
     - "Overall Platform Stability - Comprehensive Review Testing"
     - "Dashboard Endpoints Verification - Comprehensive Backend Testing"
     - "Affiliate System Backend Implementation - Phase 1"
+    - "Affiliate Login Issue Fix - admin@customermindiq.com Network Error"
   stuck_tasks:
     - "Customer Intelligence Frontend Data Display"
     - "Phase 2 Enhanced CRM - Lead Stage Updates"
