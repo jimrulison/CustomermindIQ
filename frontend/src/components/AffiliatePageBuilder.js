@@ -369,7 +369,7 @@ const AffiliatePageBuilder = ({ affiliateId }) => {
                                 disabled={loading}
                                 className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50"
                             >
-                                <Publish className="w-4 h-4 mr-2" />
+                                <Send className="w-4 h-4 mr-2" />
                                 Publish
                             </button>
                             
