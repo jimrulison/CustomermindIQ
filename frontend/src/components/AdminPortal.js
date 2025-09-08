@@ -583,7 +583,16 @@ const AdminPortalEnhanced = () => {
       loadContactForms();
       loadEmailCampaigns(); 
       loadEmailProvider();
+      fetchNotifications(); // Add notification fetching
       console.log('✅ All admin data loading initiated');
+    }
+  }, [hasAdminAccess]);
+
+  // Auto-refresh notifications every 30 seconds
+  useEffect(() => {
+    if (hasAdminAccess) {
+      const interval = setInterval(fetchNotifications, 30000);
+      return () => clearInterval(interval);
     }
   }, [hasAdminAccess]);
 
