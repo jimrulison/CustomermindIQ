@@ -43,6 +43,15 @@ const AdminPortalEnhanced = () => {
   const [emailProvider, setEmailProvider] = useState(null);
   const [analytics, setAnalytics] = useState({});
 
+  // Notification state for admin alerts
+  const [notifications, setNotifications] = useState({
+    supportTickets: 0,
+    liveChat: 0,
+    affiliateChat: 0,
+    contactForms: 0,
+    emails: 0
+  });
+
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
   const hasAdminAccess = user && (user.role === 'admin' || user.role === 'super_admin');
 
