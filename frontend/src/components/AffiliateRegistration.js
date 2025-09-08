@@ -7,7 +7,9 @@ import {
     CreditCard, 
     Shield,
     Check,
-    AlertCircle
+    AlertCircle,
+    Eye,
+    EyeOff
 } from 'lucide-react';
 
 const AffiliateRegistration = ({ onRegistrationComplete }) => {
