@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomerMind IQ - Affiliate Forms</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #3730a3 0%, #7c3aed 50%, #ec4899 100%); }
+        .glass-effect { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen py-12 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-4xl font-bold text-center text-gray-900 mb-12">CustomerMind IQ Affiliate Forms</h1>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                
+                <!-- Affiliate Sign-In Form -->
+                <div class="space-y-8">
+                    <h2 class="text-2xl font-bold text-gray-800 text-center">Affiliate Sign-In Form</h2>
+                    
+                    <div class="gradient-bg rounded-xl p-8">
+                        <div class="glass-effect rounded-xl p-8">
+                            <div class="text-center mb-8">
+                                <h2 class="text-3xl font-bold text-white">Affiliate Sign In</h2>
+                                <p class="text-indigo-200 mt-2">Access your affiliate dashboard</p>
+                            </div>
+
+                            <form class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-white mb-2">Email Address</label>
+                                    <input
+                                        type="email"
+                                        class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        placeholder="Enter your email"
+                                        value="affiliate@example.com"
+                                        readonly
+                                    />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-white mb-2">Password</label>
+                                    <div class="relative">
+                                        <input
+                                            type="password"
+                                            class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            placeholder="Enter your password"
+                                            value="••••••••"
+                                            readonly
+                                        />
+                                        <div class="absolute right-3 top-3 text-indigo-300">👁</div>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200">
+                                    Sign In
+                                </button>
+                            </form>
+
+                            <div class="mt-8 text-center">
+                                <p class="text-indigo-200">
+                                    Don't have an account?
+                                    <span class="text-blue-300 underline font-medium ml-1">Apply to become an affiliate</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Affiliate Registration Form -->
+                <div class="space-y-8">
+                    <h2 class="text-2xl font-bold text-gray-800 text-center">Affiliate Registration Form</h2>
+                    
+                    <div class="gradient-bg rounded-xl p-8">
+                        <div class="glass-effect rounded-xl p-8">
+                            <div class="text-center mb-8">
+                                <h2 class="text-3xl font-bold text-white">Join Our Affiliate Program</h2>
+                                <p class="text-indigo-200 mt-2">Start earning exceptional commissions</p>
+                            </div>
+
+                            <form class="space-y-6">
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-white mb-2">First Name</label>
+                                        <input type="text" class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-blue-500" value="John" readonly />
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-white mb-2">Last Name</label>
+                                        <input type="text" class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-blue-500" value="Smith" readonly />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-white mb-2">Email Address</label>
+                                    <input type="email" class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-blue-500" value="john@example.com" readonly />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-white mb-2">Company/Organization</label>
+                                    <input type="text" class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-blue-500" value="Marketing Solutions Inc." readonly />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-white mb-2">Website URL</label>
+                                    <input type="url" class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-blue-500" value="https://www.marketingsolutions.com" readonly />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-white mb-2">Marketing Experience</label>
+                                    <select class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <option value="5+ years" class="bg-indigo-900 text-white">5+ years</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-white mb-2">Monthly Website Traffic</label>
+                                    <select class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <option value="50K+" class="bg-indigo-900 text-white">50K+ visitors</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-white mb-2">Why do you want to promote CustomerMind IQ?</label>
+                                    <textarea rows="3" class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" readonly>I believe CustomerMind IQ offers exceptional value to businesses looking to understand their customers better, and I have a strong network in the B2B SaaS space.</textarea>
+                                </div>
+
+                                <div class="flex items-start">
+                                    <input type="checkbox" class="w-4 h-4 text-blue-600 bg-white/10 border-white/30 rounded focus:ring-blue-500 mt-1" checked readonly />
+                                    <div class="ml-3 text-sm">
+                                        <label class="text-white">I agree to the <span class="text-blue-300 underline">Affiliate Terms & Conditions</span> and <span class="text-blue-300 underline">Privacy Policy</span></label>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="w-full py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold rounded-lg hover:from-green-700 hover:to-blue-700 transition-all duration-200">
+                                    Submit Application
+                                </button>
+                            </form>
+
+                            <div class="mt-8 text-center">
+                                <p class="text-indigo-200">
+                                    Already have an account?
+                                    <span class="text-blue-300 underline font-medium ml-1">Sign In</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Commission Structure -->
+            <div class="mt-16 text-center">
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Commission Structure</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="bg-green-100 rounded-lg p-4 mb-3">
+                                <h4 class="text-lg font-semibold text-green-800">Launch Plan</h4>
+                                <p class="text-2xl font-bold text-green-600">30%</p>
+                            </div>
+                            <p class="text-sm text-gray-600">Initial + 20% recurring (2-12 months) + 10% (13-24 months)</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="bg-blue-100 rounded-lg p-4 mb-3">
+                                <h4 class="text-lg font-semibold text-blue-800">Growth Plan</h4>
+                                <p class="text-2xl font-bold text-blue-600">40%</p>
+                            </div>
+                            <p class="text-sm text-gray-600">Initial + 20% recurring (2-12 months) + 10% (13-24 months)</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="bg-purple-100 rounded-lg p-4 mb-3">
+                                <h4 class="text-lg font-semibold text-purple-800">Scale Plan</h4>
+                                <p class="text-2xl font-bold text-purple-600">50%</p>
+                            </div>
+                            <p class="text-sm text-gray-600">Initial + 20% recurring (2-12 months) + 10% (13-24 months)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
