@@ -217,8 +217,17 @@ const AffiliatePageBuilder = ({ affiliateId }) => {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {templates.map((template) => (
                     <div key={template.template_id} className="bg-slate-800 rounded-lg overflow-hidden hover:bg-slate-700 transition-colors cursor-pointer" onClick={() => selectTemplate(template)}>
-                        <div className="h-48 bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
-                            <Layout className="w-16 h-16 text-white opacity-50" />
+                        <div className="h-48 bg-gradient-to-br from-blue-600 to-purple-600 flex flex-col items-center justify-center p-4">
+                            <img 
+                                src="https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/wzbjjt9q_download.svg" 
+                                alt="CustomerMind IQ" 
+                                className="h-12 mb-4 filter brightness-0 invert"
+                            />
+                            <div className="text-white text-center">
+                                <h4 className="font-bold text-lg mb-2">Transform Your Business</h4>
+                                <p className="text-sm opacity-75">AI-powered customer intelligence</p>
+                                <button className="mt-3 bg-red-500 px-4 py-2 rounded text-sm font-medium">Start Free Trial</button>
+                            </div>
                         </div>
                         <div className="p-4">
                             <div className="flex items-center justify-between mb-2">
