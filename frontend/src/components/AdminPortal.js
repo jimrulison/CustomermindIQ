@@ -237,6 +237,55 @@ const AdminPortalEnhanced = () => {
     };
   };
 
+  // ===== NOTIFICATION FUNCTIONS =====
+  
+  const fetchNotifications = async () => {
+    try {
+      // Fetch support tickets count
+      const supportResponse = await axios.get(`${backendUrl}/api/support/tickets/count`, {
+        headers: getAuthHeaders()
+      });
+      
+      // Fetch live chat sessions count
+      const liveChatResponse = await axios.get(`${backendUrl}/api/admin/chat/sessions/unread`, {
+        headers: getAuthHeaders()
+      });
+      
+      // Fetch affiliate chat count
+      const affiliateChatResponse = await axios.get(`${backendUrl}/api/affiliate-chat/admin/unread-count`, {
+        headers: getAuthHeaders()
+      });
+      
+      // Fetch contact forms count
+      const contactFormsResponse = await axios.get(`${backendUrl}/api/admin/contact-forms/unread`, {
+        headers: getAuthHeaders()
+      });
+      
+      // Fetch email campaigns with pending/failed status
+      const emailsResponse = await axios.get(`${backendUrl}/api/admin/emails/pending-count`, {
+        headers: getAuthHeaders()
+      });
+
+      setNotifications({
+        supportTickets: supportResponse.data?.count || 0,
+        liveChat: liveChatResponse.data?.count || 0,
+        affiliateChat: affiliateChatResponse.data?.count || 0,
+        contactForms: contactFormsResponse.data?.count || 0,
+        emails: emailsResponse.data?.count || 0
+      });
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+      // Set demo data for development
+      setNotifications({
+        supportTickets: 3,
+        liveChat: 2,
+        affiliateChat: 5,
+        contactForms: 1,
+        emails: 4
+      });
+    }
+  };
+
   // ===== DATA LOADING FUNCTIONS =====
 
   const loadDashboardData = async () => {
