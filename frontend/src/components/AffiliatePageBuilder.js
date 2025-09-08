@@ -401,36 +401,50 @@ const AffiliatePageBuilder = ({ affiliateId }) => {
                     </button>
                 </div>
                 
-                <div className="bg-white rounded-lg p-4 min-h-96">
-                    <div className="preview-content">
-                        <div className="hero-section text-center py-12 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg mb-6">
-                            <h1 className="text-3xl font-bold mb-4">{pageData.custom_content.headline}</h1>
-                            <p className="text-lg mb-6">{pageData.custom_content.subtitle}</p>
-                            <button className="bg-red-500 text-white px-6 py-3 rounded-lg font-semibold">
-                                {pageData.custom_content.cta_text}
-                            </button>
-                        </div>
-                        
-                        <div className="features-section mb-6">
-                            <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Why Choose CustomerMind IQ?</h2>
-                            <div dangerouslySetInnerHTML={{ __html: pageData.custom_content.features }} />
-                        </div>
-                        
-                        {pageData.custom_content.testimonial && (
-                            <div className="testimonial-section text-center py-6 bg-gray-50 rounded-lg">
-                                <blockquote className="text-lg italic text-gray-600">
-                                    {pageData.custom_content.testimonial}
-                                </blockquote>
+                    <div className="bg-white rounded-lg p-4 min-h-96">
+                        <div className="preview-content">
+                            <div className="hero-section text-center py-12 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg mb-6">
+                                <div className="logo-container mb-6">
+                                    <img 
+                                        src="https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/wzbjjt9q_download.svg" 
+                                        alt="CustomerMind IQ" 
+                                        className="h-12 mx-auto filter brightness-0 invert"
+                                    />
+                                </div>
+                                <h1 className="text-3xl font-bold mb-4">{pageData.custom_content.headline}</h1>
+                                <p className="text-lg mb-6">{pageData.custom_content.subtitle}</p>
+                                <button className="bg-red-500 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:bg-red-600 transition-colors">
+                                    {pageData.custom_content.cta_text}
+                                </button>
                             </div>
-                        )}
-                        
-                        {currentPage && (
-                            <div className="footer-section text-center py-4 bg-gray-800 text-white rounded-lg mt-6">
-                                <p>Affiliate #{currentPage.affiliate_number} | CustomerMind IQ</p>
+                            
+                            <div className="features-section mb-6">
+                                <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Why Choose CustomerMind IQ?</h2>
+                                <div dangerouslySetInnerHTML={{ __html: pageData.custom_content.features }} />
                             </div>
-                        )}
+                            
+                            {pageData.custom_content.testimonial && (
+                                <div className="testimonial-section text-center py-6 bg-gray-50 rounded-lg">
+                                    <blockquote className="text-lg italic text-gray-600">
+                                        {pageData.custom_content.testimonial}
+                                    </blockquote>
+                                </div>
+                            )}
+                            
+                            {currentPage && (
+                                <div className="footer-section text-center py-4 bg-gray-800 text-white rounded-lg mt-6">
+                                    <div className="footer-branding flex flex-col items-center gap-2">
+                                        <img 
+                                            src="https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/wzbjjt9q_download.svg" 
+                                            alt="CustomerMind IQ" 
+                                            className="h-8 filter brightness-0 invert"
+                                        />
+                                        <p>Affiliate #{currentPage.affiliate_number} | CustomerMind IQ</p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
     );
