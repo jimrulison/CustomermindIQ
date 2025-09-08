@@ -32,7 +32,7 @@ class AffiliatePageTemplate(BaseModel):
 class AffiliatePageData(BaseModel):
     page_id: Optional[str] = None
     affiliate_id: str
-    affiliate_number: str
+    affiliate_number: Optional[str] = None  # Will be auto-generated
     template_id: str
     page_title: str
     page_slug: str
