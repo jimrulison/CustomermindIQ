@@ -1440,6 +1440,11 @@ ${details.updateFrequency}
     return <SignIn onSignIn={handleSignIn} />;
   }
 
+  // Show affiliate auth page for affiliate access (before main app)
+  if (currentPage === 'affiliate-auth') {
+    return <AffiliateAuth />;
+  }
+
   // Show loading state
   if (loading) {
     return (
