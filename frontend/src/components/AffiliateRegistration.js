@@ -117,7 +117,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
     const renderStep1 = () => (
         <div className="space-y-6">
             <div className="text-center">
-                <h2 className="text-2xl font-bold text-gray-900">🔥 TEST - Personal Information (Modified by Dev)</h2>
+                <h2 className="text-2xl font-bold text-gray-900">🚀 UPDATED - Personal Information</h2>
                 <p className="mt-2 text-gray-600">Let's start with your basic information</p>
             </div>
 
@@ -477,6 +477,8 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
         <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl mx-auto">
                 <div className="bg-white rounded-lg shadow-sm border p-8">
+                    {/* NO PROGRESS BAR - REMOVED COMPLETELY */}
+
                     {/* Error Message */}
                     {error && (
                         <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
