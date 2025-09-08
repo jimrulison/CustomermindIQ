@@ -410,7 +410,7 @@ async def delete_affiliate_page(page_id: str):
 async def get_template_content(template_id: str):
     """Get HTML/CSS/JS content for a template"""
     # This would load from files or database in production
-    # For now, returning sample content
+    # For now, returning sample content with proper CustomerMind IQ branding
     return {
         "html_content": """
         <!DOCTYPE html>
@@ -424,6 +424,9 @@ async def get_template_content(template_id: str):
         <body>
             <header class="hero">
                 <div class="container">
+                    <div class="logo-container">
+                        <img src="https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/wzbjjt9q_download.svg" alt="CustomerMind IQ" class="logo" />
+                    </div>
                     <h1>{{headline}}</h1>
                     <p>{{subtitle}}</p>
                     <button class="cta-button">{{cta_text}}</button>
@@ -444,7 +447,10 @@ async def get_template_content(template_id: str):
             </main>
             <footer>
                 <div class="container">
-                    <p>Affiliate #{{affiliate_number}} | CustomerMind IQ</p>
+                    <div class="footer-branding">
+                        <img src="https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/wzbjjt9q_download.svg" alt="CustomerMind IQ" class="footer-logo" />
+                        <p>Affiliate #{{affiliate_number}} | CustomerMind IQ</p>
+                    </div>
                 </div>
             </footer>
             <script>{{js_content}}</script>
@@ -453,19 +459,64 @@ async def get_template_content(template_id: str):
         """,
         "css_content": """
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; }
+        body { font-family: 'Inter', 'Arial', sans-serif; line-height: 1.6; color: #333; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header & Branding */
         .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 100px 0; text-align: center; }
-        .hero h1 { font-size: 3rem; margin-bottom: 20px; }
-        .hero p { font-size: 1.2rem; margin-bottom: 30px; }
-        .cta-button { background: #ff6b6b; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer; transition: background 0.3s; }
-        .cta-button:hover { background: #ff5252; }
+        .logo-container { margin-bottom: 30px; }
+        .logo { height: 60px; width: auto; filter: brightness(0) invert(1); }
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; font-weight: 700; }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9; }
+        
+        /* CTA Button */
+        .cta-button { 
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%); 
+            color: white; 
+            padding: 18px 40px; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 1.1rem; 
+            font-weight: 600;
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        .cta-button:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        /* Features Section */
         .features { padding: 80px 0; background: #f8f9fa; }
-        .features h2 { text-align: center; margin-bottom: 50px; font-size: 2.5rem; }
+        .features h2 { text-align: center; margin-bottom: 50px; font-size: 2.5rem; color: #2d3748; }
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        
+        /* Testimonial */
         .testimonial { padding: 60px 0; background: white; text-align: center; }
-        .testimonial blockquote { font-style: italic; font-size: 1.3rem; color: #666; }
-        footer { background: #333; color: white; padding: 40px 0; text-align: center; }
+        .testimonial blockquote { 
+            font-style: italic; 
+            font-size: 1.3rem; 
+            color: #666; 
+            max-width: 800px; 
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Footer */
+        footer { background: #2d3748; color: white; padding: 40px 0; text-align: center; }
+        .footer-branding { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .footer-logo { height: 40px; width: auto; filter: brightness(0) invert(1); }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .cta-button { padding: 15px 30px; font-size: 1rem; }
+            .features h2 { font-size: 2rem; }
+            .logo { height: 50px; }
+            .footer-logo { height: 35px; }
+        }
         """,
         "js_content": """
         document.addEventListener('DOMContentLoaded', function() {
@@ -474,7 +525,17 @@ async def get_template_content(template_id: str):
             ctaButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     // Add affiliate tracking logic here
-                    window.location.href = 'https://www.customermindiq.com/?ref=' + '{{affiliate_number}}';
+                    window.location.href = 'https://www.customermindiq.com/?ref={{affiliate_number}}';
+                });
+            });
+            
+            // Add smooth scrolling for better UX
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 });
             });
         });
