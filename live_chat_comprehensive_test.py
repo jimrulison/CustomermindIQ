@@ -10,7 +10,7 @@ import time
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://reftrack-1.preview.emergentagent.com/api"
+BACKEND_URL = "https://pagebuilder-iq.preview.emergentagent.com/api"
 ADMIN_EMAIL = "admin@customermindiq.com"
 ADMIN_PASSWORD = "CustomerMindIQ2025!"
 

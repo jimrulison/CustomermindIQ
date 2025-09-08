@@ -34,7 +34,7 @@ const AffiliatePageBuilder = ({ affiliateId }) => {
         custom_content: {}
     });
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://reftrack-1.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://pagebuilder-iq.preview.emergentagent.com';
 
     useEffect(() => {
         loadTemplates();

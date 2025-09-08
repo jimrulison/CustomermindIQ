@@ -40,7 +40,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://reftrack-1.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://pagebuilder-iq.preview.emergentagent.com';
 
     const handleInputChange = (field, value) => {
         if (field.includes('.')) {

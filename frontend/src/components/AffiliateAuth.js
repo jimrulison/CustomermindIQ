@@ -30,7 +30,7 @@ const AffiliateAuth = () => {
         password: ''
     });
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://reftrack-1.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://pagebuilder-iq.preview.emergentagent.com';
 
     const handleLogin = async (e) => {
         e.preventDefault();

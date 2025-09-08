@@ -16,7 +16,7 @@ import json
 from datetime import datetime
 
 class EndpointFixer:
-    def __init__(self, base_url="https://reftrack-1.preview.emergentagent.com"):
+    def __init__(self, base_url="https://pagebuilder-iq.preview.emergentagent.com"):
         self.base_url = base_url
         self.fixes_applied = []
 
