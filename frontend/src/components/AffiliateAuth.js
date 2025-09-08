@@ -222,7 +222,7 @@ const AffiliateAuth = () => {
             <div className="max-w-md w-full">
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20">
                     <div className="text-center mb-8">
-                        <h2 className="text-3xl font-bold text-white">🔥 TEST - Affiliate Sign In</h2>
+                        <h2 className="text-3xl font-bold text-white">Affiliate Sign In</h2>
                         <p className="text-indigo-200 mt-2">Access your affiliate dashboard</p>
                     </div>
 
