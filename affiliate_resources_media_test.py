@@ -489,7 +489,7 @@ class AffiliateResourcesMediaTester:
             await self.cleanup_session()
             
         # Print summary
-        self.print_summary()
+        return self.print_summary()
         
     def print_summary(self):
         """Print test summary"""
