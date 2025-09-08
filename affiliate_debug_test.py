@@ -10,6 +10,10 @@ import os
 import sys
 from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv("/app/backend/.env")
 
 async def debug_affiliate_system():
     """Debug the affiliate system"""
