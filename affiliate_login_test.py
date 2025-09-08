@@ -24,8 +24,8 @@ import urllib3
 # Disable SSL warnings for testing
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# Configuration - Use the external URL from frontend .env
-BACKEND_URL = "https://pagebuilder-iq.preview.emergentagent.com"
+# Configuration - Use localhost for testing (external URL returns 502)
+BACKEND_URL = "http://localhost:8001"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test credentials
