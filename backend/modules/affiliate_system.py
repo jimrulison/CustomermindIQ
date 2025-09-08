@@ -1147,6 +1147,70 @@ async def get_affiliate_resources():
                 "Replace emoji icons with your logo for brand consistency",
                 "Focus on Growth Acceleration module as key differentiator"
             ]
+        },
+        {
+            "id": "trial_audio",
+            "title": "7-Day Free Trial Audio",
+            "description": "Professional audio clip promoting the 7-day free trial for marketing campaigns",
+            "type": "audio",
+            "file_type": "mp3",
+            "download_url": "https://customer-assets.emergentagent.com/job_c868e713-75a0-4b49-a7a7-697ac440ca39/artifacts/14ovry8g_7%20day%20free%20trial%20audio.mp3",
+            "category": "marketing",
+            "usage_tips": [
+                "Use in podcast advertisements and sponsorships",
+                "Include in video presentations and webinars",
+                "Add to social media videos as voice-over",
+                "Perfect for phone-based sales presentations",
+                "Use in automated voice campaigns"
+            ]
+        },
+        {
+            "id": "growth_acceleration_video",
+            "title": "Growth Acceleration Intro Slideshow",
+            "description": "Comprehensive video slideshow explaining Growth Acceleration Engine features and benefits",
+            "type": "video",
+            "file_type": "mp4",
+            "download_url": "https://customer-assets.emergentagent.com/job_c868e713-75a0-4b49-a7a7-697ac440ca39/artifacts/3f5sbcbd_Growth%20Acceleration%20intro%20slide%20show.mp4",
+            "category": "content",
+            "usage_tips": [
+                "Share on LinkedIn and social media to demonstrate value",
+                "Use in sales presentations to prospects",
+                "Embed in email campaigns for visual engagement",
+                "Post on YouTube with your affiliate tracking links",
+                "Include in webinars as supporting content"
+            ]
+        },
+        {
+            "id": "intro_brief_video",
+            "title": "Customer Mind IQ Intro Brief Video",
+            "description": "Quick introduction video explaining Customer Mind IQ platform and core benefits",
+            "type": "video",
+            "file_type": "mp4",
+            "download_url": "https://customer-assets.emergentagent.com/job_c868e713-75a0-4b49-a7a7-697ac440ca39/artifacts/xqe443kb_Intro%20brief%20video.mp4",
+            "category": "content",
+            "usage_tips": [
+                "Perfect for initial prospect outreach and introductions",
+                "Use as opener in sales presentations",
+                "Share in first email contact to warm prospects",
+                "Post on social media as educational content",
+                "Include in website landing pages for credibility"
+            ]
+        },
+        {
+            "id": "prompt_explanation_presentation",
+            "title": "AI Prompt Explanation Presentation",
+            "description": "PowerPoint presentation explaining how to use AI prompts effectively with Customer Mind IQ",
+            "type": "presentation",
+            "file_type": "pptx",
+            "download_url": "https://customer-assets.emergentagent.com/job_c868e713-75a0-4b49-a7a7-697ac440ca39/artifacts/v1vexy6i_Prompt%20explanation%20video.pptx",
+            "category": "training",
+            "usage_tips": [
+                "Use in prospect training sessions and demos",
+                "Customize slides with your branding and contact info",
+                "Share with technical prospects who want implementation details",
+                "Include in proposals to show training and support value",
+                "Use as webinar content to educate potential customers"
+            ]
         }
     ]
     
