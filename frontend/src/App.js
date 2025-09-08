@@ -1435,8 +1435,8 @@ ${details.updateFrequency}
     return colors[stage] || 'bg-gray-100 text-gray-800';
   };
 
-  // Show sign-in page if not authenticated
-  if (!isAuthenticated) {
+  // Show sign-in page if not authenticated (unless it's affiliate access)
+  if (!isAuthenticated && currentPage !== 'affiliate-auth') {
     return <SignIn onSignIn={handleSignIn} />;
   }
 
