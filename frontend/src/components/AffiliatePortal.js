@@ -24,6 +24,7 @@ import {
     Edit
 } from 'lucide-react';
 import AffiliateChatWidget from './AffiliateChatWidget';
+import AffiliatePageBuilder from './AffiliatePageBuilder';
 
 const AffiliatePortal = () => {
     const [currentView, setCurrentView] = useState('dashboard');
