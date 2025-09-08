@@ -2658,6 +2658,9 @@ from modules.affiliate_landing_pages import affiliate_pages_router
 # Affiliate Chat System Router
 app.include_router(affiliate_chat_router, tags=["Affiliate Chat"])
 
+# Affiliate Landing Pages Router
+app.include_router(affiliate_pages_router, tags=["Affiliate Landing Pages"])
+
 # Include Authentication System routes
 app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
 
