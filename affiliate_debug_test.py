@@ -16,7 +16,7 @@ async def debug_affiliate_system():
     try:
         # Connect to MongoDB
         MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
-        DB_NAME = os.getenv("DB_NAME", "customer_mind_iq")
+        DB_NAME = os.getenv("DB_NAME", "test_database")
         client = AsyncIOMotorClient(MONGO_URL)
         db = client[DB_NAME]
         
