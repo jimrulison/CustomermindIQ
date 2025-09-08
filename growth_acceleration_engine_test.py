@@ -11,7 +11,7 @@ from datetime import datetime
 import time
 
 class GrowthAccelerationEngineTester:
-    def __init__(self, base_url="https://pagebuilder-iq.preview.emergentagent.com"):
+    def __init__(self, base_url="https://mindiq-portal.preview.emergentagent.com"):
         self.base_url = base_url
         self.growth_engine_tests = 0
         self.growth_engine_passed = 0

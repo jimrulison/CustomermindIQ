@@ -119,7 +119,7 @@ class AffiliateLoginFixer:
     def test_external_url_affiliate_login(self):
         """Test affiliate login using the external URL"""
         try:
-            external_url = "https://pagebuilder-iq.preview.emergentagent.com"
+            external_url = "https://mindiq-portal.preview.emergentagent.com"
             affiliate_credentials = {
                 "email": "admin@customermindiq.com",
                 "password": "CustomerMindIQ2025!"

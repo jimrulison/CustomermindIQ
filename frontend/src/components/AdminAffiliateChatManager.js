@@ -28,7 +28,7 @@ const AdminAffiliateChatManager = ({ currentAdmin }) => {
     
     const messagesEndRef = useRef(null);
     const wsRef = useRef(null);
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://pagebuilder-iq.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://mindiq-portal.preview.emergentagent.com';
 
     useEffect(() => {
         loadChatStats();
