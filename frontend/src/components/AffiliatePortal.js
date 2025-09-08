@@ -966,6 +966,9 @@ const AffiliatePortal = () => {
                 {currentView === 'dashboard' && renderDashboard()}
                 {currentView === 'links' && renderLinks()}
                 {currentView === 'materials' && renderMaterials()}
+                {currentView === 'page-builder' && (
+                    <AffiliatePageBuilder affiliateId={getCurrentAffiliateId()} />
+                )}
             </main>
         </div>
     );
