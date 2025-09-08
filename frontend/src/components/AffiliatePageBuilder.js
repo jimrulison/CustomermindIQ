@@ -4,7 +4,7 @@ import {
     Palette,
     Eye,
     Save,
-    Publish,
+    Send,
     Copy,
     Edit,
     Trash2,
