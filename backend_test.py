@@ -245,10 +245,10 @@ class AffiliateSystemTester:
             self.log_test("Affiliate Resources", False, f"Exception: {str(e)}")
             return False
 
-    def test_categories_include_sales(self) -> bool:
-        """Test that categories now include the new 'sales' category"""
+    def test_media_assets_availability(self) -> bool:
+        """Test that recent media assets (audio, video, presentation) are still available"""
         try:
-            print("📂 Testing categories include 'sales'...")
+            print("🎬 Testing media assets availability...")
             response = self.session.get(
                 f"{API_BASE}/affiliate/resources",
                 timeout=30
@@ -256,29 +256,43 @@ class AffiliateSystemTester:
             
             if response.status_code == 200:
                 data = response.json()
-                categories = data.get("categories", [])
+                resources = data.get("resources", [])
                 
-                expected_categories = ["tools", "content", "support", "sales"]
-                missing_categories = [cat for cat in expected_categories if cat not in categories]
+                # Look for media assets
+                media_assets = []
+                for resource in resources:
+                    file_type = resource.get("file_type", "").lower()
+                    if file_type in ["mp3", "mp4", "pptx"]:
+                        media_assets.append({
+                            "id": resource.get("id"),
+                            "title": resource.get("title"),
+                            "file_type": file_type,
+                            "download_url": resource.get("download_url")
+                        })
                 
-                if missing_categories:
-                    self.log_test("Categories Include Sales", False, f"Missing categories: {missing_categories}")
+                if len(media_assets) == 0:
+                    self.log_test("Media Assets Availability", False, "No media assets found")
                     return False
                 
-                # Specifically check for 'sales' category
-                if "sales" not in categories:
-                    self.log_test("Sales Category Present", False, "New 'sales' category not found in categories")
-                    return False
+                # Check that media assets have valid URLs
+                valid_media_count = 0
+                for asset in media_assets:
+                    if asset["download_url"] and "customer-assets.emergentagent.com" in asset["download_url"]:
+                        valid_media_count += 1
                 
-                self.log_test("Categories Include Sales", True, f"All expected categories present: {categories}")
-                return True
+                if valid_media_count > 0:
+                    self.log_test("Media Assets Availability", True, f"Found {valid_media_count} media assets with valid URLs")
+                    return True
+                else:
+                    self.log_test("Media Assets Availability", False, "No media assets with valid URLs found")
+                    return False
                 
             else:
-                self.log_test("Categories Include Sales", False, f"HTTP {response.status_code}: {response.text}")
+                self.log_test("Media Assets Availability", False, f"HTTP {response.status_code}: {response.text}")
                 return False
                 
         except Exception as e:
-            self.log_test("Categories Include Sales", False, f"Exception: {str(e)}")
+            self.log_test("Media Assets Availability", False, f"Exception: {str(e)}")
             return False
 
     def test_download_urls_valid(self) -> bool:
