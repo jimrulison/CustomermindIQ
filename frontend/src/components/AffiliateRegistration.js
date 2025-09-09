@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 
 const AffiliateRegistration = ({ onRegistrationComplete }) => {
+    const { t } = useTranslation();
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         first_name: '',
