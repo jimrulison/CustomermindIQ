@@ -89,12 +89,36 @@ class AffiliateSystemTester:
             self.log_test("Admin Authentication", False, f"Exception: {str(e)}")
             return False
 
-    def test_affiliate_resources_count(self) -> bool:
-        """Test that GET /api/affiliate/resources returns 5 resources instead of 3"""
+    def test_affiliate_registration(self) -> bool:
+        """Test affiliate registration endpoint"""
         try:
-            print("📋 Testing affiliate resources count (should be 5)...")
-            response = self.session.get(
-                f"{API_BASE}/affiliate/resources",
+            print("📝 Testing affiliate registration endpoint...")
+            
+            # Create test affiliate data
+            test_affiliate = {
+                "first_name": "Test",
+                "last_name": "Affiliate",
+                "email": f"test.affiliate.{int(datetime.now().timestamp())}@example.com",
+                "phone": "+1234567890",
+                "website": "https://testaffiliate.com",
+                "promotion_method": "social",
+                "password": "TestPassword123!",
+                "address": {
+                    "street": "123 Test Street",
+                    "city": "Test City",
+                    "state": "CA",
+                    "zip_code": "12345",
+                    "country": "US"
+                },
+                "payment_method": "paypal",
+                "payment_details": {
+                    "paypal_email": "test@paypal.com"
+                }
+            }
+            
+            response = self.session.post(
+                f"{API_BASE}/affiliate/auth/register",
+                json=test_affiliate,
                 timeout=30
             )
             
@@ -102,34 +126,26 @@ class AffiliateSystemTester:
                 data = response.json()
                 
                 # Check response structure
-                required_fields = ["success", "resources", "total_resources", "categories", "message"]
+                required_fields = ["success", "affiliate_id", "message"]
                 missing_fields = [field for field in required_fields if field not in data]
                 
                 if missing_fields:
-                    self.log_test("Affiliate Resources Structure", False, f"Missing fields: {missing_fields}")
+                    self.log_test("Affiliate Registration Structure", False, f"Missing fields: {missing_fields}")
                     return False
                 
-                # Check resource count
-                resources = data.get("resources", [])
-                total_resources = data.get("total_resources", 0)
-                
-                if len(resources) != 5:
-                    self.log_test("Affiliate Resources Count", False, f"Expected 5 resources, got {len(resources)}")
+                if data.get("success"):
+                    self.log_test("Affiliate Registration", True, f"Successfully registered affiliate: {data.get('affiliate_id')}")
+                    return True
+                else:
+                    self.log_test("Affiliate Registration", False, f"Registration failed: {data.get('message')}")
                     return False
-                
-                if total_resources != 5:
-                    self.log_test("Affiliate Resources Total", False, f"Expected total_resources=5, got {total_resources}")
-                    return False
-                
-                self.log_test("Affiliate Resources Count", True, f"Correctly returns 5 resources (was 3)")
-                return True
                 
             else:
-                self.log_test("Affiliate Resources Count", False, f"HTTP {response.status_code}: {response.text}")
+                self.log_test("Affiliate Registration", False, f"HTTP {response.status_code}: {response.text}")
                 return False
                 
         except Exception as e:
-            self.log_test("Affiliate Resources Count", False, f"Exception: {str(e)}")
+            self.log_test("Affiliate Registration", False, f"Exception: {str(e)}")
             return False
 
     def test_specific_resources_present(self) -> bool:
