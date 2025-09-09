@@ -216,7 +216,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Password *
+                        {t('forms.password')} *
                     </label>
                     <div className="relative">
                         <input
@@ -224,6 +224,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
                             value={formData.password}
                             onChange={(e) => handleInputChange('password', e.target.value)}
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder={t('forms.placeholders.enterPassword')}
                             required
                             minLength="8"
                         />
