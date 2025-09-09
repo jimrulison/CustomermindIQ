@@ -182,14 +182,14 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Website/Blog (Optional)
+                        {t('forms.website')}
                     </label>
                     <input
                         type="url"
                         value={formData.website}
                         onChange={(e) => handleInputChange('website', e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="https://yourwebsite.com"
+                        placeholder={t('forms.placeholders.enterWebsite')}
                     />
                 </div>
             </div>
