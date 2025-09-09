@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
+import LanguageSelector from './LanguageSelector';
 import { 
   Brain, 
   Users, 
