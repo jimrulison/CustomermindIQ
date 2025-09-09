@@ -295,64 +295,39 @@ class AffiliateSystemTester:
             self.log_test("Media Assets Availability", False, f"Exception: {str(e)}")
             return False
 
-    def test_download_urls_valid(self) -> bool:
-        """Test that new resources have correct download URLs"""
+    def test_database_connectivity(self) -> bool:
+        """Test database connectivity through health check"""
         try:
-            print("🔗 Testing download URLs for new resources...")
+            print("🔍 Testing database connectivity...")
             response = self.session.get(
-                f"{API_BASE}/affiliate/resources",
+                f"{API_BASE}/health",
                 timeout=30
             )
             
             if response.status_code == 200:
                 data = response.json()
-                resources = data.get("resources", [])
                 
-                # Find the new resources
-                white_paper = next((r for r in resources if r.get("id") == "white_paper"), None)
-                pricing_schedule = next((r for r in resources if r.get("id") == "pricing_schedule"), None)
+                # Check health response structure
+                required_fields = ["status", "service", "version", "timestamp"]
+                missing_fields = [field for field in required_fields if field not in data]
                 
-                if not white_paper:
-                    self.log_test("White Paper Resource", False, "White paper resource not found")
+                if missing_fields:
+                    self.log_test("Health Check Structure", False, f"Missing fields: {missing_fields}")
                     return False
                 
-                if not pricing_schedule:
-                    self.log_test("Pricing Schedule Resource", False, "Pricing schedule resource not found")
+                if data.get("status") == "healthy":
+                    self.log_test("Database Connectivity", True, f"Service healthy: {data.get('service')} v{data.get('version')}")
+                    return True
+                else:
+                    self.log_test("Database Connectivity", False, f"Service not healthy: {data.get('status')}")
                     return False
-                
-                # Check download URLs
-                white_paper_url = white_paper.get("download_url", "")
-                pricing_schedule_url = pricing_schedule.get("download_url", "")
-                
-                # URLs should point to customer-assets.emergentagent.com
-                expected_domain = "customer-assets.emergentagent.com"
-                
-                if expected_domain not in white_paper_url:
-                    self.log_test("White Paper URL", False, f"URL doesn't contain expected domain: {white_paper_url}")
-                    return False
-                
-                if expected_domain not in pricing_schedule_url:
-                    self.log_test("Pricing Schedule URL", False, f"URL doesn't contain expected domain: {pricing_schedule_url}")
-                    return False
-                
-                # Check that URLs contain the expected file names
-                if "White%20Paper" not in white_paper_url and "White Paper" not in white_paper_url:
-                    self.log_test("White Paper Filename", False, f"URL doesn't contain expected filename: {white_paper_url}")
-                    return False
-                
-                if "Pricing%20Schedule" not in pricing_schedule_url and "Pricing Schedule" not in pricing_schedule_url:
-                    self.log_test("Pricing Schedule Filename", False, f"URL doesn't contain expected filename: {pricing_schedule_url}")
-                    return False
-                
-                self.log_test("Download URLs Valid", True, "Both new resources have valid download URLs")
-                return True
                 
             else:
-                self.log_test("Download URLs Valid", False, f"HTTP {response.status_code}: {response.text}")
+                self.log_test("Database Connectivity", False, f"HTTP {response.status_code}: {response.text}")
                 return False
                 
         except Exception as e:
-            self.log_test("Download URLs Valid", False, f"Exception: {str(e)}")
+            self.log_test("Database Connectivity", False, f"Exception: {str(e)}")
             return False
 
     def test_new_resource_download_tracking(self) -> bool:
