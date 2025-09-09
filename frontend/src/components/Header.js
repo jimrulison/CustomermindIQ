@@ -344,6 +344,10 @@ const Header = ({ currentPage, onNavigate, onSignOut, user, onGoBack }) => {
                 </div>
               )}
             </div>
+            
+            {/* Language Selector */}
+            <LanguageSelector />
+            
             {/* Go Back Button */}
             {onGoBack && (
               <Button
