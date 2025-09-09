@@ -330,49 +330,65 @@ class AffiliateSystemTester:
             self.log_test("Database Connectivity", False, f"Exception: {str(e)}")
             return False
 
-    def test_new_resource_download_tracking(self) -> bool:
-        """Test download tracking for the new resources"""
+    def test_resource_download_tracking(self) -> bool:
+        """Test download tracking for affiliate resources"""
         try:
-            print("📥 Testing download tracking for new resources...")
+            print("📥 Testing resource download tracking...")
             
-            new_resource_ids = ["white_paper", "pricing_schedule"]
-            all_tests_passed = True
+            # First get available resources
+            response = self.session.get(
+                f"{API_BASE}/affiliate/resources",
+                timeout=30
+            )
             
-            for resource_id in new_resource_ids:
-                print(f"   Testing download tracking for: {resource_id}")
+            if response.status_code != 200:
+                self.log_test("Resource Download Tracking", False, "Could not fetch resources for testing")
+                return False
+            
+            data = response.json()
+            resources = data.get("resources", [])
+            
+            if len(resources) == 0:
+                self.log_test("Resource Download Tracking", False, "No resources available for testing")
+                return False
+            
+            # Test download tracking for first resource
+            test_resource = resources[0]
+            resource_id = test_resource.get("id")
+            
+            print(f"   Testing download tracking for: {resource_id}")
+            
+            # Test download tracking
+            response = self.session.post(
+                f"{API_BASE}/affiliate/resources/{resource_id}/download",
+                json={"affiliate_id": "test_affiliate_tracking"},
+                timeout=30
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
                 
-                # Test download tracking
-                response = self.session.post(
-                    f"{API_BASE}/affiliate/resources/{resource_id}/download",
-                    json={"affiliate_id": "test_affiliate_new_resources"},
-                    timeout=30
-                )
-                
-                if response.status_code == 200:
-                    data = response.json()
-                    
-                    # Check response structure
-                    if "success" in data and "message" in data:
-                        if data.get("success"):
-                            self.log_test(f"Download Tracking - {resource_id}", True, 
-                                        f"Successfully tracked download: {data.get('message')}")
-                        else:
-                            self.log_test(f"Download Tracking - {resource_id}", False, 
-                                        f"Download tracking failed: {data.get('message')}")
-                            all_tests_passed = False
+                # Check response structure
+                if "success" in data and "message" in data:
+                    if data.get("success"):
+                        self.log_test("Resource Download Tracking", True, 
+                                    f"Successfully tracked download for {resource_id}: {data.get('message')}")
+                        return True
                     else:
-                        self.log_test(f"Download Tracking - {resource_id}", False, 
-                                    "Response missing required fields (success, message)")
-                        all_tests_passed = False
+                        self.log_test("Resource Download Tracking", False, 
+                                    f"Download tracking failed: {data.get('message')}")
+                        return False
                 else:
-                    self.log_test(f"Download Tracking - {resource_id}", False, 
-                                f"HTTP {response.status_code}: {response.text}")
-                    all_tests_passed = False
-            
-            return all_tests_passed
+                    self.log_test("Resource Download Tracking", False, 
+                                "Response missing required fields (success, message)")
+                    return False
+            else:
+                self.log_test("Resource Download Tracking", False, 
+                            f"HTTP {response.status_code}: {response.text}")
+                return False
                 
         except Exception as e:
-            self.log_test("New Resource Download Tracking", False, f"Exception: {str(e)}")
+            self.log_test("Resource Download Tracking", False, f"Exception: {str(e)}")
             return False
 
     def test_resource_categories_assignment(self) -> bool:
