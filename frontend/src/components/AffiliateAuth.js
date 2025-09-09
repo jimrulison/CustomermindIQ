@@ -120,7 +120,7 @@ const AffiliateAuth = () => {
                         </div>
                         
                         <h2 className="text-3xl font-bold text-white mb-4">
-                            Join Our Elite Affiliate Program
+                            {t('pages.affiliate.registration.title')}
                         </h2>
                         <p className="text-xl text-gray-100 mb-8 max-w-2xl mx-auto">
                             Earn exceptional commissions promoting the world's most advanced customer intelligence platform
