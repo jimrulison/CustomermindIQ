@@ -198,7 +198,7 @@ const AffiliateAuth = () => {
                             onClick={() => setCurrentView('login')}
                             className="flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-all duration-200 border border-white/30"
                         >
-                            Already a Partner? Sign In
+                            {t('pages.affiliate.registration.alreadyPartner')}
                         </button>
                     </div>
 
