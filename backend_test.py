@@ -25,8 +25,8 @@ import urllib3
 # Disable SSL warnings for testing
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# Configuration
-BACKEND_URL = "http://localhost:8001"
+# Configuration - Use production URL from frontend .env
+BACKEND_URL = "https://mindiq-portal.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test credentials
