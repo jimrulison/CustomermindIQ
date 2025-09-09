@@ -20,6 +20,7 @@ import AffiliateRegistration from './AffiliateRegistration';
 import AffiliatePortal from './AffiliatePortal';
 
 const AffiliateAuth = () => {
+    const { t } = useTranslation();
     const [currentView, setCurrentView] = useState('landing'); // 'landing', 'login', 'register', 'portal'
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
