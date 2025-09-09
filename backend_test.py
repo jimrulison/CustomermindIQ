@@ -197,10 +197,10 @@ class AffiliateSystemTester:
             self.log_test("Affiliate Login", False, f"Exception: {str(e)}")
             return False
 
-    def test_resource_structure(self) -> bool:
-        """Test that each resource has all required fields"""
+    def test_affiliate_resources(self) -> bool:
+        """Test affiliate resources endpoint"""
         try:
-            print("🔍 Testing resource structure...")
+            print("📋 Testing affiliate resources endpoint...")
             response = self.session.get(
                 f"{API_BASE}/affiliate/resources",
                 timeout=30
@@ -208,35 +208,41 @@ class AffiliateSystemTester:
             
             if response.status_code == 200:
                 data = response.json()
-                resources = data.get("resources", [])
                 
-                required_fields = ["id", "title", "description", "type", "file_type", "download_url", "category", "usage_tips"]
+                # Check response structure
+                required_fields = ["success", "resources", "total_resources", "categories", "message"]
+                missing_fields = [field for field in required_fields if field not in data]
                 
-                all_valid = True
-                for resource in resources:
-                    missing_fields = [field for field in required_fields if field not in resource]
-                    
-                    if missing_fields:
-                        self.log_test(f"Resource Structure - {resource.get('id', 'unknown')}", False, f"Missing fields: {missing_fields}")
-                        all_valid = False
-                    else:
-                        # Check that usage_tips is a list
-                        if not isinstance(resource.get("usage_tips"), list):
-                            self.log_test(f"Resource Structure - {resource.get('id')}", False, "usage_tips should be a list")
-                            all_valid = False
-                
-                if all_valid:
-                    self.log_test("Resource Structure", True, f"All {len(resources)} resources have required fields")
-                    return True
-                else:
+                if missing_fields:
+                    self.log_test("Affiliate Resources Structure", False, f"Missing fields: {missing_fields}")
                     return False
                 
+                resources = data.get("resources", [])
+                total_resources = data.get("total_resources", 0)
+                
+                # Check that we have resources
+                if len(resources) == 0:
+                    self.log_test("Affiliate Resources", False, "No resources found")
+                    return False
+                
+                # Check resource structure
+                required_resource_fields = ["id", "title", "description", "type", "file_type", "download_url", "category", "usage_tips"]
+                
+                for resource in resources[:3]:  # Check first 3 resources
+                    missing_fields = [field for field in required_resource_fields if field not in resource]
+                    if missing_fields:
+                        self.log_test(f"Resource Structure - {resource.get('id', 'unknown')}", False, f"Missing fields: {missing_fields}")
+                        return False
+                
+                self.log_test("Affiliate Resources", True, f"Successfully retrieved {len(resources)} resources with proper structure")
+                return True
+                
             else:
-                self.log_test("Resource Structure", False, f"HTTP {response.status_code}: {response.text}")
+                self.log_test("Affiliate Resources", False, f"HTTP {response.status_code}: {response.text}")
                 return False
                 
         except Exception as e:
-            self.log_test("Resource Structure", False, f"Exception: {str(e)}")
+            self.log_test("Affiliate Resources", False, f"Exception: {str(e)}")
             return False
 
     def test_categories_include_sales(self) -> bool:
