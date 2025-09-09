@@ -196,20 +196,20 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
 
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Primary Promotion Method
+                    {t('forms.promotionMethod')}
                 </label>
                 <select
                     value={formData.promotion_method}
                     onChange={(e) => handleInputChange('promotion_method', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                    <option value="email">Email Marketing</option>
-                    <option value="social">Social Media</option>
-                    <option value="content">Content Marketing/Blog</option>
-                    <option value="paid">Paid Advertising</option>
-                    <option value="network">Network/Word of Mouth</option>
-                    <option value="speaking">Speaking/Events</option>
-                    <option value="other">Other</option>
+                    <option value="email">{t('promotionMethods.email')}</option>
+                    <option value="social">{t('promotionMethods.social')}</option>
+                    <option value="content">{t('promotionMethods.content')}</option>
+                    <option value="paid">{t('promotionMethods.paid')}</option>
+                    <option value="network">{t('promotionMethods.network')}</option>
+                    <option value="speaking">{t('promotionMethods.speaking')}</option>
+                    <option value="other">{t('promotionMethods.other')}</option>
                 </select>
             </div>
 
