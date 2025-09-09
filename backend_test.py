@@ -35,7 +35,7 @@ ADMIN_CREDENTIALS = {
     "password": "CustomerMindIQ2025!"
 }
 
-class UpdatedAffiliateResourcesTester:
+class AffiliateSystemTester:
     def __init__(self):
         self.session = requests.Session()
         self.session.verify = False  # Disable SSL verification for testing
