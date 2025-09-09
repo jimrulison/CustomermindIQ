@@ -139,13 +139,14 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Last Name *
+                        {t('forms.lastName')} *
                     </label>
                     <input
                         type="text"
                         value={formData.last_name}
                         onChange={(e) => handleInputChange('last_name', e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder={t('forms.placeholders.enterLastName')}
                         required
                     />
                 </div>
