@@ -190,7 +190,7 @@ const AffiliateAuth = () => {
                             onClick={() => setCurrentView('register')}
                             className="flex items-center justify-center px-8 py-4 bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold rounded-lg hover:from-green-700 hover:to-blue-700 transition-all duration-200 shadow-lg"
                         >
-                            Join Now - Start Earning
+                            {t('pages.affiliate.registration.joinNow')}
                             <ArrowRight className="ml-2 h-5 w-5" />
                         </button>
                         
