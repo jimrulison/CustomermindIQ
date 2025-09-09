@@ -1,27 +1,14 @@
 #!/usr/bin/env python3
 """
-CustomerMind IQ - Updated Affiliate Resources Backend Testing
-Testing the updated affiliate resources endpoints as requested in the review
+CustomerMind IQ - Affiliate System Backend Testing
+Testing the affiliate system after internationalization features were added
 
 SPECIFIC TEST OBJECTIVES FROM REVIEW REQUEST:
-1. **GET /api/affiliate/resources** - Verify this endpoint now returns 5 resources instead of 3:
-   - ROI Calculator
-   - Customer IQ Articles  
-   - FAQ Document
-   - CMIQ White Paper (NEW)
-   - Customer Mind Pricing Schedule (NEW)
-
-2. **Test the new resource download tracking**:
-   - POST /api/affiliate/resources/white_paper/download
-   - POST /api/affiliate/resources/pricing_schedule/download
-
-3. **Verify resource structure** - Check that each resource has all required fields:
-   - id, title, description, type, file_type, download_url, category, usage_tips
-
-4. **Verify categories** - Confirm that the categories now include the new "sales" category:
-   - ["tools", "content", "support", "sales"]
-
-5. **Validate download URLs** - Ensure the new resources have correct URLs pointing to the uploaded documents
+1. **Test affiliate registration endpoint** (/api/affiliate/register)
+2. **Test affiliate login endpoint** (/api/affiliate/auth/login) 
+3. **Test affiliate resources endpoint** (/api/affiliate/resources)
+4. **Verify that all endpoints are responding correctly and the database connections are working**
+5. **Make sure the recent media assets (audio, video, presentation) are still available**
 
 Use admin credentials: admin@customermindiq.com / CustomerMindIQ2025!
 """
