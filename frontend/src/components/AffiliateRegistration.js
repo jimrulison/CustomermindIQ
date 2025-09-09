@@ -513,7 +513,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
                                     step === 1 ? 'invisible' : ''
                                 }`}
                             >
-                                Previous
+                                {t('common.previous')}
                             </button>
 
                             {step < 3 ? (
