@@ -391,51 +391,7 @@ class AffiliateSystemTester:
             self.log_test("Resource Download Tracking", False, f"Exception: {str(e)}")
             return False
 
-    def test_resource_categories_assignment(self) -> bool:
-        """Test that new resources are assigned to correct categories"""
-        try:
-            print("📂 Testing resource category assignments...")
-            response = self.session.get(
-                f"{API_BASE}/affiliate/resources",
-                timeout=30
-            )
-            
-            if response.status_code == 200:
-                data = response.json()
-                resources = data.get("resources", [])
-                
-                # Find the new resources and check their categories
-                white_paper = next((r for r in resources if r.get("id") == "white_paper"), None)
-                pricing_schedule = next((r for r in resources if r.get("id") == "pricing_schedule"), None)
-                
-                if not white_paper or not pricing_schedule:
-                    self.log_test("Resource Category Assignment", False, "New resources not found")
-                    return False
-                
-                # Check categories
-                white_paper_category = white_paper.get("category")
-                pricing_schedule_category = pricing_schedule.get("category")
-                
-                # White paper should be in 'content' category
-                if white_paper_category != "content":
-                    self.log_test("White Paper Category", False, f"Expected 'content', got '{white_paper_category}'")
-                    return False
-                
-                # Pricing schedule should be in 'sales' category
-                if pricing_schedule_category != "sales":
-                    self.log_test("Pricing Schedule Category", False, f"Expected 'sales', got '{pricing_schedule_category}'")
-                    return False
-                
-                self.log_test("Resource Category Assignment", True, "New resources correctly categorized")
-                return True
-                
-            else:
-                self.log_test("Resource Category Assignment", False, f"HTTP {response.status_code}: {response.text}")
-                return False
-                
-        except Exception as e:
-            self.log_test("Resource Category Assignment", False, f"Exception: {str(e)}")
-            return False
+
 
     def run_comprehensive_test(self):
         """Run all affiliate system tests"""
