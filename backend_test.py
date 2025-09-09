@@ -469,18 +469,20 @@ class AffiliateSystemTester:
 
 def main():
     """Main test execution"""
-    tester = UpdatedAffiliateResourcesTester()
+    tester = AffiliateSystemTester()
     success = tester.run_comprehensive_test()
     
     if success:
-        print("\n🎯 CONCLUSION: Updated affiliate resources functionality is working correctly!")
-        print("   - 5 resources now available (up from 3)")
-        print("   - New CMIQ White Paper and Customer Mind Pricing Schedule added")
-        print("   - Sales category added to categories")
-        print("   - Download tracking functional for all resources")
+        print("\n🎯 CONCLUSION: Affiliate system is working correctly after i18n implementation!")
+        print("   - Database connectivity confirmed")
+        print("   - Affiliate registration endpoint functional")
+        print("   - Affiliate login endpoint working")
+        print("   - Affiliate resources endpoint operational")
+        print("   - Media assets (audio, video, presentation) available")
+        print("   - Resource download tracking functional")
         sys.exit(0)
     else:
-        print("\n💥 CONCLUSION: Some affiliate resources update tests failed!")
+        print("\n💥 CONCLUSION: Some affiliate system tests failed!")
         sys.exit(1)
 
 if __name__ == "__main__":
