@@ -537,7 +537,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
                                             {t('pages.affiliate.registration.submitting')}
                                         </>
                                     ) : (
-                                        'Complete Registration'
+                                        t('pages.affiliate.registration.completeRegistration')
                                     )}
                                 </button>
                             )}
