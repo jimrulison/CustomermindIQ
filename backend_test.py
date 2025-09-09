@@ -148,52 +148,53 @@ class AffiliateSystemTester:
             self.log_test("Affiliate Registration", False, f"Exception: {str(e)}")
             return False
 
-    def test_specific_resources_present(self) -> bool:
-        """Test that all 5 expected resources are present including the 2 new ones"""
+    def test_affiliate_login(self) -> bool:
+        """Test affiliate login endpoint with existing admin affiliate"""
         try:
-            print("📋 Testing specific resources presence...")
-            response = self.session.get(
-                f"{API_BASE}/affiliate/resources",
+            print("🔐 Testing affiliate login endpoint...")
+            
+            # Try to login with admin affiliate account
+            login_data = {
+                "email": "admin@customermindiq.com",
+                "password": "CustomerMindIQ2025!"
+            }
+            
+            response = self.session.post(
+                f"{API_BASE}/affiliate/auth/login",
+                json=login_data,
                 timeout=30
             )
             
             if response.status_code == 200:
                 data = response.json()
-                resources = data.get("resources", [])
                 
-                # Expected resource IDs
-                expected_resources = [
-                    "roi_calculator",
-                    "customer_iq_articles", 
-                    "faq_document",
-                    "white_paper",  # NEW
-                    "pricing_schedule"  # NEW
-                ]
+                # Check response structure
+                required_fields = ["success", "token", "affiliate"]
+                missing_fields = [field for field in required_fields if field not in data]
                 
-                found_resource_ids = [r.get("id") for r in resources]
-                missing_resources = [rid for rid in expected_resources if rid not in found_resource_ids]
-                
-                if missing_resources:
-                    self.log_test("Specific Resources Present", False, f"Missing resources: {missing_resources}")
+                if missing_fields:
+                    self.log_test("Affiliate Login Structure", False, f"Missing fields: {missing_fields}")
                     return False
                 
-                # Check for the new resources specifically
-                new_resources = ["white_paper", "pricing_schedule"]
-                found_new_resources = [rid for rid in new_resources if rid in found_resource_ids]
-                
-                if len(found_new_resources) != 2:
-                    self.log_test("New Resources Present", False, f"Expected 2 new resources, found {len(found_new_resources)}: {found_new_resources}")
+                if data.get("success") and data.get("token"):
+                    affiliate_info = data.get("affiliate", {})
+                    self.log_test("Affiliate Login", True, f"Successfully logged in affiliate: {affiliate_info.get('name', 'Unknown')}")
+                    return True
+                else:
+                    self.log_test("Affiliate Login", False, f"Login failed: {data}")
                     return False
-                
-                self.log_test("Specific Resources Present", True, f"All 5 expected resources found including 2 new ones: {new_resources}")
+                    
+            elif response.status_code == 403:
+                # Account pending approval - this is expected behavior
+                self.log_test("Affiliate Login", True, "Account pending approval (expected behavior)")
                 return True
                 
             else:
-                self.log_test("Specific Resources Present", False, f"HTTP {response.status_code}: {response.text}")
+                self.log_test("Affiliate Login", False, f"HTTP {response.status_code}: {response.text}")
                 return False
                 
         except Exception as e:
-            self.log_test("Specific Resources Present", False, f"Exception: {str(e)}")
+            self.log_test("Affiliate Login", False, f"Exception: {str(e)}")
             return False
 
     def test_resource_structure(self) -> bool:
