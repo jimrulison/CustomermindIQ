@@ -438,8 +438,8 @@ class AffiliateSystemTester:
             return False
 
     def run_comprehensive_test(self):
-        """Run all updated affiliate resources tests"""
-        print("🚀 Starting Updated Affiliate Resources Backend Testing")
+        """Run all affiliate system tests"""
+        print("🚀 Starting Affiliate System Backend Testing")
         print(f"🔗 Backend URL: {BACKEND_URL}")
         print(f"📡 API Base: {API_BASE}")
         print("=" * 80)
@@ -449,26 +449,23 @@ class AffiliateSystemTester:
             print("❌ Authentication failed. Cannot proceed with tests.")
             return False
         
-        # Step 2: Test resource count (should be 5 now)
-        count_test_passed = self.test_affiliate_resources_count()
+        # Step 2: Test database connectivity
+        db_test_passed = self.test_database_connectivity()
         
-        # Step 3: Test specific resources are present
-        resources_test_passed = self.test_specific_resources_present()
+        # Step 3: Test affiliate registration endpoint
+        registration_test_passed = self.test_affiliate_registration()
         
-        # Step 4: Test resource structure
-        structure_test_passed = self.test_resource_structure()
+        # Step 4: Test affiliate login endpoint
+        login_test_passed = self.test_affiliate_login()
         
-        # Step 5: Test categories include 'sales'
-        categories_test_passed = self.test_categories_include_sales()
+        # Step 5: Test affiliate resources endpoint
+        resources_test_passed = self.test_affiliate_resources()
         
-        # Step 6: Test download URLs are valid
-        urls_test_passed = self.test_download_urls_valid()
+        # Step 6: Test media assets availability
+        media_test_passed = self.test_media_assets_availability()
         
-        # Step 7: Test download tracking for new resources
-        download_test_passed = self.test_new_resource_download_tracking()
-        
-        # Step 8: Test resource category assignments
-        category_assignment_passed = self.test_resource_categories_assignment()
+        # Step 7: Test resource download tracking
+        download_test_passed = self.test_resource_download_tracking()
         
         # Summary
         print("=" * 80)
@@ -483,26 +480,24 @@ class AffiliateSystemTester:
         
         # Critical test results
         critical_tests = [
-            ("Resource Count (5 resources)", count_test_passed),
-            ("Specific Resources Present", resources_test_passed),
-            ("Resource Structure", structure_test_passed),
-            ("Categories Include Sales", categories_test_passed),
-            ("Download URLs Valid", urls_test_passed),
-            ("New Resource Download Tracking", download_test_passed),
-            ("Resource Category Assignment", category_assignment_passed)
+            ("Database Connectivity", db_test_passed),
+            ("Affiliate Registration", registration_test_passed),
+            ("Affiliate Login", login_test_passed),
+            ("Affiliate Resources", resources_test_passed),
+            ("Media Assets Availability", media_test_passed),
+            ("Resource Download Tracking", download_test_passed)
         ]
         
         all_critical_passed = all(passed for _, passed in critical_tests)
         
         if all_critical_passed:
-            print("🎉 ALL AFFILIATE RESOURCES UPDATE TESTS PASSED!")
-            print("✅ Affiliate resources endpoint now returns 5 resources (was 3)")
-            print("✅ New resources (CMIQ White Paper, Customer Mind Pricing Schedule) are present")
-            print("✅ All resources have required structure fields")
-            print("✅ Categories now include 'sales' category")
-            print("✅ Download URLs are valid and point to correct documents")
-            print("✅ Download tracking works for new resources")
-            print("✅ Resources are correctly categorized")
+            print("🎉 ALL AFFILIATE SYSTEM TESTS PASSED!")
+            print("✅ Database connectivity working")
+            print("✅ Affiliate registration endpoint functional")
+            print("✅ Affiliate login endpoint working")
+            print("✅ Affiliate resources endpoint operational")
+            print("✅ Media assets (audio, video, presentation) available")
+            print("✅ Resource download tracking functional")
         else:
             print("⚠️  Some critical tests failed:")
             for test_name, passed in critical_tests:
