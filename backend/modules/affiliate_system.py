@@ -436,6 +436,7 @@ async def register_affiliate(registration: AffiliateRegistration):
         password_hash = hash_password(registration.password)
         
         # Create affiliate record
+        current_time = datetime.now(timezone.utc)
         affiliate_data = {
             "affiliate_id": affiliate_id,
             "first_name": registration.first_name,
@@ -452,15 +453,37 @@ async def register_affiliate(registration: AffiliateRegistration):
             "total_clicks": 0,
             "total_conversions": 0,
             "total_commissions": 0.0,
-            "pending_commissions": 0.0,
+            "available_commissions": 0.0,  # New: immediately available earnings
+            "held_commissions": 0.0,       # New: held earnings awaiting release
+            "pending_release": 0.0,        # New: held funds ready for next payment
             "paid_commissions": 0.0,
-            "created_at": datetime.now(timezone.utc),
-            "updated_at": datetime.now(timezone.utc),
+            "refund_rate_90d": 0.0,        # New: 90-day refund rate
+            "account_paused": False,       # New: admin can pause account
+            "terms_accepted": registration.terms_accepted,  # New: terms acceptance
+            "terms_accepted_at": current_time if registration.terms_accepted else None,  # New: when terms accepted
+            "created_at": current_time,
+            "updated_at": current_time,
             "approved_at": None,
             "last_login": None,
             "email_verified": False,
             "verification_token": secrets.token_urlsafe(32)
         }
+        
+        # Insert into database
+        result = await db.affiliates.insert_one(affiliate_data)
+        
+        # Initialize monitoring record
+        await db.affiliate_monitoring.insert_one({
+            "affiliate_id": affiliate_id,
+            "refund_rate_90d": 0.0,
+            "total_revenue_90d": 0.0,
+            "refunded_revenue_90d": 0.0,
+            "flagged_high_refund": False,
+            "account_paused": False,
+            "pause_reason": None,
+            "last_calculated": current_time,
+            "custom_holdback": None
+        })
         
         # Insert into database
         result = await db.affiliates.insert_one(affiliate_data)
