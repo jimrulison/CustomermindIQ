@@ -42,6 +42,10 @@ const AdminPortalEnhanced = () => {
   const [emailCampaigns, setEmailCampaigns] = useState([]);
   const [emailProvider, setEmailProvider] = useState(null);
   const [analytics, setAnalytics] = useState({});
+  
+  // Affiliate monitoring states
+  const [highRefundAffiliates, setHighRefundAffiliates] = useState([]);
+  const [selectedAffiliate, setSelectedAffiliate] = useState(null);
 
   // Notification state for admin alerts
   const [notifications, setNotifications] = useState({
