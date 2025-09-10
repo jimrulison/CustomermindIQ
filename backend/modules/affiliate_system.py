@@ -952,6 +952,149 @@ async def create_commission_records(affiliate_id: str, customer_id: str, plan_ty
     except Exception as e:
         print(f"Commission creation error: {e}")
 
+async def create_commission_records_with_holdback(affiliate_id: str, customer_id: str, plan_type: str, billing_cycle: str, amount: float):
+    """Create commission records with holdback system integration"""
+    try:
+        rates = COMMISSION_RATES.get(plan_type, COMMISSION_RATES["launch"])
+        current_time = datetime.now(timezone.utc)
+        
+        if billing_cycle == "annual":
+            # Annual payment: commission on full amount
+            initial_commission = amount * rates["initial"]
+            commission_id = str(uuid.uuid4())
+            
+            # Apply holdback to initial commission
+            holdback_result = await apply_holdback_to_commission(affiliate_id, initial_commission, commission_id)
+            
+            # Create initial commission with holdback tracking
+            await db.commissions.insert_one({
+                "id": commission_id,
+                "affiliate_id": affiliate_id,
+                "customer_id": customer_id,
+                "commission_type": CommissionType.INITIAL.value,
+                "plan_type": plan_type,
+                "billing_cycle": billing_cycle,
+                "commission_rate": rates["initial"] * 100,
+                "base_amount": amount,
+                "commission_amount": initial_commission,
+                "available_amount": holdback_result["available_amount"],
+                "held_amount": holdback_result["held_amount"],
+                "holdback_id": holdback_result["holdback_id"],
+                "status": CommissionStatus.APPROVED.value,  # Immediately approved, but held
+                "earned_date": current_time,
+                "due_date": current_time + timedelta(days=30),
+                "paid_date": None,
+                "billing_month": 1
+            })
+            
+            # Create second year commission (also with holdback)
+            second_year_commission_id = str(uuid.uuid4())
+            second_year_commission = amount * rates["trailing_13_24"]
+            second_year_holdback = await apply_holdback_to_commission(affiliate_id, second_year_commission, second_year_commission_id)
+            
+            await db.commissions.insert_one({
+                "id": second_year_commission_id,
+                "affiliate_id": affiliate_id,
+                "customer_id": customer_id,
+                "commission_type": CommissionType.TRAILING_13_24.value,
+                "plan_type": plan_type,
+                "billing_cycle": billing_cycle,
+                "commission_rate": rates["trailing_13_24"] * 100,
+                "base_amount": amount,
+                "commission_amount": second_year_commission,
+                "available_amount": second_year_holdback["available_amount"],
+                "held_amount": second_year_holdback["held_amount"],
+                "holdback_id": second_year_holdback["holdback_id"],
+                "status": CommissionStatus.PENDING.value,
+                "earned_date": current_time + timedelta(days=365),
+                "due_date": current_time + timedelta(days=395),
+                "paid_date": None,
+                "billing_month": 13
+            })
+        else:
+            # Monthly subscriptions: create 24 commission records with holdback
+            initial_commission = amount * rates["initial"]
+            initial_commission_id = str(uuid.uuid4())
+            
+            # Apply holdback to initial commission
+            initial_holdback = await apply_holdback_to_commission(affiliate_id, initial_commission, initial_commission_id)
+            
+            # Initial commission (month 1)
+            await db.commissions.insert_one({
+                "id": initial_commission_id,
+                "affiliate_id": affiliate_id,
+                "customer_id": customer_id,
+                "commission_type": CommissionType.INITIAL.value,
+                "plan_type": plan_type,
+                "billing_cycle": billing_cycle,
+                "commission_rate": rates["initial"] * 100,
+                "base_amount": amount,
+                "commission_amount": initial_commission,
+                "available_amount": initial_holdback["available_amount"],
+                "held_amount": initial_holdback["held_amount"],
+                "holdback_id": initial_holdback["holdback_id"],
+                "status": CommissionStatus.APPROVED.value,
+                "earned_date": current_time,
+                "due_date": current_time + timedelta(days=30),
+                "paid_date": None,
+                "billing_month": 1
+            })
+            
+            # Trailing commissions months 2-12 (20%)
+            for month in range(2, 13):
+                trailing_commission = amount * rates["trailing_2_12"]
+                trailing_commission_id = str(uuid.uuid4())
+                trailing_holdback = await apply_holdback_to_commission(affiliate_id, trailing_commission, trailing_commission_id)
+                
+                await db.commissions.insert_one({
+                    "id": trailing_commission_id,
+                    "affiliate_id": affiliate_id,
+                    "customer_id": customer_id,
+                    "commission_type": CommissionType.TRAILING_2_12.value,
+                    "plan_type": plan_type,
+                    "billing_cycle": billing_cycle,
+                    "commission_rate": rates["trailing_2_12"] * 100,
+                    "base_amount": amount,
+                    "commission_amount": trailing_commission,
+                    "available_amount": trailing_holdback["available_amount"],
+                    "held_amount": trailing_holdback["held_amount"],
+                    "holdback_id": trailing_holdback["holdback_id"],
+                    "status": CommissionStatus.PENDING.value,
+                    "earned_date": current_time + timedelta(days=30*month),
+                    "due_date": current_time + timedelta(days=30*month + 30),
+                    "paid_date": None,
+                    "billing_month": month
+                })
+            
+            # Trailing commissions months 13-24 (10%)
+            for month in range(13, 25):
+                trailing_commission = amount * rates["trailing_13_24"]
+                trailing_commission_id = str(uuid.uuid4())
+                trailing_holdback = await apply_holdback_to_commission(affiliate_id, trailing_commission, trailing_commission_id)
+                
+                await db.commissions.insert_one({
+                    "id": trailing_commission_id,
+                    "affiliate_id": affiliate_id,
+                    "customer_id": customer_id,
+                    "commission_type": CommissionType.TRAILING_13_24.value,
+                    "plan_type": plan_type,
+                    "billing_cycle": billing_cycle,
+                    "commission_rate": rates["trailing_13_24"] * 100,
+                    "base_amount": amount,
+                    "commission_amount": trailing_commission,
+                    "available_amount": trailing_holdback["available_amount"],
+                    "held_amount": trailing_holdback["held_amount"],
+                    "holdback_id": trailing_holdback["holdback_id"],
+                    "status": CommissionStatus.PENDING.value,
+                    "earned_date": current_time + timedelta(days=30*month),
+                    "due_date": current_time + timedelta(days=30*month + 30),
+                    "paid_date": None,
+                    "billing_month": month
+                })
+        
+    except Exception as e:
+        print(f"Commission creation with holdback error: {e}")
+
 async def calculate_initial_commission(plan_type: str, billing_cycle: str, amount: float) -> float:
     """Calculate initial commission amount"""
     rates = COMMISSION_RATES.get(plan_type, COMMISSION_RATES["launch"])
