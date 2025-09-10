@@ -107,12 +107,59 @@ class AffiliateRegistration(BaseModel):
     address: AffiliateAddress
     payment_method: PaymentMethod
     payment_details: PaymentDetails
+    terms_accepted: bool = Field(..., description="Must accept terms and conditions")
 
     @validator('password')
     def validate_password(cls, v):
         if len(v) < 8:
             raise ValueError('Password must be at least 8 characters long')
         return v
+    
+    @validator('terms_accepted')
+    def validate_terms(cls, v):
+        if not v:
+            raise ValueError('You must accept the terms and conditions')
+        return v
+
+# New models for enhanced affiliate system
+class HoldbackSettings(BaseModel):
+    percentage: float = Field(default=20.0, ge=0, le=100, description="Percentage to hold back")
+    hold_days: int = Field(default=30, ge=0, description="Days to hold funds")
+    custom_settings: bool = Field(default=False, description="Whether custom settings are applied")
+    admin_notes: Optional[str] = Field(None, description="Admin notes about holdback settings")
+
+class RefundTracking(BaseModel):
+    customer_id: str
+    affiliate_id: str
+    order_id: str
+    refund_amount: float
+    refund_date: datetime
+    original_commission: float
+    commission_clawed_back: float
+    reason: Optional[str] = None
+
+class EarningsHoldback(BaseModel):
+    id: str
+    affiliate_id: str
+    commission_id: str
+    original_amount: float
+    held_amount: float
+    held_date: datetime
+    release_date: datetime
+    status: str  # "held", "released", "cancelled"
+    admin_modified: bool = Field(default=False)
+    admin_notes: Optional[str] = None
+
+class AffiliateMonitoring(BaseModel):
+    affiliate_id: str
+    refund_rate_90d: float = Field(default=0.0, description="90-day refund rate percentage")
+    total_revenue_90d: float = Field(default=0.0, description="90-day total revenue generated")
+    refunded_revenue_90d: float = Field(default=0.0, description="90-day refunded revenue")
+    flagged_high_refund: bool = Field(default=False, description="Flagged for >15% refund rate")
+    account_paused: bool = Field(default=False, description="Account paused by admin")
+    pause_reason: Optional[str] = None
+    last_calculated: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    custom_holdback: Optional[HoldbackSettings] = None
 
 class AffiliateLogin(BaseModel):
     email: EmailStr
