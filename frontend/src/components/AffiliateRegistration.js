@@ -39,7 +39,8 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
             routing_number: '',
             account_number: '',
             account_type: 'checking'
-        }
+        },
+        terms_accepted: false
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
