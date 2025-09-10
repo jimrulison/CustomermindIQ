@@ -1724,6 +1724,243 @@ const AdminPortalEnhanced = () => {
             </div>
           )}
 
+          {/* Affiliate Monitoring Tab */}
+          {activeTab === 'affiliate-monitoring' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">Affiliate Monitoring</h2>
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={loadHighRefundAffiliates}
+                    className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  >
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Refresh Data
+                  </button>
+                  <button
+                    onClick={refreshMonitoring}
+                    className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                  >
+                    <Zap className="w-4 h-4 mr-2" />
+                    Recalculate All
+                  </button>
+                </div>
+              </div>
+
+              {/* High Refund Rate Alert */}
+              <div className="bg-red-900/20 border border-red-800 rounded-xl p-4">
+                <div className="flex items-center">
+                  <AlertTriangle className="w-5 h-5 text-red-400 mr-3" />
+                  <div>
+                    <h3 className="text-red-400 font-semibold">High Refund Rate Monitoring</h3>
+                    <p className="text-red-300 text-sm">Affiliates with refund rates above 15% (90-day average) are automatically flagged</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Statistics Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Flagged Affiliates</p>
+                      <p className="text-2xl font-bold text-red-400">
+                        {highRefundAffiliates.length}
+                      </p>
+                    </div>
+                    <AlertTriangle className="w-8 h-8 text-red-400" />
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Paused Accounts</p>
+                      <p className="text-2xl font-bold text-orange-400">
+                        {highRefundAffiliates.filter(a => a.account_paused).length}
+                      </p>
+                    </div>
+                    <Lock className="w-8 h-8 text-orange-400" />
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Avg Refund Rate</p>
+                      <p className="text-2xl font-bold text-yellow-400">
+                        {highRefundAffiliates.length > 0 
+                          ? (highRefundAffiliates.reduce((sum, a) => sum + a.refund_rate_90d, 0) / highRefundAffiliates.length).toFixed(1)
+                          : '0.0'
+                        }%
+                      </p>
+                    </div>
+                    <TrendingUp className="w-8 h-8 text-yellow-400" />
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-slate-400 text-sm">Custom Holdbacks</p>
+                      <p className="text-2xl font-bold text-purple-400">
+                        {highRefundAffiliates.filter(a => a.custom_holdback).length}
+                      </p>
+                    </div>
+                    <Shield className="w-8 h-8 text-purple-400" />
+                  </div>
+                </div>
+              </div>
+
+              {/* High Refund Affiliates Table */}
+              <div className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden">
+                <div className="px-6 py-4 border-b border-slate-700">
+                  <h3 className="text-lg font-semibold text-white">High Refund Rate Affiliates (>15%)</h3>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-slate-700/50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                          Affiliate
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                          Refund Rate (90d)
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                          Revenue/Refunded
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                          Status
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                          Holdback
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-700">
+                      {highRefundAffiliates.length === 0 ? (
+                        <tr>
+                          <td colSpan="6" className="px-6 py-8 text-center">
+                            <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-4" />
+                            <p className="text-slate-400">No high refund rate affiliates found</p>
+                            <p className="text-slate-500 text-sm">All affiliates are performing within acceptable limits</p>
+                          </td>
+                        </tr>
+                      ) : (
+                        highRefundAffiliates.map((affiliate) => (
+                          <tr key={affiliate.affiliate_id} className="hover:bg-slate-700/30">
+                            <td className="px-6 py-4">
+                              <div>
+                                <div className="text-sm font-medium text-white">{affiliate.name}</div>
+                                <div className="text-sm text-slate-400">{affiliate.email}</div>
+                                <div className="text-xs text-slate-500">ID: {affiliate.affiliate_id}</div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center">
+                                <span className={`text-lg font-bold ${
+                                  affiliate.refund_rate_90d > 25 ? 'text-red-400' :
+                                  affiliate.refund_rate_90d > 20 ? 'text-orange-400' : 'text-yellow-400'
+                                }`}>
+                                  {affiliate.refund_rate_90d.toFixed(1)}%
+                                </span>
+                                {affiliate.refund_rate_90d > 25 && (
+                                  <AlertTriangle className="w-4 h-4 text-red-400 ml-2" />
+                                )}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="text-sm">
+                                <div className="text-white">${affiliate.total_revenue_90d.toFixed(2)} total</div>
+                                <div className="text-red-400">${affiliate.refunded_revenue_90d.toFixed(2)} refunded</div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center space-x-2">
+                                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                  affiliate.account_paused 
+                                    ? 'bg-red-100 text-red-800' 
+                                    : 'bg-green-100 text-green-800'
+                                }`}>
+                                  {affiliate.account_paused ? 'Paused' : 'Active'}
+                                </span>
+                                {affiliate.pause_reason && (
+                                  <div className="text-xs text-slate-400" title={affiliate.pause_reason}>
+                                    <AlertCircle className="w-3 h-3" />
+                                  </div>
+                                )}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="text-sm">
+                                {affiliate.custom_holdback ? (
+                                  <div>
+                                    <span className="text-orange-400 font-medium">
+                                      {affiliate.custom_holdback.percentage}%
+                                    </span>
+                                    <div className="text-xs text-slate-400">
+                                      {affiliate.custom_holdback.hold_days} days
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <span className="text-slate-400">20% (30d)</span>
+                                )}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center space-x-2">
+                                {affiliate.account_paused ? (
+                                  <button
+                                    onClick={() => resumeAffiliate(affiliate.affiliate_id)}
+                                    className="text-green-400 hover:text-green-300 text-xs bg-green-900/20 px-2 py-1 rounded"
+                                  >
+                                    Resume
+                                  </button>
+                                ) : (
+                                  <button
+                                    onClick={() => {
+                                      const reason = prompt('Reason for pausing:', 'High refund rate - under review');
+                                      if (reason) pauseAffiliate(affiliate.affiliate_id, reason);
+                                    }}
+                                    className="text-red-400 hover:text-red-300 text-xs bg-red-900/20 px-2 py-1 rounded"
+                                  >
+                                    Pause
+                                  </button>
+                                )}
+                                <button
+                                  onClick={() => {
+                                    const percentage = prompt('Holdback percentage (0-100):', affiliate.custom_holdback?.percentage || '20');
+                                    const days = prompt('Hold days:', affiliate.custom_holdback?.hold_days || '30');
+                                    const notes = prompt('Admin notes:', affiliate.custom_holdback?.admin_notes || '');
+                                    if (percentage && days) {
+                                      updateHoldbackSettings(affiliate.affiliate_id, {
+                                        percentage: parseFloat(percentage),
+                                        hold_days: parseInt(days),
+                                        admin_notes: notes
+                                      });
+                                    }
+                                  }}
+                                  className="text-blue-400 hover:text-blue-300 text-xs bg-blue-900/20 px-2 py-1 rounded"
+                                >
+                                  Holdback
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Contact Forms Tab */}
           {activeTab === 'contact-forms' && (
             <div className="space-y-6">
