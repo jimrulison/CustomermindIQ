@@ -70,6 +70,8 @@ class CommissionStatus(str, Enum):
     PENDING = "pending"
     APPROVED = "approved"
     PAID = "paid"
+    HELD = "held"
+    RELEASED = "released"
     CANCELLED = "cancelled"
 
 class LinkType(str, Enum):
