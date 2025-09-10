@@ -178,11 +178,17 @@ class AffiliateProfile(BaseModel):
     total_clicks: int = 0
     total_conversions: int = 0
     total_commissions: float = 0.0
-    pending_commissions: float = 0.0
+    available_commissions: float = 0.0  # Immediately available (80% of earnings)
+    held_commissions: float = 0.0       # Currently held (20% for 30 days)
+    pending_release: float = 0.0        # Held funds ready for next payment
     paid_commissions: float = 0.0
+    refund_rate_90d: float = 0.0
+    account_paused: bool = False
     created_at: datetime
     approved_at: Optional[datetime]
     last_login: Optional[datetime]
+    terms_accepted: bool = True
+    terms_accepted_at: Optional[datetime]
 
 class TrackingLink(BaseModel):
     id: str
