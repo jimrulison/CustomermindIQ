@@ -428,6 +428,97 @@ const AdminPortalEnhanced = () => {
     }
   };
 
+  // ===== AFFILIATE MONITORING FUNCTIONS =====
+  
+  const loadHighRefundAffiliates = async () => {
+    try {
+      console.log('🔍 Loading high-refund affiliates...');
+      const response = await axios.get(`${backendUrl}/api/affiliate/admin/monitoring/high-refund`, {
+        headers: getAuthHeaders()
+      });
+      console.log('🔍 High-refund affiliates response:', response.data);
+      setHighRefundAffiliates(response.data.high_refund_affiliates || []);
+    } catch (error) {
+      console.error('Failed to load high-refund affiliates:', error);
+      setError('Failed to load affiliate monitoring data');
+    }
+  };
+
+  const pauseAffiliate = async (affiliateId, reason) => {
+    try {
+      const response = await axios.post(
+        `${backendUrl}/api/affiliate/admin/affiliates/${affiliateId}/pause`,
+        { reason },
+        { headers: getAuthHeaders() }
+      );
+      
+      if (response.data.success) {
+        await loadHighRefundAffiliates(); // Refresh the list
+        setError('');
+        alert(`Affiliate account paused: ${reason}`);
+      }
+    } catch (error) {
+      console.error('Failed to pause affiliate:', error);
+      setError('Failed to pause affiliate account');
+    }
+  };
+
+  const resumeAffiliate = async (affiliateId) => {
+    try {
+      const response = await axios.post(
+        `${backendUrl}/api/affiliate/admin/affiliates/${affiliateId}/resume`,
+        {},
+        { headers: getAuthHeaders() }
+      );
+      
+      if (response.data.success) {
+        await loadHighRefundAffiliates(); // Refresh the list
+        setError('');
+        alert('Affiliate account resumed');
+      }
+    } catch (error) {
+      console.error('Failed to resume affiliate:', error);
+      setError('Failed to resume affiliate account');
+    }
+  };
+
+  const updateHoldbackSettings = async (affiliateId, settings) => {
+    try {
+      const response = await axios.post(
+        `${backendUrl}/api/affiliate/admin/affiliates/${affiliateId}/holdback-settings`,
+        settings,
+        { headers: getAuthHeaders() }
+      );
+      
+      if (response.data.success) {
+        await loadHighRefundAffiliates(); // Refresh the list
+        setError('');
+        alert(`Holdback settings updated: ${settings.percentage}% for ${settings.hold_days} days`);
+      }
+    } catch (error) {
+      console.error('Failed to update holdback settings:', error);
+      setError('Failed to update holdback settings');
+    }
+  };
+
+  const refreshMonitoring = async () => {
+    try {
+      const response = await axios.post(
+        `${backendUrl}/api/affiliate/admin/monitoring/refresh`,
+        {},
+        { headers: getAuthHeaders() }
+      );
+      
+      if (response.data.success) {
+        await loadHighRefundAffiliates(); // Refresh the list
+        alert(`Monitoring data refreshed for ${response.data.updated_count} affiliates`);
+      }
+    } catch (error) {
+      console.error('Failed to refresh monitoring:', error);
+      setError('Failed to refresh monitoring data');
+    }
+  };
+
   const loadBanners = async () => {
     try {
       console.log('📢 Loading banners...');
