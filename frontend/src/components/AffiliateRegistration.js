@@ -76,14 +76,16 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
                 return formData.address.street && formData.address.city && 
                        formData.address.state && formData.address.zip_code;
             case 3:
+                let paymentValid = true;
                 if (formData.payment_method === 'paypal') {
-                    return formData.payment_details.paypal_email;
+                    paymentValid = formData.payment_details.paypal_email;
                 } else if (formData.payment_method === 'bank') {
-                    return formData.payment_details.bank_name && 
+                    paymentValid = formData.payment_details.bank_name && 
                            formData.payment_details.routing_number && 
                            formData.payment_details.account_number;
                 }
-                return true;
+                // Must also accept terms and conditions
+                return paymentValid && formData.terms_accepted;
             default:
                 return true;
         }
