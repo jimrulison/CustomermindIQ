@@ -815,20 +815,30 @@ async def handle_conversion_event(event_data: Dict[str, Any]):
             }
         )
         
-        # Create commission records
-        await create_commission_records(affiliate_id, customer_id, plan_type, billing_cycle, amount)
+        # Create commission records with holdback processing
+        await create_commission_records_with_holdback(affiliate_id, customer_id, plan_type, billing_cycle, amount)
         
-        # Update affiliate stats
+        # Update affiliate stats with holdback split
         commission_amount = await calculate_initial_commission(plan_type, billing_cycle, amount)
+        settings = await get_affiliate_holdback_settings(affiliate_id)
+        
+        available_amount = commission_amount * (1 - settings.percentage / 100)
+        held_amount = commission_amount * (settings.percentage / 100)
+        
         await db.affiliates.update_one(
             {"affiliate_id": affiliate_id},
             {
                 "$inc": {
                     "total_conversions": 1,
-                    "pending_commissions": commission_amount
+                    "total_commissions": commission_amount,
+                    "available_commissions": available_amount,
+                    "held_commissions": held_amount
                 }
             }
         )
+        
+        # Update affiliate monitoring
+        await update_affiliate_monitoring(affiliate_id)
         
     except Exception as e:
         print(f"Conversion handling error: {e}")
