@@ -505,6 +505,45 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
                         {step === 2 && renderStep2()}
                         {step === 3 && renderStep3()}
 
+                        {/* Terms and Conditions - Only on final step */}
+                        {step === 3 && (
+                            <div className="mt-8 p-6 bg-gray-50 rounded-lg border">
+                                <div className="flex items-start">
+                                    <input
+                                        type="checkbox"
+                                        id="terms_accepted"
+                                        checked={formData.terms_accepted}
+                                        onChange={(e) => setFormData(prev => ({
+                                            ...prev,
+                                            terms_accepted: e.target.checked
+                                        }))}
+                                        className="mt-1 mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                        required
+                                    />
+                                    <div className="flex-1">
+                                        <label htmlFor="terms_accepted" className="text-sm text-gray-700 cursor-pointer">
+                                            <span className="font-medium">I agree to the Terms and Conditions</span>
+                                            <div className="mt-2 text-xs text-gray-600 max-h-32 overflow-y-auto">
+                                                <strong>Affiliate Terms & Conditions:</strong>
+                                                <ul className="mt-2 space-y-1 list-disc list-inside">
+                                                    <li><strong>Earnings Holdback:</strong> 20% of all commissions will be held for 30 days to cover potential refunds, then released in your next monthly payment.</li>
+                                                    <li><strong>Refund Monitoring:</strong> Affiliates with refund rates exceeding 15% (calculated over 90 days) will be flagged for review.</li>
+                                                    <li><strong>Account Management:</strong> We reserve the right to pause accounts and adjust holdback percentages for affiliates with high refund rates.</li>
+                                                    <li><strong>Commission Structure:</strong> Launch 30%, Growth 40%, Scale 50% initial commission + trailing commissions as outlined in our program details.</li>
+                                                    <li><strong>Payment Terms:</strong> Monthly payments for available commissions. Held funds released after 30-day period if no refunds occur.</li>
+                                                    <li><strong>Quality Standards:</strong> Maintain ethical marketing practices. Misrepresentation or spam tactics may result in account termination.</li>
+                                                    <li><strong>Compliance:</strong> Follow all applicable laws and regulations in your marketing activities.</li>
+                                                </ul>
+                                                <p className="mt-2 text-xs text-gray-500">
+                                                    By checking this box, you acknowledge that you have read, understood, and agree to abide by these terms and conditions.
+                                                </p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
                         {/* Navigation Buttons */}
                         <div className="flex justify-between pt-8 border-t">
                             <button
