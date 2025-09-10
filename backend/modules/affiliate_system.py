@@ -1200,6 +1200,270 @@ async def link_customer_to_affiliate(customer_data: Dict[str, Any]):
         print(f"Customer linking error: {e}")
         return {"success": False, "error": str(e)}
 
+# ========== ENHANCED ADMIN ENDPOINTS ==========
+
+@router.get("/admin/monitoring/high-refund")
+async def get_high_refund_affiliates(
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    limit: int = Query(default=50, le=100)
+):
+    """Get affiliates with high refund rates (>15%)"""
+    try:
+        # Get all flagged affiliates
+        high_refund_affiliates = await db.affiliate_monitoring.find({
+            "flagged_high_refund": True
+        }).limit(limit).to_list(length=limit)
+        
+        # Enrich with affiliate details
+        enriched_affiliates = []
+        for monitoring in high_refund_affiliates:
+            affiliate = await db.affiliates.find_one({"affiliate_id": monitoring["affiliate_id"]})
+            if affiliate:
+                enriched_affiliate = {
+                    "affiliate_id": monitoring["affiliate_id"],
+                    "name": f"{affiliate['first_name']} {affiliate['last_name']}",
+                    "email": affiliate["email"],
+                    "status": affiliate["status"],
+                    "refund_rate_90d": monitoring["refund_rate_90d"],
+                    "total_revenue_90d": monitoring["total_revenue_90d"],
+                    "refunded_revenue_90d": monitoring["refunded_revenue_90d"],
+                    "account_paused": monitoring.get("account_paused", False),
+                    "pause_reason": monitoring.get("pause_reason"),
+                    "last_calculated": monitoring["last_calculated"],
+                    "custom_holdback": monitoring.get("custom_holdback"),
+                    "created_at": affiliate["created_at"]
+                }
+                enriched_affiliates.append(enriched_affiliate)
+        
+        return {
+            "success": True,
+            "high_refund_affiliates": enriched_affiliates,
+            "total_flagged": len(enriched_affiliates)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching high refund affiliates: {str(e)}")
+
+@router.post("/admin/affiliates/{affiliate_id}/pause")
+async def pause_affiliate_account(
+    affiliate_id: str,
+    pause_data: Dict[str, Any],
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Pause affiliate account with reason"""
+    try:
+        reason = pause_data.get("reason", "High refund rate - under review")
+        
+        # Update affiliate status
+        await db.affiliates.update_one(
+            {"affiliate_id": affiliate_id},
+            {"$set": {"account_paused": True, "status": "suspended"}}
+        )
+        
+        # Update monitoring record
+        await db.affiliate_monitoring.update_one(
+            {"affiliate_id": affiliate_id},
+            {
+                "$set": {
+                    "account_paused": True,
+                    "pause_reason": reason,
+                    "paused_at": datetime.now(timezone.utc),
+                    "paused_by": current_user.user_id
+                }
+            }
+        )
+        
+        return {
+            "success": True,
+            "message": f"Affiliate account paused: {reason}"
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error pausing affiliate: {str(e)}")
+
+@router.post("/admin/affiliates/{affiliate_id}/resume")
+async def resume_affiliate_account(
+    affiliate_id: str,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Resume paused affiliate account"""
+    try:
+        # Update affiliate status
+        await db.affiliates.update_one(
+            {"affiliate_id": affiliate_id},
+            {"$set": {"account_paused": False, "status": "active"}}
+        )
+        
+        # Update monitoring record
+        await db.affiliate_monitoring.update_one(
+            {"affiliate_id": affiliate_id},
+            {
+                "$set": {
+                    "account_paused": False,
+                    "pause_reason": None,
+                    "resumed_at": datetime.now(timezone.utc),
+                    "resumed_by": current_user.user_id
+                }
+            }
+        )
+        
+        return {
+            "success": True,
+            "message": "Affiliate account resumed"
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error resuming affiliate: {str(e)}")
+
+@router.post("/admin/affiliates/{affiliate_id}/holdback-settings")
+async def update_holdback_settings(
+    affiliate_id: str,
+    settings_data: Dict[str, Any],
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Update custom holdback settings for affiliate"""
+    try:
+        percentage = float(settings_data.get("percentage", 20.0))
+        hold_days = int(settings_data.get("hold_days", 30))
+        admin_notes = settings_data.get("admin_notes", "")
+        
+        if percentage < 0 or percentage > 100:
+            raise HTTPException(status_code=400, detail="Holdback percentage must be between 0 and 100")
+        
+        if hold_days < 0:
+            raise HTTPException(status_code=400, detail="Hold days must be non-negative")
+        
+        custom_holdback = {
+            "percentage": percentage,
+            "hold_days": hold_days,
+            "custom_settings": True,
+            "admin_notes": admin_notes
+        }
+        
+        # Update monitoring record with custom holdback
+        await db.affiliate_monitoring.update_one(
+            {"affiliate_id": affiliate_id},
+            {
+                "$set": {
+                    "custom_holdback": custom_holdback,
+                    "updated_at": datetime.now(timezone.utc),
+                    "updated_by": current_user.user_id
+                }
+            },
+            upsert=True
+        )
+        
+        return {
+            "success": True,
+            "message": f"Custom holdback settings updated: {percentage}% for {hold_days} days",
+            "settings": custom_holdback
+        }
+        
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid percentage or hold days value")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error updating holdback settings: {str(e)}")
+
+@router.post("/admin/monitoring/refresh")
+async def refresh_affiliate_monitoring(
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    affiliate_id: Optional[str] = None
+):
+    """Refresh monitoring data for all affiliates or specific affiliate"""
+    try:
+        if affiliate_id:
+            # Update specific affiliate
+            result = await update_affiliate_monitoring(affiliate_id)
+            return {
+                "success": True,
+                "message": f"Monitoring data refreshed for {affiliate_id}",
+                "data": result
+            }
+        else:
+            # Update all affiliates
+            affiliates = await db.affiliates.find({"status": {"$in": ["active", "approved"]}}).to_list(length=None)
+            updated_count = 0
+            
+            for affiliate in affiliates:
+                try:
+                    await update_affiliate_monitoring(affiliate["affiliate_id"])
+                    updated_count += 1
+                except Exception as e:
+                    print(f"Error updating monitoring for {affiliate['affiliate_id']}: {e}")
+            
+            return {
+                "success": True,
+                "message": f"Monitoring data refreshed for {updated_count} affiliates",
+                "updated_count": updated_count
+            }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error refreshing monitoring data: {str(e)}")
+
+@router.post("/admin/refunds/track")
+async def track_refund(
+    refund_data: Dict[str, Any],
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Track a refund and update affiliate metrics"""
+    try:
+        customer_id = refund_data.get("customer_id")
+        order_id = refund_data.get("order_id")
+        refund_amount = float(refund_data.get("refund_amount", 0))
+        reason = refund_data.get("reason", "Customer refund")
+        
+        # Find the affiliate who referred this customer
+        customer = await db.customers.find_one({"customer_id": customer_id})
+        if not customer or not customer.get("referred_by_affiliate"):
+            return {"success": True, "message": "No affiliate associated with this customer"}
+        
+        affiliate_id = customer["referred_by_affiliate"]
+        
+        # Find original commission for this customer
+        commission = await db.commissions.find_one({
+            "affiliate_id": affiliate_id,
+            "customer_id": customer_id,
+            "commission_type": "initial"
+        })
+        
+        original_commission = commission.get("commission_amount", 0) if commission else 0
+        commission_clawed_back = min(original_commission, refund_amount * 0.3)  # Example: claw back 30% of refund
+        
+        # Record the refund
+        refund_record = {
+            "customer_id": customer_id,
+            "affiliate_id": affiliate_id,
+            "order_id": order_id,
+            "refund_amount": refund_amount,
+            "refund_date": datetime.now(timezone.utc),
+            "original_commission": original_commission,
+            "commission_clawed_back": commission_clawed_back,
+            "reason": reason,
+            "tracked_by": current_user.user_id
+        }
+        
+        await db.refund_tracking.insert_one(refund_record)
+        
+        # Update affiliate's available balance (claw back commission)
+        if commission_clawed_back > 0:
+            await db.affiliates.update_one(
+                {"affiliate_id": affiliate_id},
+                {"$inc": {"available_commissions": -commission_clawed_back}}
+            )
+        
+        # Refresh monitoring data for this affiliate
+        await update_affiliate_monitoring(affiliate_id)
+        
+        return {
+            "success": True,
+            "message": "Refund tracked successfully",
+            "refund_tracked": refund_record,
+            "commission_clawed_back": commission_clawed_back
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error tracking refund: {str(e)}")
+
 # ========== DETAILED DATA ENDPOINTS ==========
 
 @router.get("/commissions")
