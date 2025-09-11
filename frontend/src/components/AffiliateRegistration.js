@@ -336,7 +336,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
                     <select
                         value={formData.address.country}
                         onChange={(e) => handleInputChange('address.country', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                         <option value="US">United States</option>
                         <option value="CA">Canada</option>
