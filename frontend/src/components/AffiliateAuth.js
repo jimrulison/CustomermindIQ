@@ -319,7 +319,7 @@ const AffiliateAuth = () => {
                         
                         <button
                             onClick={() => setCurrentView('landing')}
-                            className="mt-4 text-indigo-300 hover:text-white underline text-sm"
+                            className="mt-4 text-indigo-300 hover:text-white underline text-sm min-h-[44px] inline-flex items-center"
                         >
                             ← Back to Program Info
                         </button>
