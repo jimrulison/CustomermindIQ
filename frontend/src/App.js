@@ -1446,11 +1446,6 @@ ${details.updateFrequency}
     return colors[stage] || 'bg-gray-100 text-gray-800';
   };
 
-  // Show sign-in page if not authenticated (unless it's affiliate access)
-  if (!isAuthenticated && currentPage !== 'affiliate-auth') {
-    return <SignIn onSignIn={handleSignIn} />;
-  }
-
   // Show affiliate auth page for affiliate access (before main app)
   if (currentPage === 'affiliate-auth') {
     return <AffiliateAuth />;
@@ -1465,6 +1460,11 @@ ${details.updateFrequency}
       url.searchParams.delete('legal');
       window.history.replaceState({}, '', url);
     }} />;
+  }
+
+  // Show sign-in page if not authenticated (unless it's affiliate access or legal docs)
+  if (!isAuthenticated) {
+    return <SignIn onSignIn={handleSignIn} />;
   }
 
   // Show loading state
