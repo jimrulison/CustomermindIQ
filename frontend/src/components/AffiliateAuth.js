@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import AffiliateRegistration from './AffiliateRegistration';
 import AffiliatePortal from './AffiliatePortal';
+import LanguageSelector from './LanguageSelector';
 
 const AffiliateAuth = () => {
     const { t } = useTranslation();
