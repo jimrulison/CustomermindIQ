@@ -284,7 +284,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
                     type="text"
                     value={formData.address.street}
                     onChange={(e) => handleInputChange('address.street', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                 />
             </div>
