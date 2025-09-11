@@ -283,7 +283,7 @@ const AffiliateAuth = () => {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-3 text-indigo-300 hover:text-white"
+                                    className="absolute right-3 top-3 min-h-[44px] min-w-[44px] flex items-center justify-center text-indigo-300 hover:text-white"
                                 >
                                     {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                                 </button>
