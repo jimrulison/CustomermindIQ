@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Globe, ChevronDown } from 'lucide-react';
 
-const LanguageSelector = () => {
+const LanguageSelector = ({ theme = 'light' }) => {
     const { i18n, t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -42,11 +42,36 @@ const LanguageSelector = () => {
         };
     }, []);
 
+    // Theme-based styling
+    const buttonClasses = theme === 'dark' 
+        ? "flex items-center space-x-2 px-3 py-2 rounded-md text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200"
+        : "flex items-center space-x-2 px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200";
+    
+    const dropdownClasses = theme === 'dark'
+        ? "absolute right-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg border border-slate-600 z-50"
+        : "absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50";
+        
+    const headerClasses = theme === 'dark'
+        ? "px-3 py-2 text-xs font-medium text-slate-400 uppercase tracking-wider border-b border-slate-600"
+        : "px-3 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-100";
+        
+    const itemClasses = (isActive) => theme === 'dark'
+        ? `w-full text-left px-3 py-2 text-sm hover:bg-slate-700 transition-colors duration-200 flex items-center space-x-3 ${
+            isActive 
+                ? 'bg-blue-900/50 text-blue-300 border-r-2 border-blue-400' 
+                : 'text-slate-200'
+        }`
+        : `w-full text-left px-3 py-2 text-sm hover:bg-gray-100 transition-colors duration-200 flex items-center space-x-3 ${
+            isActive 
+                ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-500' 
+                : 'text-gray-700'
+        }`;
+
     return (
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center space-x-2 px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
+                className={buttonClasses}
                 aria-label={t('language.selectLanguage')}
             >
                 <Globe className="h-4 w-4" />
@@ -60,25 +85,21 @@ const LanguageSelector = () => {
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50">
+                <div className={dropdownClasses}>
                     <div className="py-1">
-                        <div className="px-3 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-100">
+                        <div className={headerClasses}>
                             {t('language.selectLanguage')}
                         </div>
                         {languages.map((language) => (
                             <button
                                 key={language.code}
                                 onClick={() => changeLanguage(language.code)}
-                                className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-100 transition-colors duration-200 flex items-center space-x-3 ${
-                                    i18n.language === language.code 
-                                        ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-500' 
-                                        : 'text-gray-700'
-                                }`}
+                                className={itemClasses(i18n.language === language.code)}
                             >
                                 <span className="text-lg">{language.flag}</span>
                                 <span className="flex-1">{language.name}</span>
                                 {i18n.language === language.code && (
-                                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                    <div className={`w-2 h-2 rounded-full ${theme === 'dark' ? 'bg-blue-400' : 'bg-blue-500'}`}></div>
                                 )}
                             </button>
                         ))}
