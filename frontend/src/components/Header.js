@@ -278,7 +278,7 @@ const Header = ({ currentPage, onNavigate, onSignOut, user, onGoBack }) => {
               {/* Training Button */}
               <button
                 onClick={() => onNavigate('training')}
-                className={`flex items-center px-3 py-1.5 rounded-lg font-medium text-xs transition-all duration-200 ${
+                className={`flex items-center px-3 py-2 min-h-[44px] rounded-lg font-medium text-xs transition-all duration-200 ${
                   currentPage === 'training'
                     ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg'
                     : 'bg-slate-800/50 text-slate-300 hover:bg-green-600/20 hover:text-green-400 border border-slate-600'
