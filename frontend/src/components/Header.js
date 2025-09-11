@@ -321,7 +321,7 @@ const Header = ({ currentPage, onNavigate, onSignOut, user, onGoBack }) => {
               {/* Subscription Manager Access */}
               <button
                 onClick={() => onNavigate('subscription')}
-                className="px-2 py-1 text-xs bg-green-600/20 text-green-400 rounded border border-green-600/30 hover:bg-green-600/30 transition-colors"
+                className="px-2 py-2 min-h-[44px] min-w-[44px] text-xs bg-green-600/20 text-green-400 rounded border border-green-600/30 hover:bg-green-600/30 transition-colors flex items-center justify-center"
                 title="Subscription & Billing"
               >
                 <CreditCard className="w-3 h-3" />
