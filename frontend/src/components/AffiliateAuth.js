@@ -196,7 +196,7 @@ const AffiliateAuth = () => {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <button
                             onClick={() => setCurrentView('register')}
-                            className="flex items-center justify-center px-8 py-4 bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold rounded-lg hover:from-green-700 hover:to-blue-700 transition-all duration-200 shadow-lg"
+                            className="flex items-center justify-center px-8 py-4 min-h-[44px] bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold rounded-lg hover:from-green-700 hover:to-blue-700 transition-all duration-200 shadow-lg"
                         >
                             {t('pages.affiliate.registration.joinNow')}
                             <ArrowRight className="ml-2 h-5 w-5" />
@@ -204,7 +204,7 @@ const AffiliateAuth = () => {
                         
                         <button
                             onClick={() => setCurrentView('login')}
-                            className="flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-all duration-200 border border-white/30"
+                            className="flex items-center justify-center px-8 py-4 min-h-[44px] bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg hover:bg-white/20 transition-all duration-200 border border-white/30"
                         >
                             {t('pages.affiliate.registration.alreadyPartner')}
                         </button>
