@@ -263,7 +263,7 @@ const Header = ({ currentPage, onNavigate, onSignOut, user, onGoBack }) => {
             {/* Affiliate Portal Button */}
             <button
               onClick={() => onNavigate('affiliate-portal')}
-              className={`flex items-center px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
+              className={`flex items-center px-3 py-3 min-h-[44px] rounded-lg font-medium text-sm transition-all duration-200 ${
                 currentPage === 'affiliate-portal' || currentPage === 'affiliate-registration'
                   ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white shadow-lg'
                   : 'bg-slate-800/50 text-slate-300 hover:bg-indigo-600/20 hover:text-indigo-400 border border-slate-600'
