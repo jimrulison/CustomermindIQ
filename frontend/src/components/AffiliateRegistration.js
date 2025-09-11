@@ -204,7 +204,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
                 <select
                     value={formData.promotion_method}
                     onChange={(e) => handleInputChange('promotion_method', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     <option value="email">{t('promotionMethods.email')}</option>
                     <option value="social">{t('promotionMethods.social')}</option>
