@@ -104,6 +104,13 @@ const AffiliateAuth = () => {
     // Landing Page
     const renderLanding = () => (
         <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
+            {/* Language Selector - Top Right */}
+            <div className="absolute top-4 right-4 z-10">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 p-2">
+                    <LanguageSelector theme="dark" />
+                </div>
+            </div>
+            
             <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
                 <div className="max-w-4xl w-full">
                     {/* Hero Section */}
