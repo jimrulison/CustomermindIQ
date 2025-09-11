@@ -365,6 +365,13 @@ const AffiliateAuth = () => {
     if (currentView === 'register') {
         return (
             <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
+                {/* Language Selector - Top Right */}
+                <div className="absolute top-4 right-4 z-10">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 p-2">
+                        <LanguageSelector theme="dark" />
+                    </div>
+                </div>
+                
                 <div className="p-4">
                     <button
                         onClick={() => setCurrentView('landing')}
