@@ -1455,6 +1455,17 @@ ${details.updateFrequency}
     return <AffiliateAuth />;
   }
 
+  // Show legal documents page (accessible without authentication)
+  if (showLegalDocs) {
+    return <LegalDocuments onBack={() => {
+      setShowLegalDocs(false);
+      // Update URL to remove legal parameter
+      const url = new URL(window.location);
+      url.searchParams.delete('legal');
+      window.history.replaceState({}, '', url);
+    }} />;
+  }
+
   // Show loading state
   if (loading) {
     return (
