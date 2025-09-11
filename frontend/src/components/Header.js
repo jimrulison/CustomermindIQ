@@ -387,7 +387,7 @@ const Header = ({ currentPage, onNavigate, onSignOut, user, onGoBack }) => {
                 <button
                   key={button.id}
                   onClick={() => canAccess ? onNavigate(button.id) : alert('This feature is available for Annual Subscribers only. Upgrade your subscription to access the Growth Acceleration Engine.')}
-                  className={`flex flex-col items-center px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
+                  className={`flex flex-col items-center px-4 py-3 min-h-[44px] rounded-lg font-medium text-sm transition-all duration-200 ${
                     isActive
                       ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg transform scale-105'
                       : `bg-slate-800/50 text-slate-300 border border-slate-600 ${canAccess ? button.color : 'opacity-75 cursor-not-allowed'}`
