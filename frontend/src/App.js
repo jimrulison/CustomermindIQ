@@ -969,10 +969,17 @@ ${details.updateFrequency}
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const affiliateAccess = urlParams.get('affiliate');
+    const legalDocs = urlParams.get('legal');
     const currentPath = window.location.pathname;
     
     if (affiliateAccess === 'true' || currentPath === '/affiliates') {
       setCurrentPage('affiliate-auth');
+      setLoading(false);
+      return;
+    }
+    
+    if (legalDocs === 'true' || currentPath === '/legal' || currentPath === '/privacy' || currentPath === '/terms') {
+      setShowLegalDocs(true);
       setLoading(false);
       return;
     }
