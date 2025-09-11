@@ -3213,6 +3213,25 @@ Click "Pursue" in Expansion Opportunities to initiate outreach!`)}
         )}
       </div>
 
+      {/* Footer */}
+      <Footer onLegalClick={(type) => {
+        if (type === 'privacy') {
+          setShowLegalDocs(true);
+          // Update URL to show privacy policy
+          const url = new URL(window.location);
+          url.searchParams.set('legal', 'true');
+          url.hash = '#privacy';
+          window.history.pushState({}, '', url);
+        } else if (type === 'terms') {
+          setShowLegalDocs(true);
+          // Update URL to show terms of service
+          const url = new URL(window.location);
+          url.searchParams.set('legal', 'true');
+          url.hash = '#terms';
+          window.history.pushState({}, '', url);
+        }
+      }} />
+
       {/* Live Chat Widget - Always available for premium users */}
       {user && <LiveChatWidget />}
     </div>
