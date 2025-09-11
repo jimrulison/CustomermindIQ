@@ -90,6 +90,7 @@ function AppContent() {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [showLegalDocs, setShowLegalDocs] = useState(false);
 
   // Marketing Automation Pro state
   const [marketingDashboard, setMarketingDashboard] = useState(null);
