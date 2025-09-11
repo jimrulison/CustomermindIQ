@@ -261,7 +261,7 @@ const AffiliateAuth = () => {
                                 type="email"
                                 value={loginForm.email}
                                 onChange={(e) => setLoginForm(prev => ({ ...prev, email: e.target.value }))}
-                                className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-4 py-4 min-h-[44px] bg-white/10 border border-white/30 rounded-lg text-white placeholder-indigo-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 placeholder="Enter your email"
                                 required
                             />
