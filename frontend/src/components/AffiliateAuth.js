@@ -311,7 +311,7 @@ const AffiliateAuth = () => {
                             Don't have an account?{' '}
                             <button
                                 onClick={() => setCurrentView('register')}
-                                className="text-blue-300 hover:text-blue-200 underline font-medium"
+                                className="text-blue-300 hover:text-blue-200 underline font-medium min-h-[44px] inline-flex items-center"
                             >
                                 Apply to become an affiliate
                             </button>
