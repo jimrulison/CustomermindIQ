@@ -1,57 +1,129 @@
 <analysis>
-The AI engineer's work primarily focused on enhancing the Customer Mind IQ affiliate system and improving the admin portal. Initial efforts involved adding password visibility toggles to affiliate login (found existing) and registration forms (implemented). A significant challenge arose with  due to a persistent frontend caching issue, which prevented requested UI changes (removing a multi-step progress bar, making passwords visible by default) from reflecting. Subsequently, an affiliate login bug was fixed by updating a user's approval status in the backend. A real-time notification system was then implemented in the admin portal, displaying unread counts for various modules. The final task involved adding four new downloadable media resources for affiliates. Throughout this, an overarching infrastructure issue affected external URL connectivity, hindering visual verification of some frontend changes.
+The AI engineer's work spanned several key areas for the Customer Mind IQ platform. Initially, the focus was on resolving critical frontend caching issues affecting the  component. This involved systematic debugging, applying cache-busting, and confirming UI changes such as password fields being visible by default and the removal of a multi-step progress bar. Following this, a comprehensive internationalization (i18n) system was implemented, adding support for five languages across the frontend, including a language selector in the header and translation of key components like  and . Next, significant enhancements were made to the affiliate module, introducing a commission holdback system, an admin monitoring dashboard for high-refund affiliates, and a terms and conditions agreement during registration. Finally, the engineer created and integrated essential legal documents (Privacy Policy and Terms of Service) with dedicated frontend components and public access. Throughout these phases, the engineer demonstrated a structured approach, confirming plans with the user, performing backend and frontend testing, and addressing issues like incorrect routing for legal documents.
 </analysis>
 
 <product_requirements>
-The Customer Mind IQ platform is an AI-driven customer intelligence system. Core features initially included AI Business Insights, Daily Productivity Intelligence, Knowledge Base, Header Reorganization, and bug fixes. The main requirements from the trajectory centered on a Comprehensive Affiliate Tracking System: a standalone module with independent registration/sign-in, real-time statistics, a chat room, resource integration (documents, marketing banners), and an Affiliate Landing Page Builder System with customizable templates and unique IDs, all ensuring proper branding.
+The Customer Mind IQ platform is an AI-driven customer intelligence system. The core application has been built to include AI Business Insights, Daily Productivity Intelligence, Knowledge Base, Header Reorganization, and general bug fixes.
 
-Recent explicit requests included:
-*   Add password visibility toggle to affiliate sign-in and registration pages.
-*   Remove the 3-step progress bar from the affiliate registration page.
-*   Make password fields on the registration page visible by default.
-*   Fix affiliate login issues for specific users.
-*   Implement an admin notification system (e.g., stars/lights) for support tickets, live chat, affiliate chat, contact forms, and emails in the admin portal.
-*   Integrate four new downloadable media assets (audio, video, presentation) into affiliate resources.
+The explicit requirements driving the development in this trajectory were:
+
+1.  **Affiliate System Enhancements:**
+    *   **UI/UX Improvements:** Add password visibility toggles to affiliate sign-in and registration pages, remove the 3-step progress bar from registration, and make password fields visible by default on registration.
+    *   **Login Fixes:** Resolve affiliate login issues for specific users.
+    *   **Resource Integration:** Integrate four new downloadable media assets (audio, video, presentation) into affiliate resources.
+    *   **Commission Management:** Implement a system to hold back 20% of affiliate commissions for 30 days to cover refunds, releasing the remainder in the next monthly payment after the hold period.
+    *   **Refund Monitoring:** Introduce an admin portal feature to flag affiliates with a refund rate exceeding 15% (calculated as (Refunded revenue / Total revenue generated) × 100 over a 90-day average).
+    *   **Admin Control:** Provide administrators with the ability to pause affiliate accounts and customize holdback amounts and durations.
+    *   **Terms Agreement:** Display affiliate rules and regulations, requiring agreement via a checkbox during registration.
+
+2.  **Admin Portal Notifications:**
+    *   Implement a real-time notification system (e.g., stars/lights) in the admin portal for unread support tickets, live chat, affiliate chat, contact forms, and emails.
+
+3.  **Internationalization (i18n) System:**
+    *   Enable language switching for users across the entire website.
+    *   Support English, Spanish, French, German, and Italian using basic automated translations.
+    *   Integrate a language selector prominently in the header navigation (always visible after login).
+    *   Translate navigation, common UI elements, form labels, messages, page headers, dynamic content, status messages, and date/time content.
+
+4.  **Legal Document Integration:**
+    *   Create and integrate comprehensive Privacy Policy and Terms of Service pages into the website, accessible publicly.
 </product_requirements>
 
 <key_technical_concepts>
-
 -   **Full-Stack Architecture**: React (frontend), FastAPI (backend), MongoDB (database).
--   **Deployment & Routing**: Kubernetes, Supervisor,  prefix, environment variables.
--   **State Management**: React , .
--   **UI/UX**: Tailwind CSS,  for icons.
--   **Database Interaction**: MongoDB collections, Pydantic, UUIDs.
--   **Authentication**: JWT.
+-   **Deployment & Routing**: Kubernetes, Supervisor,  prefix, environment variables, URL parameter handling.
+-   **State Management**: React , , React Context (AuthContext).
+-   **UI/UX**: Tailwind CSS,  for icons,  for internationalization.
+-   **Database Interaction**: MongoDB collections, Pydantic, UUIDs, ISO string serialization for dates.
+-   **Authentication**: JWT (JSON Web Tokens).
+-   **Code Structure**: Modular backend (e.g., ), component-based React frontend.
 </key_technical_concepts>
 
 <code_architecture>
 
+**File and Directory Changes:**
 
-   - 
-      - **Importance:** Manages backend logic for affiliate resources, including retrieval and download tracking.
-      - **Changes:** Modified to add four new media assets (audio, video, slideshow, presentation) to the  endpoint and updated categories to include training.
-   - 
-      - **Importance:** Handles the user registration process for affiliates.
-      - **Changes:** Multiple attempts were made to add password visibility toggles, make passwords visible by default, and remove the 3-step progress bar. Despite code being correctly saved, changes are not visually reflecting due to a persistent frontend caching issue.
-   - 
-      - **Importance:** Handles the user login process for affiliates.
-      - **Changes:** Verified to already possess password visibility toggle functionality. A brief test confirmed that icon rendering worked, but text changes were also affected by caching.
-   - 
-      - **Importance:** Central dashboard for administrative functions and monitoring.
-      - **Changes:** Significantly modified to implement a real-time notification system. This involved adding  state, creating a  function to query various backend endpoints for unread counts, integrating this function with  for auto-refresh, defining a  component, and updating the admin navigation to display these badges on relevant tabs (Support Tickets, Live Chat, Affiliate Chat, Contact Forms, Email System).
+-   
+    -   **Importance:** Centralizes backend logic for affiliate operations.
+    -   **Changes:**
+        -   Added new Pydantic models (, ,  updated) to manage commission holdbacks.
+        -   Implemented holdback calculation and release functions.
+        -   Modified the  endpoint to include  field.
+        -   Updated  to integrate holdback processing.
+        -   Added new admin endpoints to  for monitoring high-refund affiliates and managing holdbacks (e.g., , ).
+
+-   
+    -   **Importance:** Handles affiliate user registration.
+    -   **Changes:**
+        -   Fixed persistent caching issues by applying cache-busting strategies.
+        -   Modified password input types to  (default visible) and removed the 3-step progress bar logic/UI.
+        -   Integrated  for multi-language support, translating all visible text content (labels, placeholders, buttons, messages).
+        -   Added a terms and conditions checkbox and integrated its state () into form data and validation.
+
+-   
+    -   **Importance:** Handles affiliate user login.
+    -   **Changes:** Integrated  to translate key textual elements on the login/landing page.
+
+-   
+    -   **Importance:** Provides administrative dashboard and monitoring.
+    -   **Changes:**
+        -   Previously modified to implement a real-time notification system for various modules.
+        -   Further updated to add state variables and functions for Affiliate Monitoring.
+        -   Integrated a new Affiliate Monitoring tab into the admin navigation, including content to display high-refund affiliates and controls for holdbacks.
+
+-   
+    -   **Importance:** Main React application entry point and routing.
+    -   **Changes:**
+        -   Imported and initialized  for internationalization.
+        -   Added logic to handle URL parameters for displaying legal documents ().
+        -   Included the  and  components in the main application render tree.
+        -   Crucially, moved the  state check *before* the authentication check to allow public access to legal documents.
+
+-   
+    -   **Importance:** Configuration file for the  internationalization library.
+    -   **Created:** Initializes  with , defines supported languages (en, es, fr, de, it), fallback language, and resource loading paths.
+
+-   
+    -   **Importance:** Stores translation strings for each supported language.
+    -   **Created:** Separate directories and JSON files for English, Spanish, French, German, and Italian, containing categorized translations for UI elements, forms, messages, etc.
+
+-   
+    -   **Importance:** Provides UI for users to switch languages.
+    -   **Created:** Component (likely a dropdown with flags) that uses  to update the active language. Integrated into the  component.
+
+-   
+    -   **Importance:** Displays the Privacy Policy and Terms of Service.
+    -   **Created:** React component to render the content of markdown files (, ), including tabbed navigation between the two documents.
+
+-   
+    -   **Importance:** Provides a consistent footer across the application.
+    -   **Created:** Simple React component, added to , likely containing links to legal documents.
+
+-   
+    -   **Importance:** Markdown file containing the rules and regulations for affiliates.
+    -   **Created:** To be displayed to affiliates and agreed upon during registration.
+
+-   
+    -   **Importance:** Markdown file containing the comprehensive privacy policy.
+    -   **Created:** Details data collection, usage, sharing, user rights, and compliance (GDPR, CCPA).
+
+-   
+    -   **Importance:** Markdown file containing the comprehensive terms of service.
+    -   **Created:** Covers service description, billing, acceptable use, liability, and dispute resolution.
 </code_architecture>
 
 <pending_tasks>
 -   **Kubernetes Ingress Routing Fix**: The underlying infrastructure issue causing external  calls to potentially fail, affecting frontend logins, remains unresolved.
--   **Affiliate Registration Page UI Fixes**: Resolve persistent caching issues to visually implement the removal of the 3-step progress bar and the default visibility of password fields.
+-   **Mobile Responsiveness - Touch Target Optimization**: Increase button height to a minimum of 44px for better touch accessibility on mobile devices.
+-   **Mobile Responsiveness - Language Selector Access**: Make the language selector available on the login page (before authentication) for improved international user experience.
 </pending_tasks>
 
 <current_work>
-Immediately prior to this summary, the AI engineer successfully added four new downloadable media assets (an audio file, two video files, and a presentation) to the affiliate resources system. These assets were integrated into the backend's , and backend testing confirmed their successful addition and categorization, including a new training category. The user was then prompted to test these newly added resources.
+Immediately prior to this summary, the AI engineer successfully implemented and integrated a comprehensive legal documents system. This involved creating two new markdown files ( and ) containing detailed content. A new React component, , was developed to display these documents with tabbed navigation and integrated into the  router. A  component was also created and added to  to provide consistent navigation to these legal pages. A critical bug was identified and fixed where the legal documents page was not accessible publicly due to an incorrect order of authentication and legal document checks in ; this was resolved by ensuring the legal documents check happens before authentication. The legal documents system is now fully functional, publicly accessible via a URL parameter (), professionally presented, and deemed production-ready.
 
-Before this, the AI engineer implemented a comprehensive notification system within the  component. This system includes real-time fetching of unread counts for support tickets, live chat, affiliate chat, contact forms, and emails, displayed with animated red badges on the admin navigation tabs, and updates every 30 seconds. Additionally, a critical bug preventing affiliate login for  was resolved by updating the account's approval status in the backend to approved. However, persistent frontend caching issues continue to block visual updates to , preventing the removal of the progress bar and default password visibility. An overarching infrastructure issue with the external preview URL is currently preventing both affiliate and main admin portal logins from the frontend, making visual verification of the admin notifications difficult.
+Before this, the AI engineer extensively enhanced the affiliate module. This included implementing a commission holdback system in  (20% for 30 days, adjustable by admin), adding new admin endpoints for monitoring affiliates with high refund rates (>15% over 90 days), and allowing admins to pause accounts and customize holdback rules. On the frontend,  was updated to include a terms and conditions checkbox with associated validation. The  was modified to integrate an Affiliate Monitoring tab to display and manage these high-risk affiliates. Backend testing confirmed the functionality of the new affiliate system features. Frontend testing was left for the user to perform.
 </current_work>
 
 <optional_next_step>
-Address the persistent caching issue with  to implement the pending UI changes.
+Address the minor mobile responsiveness improvements: optimizing touch targets and making the language selector accessible on the login page.
 </optional_next_step>
