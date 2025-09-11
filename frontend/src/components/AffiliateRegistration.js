@@ -226,7 +226,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
                             type={showPassword ? 'text' : 'password'}
                             value={formData.password}
                             onChange={(e) => handleInputChange('password', e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-3 py-3 min-h-[44px] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder={t('forms.placeholders.enterPassword')}
                             required
                             minLength="8"
