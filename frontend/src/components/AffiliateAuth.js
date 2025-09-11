@@ -350,7 +350,7 @@ const AffiliateAuth = () => {
                         
                         <button
                             onClick={handleLogout}
-                            className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors text-sm"
+                            className="px-4 py-3 min-h-[44px] bg-white/20 hover:bg-white/30 rounded-lg transition-colors text-sm"
                         >
                             Sign Out
                         </button>
