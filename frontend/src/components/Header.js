@@ -221,7 +221,7 @@ const Header = ({ currentPage, onNavigate, onSignOut, user, onGoBack }) => {
             <div className="flex space-x-2">
               <button
                 onClick={() => onNavigate('customer-analytics-dashboard')}
-                className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ${
+                className={`px-4 py-3 min-h-[44px] rounded-lg font-semibold text-sm transition-all duration-200 ${
                   currentPage === 'customer-analytics-dashboard' || customerAnalyticsModules.some(m => m.id === currentPage)
                     ? 'bg-blue-600 text-white shadow-lg'
                     : 'bg-slate-800/50 text-slate-300 hover:bg-blue-600/20 hover:text-blue-400 border border-slate-600'
