@@ -233,7 +233,7 @@ const Header = ({ currentPage, onNavigate, onSignOut, user, onGoBack }) => {
               
               <button
                 onClick={() => onNavigate('website-analytics-dashboard')}
-                className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ${
+                className={`px-4 py-3 min-h-[44px] rounded-lg font-semibold text-sm transition-all duration-200 ${
                   currentPage === 'website-analytics-dashboard' || websiteAnalyticsModules.some(m => m.id === currentPage)
                     ? 'bg-emerald-600 text-white shadow-lg'
                     : 'bg-slate-800/50 text-slate-300 hover:bg-emerald-600/20 hover:text-emerald-400 border border-slate-600'
