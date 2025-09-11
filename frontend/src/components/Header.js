@@ -250,7 +250,7 @@ const Header = ({ currentPage, onNavigate, onSignOut, user, onGoBack }) => {
             {/* Productivity Intelligence Button */}
             <button
               onClick={() => onNavigate('productivity')}
-              className={`flex items-center px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
+              className={`flex items-center px-3 py-3 min-h-[44px] rounded-lg font-medium text-sm transition-all duration-200 ${
                 currentPage === 'productivity'
                   ? 'bg-gradient-to-r from-yellow-600 to-yellow-700 text-white shadow-lg'
                   : 'bg-slate-800/50 text-slate-300 hover:bg-yellow-600/20 hover:text-yellow-400 border border-slate-600'
