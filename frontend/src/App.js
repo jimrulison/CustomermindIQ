@@ -71,6 +71,7 @@ import AffiliatePortal from './components/AffiliatePortal';
 import AffiliateRegistration from './components/AffiliateRegistration';
 import AffiliateAuth from './components/AffiliateAuth';
 import LegalDocuments from './components/LegalDocuments';
+import Footer from './components/Footer';
 import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
