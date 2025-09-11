@@ -225,7 +225,7 @@ const AffiliateAuth = () => {
             {/* Language Selector - Top Right */}
             <div className="absolute top-4 right-4 z-10">
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 p-2">
-                    <LanguageSelector />
+                    <LanguageSelector theme="dark" />
                 </div>
             </div>
             
