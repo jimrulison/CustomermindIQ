@@ -32,7 +32,8 @@ import {
   RefreshCw,
   Sparkles,
   HelpCircle,
-  CheckSquare
+  CheckSquare,
+  Calendar
 } from 'lucide-react';
 
 const Training = () => {
