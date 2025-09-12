@@ -1649,12 +1649,14 @@ ${details.updateFrequency}
           />
         )}
         
-        {currentPage === 'website-analytics-dashboard' && (
-          <WebsiteAnalyticsDashboard 
-            analyticsInsightsDashboard={analyticsInsightsDashboard}
-            onNavigate={handleNavigate}
-          />
-        )}
+        <Suspense fallback={<LoadingSpinner />}>
+          {currentPage === 'website-analytics-dashboard' && (
+            <WebsiteAnalyticsDashboard 
+              analyticsInsightsDashboard={analyticsInsightsDashboard}
+              onNavigate={handleNavigate}
+            />
+          )}
+        </Suspense>
         
         {currentPage === 'customers' && (
           <div className="space-y-6">
