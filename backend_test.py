@@ -1,14 +1,27 @@
 #!/usr/bin/env python3
 """
-CustomerMind IQ - Affiliate System Backend Testing
-Testing the affiliate system after internationalization features were added
+Comprehensive Backend Testing - Product Intelligence & Performance Validation
+
+This script tests the backend endpoints that support the enhanced Product Intelligence UI
+and overall application performance as requested in the review.
 
 SPECIFIC TEST OBJECTIVES FROM REVIEW REQUEST:
-1. **Test affiliate registration endpoint** (/api/affiliate/register)
-2. **Test affiliate login endpoint** (/api/affiliate/auth/login) 
-3. **Test affiliate resources endpoint** (/api/affiliate/resources)
-4. **Verify that all endpoints are responding correctly and the database connections are working**
-5. **Make sure the recent media assets (audio, video, presentation) are still available**
+1. **Product Intelligence Endpoints:**
+   - GET /api/product-intelligence/feature-usage-dashboard 
+   - GET /api/product-intelligence/onboarding-dashboard
+   - GET /api/product-intelligence/pmf-dashboard  
+   - GET /api/product-intelligence/journey-dashboard
+2. **Authentication & Authorization:**
+   - POST /api/auth/login with admin@customermindiq.com / CustomerMindIQ2025!
+   - Verify JWT token generation and validation
+3. **Website Intelligence Integration:**
+   - GET /api/website-intelligence/dashboard
+4. **Performance & Health Checks:**
+   - GET /api/health (basic health check)
+   - Verify response times are acceptable (<2 seconds)
+5. **Error Handling:**
+   - Test with invalid authentication
+   - Test with malformed requests
 
 Use admin credentials: admin@customermindiq.com / CustomerMindIQ2025!
 """
