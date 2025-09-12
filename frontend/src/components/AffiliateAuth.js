@@ -118,7 +118,7 @@ const AffiliateAuth = () => {
                         <div className="flex items-center justify-center mb-6">
                             <img
                                 src="https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/wzbjjt9q_download.svg"
-                                alt="CustomerMind IQ Logo"
+                                alt="CustomerMind IQ company logo - Join our affiliate partner program"
                                 className="w-16 h-16 mr-4"
                             />
                             <div className="text-left">
