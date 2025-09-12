@@ -1156,9 +1156,13 @@ def _export_to_csv(data, filename):
     # Create CSV content
     output = io.StringIO()
     
-    # Get field names from first record
-    fieldnames = list(data[0].keys())
-    writer = csv.DictWriter(output, fieldnames=fieldnames)
+    # Get all possible field names from all records to handle schema variations
+    all_fieldnames = set()
+    for record in data:
+        all_fieldnames.update(record.keys())
+    
+    fieldnames = sorted(list(all_fieldnames))  # Sort for consistent output
+    writer = csv.DictWriter(output, fieldnames=fieldnames, restval='')  # Use empty string for missing fields
     
     writer.writeheader()
     for row in data:
