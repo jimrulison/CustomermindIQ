@@ -55,78 +55,7 @@ def parse_from_mongo(data):
 async def get_website_intelligence_dashboard() -> Dict[str, Any]:
     """Get comprehensive website intelligence dashboard"""
     try:
-        # User's Websites Overview
-        websites_overview = {
-            "total_websites": 3,
-            "active_websites": 3,
-            "websites_analyzed": 3,
-            "last_update": datetime.now() - timedelta(hours=2),
-            "membership_tier": "Professional",
-            "websites_allowed": 7,
-            "websites_remaining": 4,
-            "next_auto_update": datetime.now() + timedelta(hours=22),
-            "overall_health_score": 87.4
-        }
-        
-        # Static mock websites
-        static_websites = [
-            {
-                "website_id": "web_001",
-                "domain": "myawesomestore.com",
-                "website_name": "MYAWESOMESTORE", 
-                "website_type": "E-commerce",
-                "status": "active",
-                "health_score": 92.3,
-                "last_analyzed": datetime.now() - timedelta(hours=2),
-                "connected_services": ["Google Analytics", "Shopify", "Facebook Pixel"],
-                "monthly_visitors": 45678,
-                "conversion_rate": 3.2,
-                "seo_score": 89.5,
-                "performance_score": 94.2,
-                "security_score": 96.8,
-                "mobile_score": 87.6,
-                "issues_count": 3,
-                "opportunities_count": 7
-            },
-            {
-                "website_id": "web_002", 
-                "domain": "techblogpro.net",
-                "website_name": "TechBlog Pro",
-                "website_type": "Blog",
-                "status": "active",
-                "health_score": 85.7,
-                "last_analyzed": datetime.now() - timedelta(hours=3),
-                "connected_services": ["Google Analytics", "WordPress"],
-                "monthly_visitors": 12340,
-                "conversion_rate": 1.8,
-                "seo_score": 83.2,
-                "performance_score": 88.9,
-                "security_score": 92.1,
-                "mobile_score": 79.4,
-                "issues_count": 8,
-                "opportunities_count": 12
-            },
-            {
-                "website_id": "web_003",
-                "domain": "mycorporatesite.com", 
-                "website_name": "My Corporate Site",
-                "website_type": "Corporate",
-                "status": "active",
-                "health_score": 84.6,
-                "last_analyzed": datetime.now() - timedelta(hours=1),
-                "connected_services": ["Google Analytics", "Google Search Console"],
-                "monthly_visitors": 8950,
-                "conversion_rate": 5.7,
-                "seo_score": 91.8,
-                "performance_score": 76.2,
-                "security_score": 89.4,
-                "mobile_score": 81.5,
-                "issues_count": 5,
-                "opportunities_count": 9
-            }
-        ]
-        
-        # Get user websites from MongoDB
+        # User's Websites Overview - calculate from actual user websites only
         user_websites_cursor = db.user_websites.find({})
         user_websites_from_db = []
         async for website in user_websites_cursor:
@@ -135,8 +64,24 @@ async def get_website_intelligence_dashboard() -> Dict[str, Any]:
             parsed_website = parse_from_mongo(website)
             user_websites_from_db.append(parsed_website)
         
-        # Combine static websites with dynamically added ones
-        user_websites = static_websites + user_websites_from_db
+        # Calculate actual user website counts
+        total_user_websites = len(user_websites_from_db)
+        active_user_websites = len([w for w in user_websites_from_db if w.get('status') == 'active'])
+        
+        websites_overview = {
+            "total_websites": total_user_websites,
+            "active_websites": active_user_websites, 
+            "websites_analyzed": total_user_websites,
+            "last_update": datetime.now() - timedelta(hours=2) if total_user_websites > 0 else datetime.now(),
+            "membership_tier": "Professional",
+            "websites_allowed": 7,
+            "websites_remaining": max(0, 7 - total_user_websites),
+            "next_auto_update": datetime.now() + timedelta(hours=22) if total_user_websites > 0 else None,
+            "overall_health_score": sum(w.get('health_score', 0) for w in user_websites_from_db) / total_user_websites if total_user_websites > 0 else 0
+        }
+        
+        # Use only user websites (no demo websites)
+        user_websites = user_websites_from_db
         
         # Comprehensive Analysis Summary
         analysis_summary = {
