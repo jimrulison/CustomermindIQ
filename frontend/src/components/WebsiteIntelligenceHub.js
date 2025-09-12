@@ -1312,6 +1312,162 @@ const WebsiteIntelligenceHub = () => {
                 </div>
               )}
 
+              {/* Keywords Detail View */}
+              {detailView === 'keywords' && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-lg font-semibold text-white">Tracked Keywords</h4>
+                    <Badge className="bg-purple-500/20 text-purple-400">
+                      {dashboardData?.dashboard?.analysis_summary?.tracked_keywords?.length || 156} Keywords
+                    </Badge>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    {dashboardData?.dashboard?.analysis_summary?.tracked_keywords?.length > 0 ? (
+                      <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {dashboardData.dashboard.analysis_summary.tracked_keywords.map((keyword, index) => {
+                            const positionColor = keyword.position <= 3 ? 'text-green-400' : 
+                                                keyword.position <= 10 ? 'text-yellow-400' : 'text-red-400';
+                            const trendIcon = keyword.trend === 'up' ? '↗️' : 
+                                            keyword.trend === 'down' ? '↘️' : '➡️';
+                            const trendColor = keyword.trend === 'up' ? 'text-green-400' : 
+                                             keyword.trend === 'down' ? 'text-red-400' : 'text-slate-400';
+                            
+                            return (
+                              <div key={index} className="bg-slate-700/30 rounded-lg p-4">
+                                <div className="flex items-start justify-between mb-2">
+                                  <h5 className="font-medium text-white text-sm">{keyword.keyword}</h5>
+                                  <span className={`text-xs ${trendColor}`}>
+                                    {trendIcon}
+                                  </span>
+                                </div>
+                                
+                                <div className="grid grid-cols-2 gap-3 text-xs">
+                                  <div>
+                                    <span className="text-slate-400">Position:</span>
+                                    <div className={`font-medium ${positionColor}`}>#{keyword.position}</div>
+                                  </div>
+                                  <div>
+                                    <span className="text-slate-400">Search Volume:</span>
+                                    <div className="text-white font-medium">{keyword.search_volume.toLocaleString()}</div>
+                                  </div>
+                                  <div>
+                                    <span className="text-slate-400">Difficulty:</span>
+                                    <div className="text-slate-300">{keyword.difficulty}/100</div>
+                                  </div>
+                                  <div>
+                                    <span className="text-slate-400">Trend:</span>
+                                    <div className={`font-medium ${trendColor}`}>
+                                      {keyword.trend.charAt(0).toUpperCase() + keyword.trend.slice(1)}
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                                <div className="mt-3 w-full bg-slate-600 rounded-full h-2">
+                                  <div 
+                                    className={`h-2 rounded-full ${
+                                      keyword.position <= 3 ? 'bg-green-400' : 
+                                      keyword.position <= 10 ? 'bg-yellow-400' : 'bg-red-400'
+                                    }`}
+                                    style={{width: `${Math.max(5, 100 - keyword.position)}%`}}
+                                  ></div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        
+                        <div className="mt-6 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                          <h5 className="font-medium text-white mb-3">Keyword Performance Summary</h5>
+                          <div className="grid grid-cols-3 gap-4 text-center">
+                            <div>
+                              <div className="text-2xl font-bold text-green-400">
+                                {dashboardData.dashboard.analysis_summary.tracked_keywords.filter(k => k.position <= 3).length}
+                              </div>
+                              <div className="text-xs text-slate-400">Top 3 Positions</div>
+                            </div>
+                            <div>
+                              <div className="text-2xl font-bold text-yellow-400">
+                                {dashboardData.dashboard.analysis_summary.tracked_keywords.filter(k => k.position <= 10).length}
+                              </div>
+                              <div className="text-xs text-slate-400">Top 10 Positions</div>
+                            </div>
+                            <div>
+                              <div className="text-2xl font-bold text-blue-400">
+                                {Math.round(dashboardData.dashboard.analysis_summary.tracked_keywords.reduce((sum, k) => sum + k.search_volume, 0) / dashboardData.dashboard.analysis_summary.tracked_keywords.length).toLocaleString()}
+                              </div>
+                              <div className="text-xs text-slate-400">Avg Search Volume</div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="text-center py-8">
+                        <Search className="w-12 h-12 text-purple-400 mx-auto mb-3" />
+                        <h5 className="text-lg font-medium text-white mb-2">No Keywords Tracked</h5>
+                        <p className="text-slate-400">Start tracking keywords to monitor your search engine performance.</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Overall Health Score Detail View */}
+              {detailView === 'health' && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-lg font-semibold text-white">Health Score Breakdown</h4>
+                    <Badge className="bg-blue-500/20 text-blue-400">
+                      {selectedWebsite?.health_score?.toFixed(1) || 0}% Overall
+                    </Badge>
+                  </div>
+                  
+                  {dashboardData?.dashboard?.analysis_summary?.health_score_calculation && (
+                    <div className="space-y-4">
+                      <div className="bg-slate-700/30 rounded-lg p-4">
+                        <h5 className="font-medium text-white mb-2">{dashboardData.dashboard.analysis_summary.health_score_calculation.methodology}</h5>
+                        <p className="text-slate-400 text-sm">Your website's health score is calculated using the following weighted factors:</p>
+                      </div>
+                      
+                      <div className="space-y-3">
+                        {dashboardData.dashboard.analysis_summary.health_score_calculation.factors.map((factor, index) => (
+                          <div key={index} className="bg-slate-700/30 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-2">
+                              <h6 className="font-medium text-white">{factor.name}</h6>
+                              <span className="text-blue-400 font-medium">{factor.weight}%</span>
+                            </div>
+                            <p className="text-slate-400 text-sm">{factor.description}</p>
+                            <div className="mt-2 w-full bg-slate-600 rounded-full h-2">
+                              <div 
+                                className="h-2 rounded-full bg-blue-400"
+                                style={{width: `${factor.weight}%`}}
+                              ></div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                        <h5 className="font-medium text-white mb-3">Scoring Guide</h5>
+                        <div className="space-y-2">
+                          {dashboardData.dashboard.analysis_summary.health_score_calculation.scoring_ranges.map((range, index) => (
+                            <div key={index} className="flex items-center justify-between">
+                              <div className="flex items-center space-x-3">
+                                <div className={`w-4 h-4 rounded-full bg-${range.color}-400`}></div>
+                                <span className="text-white font-medium">{range.grade}</span>
+                                <span className="text-slate-400">({range.range})</span>
+                              </div>
+                              <span className="text-slate-400 text-sm">{range.description}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* SEO Analysis Detail View */}
               {detailView === 'seo' && (
                 <div className="space-y-6">
