@@ -33,7 +33,8 @@ import {
   ChevronRight,
   Activity,
   Users,
-  DollarSign
+  DollarSign,
+  Trash2
 } from 'lucide-react';
 import axios from 'axios';
 
