@@ -2846,9 +2846,9 @@ const AdminPortalEnhanced = () => {
                     <div>
                       <p className="text-slate-400 text-sm">Delivery Rate</p>
                       <p className="text-2xl font-bold text-purple-400">
-                        {emailCampaigns.length > 0 ? 
-                          Math.round((emailCampaigns.reduce((sum, c) => sum + (c.sent_count || 0), 0) / 
-                          Math.max(emailCampaigns.reduce((sum, c) => sum + (c.recipient_count || 0), 0), 1)) * 100) : 0}%
+                        {(emailCampaigns || []).length > 0 ? 
+                          Math.round(((emailCampaigns || []).reduce((sum, c) => sum + (c.sent_count || 0), 0) / 
+                          Math.max((emailCampaigns || []).reduce((sum, c) => sum + (c.recipient_count || 0), 0), 1)) * 100) : 0}%
                       </p>
                     </div>
                     <TrendingUp className="w-8 h-8 text-purple-400" />
