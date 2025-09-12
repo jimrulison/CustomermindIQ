@@ -739,6 +739,8 @@ const WebsiteIntelligenceHub = () => {
                           size="sm"
                           onClick={() => handleDeleteWebsite(website)}
                           className="text-red-400 hover:text-red-300 hover:bg-red-500/10 p-1 h-8 w-8"
+                          aria-label={`Delete website ${website.website_name} (${website.domain})`}
+                          title={`Delete website ${website.website_name}`}
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
