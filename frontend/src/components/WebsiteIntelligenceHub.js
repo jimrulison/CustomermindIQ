@@ -34,7 +34,8 @@ import {
   Activity,
   Users,
   DollarSign,
-  Trash2
+  Trash2,
+  X
 } from 'lucide-react';
 import axios from 'axios';
 
