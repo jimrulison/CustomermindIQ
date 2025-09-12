@@ -50,7 +50,9 @@ const IntegrationDataHub = () => {
         methodology: 'Active Connectors = Total configured integrations with successful authentication AND recent data transfer activity within last 24 hours. Includes API connections, database links, webhook endpoints, and file imports.',
         dataPoints: 'Connection status, authentication tokens, last sync timestamp, error rates, data volume throughput',
         updateFrequency: 'Real-time monitoring with 30-second health checks',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: Link,
+        color: 'green'
       },
       'overview_sync_success_rate': {
         title: 'Sync Success Rate - Data Source',
