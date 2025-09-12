@@ -525,8 +525,8 @@ Your request will be handled by our admin team within 2 hours.`);
 
       {/* Available Plans */}
       <div>
-        <h2 className="text-2xl font-bold text-center mb-8">Choose Your Plan</h2>
-        <div className="grid md:grid-cols-3 gap-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8">Choose Your Plan</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {Object.entries(subscriptionPlans).map(([planId, plan]) => {
             const isCurrentPlan = currentSubscription?.plan_type === planId;
             const isUpgrade = currentSubscription && (
@@ -537,54 +537,54 @@ Your request will be handled by our admin team within 2 hours.`);
             );
 
             return (
-              <Card key={planId} className={`relative ${getPlanColor(planId)} ${isCurrentPlan ? 'ring-2 ring-blue-500' : ''}`}>
+              <Card key={planId} className={`relative ${getPlanColor(planId)} ${isCurrentPlan ? 'ring-2 ring-blue-500' : ''} h-full flex flex-col`}>
                 {plan.most_popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <Badge className="bg-purple-600 text-white px-3 py-1">Most Popular</Badge>
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
+                    <Badge className="bg-purple-600 text-white px-3 py-1 text-xs">Most Popular</Badge>
                   </div>
                 )}
                 
-                <CardHeader className="text-center">
-                  <div className="flex justify-center mb-4">
+                <CardHeader className="text-center pb-4">
+                  <div className="flex justify-center mb-3">
                     {getPlanIcon(planId)}
                   </div>
-                  <h3 className="text-xl font-bold">{plan.name}</h3>
+                  <h3 className="text-lg sm:text-xl font-bold">{plan.name}</h3>
                   {plan.description && (
-                    <p className="text-sm text-gray-600 mt-2">{plan.description}</p>
+                    <p className="text-xs sm:text-sm text-gray-600 mt-2 leading-relaxed">{plan.description}</p>
                   )}
                   <div className="mt-4">
                     {typeof plan.monthly_price === 'number' ? (
                       <>
-                        <div className="flex items-center justify-center space-x-2">
-                          <span className="text-4xl font-bold">${plan.monthly_price}</span>
-                          <span className="text-gray-600">/month</span>
+                        <div className="flex items-center justify-center space-x-1">
+                          <span className="text-2xl sm:text-4xl font-bold">${plan.monthly_price}</span>
+                          <span className="text-gray-600 text-sm">/month</span>
                         </div>
                         {plan.annual_price && (
-                          <div className="mt-2 text-sm text-green-600">
+                          <div className="mt-2 text-xs sm:text-sm text-green-600">
                             <strong>${plan.annual_price}/year</strong> (2 months free!)
                           </div>
                         )}
                       </>
                     ) : (
-                      <div className="text-2xl font-bold text-gray-700">
+                      <div className="text-xl sm:text-2xl font-bold text-gray-700">
                         {plan.monthly_price === 'contact_sales' ? 'Contact Sales' : 'Free'}
                       </div>
                     )}
                   </div>
                 </CardHeader>
                 
-                <CardContent>
-                  <ul className="space-y-3 mb-6">
+                <CardContent className="flex-1 flex flex-col">
+                  <ul className="space-y-2 sm:space-y-3 mb-6 flex-1">
                     {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-start text-sm">
+                      <li key={index} className="flex items-start text-xs sm:text-sm">
                         <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                        {feature}
+                        <span className="leading-relaxed">{feature}</span>
                       </li>
                     ))}
                   </ul>
                   
                   <Button 
-                    className="w-full"
+                    className="w-full min-h-[48px] text-sm sm:text-base"
                     onClick={() => initiateSubscription(planId)}
                     disabled={isCurrentPlan || processingPayment === planId || plan.contact_required}
                     variant={isCurrentPlan ? "outline" : "default"}
@@ -592,13 +592,15 @@ Your request will be handled by our admin team within 2 hours.`);
                     {processingPayment === planId && (
                       <Loader2 className="h-4 w-4 animate-spin mr-2" />
                     )}
-                    {isCurrentPlan ? 'Current Plan' : 
-                     plan.contact_required ? 'Contact Sales' :
-                     isUpgrade ? `Upgrade to ${plan.name}` : 
-                     planId === 'free' ? 'Start Free Trial' : 
-                     `Get ${plan.name}`}
+                    <span className="truncate">
+                      {isCurrentPlan ? 'Current Plan' : 
+                       plan.contact_required ? 'Contact Sales' :
+                       isUpgrade ? `Upgrade to ${plan.name}` : 
+                       planId === 'free' ? 'Start Free Trial' : 
+                       `Get ${plan.name}`}
+                    </span>
                     {!isCurrentPlan && !processingPayment && !plan.contact_required && (
-                      <ArrowRight className="h-4 w-4 ml-2" />
+                      <ArrowRight className="h-4 w-4 ml-2 flex-shrink-0" />
                     )}
                   </Button>
                 </CardContent>
