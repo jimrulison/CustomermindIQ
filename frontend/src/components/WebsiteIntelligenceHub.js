@@ -642,8 +642,30 @@ const WebsiteIntelligenceHub = () => {
           </div>
 
           {/* Websites Grid */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {(dashboardData?.dashboard?.user_websites || []).map((website, index) => (
+          {(dashboardData?.dashboard?.user_websites || []).length === 0 ? (
+            // Empty State
+            <div className="col-span-full">
+              <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700 border-dashed">
+                <CardContent className="flex flex-col items-center justify-center py-16">
+                  <Globe className="w-16 h-16 text-slate-500 mb-4" />
+                  <h3 className="text-xl font-semibold text-white mb-2">No Websites Added Yet</h3>
+                  <p className="text-slate-400 text-center mb-6 max-w-md">
+                    Get started by adding your first website to monitor its performance, SEO, and analytics.
+                  </p>
+                  <Button 
+                    onClick={() => setShowAddWebsite(true)}
+                    className="bg-green-600 hover:bg-green-700"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Your First Website
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          ) : (
+            // Websites Grid
+            <>
+              {(dashboardData?.dashboard?.user_websites || []).map((website, index) => (
               <Card key={website.website_id || index} className="bg-slate-800/50 backdrop-blur-xl border-slate-700 hover:border-slate-600 transition-all">
                 <CardHeader>
                   <div className="flex items-center justify-between">
