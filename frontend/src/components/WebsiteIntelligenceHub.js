@@ -75,16 +75,22 @@ const WebsiteIntelligenceHub = () => {
   const loadAllData = async () => {
     try {
       setLoading(true);
-      console.log('Loading Website Intelligence Hub data...');
+      console.log('🔄 Loading Website Intelligence Hub data...');
+      console.log(`🔄 Backend URL: ${API_BASE_URL}`);
+      console.log(`🔄 Auth token: ${localStorage.getItem('access_token') ? 'Present' : 'Missing'}`);
       
       const axiosConfig = {
         timeout: 30000,
-        headers: getAuthHeaders()
+        headers: getAuthHeaders(),
+        // Force no cache
+        params: { _t: Date.now() }
       };
 
+      console.log('🔄 Making API calls to dashboard endpoints...');
       const [dashboardRes, performanceRes, seoRes, membershipRes] = await Promise.all([
         axios.get(`${API_BASE_URL}/api/website-intelligence/dashboard`, axiosConfig).catch(err => {
-          console.error('Website dashboard error:', err);
+          console.error('❌ Website dashboard error:', err);
+          console.error('❌ Response data:', err.response?.data);
           return { data: { dashboard: {} } };
         }),
         axios.get(`${API_BASE_URL}/api/website-intelligence/performance-dashboard`, axiosConfig).catch(err => {
