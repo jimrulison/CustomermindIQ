@@ -441,7 +441,7 @@ async def add_website(website_data: Dict[str, Any]) -> Dict[str, Any]:
             "domain": website_data.get("domain", ""),
             "website_name": website_data.get("name", ""),
             "website_type": website_data.get("type", "General"),
-            "status": "pending_verification",
+            "status": "active",  # Set to active immediately since verification isn't implemented
             "health_score": round(random.uniform(75.0, 95.0), 1),
             "last_analyzed": datetime.now(),
             "connected_services": [],
