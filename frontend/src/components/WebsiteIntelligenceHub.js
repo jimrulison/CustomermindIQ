@@ -414,7 +414,7 @@ const WebsiteIntelligenceHub = () => {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30">
+        <Card className="bg-gradient-to-br from-green-600/20 to-green-800/20 border-green-500/30 hover:border-green-400/50 transition-all cursor-pointer" onClick={() => handleShowDetails(null, 'health')}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
