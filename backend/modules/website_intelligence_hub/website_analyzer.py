@@ -34,31 +34,31 @@ async def get_website_intelligence_dashboard() -> Dict[str, Any]:
             "overall_health_score": 87.4
         }
         
-        # User's Websites List
-        user_websites = [
+        # Static mock websites
+        static_websites = [
             {
                 "website_id": "web_001",
                 "domain": "myawesomestore.com",
-                "website_name": "My Awesome Store",
+                "website_name": "MYAWESOMESTORE", 
                 "website_type": "E-commerce",
                 "status": "active",
                 "health_score": 92.3,
                 "last_analyzed": datetime.now() - timedelta(hours=2),
-                "connected_services": ["Google Analytics", "Google Search Console", "Shopify"],
-                "monthly_visitors": 45670,
+                "connected_services": ["Google Analytics", "Shopify", "Facebook Pixel"],
+                "monthly_visitors": 45678,
                 "conversion_rate": 3.2,
                 "seo_score": 89.5,
-                "performance_score": 94.1,
-                "security_score": 87.8,
-                "mobile_score": 91.2,
+                "performance_score": 94.2,
+                "security_score": 96.8,
+                "mobile_score": 87.6,
                 "issues_count": 3,
                 "opportunities_count": 7
             },
             {
                 "website_id": "web_002", 
-                "domain": "myblogsite.net",
-                "website_name": "My Blog Site",
-                "website_type": "Blog/Content",
+                "domain": "techblogpro.net",
+                "website_name": "TechBlog Pro",
+                "website_type": "Blog",
                 "status": "active",
                 "health_score": 85.7,
                 "last_analyzed": datetime.now() - timedelta(hours=3),
@@ -91,6 +91,9 @@ async def get_website_intelligence_dashboard() -> Dict[str, Any]:
                 "opportunities_count": 9
             }
         ]
+        
+        # Combine static websites with dynamically added ones
+        user_websites = static_websites + user_websites_storage
         
         # Comprehensive Analysis Summary
         analysis_summary = {
