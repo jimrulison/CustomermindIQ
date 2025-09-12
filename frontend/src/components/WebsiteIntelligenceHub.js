@@ -150,6 +150,12 @@ const WebsiteIntelligenceHub = () => {
       console.log('Adding website with data:', websiteData);
       console.log('Auth headers:', getAuthHeaders());
       console.log('API URL:', `${API_BASE_URL}/api/website-intelligence/website/add`);
+      console.log('Request config:', {
+        method: 'POST',
+        url: `${API_BASE_URL}/api/website-intelligence/website/add`,
+        headers: getAuthHeaders(),
+        data: websiteData
+      });
 
       const response = await axios.post(`${API_BASE_URL}/api/website-intelligence/website/add`, websiteData, {
         headers: getAuthHeaders()
