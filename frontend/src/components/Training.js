@@ -802,6 +802,337 @@ Powered by AI Intelligence Systems`;
           </div>
         </TabsContent>
 
+        {/* Starter Steps Tab */}
+        <TabsContent value="starter-steps" className="space-y-6">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-white mb-4">Starter Steps for Each Level of Experience</h2>
+            <p className="text-slate-400 text-lg">Choose your experience level and follow the tailored guide to get the most out of CustomerMind IQ</p>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-3">
+            {/* Novice Users */}
+            <Card className="bg-gradient-to-br from-green-900/20 to-green-800/20 backdrop-blur-xl border-green-500/30 hover:border-green-400/50 transition-all">
+              <CardHeader>
+                <div className="flex items-center space-x-3">
+                  <div className="p-3 bg-green-500/20 rounded-lg">
+                    <Target className="w-6 h-6 text-green-400" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-white text-xl">Guide for Novices</CardTitle>
+                    <CardDescription className="text-green-200">
+                      "I want to understand my customers better, but I'm not very tech-savvy"
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                  <p className="text-green-100 text-sm font-medium mb-2">Welcome! You're in the right place.</p>
+                  <p className="text-green-200 text-sm">
+                    CustomerMindIQ helps you understand what your website visitors are thinking and doing. 
+                    Think of it like having a conversation with each person who visits your site, even when you're not there.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="border-l-2 border-green-400 pl-4">
+                    <h4 className="font-semibold text-green-300 flex items-center mb-2">
+                      <Clock className="w-4 h-4 mr-2" />
+                      Step 1: Just Look Around (5 minutes)
+                    </h4>
+                    <ul className="space-y-2 text-sm text-green-100">
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Log in and click around the main dashboard</li>
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Don't worry about understanding everything you see</li>
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Goal: Get familiar with the layout</li>
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>You'll see: Charts, numbers, and visitor information</li>
+                    </ul>
+                  </div>
+
+                  <div className="border-l-2 border-green-400 pl-4">
+                    <h4 className="font-semibold text-green-300 flex items-center mb-2">
+                      <Clock className="w-4 h-4 mr-2" />
+                      Step 2: Find Your "Real People" (10 minutes)
+                    </h4>
+                    <ul className="space-y-2 text-sm text-green-100">
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Look for "Website Analytics" → "Website Intelligence" and add your website</li>
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>You're seeing: Real people who visited your website</li>
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Try: Click on one visitor to see their journey</li>
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Watch 2-3 visitor journeys before moving on</li>
+                    </ul>
+                  </div>
+
+                  <div className="border-l-2 border-green-400 pl-4">
+                    <h4 className="font-semibold text-green-300 flex items-center mb-2">
+                      <Clock className="w-4 h-4 mr-2" />
+                      Step 3: Understand One Simple Report (15 minutes)
+                    </h4>
+                    <ul className="space-y-2 text-sm text-green-100">
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Go to "Website Intelligence" tab → Check OVERVIEW and all tabs</li>
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Shows: Which pages visitors like most</li>
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Action: Make sure these pages have your best content</li>
+                    </ul>
+                  </div>
+
+                  <div className="border-l-2 border-green-400 pl-4">
+                    <h4 className="font-semibold text-green-300 flex items-center mb-2">
+                      <Clock className="w-4 h-4 mr-2" />
+                      Step 4: Set Up One Alert (10 minutes)
+                    </h4>
+                    <ul className="space-y-2 text-sm text-green-100">
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Look for "Alerts" or "Notifications"</li>
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Set: "Email me when someone visits my contact page"</li>
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Why: You'll know when potential customers are interested</li>
+                    </ul>
+                  </div>
+
+                  <div className="border-l-2 border-green-400 pl-4">
+                    <h4 className="font-semibold text-green-300 flex items-center mb-2">
+                      <Clock className="w-4 h-4 mr-2" />
+                      Step 5: Ask One Question (5 minutes)
+                    </h4>
+                    <ul className="space-y-2 text-sm text-green-100">
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Question: "What page do most people leave from?"</li>
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Find: Look for "Exit Pages" or "Bounce Rate"</li>
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Action: Make a note to improve that page later</li>
+                      <li className="flex items-start"><span className="text-green-400 mr-2">•</span>Repeat: Do this process weekly</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                  <h4 className="font-semibold text-green-300 mb-2">🎉 Congratulations!</h4>
+                  <p className="text-green-200 text-sm mb-3">You're now using CustomerMindIQ to understand your visitors. Take your time with each step - there's no rush.</p>
+                  
+                  <div className="space-y-2">
+                    <h5 className="font-medium text-green-300 text-sm">Additional Support:</h5>
+                    <ul className="space-y-1 text-xs text-green-100">
+                      <li className="flex items-center"><CheckCircle className="w-3 h-3 mr-2 text-green-400" />Live chat support</li>
+                      <li className="flex items-center"><CheckCircle className="w-3 h-3 mr-2 text-green-400" />Video tutorials</li>
+                      <li className="flex items-center"><CheckCircle className="w-3 h-3 mr-2 text-green-400" />Step-by-step manuals</li>
+                      <li className="flex items-center"><CheckCircle className="w-3 h-3 mr-2 text-green-400" />Email support</li>
+                      <li className="flex items-center"><CheckCircle className="w-3 h-3 mr-2 text-green-400" />Knowledge base articles</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Intermediate Users */}
+            <Card className="bg-gradient-to-br from-blue-900/20 to-blue-800/20 backdrop-blur-xl border-blue-500/30 hover:border-blue-400/50 transition-all">
+              <CardHeader>
+                <div className="flex items-center space-x-3">
+                  <div className="p-3 bg-blue-500/20 rounded-lg">
+                    <BarChart3 className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-white text-xl">Guide for Intermediate Users</CardTitle>
+                    <CardDescription className="text-blue-200">
+                      "I've used analytics tools before and understand the basics"
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                  <h4 className="font-semibold text-blue-300 mb-2">Quick Start Checklist</h4>
+                  <p className="text-blue-200 text-sm">
+                    You already understand concepts like page views, bounce rates, and user sessions. 
+                    Here's how to leverage CustomerMindIQ's unique features:
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="border-l-2 border-blue-400 pl-4">
+                    <h4 className="font-semibold text-blue-300 flex items-center mb-2">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      Phase 1: Advanced Visitor Intelligence (Week 1)
+                    </h4>
+                    <ul className="space-y-2 text-sm text-blue-100">
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Set up visitor identification and lead scoring</li>
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Enable behavioral triggers for high-value actions</li>
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Configure goal tracking for key conversion events</li>
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Review heat maps to understand user interaction</li>
+                    </ul>
+                  </div>
+
+                  <div className="border-l-2 border-blue-400 pl-4">
+                    <h4 className="font-semibold text-blue-300 flex items-center mb-2">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      Phase 2: Customer Journey Mapping (Week 2)
+                    </h4>
+                    <ul className="space-y-2 text-sm text-blue-100">
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Analyze funnel performance and drop-off points</li>
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Set up cohort analysis for behavior tracking</li>
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Configure A/B testing based on visitor segments</li>
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Implement feedback collection with on-site surveys</li>
+                    </ul>
+                  </div>
+
+                  <div className="border-l-2 border-blue-400 pl-4">
+                    <h4 className="font-semibold text-blue-300 flex items-center mb-2">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      Phase 3: Integration and Automation (Week 3)
+                    </h4>
+                    <ul className="space-y-2 text-sm text-blue-100">
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Connect your CRM with visitor data sync</li>
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Set up marketing automation based on behavior</li>
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Configure custom reports for specific KPIs</li>
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Enable team collaboration and insight sharing</li>
+                    </ul>
+                  </div>
+
+                  <div className="border-l-2 border-blue-400 pl-4">
+                    <h4 className="font-semibold text-blue-300 flex items-center mb-2">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      Phase 4: Optimization and Scaling (Week 4)
+                    </h4>
+                    <ul className="space-y-2 text-sm text-blue-100">
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Advanced segmentation with detailed personas</li>
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Predictive analytics using CustomerMindIQ's AI</li>
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>Custom event tracking for business-specific actions</li>
+                      <li className="flex items-start"><span className="text-blue-400 mr-2">•</span>ROI measurement connecting behavior to revenue</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                  <div className="space-y-2">
+                    <h5 className="font-medium text-blue-300 text-sm">Additional Training Materials:</h5>
+                    <ul className="space-y-1 text-xs text-blue-100">
+                      <li className="flex items-center"><BookOpen className="w-3 h-3 mr-2 text-blue-400" />Comprehensive knowledge base</li>
+                      <li className="flex items-center"><Users className="w-3 h-3 mr-2 text-blue-400" />Community forum</li>
+                      <li className="flex items-center"><Video className="w-3 h-3 mr-2 text-blue-400" />Monthly webinars</li>
+                      <li className="flex items-center"><FileText className="w-3 h-3 mr-2 text-blue-400" />Complete manual and videos</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Advanced Users */}
+            <Card className="bg-gradient-to-br from-purple-900/20 to-purple-800/20 backdrop-blur-xl border-purple-500/30 hover:border-purple-400/50 transition-all">
+              <CardHeader>
+                <div className="flex items-center space-x-3">
+                  <div className="p-3 bg-purple-500/20 rounded-lg">
+                    <Zap className="w-6 h-6 text-purple-400" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-white text-xl">Guide for Advanced Users</CardTitle>
+                    <CardDescription className="text-purple-200">
+                      "I'm experienced with analytics and want to maximize CustomerMindIQ quickly"
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                  <h4 className="font-semibold text-purple-300 mb-2">Rapid Deployment Strategy</h4>
+                  <p className="text-purple-200 text-sm">
+                    Advanced implementation roadmap for experienced users who want to leverage the full power of CustomerMindIQ immediately.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="border-l-2 border-purple-400 pl-4">
+                    <h4 className="font-semibold text-purple-300 flex items-center mb-2">
+                      <Clock className="w-4 h-4 mr-2" />
+                      Day 1: Foundation Setup
+                    </h4>
+                    <ul className="space-y-2 text-sm text-purple-100">
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>API integration with existing data stack</li>
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Advanced tracking code across all touchpoints</li>
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Data validation across conversion funnels</li>
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Role-based access configuration for team</li>
+                    </ul>
+                  </div>
+
+                  <div className="border-l-2 border-purple-400 pl-4">
+                    <h4 className="font-semibold text-purple-300 flex items-center mb-2">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      Day 2-3: Advanced Analytics Configuration
+                    </h4>
+                    <ul className="space-y-2 text-sm text-purple-100">
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Custom dimensions for business-specific tracking</li>
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Advanced segmentation with behavioral data</li>
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Cross-domain tracking implementation</li>
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Data warehouse integration setup</li>
+                    </ul>
+                  </div>
+
+                  <div className="border-l-2 border-purple-400 pl-4">
+                    <h4 className="font-semibold text-purple-300 flex items-center mb-2">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      Week 1: Strategic Implementation
+                    </h4>
+                    <ul className="space-y-2 text-sm text-purple-100">
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Behavioral scoring models development</li>
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Predictive modeling for visitor intent</li>
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Real-time personalization implementation</li>
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Advanced attribution modeling setup</li>
+                    </ul>
+                  </div>
+
+                  <div className="border-l-2 border-purple-400 pl-4">
+                    <h4 className="font-semibold text-purple-300 flex items-center mb-2">
+                      <RefreshCw className="w-4 h-4 mr-2" />
+                      Ongoing Optimization
+                    </h4>
+                    <ul className="space-y-2 text-sm text-purple-100">
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Custom dashboard creation for executives</li>
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>API automation for unique workflows</li>
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Advanced testing framework implementation</li>
+                      <li className="flex items-start"><span className="text-purple-400 mr-2">•</span>Data quality monitoring and validation</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                  <h5 className="font-medium text-purple-300 text-sm mb-2">Key Focus Areas for Maximum ROI:</h5>
+                  <ol className="space-y-1 text-xs text-purple-100">
+                    <li className="flex items-start"><span className="text-purple-400 mr-2 font-bold">1.</span>Revenue attribution: Connect every visitor interaction to business outcomes</li>
+                    <li className="flex items-start"><span className="text-purple-400 mr-2 font-bold">2.</span>Predictive insights: Use AI to anticipate customer needs and behaviors</li>
+                    <li className="flex items-start"><span className="text-purple-400 mr-2 font-bold">3.</span>Operational efficiency: Automate routine analysis and reporting</li>
+                    <li className="flex items-start"><span className="text-purple-400 mr-2 font-bold">4.</span>Strategic decision support: Create data products for executive decisions</li>
+                  </ol>
+                </div>
+
+                <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                  <h5 className="font-medium text-purple-300 text-sm mb-2">Advanced Features to Explore:</h5>
+                  <div className="grid grid-cols-1 gap-2">
+                    <div className="flex items-center text-xs text-purple-100">
+                      <Sparkles className="w-3 h-3 mr-2 text-purple-400" />
+                      Multi-dimensional cohort analysis
+                    </div>
+                    <div className="flex items-center text-xs text-purple-100">
+                      <Sparkles className="w-3 h-3 mr-2 text-purple-400" />
+                      Custom machine learning models
+                    </div>
+                    <div className="flex items-center text-xs text-purple-100">
+                      <Sparkles className="w-3 h-3 mr-2 text-purple-400" />
+                      Real-time behavioral APIs
+                    </div>
+                    <div className="flex items-center text-xs text-purple-100">
+                      <Sparkles className="w-3 h-3 mr-2 text-purple-400" />
+                      Cross-platform visitor stitching
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                  <div className="space-y-2">
+                    <h5 className="font-medium text-purple-300 text-sm">Support Materials:</h5>
+                    <ul className="space-y-1 text-xs text-purple-100">
+                      <li className="flex items-center"><FileText className="w-3 h-3 mr-2 text-purple-400" />Technical documentation & API references</li>
+                      <li className="flex items-center"><Video className="w-3 h-3 mr-2 text-purple-400" />Training manual & videos</li>
+                      <li className="flex items-center"><BookOpen className="w-3 h-3 mr-2 text-purple-400" />Integration guides</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
         {/* Educational Tab */}
         <TabsContent value="educational" className="space-y-6">
           <div className="grid gap-6">
