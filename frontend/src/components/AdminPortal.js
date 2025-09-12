@@ -736,6 +736,8 @@ const AdminPortalEnhanced = () => {
   useEffect(() => {
     if (activeTab === 'users') {
       loadUsers();
+    } else if (activeTab === 'api-keys') {
+      loadApiKeys();
     }
   }, [activeTab, searchTerm, filters]);
 
