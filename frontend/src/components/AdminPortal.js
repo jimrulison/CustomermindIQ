@@ -2163,12 +2163,12 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                         <button
                           onClick={() => {
                             setEditingItem(form);
-                            setModalType('respond-contact');
+                            setModalType('view-contact-form');
                             setShowModal(true);
                           }}
                           className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
                         >
-                          Respond
+                          View & Respond
                         </button>
                       </div>
                     </div>
