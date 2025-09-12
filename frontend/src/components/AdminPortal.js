@@ -3375,6 +3375,8 @@ const AdminPortalEnhanced = () => {
                 {modalType === 'send-to-all' && 'Send Email to All Users'}
                 {modalType === 'send-to-tier' && 'Send Email by Subscription Tier'}
                 {modalType === 'custom-send' && 'Custom Email Send'}
+                {modalType === 'create-api-key' && 'Generate New API Key'}
+                {modalType === 'edit-api-key' && 'Edit API Key'}
               </h3>
               <button
                 onClick={() => {
