@@ -39,6 +39,8 @@ const WebsiteAnalyticsDashboard = ({
 
   const [updating, setUpdating] = useState(false);
   const [updateMessage, setUpdateMessage] = useState('');
+  const [showDataSourceModal, setShowDataSourceModal] = useState(false);
+  const [selectedDataSource, setSelectedDataSource] = useState(null);
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
   // Handle UPDATE ALL button click
