@@ -3355,6 +3355,252 @@ const AdminPortalEnhanced = () => {
         </div>
       </div>
     </div>
+
+    {/* Modal Overlay */}
+    {showModal && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="bg-slate-800 rounded-xl border border-slate-700 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="flex items-center justify-between p-6 border-b border-slate-700">
+            <h3 className="text-xl font-semibold text-white">
+              {modalType === 'create-banner' && 'Create New Banner'}
+              {modalType === 'edit-banner' && 'Edit Banner'}
+              {modalType === 'create-discount' && 'Create New Discount'}
+              {modalType === 'edit-discount' && 'Edit Discount'}
+              {modalType === 'create-cohort' && 'Create User Cohort'}
+              {modalType === 'create-trial-email' && 'Create Trial Email Template'}
+              {modalType === 'edit-trial-email' && 'Edit Trial Email Template'}
+              {modalType === 'view-trial-email-stats' && 'Trial Email Statistics'}
+              {modalType === 'view-email-campaign' && 'Email Campaign Details'}
+              {modalType === 'user-analytics' && 'User Analytics'}
+              {modalType === 'generate-codes' && 'Generate Discount Codes'}
+              {modalType === 'send-to-all' && 'Send Email to All Users'}
+              {modalType === 'send-to-tier' && 'Send Email by Subscription Tier'}
+              {modalType === 'custom-send' && 'Custom Email Send'}
+            </h3>
+            <button
+              onClick={() => {
+                setShowModal(false);
+                setEditingItem(null);
+                setModalType('');
+              }}
+              className="text-slate-400 hover:text-white"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          <div className="p-6">
+            {/* Email Campaign Details Modal */}
+            {modalType === 'view-email-campaign' && editingItem && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-white mb-4">Campaign Information</h4>
+                    <div className="space-y-3">
+                      <div>
+                        <span className="text-slate-400 text-sm">Subject:</span>
+                        <p className="text-white font-medium">{editingItem.subject}</p>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 text-sm">Status:</span>
+                        <span className={`px-2 py-1 rounded text-xs font-medium ml-2 ${
+                          editingItem.status === 'sent' ? 'bg-green-500/20 text-green-400' :
+                          editingItem.status === 'failed' ? 'bg-red-500/20 text-red-400' :
+                          'bg-yellow-500/20 text-yellow-400'
+                        }`}>
+                          {editingItem.status}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 text-sm">Created:</span>
+                        <p className="text-white">{editingItem.created_at ? new Date(editingItem.created_at).toLocaleDateString() : 'N/A'}</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-lg font-semibold text-white mb-4">Statistics</h4>
+                    <div className="space-y-3">
+                      <div>
+                        <span className="text-slate-400 text-sm">Recipients:</span>
+                        <p className="text-white font-medium">{editingItem.recipient_count || 0}</p>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 text-sm">Sent:</span>
+                        <p className="text-green-400 font-medium">{editingItem.sent_count || 0}</p>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 text-sm">Failed:</span>
+                        <p className="text-red-400 font-medium">{editingItem.failed_count || 0}</p>
+                      </div>
+                      {editingItem.error_message && (
+                        <div>
+                          <span className="text-slate-400 text-sm">Error:</span>
+                          <p className="text-red-400 text-sm">{editingItem.error_message}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="border-t border-slate-700 pt-4">
+                  <h4 className="text-lg font-semibold text-white mb-4">Actions</h4>
+                  <div className="flex space-x-3">
+                    <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                      Resend Campaign
+                    </button>
+                    <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                      Duplicate Campaign
+                    </button>
+                    <button className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700">
+                      Download Report
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Banner Creation/Edit Modal */}
+            {(modalType === 'create-banner' || modalType === 'edit-banner') && (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Banner Title</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                    placeholder="Enter banner title"
+                    defaultValue={editingItem?.title || ''}
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Message</label>
+                  <textarea
+                    rows="4"
+                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                    placeholder="Enter banner message"
+                    defaultValue={editingItem?.message || ''}
+                  />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">Type</label>
+                    <select className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                      <option value="info">Info</option>
+                      <option value="warning">Warning</option>
+                      <option value="success">Success</option>
+                      <option value="error">Error</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">Priority</label>
+                    <select className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                      <option value="1">Low</option>
+                      <option value="5">Medium</option>
+                      <option value="10">High</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div className="flex justify-end space-x-3 pt-4">
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700"
+                  >
+                    Cancel
+                  </button>
+                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    {modalType === 'create-banner' ? 'Create Banner' : 'Update Banner'}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Trial Email Template Modal */}
+            {(modalType === 'create-trial-email' || modalType === 'edit-trial-email') && (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Template Name</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                    placeholder="Enter template name"
+                    defaultValue={editingItem?.name || ''}
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Subject Line</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                    placeholder="Enter email subject"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Email Content</label>
+                  <textarea
+                    rows="8"
+                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                    placeholder="Enter email content (HTML supported)"
+                  />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">Trigger</label>
+                    <select className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                      <option value="registration">Registration</option>
+                      <option value="day_1">Day 1</option>
+                      <option value="day_3">Day 3</option>
+                      <option value="day_6">Day 6</option>
+                      <option value="day_7">Day 7 (Last Day)</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">Status</label>
+                    <select className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                      <option value="active">Active</option>
+                      <option value="paused">Paused</option>
+                      <option value="draft">Draft</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div className="flex justify-end space-x-3 pt-4">
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700"
+                  >
+                    Cancel
+                  </button>
+                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    {modalType === 'create-trial-email' ? 'Create Template' : 'Update Template'}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Other modal types can be added here */}
+            {(modalType === 'user-analytics' || modalType === 'generate-codes' || modalType === 'send-to-all') && (
+              <div className="text-center py-8">
+                <p className="text-slate-400">Modal content for {modalType} coming soon...</p>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  Close
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    )}
   );
 };
 
