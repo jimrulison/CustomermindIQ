@@ -11,6 +11,9 @@ import AdminChatDashboard from './AdminChatDashboard';
 import AdminAffiliateChatManager from './AdminAffiliateChatManager';
 
 const AdminPortalEnhanced = () => {
+  console.log('🎯 AdminPortal.js component is loading with all fixes!');
+  console.log('🎯 This is the ENHANCED AdminPortal (213KB) with fixed tables and modals');
+  
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
