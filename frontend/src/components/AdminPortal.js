@@ -1804,7 +1804,7 @@ const AdminPortalEnhanced = () => {
                     <div>
                       <p className="text-slate-400 text-sm">Custom Holdbacks</p>
                       <p className="text-2xl font-bold text-purple-400">
-                        {highRefundAffiliates.filter(a => a.custom_holdback).length}
+                        {(highRefundAffiliates || []).filter(a => a.custom_holdback).length}
                       </p>
                     </div>
                     <Shield className="w-8 h-8 text-purple-400" />
