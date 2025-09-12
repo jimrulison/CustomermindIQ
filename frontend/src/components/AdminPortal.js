@@ -2279,7 +2279,7 @@ const AdminPortalEnhanced = () => {
                     <div>
                       <p className="text-slate-400 text-sm">Active Workflows</p>
                       <p className="text-2xl font-bold text-green-400">
-                        {workflows.filter(workflow => workflow.is_active).length}
+                        {(workflows || []).filter(workflow => workflow.is_active).length}
                       </p>
                     </div>
                     <CheckCircle className="w-8 h-8 text-green-400" />
