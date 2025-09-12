@@ -24,7 +24,12 @@ import {
   Lightbulb,
   Award,
   RefreshCw,
-  Clock
+  Clock,
+  X,
+  Info,
+  TrendingUp as TrendIcon,
+  PieChart,
+  Eye
 } from 'lucide-react';
 
 const WebsiteAnalyticsDashboard = ({ 
