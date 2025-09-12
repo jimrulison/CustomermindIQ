@@ -224,6 +224,42 @@ class AdminPortalTester:
                 
         except Exception as e:
             self.log_test("User Management List", False, f"Exception: {str(e)}")
+        
+        # Test user analytics (modal functionality)
+        try:
+            # First get a user to test analytics for
+            users_response = self.session.get(f"{API_BASE}/admin/users", timeout=10)
+            if users_response.status_code == 200:
+                users_data = users_response.json()
+                users = users_data.get('users', [])
+                if users:
+                    test_user_id = users[0].get('user_id')
+                    if test_user_id:
+                        start_time = datetime.now()
+                        response = self.session.get(
+                            f"{API_BASE}/admin/users/{test_user_id}/analytics",
+                            timeout=10
+                        )
+                        response_time = (datetime.now() - start_time).total_seconds()
+                        
+                        if response.status_code == 200:
+                            self.log_test(
+                                "User Analytics Modal", 
+                                True, 
+                                "User analytics data retrieved successfully",
+                                response_time
+                            )
+                        else:
+                            self.log_test("User Analytics Modal", False, f"HTTP {response.status_code}: {response.text}")
+                    else:
+                        self.log_test("User Analytics Modal", False, "No user_id found in user data")
+                else:
+                    self.log_test("User Analytics Modal", True, "No users available for analytics test (expected)")
+            else:
+                self.log_test("User Analytics Modal", False, "Could not retrieve users for analytics test")
+                
+        except Exception as e:
+            self.log_test("User Analytics Modal", False, f"Exception: {str(e)}")
     
     async def test_cohorts_management(self):
         """Test cohorts management endpoints"""
