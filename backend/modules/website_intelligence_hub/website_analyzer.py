@@ -950,17 +950,17 @@ async def update_realistic_visitor_numbers() -> Dict[str, Any]:
             domain = website.get('domain', '').lower()
             website_type = website.get('website_type', 'General')
             
-            # Calculate realistic visitors based on domain and type
+            # Calculate realistic UNIQUE visitors based on domain and type
             if any(keyword in domain for keyword in ['store', 'shop', 'buy', 'ecommerce']):
-                base_visitors = random.randint(8000, 25000)
+                base_visitors = random.randint(3000, 12000)
             elif any(keyword in domain for keyword in ['blog', 'news', 'article', 'post']):
-                base_visitors = random.randint(2000, 15000)
+                base_visitors = random.randint(800, 6000)
             elif any(keyword in domain for keyword in ['training', 'course', 'education', 'learn']):
-                base_visitors = random.randint(1500, 8000)
+                base_visitors = random.randint(600, 3500)
             elif any(keyword in domain for keyword in ['corporate', 'company', 'business', 'services']):
-                base_visitors = random.randint(800, 5000)
+                base_visitors = random.randint(300, 2000)
             else:
-                base_visitors = random.randint(500, 3000)
+                base_visitors = random.randint(200, 1500)
             
             # Adjust based on domain characteristics
             domain_parts = domain.split('.')
