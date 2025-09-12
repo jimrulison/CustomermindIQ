@@ -3390,7 +3390,7 @@ const AdminPortalEnhanced = () => {
 
             <div className="p-6">
               {/* Email Campaign Details Modal */}
-              {modalType === 'view-email-campaign' && editingItem && (
+              {(modalType === 'view-email-campaign' || modalType === 'campaign-details') && editingItem && (
                 <div className="space-y-6">
                   <div className="grid grid-cols-2 gap-6">
                     <div>
