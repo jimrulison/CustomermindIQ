@@ -153,6 +153,17 @@ const WebsiteIntelligenceHub = () => {
       console.log('Adding website with data:', websiteData);
       console.log('Auth headers:', getAuthHeaders());
       console.log('API URL:', `${API_BASE_URL}/api/website-intelligence/website/add`);
+      
+      // Check membership limit before attempting to add
+      const currentWebsiteCount = dashboardData?.dashboard?.websites_overview?.total_websites || 0;
+      const membershipTier = membershipData?.membership_details?.current_tier?.toLowerCase() || 'basic';
+      const tierLimits = { basic: 1, professional: 3, enterprise: 7 };
+      const maxWebsites = tierLimits[membershipTier] || 1;
+      
+      if (currentWebsiteCount >= maxWebsites) {
+        alert(`❌ MEMBERSHIP LIMIT REACHED\n\nYou've reached the maximum number of websites (${maxWebsites}) allowed for your ${membershipData?.membership_details?.current_tier || 'current'} plan.\n\nTo add more websites:\n• Upgrade to a higher tier plan\n• Or delete some existing websites first\n\nUpgrade your plan in the Membership tab to unlock more website slots.`);
+        return;
+      }
       console.log('Request config:', {
         method: 'POST',
         url: `${API_BASE_URL}/api/website-intelligence/website/add`,
