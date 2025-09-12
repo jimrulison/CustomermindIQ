@@ -1109,7 +1109,7 @@ const AdminPortalEnhanced = () => {
                     <div>
                       <p className="text-slate-400 text-sm">Total Views</p>
                       <p className="text-2xl font-bold text-purple-400">
-                        {banners.reduce((sum, banner) => sum + (banner.views || 0), 0)}
+                        {(banners || []).reduce((sum, banner) => sum + (banner.views || 0), 0)}
                       </p>
                     </div>
                     <Eye className="w-8 h-8 text-purple-400" />
