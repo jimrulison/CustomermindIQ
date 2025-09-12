@@ -469,21 +469,21 @@ Your request will be handled by our admin team within 2 hours.`);
             </div>
           </CardHeader>
           <CardContent>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <h3 className="font-medium mb-3">Plan Features</h3>
+                <h3 className="font-medium mb-3 text-sm sm:text-base">Plan Features</h3>
                 <ul className="space-y-2">
                   {currentSubscription.features?.map((feature, index) => (
-                    <li key={index} className="flex items-center text-sm">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
-                      {feature}
+                    <li key={index} className="flex items-start text-xs sm:text-sm">
+                      <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                      <span className="leading-relaxed">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </div>
               <div>
-                <h3 className="font-medium mb-3">Usage Limits</h3>
-                <div className="space-y-2 text-sm">
+                <h3 className="font-medium mb-3 text-sm sm:text-base">Usage Limits</h3>
+                <div className="space-y-2 text-xs sm:text-sm">
                   {currentSubscription.limits && (
                     <>
                       <div className="flex justify-between">
@@ -513,7 +513,7 @@ Your request will be handled by our admin team within 2 hours.`);
                 <Button 
                   variant="outline" 
                   onClick={cancelSubscription}
-                  className="text-red-600 border-red-300 hover:bg-red-50"
+                  className="w-full sm:w-auto text-red-600 border-red-300 hover:bg-red-50 min-h-[48px]"
                 >
                   Cancel Subscription
                 </Button>
