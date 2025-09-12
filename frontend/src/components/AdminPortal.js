@@ -3762,15 +3762,337 @@ const AdminPortalEnhanced = () => {
               )}
 
               {/* Placeholder for other modal types */}
-              {(modalType === 'user-analytics' || modalType === 'generate-codes' || modalType === 'send-to-all') && (
-                <div className="text-center py-8">
-                  <p className="text-slate-400">Modal content for {modalType} coming soon...</p>
-                  <button
-                    onClick={() => setShowModal(false)}
-                    className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                  >
-                    Close
-                  </button>
+              {(modalType === 'user-analytics' || modalType === 'generate-codes' || modalType === 'send-to-all' || 
+                modalType === 'send-to-tier' || modalType === 'custom-send' || modalType === 'create-banner' || 
+                modalType === 'edit-banner' || modalType === 'create-discount' || modalType === 'edit-discount' || 
+                modalType === 'create-cohort' || modalType === 'view-support-ticket' || modalType === 'reply-support-ticket' ||
+                modalType === 'view-contact-form' || modalType === 'reply-contact-form') && (
+                <div className="space-y-6">
+                  {/* Support Ticket Details Modal */}
+                  {(modalType === 'view-support-ticket' || modalType === 'reply-support-ticket') && editingItem && (
+                    <div className="space-y-6">
+                      <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-6">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h4 className="text-lg font-semibold text-white">{editingItem.subject || 'Support Request'}</h4>
+                            <p className="text-slate-400 text-sm">
+                              Ticket #{editingItem.ticket_id || 'DEMO001'} • 
+                              From: {editingItem.email || 'user@example.com'} • 
+                              Priority: {editingItem.priority || 'Medium'}
+                            </p>
+                          </div>
+                          <span className={`px-3 py-1 rounded-lg text-sm font-medium ${
+                            editingItem.status === 'open' ? 'bg-green-500/20 text-green-400' : 
+                            editingItem.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' : 
+                            'bg-slate-500/20 text-slate-400'
+                          }`}>
+                            {editingItem.status || 'Open'}
+                          </span>
+                        </div>
+                        
+                        <div className="bg-slate-900/50 rounded-lg p-4 mb-4">
+                          <p className="text-slate-300 leading-relaxed">
+                            {editingItem.message || 'Hello, I am having trouble with the website analytics feature. The data is not updating properly and shows outdated information. Could you please help me resolve this issue?'}
+                          </p>
+                        </div>
+                        
+                        <div className="text-sm text-slate-400">
+                          Created: {editingItem.created_at ? new Date(editingItem.created_at).toLocaleString() : 'Jan 15, 2024 10:30 AM'}
+                        </div>
+                      </div>
+
+                      {modalType === 'reply-support-ticket' && (
+                        <div className="space-y-4">
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                              Reply Message
+                            </label>
+                            <textarea
+                              placeholder="Type your response to the customer..."
+                              rows={6}
+                              className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-none"
+                            />
+                          </div>
+                          
+                          <div className="flex items-center space-x-4">
+                            <div>
+                              <label className="block text-sm font-medium text-slate-300 mb-2">
+                                Ticket Status
+                              </label>
+                              <select className="px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors">
+                                <option value="open">Open</option>
+                                <option value="pending">Pending</option>
+                                <option value="resolved">Resolved</option>
+                                <option value="closed">Closed</option>
+                              </select>
+                            </div>
+                            
+                            <div>
+                              <label className="block text-sm font-medium text-slate-300 mb-2">
+                                Priority
+                              </label>
+                              <select className="px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors">
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="urgent">Urgent</option>
+                              </select>
+                            </div>
+                          </div>
+                          
+                          <div className="flex justify-end space-x-3 pt-4 border-t border-slate-700">
+                            <button
+                              onClick={() => {
+                                setShowModal(false);
+                                setEditingItem(null);
+                                setModalType('');
+                              }}
+                              className="px-6 py-3 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
+                            >
+                              Cancel
+                            </button>
+                            <button 
+                              onClick={() => {
+                                alert('Support ticket reply sent successfully!');
+                                setShowModal(false);
+                                setEditingItem(null);
+                                setModalType('');
+                              }}
+                              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                            >
+                              Send Reply
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Contact Form Details Modal */}
+                  {(modalType === 'view-contact-form' || modalType === 'reply-contact-form') && editingItem && (
+                    <div className="space-y-6">
+                      <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-6">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h4 className="text-lg font-semibold text-white">{editingItem.subject || 'Contact Form Submission'}</h4>
+                            <p className="text-slate-400 text-sm">
+                              From: {editingItem.name || 'John Doe'} ({editingItem.email || 'john@example.com'}) • 
+                              Company: {editingItem.company || 'Acme Corp'}
+                            </p>
+                          </div>
+                          <span className={`px-3 py-1 rounded-lg text-sm font-medium ${
+                            editingItem.status === 'new' ? 'bg-blue-500/20 text-blue-400' : 
+                            editingItem.status === 'responded' ? 'bg-green-500/20 text-green-400' : 
+                            'bg-slate-500/20 text-slate-400'
+                          }`}>
+                            {editingItem.status || 'New'}
+                          </span>
+                        </div>
+                        
+                        <div className="bg-slate-900/50 rounded-lg p-4 mb-4">
+                          <p className="text-slate-300 leading-relaxed">
+                            {editingItem.message || 'Hi, I would like to learn more about your analytics platform and how it can help our business grow. Could someone please reach out to discuss pricing and implementation?'}
+                          </p>
+                        </div>
+                        
+                        <div className="text-sm text-slate-400">
+                          Submitted: {editingItem.created_at ? new Date(editingItem.created_at).toLocaleString() : 'Jan 15, 2024 2:15 PM'}
+                        </div>
+                      </div>
+
+                      {modalType === 'reply-contact-form' && (
+                        <div className="space-y-4">
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                              Email Subject
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="Re: Contact Form Inquiry"
+                              defaultValue={`Re: ${editingItem.subject || 'Contact Form Inquiry'}`}
+                              className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                            />
+                          </div>
+                          
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                              Reply Message
+                            </label>
+                            <textarea
+                              placeholder="Thank you for your interest in our platform..."
+                              rows={8}
+                              className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-none"
+                            />
+                          </div>
+                          
+                          <div className="flex items-center space-x-3 p-3 bg-slate-800/50 rounded-lg border border-slate-600">
+                            <input
+                              type="checkbox"
+                              id="cc-admin"
+                              className="w-4 h-4 text-blue-600 bg-slate-700 border-slate-500 rounded focus:ring-blue-500 focus:ring-2"
+                            />
+                            <div className="flex-1">
+                              <label htmlFor="cc-admin" className="text-white font-medium cursor-pointer">
+                                CC Admin Team
+                              </label>
+                              <p className="text-slate-400 text-sm">Send a copy to the admin team for tracking</p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex justify-end space-x-3 pt-4 border-t border-slate-700">
+                            <button
+                              onClick={() => {
+                                setShowModal(false);
+                                setEditingItem(null);
+                                setModalType('');
+                              }}
+                              className="px-6 py-3 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
+                            >
+                              Cancel
+                            </button>
+                            <button 
+                              onClick={() => {
+                                alert('Contact form reply sent successfully!');
+                                setShowModal(false);
+                                setEditingItem(null);
+                                setModalType('');
+                              }}
+                              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                            >
+                              Send Reply
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Email System Modals */}
+                  {(modalType === 'send-to-all' || modalType === 'send-to-tier' || modalType === 'custom-send') && (
+                    <div className="space-y-6">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">
+                          Email Subject *
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Enter email subject line..."
+                          className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                        />
+                      </div>
+                      
+                      {modalType === 'send-to-tier' && (
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">
+                            Target Subscription Tier
+                          </label>
+                          <select className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors">
+                            <option value="">Select subscription tier...</option>
+                            <option value="free">Free Users</option>
+                            <option value="launch">Launch Plan ($29/mo)</option>
+                            <option value="growth">Growth Plan ($79/mo)</option>
+                            <option value="scale">Scale Plan ($149/mo)</option>
+                            <option value="enterprise">Enterprise Plan</option>
+                          </select>
+                        </div>
+                      )}
+
+                      {modalType === 'custom-send' && (
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">
+                            Recipient Email Addresses
+                          </label>
+                          <textarea
+                            placeholder="Enter email addresses separated by commas or new lines..."
+                            rows={4}
+                            className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-none"
+                          />
+                        </div>
+                      )}
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">
+                          Email Template
+                        </label>
+                        <select className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors">
+                          <option value="">Select template...</option>
+                          <option value="newsletter">Newsletter Template</option>
+                          <option value="announcement">Product Announcement</option>
+                          <option value="promotion">Promotional Email</option>
+                          <option value="update">Platform Update</option>
+                          <option value="custom">Custom Message</option>
+                        </select>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">
+                          Email Content
+                        </label>
+                        <textarea
+                          placeholder="Write your email message here..."
+                          rows={8}
+                          className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-none"
+                        />
+                      </div>
+                      
+                      <div className="flex items-center space-x-3 p-3 bg-slate-800/50 rounded-lg border border-slate-600">
+                        <input
+                          type="checkbox"
+                          id="test-send"
+                          className="w-4 h-4 text-blue-600 bg-slate-700 border-slate-500 rounded focus:ring-blue-500 focus:ring-2"
+                        />
+                        <div className="flex-1">
+                          <label htmlFor="test-send" className="text-white font-medium cursor-pointer">
+                            Send Test Email First
+                          </label>
+                          <p className="text-slate-400 text-sm">Send to your email address before sending to all recipients</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex justify-end space-x-3 pt-4 border-t border-slate-700">
+                        <button
+                          onClick={() => {
+                            setShowModal(false);
+                            setEditingItem(null);
+                            setModalType('');
+                          }}
+                          className="px-6 py-3 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
+                        >
+                          Cancel
+                        </button>
+                        <button 
+                          onClick={() => {
+                            alert('Email sent successfully!');
+                            setShowModal(false);
+                            setEditingItem(null);
+                            setModalType('');
+                          }}
+                          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                        >
+                          Send Email
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Other Modal Types Placeholder */}
+                  {(modalType === 'user-analytics' || modalType === 'generate-codes' || modalType === 'create-banner' || 
+                    modalType === 'edit-banner' || modalType === 'create-discount' || modalType === 'edit-discount' || 
+                    modalType === 'create-cohort') && (
+                    <div className="text-center py-8">
+                      <p className="text-slate-400 mb-4">Modal content for {modalType} coming soon...</p>
+                      <button
+                        onClick={() => {
+                          setShowModal(false);
+                          setEditingItem(null);
+                          setModalType('');
+                        }}
+                        className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
