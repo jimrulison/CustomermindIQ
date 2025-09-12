@@ -42,3 +42,5 @@ psutil>=5.9.0
 emergentintegrations
 aiofiles==23.2.1
 stripe>=8.0.0
+reportlab==4.0.7
+python-docx==0.8.11
