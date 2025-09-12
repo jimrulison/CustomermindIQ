@@ -303,28 +303,13 @@ const IntegrationDataHub = () => {
       methodology: 'Calculated using advanced integration analytics and real-time monitoring',
       dataPoints: 'Connection status, data volumes, error rates, performance metrics',
       updateFrequency: 'Updated based on integration monitoring schedules',
-      currentValue: currentValue
+      currentValue: currentValue,
+      icon: Database,
+      color: 'slate'
     };
 
-    alert(`📊 ${details.title}
-
-Current Value: ${details.currentValue}
-
-${details.description}
-
-🔍 DATA SOURCES:
-${details.sources.join('\n')}
-
-⚙️ METHODOLOGY:
-${details.methodology}
-
-📈 KEY DATA POINTS:
-${details.dataPoints}
-
-🕐 UPDATE FREQUENCY:
-${details.updateFrequency}
-
-💡 This data helps monitor integration health and optimize data pipeline performance.`);
+    setSelectedDataSource(details);
+    setShowDataSourceModal(true);
   };
 
   useEffect(() => {
