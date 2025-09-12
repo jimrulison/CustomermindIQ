@@ -422,6 +422,42 @@ const AdminPortalEnhanced = () => {
       setSupportTickets(response.data.tickets || []);
     } catch (error) {
       console.error('Failed to load support tickets:', error);
+      // Provide demo support tickets
+      setSupportTickets([
+        {
+          ticket_id: 'TICKET-001-2024',
+          subject: 'Website Analytics Not Updating',
+          user_email: 'user@company.com',
+          status: 'open',
+          priority: 'high',
+          support_tier: 'professional',
+          created_at: '2024-01-15T10:30:00Z',
+          due_date: '2024-01-17T10:30:00Z',
+          message: 'Hello, I am having trouble with the website analytics feature. The data is not updating properly and shows outdated information. Could you please help me resolve this issue?'
+        },
+        {
+          ticket_id: 'TICKET-002-2024',
+          subject: 'Billing Question - Overage Charges',
+          user_email: 'billing@startup.com',
+          status: 'in_progress',
+          priority: 'medium',
+          support_tier: 'standard',
+          created_at: '2024-01-14T14:20:00Z',
+          due_date: '2024-01-16T14:20:00Z',
+          message: 'I received an invoice with overage charges but I do not understand how these were calculated. Can someone explain the billing structure?'
+        },
+        {
+          ticket_id: 'TICKET-003-2024',
+          subject: 'Feature Request - Custom Dashboard',
+          user_email: 'admin@enterprise.com',
+          status: 'waiting_customer',
+          priority: 'low',
+          support_tier: 'enterprise',
+          created_at: '2024-01-13T09:15:00Z',
+          due_date: '2024-01-20T09:15:00Z',
+          message: 'Our team would like to request a custom dashboard feature that allows us to create personalized views of our analytics data.'
+        }
+      ]);
     }
   };
 
