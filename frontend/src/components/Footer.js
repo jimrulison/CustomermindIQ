@@ -41,10 +41,10 @@ const Footer = ({ onLegalClick }) => {
                     <div className="space-y-4">
                         <h4 className="text-md font-semibold text-white">Platform</h4>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="#" className="text-slate-400 hover:text-white transition-colors">AI Business Insights</a></li>
-                            <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Customer Analytics</a></li>
-                            <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Productivity Intelligence</a></li>
-                            <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Growth Acceleration</a></li>
+                            <li><button onClick={() => window.location.hash = 'customer-analytics'} className="text-slate-400 hover:text-white transition-colors text-left">AI Business Insights</button></li>
+                            <li><button onClick={() => window.location.hash = 'customer-analytics'} className="text-slate-400 hover:text-white transition-colors text-left">Customer Analytics</button></li>
+                            <li><button onClick={() => window.location.hash = 'productivity'} className="text-slate-400 hover:text-white transition-colors text-left">Productivity Intelligence</button></li>
+                            <li><button onClick={() => window.location.hash = 'growth-acceleration'} className="text-slate-400 hover:text-white transition-colors text-left">Growth Acceleration</button></li>
                             <li><a href="?affiliate=true" className="text-slate-400 hover:text-white transition-colors">Affiliate Program</a></li>
                         </ul>
                     </div>
