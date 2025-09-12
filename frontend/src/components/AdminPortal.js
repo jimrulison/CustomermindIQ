@@ -2822,7 +2822,7 @@ const AdminPortalEnhanced = () => {
                     <div>
                       <p className="text-slate-400 text-sm">Emails Sent</p>
                       <p className="text-2xl font-bold text-green-400">
-                        {emailCampaigns.reduce((sum, c) => sum + (c.sent_count || 0), 0)}
+                        {(emailCampaigns || []).reduce((sum, c) => sum + (c.sent_count || 0), 0)}
                       </p>
                     </div>
                     <CheckCircle className="w-8 h-8 text-green-400" />
