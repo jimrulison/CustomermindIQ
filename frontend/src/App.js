@@ -90,6 +90,12 @@ const AffiliateRegistration = React.lazy(() => import('./components/AffiliateReg
 const AffiliateAuth = React.lazy(() => import('./components/AffiliateAuth'));
 const LegalDocuments = React.lazy(() => import('./components/LegalDocuments'));
 const Footer = React.lazy(() => import('./components/Footer'));
+
+// Missing components - commented out to fix build
+// const UniversalIntelligenceDashboard = React.lazy(() => import('./components/UniversalIntelligenceDashboard'));
+// const SalesIntelligenceDashboard = React.lazy(() => import('./components/SalesIntelligenceDashboard'));
+// const MarketingROIDashboard = React.lazy(() => import('./components/MarketingROIDashboard'));
+// const ProductivityIntelligenceDashboard = React.lazy(() => import('./components/ProductivityIntelligenceDashboard'));
 import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
