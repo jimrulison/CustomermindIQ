@@ -292,59 +292,82 @@ class AdminPortalTester:
         """Test discount codes management endpoints"""
         print("\n🎫 Testing Discount Codes Management...")
         
-        # Test get discount codes
-        try:
-            start_time = datetime.now()
-            response = self.session.get(
-                f"{API_BASE}/admin/discount-codes",
-                timeout=10
-            )
-            response_time = (datetime.now() - start_time).total_seconds()
-            
-            if response.status_code == 200:
-                data = response.json()
-                code_count = len(data) if isinstance(data, list) else data.get('total_codes', 0)
-                self.log_test(
-                    "Get Discount Codes", 
-                    True, 
-                    f"Discount codes retrieved successfully ({code_count} codes)",
-                    response_time
-                )
-            else:
-                # Check if demo data fallback is working
-                self.log_test("Get Discount Codes", True, f"Demo data fallback working (HTTP {response.status_code})")
-                
-        except Exception as e:
-            self.log_test("Get Discount Codes", False, f"Exception: {str(e)}")
+        # First create a discount to generate codes for
+        discount_data = {
+            "name": "Test Discount for Codes",
+            "description": "Test discount for code generation",
+            "discount_type": "percentage",
+            "value": 15.0,
+            "target_tiers": [],
+            "target_users": [],
+            "is_active": True
+        }
         
-        # Test generate discount codes
+        discount_id = None
         try:
-            code_data = {
-                "count": 5,
-                "max_uses": 100,
-                "expiry_date": "2025-12-31"
-            }
-            
-            start_time = datetime.now()
             response = self.session.post(
-                f"{API_BASE}/admin/discount-codes",
-                json=code_data,
+                f"{API_BASE}/admin/discounts",
+                json=discount_data,
                 timeout=10
             )
-            response_time = (datetime.now() - start_time).total_seconds()
-            
             if response.status_code in [200, 201]:
-                self.log_test(
-                    "Generate Discount Codes", 
-                    True, 
-                    "Discount codes generation successful",
-                    response_time
+                discount_result = response.json()
+                discount_id = discount_result.get("discount_id")
+        except:
+            pass
+        
+        # Test generate discount codes (if we have a discount)
+        if discount_id:
+            try:
+                start_time = datetime.now()
+                response = self.session.post(
+                    f"{API_BASE}/admin/discounts/{discount_id}/codes/generate",
+                    params={"count": 5, "max_uses_per_code": 100, "expires_in_days": 30},
+                    timeout=10
                 )
-            else:
-                self.log_test("Generate Discount Codes", False, f"HTTP {response.status_code}: {response.text}")
+                response_time = (datetime.now() - start_time).total_seconds()
                 
-        except Exception as e:
-            self.log_test("Generate Discount Codes", False, f"Exception: {str(e)}")
+                if response.status_code in [200, 201]:
+                    data = response.json()
+                    code_count = len(data.get('codes', []))
+                    self.log_test(
+                        "Generate Discount Codes", 
+                        True, 
+                        f"Generated {code_count} discount codes successfully",
+                        response_time
+                    )
+                else:
+                    self.log_test("Generate Discount Codes", False, f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_test("Generate Discount Codes", False, f"Exception: {str(e)}")
+            
+            # Test get discount codes
+            try:
+                start_time = datetime.now()
+                response = self.session.get(
+                    f"{API_BASE}/admin/discounts/{discount_id}/codes",
+                    timeout=10
+                )
+                response_time = (datetime.now() - start_time).total_seconds()
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    code_count = len(data.get('codes', []))
+                    self.log_test(
+                        "Get Discount Codes", 
+                        True, 
+                        f"Discount codes retrieved successfully ({code_count} codes)",
+                        response_time
+                    )
+                else:
+                    self.log_test("Get Discount Codes", False, f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_test("Get Discount Codes", False, f"Exception: {str(e)}")
+        else:
+            self.log_test("Generate Discount Codes", False, "Could not create test discount")
+            self.log_test("Get Discount Codes", False, "Could not create test discount")
     
     async def test_discounts_management(self):
         """Test discounts management endpoints"""
