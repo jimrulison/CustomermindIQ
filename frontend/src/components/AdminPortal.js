@@ -2442,7 +2442,7 @@ const AdminPortalEnhanced = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-700">
-                      {apiKeys.length === 0 ? (
+                      {!apiKeys || apiKeys.length === 0 ? (
                         <tr>
                           <td colSpan="7" className="px-6 py-8 text-center">
                             <Key className="w-12 h-12 text-slate-600 mx-auto mb-4" />
