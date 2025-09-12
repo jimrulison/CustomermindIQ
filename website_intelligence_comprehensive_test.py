@@ -19,6 +19,10 @@ import sys
 from datetime import datetime
 from typing import Dict, Any, List
 import uuid
+import urllib3
+
+# Disable SSL warnings for testing
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Get backend URL from environment
 import os
