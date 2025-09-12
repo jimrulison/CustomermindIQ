@@ -1305,95 +1305,97 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                 </div>
               </div>
 
-              {/* Users Table */}
-              <div className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="bg-slate-700/50">
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">User</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Role</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Subscription</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Status</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Joined</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-700">
-                      {users.map((user) => (
-                        <tr key={user.user_id} className="hover:bg-slate-700/30">
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex items-center">
-                              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                                <span className="text-white text-sm font-medium">
-                                  {user.email.charAt(0).toUpperCase()}
-                                </span>
-                              </div>
-                              <div className="ml-3">
-                                <p className="text-white font-medium">{user.email}</p>
-                                <p className="text-slate-400 text-sm">{user.user_id}</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`px-2 py-1 rounded text-xs font-medium ${
-                              user.role === 'super_admin' ? 'bg-red-500/20 text-red-400' :
-                              user.role === 'admin' ? 'bg-yellow-500/20 text-yellow-400' :
-                              'bg-gray-500/20 text-gray-400'
-                            }`}>
-                              {user.role}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`px-2 py-1 rounded text-xs font-medium ${
-                              user.subscription_tier === 'annual' ? 'bg-green-500/20 text-green-400' :
-                              user.subscription_tier === 'monthly' ? 'bg-blue-500/20 text-blue-400' :
-                              'bg-gray-500/20 text-gray-400'
-                            }`}>
-                              {user.subscription_tier}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`px-2 py-1 rounded text-xs font-medium ${
-                              user.is_active ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
-                            }`}>
-                              {user.is_active ? 'Active' : 'Inactive'}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-slate-300 text-sm">
-                            {new Date(user.created_at).toLocaleDateString()}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex space-x-2">
-                              <button
-                                onClick={() => {
-                                  setEditingItem(user);
-                                  setModalType('user-analytics');
-                                  setShowModal(true);
-                                }}
-                                className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
-                                title="View Analytics"
-                              >
-                                <BarChart3 className="w-4 h-4" />
-                              </button>
-                              <button
-                                onClick={() => {
-                                  const reason = prompt('Enter reason for impersonation:');
-                                  if (reason) {
-                                    startImpersonation(user.user_id, reason);
-                                  }
-                                }}
-                                className="p-2 text-slate-400 hover:text-yellow-400 hover:bg-slate-600 rounded"
-                                title="Impersonate User"
-                              >
-                                <UserCheck className="w-4 h-4" />
-                              </button>
-                            </div>
-                          </td>
+              {/* Users Table - Fixed Overflow */}
+              <div className="w-full overflow-x-auto">
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 min-w-full">
+                  <div className="w-full overflow-x-auto">
+                    <table className="w-full min-w-[800px]">
+                      <thead className="bg-slate-700/50">
+                        <tr>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[200px]">User</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[100px]">Role</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[120px]">Subscription</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[80px]">Status</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[100px]">Joined</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[120px]">Actions</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody className="divide-y divide-slate-700">
+                        {users.map((user) => (
+                          <tr key={user.user_id} className="hover:bg-slate-700/30">
+                            <td className="px-4 py-4 min-w-[200px]">
+                              <div className="flex items-center">
+                                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                  <span className="text-white text-sm font-medium">
+                                    {user.email.charAt(0).toUpperCase()}
+                                  </span>
+                                </div>
+                                <div className="ml-3 min-w-0 flex-1">
+                                  <p className="text-white font-medium text-sm truncate">{user.email}</p>
+                                  <p className="text-slate-400 text-xs truncate">{user.user_id}</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-4 py-4 min-w-[100px]">
+                              <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${
+                                user.role === 'super_admin' ? 'bg-red-500/20 text-red-400' :
+                                user.role === 'admin' ? 'bg-yellow-500/20 text-yellow-400' :
+                                'bg-gray-500/20 text-gray-400'
+                              }`}>
+                                {user.role}
+                              </span>
+                            </td>
+                            <td className="px-4 py-4 min-w-[120px]">
+                              <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${
+                                user.subscription_tier === 'annual' ? 'bg-green-500/20 text-green-400' :
+                                user.subscription_tier === 'monthly' ? 'bg-blue-500/20 text-blue-400' :
+                                'bg-gray-500/20 text-gray-400'
+                              }`}>
+                                {user.subscription_tier}
+                              </span>
+                            </td>
+                            <td className="px-4 py-4 min-w-[80px]">
+                              <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${
+                                user.is_active ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                              }`}>
+                                {user.is_active ? 'Active' : 'Inactive'}
+                              </span>
+                            </td>
+                            <td className="px-4 py-4 text-slate-300 text-sm min-w-[100px]">
+                              {new Date(user.created_at).toLocaleDateString()}
+                            </td>
+                            <td className="px-4 py-4 min-w-[120px]">
+                              <div className="flex space-x-2">
+                                <button
+                                  onClick={() => {
+                                    setEditingItem(user);
+                                    setModalType('user-analytics');
+                                    setShowModal(true);
+                                  }}
+                                  className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
+                                  title="View Analytics"
+                                >
+                                  <BarChart3 className="w-4 h-4" />
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    const reason = prompt('Enter reason for impersonation:');
+                                    if (reason) {
+                                      startImpersonation(user.user_id, reason);
+                                    }
+                                  }}
+                                  className="p-2 text-slate-400 hover:text-yellow-400 hover:bg-slate-600 rounded"
+                                  title="Impersonate User"
+                                >
+                                  <UserCheck className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
