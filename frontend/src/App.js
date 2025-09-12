@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './i18n'; // Initialize i18n
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/ui/card';
@@ -43,11 +43,29 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import SignIn from './components/SignIn';
 import OverageApproval from './components/OverageApproval';
 import Header from './components/Header';
-import CustomerAnalyticsDashboard from './components/CustomerAnalyticsDashboard';
-import WebsiteAnalyticsDashboard from './components/WebsiteAnalyticsDashboard';
-import RealTimeHealthDashboard from './components/RealTimeHealthDashboard';
-import CustomerJourneyDashboard from './components/CustomerJourneyDashboard';
-import CompetitiveIntelligenceDashboard from './components/CompetitiveIntelligenceDashboard';
+
+// Lazy load heavy components for better performance
+const CustomerAnalyticsDashboard = React.lazy(() => import('./components/CustomerAnalyticsDashboard'));
+const WebsiteAnalyticsDashboard = React.lazy(() => import('./components/WebsiteAnalyticsDashboard'));
+const RealTimeHealthDashboard = React.lazy(() => import('./components/RealTimeHealthDashboard'));
+const CustomerJourneyDashboard = React.lazy(() => import('./components/CustomerJourneyDashboard'));
+const CompetitiveIntelligenceDashboard = React.lazy(() => import('./components/CompetitiveIntelligenceDashboard'));
+const AdminPortal = React.lazy(() => import('./components/AdminPortal'));
+const SalesIntelligenceDashboard = React.lazy(() => import('./components/SalesIntelligenceDashboard'));
+const MarketingROIDashboard = React.lazy(() => import('./components/MarketingROIDashboard'));
+const ProductivityIntelligenceDashboard = React.lazy(() => import('./components/ProductivityIntelligenceDashboard'));
+const UniversalIntelligenceDashboard = React.lazy(() => import('./components/UniversalIntelligenceDashboard'));
+const AffiliatePortal = React.lazy(() => import('./components/AffiliatePortal'));
+
+// Loading component for Suspense
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center h-64">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
+      <p className="text-slate-400">Loading...</p>
+    </div>
+  </div>
+);
 import CreateCampaign from './components/CreateCampaign';
 import CustomerSuccessIntelligence from './components/CustomerSuccessIntelligence';
 import ExecutiveIntelligenceDashboard from './components/ExecutiveIntelligenceDashboard';
