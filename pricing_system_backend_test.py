@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 from typing import Dict, Any
 
 # Configuration
-BACKEND_URL = "https://global-customer-iq.preview.emergentagent.com"
+BACKEND_URL = "https://customer-iq-touch.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test credentials

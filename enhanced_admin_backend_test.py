@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Any
 
 # Configuration
-BASE_URL = "https://global-customer-iq.preview.emergentagent.com"
+BASE_URL = "https://customer-iq-touch.preview.emergentagent.com"
 ADMIN_EMAIL = "admin@customermindiq.com"
 ADMIN_PASSWORD = "CustomerMindIQ2025!"
 

@@ -15,7 +15,7 @@ import time
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://global-customer-iq.preview.emergentagent.com/api"
+BACKEND_URL = "https://customer-iq-touch.preview.emergentagent.com/api"
 ADMIN_EMAIL = "admin@customermindiq.com"
 ADMIN_PASSWORD = "CustomerMindIQ2025!"
 
