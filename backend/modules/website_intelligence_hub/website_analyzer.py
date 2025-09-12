@@ -612,6 +612,62 @@ async def delete_website(website_id: str) -> Dict[str, Any]:
         print(f"❌ Traceback: {traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=f"Delete website error: {str(e)}")
 
+@analyzer_router.post("/website/{website_id}/verify")
+async def verify_website(website_id: str) -> Dict[str, Any]:
+    """Manually verify a website (change status from pending to active)"""
+    try:
+        print(f"🔍 Verifying website with ID: {website_id}")
+        
+        # Update the website status in MongoDB
+        result = await db.user_websites.update_one(
+            {"website_id": website_id},
+            {"$set": {"status": "active", "updated_at": datetime.now().isoformat()}}
+        )
+        
+        if result.modified_count > 0:
+            print(f"✅ Website verified and status updated to active")
+            return {
+                "status": "success",
+                "message": "Website verified successfully",
+                "website_id": website_id,
+                "new_status": "active"
+            }
+        else:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Website with ID {website_id} not found"
+            )
+        
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        print(f"❌ Exception in verify_website: {e}")
+        raise HTTPException(status_code=500, detail=f"Verification error: {str(e)}")
+
+@analyzer_router.post("/admin/update-all-status")
+async def update_all_website_status() -> Dict[str, Any]:
+    """Admin endpoint to update all pending websites to active status"""
+    try:
+        print("🔄 Updating all pending websites to active status")
+        
+        # Update all websites with pending_verification status to active
+        result = await db.user_websites.update_many(
+            {"status": "pending_verification"},
+            {"$set": {"status": "active", "updated_at": datetime.now().isoformat()}}
+        )
+        
+        print(f"✅ Updated {result.modified_count} websites to active status")
+        
+        return {
+            "status": "success",
+            "message": f"Updated {result.modified_count} websites to active status",
+            "updated_count": result.modified_count
+        }
+        
+    except Exception as e:
+        print(f"❌ Exception in update_all_website_status: {e}")
+        raise HTTPException(status_code=500, detail=f"Update error: {str(e)}")
+
 @analyzer_router.post("/update-all")
 async def update_all_websites() -> Dict[str, Any]:
     """Update analysis for all user's websites"""
