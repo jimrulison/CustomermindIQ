@@ -644,177 +644,129 @@ const WebsiteIntelligenceHub = () => {
           {/* Websites Grid */}
           {(dashboardData?.dashboard?.user_websites || []).length === 0 ? (
             // Empty State
-            <div className="col-span-full">
-              <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700 border-dashed">
-                <CardContent className="flex flex-col items-center justify-center py-16">
-                  <Globe className="w-16 h-16 text-slate-500 mb-4" />
-                  <h3 className="text-xl font-semibold text-white mb-2">No Websites Added Yet</h3>
-                  <p className="text-slate-400 text-center mb-6 max-w-md">
-                    Get started by adding your first website to monitor its performance, SEO, and analytics.
-                  </p>
-                  <Button 
-                    onClick={() => setShowAddWebsite(true)}
-                    className="bg-green-600 hover:bg-green-700"
-                  >
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add Your First Website
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          ) : (
-            // Websites Grid
-            <>
-              {(dashboardData?.dashboard?.user_websites || []).map((website, index) => (
-              <Card key={website.website_id || index} className="bg-slate-800/50 backdrop-blur-xl border-slate-700 hover:border-slate-600 transition-all">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-white text-lg">{website.website_name}</CardTitle>
-                    <div className="flex items-center space-x-2">
-                      <Badge className={`${
-                        website.status === 'active' ? 'bg-green-500/20 text-green-400' : 
-                        'bg-red-500/20 text-red-400'
-                      }`}>
-                        {website.status}
-                      </Badge>
-                      <button
-                        onClick={() => handleDeleteWebsite(website)}
-                        className="p-1 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded transition-colors"
-                        title="Delete website"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                  <CardDescription className="text-slate-400 flex items-center">
-                    <ExternalLink className="w-4 h-4 mr-1" />
-                    {website.domain}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {/* Health Score */}
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm text-slate-300">Health Score</span>
-                        <span className={`text-sm font-medium ${getHealthColor(website.health_score)}`}>
-                          {website.health_score?.toFixed(1)}%
-                        </span>
-                      </div>
-                      <Progress value={website.health_score} className="h-2" />
-                    </div>
-
-                    {/* Metrics Grid - Now Clickable */}
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <button
-                        onClick={() => {
-                          setSelectedWebsite(website);
-                          setDetailView('seo');
-                          setShowWebsiteDetails(true);
-                        }}
-                        className="text-center p-2 bg-slate-700/30 rounded hover:bg-slate-600/30 transition-colors cursor-pointer"
-                        title="Click to view SEO details"
-                      >
-                        <div className="text-blue-400 font-semibold">{website.seo_score?.toFixed(1)}</div>
-                        <div className="text-slate-400 text-xs">SEO Score</div>
-                      </button>
-                      <button
-                        onClick={() => {
-                          setSelectedWebsite(website);
-                          setDetailView('performance');
-                          setShowWebsiteDetails(true);
-                        }}
-                        className="text-center p-2 bg-slate-700/30 rounded hover:bg-slate-600/30 transition-colors cursor-pointer"
-                        title="Click to view performance details"
-                      >
-                        <div className="text-green-400 font-semibold">{website.performance_score?.toFixed(1)}</div>
-                        <div className="text-slate-400 text-xs">Performance</div>
-                      </button>
-                    </div>
-
-                    {/* Statistics */}
-                    <div className="grid grid-cols-2 gap-3 text-xs">
-                      <div>
-                        <div className="text-slate-300">Monthly Visitors</div>
-                        <div className="text-white font-medium">
-                          {website.monthly_visitors?.toLocaleString() || 0}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-slate-300">Conversion Rate</div>
-                        <div className="text-white font-medium">{website.conversion_rate || 0}%</div>
-                      </div>
-                    </div>
-
-                    {/* Issues & Opportunities - Now Clickable */}
-                    <div className="flex items-center justify-between text-xs">
-                      <button
-                        onClick={() => {
-                          setSelectedWebsite(website);
-                          setDetailView('issues');
-                          setShowWebsiteDetails(true);
-                        }}
-                        className="flex items-center text-red-400 hover:text-red-300 hover:bg-red-500/10 px-2 py-1 rounded transition-colors cursor-pointer"
-                        title="Click to view detailed issues"
-                      >
-                        <AlertTriangle className="w-3 h-3 mr-1" />
-                        {website.issues_count || 0} Issues
-                      </button>
-                      <button
-                        onClick={() => {
-                          setSelectedWebsite(website);
-                          setDetailView('opportunities');
-                          setShowWebsiteDetails(true);
-                        }}
-                        className="flex items-center text-green-400 hover:text-green-300 hover:bg-green-500/10 px-2 py-1 rounded transition-colors cursor-pointer"
-                        title="Click to view detailed opportunities"
-                      >
-                        <Lightbulb className="w-3 h-3 mr-1" />
-                        {website.opportunities_count || 0} Opportunities
-                      </button>
-                    </div>
-
-                    {/* Connected Services */}
-                    <div>
-                      <div className="text-xs text-slate-400 mb-1">Connected Services</div>
-                      <div className="flex flex-wrap gap-1">
-                        {(website.connected_services || []).map((service, idx) => (
-                          <Badge key={idx} variant="outline" className="text-xs text-slate-400 border-slate-600">
-                            {service}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Last Updated */}
-                    <div className="text-xs text-slate-500 flex items-center">
-                      <Clock className="w-3 h-3 mr-1" />
-                      Last updated: {website.last_analyzed ? new Date(website.last_analyzed).toLocaleDateString() : 'Never'}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Empty State */}
-          {(!dashboardData?.dashboard?.user_websites?.length) && (
-            <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700">
+            <Card className="bg-slate-800/50 backdrop-blur-xl border-slate-700 border-dashed">
               <CardContent className="flex flex-col items-center justify-center py-16">
-                <Globe className="w-16 h-16 text-slate-600 mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">No Websites Added</h3>
+                <Globe className="w-16 h-16 text-slate-500 mb-4" />
+                <h3 className="text-xl font-semibold text-white mb-2">No Websites Added Yet</h3>
                 <p className="text-slate-400 text-center mb-6 max-w-md">
-                  Get started by adding your first website to monitor and analyze its performance, SEO, and technical health.
+                  Get started by adding your first website to monitor its performance, SEO, and analytics.
                 </p>
                 <Button 
                   onClick={() => setShowAddWebsite(true)}
-                  className="bg-blue-600 hover:bg-blue-700"
+                  className="bg-green-600 hover:bg-green-700"
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Your First Website
                 </Button>
               </CardContent>
             </Card>
+          ) : (
+            // Websites Grid
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {(dashboardData?.dashboard?.user_websites || []).map((website, index) => (
+                <Card key={website.website_id || index} className="bg-slate-800/50 backdrop-blur-xl border-slate-700 hover:border-slate-600 transition-all">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-white text-lg">{website.website_name}</CardTitle>
+                      <div className="flex items-center space-x-2">
+                        <Badge className={`${website.status === 'active' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                          {website.status || 'unknown'}
+                        </Badge>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDeleteWebsite(website)}
+                          className="text-red-400 hover:text-red-300 hover:bg-red-500/10 p-1 h-8 w-8"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                    <CardDescription className="text-slate-400 flex items-center">
+                      <ExternalLink className="w-4 h-4 mr-1" />
+                      {website.domain}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {/* Health Score */}
+                      <div>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm text-slate-300">Health Score</span>
+                          <span className={`text-sm font-medium ${getHealthColor(website.health_score || 0)}`}>
+                            {website.health_score?.toFixed(1) || '0.0'}%
+                          </span>
+                        </div>
+                        <Progress 
+                          value={website.health_score || 0} 
+                          className="h-2 bg-slate-700"
+                        />
+                      </div>
+          
+                      {/* Metrics Grid */}
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div className="space-y-1">
+                          <div className="text-slate-400">SEO Score</div>
+                          <div className={`font-medium ${getHealthColor(website.seo_score || 0)}`}>
+                            {website.seo_score?.toFixed(1) || '0.0'}
+                          </div>
+                        </div>
+                        <div className="space-y-1">
+                          <div className="text-slate-400">Performance</div>
+                          <div className={`font-medium ${getHealthColor(website.performance_score || 0)}`}>
+                            {website.performance_score?.toFixed(1) || '0.0'}
+                          </div>
+                        </div>
+                      </div>
+          
+                      {/* Issues and Opportunities */}
+                      <div className="grid grid-cols-2 gap-2">
+                        <button
+                          onClick={() => handleShowDetails(website, 'issues')}
+                          className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg border border-red-500/20 hover:border-red-500/30 transition-all group"
+                        >
+                          <div className="flex items-center justify-center space-x-1">
+                            <AlertTriangle className="w-4 h-4 text-red-400 group-hover:text-red-300" />
+                            <span className="text-sm text-red-400 group-hover:text-red-300">
+                              {website.issues_count || 0} Issues
+                            </span>
+                          </div>
+                        </button>
+                        <button
+                          onClick={() => handleShowDetails(website, 'opportunities')}
+                          className="p-2 bg-green-500/10 hover:bg-green-500/20 rounded-lg border border-green-500/20 hover:border-green-500/30 transition-all group"
+                        >
+                          <div className="flex items-center justify-center space-x-1">
+                            <Lightbulb className="w-4 h-4 text-green-400 group-hover:text-green-300" />
+                            <span className="text-sm text-green-400 group-hover:text-green-300">
+                              {website.opportunities_count || 0} Opportunities
+                            </span>
+                          </div>
+                        </button>
+                      </div>
+          
+                      {/* Additional Metrics */}
+                      <div className="pt-2 border-t border-slate-700/50">
+                        <div className="grid grid-cols-2 gap-4 text-xs text-slate-400">
+                          <div>
+                            <span>Monthly Visitors</span>
+                            <div className="text-white font-medium">{(website.monthly_visitors || 0).toLocaleString()}</div>
+                          </div>
+                          <div>
+                            <span>Conversion Rate</span>
+                            <div className="text-white font-medium">{website.conversion_rate || 0}%</div>
+                          </div>
+                        </div>
+                        <div className="text-xs text-slate-500 flex items-center mt-2">
+                          <Clock className="w-3 h-3 mr-1" />
+                          Last updated: {website.last_analyzed ? new Date(website.last_analyzed).toLocaleDateString() : 'Never'}
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           )}
         </TabsContent>
 
