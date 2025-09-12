@@ -147,10 +147,16 @@ const WebsiteIntelligenceHub = () => {
         current_websites: dashboardData?.dashboard?.websites_overview?.total_websites || 0
       };
 
+      console.log('Adding website with data:', websiteData);
+      console.log('Auth headers:', getAuthHeaders());
+      console.log('API URL:', `${API_BASE_URL}/api/website-intelligence/website/add`);
+
       const response = await axios.post(`${API_BASE_URL}/api/website-intelligence/website/add`, websiteData, {
         headers: getAuthHeaders()
       });
-      console.log('Website added:', response.data);
+      
+      console.log('Website added successfully:', response.data);
+      alert('Website added successfully!');
       
       // Reset form and close dialog
       setNewWebsite({ domain: '', name: '', type: 'E-commerce' });
