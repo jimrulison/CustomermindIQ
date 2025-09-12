@@ -620,6 +620,10 @@ Powered by AI Intelligence Systems`;
             <Book className="w-4 h-4 mr-2" />
             Manual
           </TabsTrigger>
+          <TabsTrigger value="starter-steps" className="flex items-center">
+            <Target className="w-4 h-4 mr-2" />
+            Starter Steps
+          </TabsTrigger>
           <TabsTrigger value="educational" className="flex items-center">
             <Lightbulb className="w-4 h-4 mr-2" />
             Educational
