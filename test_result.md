@@ -14,7 +14,7 @@
 # Main and testing agents must follow this exact format to maintain testing data. 
 # The testing data must be entered in yaml format Below is the data structure:
 # 
-user_problem_statement: "Build an affiliate tracking system with the attached code - comprehensive affiliate program with registration, dashboard, tracking, commission calculation, and payment processing. Phase 1 implementation."
+user_problem_statement: "Training Module - Starter Steps Integration: Verify and fix the 'Starter Steps for Each Level of Experience' content integration in the Training module. Previous AI had added the content but verification showed runtime errors preventing the module from loading."
 
 ## backend:
 ##   - task: "Task name"
