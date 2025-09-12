@@ -1843,7 +1843,7 @@ const AdminPortalEnhanced = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-700">
-                      {highRefundAffiliates.length === 0 ? (
+                      {!highRefundAffiliates || highRefundAffiliates.length === 0 ? (
                         <tr>
                           <td colSpan="6" className="px-6 py-8 text-center">
                             <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-4" />
