@@ -93,11 +93,11 @@ class WebsiteIntelligenceHubTester:
             headers = self.get_headers()
             
             if method.upper() == "GET":
-                response = requests.get(url, headers=headers, timeout=30)
+                response = requests.get(url, headers=headers, timeout=30, verify=False)
             elif method.upper() == "POST":
-                response = requests.post(url, json=data, headers=headers, timeout=30)
+                response = requests.post(url, json=data, headers=headers, timeout=30, verify=False)
             elif method.upper() == "DELETE":
-                response = requests.delete(url, headers=headers, timeout=30)
+                response = requests.delete(url, headers=headers, timeout=30, verify=False)
             else:
                 raise ValueError(f"Unsupported method: {method}")
             
