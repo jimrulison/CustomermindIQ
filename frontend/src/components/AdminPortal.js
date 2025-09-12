@@ -1502,7 +1502,7 @@ const AdminPortalEnhanced = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-700">
-                      {supportTickets.length === 0 ? (
+                      {!supportTickets || supportTickets.length === 0 ? (
                         <tr>
                           <td colSpan="8" className="px-6 py-8 text-center">
                             <Headphones className="w-12 h-12 text-slate-600 mx-auto mb-4" />
