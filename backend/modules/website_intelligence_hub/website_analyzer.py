@@ -481,7 +481,14 @@ async def add_website(website_data: Dict[str, Any]) -> Dict[str, Any]:
         
         return new_website
         
+    except HTTPException as he:
+        print(f"❌ HTTPException in add_website: {he}")
+        raise he
     except Exception as e:
+        print(f"❌ Exception in add_website: {e}")
+        print(f"❌ Exception type: {type(e)}")
+        import traceback
+        print(f"❌ Traceback: {traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=f"Add website error: {str(e)}")
 
 @analyzer_router.post("/website/{website_id}/analyze")
