@@ -722,7 +722,11 @@ const WebsiteIntelligenceHub = () => {
                       {/* Issues and Opportunities */}
                       <div className="grid grid-cols-2 gap-2">
                         <button
-                          onClick={() => handleShowDetails(website, 'issues')}
+                          onClick={() => {
+                            setSelectedWebsite(website);
+                            setDetailView('issues');
+                            setShowWebsiteDetails(true);
+                          }}
                           className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg border border-red-500/20 hover:border-red-500/30 transition-all group"
                         >
                           <div className="flex items-center justify-center space-x-1">
@@ -733,7 +737,11 @@ const WebsiteIntelligenceHub = () => {
                           </div>
                         </button>
                         <button
-                          onClick={() => handleShowDetails(website, 'opportunities')}
+                          onClick={() => {
+                            setSelectedWebsite(website);
+                            setDetailView('opportunities');
+                            setShowWebsiteDetails(true);
+                          }}
                           className="p-2 bg-green-500/10 hover:bg-green-500/20 rounded-lg border border-green-500/20 hover:border-green-500/30 transition-all group"
                         >
                           <div className="flex items-center justify-center space-x-1">
