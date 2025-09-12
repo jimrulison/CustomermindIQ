@@ -1590,16 +1590,18 @@ ${details.updateFrequency}
           </div>
         )}
         
-        {currentPage === 'customer-analytics-dashboard' && (
-          <CustomerAnalyticsDashboard 
-            dashboardData={analytics}
-            customerData={{ dashboard_data: { total_customers: customers.length } }}
-            marketingData={{ leadScoringData, campaigns_count: campaigns.length }}
-            revenueAnalyticsData={{ revenueForecastingData, roi: 3.4 }}
-            advancedFeaturesData={advancedDashboard}
-            onNavigate={handleNavigate}
-          />
-        )}
+        <Suspense fallback={<LoadingSpinner />}>
+          {currentPage === 'customer-analytics-dashboard' && (
+            <CustomerAnalyticsDashboard 
+              dashboardData={analytics}
+              customerData={{ dashboard_data: { total_customers: customers.length } }}
+              marketingData={{ leadScoringData, campaigns_count: campaigns.length }}
+              revenueAnalyticsData={{ revenueForecastingData, roi: 3.4 }}
+              advancedFeaturesData={advancedDashboard}
+              onNavigate={handleNavigate}
+            />
+          )}
+        </Suspense>
         
         {currentPage === 'real-time-health' && (
           <RealTimeHealthDashboard 
