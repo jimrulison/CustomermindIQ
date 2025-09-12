@@ -66,30 +66,30 @@ const LoadingSpinner = () => (
     </div>
   </div>
 );
-import CreateCampaign from './components/CreateCampaign';
-import CustomerSuccessIntelligence from './components/CustomerSuccessIntelligence';
-import ExecutiveIntelligenceDashboard from './components/ExecutiveIntelligenceDashboard';
-import GrowthAccelerationEngine from './components/GrowthAccelerationEngine';
-import AdminPortal from './components/AdminPortal';
-import GrowthIntelligenceSuite from './components/GrowthIntelligenceSuite';
-import ProductIntelligenceHub from './components/ProductIntelligenceHub';
-import IntegrationDataHub from './components/IntegrationDataHub';
-import ComplianceGovernanceSuite from './components/ComplianceGovernanceSuite';
-import AICommandCenter from './components/AICommandCenter';
-import WebsiteIntelligenceHub from './components/WebsiteIntelligenceHub';
-import Training from './components/Training';
-import Support from './components/Support';
-import KnowledgeBase from './components/KnowledgeBase';
-import SubscriptionManager from './components/SubscriptionManager';
-import LiveChatWidget from './components/LiveChatWidget';
-import PublicTrainingPage from './components/PublicTrainingPage';
-import AIBusinessInsights from './components/AIBusinessInsights';
-import ProductivityIntelligence from './components/ProductivityIntelligence';
-import AffiliatePortal from './components/AffiliatePortal';
-import AffiliateRegistration from './components/AffiliateRegistration';
-import AffiliateAuth from './components/AffiliateAuth';
-import LegalDocuments from './components/LegalDocuments';
-import Footer from './components/Footer';
+
+// Lazy load all heavy components for better performance  
+const CreateCampaign = React.lazy(() => import('./components/CreateCampaign'));
+const CustomerSuccessIntelligence = React.lazy(() => import('./components/CustomerSuccessIntelligence'));
+const ExecutiveIntelligenceDashboard = React.lazy(() => import('./components/ExecutiveIntelligenceDashboard'));
+const GrowthAccelerationEngine = React.lazy(() => import('./components/GrowthAccelerationEngine'));
+const GrowthIntelligenceSuite = React.lazy(() => import('./components/GrowthIntelligenceSuite'));
+const ProductIntelligenceHub = React.lazy(() => import('./components/ProductIntelligenceHub'));
+const IntegrationDataHub = React.lazy(() => import('./components/IntegrationDataHub'));
+const ComplianceGovernanceSuite = React.lazy(() => import('./components/ComplianceGovernanceSuite'));
+const AICommandCenter = React.lazy(() => import('./components/AICommandCenter'));
+const WebsiteIntelligenceHub = React.lazy(() => import('./components/WebsiteIntelligenceHub'));
+const Training = React.lazy(() => import('./components/Training'));
+const Support = React.lazy(() => import('./components/Support'));
+const KnowledgeBase = React.lazy(() => import('./components/KnowledgeBase'));
+const SubscriptionManager = React.lazy(() => import('./components/SubscriptionManager'));
+const LiveChatWidget = React.lazy(() => import('./components/LiveChatWidget'));
+const PublicTrainingPage = React.lazy(() => import('./components/PublicTrainingPage'));
+const AIBusinessInsights = React.lazy(() => import('./components/AIBusinessInsights'));
+const ProductivityIntelligence = React.lazy(() => import('./components/ProductivityIntelligence'));
+const AffiliateRegistration = React.lazy(() => import('./components/AffiliateRegistration'));
+const AffiliateAuth = React.lazy(() => import('./components/AffiliateAuth'));
+const LegalDocuments = React.lazy(() => import('./components/LegalDocuments'));
+const Footer = React.lazy(() => import('./components/Footer'));
 import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
