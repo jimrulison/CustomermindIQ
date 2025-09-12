@@ -9,6 +9,7 @@ from enum import Enum
 import os
 import uuid
 import asyncio
+import secrets
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
 from emergentintegrations.llm.chat import LlmChat, UserMessage
