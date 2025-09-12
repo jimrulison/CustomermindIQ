@@ -225,12 +225,12 @@ const WebsiteIntelligenceHub = () => {
     try {
       console.log('Deleting website:', website);
       
-      // Add to deleted websites list to persist the deletion
-      setDeletedWebsites(prev => [...prev, {
-        website_id: website.website_id,
-        domain: website.domain,
-        website_name: website.website_name
-      }]);
+      // Call backend delete endpoint
+      const response = await axios.delete(`${API_BASE_URL}/api/website-intelligence/website/${website.website_id}`, {
+        headers: getAuthHeaders()
+      });
+      
+      console.log('Backend delete response:', response.data);
       
       // Remove from current state immediately
       if (dashboardData && dashboardData.dashboard && dashboardData.dashboard.user_websites) {
@@ -254,18 +254,31 @@ const WebsiteIntelligenceHub = () => {
           }
         });
         
-        alert(`Website "${website.website_name}" has been removed from your account.`);
-        console.log('Website removed and added to deleted list');
+        alert(`Website "${website.website_name}" has been successfully deleted from your account.`);
+        console.log('Website deleted successfully from backend and frontend state updated');
       }
-      
-      // TODO: When backend delete endpoint is implemented, add API call here:
-      // await axios.delete(`${API_BASE_URL}/api/website-intelligence/website/${website.website_id}`, {
-      //   headers: getAuthHeaders()
-      // });
       
     } catch (error) {
       console.error('Error deleting website:', error);
-      alert('Error deleting website. Please try again.');
+      
+      if (error.response?.status === 403) {
+        alert('Cannot delete demo websites. Only user-added websites can be deleted.');
+      } else if (error.response?.status === 404) {
+        alert('Website not found. It may have been already deleted.');
+        // Still remove from frontend state if it exists
+        loadAllData();
+      } else if (error.response?.status === 401) {
+        alert('Authentication failed. Please log in again.');
+      } else if (error.response?.status === 500) {
+        const errorMsg = error.response?.data?.detail || 'Server error occurred.';
+        alert(`Server Error: ${errorMsg}`);
+      } else if (error.code === 'NETWORK_ERROR' || !error.response) {
+        alert('Network error: Unable to connect to server. Please check your connection.');
+      } else {
+        const statusCode = error.response?.status || 'Unknown';
+        const errorDetail = error.response?.data?.detail || error.message || 'Unknown error';
+        alert(`Error ${statusCode}: ${errorDetail}`);
+      }
     }
   };
 
