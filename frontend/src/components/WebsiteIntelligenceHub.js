@@ -72,7 +72,7 @@ const WebsiteIntelligenceHub = () => {
       
       const axiosConfig = {
         timeout: 30000,
-        headers: { 'Content-Type': 'application/json' }
+        headers: getAuthHeaders()
       };
 
       const [dashboardRes, performanceRes, seoRes, membershipRes] = await Promise.all([
