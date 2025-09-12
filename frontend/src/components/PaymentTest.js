@@ -152,39 +152,39 @@ const PaymentTest = () => {
         )}
 
         {/* Subscription Plans */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
           
           {/* Free Plan */}
-          <div className="border border-gray-200 rounded-lg p-6 bg-gray-50">
-            <div className="text-center">
-              <h3 className="text-xl font-bold mb-2">Free Tier</h3>
-              <div className="text-3xl font-bold mb-4">$0<span className="text-lg text-gray-600">/month</span></div>
-              <ul className="text-sm text-left mb-6 space-y-2">
+          <div className="border border-gray-200 rounded-lg p-4 sm:p-6 bg-gray-50 h-full flex flex-col">
+            <div className="text-center flex-1">
+              <h3 className="text-lg sm:text-xl font-bold mb-2">Free Tier</h3>
+              <div className="text-2xl sm:text-3xl font-bold mb-4">$0<span className="text-base sm:text-lg text-gray-600">/month</span></div>
+              <ul className="text-xs sm:text-sm text-left mb-6 space-y-2 flex-1">
                 <li>✅ Basic customer intelligence</li>
                 <li>✅ Up to 1,000 customer profiles</li>
                 <li>✅ 5 AI insights per month</li>
                 <li>✅ Email support</li>
                 <li>✅ Basic dashboard</li>
               </ul>
-              <button
-                onClick={() => initiatePayment('free')}
-                disabled={loading}
-                className="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 disabled:opacity-50"
-              >
-                {loading ? 'Processing...' : 'Get Free'}
-              </button>
             </div>
+            <button
+              onClick={() => initiatePayment('free')}
+              disabled={loading}
+              className="w-full bg-gray-600 text-white py-3 px-4 rounded-md hover:bg-gray-700 disabled:opacity-50 min-h-[48px] text-sm sm:text-base font-medium transition-colors"
+            >
+              {loading ? 'Processing...' : 'Get Free'}
+            </button>
           </div>
 
           {/* Professional Plan */}
-          <div className="border border-purple-200 rounded-lg p-6 bg-purple-50 relative">
-            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+          <div className="border border-purple-200 rounded-lg p-4 sm:p-6 bg-purple-50 relative h-full flex flex-col">
+            <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-medium">
               Most Popular
             </div>
-            <div className="text-center">
-              <h3 className="text-xl font-bold mb-2">Professional</h3>
-              <div className="text-3xl font-bold mb-4">$99<span className="text-lg text-gray-600">/month</span></div>
-              <ul className="text-sm text-left mb-6 space-y-2">
+            <div className="text-center flex-1 mt-2">
+              <h3 className="text-lg sm:text-xl font-bold mb-2">Professional</h3>
+              <div className="text-2xl sm:text-3xl font-bold mb-4">$99<span className="text-base sm:text-lg text-gray-600">/month</span></div>
+              <ul className="text-xs sm:text-sm text-left mb-6 space-y-2 flex-1">
                 <li>✅ Full customer intelligence suite</li>
                 <li>✅ Up to 50,000 customer profiles</li>
                 <li>✅ Unlimited AI insights</li>
@@ -193,22 +193,22 @@ const PaymentTest = () => {
                 <li>✅ Website intelligence</li>
                 <li>✅ Priority support</li>
               </ul>
-              <button
-                onClick={() => initiatePayment('professional')}
-                disabled={loading}
-                className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 disabled:opacity-50"
-              >
-                {loading ? 'Processing...' : 'Upgrade to Professional'}
-              </button>
             </div>
+            <button
+              onClick={() => initiatePayment('professional')}
+              disabled={loading}
+              className="w-full bg-purple-600 text-white py-3 px-4 rounded-md hover:bg-purple-700 disabled:opacity-50 min-h-[48px] text-sm sm:text-base font-medium transition-colors"
+            >
+              {loading ? 'Processing...' : 'Upgrade to Professional'}
+            </button>
           </div>
 
           {/* Enterprise Plan */}
-          <div className="border border-yellow-200 rounded-lg p-6 bg-yellow-50">
-            <div className="text-center">
-              <h3 className="text-xl font-bold mb-2">Enterprise</h3>
-              <div className="text-3xl font-bold mb-4">$299<span className="text-lg text-gray-600">/month</span></div>
-              <ul className="text-sm text-left mb-6 space-y-2">
+          <div className="border border-yellow-200 rounded-lg p-4 sm:p-6 bg-yellow-50 h-full flex flex-col md:col-span-2 lg:col-span-1">
+            <div className="text-center flex-1">
+              <h3 className="text-lg sm:text-xl font-bold mb-2">Enterprise</h3>
+              <div className="text-2xl sm:text-3xl font-bold mb-4">$299<span className="text-base sm:text-lg text-gray-600">/month</span></div>
+              <ul className="text-xs sm:text-sm text-left mb-6 space-y-2 flex-1">
                 <li>✅ Everything in Professional</li>
                 <li>✅ Unlimited customer profiles</li>
                 <li>✅ White-label options</li>
@@ -217,14 +217,14 @@ const PaymentTest = () => {
                 <li>✅ Phone support</li>
                 <li>✅ SLA guarantees</li>
               </ul>
-              <button
-                onClick={() => initiatePayment('enterprise')}
-                disabled={loading}
-                className="w-full bg-yellow-600 text-white py-2 px-4 rounded-md hover:bg-yellow-700 disabled:opacity-50"
-              >
-                {loading ? 'Processing...' : 'Get Enterprise'}
-              </button>
             </div>
+            <button
+              onClick={() => initiatePayment('enterprise')}
+              disabled={loading}
+              className="w-full bg-yellow-600 text-white py-3 px-4 rounded-md hover:bg-yellow-700 disabled:opacity-50 min-h-[48px] text-sm sm:text-base font-medium transition-colors"
+            >
+              {loading ? 'Processing...' : 'Get Enterprise'}
+            </button>
           </div>
         </div>
 
