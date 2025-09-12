@@ -1239,88 +1239,62 @@ const WebsiteIntelligenceHub = () => {
                   <div className="flex items-center justify-between">
                     <h4 className="text-lg font-semibold text-white">Growth Opportunities</h4>
                     <Badge className="bg-green-500/20 text-green-400">
-                      {selectedWebsite.opportunities_count || 0} Opportunities
+                      {selectedWebsite?.opportunities_count || 0} Opportunities
                     </Badge>
                   </div>
                   
                   <div className="space-y-4">
-                    <div className="bg-slate-700/30 rounded-lg p-4">
-                      <div className="flex items-start space-x-3">
-                        <Lightbulb className="w-5 h-5 text-green-400 mt-0.5" />
-                        <div>
-                          <h5 className="font-medium text-white">Add Schema Markup</h5>
-                          <p className="text-slate-400 text-sm mt-1">
-                            Implementing structured data could improve your search result appearance and increase click-through rates by 15-20%.
-                          </p>
-                          <div className="mt-2">
-                            <span className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded">High Impact</span>
+                    {selectedWebsite?.detailed_opportunities?.length > 0 ? (
+                      selectedWebsite.detailed_opportunities.map((opportunity, index) => (
+                        <div key={opportunity.opportunity_id || index} className="bg-slate-700/30 rounded-lg p-4">
+                          <div className="flex items-start space-x-3">
+                            <Lightbulb className={`w-5 h-5 mt-0.5 ${
+                              opportunity.priority === 'High' ? 'text-green-400' :
+                              opportunity.priority === 'Medium' ? 'text-blue-400' : 'text-purple-400'
+                            }`} />
+                            <div className="flex-1">
+                              <div className="flex items-start justify-between">
+                                <h5 className="font-medium text-white">{opportunity.title}</h5>
+                                <span className={`text-xs px-2 py-1 rounded ${
+                                  opportunity.priority === 'High' ? 'bg-green-500/20 text-green-400' :
+                                  opportunity.priority === 'Medium' ? 'bg-blue-500/20 text-blue-400' : 'bg-purple-500/20 text-purple-400'
+                                }`}>
+                                  {opportunity.priority} Priority
+                                </span>
+                              </div>
+                              
+                              <p className="text-slate-400 text-sm mt-2">{opportunity.description}</p>
+                              
+                              <div className="mt-3 grid grid-cols-2 gap-3 text-xs">
+                                <div className="bg-slate-800/50 p-2 rounded">
+                                  <span className="text-slate-400">Potential Impact:</span>
+                                  <div className="text-white font-medium">{opportunity.potential_impact}</div>
+                                </div>
+                                <div className="bg-slate-800/50 p-2 rounded">
+                                  <span className="text-slate-400">Estimated ROI:</span>
+                                  <div className="text-green-400 font-medium">{opportunity.roi_estimate}</div>
+                                </div>
+                              </div>
+                              
+                              <div className="mt-3 p-3 bg-slate-800/50 rounded border-l-2 border-green-400">
+                                <h6 className="text-xs font-medium text-green-400 mb-1">Implementation:</h6>
+                                <p className="text-xs text-slate-300">{opportunity.implementation}</p>
+                                <div className="flex justify-between items-center mt-2">
+                                  <span className="text-xs text-slate-400">Category: {opportunity.category}</span>
+                                  <span className="text-xs text-slate-400">Effort: {opportunity.effort}</span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
+                      ))
+                    ) : (
+                      <div className="text-center py-8">
+                        <Lightbulb className="w-12 h-12 text-yellow-400 mx-auto mb-3" />
+                        <h5 className="text-lg font-medium text-white mb-2">No Opportunities Identified</h5>
+                        <p className="text-slate-400">Your website is well optimized. New opportunities may appear after the next analysis.</p>
                       </div>
-                    </div>
-
-                    <div className="bg-slate-700/30 rounded-lg p-4">
-                      <div className="flex items-start space-x-3">
-                        <Lightbulb className="w-5 h-5 text-blue-400 mt-0.5" />
-                        <div>
-                          <h5 className="font-medium text-white">Mobile Optimization</h5>
-                          <p className="text-slate-400 text-sm mt-1">
-                            Your mobile page speed score is 65. Optimizing for mobile could increase conversions by 10-12%.
-                          </p>
-                          <div className="mt-2">
-                            <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Medium Impact</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-slate-700/30 rounded-lg p-4">
-                      <div className="flex items-start space-x-3">
-                        <Lightbulb className="w-5 h-5 text-purple-400 mt-0.5" />
-                        <div>
-                          <h5 className="font-medium text-white">Content Expansion</h5>
-                          <p className="text-slate-400 text-sm mt-1">
-                            Adding blog content targeting 5 identified keywords could drive 25% more organic traffic.
-                          </p>
-                          <div className="mt-2">
-                            <span className="text-xs bg-purple-500/20 text-purple-400 px-2 py-1 rounded">Long-term</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-slate-700/30 rounded-lg p-4">
-                      <div className="flex items-start space-x-3">
-                        <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5" />
-                        <div>
-                          <h5 className="font-medium text-white">Social Media Integration</h5>
-                          <p className="text-slate-400 text-sm mt-1">
-                            Adding social sharing buttons and Open Graph tags could increase referral traffic by 8-10%.
-                          </p>
-                          <div className="mt-2">
-                            <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">Quick Win</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t border-slate-700">
-                    <h5 className="font-medium text-white mb-2">Priority Recommendations</h5>
-                    <ol className="space-y-2 text-sm text-slate-300">
-                      <li className="flex items-center space-x-3">
-                        <span className="flex-shrink-0 w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs">1</span>
-                        <span>Implement schema markup for products/services (High Impact)</span>
-                      </li>
-                      <li className="flex items-center space-x-3">
-                        <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs">2</span>
-                        <span>Optimize mobile performance and user experience</span>
-                      </li>
-                      <li className="flex items-center space-x-3">
-                        <span className="flex-shrink-0 w-6 h-6 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs">3</span>
-                        <span>Create content strategy for identified keyword opportunities</span>
-                      </li>
-                    </ol>
+                    )}
                   </div>
                 </div>
               )}
