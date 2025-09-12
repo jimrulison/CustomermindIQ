@@ -108,6 +108,18 @@ const WebsiteIntelligenceHub = () => {
       ]);
 
       // Set the dashboard data directly without filtering
+      console.log('✅ Dashboard API Response:', dashboardRes.data);
+      console.log('✅ User websites count:', dashboardRes.data?.dashboard?.user_websites?.length || 0);
+      
+      if (dashboardRes.data?.dashboard?.user_websites) {
+        console.log('✅ Websites in dashboard:', dashboardRes.data.dashboard.user_websites.map(w => ({
+          id: w.website_id,
+          name: w.website_name,
+          domain: w.domain,
+          type: w.website_id?.startsWith('web_') ? 'STATIC DEMO' : 'USER ADDED'
+        })));
+      }
+      
       setDashboardData(dashboardRes.data);
       setPerformanceData(performanceRes.data);
       setSeoData(seoRes.data);
