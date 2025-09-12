@@ -2154,7 +2154,7 @@ const AdminPortalEnhanced = () => {
                     <div>
                       <p className="text-slate-400 text-sm">Active Templates</p>
                       <p className="text-2xl font-bold text-green-400">
-                        {emailTemplates.filter(template => template.is_active).length}
+                        {(emailTemplates || []).filter(template => template.is_active).length}
                       </p>
                     </div>
                     <CheckCircle className="w-8 h-8 text-green-400" />
