@@ -1777,7 +1777,7 @@ const AdminPortalEnhanced = () => {
                     <div>
                       <p className="text-slate-400 text-sm">Paused Accounts</p>
                       <p className="text-2xl font-bold text-orange-400">
-                        {highRefundAffiliates.filter(a => a.account_paused).length}
+                        {(highRefundAffiliates || []).filter(a => a.account_paused).length}
                       </p>
                     </div>
                     <Lock className="w-8 h-8 text-orange-400" />
