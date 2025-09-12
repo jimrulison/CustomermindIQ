@@ -533,12 +533,21 @@ const WebsiteIntelligenceHub = () => {
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-white text-lg">{website.website_name}</CardTitle>
-                    <Badge className={`${
-                      website.status === 'active' ? 'bg-green-500/20 text-green-400' : 
-                      'bg-red-500/20 text-red-400'
-                    }`}>
-                      {website.status}
-                    </Badge>
+                    <div className="flex items-center space-x-2">
+                      <Badge className={`${
+                        website.status === 'active' ? 'bg-green-500/20 text-green-400' : 
+                        'bg-red-500/20 text-red-400'
+                      }`}>
+                        {website.status}
+                      </Badge>
+                      <button
+                        onClick={() => handleDeleteWebsite(website)}
+                        className="p-1 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded transition-colors"
+                        title="Delete website"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                   <CardDescription className="text-slate-400 flex items-center">
                     <ExternalLink className="w-4 h-4 mr-1" />
