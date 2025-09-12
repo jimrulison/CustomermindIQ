@@ -28,7 +28,7 @@ const AdminAffiliateChatManager = ({ currentAdmin }) => {
     
     const messagesEndRef = useRef(null);
     const wsRef = useRef(null);
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customer-iq-touch.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://website-intel-hub.preview.emergentagent.com';
 
     useEffect(() => {
         loadChatStats();

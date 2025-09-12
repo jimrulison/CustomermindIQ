@@ -8,7 +8,7 @@ import requests
 import json
 
 # Configuration
-BACKEND_URL = "https://customer-iq-touch.preview.emergentagent.com"
+BACKEND_URL = "https://website-intel-hub.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Admin credentials

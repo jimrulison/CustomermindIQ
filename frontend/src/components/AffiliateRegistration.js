@@ -47,7 +47,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
     const [showPassword, setShowPassword] = useState(true);
     const [showConfirmPassword, setShowConfirmPassword] = useState(true);
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customer-iq-touch.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://website-intel-hub.preview.emergentagent.com';
 
     const handleInputChange = (field, value) => {
         if (field.includes('.')) {

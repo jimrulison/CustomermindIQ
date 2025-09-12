@@ -16,7 +16,7 @@ from datetime import datetime
 import time
 
 class IssueFocusedTester:
-    def __init__(self, base_url="https://customer-iq-touch.preview.emergentagent.com"):
+    def __init__(self, base_url="https://website-intel-hub.preview.emergentagent.com"):
         self.base_url = base_url
         self.issues_found = []
         self.fixes_needed = []

@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import Dict, Any
 
 # Configuration
-BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://customer-iq-touch.preview.emergentagent.com")
+BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://website-intel-hub.preview.emergentagent.com")
 API_BASE = f"{BACKEND_URL}/api"
 
 class AffiliateAuthTester:

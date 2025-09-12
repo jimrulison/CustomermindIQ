@@ -33,7 +33,7 @@ const AffiliateAuth = () => {
         password: ''
     });
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customer-iq-touch.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://website-intel-hub.preview.emergentagent.com';
 
     const handleLogin = async (e) => {
         e.preventDefault();

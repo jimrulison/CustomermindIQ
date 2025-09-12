@@ -308,7 +308,7 @@ class AffiliateLoginTester:
             response = self.session.options(
                 f"{API_BASE}/affiliate/auth/login",
                 headers={
-                    "Origin": "https://customer-iq-touch.preview.emergentagent.com",
+                    "Origin": "https://website-intel-hub.preview.emergentagent.com",
                     "Access-Control-Request-Method": "POST",
                     "Access-Control-Request-Headers": "Content-Type"
                 },
@@ -476,7 +476,7 @@ class AffiliateLoginTester:
         if not health_ok:
             print("❌ CRITICAL: Backend is not accessible - network connectivity issue")
             print("   - Check if the backend service is running")
-            print("   - Verify the URL: https://customer-iq-touch.preview.emergentagent.com")
+            print("   - Verify the URL: https://website-intel-hub.preview.emergentagent.com")
             print("   - Check DNS resolution and firewall settings")
         
         elif not affiliate_endpoint_ok:
