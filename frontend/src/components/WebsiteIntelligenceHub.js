@@ -354,6 +354,15 @@ const WebsiteIntelligenceHub = () => {
     }
   };
 
+  const getTierColor = (tier) => {
+    const colors = {
+      'Basic': 'bg-blue-500/20 text-blue-400',
+      'Professional': 'bg-purple-500/20 text-purple-400',
+      'Enterprise': 'bg-gold-500/20 text-gold-400'
+    };
+    return colors[tier] || 'bg-gray-500/20 text-gray-400';
+  };
+
   const getHealthColor = (score) => {
     if (score >= 90) return 'text-green-400';
     if (score >= 75) return 'text-blue-400';
