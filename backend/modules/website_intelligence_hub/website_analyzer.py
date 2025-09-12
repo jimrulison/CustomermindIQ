@@ -597,14 +597,6 @@ async def delete_website(website_id: str) -> Dict[str, Any]:
                 "remaining_websites": await db.user_websites.count_documents({})
             }
         else:
-            # Check if it's one of the static websites (cannot be deleted)
-            static_website_ids = ["web_001", "web_002", "web_003"]
-            if website_id in static_website_ids:
-                raise HTTPException(
-                    status_code=403, 
-                    detail="Cannot delete demo websites. Only user-added websites can be deleted."
-                )
-            
             raise HTTPException(
                 status_code=404, 
                 detail=f"Website with ID {website_id} not found in your account"
