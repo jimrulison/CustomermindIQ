@@ -155,10 +155,10 @@ const ContactForm = () => {
               </Alert>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
                     Full Name *
                   </label>
                   <Input
@@ -168,10 +168,11 @@ const ContactForm = () => {
                     onChange={handleChange}
                     required
                     placeholder="John Doe"
+                    className="min-h-[48px] text-base"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
                     Email Address *
                   </label>
                   <Input
@@ -181,13 +182,14 @@ const ContactForm = () => {
                     onChange={handleChange}
                     required
                     placeholder="john@company.com"
+                    className="min-h-[48px] text-base"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
                     Phone Number
                   </label>
                   <Input
@@ -196,10 +198,11 @@ const ContactForm = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="+1 (555) 123-4567"
+                    className="min-h-[48px] text-base"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
                     Company Name
                   </label>
                   <Input
@@ -208,12 +211,13 @@ const ContactForm = () => {
                     value={formData.company}
                     onChange={handleChange}
                     placeholder="Your Company"
+                    className="min-h-[48px] text-base"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
                   Website
                 </label>
                 <Input
@@ -222,11 +226,12 @@ const ContactForm = () => {
                   value={formData.website}
                   onChange={handleChange}
                   placeholder="https://yourcompany.com"
+                  className="min-h-[48px] text-base"
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
                   Subject *
                 </label>
                 <Input
@@ -236,11 +241,12 @@ const ContactForm = () => {
                   onChange={handleChange}
                   required
                   placeholder="How can we help you?"
+                  className="min-h-[48px] text-base"
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
                   Message *
                 </label>
                 <Textarea
@@ -250,16 +256,17 @@ const ContactForm = () => {
                   required
                   rows={6}
                   placeholder="Tell us about your needs, challenges, or questions..."
+                  className="min-h-[120px] text-base resize-none"
                 />
               </div>
 
               <Button 
                 type="submit" 
                 disabled={loading}
-                className="w-full"
+                className="w-full min-h-[56px] text-base font-semibold"
               >
-                {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                <Send className="w-4 h-4 mr-2" />
+                {loading && <Loader2 className="w-5 h-5 mr-2 animate-spin" />}
+                <Send className="w-5 h-5 mr-2" />
                 Send Message
               </Button>
             </form>
