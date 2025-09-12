@@ -592,6 +592,36 @@ async def add_website(website_data: Dict[str, Any]) -> Dict[str, Any]:
                 "roi_estimate": f"${random.randint(500, 5000)}/month"
             })
 
+        # Generate more realistic monthly visitors based on website type and domain
+        domain = website_data.get("domain", "").lower()
+        website_type = website_data.get("type", "General")
+        
+        # More realistic monthly visitors based on website characteristics
+        if any(keyword in domain for keyword in ['store', 'shop', 'buy', 'ecommerce']):
+            # E-commerce sites typically have higher traffic
+            base_visitors = random.randint(8000, 25000)
+        elif any(keyword in domain for keyword in ['blog', 'news', 'article', 'post']):
+            # Blog/content sites can vary widely
+            base_visitors = random.randint(2000, 15000)
+        elif any(keyword in domain for keyword in ['training', 'course', 'education', 'learn']):
+            # Educational sites typically have moderate traffic
+            base_visitors = random.randint(1500, 8000)
+        elif any(keyword in domain for keyword in ['corporate', 'company', 'business', 'services']):
+            # Corporate sites typically have lower but steady traffic
+            base_visitors = random.randint(800, 5000)
+        else:
+            # General websites
+            base_visitors = random.randint(500, 3000)
+        
+        # Adjust based on domain length (shorter domains often get more traffic)
+        domain_parts = domain.split('.')
+        if len(domain_parts) > 0:
+            main_domain = domain_parts[0]
+            if len(main_domain) < 8:  # Short, memorable domains
+                base_visitors = int(base_visitors * 1.3)
+            elif len(main_domain) > 20:  # Very long domains
+                base_visitors = int(base_visitors * 0.7)
+
         new_website_data = {
             "website_id": str(uuid.uuid4()),
             "domain": website_data.get("domain", ""),
@@ -601,7 +631,7 @@ async def add_website(website_data: Dict[str, Any]) -> Dict[str, Any]:
             "health_score": round(random.uniform(75.0, 95.0), 1),
             "last_analyzed": datetime.now(),
             "connected_services": [],
-            "monthly_visitors": random.randint(1000, 15000),
+            "monthly_visitors": base_visitors,
             "conversion_rate": round(random.uniform(1.0, 6.0), 1),
             "seo_score": round(random.uniform(65.0, 90.0), 1),
             "performance_score": round(random.uniform(70.0, 95.0), 1),
