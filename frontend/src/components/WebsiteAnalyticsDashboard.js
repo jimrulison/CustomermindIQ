@@ -70,6 +70,93 @@ const WebsiteAnalyticsDashboard = ({
     }
   };
 
+  // Data source drill-down handlers for Analytics & Insights
+  const showDataSource = (section, metricType, metricName, currentValue) => {
+    const sourceDetails = {
+      // WEBSITE ANALYTICS KPI DATA SOURCES
+      'kpi_websites_monitored': {
+        title: 'Websites Monitored - Data Source',
+        description: 'Total number of websites actively tracked by the analytics platform',
+        sources: [
+          '• Website Intelligence Hub: Active website configurations and monitoring setup',
+          '• Domain Registry: Verified domain ownership and access permissions',  
+          '• Analytics SDK: Deployed tracking scripts and measurement codes',
+          '• Health Monitoring System: Continuous uptime and availability checks'
+        ],
+        methodology: 'Website count includes all configured domains with active monitoring, verified ownership, and successful data collection within last 7 days. Excludes paused or archived websites.',
+        dataPoints: 'Domain names, monitoring status, last data collection timestamp, tracking configuration',
+        updateFrequency: 'Real-time tracking with immediate updates when websites are added/removed',
+        currentValue: currentValue,
+        icon: Globe,
+        color: 'emerald'
+      },
+      'kpi_overall_health_score': {
+        title: 'Overall Health Score - Data Source',
+        description: 'Comprehensive health assessment across all monitored websites',
+        sources: [
+          '• Performance Monitoring: Core Web Vitals and page speed measurements',
+          '• SEO Analysis Engine: Technical SEO audit results and optimization scores',
+          '• Security Scanners: SSL certificates, security headers, and vulnerability checks',
+          '• Accessibility Testing: WCAG compliance and usability assessments'
+        ],
+        methodology: 'Health Score = weighted average of Performance (30%), SEO (25%), Security (25%), Accessibility (20%). Each dimension scored 0-100 using industry standards and best practices.',
+        dataPoints: 'Core Web Vitals, SEO scores, security ratings, accessibility compliance, uptime metrics',
+        updateFrequency: 'Continuous monitoring with hourly health score recalculation',
+        currentValue: currentValue,
+        icon: Activity,
+        color: 'blue'
+      },
+      'kpi_keywords_tracked': {
+        title: 'Keywords Tracked - Data Source',
+        description: 'Total number of SEO keywords monitored across all websites',
+        sources: [
+          '• SEO Intelligence Engine: Keyword research and ranking data collection',
+          '• Search Console Integration: Google Search Console API data import',
+          '• Keyword Research Tools: Third-party SEO tool integrations',
+          '• Competitor Analysis: Market positioning and keyword gap analysis'
+        ],
+        methodology: 'Keyword count includes primary target keywords, long-tail variations, and competitor keywords. Updated based on search volume trends and business priority adjustments.',
+        dataPoints: 'Keyword phrases, search volume, ranking positions, click-through rates, competition levels',
+        updateFrequency: 'Daily keyword ranking updates with weekly keyword list optimization',
+        currentValue: currentValue,
+        icon: Search,
+        color: 'purple'
+      },
+      'kpi_performance_score': {
+        title: 'Performance Score - Data Source',
+        description: 'Aggregate performance measurement across all monitored websites',
+        sources: [
+          '• Lighthouse Performance Audits: Google Lighthouse automated testing',
+          '• Real User Monitoring (RUM): Actual visitor experience data collection',
+          '• Synthetic Testing: Automated performance tests from multiple locations', 
+          '• Core Web Vitals API: Google\'s official performance metrics tracking'
+        ],
+        methodology: 'Performance Score = weighted average of LCP (40%), FID (30%), CLS (30%) normalized to 0-100 scale. Includes both lab data and field data for comprehensive assessment.',
+        dataPoints: 'Largest Contentful Paint, First Input Delay, Cumulative Layout Shift, Speed Index, Time to Interactive',
+        updateFrequency: 'Continuous real-user monitoring with daily synthetic test runs',
+        currentValue: currentValue,
+        icon: Zap,
+        color: 'orange'
+      }
+    };
+
+    const key = `${section}_${metricType}`;
+    const details = sourceDetails[key] || {
+      title: `${metricName} - Data Source`,
+      description: 'Data source information for this analytics metric',
+      sources: ['• Website analytics platform', '• Performance monitoring tools', '• SEO tracking systems', '• Business intelligence dashboards'],
+      methodology: 'Calculated using advanced analytics algorithms and real-time data processing',
+      dataPoints: 'Website metrics, user behavior data, performance indicators, business outcomes',
+      updateFrequency: 'Updated regularly based on monitoring schedules and data availability',
+      currentValue: currentValue,
+      icon: BarChart3,
+      color: 'slate'
+    };
+
+    setSelectedDataSource(details);
+    setShowDataSourceModal(true);
+  };
+
   // Website Analytics focused modules
   const websiteModules = [
     {
