@@ -1572,6 +1572,9 @@ ${details.updateFrequency}
   // Render main application with header and current page
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+      {/* Schema Markup for SEO */}
+      <SchemaMarkup />
+      
       <Header 
         currentPage={currentPage}
         onNavigate={handleNavigate}
