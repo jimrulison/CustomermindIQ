@@ -354,15 +354,18 @@ const AdminPortalEnhanced = () => {
   };
 
   const loadApiKeys = async () => {
+    console.log('🔑 Loading API Keys...');
     try {
       const response = await axios.get(`${backendUrl}/api/admin/api-keys`, {
         headers: getAuthHeaders()
       });
+      console.log('✅ API Keys loaded from API:', response.data.api_keys);
       setApiKeys(response.data.api_keys || []);
     } catch (error) {
-      console.error('Failed to load API keys:', error);
+      console.error('❌ Failed to load API keys from API:', error);
+      console.log('🎯 Using demo API keys fallback...');
       // Provide demo data when API is not available
-      setApiKeys([
+      const demoKeys = [
         {
           key_id: 'demo_1',
           name: 'Production Website Tracker',
@@ -402,7 +405,9 @@ const AdminPortalEnhanced = () => {
           created_at: '2024-01-05T00:00:00Z',
           rate_limit: 100
         }
-      ]);
+      ];
+      console.log('✅ Demo API keys set:', demoKeys);
+      setApiKeys(demoKeys);
     }
   };
 
