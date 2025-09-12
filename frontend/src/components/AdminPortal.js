@@ -3133,18 +3133,25 @@ const AdminPortalEnhanced = () => {
                 
                 <div className="flex gap-3 mt-4">
                   <button 
-                    className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
-                    onClick={handleProcessAllOverages}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
+                    onClick={handleExportUsers}
                     disabled={loading}
                   >
-                    {loading ? 'Processing...' : 'Process All Overages'}
+                    {loading ? 'Exporting...' : 'Export Users'}
                   </button>
                   <button 
-                    className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
-                    onClick={handleExportOverageReport}
+                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
+                    onClick={handleExportAnalytics}
                     disabled={loading}
                   >
-                    {loading ? 'Exporting...' : 'Export Overage Report'}
+                    {loading ? 'Exporting...' : 'Export Analytics'}
+                  </button>
+                  <button 
+                    className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
+                    onClick={handleExportRevenue}
+                    disabled={loading}
+                  >
+                    {loading ? 'Exporting...' : 'Export Revenue'}
                   </button>
                 </div>
               </div>
