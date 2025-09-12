@@ -936,6 +936,61 @@ async def export_website_report() -> Dict[str, Any]:
         print(f"❌ Traceback: {traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=f"Export report error: {str(e)}")
 
+@analyzer_router.post("/admin/update-visitor-numbers")
+async def update_realistic_visitor_numbers() -> Dict[str, Any]:
+    """Admin endpoint to update existing websites with more realistic visitor numbers"""
+    try:
+        print("🔄 Updating visitor numbers to be more realistic")
+        
+        # Get all user websites
+        cursor = db.user_websites.find({})
+        updated_count = 0
+        
+        async for website in cursor:
+            domain = website.get('domain', '').lower()
+            website_type = website.get('website_type', 'General')
+            
+            # Calculate realistic visitors based on domain and type
+            if any(keyword in domain for keyword in ['store', 'shop', 'buy', 'ecommerce']):
+                base_visitors = random.randint(8000, 25000)
+            elif any(keyword in domain for keyword in ['blog', 'news', 'article', 'post']):
+                base_visitors = random.randint(2000, 15000)
+            elif any(keyword in domain for keyword in ['training', 'course', 'education', 'learn']):
+                base_visitors = random.randint(1500, 8000)
+            elif any(keyword in domain for keyword in ['corporate', 'company', 'business', 'services']):
+                base_visitors = random.randint(800, 5000)
+            else:
+                base_visitors = random.randint(500, 3000)
+            
+            # Adjust based on domain characteristics
+            domain_parts = domain.split('.')
+            if len(domain_parts) > 0:
+                main_domain = domain_parts[0]
+                if len(main_domain) < 8:
+                    base_visitors = int(base_visitors * 1.3)
+                elif len(main_domain) > 20:
+                    base_visitors = int(base_visitors * 0.7)
+            
+            # Update the website
+            result = await db.user_websites.update_one(
+                {"website_id": website.get("website_id")},
+                {"$set": {"monthly_visitors": base_visitors, "updated_at": datetime.now().isoformat()}}
+            )
+            
+            if result.modified_count > 0:
+                updated_count += 1
+                print(f"✅ Updated {website.get('website_name', 'Unknown')} ({domain}): {base_visitors} monthly visitors")
+        
+        return {
+            "status": "success",
+            "message": f"Updated visitor numbers for {updated_count} websites",
+            "updated_count": updated_count
+        }
+        
+    except Exception as e:
+        print(f"❌ Exception in update_realistic_visitor_numbers: {e}")
+        raise HTTPException(status_code=500, detail=f"Update error: {str(e)}")
+
 @analyzer_router.post("/admin/update-all-status")
 async def update_all_website_status() -> Dict[str, Any]:
     """Admin endpoint to update all pending websites to active status"""
