@@ -837,10 +837,10 @@ async def verify_website(website_id: str) -> Dict[str, Any]:
         raise HTTPException(status_code=500, detail=f"Verification error: {str(e)}")
 
 @analyzer_router.get("/export/report")
-async def export_website_report() -> Dict[str, Any]:
-    """Export comprehensive website intelligence report"""
+async def export_website_report(format: str = "pdf") -> Dict[str, Any]:
+    """Export comprehensive website intelligence report in PDF or Word format"""
     try:
-        print("🔍 Generating website intelligence export report")
+        print(f"🔍 Generating comprehensive website intelligence export report in {format} format")
         
         # Get user websites from MongoDB
         user_websites_cursor = db.user_websites.find({})
