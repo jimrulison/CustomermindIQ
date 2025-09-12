@@ -299,6 +299,19 @@ const WebsiteIntelligenceHub = () => {
     }
   };
 
+  const handleShowDetails = (website, view) => {
+    if (view === 'keywords') {
+      // Special case for keywords: show global keywords, not specific to a website
+      setSelectedWebsite(null);
+      setDetailView('keywords');
+      setShowWebsiteDetails(true);
+    } else {
+      setSelectedWebsite(website);
+      setDetailView(view);
+      setShowWebsiteDetails(true);
+    }
+  };
+
   const getTierColor = (tier) => {
     const colors = {
       'Basic': 'bg-blue-500/20 text-blue-400',
