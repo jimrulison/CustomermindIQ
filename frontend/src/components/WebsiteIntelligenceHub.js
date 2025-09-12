@@ -103,7 +103,22 @@ const WebsiteIntelligenceHub = () => {
         })
       ]);
 
-      setDashboardData(dashboardRes.data);
+      // Filter out locally deleted websites from the backend data
+      const filteredDashboardData = {
+        ...dashboardRes.data,
+        dashboard: {
+          ...dashboardRes.data.dashboard,
+          user_websites: (dashboardRes.data.dashboard?.user_websites || []).filter(website => {
+            return !deletedWebsites.some(deleted => 
+              deleted.website_id === website.website_id ||
+              deleted.domain === website.domain ||
+              deleted.website_name === website.website_name
+            );
+          })
+        }
+      };
+
+      setDashboardData(filteredDashboardData);
       setPerformanceData(performanceRes.data);
       setSeoData(seoRes.data);
       setMembershipData(membershipRes.data);
