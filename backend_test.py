@@ -26,7 +26,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configuration - Use production URL from frontend .env
-BACKEND_URL = "https://website-intel-hub.preview.emergentagent.com"
+BACKEND_URL = "https://websiteintel-hub.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test credentials
