@@ -4384,22 +4384,387 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                     </div>
                   )}
 
-                  {/* Other Modal Types Placeholder */}
-                  {(modalType === 'user-analytics' || modalType === 'generate-codes' || modalType === 'create-banner' || 
-                    modalType === 'edit-banner' || modalType === 'create-discount' || modalType === 'edit-discount' || 
-                    modalType === 'create-cohort') && (
-                    <div className="text-center py-8">
-                      <p className="text-slate-400 mb-4">Modal content for {modalType} coming soon...</p>
-                      <button
-                        onClick={() => {
-                          setShowModal(false);
-                          setEditingItem(null);
-                          setModalType('');
-                        }}
-                        className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        Close
-                      </button>
+                  {/* User Analytics Modal */}
+                  {modalType === 'user-analytics' && editingItem && (
+                    <div className="space-y-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="bg-slate-700/50 rounded-lg p-4">
+                          <h4 className="text-sm font-medium text-slate-300 mb-2">Account Status</h4>
+                          <p className="text-lg font-bold text-white">{editingItem.is_active ? 'Active' : 'Inactive'}</p>
+                        </div>
+                        <div className="bg-slate-700/50 rounded-lg p-4">
+                          <h4 className="text-sm font-medium text-slate-300 mb-2">Subscription Tier</h4>
+                          <p className="text-lg font-bold text-blue-400">{editingItem.subscription_tier || 'Free'}</p>
+                        </div>
+                        <div className="bg-slate-700/50 rounded-lg p-4">
+                          <h4 className="text-sm font-medium text-slate-300 mb-2">Member Since</h4>
+                          <p className="text-lg font-bold text-green-400">{new Date(editingItem.created_at).toLocaleDateString()}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="border-t border-slate-700 pt-4">
+                        <h4 className="text-lg font-semibold text-white mb-4">User Details</h4>
+                        <div className="space-y-3">
+                          <div className="flex justify-between">
+                            <span className="text-slate-300">Email:</span>
+                            <span className="text-white">{editingItem.email}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-slate-300">User ID:</span>
+                            <span className="text-slate-400 font-mono text-sm">{editingItem.user_id}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-slate-300">Role:</span>
+                            <span className="text-white">{editingItem.role}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-slate-300">Last Login:</span>
+                            <span className="text-white">{editingItem.last_login ? new Date(editingItem.last_login).toLocaleDateString() : 'Never'}</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex justify-end space-x-3">
+                        <button
+                          onClick={() => {
+                            setShowModal(false);
+                            setEditingItem(null);
+                            setModalType('');
+                          }}
+                          className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700"
+                        >
+                          Close
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Generate Discount Codes Modal */}
+                  {modalType === 'generate-codes' && (
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">Number of Codes</label>
+                          <input
+                            type="number"
+                            min="1"
+                            max="1000"
+                            defaultValue="10"
+                            className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                            id="codeCount"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">Max Uses Per Code</label>
+                          <input
+                            type="number"
+                            min="1"
+                            max="100"
+                            defaultValue="1"
+                            className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                            id="maxUses"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Expires In (Days)</label>
+                        <input
+                          type="number"
+                          min="1"
+                          max="365"
+                          defaultValue="30"
+                          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                          id="expiresInDays"
+                        />
+                      </div>
+                      
+                      <div className="flex justify-end space-x-3">
+                        <button
+                          onClick={() => {
+                            setShowModal(false);
+                            setModalType('');
+                          }}
+                          className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={() => {
+                            const count = document.getElementById('codeCount').value;
+                            const maxUses = document.getElementById('maxUses').value;
+                            const expiresInDays = document.getElementById('expiresInDays').value;
+                            alert(`Generated ${count} discount codes with ${maxUses} max uses each, expiring in ${expiresInDays} days`);
+                            setShowModal(false);
+                            setModalType('');
+                          }}
+                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                        >
+                          Generate Codes
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Create Cohort Modal */}
+                  {modalType === 'create-cohort' && (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Cohort Name</label>
+                        <input
+                          type="text"
+                          placeholder="e.g., New Users March 2025"
+                          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                          id="cohortName"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Description</label>
+                        <textarea
+                          placeholder="Describe this cohort..."
+                          rows="3"
+                          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                          id="cohortDescription"
+                        ></textarea>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">Date Range From</label>
+                          <input
+                            type="date"
+                            className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                            id="cohortDateFrom"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">Date Range To</label>
+                          <input
+                            type="date"
+                            className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                            id="cohortDateTo"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div className="flex justify-end space-x-3">
+                        <button
+                          onClick={() => {
+                            setShowModal(false);
+                            setModalType('');
+                          }}
+                          className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={() => {
+                            const name = document.getElementById('cohortName').value;
+                            const description = document.getElementById('cohortDescription').value;
+                            const dateFrom = document.getElementById('cohortDateFrom').value;
+                            const dateTo = document.getElementById('cohortDateTo').value;
+                            
+                            if (name && dateFrom && dateTo) {
+                              alert(`Created cohort "${name}" for users from ${dateFrom} to ${dateTo}`);
+                              setShowModal(false);
+                              setModalType('');
+                            } else {
+                              alert('Please fill in all required fields');
+                            }
+                          }}
+                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                        >
+                          Create Cohort
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Create/Edit Banner Modal */}
+                  {(modalType === 'create-banner' || modalType === 'edit-banner') && (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Banner Title</label>
+                        <input
+                          type="text"
+                          placeholder="Enter banner title"
+                          defaultValue={editingItem?.title || ''}
+                          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                          id="bannerTitle"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Banner Message</label>
+                        <textarea
+                          placeholder="Enter banner message..."
+                          rows="3"
+                          defaultValue={editingItem?.message || ''}
+                          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                          id="bannerMessage"
+                        ></textarea>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">Banner Type</label>
+                          <select
+                            className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                            id="bannerType"
+                            defaultValue={editingItem?.type || 'info'}
+                          >
+                            <option value="info">Info</option>
+                            <option value="success">Success</option>
+                            <option value="warning">Warning</option>
+                            <option value="error">Error</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">Target Users</label>
+                          <select
+                            className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                            id="bannerTarget"
+                            defaultValue={editingItem?.target || 'all'}
+                          >
+                            <option value="all">All Users</option>
+                            <option value="free">Free Users</option>
+                            <option value="paid">Paid Users</option>
+                            <option value="admin">Admin Users</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <div className="flex justify-end space-x-3">
+                        <button
+                          onClick={() => {
+                            setShowModal(false);
+                            setEditingItem(null);
+                            setModalType('');
+                          }}
+                          className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={() => {
+                            const title = document.getElementById('bannerTitle').value;
+                            const message = document.getElementById('bannerMessage').value;
+                            const type = document.getElementById('bannerType').value;
+                            const target = document.getElementById('bannerTarget').value;
+                            
+                            if (title && message) {
+                              alert(`${modalType === 'create-banner' ? 'Created' : 'Updated'} banner "${title}" for ${target} users`);
+                              setShowModal(false);
+                              setEditingItem(null);
+                              setModalType('');
+                            } else {
+                              alert('Please fill in title and message');
+                            }
+                          }}
+                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                        >
+                          {modalType === 'create-banner' ? 'Create Banner' : 'Update Banner'}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Create/Edit Discount Modal */}
+                  {(modalType === 'create-discount' || modalType === 'edit-discount') && (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Discount Name</label>
+                        <input
+                          type="text"
+                          placeholder="e.g., Spring Sale 2025"
+                          defaultValue={editingItem?.name || ''}
+                          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                          id="discountName"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Description</label>
+                        <textarea
+                          placeholder="Describe this discount..."
+                          rows="2"
+                          defaultValue={editingItem?.description || ''}
+                          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                          id="discountDescription"
+                        ></textarea>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">Discount Type</label>
+                          <select
+                            className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                            id="discountType"
+                            defaultValue={editingItem?.discount_type || 'percentage'}
+                          >
+                            <option value="percentage">Percentage</option>
+                            <option value="fixed_amount">Fixed Amount</option>
+                            <option value="free_months">Free Months</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">Value</label>
+                          <input
+                            type="number"
+                            min="0"
+                            placeholder="e.g., 25"
+                            defaultValue={editingItem?.value || ''}
+                            className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                            id="discountValue"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">Usage Limit</label>
+                          <input
+                            type="number"
+                            min="1"
+                            placeholder="e.g., 100"
+                            defaultValue={editingItem?.usage_limit || ''}
+                            className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                            id="discountLimit"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div className="flex justify-end space-x-3">
+                        <button
+                          onClick={() => {
+                            setShowModal(false);
+                            setEditingItem(null);
+                            setModalType('');
+                          }}
+                          className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={() => {
+                            const name = document.getElementById('discountName').value;
+                            const description = document.getElementById('discountDescription').value;
+                            const type = document.getElementById('discountType').value;
+                            const value = document.getElementById('discountValue').value;
+                            const limit = document.getElementById('discountLimit').value;
+                            
+                            if (name && value) {
+                              alert(`${modalType === 'create-discount' ? 'Created' : 'Updated'} discount "${name}" with ${value}${type === 'percentage' ? '%' : type === 'fixed_amount' ? '$' : ' months'} off`);
+                              setShowModal(false);
+                              setEditingItem(null);
+                              setModalType('');
+                            } else {
+                              alert('Please fill in name and value');
+                            }
+                          }}
+                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                        >
+                          {modalType === 'create-discount' ? 'Create Discount' : 'Update Discount'}
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
