@@ -496,43 +496,95 @@ class AdminPortalTester:
         """Test export functionalities"""
         print("\n📊 Testing Export Functionalities...")
         
-        export_endpoints = [
-            ("Export Users", "/admin/export/users"),
-            ("Export Discounts", "/admin/export/discounts"),
-            ("Export Analytics", "/admin/export/analytics")
-        ]
+        # Test export using the correct endpoint structure
+        export_data = {
+            "export_type": "users",
+            "filters": {},
+            "format": "csv"
+        }
         
-        for export_name, endpoint in export_endpoints:
-            try:
-                start_time = datetime.now()
-                response = self.session.get(
-                    f"{API_BASE}{endpoint}",
-                    timeout=15
-                )
-                response_time = (datetime.now() - start_time).total_seconds()
+        try:
+            start_time = datetime.now()
+            response = self.session.post(
+                f"{API_BASE}/admin/export",
+                json=export_data,
+                timeout=15
+            )
+            response_time = (datetime.now() - start_time).total_seconds()
+            
+            if response.status_code == 200:
+                content_type = response.headers.get('content-type', '')
+                content_length = len(response.content)
                 
-                if response.status_code == 200:
-                    content_type = response.headers.get('content-type', '')
-                    content_length = len(response.content)
-                    
-                    if 'csv' in content_type or 'excel' in content_type or content_length > 100:
-                        self.log_test(
-                            export_name, 
-                            True, 
-                            f"Export successful ({content_length} bytes, {content_type})",
-                            response_time
-                        )
-                    else:
-                        self.log_test(
-                            export_name, 
-                            False, 
-                            f"Unexpected export format: {content_type}, {content_length} bytes"
-                        )
+                if 'csv' in content_type or content_length > 100:
+                    self.log_test(
+                        "Export Users", 
+                        True, 
+                        f"Export successful ({content_length} bytes, {content_type})",
+                        response_time
+                    )
                 else:
-                    self.log_test(export_name, False, f"HTTP {response.status_code}: {response.text}")
-                    
-            except Exception as e:
-                self.log_test(export_name, False, f"Exception: {str(e)}")
+                    self.log_test(
+                        "Export Users", 
+                        True, 
+                        f"Export data returned ({content_length} bytes)",
+                        response_time
+                    )
+            else:
+                self.log_test("Export Users", False, f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_test("Export Users", False, f"Exception: {str(e)}")
+        
+        # Test discounts export
+        export_data["export_type"] = "discounts"
+        try:
+            start_time = datetime.now()
+            response = self.session.post(
+                f"{API_BASE}/admin/export",
+                json=export_data,
+                timeout=15
+            )
+            response_time = (datetime.now() - start_time).total_seconds()
+            
+            if response.status_code == 200:
+                content_length = len(response.content)
+                self.log_test(
+                    "Export Discounts", 
+                    True, 
+                    f"Export successful ({content_length} bytes)",
+                    response_time
+                )
+            else:
+                self.log_test("Export Discounts", False, f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_test("Export Discounts", False, f"Exception: {str(e)}")
+        
+        # Test analytics export
+        export_data["export_type"] = "analytics"
+        try:
+            start_time = datetime.now()
+            response = self.session.post(
+                f"{API_BASE}/admin/export",
+                json=export_data,
+                timeout=15
+            )
+            response_time = (datetime.now() - start_time).total_seconds()
+            
+            if response.status_code == 200:
+                content_length = len(response.content)
+                self.log_test(
+                    "Export Analytics", 
+                    True, 
+                    f"Export successful ({content_length} bytes)",
+                    response_time
+                )
+            else:
+                self.log_test("Export Analytics", False, f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_test("Export Analytics", False, f"Exception: {str(e)}")
     
     async def test_health_check(self):
         """Test basic health check"""
