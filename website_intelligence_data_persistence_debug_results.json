@@ -1,0 +1,53 @@
+{
+  "debug_summary": {
+    "total_tests": 7,
+    "passed_tests": 0,
+    "success_rate": 0.0,
+    "test_timestamp": "2025-09-12T15:49:59.310782",
+    "critical_issue": "Data persistence debugging for user-reported issue"
+  },
+  "detailed_results": [
+    {
+      "test_name": "MongoDB Connection Test",
+      "status": "FAIL",
+      "details": "Database test endpoint failed: {'error': 'Invalid JSON response', 'text': ''}",
+      "timestamp": "2025-09-12T15:49:57.000910"
+    },
+    {
+      "test_name": "Initial Dashboard State",
+      "status": "FAIL",
+      "details": "Dashboard endpoint failed: {'error': 'Invalid JSON response', 'text': ''}",
+      "timestamp": "2025-09-12T15:49:57.054926"
+    },
+    {
+      "test_name": "Add New Website",
+      "status": "FAIL",
+      "details": "Add website failed: {'error': 'Invalid JSON response', 'text': ''}",
+      "timestamp": "2025-09-12T15:49:57.104504"
+    },
+    {
+      "test_name": "Page Refresh Simulation",
+      "status": "SKIP",
+      "details": "No website ID to test with",
+      "timestamp": "2025-09-12T15:49:57.104556"
+    },
+    {
+      "test_name": "Delete Website Test",
+      "status": "SKIP",
+      "details": "No website ID to delete",
+      "timestamp": "2025-09-12T15:49:57.104571"
+    },
+    {
+      "test_name": "Deleted Website Reappearance Check",
+      "status": "FAIL",
+      "details": "Dashboard failed: {'error': 'Invalid JSON response', 'text': ''}",
+      "timestamp": "2025-09-12T15:49:59.157619"
+    },
+    {
+      "test_name": "Multiple Website Addition",
+      "status": "FAIL",
+      "details": "Added 0/2 websites successfully",
+      "timestamp": "2025-09-12T15:49:59.263130"
+    }
+  ]
+}
