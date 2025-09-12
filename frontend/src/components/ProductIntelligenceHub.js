@@ -1065,6 +1065,212 @@ const ProductIntelligenceHub = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Data Source Modal */}
+      {showDataSourceModal && selectedDataSource && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+          <div className="bg-slate-800 rounded-xl border border-slate-700 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div className="flex items-center justify-between p-6 border-b border-slate-700">
+              <div className="flex items-center space-x-3">
+                {selectedDataSource.icon && (
+                  <div className={`p-3 rounded-lg bg-${selectedDataSource.color}-500/20 border border-${selectedDataSource.color}-500/30`}>
+                    <selectedDataSource.icon className={`w-6 h-6 text-${selectedDataSource.color}-400`} />
+                  </div>
+                )}
+                <div>
+                  <h3 className="text-xl font-semibold text-white">{selectedDataSource.title}</h3>
+                  {selectedDataSource.currentValue && (
+                    <p className="text-slate-400 text-sm">Current Value: {selectedDataSource.currentValue}</p>
+                  )}
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setShowDataSourceModal(false);
+                  setSelectedDataSource(null);
+                }}
+                className="text-slate-400 hover:text-white transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-6">
+              {/* Description */}
+              <div className="bg-slate-900/50 rounded-lg p-4 border border-slate-700">
+                <p className="text-slate-300 leading-relaxed">{selectedDataSource.description}</p>
+              </div>
+
+              {/* Feature-specific usage data */}
+              {selectedDataSource.usageData && (
+                <div className="space-y-4">
+                  <h4 className="text-lg font-semibold text-white flex items-center">
+                    <BarChart3 className="w-5 h-5 mr-2 text-blue-400" />
+                    Usage Breakdown
+                  </h4>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="bg-slate-700/30 rounded-lg p-4">
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-300">Daily Active Users</span>
+                          <span className="text-white font-semibold">{selectedDataSource.usageData.dailyActiveUsers}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-300">Adoption Rate</span>
+                          <span className="text-green-400 font-semibold">{selectedDataSource.usageData.adoptionRate}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-300">Stickiness</span>
+                          <span className="text-blue-400 font-semibold">{selectedDataSource.usageData.stickiness}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-slate-700/30 rounded-lg p-4">
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-300">Power Users</span>
+                          <span className="text-purple-400 font-semibold">{selectedDataSource.usageData.powerUsers}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-300">Avg Sessions</span>
+                          <span className="text-orange-400 font-semibold">{selectedDataSource.usageData.avgSessions}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-300">Retention Impact</span>
+                          <span className="text-cyan-400 font-semibold">{selectedDataSource.usageData.retentionImpact}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Data Sources */}
+              {selectedDataSource.sources && (
+                <div className="space-y-4">
+                  <h4 className="text-lg font-semibold text-white flex items-center">
+                    <Database className="w-5 h-5 mr-2 text-green-400" />
+                    Data Sources
+                  </h4>
+                  <div className="bg-slate-700/30 rounded-lg p-4">
+                    <div className="space-y-2">
+                      {selectedDataSource.sources.map((source, index) => (
+                        <div key={index} className="flex items-start text-sm text-slate-300">
+                          <div className="w-2 h-2 bg-green-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                          <span>{source.replace('• ', '')}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Methodology */}
+              {selectedDataSource.methodology && (
+                <div className="space-y-4">
+                  <h4 className="text-lg font-semibold text-white flex items-center">
+                    <RefreshCw className="w-5 h-5 mr-2 text-blue-400" />
+                    Methodology
+                  </h4>
+                  <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
+                    <p className="text-blue-100 text-sm leading-relaxed">{selectedDataSource.methodology}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Key Data Points */}
+              {selectedDataSource.dataPoints && (
+                <div className="space-y-4">
+                  <h4 className="text-lg font-semibold text-white flex items-center">
+                    <PieChart className="w-5 h-5 mr-2 text-yellow-400" />
+                    Key Data Points
+                  </h4>
+                  <div className="bg-slate-700/30 rounded-lg p-4">
+                    <p className="text-slate-300 text-sm">{selectedDataSource.dataPoints}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Update Frequency */}
+              {selectedDataSource.updateFrequency && (
+                <div className="space-y-4">
+                  <h4 className="text-lg font-semibold text-white flex items-center">
+                    <Clock className="w-5 h-5 mr-2 text-purple-400" />
+                    Update Frequency
+                  </h4>
+                  <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
+                    <p className="text-purple-100 text-sm">{selectedDataSource.updateFrequency}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Actionable Insights - Feature specific */}
+              {selectedDataSource.insights && (
+                <div className="space-y-4">
+                  <h4 className="text-lg font-semibold text-white flex items-center">
+                    <Brain className="w-5 h-5 mr-2 text-emerald-400" />
+                    Actionable Insights
+                  </h4>
+                  <div className="space-y-3">
+                    {selectedDataSource.insights.map((insight, index) => (
+                      <div key={index} className="bg-emerald-500/10 rounded-lg p-3 border border-emerald-500/20">
+                        <p className="text-emerald-100 text-sm flex items-start">
+                          <CheckCircle className="w-4 h-4 mr-2 mt-0.5 text-emerald-400 flex-shrink-0" />
+                          {insight}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Optimization Opportunities - Feature specific */}
+              {selectedDataSource.optimizations && (
+                <div className="space-y-4">
+                  <h4 className="text-lg font-semibold text-white flex items-center">
+                    <Zap className="w-5 h-5 mr-2 text-orange-400" />
+                    Optimization Opportunities
+                  </h4>
+                  <div className="space-y-2">
+                    {selectedDataSource.optimizations.map((opportunity, index) => (
+                      <div key={index} className="flex items-start text-sm text-slate-300">
+                        <div className="w-2 h-2 bg-orange-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                        <span>{opportunity}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* General insights for non-feature modals */}
+              {!selectedDataSource.usageData && !selectedDataSource.insights && (
+                <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg p-4 border border-blue-500/20">
+                  <div className="flex items-start">
+                    <Info className="w-5 h-5 text-blue-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <p className="text-blue-100 text-sm">
+                      This data helps understand {selectedDataSource.title?.toLowerCase().replace(' - data source', '')} trends and drives product optimization decisions.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex justify-end p-6 border-t border-slate-700">
+              <Button
+                onClick={() => {
+                  setShowDataSourceModal(false);
+                  setSelectedDataSource(null);
+                }}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                Close
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
