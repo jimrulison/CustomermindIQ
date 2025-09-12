@@ -136,7 +136,7 @@ from modules.payment_system import router as payment_router
 from modules.affiliate_system import router as affiliate_router
 
 # Import Authentication System
-from auth.auth_system import router as auth_router, create_default_admin, UserProfile, get_current_user, require_role, UserRole
+from auth.auth_system import router as auth_router, create_default_admin, UserProfile, get_current_user, require_role, UserRole, hash_password, SubscriptionTier
 
 # Import Advanced Admin System
 from modules.admin_system import router as admin_router
