@@ -1815,7 +1815,7 @@ const AdminPortalEnhanced = () => {
               {/* High Refund Affiliates Table */}
               <div className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden">
                 <div className="px-6 py-4 border-b border-slate-700">
-                  <h3 className="text-lg font-semibold text-white">High Refund Rate Affiliates (>15%)</h3>
+                  <h3 className="text-lg font-semibold text-white">High Refund Rate Affiliates (&gt;15%)</h3>
                 </div>
 
                 <div className="overflow-x-auto">
