@@ -14,6 +14,9 @@ import json
 
 analyzer_router = APIRouter()
 
+# In-memory storage for user websites (until database integration)
+user_websites_storage = []
+
 @analyzer_router.get("/dashboard")
 async def get_website_intelligence_dashboard() -> Dict[str, Any]:
     """Get comprehensive website intelligence dashboard"""
