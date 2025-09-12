@@ -240,7 +240,7 @@ class AdminPortalTester:
             
             if response.status_code == 200:
                 data = response.json()
-                cohort_count = len(data) if isinstance(data, list) else data.get('total_cohorts', 0)
+                cohort_count = len(data.get('cohorts', [])) if isinstance(data, dict) else len(data)
                 self.log_test(
                     "Get Cohorts", 
                     True, 
@@ -254,19 +254,23 @@ class AdminPortalTester:
         except Exception as e:
             self.log_test("Get Cohorts", False, f"Exception: {str(e)}")
         
-        # Test create cohort
+        # Test create cohort using correct endpoint
         try:
             cohort_data = {
                 "name": "Test Cohort",
-                "description": "Test cohort for admin portal testing",
-                "start_date": "2025-01-01",
-                "end_date": "2025-12-31"
+                "definition": {
+                    "subscription_tier": "growth",
+                    "registration_period": {
+                        "from": "2025-01-01T00:00:00",
+                        "to": "2025-12-31T23:59:59"
+                    }
+                }
             }
             
             start_time = datetime.now()
             response = self.session.post(
-                f"{API_BASE}/admin/cohorts",
-                json=cohort_data,
+                f"{API_BASE}/admin/cohorts/create",
+                params=cohort_data,
                 timeout=10
             )
             response_time = (datetime.now() - start_time).total_seconds()
