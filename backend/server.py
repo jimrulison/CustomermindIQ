@@ -182,6 +182,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Add GZip compression middleware for better performance
+app.add_middleware(GZipMiddleware, minimum_size=1000)
+
 # Static files for serving assets
 app.mount("/static", StaticFiles(directory="/app/backend/static"), name="static")
 
