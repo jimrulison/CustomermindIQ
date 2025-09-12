@@ -464,6 +464,134 @@ async def add_website(website_data: Dict[str, Any]) -> Dict[str, Any]:
             )
         
         # Generate realistic metrics for the new website
+        issues_count = random.randint(2, 12)
+        opportunities_count = random.randint(5, 15)
+        
+        # Generate detailed issues based on common website problems
+        detailed_issues = []
+        issue_templates = [
+            {
+                "title": "Missing Alt Text on Images",
+                "severity": "medium",
+                "category": "SEO",
+                "description": "Images without alt text hurt accessibility and SEO",
+                "affected_pages": ["/products", "/about", "/services"],
+                "fix_instructions": "Add descriptive alt text to all images using alt='descriptive text' attribute",
+                "impact": "Improves SEO ranking and accessibility for screen readers",
+                "effort": "Low - 1-2 hours"
+            },
+            {
+                "title": "Slow Page Load Speed",
+                "severity": "high", 
+                "category": "Performance",
+                "description": "Pages loading slower than 3 seconds",
+                "affected_pages": ["/", "/products", "/contact"],
+                "fix_instructions": "Optimize images, enable compression, use CDN, minify CSS/JS files",
+                "impact": "Reduces bounce rate, improves user experience and SEO",
+                "effort": "Medium - 4-6 hours"
+            },
+            {
+                "title": "Missing Meta Descriptions",
+                "severity": "medium",
+                "category": "SEO",
+                "description": "Pages without meta descriptions miss search result opportunities",
+                "affected_pages": ["/blog/post-1", "/blog/post-2", "/services"],
+                "fix_instructions": "Add unique 150-160 character meta descriptions to each page",
+                "impact": "Improves click-through rates from search results",
+                "effort": "Low - 2-3 hours"
+            },
+            {
+                "title": "Broken Internal Links",
+                "severity": "high",
+                "category": "Technical",
+                "description": "Internal links returning 404 errors",
+                "affected_pages": ["/old-page", "/moved-content", "/deleted-service"],
+                "fix_instructions": "Update or remove broken links, implement 301 redirects for moved content",
+                "impact": "Improves user experience and search engine crawling",
+                "effort": "Medium - 3-4 hours"
+            },
+            {
+                "title": "Mobile Usability Issues",
+                "severity": "high",
+                "category": "UX",
+                "description": "Elements too small or not mobile-friendly",
+                "affected_pages": ["/contact-form", "/pricing", "/checkout"],
+                "fix_instructions": "Increase touch target sizes, improve responsive design, test on mobile devices",
+                "impact": "Better mobile user experience and mobile SEO ranking",
+                "effort": "High - 8-12 hours"
+            }
+        ]
+        
+        # Select random issues for this website
+        selected_issues = random.sample(issue_templates, min(issues_count, len(issue_templates)))
+        for i, issue in enumerate(selected_issues):
+            detailed_issues.append({
+                **issue,
+                "issue_id": f"issue_{i+1}",
+                "detected_date": (datetime.now() - timedelta(days=random.randint(1, 30))).isoformat(),
+                "priority_score": random.randint(1, 10)
+            })
+        
+        # Generate detailed opportunities
+        detailed_opportunities = []
+        opportunity_templates = [
+            {
+                "title": "Implement Schema Markup",
+                "category": "SEO",
+                "description": "Add structured data to help search engines understand your content",
+                "potential_impact": "15-25% increase in search visibility",
+                "implementation": "Add JSON-LD schema markup for products, reviews, and business info",
+                "effort": "Medium - 6-8 hours",
+                "priority": "High"
+            },
+            {
+                "title": "Add Customer Reviews Section",
+                "category": "Conversion",
+                "description": "Customer reviews increase trust and conversion rates",
+                "potential_impact": "10-20% increase in conversions",
+                "implementation": "Integrate review system, add review widgets to product pages",
+                "effort": "High - 12-16 hours", 
+                "priority": "High"
+            },
+            {
+                "title": "Optimize for Voice Search",
+                "category": "SEO",
+                "description": "Target conversational, long-tail keywords for voice search",
+                "potential_impact": "Access to growing voice search traffic",
+                "implementation": "Create FAQ sections, optimize for question-based queries",
+                "effort": "Medium - 4-6 hours",
+                "priority": "Medium"
+            },
+            {
+                "title": "Implement Live Chat",
+                "category": "UX",
+                "description": "Real-time customer support increases satisfaction and sales",
+                "potential_impact": "5-15% increase in conversions",
+                "implementation": "Add chat widget, set up support workflows, train team",
+                "effort": "Medium - 8-10 hours",
+                "priority": "Medium"
+            },
+            {
+                "title": "Create Video Content",
+                "category": "Content",
+                "description": "Video content increases engagement and time on site",
+                "potential_impact": "Higher engagement, better SEO signals",
+                "implementation": "Create product demos, tutorials, testimonial videos",
+                "effort": "High - 16-20 hours",
+                "priority": "Medium"
+            }
+        ]
+        
+        # Select random opportunities for this website
+        selected_opportunities = random.sample(opportunity_templates, min(opportunities_count, len(opportunity_templates)))
+        for i, opp in enumerate(selected_opportunities):
+            detailed_opportunities.append({
+                **opp,
+                "opportunity_id": f"opp_{i+1}",
+                "identified_date": (datetime.now() - timedelta(days=random.randint(1, 14))).isoformat(),
+                "roi_estimate": f"${random.randint(500, 5000)}/month"
+            })
+
         new_website_data = {
             "website_id": str(uuid.uuid4()),
             "domain": website_data.get("domain", ""),
@@ -479,8 +607,14 @@ async def add_website(website_data: Dict[str, Any]) -> Dict[str, Any]:
             "performance_score": round(random.uniform(70.0, 95.0), 1),
             "security_score": round(random.uniform(80.0, 98.0), 1),
             "mobile_score": round(random.uniform(70.0, 90.0), 1),
-            "issues_count": random.randint(2, 12),
-            "opportunities_count": random.randint(5, 15),
+            "issues_count": issues_count,
+            "opportunities_count": opportunities_count,
+            "detailed_issues": detailed_issues,
+            "detailed_opportunities": detailed_opportunities,
+            "analyzed_pages": [
+                f"/{random.choice(['', 'about', 'services', 'products', 'contact', 'blog'])}" 
+                for _ in range(random.randint(10, 50))
+            ],
             "created_at": datetime.now(),
             "updated_at": datetime.now()
         }
