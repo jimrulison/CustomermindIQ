@@ -992,12 +992,39 @@ ${details.updateFrequency}
     }
   };
 
-  // Check URL for affiliate access
+  // Check URL for affiliate access and handle redirects for broken internal links
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const affiliateAccess = urlParams.get('affiliate');
     const legalDocs = urlParams.get('legal');
     const currentPath = window.location.pathname;
+    
+    // Handle broken internal link redirects
+    const brokenLinksRedirectMap = {
+      '/old-page': 'customer-analytics-dashboard',
+      '/moved-content': 'knowledge-base', 
+      '/deleted-service': 'support',
+      '/products': 'customer-analytics-dashboard',
+      '/about': 'support',
+      '/services': 'customer-analytics-dashboard',
+      '/contact-form': 'support',
+      '/pricing': 'subscription',
+      '/checkout': 'subscription',
+      '/help': 'support',
+      '/docs': 'training',
+      '/api': 'knowledge-base',
+      '/status': 'support'
+    };
+    
+    // Check if current path is a broken link that needs redirect
+    if (brokenLinksRedirectMap[currentPath]) {
+      console.log(`Redirecting broken link ${currentPath} to ${brokenLinksRedirectMap[currentPath]}`);
+      setCurrentPage(brokenLinksRedirectMap[currentPath]);
+      setLoading(false);
+      // Update URL without page reload
+      window.history.replaceState({}, '', '/');
+      return;
+    }
     
     if (affiliateAccess === 'true' || currentPath === '/affiliates') {
       setCurrentPage('affiliate-auth');
@@ -1010,6 +1037,34 @@ ${details.updateFrequency}
       setLoading(false);
       return;
     }
+    
+    // Handle hash-based navigation for internal links
+    const handleHashChange = () => {
+      const hash = window.location.hash.substring(1);
+      const hashRedirectMap = {
+        'customer-analytics': 'customer-analytics-dashboard',
+        'website-analytics': 'website-analytics-dashboard',
+        'productivity': 'productivity',
+        'growth-acceleration': 'growth-acceleration',
+        'support': 'support',
+        'training': 'training',
+        'knowledge-base': 'knowledge-base',
+        'subscription': 'subscription'
+      };
+      
+      if (hash && hashRedirectMap[hash]) {
+        console.log(`Hash navigation to ${hash}, redirecting to ${hashRedirectMap[hash]}`);
+        setCurrentPage(hashRedirectMap[hash]);
+      }
+    };
+    
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange(); // Check initial hash
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, []);
 
   // Data loading on authentication
