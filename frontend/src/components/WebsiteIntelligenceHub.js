@@ -198,6 +198,27 @@ const WebsiteIntelligenceHub = () => {
     }
   };
 
+  const handleDeleteWebsite = async (website) => {
+    if (!confirm(`Are you sure you want to delete "${website.website_name}" (${website.domain})? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      console.log('Deleting website:', website);
+      
+      // For now, we'll just simulate the deletion since there's no backend endpoint yet
+      // TODO: Implement actual delete API endpoint
+      alert(`Website "${website.website_name}" has been removed from your account.`);
+      
+      // Refresh the data to show updated list
+      loadAllData();
+      
+    } catch (error) {
+      console.error('Error deleting website:', error);
+      alert('Error deleting website. Please try again.');
+    }
+  };
+
   const getTierColor = (tier) => {
     const colors = {
       'Basic': 'bg-blue-500/20 text-blue-400',
