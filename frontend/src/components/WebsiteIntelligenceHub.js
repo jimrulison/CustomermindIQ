@@ -315,28 +315,33 @@ const WebsiteIntelligenceHub = () => {
   const handleExportReport = async () => {
     try {
       setLoading(true);
-      console.log('🔄 Exporting website intelligence report...');
+      console.log('🔄 Exporting comprehensive website intelligence report as PDF...');
       
-      const response = await axios.get(`${API_BASE_URL}/api/website-intelligence/export/report`, {
+      const response = await axios.get(`${API_BASE_URL}/api/website-intelligence/export/report?format=pdf`, {
         headers: getAuthHeaders(),
-        timeout: 30000
+        timeout: 60000  // Increased timeout for PDF generation
       });
       
       if (response.data.status === 'success') {
-        // Create and download the report as JSON file
-        const reportData = response.data.report;
-        const blob = new Blob([JSON.stringify(reportData, null, 2)], { type: 'application/json' });
+        // Decode base64 PDF data and create blob
+        const pdfData = atob(response.data.data);
+        const bytes = new Uint8Array(pdfData.length);
+        for (let i = 0; i < pdfData.length; i++) {
+          bytes[i] = pdfData.charCodeAt(i);
+        }
+        
+        const blob = new Blob([bytes], { type: 'application/pdf' });
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `website-intelligence-report-${new Date().toISOString().split('T')[0]}.json`;
+        link.download = response.data.filename || `website-intelligence-report-${new Date().toISOString().split('T')[0]}.pdf`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
         
-        console.log('✅ Report exported successfully');
-        alert(`Report exported successfully!\n\nReport includes:\n• ${reportData.executive_summary.total_websites_monitored} websites analyzed\n• ${reportData.executive_summary.total_issues_found} issues identified\n• ${reportData.executive_summary.total_opportunities} opportunities found\n• Detailed recommendations and action items`);
+        console.log('✅ Comprehensive PDF report exported successfully');
+        alert(`📄 Comprehensive PDF Report Exported Successfully!\n\n✅ Report Details:\n• ${response.data.websites_included || 0} websites analyzed in detail\n• ${Math.round(response.data.size_bytes / 1024)} KB file size\n• ${response.data.pages_estimated || 'Multiple'} pages of detailed analysis\n\n📋 Report Includes:\n• Executive summary with key metrics\n• Detailed analysis for each website\n• Specific issues with affected pages & fix instructions\n• Growth opportunities with implementation steps\n• Actionable recommendations categorized by priority\n• Professional formatting suitable for presentations\n\nThe report has been downloaded to your computer!`);
       } else {
         throw new Error('Export failed: Invalid response');
       }
@@ -345,9 +350,11 @@ const WebsiteIntelligenceHub = () => {
       if (error.response?.status === 401) {
         alert('Authentication failed. Please log in again.');
       } else if (error.response?.status === 500) {
-        alert('Server error occurred while generating the report. Please try again.');
+        alert('Server error occurred while generating the comprehensive report. Please try again.');
+      } else if (error.code === 'NETWORK_ERROR' || !error.response) {
+        alert('Network error: Unable to connect to server. Please check your connection and try again.');
       } else {
-        alert('Failed to export report. Please check your connection and try again.');
+        alert('Failed to export comprehensive report. Please try again in a moment.');
       }
     } finally {
       setLoading(false);
