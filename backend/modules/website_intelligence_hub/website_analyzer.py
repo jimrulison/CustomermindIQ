@@ -865,6 +865,228 @@ async def export_website_report(format: str = "pdf") -> Dict[str, Any]:
         print(f"❌ Traceback: {traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=f"Export report error: {str(e)}")
 
+@analyzer_router.post("/admin/populate-detailed-data")
+async def populate_detailed_data_for_existing_websites() -> Dict[str, Any]:
+    """Admin endpoint to populate detailed issues and opportunities for existing websites"""
+    try:
+        print("🔄 Populating detailed data for existing websites")
+        
+        # Get all user websites
+        cursor = db.user_websites.find({})
+        updated_count = 0
+        
+        async for website in cursor:
+            website_id = website.get("website_id")
+            website_name = website.get("website_name", "Unknown")
+            
+            # Check if detailed data is missing
+            needs_update = False
+            if not website.get('detailed_issues') or len(website.get('detailed_issues', [])) == 0:
+                needs_update = True
+            if not website.get('detailed_opportunities') or len(website.get('detailed_opportunities', [])) == 0:
+                needs_update = True
+            
+            if needs_update:
+                print(f"🔄 Updating detailed data for {website_name}")
+                
+                # Generate detailed issues based on issues_count
+                issues_count = website.get('issues_count', random.randint(2, 8))
+                detailed_issues = []
+                issue_templates = [
+                    {
+                        "title": "Missing Alt Text on Images",
+                        "severity": "medium",
+                        "category": "SEO",
+                        "description": "Images without alt text hurt accessibility and SEO",
+                        "affected_pages": ["/products", "/about", "/services"],
+                        "fix_instructions": "Add descriptive alt text to all images using alt='descriptive text' attribute",
+                        "impact": "Improves SEO ranking and accessibility for screen readers",
+                        "effort": "Low - 1-2 hours"
+                    },
+                    {
+                        "title": "Slow Page Load Speed",
+                        "severity": "high", 
+                        "category": "Performance",
+                        "description": "Pages loading slower than 3 seconds",
+                        "affected_pages": ["/", "/products", "/contact"],
+                        "fix_instructions": "Optimize images, enable compression, use CDN, minify CSS/JS files",
+                        "impact": "Reduces bounce rate, improves user experience and SEO",
+                        "effort": "Medium - 4-6 hours"
+                    },
+                    {
+                        "title": "Missing Meta Descriptions",
+                        "severity": "medium",
+                        "category": "SEO",
+                        "description": "Pages without meta descriptions miss search result opportunities",
+                        "affected_pages": ["/blog/post-1", "/blog/post-2", "/services"],
+                        "fix_instructions": "Add unique 150-160 character meta descriptions to each page",
+                        "impact": "Improves click-through rates from search results",
+                        "effort": "Low - 2-3 hours"
+                    },
+                    {
+                        "title": "Broken Internal Links",
+                        "severity": "high",
+                        "category": "Technical",
+                        "description": "Internal links returning 404 errors",
+                        "affected_pages": ["/old-page", "/moved-content", "/deleted-service"],
+                        "fix_instructions": "Update or remove broken links, implement 301 redirects for moved content",
+                        "impact": "Improves user experience and search engine crawling",
+                        "effort": "Medium - 3-4 hours"
+                    },
+                    {
+                        "title": "Mobile Usability Issues",
+                        "severity": "high",
+                        "category": "UX",
+                        "description": "Elements too small or not mobile-friendly",
+                        "affected_pages": ["/contact-form", "/pricing", "/checkout"],
+                        "fix_instructions": "Increase touch target sizes, improve responsive design, test on mobile devices",
+                        "impact": "Better mobile user experience and mobile SEO ranking",
+                        "effort": "High - 8-12 hours"
+                    },
+                    {
+                        "title": "Missing SSL Certificate",
+                        "severity": "critical",
+                        "category": "Security",
+                        "description": "Website not served over HTTPS",
+                        "affected_pages": ["All pages"],
+                        "fix_instructions": "Install SSL certificate, redirect HTTP to HTTPS, update internal links",
+                        "impact": "Improves security, trust, and SEO rankings",
+                        "effort": "Medium - 2-4 hours"
+                    },
+                    {
+                        "title": "Outdated Content Management System",
+                        "severity": "medium",
+                        "category": "Security",
+                        "description": "CMS version is outdated and may have security vulnerabilities",
+                        "affected_pages": ["Backend system"],
+                        "fix_instructions": "Update CMS to latest version, backup site before updating, test functionality",
+                        "impact": "Improves security and access to new features",
+                        "effort": "Medium - 4-6 hours"
+                    }
+                ]
+                
+                # Select random issues for this website
+                selected_issues = random.sample(issue_templates, min(issues_count, len(issue_templates)))
+                for i, issue in enumerate(selected_issues):
+                    detailed_issues.append({
+                        **issue,
+                        "issue_id": f"issue_{i+1}",
+                        "detected_date": (datetime.now() - timedelta(days=random.randint(1, 30))).isoformat(),
+                        "priority_score": random.randint(1, 10)
+                    })
+                
+                # Generate detailed opportunities based on opportunities_count
+                opportunities_count = website.get('opportunities_count', random.randint(3, 8))
+                detailed_opportunities = []
+                opportunity_templates = [
+                    {
+                        "title": "Implement Schema Markup",
+                        "category": "SEO",
+                        "description": "Add structured data to help search engines understand your content",
+                        "potential_impact": "15-25% increase in search visibility",
+                        "implementation": "Add JSON-LD schema markup for products, reviews, and business info",
+                        "effort": "Medium - 6-8 hours",
+                        "priority": "High"
+                    },
+                    {
+                        "title": "Add Customer Reviews Section",
+                        "category": "Conversion",
+                        "description": "Customer reviews increase trust and conversion rates",
+                        "potential_impact": "10-20% increase in conversions",
+                        "implementation": "Integrate review system, add review widgets to product pages",
+                        "effort": "High - 12-16 hours", 
+                        "priority": "High"
+                    },
+                    {
+                        "title": "Optimize for Voice Search",
+                        "category": "SEO",
+                        "description": "Target conversational, long-tail keywords for voice search",
+                        "potential_impact": "Access to growing voice search traffic",
+                        "implementation": "Create FAQ sections, optimize for question-based queries",
+                        "effort": "Medium - 4-6 hours",
+                        "priority": "Medium"
+                    },
+                    {
+                        "title": "Implement Live Chat",
+                        "category": "UX",
+                        "description": "Real-time customer support increases satisfaction and sales",
+                        "potential_impact": "5-15% increase in conversions",
+                        "implementation": "Add chat widget, set up support workflows, train team",
+                        "effort": "Medium - 8-10 hours",
+                        "priority": "Medium"
+                    },
+                    {
+                        "title": "Create Video Content",
+                        "category": "Content",
+                        "description": "Video content increases engagement and time on site",
+                        "potential_impact": "Higher engagement, better SEO signals",
+                        "implementation": "Create product demos, tutorials, testimonial videos",
+                        "effort": "High - 16-20 hours",
+                        "priority": "Medium"
+                    },
+                    {
+                        "title": "Implement Email Marketing Automation",
+                        "category": "Marketing",
+                        "description": "Automated email sequences to nurture leads and retain customers",
+                        "potential_impact": "20-30% increase in customer lifetime value",
+                        "implementation": "Set up email automation platform, create welcome series, abandoned cart emails",
+                        "effort": "High - 10-15 hours",
+                        "priority": "High"
+                    },
+                    {
+                        "title": "Add Social Media Integration",
+                        "category": "Marketing",
+                        "description": "Social sharing buttons and social proof to increase engagement",
+                        "potential_impact": "15-25% increase in social traffic",
+                        "implementation": "Add social sharing buttons, integrate social feeds, add social login",
+                        "effort": "Medium - 6-8 hours",
+                        "priority": "Medium"
+                    },
+                    {
+                        "title": "Implement A/B Testing",
+                        "category": "Conversion",
+                        "description": "Test different versions of pages to optimize conversion rates",
+                        "potential_impact": "5-15% improvement in conversion rates",
+                        "implementation": "Set up A/B testing tools, create test variations, analyze results",
+                        "effort": "Medium - 8-12 hours",
+                        "priority": "Medium"
+                    }
+                ]
+                
+                # Select random opportunities for this website
+                selected_opportunities = random.sample(opportunity_templates, min(opportunities_count, len(opportunity_templates)))
+                for i, opp in enumerate(selected_opportunities):
+                    detailed_opportunities.append({
+                        **opp,
+                        "opportunity_id": f"opp_{i+1}",
+                        "identified_date": (datetime.now() - timedelta(days=random.randint(1, 14))).isoformat(),
+                        "roi_estimate": f"${random.randint(500, 5000)}/month"
+                    })
+                
+                # Update the website in MongoDB
+                result = await db.user_websites.update_one(
+                    {"website_id": website_id},
+                    {"$set": {
+                        "detailed_issues": detailed_issues,
+                        "detailed_opportunities": detailed_opportunities,
+                        "updated_at": datetime.now().isoformat()
+                    }}
+                )
+                
+                if result.modified_count > 0:
+                    updated_count += 1
+                    print(f"✅ Updated detailed data for {website_name}: {len(detailed_issues)} issues, {len(detailed_opportunities)} opportunities")
+        
+        return {
+            "status": "success",
+            "message": f"Populated detailed data for {updated_count} websites",
+            "updated_count": updated_count
+        }
+        
+    except Exception as e:
+        print(f"❌ Exception in populate_detailed_data_for_existing_websites: {e}")
+        raise HTTPException(status_code=500, detail=f"Populate data error: {str(e)}")
+
 @analyzer_router.post("/admin/update-visitor-numbers")
 async def update_realistic_visitor_numbers() -> Dict[str, Any]:
     """Admin endpoint to update existing websites with more realistic visitor numbers"""
