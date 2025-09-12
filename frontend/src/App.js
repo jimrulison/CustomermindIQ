@@ -43,6 +43,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import SignIn from './components/SignIn';
 import OverageApproval from './components/OverageApproval';
 import Header from './components/Header';
+import SchemaMarkup from './components/SchemaMarkup';
 
 // Lazy load heavy components for better performance
 const CustomerAnalyticsDashboard = React.lazy(() => import('./components/CustomerAnalyticsDashboard'));
