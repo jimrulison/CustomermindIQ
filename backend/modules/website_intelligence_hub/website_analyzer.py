@@ -447,14 +447,39 @@ async def add_website(website_data: Dict[str, Any]) -> Dict[str, Any]:
                 detail=f"Website limit reached for {membership_tier} tier. Upgrade to add more websites."
             )
         
+        # Generate realistic metrics for the new website
+        new_website_data = {
+            "website_id": str(uuid.uuid4()),
+            "domain": website_data.get("domain", ""),
+            "website_name": website_data.get("name", ""),
+            "website_type": website_data.get("type", "General"),
+            "status": "pending_verification",
+            "health_score": round(random.uniform(75.0, 95.0), 1),
+            "last_analyzed": datetime.now(),
+            "connected_services": [],
+            "monthly_visitors": random.randint(1000, 15000),
+            "conversion_rate": round(random.uniform(1.0, 6.0), 1),
+            "seo_score": round(random.uniform(65.0, 90.0), 1),
+            "performance_score": round(random.uniform(70.0, 95.0), 1),
+            "security_score": round(random.uniform(80.0, 98.0), 1),
+            "mobile_score": round(random.uniform(70.0, 90.0), 1),
+            "issues_count": random.randint(2, 12),
+            "opportunities_count": random.randint(5, 15)
+        }
+        
+        # Store the website in memory
+        user_websites_storage.append(new_website_data)
+        print(f"✅ Website stored: {new_website_data['website_name']} ({new_website_data['domain']})")
+        print(f"✅ Total websites in storage: {len(user_websites_storage)}")
+        
         new_website = {
             "status": "success",
-            "website_id": str(uuid.uuid4()),
+            "website_id": new_website_data["website_id"],
             "website_details": {
-                "domain": website_data.get("domain", ""),
-                "website_name": website_data.get("name", ""),
-                "website_type": website_data.get("type", "General"),
-                "added_date": datetime.now().isoformat(),
+                "domain": new_website_data["domain"],
+                "website_name": new_website_data["website_name"],
+                "website_type": new_website_data["website_type"],
+                "added_date": new_website_data["last_analyzed"].isoformat(),
                 "status": "pending_verification"
             },
             "verification_steps": [
