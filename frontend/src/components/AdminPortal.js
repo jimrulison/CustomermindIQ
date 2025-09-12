@@ -3335,7 +3335,7 @@ const AdminPortalEnhanced = () => {
                                   id: 'upgrade-reminder',
                                   name: 'Upgrade Reminder'
                                 });
-                                setModalType='view-trial-email-stats';
+                                setModalType('view-trial-email-stats');
                                 setShowModal(true);
                               }}
                               className="p-2 text-slate-400 hover:text-green-400 hover:bg-slate-600 rounded"
