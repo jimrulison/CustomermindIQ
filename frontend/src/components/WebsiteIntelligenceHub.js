@@ -1167,75 +1167,68 @@ const WebsiteIntelligenceHub = () => {
               {detailView === 'issues' && (
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-lg font-semibold text-white">Website Issues</h4>
+                    <h4 className="text-lg font-semibold text-white">Technical Issues Found</h4>
                     <Badge className="bg-red-500/20 text-red-400">
-                      {selectedWebsite.issues_count || 0} Issues Found
+                      {selectedWebsite?.issues_count || 0} Issues
                     </Badge>
                   </div>
                   
                   <div className="space-y-4">
-                    <div className="bg-slate-700/30 rounded-lg p-4">
-                      <div className="flex items-start space-x-3">
-                        <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5" />
-                        <div>
-                          <h5 className="font-medium text-white">Slow Page Load Speed</h5>
-                          <p className="text-slate-400 text-sm mt-1">
-                            Your homepage takes 4.2 seconds to load, which is above the recommended 2.5 seconds.
-                          </p>
-                          <div className="mt-2">
-                            <span className="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded">High Priority</span>
+                    {selectedWebsite?.detailed_issues?.length > 0 ? (
+                      selectedWebsite.detailed_issues.map((issue, index) => (
+                        <div key={issue.issue_id || index} className="bg-slate-700/30 rounded-lg p-4">
+                          <div className="flex items-start space-x-3">
+                            <AlertTriangle className={`w-5 h-5 mt-0.5 ${
+                              issue.severity === 'critical' ? 'text-red-400' :
+                              issue.severity === 'high' ? 'text-orange-400' :
+                              issue.severity === 'medium' ? 'text-yellow-400' : 'text-blue-400'
+                            }`} />
+                            <div className="flex-1">
+                              <div className="flex items-start justify-between">
+                                <h5 className="font-medium text-white">{issue.title}</h5>
+                                <span className={`text-xs px-2 py-1 rounded ${
+                                  issue.severity === 'critical' ? 'bg-red-500/20 text-red-400' :
+                                  issue.severity === 'high' ? 'bg-orange-500/20 text-orange-400' :
+                                  issue.severity === 'medium' ? 'bg-yellow-500/20 text-yellow-400' : 'bg-blue-500/20 text-blue-400'
+                                }`}>
+                                  {issue.severity.charAt(0).toUpperCase() + issue.severity.slice(1)} Priority
+                                </span>
+                              </div>
+                              
+                              <p className="text-slate-400 text-sm mt-2">{issue.description}</p>
+                              
+                              {issue.affected_pages && issue.affected_pages.length > 0 && (
+                                <div className="mt-3">
+                                  <h6 className="text-xs font-medium text-slate-300 mb-1">Affected Pages:</h6>
+                                  <div className="flex flex-wrap gap-1">
+                                    {issue.affected_pages.map((page, pageIndex) => (
+                                      <span key={pageIndex} className="text-xs bg-slate-600/50 text-slate-300 px-2 py-1 rounded">
+                                        {page}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                              
+                              <div className="mt-3 p-3 bg-slate-800/50 rounded border-l-2 border-blue-400">
+                                <h6 className="text-xs font-medium text-blue-400 mb-1">How to Fix:</h6>
+                                <p className="text-xs text-slate-300">{issue.fix_instructions}</p>
+                                <div className="flex justify-between items-center mt-2">
+                                  <span className="text-xs text-slate-400">Impact: {issue.impact}</span>
+                                  <span className="text-xs text-slate-400">Effort: {issue.effort}</span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
+                      ))
+                    ) : (
+                      <div className="text-center py-8">
+                        <CheckCircle className="w-12 h-12 text-green-400 mx-auto mb-3" />
+                        <h5 className="text-lg font-medium text-white mb-2">No Issues Found</h5>
+                        <p className="text-slate-400">Your website is performing well with no detected issues.</p>
                       </div>
-                    </div>
-
-                    <div className="bg-slate-700/30 rounded-lg p-4">
-                      <div className="flex items-start space-x-3">
-                        <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5" />
-                        <div>
-                          <h5 className="font-medium text-white">Missing Meta Descriptions</h5>
-                          <p className="text-slate-400 text-sm mt-1">
-                            15 pages are missing meta descriptions, which impacts SEO performance.
-                          </p>
-                          <div className="mt-2">
-                            <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">Medium Priority</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-slate-700/30 rounded-lg p-4">
-                      <div className="flex items-start space-x-3">
-                        <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5" />
-                        <div>
-                          <h5 className="font-medium text-white">Broken Internal Links</h5>
-                          <p className="text-slate-400 text-sm mt-1">
-                            3 internal links return 404 errors and need to be fixed.
-                          </p>
-                          <div className="mt-2">
-                            <span className="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded">Low Priority</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t border-slate-700">
-                    <h5 className="font-medium text-white mb-2">Recommended Actions</h5>
-                    <ul className="space-y-2 text-sm text-slate-300">
-                      <li className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                        <span>Optimize images and enable compression to improve load speed</span>
-                      </li>
-                      <li className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                        <span>Add meta descriptions to all pages using relevant keywords</span>
-                      </li>
-                      <li className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                        <span>Update or remove broken internal links</span>
-                      </li>
-                    </ul>
+                    )}
                   </div>
                 </div>
               )}
