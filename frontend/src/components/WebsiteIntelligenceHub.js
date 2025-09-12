@@ -556,16 +556,32 @@ const WebsiteIntelligenceHub = () => {
                       </div>
                     </div>
 
-                    {/* Issues & Opportunities */}
+                    {/* Issues & Opportunities - Now Clickable */}
                     <div className="flex items-center justify-between text-xs">
-                      <div className="flex items-center text-red-400">
+                      <button
+                        onClick={() => {
+                          setSelectedWebsite(website);
+                          setDetailView('issues');
+                          setShowWebsiteDetails(true);
+                        }}
+                        className="flex items-center text-red-400 hover:text-red-300 hover:bg-red-500/10 px-2 py-1 rounded transition-colors cursor-pointer"
+                        title="Click to view detailed issues"
+                      >
                         <AlertTriangle className="w-3 h-3 mr-1" />
                         {website.issues_count || 0} Issues
-                      </div>
-                      <div className="flex items-center text-green-400">
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedWebsite(website);
+                          setDetailView('opportunities');
+                          setShowWebsiteDetails(true);
+                        }}
+                        className="flex items-center text-green-400 hover:text-green-300 hover:bg-green-500/10 px-2 py-1 rounded transition-colors cursor-pointer"
+                        title="Click to view detailed opportunities"
+                      >
                         <Lightbulb className="w-3 h-3 mr-1" />
                         {website.opportunities_count || 0} Opportunities
-                      </div>
+                      </button>
                     </div>
 
                     {/* Connected Services */}
