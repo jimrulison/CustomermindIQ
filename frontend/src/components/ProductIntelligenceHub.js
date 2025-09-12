@@ -57,7 +57,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Features identified through code analysis, SDK integration, and manual configuration. Active tracking covers user interactions, session data, and conversion events.',
         dataPoints: 'Click events, page views, feature activation, time spent, user flows, error rates',
         updateFrequency: 'Real-time with 5-minute aggregation intervals',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: BarChart3,
+        color: 'blue'
       },
       'features_avg_adoption_rate': {
         title: 'Average Adoption Rate - Data Source',
@@ -71,7 +73,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Adoption rate = (Users who used feature in last 30 days / Total active users) × 100. Weighted by feature importance and user segment.',
         dataPoints: 'Unique users per feature, session frequency, feature depth usage, onboarding completion',
         updateFrequency: 'Updated daily at 3:00 AM UTC with rolling 30-day windows',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: TrendingUp,
+        color: 'green'
       },
       'features_power_users': {
         title: 'Power Users Percentage - Data Source',
@@ -85,7 +89,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Power users defined as top 20% by engagement score: feature breadth (40%), usage frequency (35%), session depth (25%). ML algorithms identify patterns.',
         dataPoints: 'Features used per session, session duration, feature exploration rate, advanced feature adoption',
         updateFrequency: 'Recalculated weekly with daily incremental updates',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: Users,
+        color: 'purple'
       },
       'features_stickiness_score': {
         title: 'Feature Stickiness Score - Data Source',
@@ -99,7 +105,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Stickiness = (DAU/MAU) × Feature Depth Factor × Retention Weight. Accounts for usage consistency, feature complexity, and user segment behavior.',
         dataPoints: 'Daily active users, monthly active users, feature session depth, return visit patterns, feature churn events',
         updateFrequency: 'Real-time computation with hourly rolling averages',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: Activity,
+        color: 'orange'
       },
       // ONBOARDING DATA SOURCES
       'onboarding_completion_rate': {
@@ -114,7 +122,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Completion Rate = (Users completing all onboarding steps / Users starting onboarding) × 100. Tracks critical milestones and identifies drop-off points.',
         dataPoints: 'Step completion events, time per step, abandonment points, user segment performance',
         updateFrequency: 'Real-time tracking with hourly summary reports',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: CheckCircle,
+        color: 'green'
       },
       'onboarding_avg_time_to_complete': {
         title: 'Average Time to Complete - Data Source',
@@ -128,7 +138,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Average calculated from first onboarding step to final completion, excluding inactive periods >24 hours. Segmented by user type and entry point.',
         dataPoints: 'Session timestamps, step durations, pause periods, completion paths',
         updateFrequency: 'Updated daily with rolling 30-day averages',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: Clock,
+        color: 'blue'
       },
       'onboarding_drop_off_rate': {
         title: 'Drop-off Rate - Data Source',
@@ -142,7 +154,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Drop-off Rate = 100% - Completion Rate. Analyzed by step, user segment, traffic source, and device type to identify improvement opportunities.',
         dataPoints: 'Exit points, abandonment triggers, device data, referral sources, user demographics',
         updateFrequency: 'Real-time with daily trend analysis',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: AlertCircle,
+        color: 'red'
       },
       'onboarding_feature_discovery': {
         title: 'Feature Discovery Rate - Data Source',
@@ -156,7 +170,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Discovery Rate = (Users interacting with key features during onboarding / Total users in onboarding) × 100. Weighted by feature importance and business impact.',
         dataPoints: 'Feature clicks, tutorial completions, help usage, feature adoption post-onboarding',
         updateFrequency: 'Real-time with weekly trend analysis',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: Eye,
+        color: 'cyan'
       },
       // PRODUCT-MARKET FIT DATA SOURCES
       'pmf_overall_score': {
@@ -171,7 +187,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'PMF Score = weighted average of satisfaction (30%), retention (25%), growth (20%), competitive advantage (15%), market penetration (10%). Normalized to 0-100 scale.',
         dataPoints: 'NPS scores, churn rates, usage frequency, expansion revenue, market share data',
         updateFrequency: 'Monthly calculation with quarterly deep analysis',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: Star,
+        color: 'yellow'
       },
       'pmf_nps_score': {
         title: 'Net Promoter Score - Data Source',
@@ -185,7 +203,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'NPS = % Promoters (9-10) - % Detractors (0-6). Collected through systematic surveys with 90-day rotation and sentiment analysis of support interactions.',
         dataPoints: 'Survey responses, support sentiment, review scores, referral tracking',
         updateFrequency: 'Continuous collection with monthly NPS calculation',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: TrendIcon,
+        color: 'emerald'
       },
       'pmf_customer_satisfaction': {
         title: 'Customer Satisfaction - Data Source',
@@ -199,7 +219,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Satisfaction = average of CSAT surveys (40%), product ratings (30%), usage engagement (20%), support sentiment (10%). Scale normalized to percentage.',
         dataPoints: 'CSAT scores, product ratings, session duration, feature adoption, support interactions',
         updateFrequency: 'Real-time collection with weekly satisfaction calculation',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: CheckCircle,
+        color: 'green'
       },
       'pmf_market_penetration': {
         title: 'Market Penetration - Data Source',
@@ -213,7 +235,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Market Penetration = (Our customers / Total addressable market) × 100. Combined with competitive feature analysis and market positioning assessment.',
         dataPoints: 'Customer counts, market size estimates, competitive feature matrices, industry benchmarks',
         updateFrequency: 'Quarterly assessment with monthly trend tracking',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: BarChart,
+        color: 'indigo'
       },
       // USER JOURNEYS DATA SOURCES
       'journeys_total_paths': {
@@ -228,7 +252,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Journey paths identified using ML clustering of user behavior sequences. Paths must have >10 users and >5% completion rate to be considered significant.',
         dataPoints: 'Page sequences, click paths, session flows, conversion funnels, abandonment points',
         updateFrequency: 'Daily path analysis with weekly pattern recognition',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: Route,
+        color: 'teal'
       },
       'journeys_avg_completion_rate': {
         title: 'Average Completion Rate - Data Source',
@@ -242,7 +268,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Completion Rate = (Successful journey completions / Total journey attempts) × 100. Success defined by reaching conversion goals or key milestones.',
         dataPoints: 'Goal completions, funnel progression, task success, user intent signals',
         updateFrequency: 'Real-time tracking with daily completion analysis',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: Target,
+        color: 'green'
       },
       'journeys_avg_steps_to_conversion': {
         title: 'Average Steps to Conversion - Data Source',
@@ -256,7 +284,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Steps to Conversion = average number of meaningful interactions from entry to goal completion. Excludes navigational and non-productive actions.',
         dataPoints: 'Click sequences, page views, form interactions, conversion events, path efficiency metrics',
         updateFrequency: 'Daily calculation with trend analysis',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: Activity,
+        color: 'blue'
       },
       'journeys_optimization_score': {
         title: 'Journey Optimization Score - Data Source',
@@ -270,7 +300,9 @@ const ProductIntelligenceHub = () => {
         methodology: 'Optimization Score = weighted combination of completion rate (35%), steps efficiency (25%), time to conversion (20%), user satisfaction (20%). Normalized 0-100.',
         dataPoints: 'Completion rates, interaction efficiency, time metrics, satisfaction scores, friction points',
         updateFrequency: 'Weekly optimization analysis with continuous monitoring',
-        currentValue: currentValue
+        currentValue: currentValue,
+        icon: Zap,
+        color: 'yellow'
       }
     };
 
@@ -282,28 +314,13 @@ const ProductIntelligenceHub = () => {
       methodology: 'Calculated using advanced analytics algorithms and machine learning models',
       dataPoints: 'User interactions, behavior patterns, performance metrics, and business outcomes',
       updateFrequency: 'Updated regularly based on data collection schedules',
-      currentValue: currentValue
+      currentValue: currentValue,
+      icon: Database,
+      color: 'slate'
     };
 
-    alert(`📊 ${details.title}
-
-Current Value: ${details.currentValue}
-
-${details.description}
-
-🔍 DATA SOURCES:
-${details.sources.join('\n')}
-
-⚙️ METHODOLOGY:
-${details.methodology}
-
-📈 KEY DATA POINTS:
-${details.dataPoints}
-
-🕐 UPDATE FREQUENCY:
-${details.updateFrequency}
-
-💡 This data helps understand ${metricName.toLowerCase()} trends and drives product optimization decisions.`);
+    setSelectedDataSource(details);
+    setShowDataSourceModal(true);
   };
 
   // Feature detail drill-down
