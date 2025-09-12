@@ -243,11 +243,11 @@ const PaymentTest = () => {
 
         {/* Debug Information */}
         <div className="mt-6 bg-gray-50 border border-gray-200 rounded-md p-4">
-          <h4 className="font-medium text-gray-900 mb-2">Debug Information</h4>
-          <div className="text-sm text-gray-700 space-y-1">
-            <p><strong>Backend URL:</strong> {process.env.REACT_APP_BACKEND_URL}</p>
-            <p><strong>Current URL:</strong> {window.location.href}</p>
-            <p><strong>Origin:</strong> {window.location.origin}</p>
+          <h4 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Debug Information</h4>
+          <div className="text-xs sm:text-sm text-gray-700 space-y-1 overflow-hidden">
+            <p className="break-all"><strong>Backend URL:</strong> {process.env.REACT_APP_BACKEND_URL}</p>
+            <p className="break-all"><strong>Current URL:</strong> {window.location.href}</p>
+            <p className="break-all"><strong>Origin:</strong> {window.location.origin}</p>
             <p><strong>Session ID from URL:</strong> {getUrlParameter('session_id') || 'None'}</p>
           </div>
         </div>
