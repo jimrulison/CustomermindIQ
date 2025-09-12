@@ -1635,7 +1635,7 @@ const AdminPortalEnhanced = () => {
                     <div>
                       <p className="text-slate-400 text-sm">Overdue</p>
                       <p className="text-2xl font-bold text-red-400">
-                        {supportTickets.filter(t => new Date(t.due_date) < new Date() && t.status !== 'closed').length}
+                        {(supportTickets || []).filter(t => new Date(t.due_date) < new Date() && t.status !== 'closed').length}
                       </p>
                     </div>
                     <Clock className="w-8 h-8 text-red-400" />
