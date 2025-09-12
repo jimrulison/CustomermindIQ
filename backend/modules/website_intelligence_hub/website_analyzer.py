@@ -836,6 +836,106 @@ async def verify_website(website_id: str) -> Dict[str, Any]:
         print(f"❌ Exception in verify_website: {e}")
         raise HTTPException(status_code=500, detail=f"Verification error: {str(e)}")
 
+@analyzer_router.get("/export/report")
+async def export_website_report() -> Dict[str, Any]:
+    """Export comprehensive website intelligence report"""
+    try:
+        print("🔍 Generating website intelligence export report")
+        
+        # Get user websites from MongoDB
+        user_websites_cursor = db.user_websites.find({})
+        user_websites_from_db = []
+        async for website in user_websites_cursor:
+            # Remove MongoDB's _id field and parse datetime objects
+            website.pop('_id', None)
+            parsed_website = parse_from_mongo(website)
+            user_websites_from_db.append(parsed_website)
+        
+        # Generate comprehensive report data
+        report_data = {
+            "report_metadata": {
+                "generated_at": datetime.now().isoformat(),
+                "report_type": "Website Intelligence Comprehensive Report",
+                "total_websites": len(user_websites_from_db),
+                "report_period": f"{(datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')} to {datetime.now().strftime('%Y-%m-%d')}",
+                "generated_by": "Website Intelligence Hub"
+            },
+            "executive_summary": {
+                "total_websites_monitored": len(user_websites_from_db),
+                "average_health_score": round(sum(w.get('health_score', 0) for w in user_websites_from_db) / len(user_websites_from_db), 1) if user_websites_from_db else 0,
+                "total_monthly_visitors": sum(w.get('monthly_visitors', 0) for w in user_websites_from_db),
+                "total_issues_found": sum(w.get('issues_count', 0) for w in user_websites_from_db),
+                "total_opportunities": sum(w.get('opportunities_count', 0) for w in user_websites_from_db),
+                "average_seo_score": round(sum(w.get('seo_score', 0) for w in user_websites_from_db) / len(user_websites_from_db), 1) if user_websites_from_db else 0,
+                "average_performance_score": round(sum(w.get('performance_score', 0) for w in user_websites_from_db) / len(user_websites_from_db), 1) if user_websites_from_db else 0
+            },
+            "website_details": [],
+            "recommendations_summary": {
+                "high_priority_actions": [],
+                "quick_wins": [],
+                "long_term_improvements": []
+            }
+        }
+        
+        # Add detailed data for each website
+        for website in user_websites_from_db:
+            website_detail = {
+                "website_name": website.get('website_name', 'Unknown'),
+                "domain": website.get('domain', 'Unknown'),
+                "health_score": website.get('health_score', 0),
+                "monthly_visitors": website.get('monthly_visitors', 0),
+                "seo_score": website.get('seo_score', 0),
+                "performance_score": website.get('performance_score', 0),
+                "security_score": website.get('security_score', 0),
+                "mobile_score": website.get('mobile_score', 0),
+                "issues_count": website.get('issues_count', 0),
+                "opportunities_count": website.get('opportunities_count', 0),
+                "last_analyzed": website.get('last_analyzed', datetime.now()).isoformat() if isinstance(website.get('last_analyzed'), datetime) else website.get('last_analyzed', ''),
+                "detailed_issues": website.get('detailed_issues', []),
+                "detailed_opportunities": website.get('detailed_opportunities', []),
+                "conversion_rate": website.get('conversion_rate', 0)
+            }
+            report_data["website_details"].append(website_detail)
+            
+            # Categorize recommendations
+            for issue in website.get('detailed_issues', []):
+                if issue.get('severity') in ['critical', 'high']:
+                    report_data["recommendations_summary"]["high_priority_actions"].append({
+                        "website": website.get('website_name'),
+                        "action": issue.get('title'),
+                        "description": issue.get('fix_instructions')
+                    })
+                elif issue.get('effort', '').lower().startswith('low'):
+                    report_data["recommendations_summary"]["quick_wins"].append({
+                        "website": website.get('website_name'),
+                        "action": issue.get('title'),
+                        "description": issue.get('fix_instructions')
+                    })
+            
+            for opportunity in website.get('detailed_opportunities', []):
+                if opportunity.get('priority') == 'High':
+                    report_data["recommendations_summary"]["long_term_improvements"].append({
+                        "website": website.get('website_name'),
+                        "opportunity": opportunity.get('title'),
+                        "impact": opportunity.get('potential_impact'),
+                        "implementation": opportunity.get('implementation')
+                    })
+        
+        print(f"✅ Report generated successfully for {len(user_websites_from_db)} websites")
+        
+        return {
+            "status": "success",
+            "report": report_data,
+            "download_format": "json",
+            "file_size_kb": len(str(report_data)) // 1024 + 1
+        }
+        
+    except Exception as e:
+        print(f"❌ Exception in export_website_report: {e}")
+        import traceback
+        print(f"❌ Traceback: {traceback.format_exc()}")
+        raise HTTPException(status_code=500, detail=f"Export report error: {str(e)}")
+
 @analyzer_router.post("/admin/update-all-status")
 async def update_all_website_status() -> Dict[str, Any]:
     """Admin endpoint to update all pending websites to active status"""
