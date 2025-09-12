@@ -59,6 +59,11 @@ const WebsiteIntelligenceHub = () => {
   const [updating, setUpdating] = useState(false);
   const [showAddWebsite, setShowAddWebsite] = useState(false);
   const [newWebsite, setNewWebsite] = useState({ domain: '', name: '', type: 'E-commerce' });
+  
+  // Website details modal state
+  const [showWebsiteDetails, setShowWebsiteDetails] = useState(false);
+  const [selectedWebsite, setSelectedWebsite] = useState(null);
+  const [detailView, setDetailView] = useState('overview'); // 'overview', 'issues', 'opportunities', 'seo', 'performance'
 
   // Load data on component mount
   useEffect(() => {
