@@ -579,6 +579,59 @@ async def analyze_website(website_id: str, analysis_options: Optional[Dict[str, 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Website analysis error: {str(e)}")
 
+@analyzer_router.delete("/website/{website_id}")
+async def delete_website(website_id: str) -> Dict[str, Any]:
+    """Delete a website from user's account"""
+    try:
+        print(f"🔍 Attempting to delete website with ID: {website_id}")
+        print(f"🔍 Current websites in storage: {len(user_websites_storage)}")
+        
+        # Find the website in the in-memory storage
+        website_to_delete = None
+        for i, website in enumerate(user_websites_storage):
+            if website.get("website_id") == website_id:
+                website_to_delete = user_websites_storage.pop(i)
+                break
+        
+        if website_to_delete:
+            print(f"✅ Website deleted from storage: {website_to_delete['website_name']} ({website_to_delete['domain']})")
+            print(f"✅ Remaining websites in storage: {len(user_websites_storage)}")
+            
+            return {
+                "status": "success",
+                "message": f"Website '{website_to_delete['website_name']}' has been successfully deleted",
+                "deleted_website": {
+                    "website_id": website_to_delete["website_id"],
+                    "domain": website_to_delete["domain"],
+                    "website_name": website_to_delete["website_name"],
+                    "deleted_at": datetime.now().isoformat()
+                },
+                "remaining_websites": len(user_websites_storage)
+            }
+        else:
+            # Check if it's one of the static websites (cannot be deleted)
+            static_website_ids = ["web_001", "web_002", "web_003"]
+            if website_id in static_website_ids:
+                raise HTTPException(
+                    status_code=403, 
+                    detail="Cannot delete demo websites. Only user-added websites can be deleted."
+                )
+            
+            raise HTTPException(
+                status_code=404, 
+                detail=f"Website with ID {website_id} not found in your account"
+            )
+        
+    except HTTPException as he:
+        print(f"❌ HTTPException in delete_website: {he}")
+        raise he
+    except Exception as e:
+        print(f"❌ Exception in delete_website: {e}")
+        print(f"❌ Exception type: {type(e)}")
+        import traceback
+        print(f"❌ Traceback: {traceback.format_exc()}")
+        raise HTTPException(status_code=500, detail=f"Delete website error: {str(e)}")
+
 @analyzer_router.post("/update-all")
 async def update_all_websites() -> Dict[str, Any]:
     """Update analysis for all user's websites"""
