@@ -311,48 +311,52 @@ const WebsiteAnalyticsDashboard = ({
 
       {/* Key Performance Indicators */}
       <div className="grid gap-4 md:grid-cols-4">
-        <Card className="bg-gradient-to-br from-emerald-600/20 to-emerald-800/20 border-emerald-500/30">
+        <Card className="bg-gradient-to-br from-emerald-600/20 to-emerald-800/20 border-emerald-500/30 cursor-pointer hover:border-emerald-400/50 transition-all" onClick={() => showDataSource('kpi', 'websites_monitored', 'Websites Monitored', '3')}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-2xl font-bold text-white">3</div>
                 <div className="text-xs text-emerald-200">Websites Monitored</div>
+                <div className="text-xs text-emerald-300 mt-1 opacity-75">Click for data source</div>
               </div>
               <Globe className="h-8 w-8 text-emerald-400" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30">
+        <Card className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 border-blue-500/30 cursor-pointer hover:border-blue-400/50 transition-all" onClick={() => showDataSource('kpi', 'overall_health_score', 'Overall Health Score', '87.4%')}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-2xl font-bold text-white">87.4%</div>
                 <div className="text-xs text-blue-200">Overall Health Score</div>
+                <div className="text-xs text-blue-300 mt-1 opacity-75">Click for data source</div>
               </div>
               <Activity className="h-8 w-8 text-blue-400" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30">
+        <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 cursor-pointer hover:border-purple-400/50 transition-all" onClick={() => showDataSource('kpi', 'keywords_tracked', 'Keywords Tracked', '156')}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-2xl font-bold text-white">156</div>
                 <div className="text-xs text-purple-200">Keywords Tracked</div>
+                <div className="text-xs text-purple-300 mt-1 opacity-75">Click for data source</div>
               </div>
               <Search className="h-8 w-8 text-purple-400" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30">
+        <Card className="bg-gradient-to-br from-orange-600/20 to-orange-800/20 border-orange-500/30 cursor-pointer hover:border-orange-400/50 transition-all" onClick={() => showDataSource('kpi', 'performance_score', 'Performance Score', '87.3%')}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-2xl font-bold text-white">87.3%</div>
                 <div className="text-xs text-orange-200">Performance Score</div>
+                <div className="text-xs text-orange-300 mt-1 opacity-75">Click for data source</div>
               </div>
               <Zap className="h-8 w-8 text-orange-400" />
             </div>
