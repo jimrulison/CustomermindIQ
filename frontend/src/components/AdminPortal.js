@@ -1230,7 +1230,7 @@ const AdminPortalEnhanced = () => {
                     <div>
                       <p className="text-slate-400 text-sm">Active Discounts</p>
                       <p className="text-2xl font-bold text-green-400">
-                        {discounts.filter(discount => discount.is_active).length}
+                        {(discounts || []).filter(discount => discount.is_active).length}
                       </p>
                     </div>
                     <CheckCircle className="w-8 h-8 text-green-400" />
