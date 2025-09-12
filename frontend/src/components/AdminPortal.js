@@ -237,6 +237,171 @@ const AdminPortalEnhanced = () => {
     };
   };
 
+  // Permission details handler
+  const showPermissionDetails = (permission, apiKeyName) => {
+    const permissionDetails = {
+      'read_analytics': {
+        title: 'Read Analytics Permission',
+        description: 'Grants read-only access to analytics data and reporting endpoints',
+        icon: BarChart3,
+        color: 'blue',
+        capabilities: [
+          'View website analytics dashboards',
+          'Access visitor metrics and traffic data',
+          'Read conversion rates and performance metrics', 
+          'Download analytics reports (CSV/PDF)',
+          'View real-time analytics data',
+          'Access historical analytics data'
+        ],
+        endpoints: [
+          'GET /api/analytics/dashboard',
+          'GET /api/analytics/visitors',
+          'GET /api/analytics/conversions',
+          'GET /api/analytics/reports',
+          'GET /api/analytics/realtime'
+        ],
+        limitations: [
+          'Cannot modify analytics settings',
+          'Cannot delete analytics data',
+          'Cannot create custom reports',
+          'Read-only access to all endpoints'
+        ],
+        rateLimit: 'Standard rate limits apply (1000 requests/hour)',
+        security: 'Low security risk - read-only access'
+      },
+      'read_websites': {
+        title: 'Read Websites Permission',
+        description: 'Grants read-only access to website configuration and monitoring data',
+        icon: Globe,
+        color: 'green',
+        capabilities: [
+          'View website configurations and settings',
+          'Access website monitoring status',
+          'Read domain and SSL certificate info',
+          'View website performance metrics',
+          'Access SEO and technical audit data',
+          'Read website health scores'
+        ],
+        endpoints: [
+          'GET /api/websites/list',
+          'GET /api/websites/{id}/config',
+          'GET /api/websites/{id}/status',
+          'GET /api/websites/{id}/performance',
+          'GET /api/websites/monitoring'
+        ],
+        limitations: [
+          'Cannot add or remove websites',
+          'Cannot modify website settings',
+          'Cannot trigger manual scans',
+          'Read-only access to configurations'
+        ],
+        rateLimit: 'Standard rate limits apply (1000 requests/hour)',
+        security: 'Low security risk - read-only access'
+      },
+      'write_websites': {
+        title: 'Write Websites Permission',
+        description: 'Grants full read/write access to website management and configuration',
+        icon: Settings,
+        color: 'orange',
+        capabilities: [
+          'Add new websites to monitoring',
+          'Remove websites from tracking',
+          'Modify website configurations',
+          'Update domain and SSL settings',
+          'Trigger manual website scans',
+          'Configure monitoring alerts'
+        ],
+        endpoints: [
+          'POST /api/websites/add',
+          'PUT /api/websites/{id}/config',
+          'DELETE /api/websites/{id}',
+          'POST /api/websites/{id}/scan',
+          'PUT /api/websites/{id}/alerts'
+        ],
+        limitations: [
+          'Cannot access other users\' websites',
+          'Cannot modify billing settings',
+          'Subject to plan limits'
+        ],
+        rateLimit: 'Reduced rate limits (500 requests/hour)',
+        security: 'Medium security risk - can modify data'
+      },
+      'read_users': {
+        title: 'Read Users Permission',
+        description: 'Grants read-only access to user account information',
+        icon: User,
+        color: 'purple',
+        capabilities: [
+          'View user account details',
+          'Access user subscription information',
+          'Read user activity logs',
+          'View user preferences',
+          'Access support ticket history'
+        ],
+        endpoints: [
+          'GET /api/users/profile',
+          'GET /api/users/subscription',
+          'GET /api/users/activity',
+          'GET /api/users/preferences'
+        ],
+        limitations: [
+          'Cannot modify user data',
+          'Cannot access sensitive information',
+          'Cannot view other users\' data',
+          'PII data is masked'
+        ],
+        rateLimit: 'Standard rate limits apply (1000 requests/hour)',
+        security: 'Medium security risk - access to user data'
+      },
+      'admin_access': {
+        title: 'Admin Access Permission',
+        description: 'Grants full administrative access to all platform features',
+        icon: Shield,
+        color: 'red',
+        capabilities: [
+          'Full access to all API endpoints',
+          'User management and administration',
+          'System configuration and settings',
+          'Billing and subscription management',
+          'Support ticket management',
+          'Analytics and reporting administration'
+        ],
+        endpoints: [
+          'All API endpoints available',
+          'POST /api/admin/*',
+          'PUT /api/admin/*',
+          'DELETE /api/admin/*'
+        ],
+        limitations: [
+          'Use with extreme caution',
+          'Full system access',
+          'Can modify critical settings'
+        ],
+        rateLimit: 'Unlimited (admin privilege)',
+        security: 'HIGH SECURITY RISK - Full system access'
+      }
+    };
+
+    const details = permissionDetails[permission] || {
+      title: `${permission.replace('_', ' ').toUpperCase()} Permission`,
+      description: 'Custom permission with specific access rights',
+      icon: Key,
+      color: 'slate',
+      capabilities: ['Custom permission capabilities'],
+      endpoints: ['Custom API endpoints'],
+      limitations: ['Subject to standard limitations'],
+      rateLimit: 'Standard rate limits apply',
+      security: 'Security level varies by permission'
+    };
+
+    // Add the API key context
+    details.apiKeyName = apiKeyName;
+    details.currentPermission = permission;
+
+    setSelectedDataSource(details);
+    setShowDataSourceModal(true);
+  };
+
   // ===== NOTIFICATION FUNCTIONS =====
   
   const fetchNotifications = async () => {
