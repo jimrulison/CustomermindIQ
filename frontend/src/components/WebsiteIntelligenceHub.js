@@ -364,8 +364,21 @@ const WebsiteIntelligenceHub = () => {
               </div>
               <Globe className="h-8 w-8 text-blue-400" />
             </div>
-            <div className="mt-2 text-xs text-slate-400">
-              {membershipData?.website_limits?.websites_remaining || 0} slots remaining
+            <div className="mt-2 text-xs">
+              {(() => {
+                const currentWebsites = dashboardData?.dashboard?.websites_overview?.total_websites || 0;
+                const membershipTier = membershipData?.membership_details?.current_tier?.toLowerCase() || 'basic';
+                const tierLimits = { basic: 1, professional: 3, enterprise: 7 };
+                const maxWebsites = tierLimits[membershipTier] || 1;
+                const remaining = Math.max(0, maxWebsites - currentWebsites);
+                const isAtLimit = currentWebsites >= maxWebsites;
+                
+                return (
+                  <span className={isAtLimit ? 'text-red-300' : 'text-slate-400'}>
+                    {remaining > 0 ? `${remaining} slots remaining` : 'Limit reached - upgrade to add more'}
+                  </span>
+                );
+              })()}
             </div>
           </CardContent>
         </Card>
