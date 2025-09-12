@@ -655,25 +655,31 @@ const WebsiteIntelligenceHub = () => {
                 </DialogHeader>
                 <div className="space-y-4 py-4">
                   <div className="space-y-2">
-                    <label className="text-sm text-slate-300">Domain</label>
+                    <label htmlFor="website-domain" className="text-sm text-slate-300">Domain</label>
                     <Input
+                      id="website-domain"
                       placeholder="example.com"
                       value={newWebsite.domain}
                       onChange={(e) => setNewWebsite(prev => ({ ...prev, domain: e.target.value }))}
                       className="bg-slate-700 border-slate-600 text-white"
+                      aria-describedby="domain-help"
                     />
+                    <div id="domain-help" className="text-xs text-slate-500">Enter your website domain without http:// or https://</div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm text-slate-300">Website Name</label>
+                    <label htmlFor="website-name" className="text-sm text-slate-300">Website Name</label>
                     <Input
+                      id="website-name"
                       placeholder="My Awesome Website"
                       value={newWebsite.name}
                       onChange={(e) => setNewWebsite(prev => ({ ...prev, name: e.target.value }))}
                       className="bg-slate-700 border-slate-600 text-white"
+                      aria-describedby="name-help"
                     />
+                    <div id="name-help" className="text-xs text-slate-500">Choose a descriptive name for your website</div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm text-slate-300">Website Type</label>
+                    <label htmlFor="website-type" className="text-sm text-slate-300">Website Type</label>
                     <Select 
                       value={newWebsite.type} 
                       onValueChange={(value) => setNewWebsite(prev => ({ ...prev, type: value }))}
