@@ -434,11 +434,11 @@ Your request will be handled by our admin team within 2 hours.`);
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-8">
+    <div className="max-w-7xl mx-auto p-4 sm:p-6 space-y-6 sm:space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Subscription Management</h1>
-        <p className="text-gray-600">Manage your Customer Mind IQ subscription and billing</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Subscription Management</h1>
+        <p className="text-gray-600 text-sm sm:text-base">Manage your Customer Mind IQ subscription and billing</p>
       </div>
 
       {/* Error Display */}
