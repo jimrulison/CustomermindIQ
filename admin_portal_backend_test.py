@@ -446,7 +446,7 @@ class AdminPortalTester:
             
             if response.status_code == 200:
                 data = response.json()
-                banner_count = len(data) if isinstance(data, list) else data.get('total_banners', 0)
+                banner_count = len(data.get('banners', [])) if isinstance(data, dict) else len(data)
                 self.log_test(
                     "Get Banners", 
                     True, 
@@ -459,13 +459,16 @@ class AdminPortalTester:
         except Exception as e:
             self.log_test("Get Banners", False, f"Exception: {str(e)}")
         
-        # Test create banner
+        # Test create banner with correct field names
         try:
             banner_data = {
                 "title": "Test Banner",
                 "message": "Test banner for admin portal testing",
-                "type": "info",
-                "target_users": "all"
+                "banner_type": "info",  # Use correct field name
+                "target_users": [],  # Use empty list instead of string
+                "target_tiers": [],
+                "is_dismissible": True,
+                "priority": 1
             }
             
             start_time = datetime.now()
