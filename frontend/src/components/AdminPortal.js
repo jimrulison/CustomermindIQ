@@ -1789,8 +1789,8 @@ const AdminPortalEnhanced = () => {
                     <div>
                       <p className="text-slate-400 text-sm">Avg Refund Rate</p>
                       <p className="text-2xl font-bold text-yellow-400">
-                        {highRefundAffiliates.length > 0 
-                          ? (highRefundAffiliates.reduce((sum, a) => sum + a.refund_rate_90d, 0) / highRefundAffiliates.length).toFixed(1)
+                        {(highRefundAffiliates || []).length > 0 
+                          ? ((highRefundAffiliates || []).reduce((sum, a) => sum + a.refund_rate_90d, 0) / (highRefundAffiliates || []).length).toFixed(1)
                           : '0.0'
                         }%
                       </p>
