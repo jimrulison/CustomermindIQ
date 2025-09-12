@@ -107,24 +107,24 @@ const ContactForm = () => {
         {/* Contact Information */}
         <div className="space-y-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Get in Touch</h1>
-            <p className="text-gray-600 text-lg">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Get in Touch</h1>
+            <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
               Ready to transform your customer intelligence? Contact our team to learn how CustomerMind IQ can help you unlock growth opportunities.
             </p>
           </div>
 
           <div className="space-y-4">
-            <div className="flex items-center space-x-3">
-              <Mail className="w-5 h-5 text-blue-600" />
-              <span className="text-gray-600">support@customermindiq.com</span>
+            <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+              <Mail className="w-6 h-6 text-blue-600 flex-shrink-0" />
+              <span className="text-gray-600 text-sm sm:text-base break-all">support@customermindiq.com</span>
             </div>
-            <div className="flex items-center space-x-3">
-              <Phone className="w-5 h-5 text-blue-600" />
-              <span className="text-gray-600">+1 (555) 123-4567</span>
+            <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+              <Phone className="w-6 h-6 text-blue-600 flex-shrink-0" />
+              <span className="text-gray-600 text-sm sm:text-base">+1 (555) 123-4567</span>
             </div>
-            <div className="flex items-center space-x-3">
-              <Globe className="w-5 h-5 text-blue-600" />
-              <span className="text-gray-600">www.customermindiq.com</span>
+            <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+              <Globe className="w-6 h-6 text-blue-600 flex-shrink-0" />
+              <span className="text-gray-600 text-sm sm:text-base break-all">www.customermindiq.com</span>
             </div>
           </div>
 
