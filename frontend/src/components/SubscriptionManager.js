@@ -680,12 +680,12 @@ Your request will be handled by our admin team within 2 hours.`);
               <p className="text-gray-600 mb-4">
                 Our support team is here to assist you with any subscription or billing questions.
               </p>
-              <div className="flex justify-center space-x-4">
-                <Button variant="outline" size="sm" onClick={handleViewLegalDocs}>
+              <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+                <Button variant="outline" size="sm" onClick={handleViewLegalDocs} className="min-h-[44px]">
                   <Shield className="h-4 w-4 mr-2" />
                   View Legal Docs
                 </Button>
-                <Button variant="outline" size="sm" onClick={handleContactSupport}>
+                <Button variant="outline" size="sm" onClick={handleContactSupport} className="min-h-[44px]">
                   <Headphones className="h-4 w-4 mr-2" />
                   Contact Support
                 </Button>
