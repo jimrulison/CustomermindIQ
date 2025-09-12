@@ -60,6 +60,10 @@ const AdminPortalEnhanced = () => {
     emails: 0
   });
 
+  // Data source modal states
+  const [selectedDataSource, setSelectedDataSource] = useState(null);
+  const [showDataSourceModal, setShowDataSourceModal] = useState(false);
+
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
   const hasAdminAccess = user && (user.role === 'admin' || user.role === 'super_admin');
 
