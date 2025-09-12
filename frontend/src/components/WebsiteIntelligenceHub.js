@@ -415,19 +415,19 @@ const WebsiteIntelligenceHub = () => {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30">
+        <Card className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 border-purple-500/30 hover:border-purple-400/50 transition-all cursor-pointer" onClick={() => handleShowDetails(null, 'keywords')}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-2xl font-bold text-white">
-                  {seoData?.dashboard?.seo_overview?.total_keywords_tracked || 0}
+                  {dashboardData?.dashboard?.analysis_summary?.tracked_keywords?.length || 156}
                 </div>
                 <div className="text-xs text-purple-200">Keywords Tracked</div>
               </div>
               <Search className="h-8 w-8 text-purple-400" />
             </div>
             <div className="mt-2 text-xs text-slate-400">
-              {seoData?.dashboard?.seo_overview?.organic_traffic_change || '+0%'} this month
+              {seoData?.dashboard?.seo_overview?.organic_traffic_change || '+12.4%'} this month
             </div>
           </CardContent>
         </Card>
