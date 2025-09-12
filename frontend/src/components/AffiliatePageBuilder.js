@@ -445,7 +445,7 @@ const AffiliatePageBuilder = ({ affiliateId }) => {
                                     <div className="footer-branding flex flex-col items-center gap-2">
                                         <img 
                                             src="https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/wzbjjt9q_download.svg" 
-                                            alt="CustomerMind IQ" 
+                                            alt="CustomerMind IQ company logo - AI-powered customer intelligence platform" 
                                             className="h-8 filter brightness-0 invert"
                                         />
                                         <p>Affiliate #{currentPage.affiliate_number} | CustomerMind IQ</p>
