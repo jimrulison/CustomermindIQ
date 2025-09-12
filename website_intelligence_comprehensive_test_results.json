@@ -1,9 +1,9 @@
 {
   "test_summary": {
-    "total_tests": 0,
-    "passed_tests": 0,
-    "success_rate": 0,
-    "test_timestamp": "2025-09-12T15:42:22.563589",
+    "total_tests": 18,
+    "passed_tests": 15,
+    "success_rate": 83.33333333333334,
+    "test_timestamp": "2025-09-12T15:43:26.069368",
     "focus_areas": [
       "MongoDB Integration & Data Persistence",
       "Add Website Functionality",
@@ -13,5 +13,1403 @@
       "Error Handling & Edge Cases"
     ]
   },
-  "detailed_results": []
+  "detailed_results": [
+    {
+      "test_name": "MongoDB Integration - Dashboard Data Retrieval",
+      "method": "GET",
+      "endpoint": "/api/website-intelligence/dashboard",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/dashboard",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "dashboard": {
+          "generated_date": "2025-09-12T15:43:24.571254",
+          "websites_overview": {
+            "total_websites": 3,
+            "active_websites": 3,
+            "websites_analyzed": 3,
+            "last_update": "2025-09-12T13:43:24.143505",
+            "membership_tier": "Professional",
+            "websites_allowed": 7,
+            "websites_remaining": 4,
+            "next_auto_update": "2025-09-13T13:43:24.143517",
+            "overall_health_score": 87.4
+          },
+          "user_websites": [
+            {
+              "website_id": "web_001",
+              "domain": "myawesomestore.com",
+              "website_name": "MYAWESOMESTORE",
+              "website_type": "E-commerce",
+              "status": "active",
+              "health_score": 92.3,
+              "last_analyzed": "2025-09-12T13:43:24.143522",
+              "connected_services": [
+                "Google Analytics",
+                "Shopify",
+                "Facebook Pixel"
+              ],
+              "monthly_visitors": 45678,
+              "conversion_rate": 3.2,
+              "seo_score": 89.5,
+              "performance_score": 94.2,
+              "security_score": 96.8,
+              "mobile_score": 87.6,
+              "issues_count": 3,
+              "opportunities_count": 7
+            },
+            {
+              "website_id": "web_002",
+              "domain": "techblogpro.net",
+              "website_name": "TechBlog Pro",
+              "website_type": "Blog",
+              "status": "active",
+              "health_score": 85.7,
+              "last_analyzed": "2025-09-12T12:43:24.143527",
+              "connected_services": [
+                "Google Analytics",
+                "WordPress"
+              ],
+              "monthly_visitors": 12340,
+              "conversion_rate": 1.8,
+              "seo_score": 83.2,
+              "performance_score": 88.9,
+              "security_score": 92.1,
+              "mobile_score": 79.4,
+              "issues_count": 8,
+              "opportunities_count": 12
+            },
+            {
+              "website_id": "web_003",
+              "domain": "mycorporatesite.com",
+              "website_name": "My Corporate Site",
+              "website_type": "Corporate",
+              "status": "active",
+              "health_score": 84.6,
+              "last_analyzed": "2025-09-12T14:43:24.143541",
+              "connected_services": [
+                "Google Analytics",
+                "Google Search Console"
+              ],
+              "monthly_visitors": 8950,
+              "conversion_rate": 5.7,
+              "seo_score": 91.8,
+              "performance_score": 76.2,
+              "security_score": 89.4,
+              "mobile_score": 81.5,
+              "issues_count": 5,
+              "opportunities_count": 9
+            }
+          ],
+          "analysis_summary": {
+            "total_pages_analyzed": 1247,
+            "total_issues_found": 16,
+            "critical_issues": 2,
+            "high_priority_issues": 5,
+            "medium_priority_issues": 6,
+            "low_priority_issues": 3,
+            "opportunities_identified": 28,
+            "avg_page_load_time": 2.1,
+            "avg_seo_score": 88.2,
+            "avg_mobile_score": 84.0,
+            "avg_security_score": 89.8
+          },
+          "technical_analysis": {
+            "website_technologies": [
+              {
+                "website": "myawesomestore.com",
+                "technologies": [
+                  {
+                    "name": "Shopify",
+                    "category": "E-commerce Platform",
+                    "version": "Latest"
+                  },
+                  {
+                    "name": "Google Analytics",
+                    "category": "Analytics",
+                    "version": "4"
+                  },
+                  {
+                    "name": "Cloudflare",
+                    "category": "CDN",
+                    "version": "Latest"
+                  },
+                  {
+                    "name": "React",
+                    "category": "JavaScript Framework",
+                    "version": "18.2"
+                  },
+                  {
+                    "name": "Stripe",
+                    "category": "Payment Processor",
+                    "version": "Latest"
+                  }
+                ]
+              },
+              {
+                "website": "myblogsite.net",
+                "technologies": [
+                  {
+                    "name": "WordPress",
+                    "category": "CMS",
+                    "version": "6.3"
+                  },
+                  {
+                    "name": "Elementor",
+                    "category": "Page Builder",
+                    "version": "3.15"
+                  },
+                  {
+                    "name": "Yoast SEO",
+                    "category": "SEO Plugin",
+                    "version": "21.0"
+                  },
+                  {
+                    "name": "WooCommerce",
+                    "category": "E-commerce",
+                    "version": "8.0"
+                  }
+                ]
+              }
+            ],
+            "hosting_analysis": [
+              {
+                "website": "myawesomestore.com",
+                "hosting_provider": "Shopify Hosting",
+                "server_location": "United States",
+                "ssl_certificate": "Valid",
+                "ssl_grade": "A+",
+                "cdn_enabled": true,
+                "backup_status": "Automated",
+                "uptime_percentage": 99.97
+              },
+              {
+                "website": "myblogsite.net",
+                "hosting_provider": "SiteGround",
+                "server_location": "Germany",
+                "ssl_certificate": "Valid",
+                "ssl_grade": "A",
+                "cdn_enabled": true,
+                "backup_status": "Daily",
+                "uptime_percentage": 99.89
+              }
+            ]
+          },
+          "seo_analysis": {
+            "total_keywords_tracked": 156,
+            "keywords_ranking_top_10": 23,
+            "keywords_ranking_top_50": 67,
+            "organic_traffic_trend": "increasing",
+            "backlinks_total": 2847,
+            "referring_domains": 345,
+            "domain_authority": 48.3,
+            "page_authority_avg": 32.7,
+            "seo_issues": [
+              {
+                "issue": "Missing meta descriptions",
+                "severity": "medium",
+                "pages_affected": 12,
+                "websites_affected": [
+                  "myblogsite.net"
+                ]
+              },
+              {
+                "issue": "Slow page load times",
+                "severity": "high",
+                "pages_affected": 8,
+                "websites_affected": [
+                  "mycorporatesite.com"
+                ]
+              },
+              {
+                "issue": "Mobile usability issues",
+                "severity": "medium",
+                "pages_affected": 15,
+                "websites_affected": [
+                  "myblogsite.net",
+                  "mycorporatesite.com"
+                ]
+              }
+            ]
+          },
+          "performance_metrics": {
+            "core_web_vitals": {
+              "largest_contentful_paint": 2.1,
+              "first_input_delay": 85,
+              "cumulative_layout_shift": 0.08,
+              "overall_score": "Good"
+            },
+            "page_speed_insights": [
+              {
+                "website": "myawesomestore.com",
+                "desktop_score": 94,
+                "mobile_score": 87,
+                "opportunities": [
+                  {
+                    "opportunity": "Optimize images",
+                    "savings_ms": 340
+                  },
+                  {
+                    "opportunity": "Reduce unused CSS",
+                    "savings_ms": 180
+                  }
+                ]
+              },
+              {
+                "website": "myblogsite.net",
+                "desktop_score": 89,
+                "mobile_score": 76,
+                "opportunities": [
+                  {
+                    "opportunity": "Optimize server response time",
+                    "savings_ms": 890
+                  },
+                  {
+                    "opportunity": "Eliminate render-blocking resources",
+                    "savings_ms": 450
+                  }
+                ]
+              }
+            ],
+            "uptime_monitoring": [
+              {
+                "website": "myawesomestore.com",
+                "uptime_percentage": 99.97,
+                "avg_response_time": 245,
+                "incidents_30d": 1,
+                "last_downtime": "2025-08-25T15:43:24.571225"
+              },
+              {
+                "website": "myblogsite.net",
+                "uptime_percentage": 99.89,
+                "avg_response_time": 567,
+                "incidents_30d": 3,
+                "last_downtime": "2025-09-07T15:43:24.571235"
+              }
+            ]
+          },
+          "security_analysis": {
+            "security_score_avg": 89.8,
+            "vulnerabilities_found": 2,
+            "security_headers": [
+              {
+                "website": "myawesomestore.com",
+                "https_enforced": true,
+                "hsts_enabled": true,
+                "xss_protection": true,
+                "content_security_policy": true,
+                "security_grade": "A+"
+              },
+              {
+                "website": "myblogsite.net",
+                "https_enforced": true,
+                "hsts_enabled": false,
+                "xss_protection": true,
+                "content_security_policy": false,
+                "security_grade": "B+"
+              }
+            ],
+            "ssl_analysis": [
+              {
+                "website": "myawesomestore.com",
+                "ssl_grade": "A+",
+                "certificate_valid": true,
+                "expires_in_days": 87,
+                "issuer": "Let's Encrypt"
+              },
+              {
+                "website": "myblogsite.net",
+                "ssl_grade": "A",
+                "certificate_valid": true,
+                "expires_in_days": 156,
+                "issuer": "Sectigo"
+              }
+            ]
+          },
+          "content_analysis": {
+            "total_pages": 1247,
+            "pages_with_content_issues": 34,
+            "duplicate_content_pages": 8,
+            "thin_content_pages": 12,
+            "missing_images_alt_text": 67,
+            "broken_links": 15,
+            "content_quality_score": 86.7,
+            "readability_analysis": [
+              {
+                "website": "myawesomestore.com",
+                "avg_reading_level": "Grade 8",
+                "readability_score": 78.4,
+                "avg_sentence_length": 16.2,
+                "passive_voice_percentage": 12.8
+              },
+              {
+                "website": "myblogsite.net",
+                "avg_reading_level": "Grade 10",
+                "readability_score": 71.9,
+                "avg_sentence_length": 19.8,
+                "passive_voice_percentage": 18.4
+              }
+            ]
+          },
+          "business_insights": {
+            "revenue_correlation": {
+              "website_performance_to_revenue": 0.847,
+              "seo_score_to_conversions": 0.762,
+              "page_speed_to_bounce_rate": -0.689,
+              "mobile_score_to_mobile_revenue": 0.823
+            },
+            "optimization_opportunities": [
+              {
+                "opportunity": "Improve mobile performance on myblogsite.net",
+                "potential_impact": "15-25% increase in mobile conversions",
+                "effort_required": "Medium",
+                "estimated_revenue_impact": "$2,340/month"
+              },
+              {
+                "opportunity": "Fix server response time on mycorporatesite.com",
+                "potential_impact": "10-15% reduction in bounce rate",
+                "effort_required": "High",
+                "estimated_revenue_impact": "$890/month"
+              },
+              {
+                "opportunity": "Optimize SEO meta descriptions across all sites",
+                "potential_impact": "5-10% increase in organic traffic",
+                "effort_required": "Low",
+                "estimated_revenue_impact": "$1,560/month"
+              }
+            ],
+            "competitive_insights": [
+              {
+                "insight": "Your e-commerce site loads 23% faster than industry average",
+                "advantage": "Higher conversion potential",
+                "recommendation": "Leverage speed advantage in marketing"
+              },
+              {
+                "insight": "Blog content readability is above average for your niche",
+                "advantage": "Better user engagement",
+                "recommendation": "Create more long-form content"
+              }
+            ]
+          },
+          "recent_updates": [
+            {
+              "update_id": "upd_001",
+              "timestamp": "2025-09-12T13:43:24.571248",
+              "website": "myawesomestore.com",
+              "update_type": "Full Analysis",
+              "changes_detected": [
+                "New product pages added (+15)",
+                "Core Web Vitals improved (+3.2%)",
+                "2 new keywords ranking in top 50"
+              ],
+              "status": "completed"
+            },
+            {
+              "update_id": "upd_002",
+              "timestamp": "2025-09-12T09:43:24.571252",
+              "website": "myblogsite.net",
+              "update_type": "SEO Update",
+              "changes_detected": [
+                "3 new blog posts published",
+                "Meta descriptions updated",
+                "Internal linking improved"
+              ],
+              "status": "completed"
+            }
+          ],
+          "key_insights": [
+            "myawesomestore.com performing 23% above industry average",
+            "2 critical security headers missing on myblogsite.net",
+            "Potential $4,790/month revenue increase from identified optimizations",
+            "87.4% overall website health score across all properties",
+            "Mobile optimization needed for 2 of 3 websites"
+          ],
+          "action_items": [
+            {
+              "priority": "high",
+              "action": "Fix server response time on mycorporatesite.com",
+              "impact": "$890/month potential revenue increase",
+              "effort": "2-3 days"
+            },
+            {
+              "priority": "medium",
+              "action": "Add missing security headers to myblogsite.net",
+              "impact": "Improve security grade from B+ to A",
+              "effort": "4-6 hours"
+            },
+            {
+              "priority": "low",
+              "action": "Optimize meta descriptions across all sites",
+              "impact": "5-10% organic traffic increase",
+              "effort": "1-2 days"
+            }
+          ]
+        }
+      },
+      "timestamp": "2025-09-12T15:43:24.574305"
+    },
+    {
+      "test_name": "Add E-commerce Website",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/website/add",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/add",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "website_id": "962fe778-bd13-4614-b2cb-c7a3e2f48222",
+        "website_details": {
+          "domain": "teststore.example.com",
+          "website_name": "Test E-commerce Store",
+          "website_type": "E-commerce",
+          "added_date": "2025-09-12T15:43:24.628364",
+          "status": "pending_verification"
+        },
+        "verification_steps": [
+          {
+            "step": 1,
+            "title": "Domain Ownership Verification",
+            "description": "Verify you own this domain",
+            "methods": [
+              "DNS TXT Record",
+              "HTML File Upload",
+              "Meta Tag"
+            ]
+          },
+          {
+            "step": 2,
+            "title": "Connect Analytics Services",
+            "description": "Optional: Connect Google Analytics, Search Console",
+            "methods": [
+              "OAuth Integration",
+              "API Key"
+            ]
+          },
+          {
+            "step": 3,
+            "title": "Initial Analysis",
+            "description": "Run comprehensive website analysis",
+            "estimated_time": "5-10 minutes"
+          }
+        ],
+        "next_steps": [
+          "Complete domain verification",
+          "Configure analytics connections",
+          "Run initial website analysis",
+          "Review analysis results"
+        ]
+      },
+      "timestamp": "2025-09-12T15:43:24.680166"
+    },
+    {
+      "test_name": "Add Blog Website",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/website/add",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/add",
+      "status_code": 403,
+      "expected_status": 200,
+      "status_ok": false,
+      "json_valid": true,
+      "test_passed": false,
+      "response_data": {
+        "detail": "Website limit reached for professional tier. Upgrade to add more websites."
+      },
+      "timestamp": "2025-09-12T15:43:24.734073"
+    },
+    {
+      "test_name": "Add Corporate Website",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/website/add",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/add",
+      "status_code": 403,
+      "expected_status": 200,
+      "status_ok": false,
+      "json_valid": true,
+      "test_passed": false,
+      "response_data": {
+        "detail": "Website limit reached for professional tier. Upgrade to add more websites."
+      },
+      "timestamp": "2025-09-12T15:43:24.787180"
+    },
+    {
+      "test_name": "Test Membership Limit Enforcement",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/website/add",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/add",
+      "status_code": 403,
+      "expected_status": 403,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "detail": "Website limit reached for basic tier. Upgrade to add more websites."
+      },
+      "timestamp": "2025-09-12T15:43:24.882653"
+    },
+    {
+      "test_name": "Delete User-Added Website",
+      "method": "DELETE",
+      "endpoint": "/api/website-intelligence/website/962fe778-bd13-4614-b2cb-c7a3e2f48222",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/962fe778-bd13-4614-b2cb-c7a3e2f48222",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "message": "Website 'Test E-commerce Store' has been successfully deleted",
+        "deleted_website": {
+          "website_id": "962fe778-bd13-4614-b2cb-c7a3e2f48222",
+          "domain": "teststore.example.com",
+          "website_name": "Test E-commerce Store",
+          "deleted_at": "2025-09-12T15:43:25.000796"
+        },
+        "remaining_websites": 0
+      },
+      "timestamp": "2025-09-12T15:43:25.035713"
+    },
+    {
+      "test_name": "Prevent Deletion of Static Demo Website (web_001)",
+      "method": "DELETE",
+      "endpoint": "/api/website-intelligence/website/web_001",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/web_001",
+      "status_code": 403,
+      "expected_status": 403,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "detail": "Cannot delete demo websites. Only user-added websites can be deleted."
+      },
+      "timestamp": "2025-09-12T15:43:25.123447"
+    },
+    {
+      "test_name": "Prevent Deletion of Static Demo Website (web_002)",
+      "method": "DELETE",
+      "endpoint": "/api/website-intelligence/website/web_002",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/web_002",
+      "status_code": 403,
+      "expected_status": 403,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "detail": "Cannot delete demo websites. Only user-added websites can be deleted."
+      },
+      "timestamp": "2025-09-12T15:43:25.206266"
+    },
+    {
+      "test_name": "Prevent Deletion of Static Demo Website (web_003)",
+      "method": "DELETE",
+      "endpoint": "/api/website-intelligence/website/web_003",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/web_003",
+      "status_code": 403,
+      "expected_status": 403,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "detail": "Cannot delete demo websites. Only user-added websites can be deleted."
+      },
+      "timestamp": "2025-09-12T15:43:25.288289"
+    },
+    {
+      "test_name": "Delete Non-Existent Website (404 Error)",
+      "method": "DELETE",
+      "endpoint": "/api/website-intelligence/website/4122888c-e763-4e5d-b02a-202941aa92e6",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/4122888c-e763-4e5d-b02a-202941aa92e6",
+      "status_code": 404,
+      "expected_status": 404,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "detail": "Website with ID 4122888c-e763-4e5d-b02a-202941aa92e6 not found in your account"
+      },
+      "timestamp": "2025-09-12T15:43:25.375647"
+    },
+    {
+      "test_name": "Update All Websites",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/update-all",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/update-all",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "update_id": "ca8673d8-cb6a-4d44-979d-e39546f0843d",
+        "update_started": "2025-09-12T15:43:25.434543",
+        "websites_to_update": 3,
+        "estimated_completion": "2025-09-12T15:58:25.434551",
+        "update_queue": [
+          {
+            "website_id": "web_001",
+            "domain": "myawesomestore.com",
+            "status": "running",
+            "progress": 12.3,
+            "estimated_time": "5 minutes"
+          },
+          {
+            "website_id": "web_002",
+            "domain": "myblogsite.net",
+            "status": "queued",
+            "progress": 0,
+            "estimated_time": "6 minutes"
+          },
+          {
+            "website_id": "web_003",
+            "domain": "mycorporatesite.com",
+            "status": "queued",
+            "progress": 0,
+            "estimated_time": "4 minutes"
+          }
+        ],
+        "update_types": [
+          "SEO metrics refresh",
+          "Performance testing",
+          "Security scan update",
+          "Content analysis",
+          "Technical audit",
+          "Keyword ranking check"
+        ],
+        "notification_settings": {
+          "email_on_completion": true,
+          "slack_notification": false,
+          "dashboard_update": true
+        }
+      },
+      "timestamp": "2025-09-12T15:43:25.437006"
+    },
+    {
+      "test_name": "MongoDB Data Quality - DateTime Handling",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/website/add",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/add",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "website_id": "d1b7409a-f603-4a72-8461-dbd9eaac76f9",
+        "website_details": {
+          "domain": "datetime-test.example.com",
+          "website_name": "DateTime Test Site",
+          "website_type": "General",
+          "added_date": "2025-09-12T15:43:25.489061",
+          "status": "pending_verification"
+        },
+        "verification_steps": [
+          {
+            "step": 1,
+            "title": "Domain Ownership Verification",
+            "description": "Verify you own this domain",
+            "methods": [
+              "DNS TXT Record",
+              "HTML File Upload",
+              "Meta Tag"
+            ]
+          },
+          {
+            "step": 2,
+            "title": "Connect Analytics Services",
+            "description": "Optional: Connect Google Analytics, Search Console",
+            "methods": [
+              "OAuth Integration",
+              "API Key"
+            ]
+          },
+          {
+            "step": 3,
+            "title": "Initial Analysis",
+            "description": "Run comprehensive website analysis",
+            "estimated_time": "5-10 minutes"
+          }
+        ],
+        "next_steps": [
+          "Complete domain verification",
+          "Configure analytics connections",
+          "Run initial website analysis",
+          "Review analysis results"
+        ]
+      },
+      "timestamp": "2025-09-12T15:43:25.526475"
+    },
+    {
+      "test_name": "Verify Data Persistence After Add",
+      "method": "GET",
+      "endpoint": "/api/website-intelligence/dashboard",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/dashboard",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "dashboard": {
+          "generated_date": "2025-09-12T15:43:25.605954",
+          "websites_overview": {
+            "total_websites": 3,
+            "active_websites": 3,
+            "websites_analyzed": 3,
+            "last_update": "2025-09-12T13:43:25.573793",
+            "membership_tier": "Professional",
+            "websites_allowed": 7,
+            "websites_remaining": 4,
+            "next_auto_update": "2025-09-13T13:43:25.573805",
+            "overall_health_score": 87.4
+          },
+          "user_websites": [
+            {
+              "website_id": "web_001",
+              "domain": "myawesomestore.com",
+              "website_name": "MYAWESOMESTORE",
+              "website_type": "E-commerce",
+              "status": "active",
+              "health_score": 92.3,
+              "last_analyzed": "2025-09-12T13:43:25.573811",
+              "connected_services": [
+                "Google Analytics",
+                "Shopify",
+                "Facebook Pixel"
+              ],
+              "monthly_visitors": 45678,
+              "conversion_rate": 3.2,
+              "seo_score": 89.5,
+              "performance_score": 94.2,
+              "security_score": 96.8,
+              "mobile_score": 87.6,
+              "issues_count": 3,
+              "opportunities_count": 7
+            },
+            {
+              "website_id": "web_002",
+              "domain": "techblogpro.net",
+              "website_name": "TechBlog Pro",
+              "website_type": "Blog",
+              "status": "active",
+              "health_score": 85.7,
+              "last_analyzed": "2025-09-12T12:43:25.573816",
+              "connected_services": [
+                "Google Analytics",
+                "WordPress"
+              ],
+              "monthly_visitors": 12340,
+              "conversion_rate": 1.8,
+              "seo_score": 83.2,
+              "performance_score": 88.9,
+              "security_score": 92.1,
+              "mobile_score": 79.4,
+              "issues_count": 8,
+              "opportunities_count": 12
+            },
+            {
+              "website_id": "web_003",
+              "domain": "mycorporatesite.com",
+              "website_name": "My Corporate Site",
+              "website_type": "Corporate",
+              "status": "active",
+              "health_score": 84.6,
+              "last_analyzed": "2025-09-12T14:43:25.573819",
+              "connected_services": [
+                "Google Analytics",
+                "Google Search Console"
+              ],
+              "monthly_visitors": 8950,
+              "conversion_rate": 5.7,
+              "seo_score": 91.8,
+              "performance_score": 76.2,
+              "security_score": 89.4,
+              "mobile_score": 81.5,
+              "issues_count": 5,
+              "opportunities_count": 9
+            },
+            {
+              "website_id": "d1b7409a-f603-4a72-8461-dbd9eaac76f9",
+              "domain": "datetime-test.example.com",
+              "website_name": "DateTime Test Site",
+              "website_type": "General",
+              "status": "pending_verification",
+              "health_score": 82.3,
+              "last_analyzed": "2025-09-12T15:43:25.489061",
+              "connected_services": [],
+              "monthly_visitors": 10629,
+              "conversion_rate": 3.7,
+              "seo_score": 76.2,
+              "performance_score": 84.7,
+              "security_score": 83.5,
+              "mobile_score": 72.8,
+              "issues_count": 11,
+              "opportunities_count": 14,
+              "created_at": "2025-09-12T15:43:25.489081",
+              "updated_at": "2025-09-12T15:43:25.489082"
+            }
+          ],
+          "analysis_summary": {
+            "total_pages_analyzed": 1247,
+            "total_issues_found": 16,
+            "critical_issues": 2,
+            "high_priority_issues": 5,
+            "medium_priority_issues": 6,
+            "low_priority_issues": 3,
+            "opportunities_identified": 28,
+            "avg_page_load_time": 2.1,
+            "avg_seo_score": 88.2,
+            "avg_mobile_score": 84.0,
+            "avg_security_score": 89.8
+          },
+          "technical_analysis": {
+            "website_technologies": [
+              {
+                "website": "myawesomestore.com",
+                "technologies": [
+                  {
+                    "name": "Shopify",
+                    "category": "E-commerce Platform",
+                    "version": "Latest"
+                  },
+                  {
+                    "name": "Google Analytics",
+                    "category": "Analytics",
+                    "version": "4"
+                  },
+                  {
+                    "name": "Cloudflare",
+                    "category": "CDN",
+                    "version": "Latest"
+                  },
+                  {
+                    "name": "React",
+                    "category": "JavaScript Framework",
+                    "version": "18.2"
+                  },
+                  {
+                    "name": "Stripe",
+                    "category": "Payment Processor",
+                    "version": "Latest"
+                  }
+                ]
+              },
+              {
+                "website": "myblogsite.net",
+                "technologies": [
+                  {
+                    "name": "WordPress",
+                    "category": "CMS",
+                    "version": "6.3"
+                  },
+                  {
+                    "name": "Elementor",
+                    "category": "Page Builder",
+                    "version": "3.15"
+                  },
+                  {
+                    "name": "Yoast SEO",
+                    "category": "SEO Plugin",
+                    "version": "21.0"
+                  },
+                  {
+                    "name": "WooCommerce",
+                    "category": "E-commerce",
+                    "version": "8.0"
+                  }
+                ]
+              }
+            ],
+            "hosting_analysis": [
+              {
+                "website": "myawesomestore.com",
+                "hosting_provider": "Shopify Hosting",
+                "server_location": "United States",
+                "ssl_certificate": "Valid",
+                "ssl_grade": "A+",
+                "cdn_enabled": true,
+                "backup_status": "Automated",
+                "uptime_percentage": 99.97
+              },
+              {
+                "website": "myblogsite.net",
+                "hosting_provider": "SiteGround",
+                "server_location": "Germany",
+                "ssl_certificate": "Valid",
+                "ssl_grade": "A",
+                "cdn_enabled": true,
+                "backup_status": "Daily",
+                "uptime_percentage": 99.89
+              }
+            ]
+          },
+          "seo_analysis": {
+            "total_keywords_tracked": 156,
+            "keywords_ranking_top_10": 23,
+            "keywords_ranking_top_50": 67,
+            "organic_traffic_trend": "increasing",
+            "backlinks_total": 2847,
+            "referring_domains": 345,
+            "domain_authority": 48.3,
+            "page_authority_avg": 32.7,
+            "seo_issues": [
+              {
+                "issue": "Missing meta descriptions",
+                "severity": "medium",
+                "pages_affected": 12,
+                "websites_affected": [
+                  "myblogsite.net"
+                ]
+              },
+              {
+                "issue": "Slow page load times",
+                "severity": "high",
+                "pages_affected": 8,
+                "websites_affected": [
+                  "mycorporatesite.com"
+                ]
+              },
+              {
+                "issue": "Mobile usability issues",
+                "severity": "medium",
+                "pages_affected": 15,
+                "websites_affected": [
+                  "myblogsite.net",
+                  "mycorporatesite.com"
+                ]
+              }
+            ]
+          },
+          "performance_metrics": {
+            "core_web_vitals": {
+              "largest_contentful_paint": 2.1,
+              "first_input_delay": 85,
+              "cumulative_layout_shift": 0.08,
+              "overall_score": "Good"
+            },
+            "page_speed_insights": [
+              {
+                "website": "myawesomestore.com",
+                "desktop_score": 94,
+                "mobile_score": 87,
+                "opportunities": [
+                  {
+                    "opportunity": "Optimize images",
+                    "savings_ms": 340
+                  },
+                  {
+                    "opportunity": "Reduce unused CSS",
+                    "savings_ms": 180
+                  }
+                ]
+              },
+              {
+                "website": "myblogsite.net",
+                "desktop_score": 89,
+                "mobile_score": 76,
+                "opportunities": [
+                  {
+                    "opportunity": "Optimize server response time",
+                    "savings_ms": 890
+                  },
+                  {
+                    "opportunity": "Eliminate render-blocking resources",
+                    "savings_ms": 450
+                  }
+                ]
+              }
+            ],
+            "uptime_monitoring": [
+              {
+                "website": "myawesomestore.com",
+                "uptime_percentage": 99.97,
+                "avg_response_time": 245,
+                "incidents_30d": 1,
+                "last_downtime": "2025-08-25T15:43:25.605927"
+              },
+              {
+                "website": "myblogsite.net",
+                "uptime_percentage": 99.89,
+                "avg_response_time": 567,
+                "incidents_30d": 3,
+                "last_downtime": "2025-09-07T15:43:25.605937"
+              }
+            ]
+          },
+          "security_analysis": {
+            "security_score_avg": 89.8,
+            "vulnerabilities_found": 2,
+            "security_headers": [
+              {
+                "website": "myawesomestore.com",
+                "https_enforced": true,
+                "hsts_enabled": true,
+                "xss_protection": true,
+                "content_security_policy": true,
+                "security_grade": "A+"
+              },
+              {
+                "website": "myblogsite.net",
+                "https_enforced": true,
+                "hsts_enabled": false,
+                "xss_protection": true,
+                "content_security_policy": false,
+                "security_grade": "B+"
+              }
+            ],
+            "ssl_analysis": [
+              {
+                "website": "myawesomestore.com",
+                "ssl_grade": "A+",
+                "certificate_valid": true,
+                "expires_in_days": 87,
+                "issuer": "Let's Encrypt"
+              },
+              {
+                "website": "myblogsite.net",
+                "ssl_grade": "A",
+                "certificate_valid": true,
+                "expires_in_days": 156,
+                "issuer": "Sectigo"
+              }
+            ]
+          },
+          "content_analysis": {
+            "total_pages": 1247,
+            "pages_with_content_issues": 34,
+            "duplicate_content_pages": 8,
+            "thin_content_pages": 12,
+            "missing_images_alt_text": 67,
+            "broken_links": 15,
+            "content_quality_score": 86.7,
+            "readability_analysis": [
+              {
+                "website": "myawesomestore.com",
+                "avg_reading_level": "Grade 8",
+                "readability_score": 78.4,
+                "avg_sentence_length": 16.2,
+                "passive_voice_percentage": 12.8
+              },
+              {
+                "website": "myblogsite.net",
+                "avg_reading_level": "Grade 10",
+                "readability_score": 71.9,
+                "avg_sentence_length": 19.8,
+                "passive_voice_percentage": 18.4
+              }
+            ]
+          },
+          "business_insights": {
+            "revenue_correlation": {
+              "website_performance_to_revenue": 0.847,
+              "seo_score_to_conversions": 0.762,
+              "page_speed_to_bounce_rate": -0.689,
+              "mobile_score_to_mobile_revenue": 0.823
+            },
+            "optimization_opportunities": [
+              {
+                "opportunity": "Improve mobile performance on myblogsite.net",
+                "potential_impact": "15-25% increase in mobile conversions",
+                "effort_required": "Medium",
+                "estimated_revenue_impact": "$2,340/month"
+              },
+              {
+                "opportunity": "Fix server response time on mycorporatesite.com",
+                "potential_impact": "10-15% reduction in bounce rate",
+                "effort_required": "High",
+                "estimated_revenue_impact": "$890/month"
+              },
+              {
+                "opportunity": "Optimize SEO meta descriptions across all sites",
+                "potential_impact": "5-10% increase in organic traffic",
+                "effort_required": "Low",
+                "estimated_revenue_impact": "$1,560/month"
+              }
+            ],
+            "competitive_insights": [
+              {
+                "insight": "Your e-commerce site loads 23% faster than industry average",
+                "advantage": "Higher conversion potential",
+                "recommendation": "Leverage speed advantage in marketing"
+              },
+              {
+                "insight": "Blog content readability is above average for your niche",
+                "advantage": "Better user engagement",
+                "recommendation": "Create more long-form content"
+              }
+            ]
+          },
+          "recent_updates": [
+            {
+              "update_id": "upd_001",
+              "timestamp": "2025-09-12T13:43:25.605949",
+              "website": "myawesomestore.com",
+              "update_type": "Full Analysis",
+              "changes_detected": [
+                "New product pages added (+15)",
+                "Core Web Vitals improved (+3.2%)",
+                "2 new keywords ranking in top 50"
+              ],
+              "status": "completed"
+            },
+            {
+              "update_id": "upd_002",
+              "timestamp": "2025-09-12T09:43:25.605952",
+              "website": "myblogsite.net",
+              "update_type": "SEO Update",
+              "changes_detected": [
+                "3 new blog posts published",
+                "Meta descriptions updated",
+                "Internal linking improved"
+              ],
+              "status": "completed"
+            }
+          ],
+          "key_insights": [
+            "myawesomestore.com performing 23% above industry average",
+            "2 critical security headers missing on myblogsite.net",
+            "Potential $4,790/month revenue increase from identified optimizations",
+            "87.4% overall website health score across all properties",
+            "Mobile optimization needed for 2 of 3 websites"
+          ],
+          "action_items": [
+            {
+              "priority": "high",
+              "action": "Fix server response time on mycorporatesite.com",
+              "impact": "$890/month potential revenue increase",
+              "effort": "2-3 days"
+            },
+            {
+              "priority": "medium",
+              "action": "Add missing security headers to myblogsite.net",
+              "impact": "Improve security grade from B+ to A",
+              "effort": "4-6 hours"
+            },
+            {
+              "priority": "low",
+              "action": "Optimize meta descriptions across all sites",
+              "impact": "5-10% organic traffic increase",
+              "effort": "1-2 days"
+            }
+          ]
+        }
+      },
+      "timestamp": "2025-09-12T15:43:25.609210"
+    },
+    {
+      "test_name": "Invalid Domain Format Handling",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/website/add",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/add",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "website_id": "bdb60d72-de8d-4f41-a60c-cc6976ebc766",
+        "website_details": {
+          "domain": "not-a-valid-domain",
+          "website_name": "Invalid Domain Test",
+          "website_type": "General",
+          "added_date": "2025-09-12T15:43:25.656336",
+          "status": "pending_verification"
+        },
+        "verification_steps": [
+          {
+            "step": 1,
+            "title": "Domain Ownership Verification",
+            "description": "Verify you own this domain",
+            "methods": [
+              "DNS TXT Record",
+              "HTML File Upload",
+              "Meta Tag"
+            ]
+          },
+          {
+            "step": 2,
+            "title": "Connect Analytics Services",
+            "description": "Optional: Connect Google Analytics, Search Console",
+            "methods": [
+              "OAuth Integration",
+              "API Key"
+            ]
+          },
+          {
+            "step": 3,
+            "title": "Initial Analysis",
+            "description": "Run comprehensive website analysis",
+            "estimated_time": "5-10 minutes"
+          }
+        ],
+        "next_steps": [
+          "Complete domain verification",
+          "Configure analytics connections",
+          "Run initial website analysis",
+          "Review analysis results"
+        ]
+      },
+      "timestamp": "2025-09-12T15:43:25.693513"
+    },
+    {
+      "test_name": "Missing Required Fields Handling",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/website/add",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/add",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "website_id": "a320a83a-97ba-48d4-a72b-0dc4571f9f49",
+        "website_details": {
+          "domain": "incomplete.example.com",
+          "website_name": "",
+          "website_type": "General",
+          "added_date": "2025-09-12T15:43:25.746162",
+          "status": "pending_verification"
+        },
+        "verification_steps": [
+          {
+            "step": 1,
+            "title": "Domain Ownership Verification",
+            "description": "Verify you own this domain",
+            "methods": [
+              "DNS TXT Record",
+              "HTML File Upload",
+              "Meta Tag"
+            ]
+          },
+          {
+            "step": 2,
+            "title": "Connect Analytics Services",
+            "description": "Optional: Connect Google Analytics, Search Console",
+            "methods": [
+              "OAuth Integration",
+              "API Key"
+            ]
+          },
+          {
+            "step": 3,
+            "title": "Initial Analysis",
+            "description": "Run comprehensive website analysis",
+            "estimated_time": "5-10 minutes"
+          }
+        ],
+        "next_steps": [
+          "Complete domain verification",
+          "Configure analytics connections",
+          "Run initial website analysis",
+          "Review analysis results"
+        ]
+      },
+      "timestamp": "2025-09-12T15:43:25.784060"
+    },
+    {
+      "test_name": "Invalid Website Type Handling",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/website/add",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/add",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "website_id": "cd4d0374-987e-4cff-840c-623b5bf0a8d0",
+        "website_details": {
+          "domain": "invalidtype.example.com",
+          "website_name": "Invalid Type Test",
+          "website_type": "InvalidType",
+          "added_date": "2025-09-12T15:43:25.831136",
+          "status": "pending_verification"
+        },
+        "verification_steps": [
+          {
+            "step": 1,
+            "title": "Domain Ownership Verification",
+            "description": "Verify you own this domain",
+            "methods": [
+              "DNS TXT Record",
+              "HTML File Upload",
+              "Meta Tag"
+            ]
+          },
+          {
+            "step": 2,
+            "title": "Connect Analytics Services",
+            "description": "Optional: Connect Google Analytics, Search Console",
+            "methods": [
+              "OAuth Integration",
+              "API Key"
+            ]
+          },
+          {
+            "step": 3,
+            "title": "Initial Analysis",
+            "description": "Run comprehensive website analysis",
+            "estimated_time": "5-10 minutes"
+          }
+        ],
+        "next_steps": [
+          "Complete domain verification",
+          "Configure analytics connections",
+          "Run initial website analysis",
+          "Review analysis results"
+        ]
+      },
+      "timestamp": "2025-09-12T15:43:25.868770"
+    },
+    {
+      "test_name": "Invalid Membership Tier Handling",
+      "method": "POST",
+      "endpoint": "/api/website-intelligence/website/add",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/add",
+      "status_code": 403,
+      "expected_status": 200,
+      "status_ok": false,
+      "json_valid": true,
+      "test_passed": false,
+      "response_data": {
+        "detail": "Website limit reached for invalid_tier tier. Upgrade to add more websites."
+      },
+      "timestamp": "2025-09-12T15:43:25.918048"
+    },
+    {
+      "test_name": "Cleanup Website d1b7409a...",
+      "method": "DELETE",
+      "endpoint": "/api/website-intelligence/website/d1b7409a-f603-4a72-8461-dbd9eaac76f9",
+      "url": "https://website-intel-hub.preview.emergentagent.com/api/website-intelligence/website/d1b7409a-f603-4a72-8461-dbd9eaac76f9",
+      "status_code": 200,
+      "expected_status": 200,
+      "status_ok": true,
+      "json_valid": true,
+      "test_passed": true,
+      "response_data": {
+        "status": "success",
+        "message": "Website 'DateTime Test Site' has been successfully deleted",
+        "deleted_website": {
+          "website_id": "d1b7409a-f603-4a72-8461-dbd9eaac76f9",
+          "domain": "datetime-test.example.com",
+          "website_name": "DateTime Test Site",
+          "deleted_at": "2025-09-12T15:43:26.032765"
+        },
+        "remaining_websites": 3
+      },
+      "timestamp": "2025-09-12T15:43:26.067370"
+    }
+  ]
 }
