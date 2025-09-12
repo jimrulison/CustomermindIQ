@@ -1,53 +1,53 @@
 {
   "debug_summary": {
     "total_tests": 7,
-    "passed_tests": 0,
-    "success_rate": 0.0,
-    "test_timestamp": "2025-09-12T15:49:59.310782",
+    "passed_tests": 1,
+    "success_rate": 14.285714285714285,
+    "test_timestamp": "2025-09-12T15:55:57.102340",
     "critical_issue": "Data persistence debugging for user-reported issue"
   },
   "detailed_results": [
     {
       "test_name": "MongoDB Connection Test",
       "status": "FAIL",
-      "details": "Database test endpoint failed: {'error': 'Invalid JSON response', 'text': ''}",
-      "timestamp": "2025-09-12T15:49:57.000910"
+      "details": "Database test endpoint failed: {'error': \"HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /api/test-db (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xf82a5d21cad0>: Failed to establish a new connection: [Errno 111] Connection refused'))\"}",
+      "timestamp": "2025-09-12T15:55:51.721241"
     },
     {
       "test_name": "Initial Dashboard State",
       "status": "FAIL",
-      "details": "Dashboard endpoint failed: {'error': 'Invalid JSON response', 'text': ''}",
-      "timestamp": "2025-09-12T15:49:57.054926"
+      "details": "Dashboard endpoint failed: {'error': \"HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /api/website-intelligence/dashboard (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xf82a5d21ef90>: Failed to establish a new connection: [Errno 111] Connection refused'))\"}",
+      "timestamp": "2025-09-12T15:55:51.722557"
     },
     {
       "test_name": "Add New Website",
       "status": "FAIL",
-      "details": "Add website failed: {'error': 'Invalid JSON response', 'text': ''}",
-      "timestamp": "2025-09-12T15:49:57.104504"
+      "details": "Add website failed: {'error': \"HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /api/website-intelligence/website/add (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xf82a5d21cb90>: Failed to establish a new connection: [Errno 111] Connection refused'))\"}",
+      "timestamp": "2025-09-12T15:55:51.723687"
     },
     {
       "test_name": "Page Refresh Simulation",
       "status": "SKIP",
       "details": "No website ID to test with",
-      "timestamp": "2025-09-12T15:49:57.104556"
+      "timestamp": "2025-09-12T15:55:51.723725"
     },
     {
       "test_name": "Delete Website Test",
       "status": "SKIP",
       "details": "No website ID to delete",
-      "timestamp": "2025-09-12T15:49:57.104571"
+      "timestamp": "2025-09-12T15:55:51.723748"
     },
     {
       "test_name": "Deleted Website Reappearance Check",
       "status": "FAIL",
-      "details": "Dashboard failed: {'error': 'Invalid JSON response', 'text': ''}",
-      "timestamp": "2025-09-12T15:49:59.157619"
+      "details": "Dashboard failed: {'error': \"HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /api/website-intelligence/dashboard (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xf82a5d231610>: Failed to establish a new connection: [Errno 111] Connection refused'))\"}",
+      "timestamp": "2025-09-12T15:55:53.725400"
     },
     {
-      "test_name": "Multiple Website Addition",
-      "status": "FAIL",
-      "details": "Added 0/2 websites successfully",
-      "timestamp": "2025-09-12T15:49:59.263130"
+      "test_name": "Critical User Issue Reproduction",
+      "status": "PASS",
+      "details": "Deleted reappeared: 0, Remaining disappeared: 0",
+      "timestamp": "2025-09-12T15:55:57.102093"
     }
   ]
 }
