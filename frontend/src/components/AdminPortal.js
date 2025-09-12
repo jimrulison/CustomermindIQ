@@ -4,7 +4,7 @@ import {
   Shield, Users, Megaphone, DollarSign, BarChart3, Settings, LogOut, Lock, 
   Plus, Edit, Trash2, Eye, Calendar, Target, CheckCircle, AlertCircle, X,
   Search, Filter, Download, Code, Mail, Key, Workflow, Clock, TrendingUp, AlertTriangle,
-  FileSpreadsheet, RefreshCw, UserCheck, Zap, Bell, CreditCard, Gift, Headphones, MessageCircle, MousePointer, Copy
+  FileSpreadsheet, RefreshCw, UserCheck, Zap, Bell, CreditCard, Gift, Headphones, MessageCircle, MousePointer, Copy, Send
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import AdminChatDashboard from './AdminChatDashboard';
