@@ -270,7 +270,7 @@ class AdminPortalTester:
             start_time = datetime.now()
             response = self.session.post(
                 f"{API_BASE}/admin/cohorts/create",
-                params=cohort_data,
+                json=cohort_data,  # Use json instead of params
                 timeout=10
             )
             response_time = (datetime.now() - start_time).total_seconds()
