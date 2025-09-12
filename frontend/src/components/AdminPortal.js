@@ -3585,7 +3585,7 @@ const AdminPortalEnhanced = () => {
               </div>
             )}
 
-            {/* Other modal types can be added here */}
+            {/* Placeholder for other modal types */}
             {(modalType === 'user-analytics' || modalType === 'generate-codes' || modalType === 'send-to-all') && (
               <div className="text-center py-8">
                 <p className="text-slate-400">Modal content for {modalType} coming soon...</p>
