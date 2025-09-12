@@ -76,28 +76,31 @@ const ContactForm = () => {
 
   if (success) {
     return (
-      <Card className="max-w-2xl mx-auto">
-        <CardContent className="p-8 text-center">
-          <div className="mb-6">
-            <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Message Sent Successfully!</h2>
-            <p className="text-gray-600 mb-4">
-              Thank you for contacting CustomerMind IQ. We've received your message and will get back to you soon.
-            </p>
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
-              <p className="text-sm text-gray-600">
-                Your reference number: <span className="font-mono font-semibold text-gray-900">{reference}</span>
+      <div className="max-w-2xl mx-auto p-4 sm:p-6">
+        <Card className="w-full">
+          <CardContent className="p-6 sm:p-8 text-center">
+            <div className="mb-6">
+              <CheckCircle className="w-16 h-16 sm:w-20 sm:h-20 text-green-500 mx-auto mb-4" />
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">Message Sent Successfully!</h2>
+              <p className="text-gray-600 text-sm sm:text-base mb-4 leading-relaxed">
+                Thank you for contacting CustomerMind IQ. We've received your message and will get back to you soon.
               </p>
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
+                <p className="text-sm text-gray-600">
+                  Your reference number: <span className="font-mono font-semibold text-gray-900 break-all">{reference}</span>
+                </p>
+              </div>
             </div>
-          </div>
-          <Button 
-            onClick={() => setSuccess(false)}
-            variant="outline"
-          >
-            Send Another Message
-          </Button>
-        </CardContent>
-      </Card>
+            <Button 
+              onClick={() => setSuccess(false)}
+              variant="outline"
+              className="min-h-[48px] text-base px-6"
+            >
+              Send Another Message
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 
