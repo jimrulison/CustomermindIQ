@@ -37,7 +37,7 @@ const AffiliatePortal = () => {
         performanceMetrics: {}
     });
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://mindindata.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://mindiq-admin.preview.emergentagent.com';
 
     // Get current affiliate info from localStorage or props
     const getCurrentAffiliateId = () => {

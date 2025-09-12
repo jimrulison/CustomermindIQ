@@ -33,7 +33,7 @@ const AffiliateAuth = () => {
         password: ''
     });
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://mindindata.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://mindiq-admin.preview.emergentagent.com';
 
     const handleLogin = async (e) => {
         e.preventDefault();

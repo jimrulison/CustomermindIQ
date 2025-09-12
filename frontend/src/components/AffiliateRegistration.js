@@ -47,7 +47,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
     const [showPassword, setShowPassword] = useState(true);
     const [showConfirmPassword, setShowConfirmPassword] = useState(true);
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://mindindata.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://mindiq-admin.preview.emergentagent.com';
 
     const handleInputChange = (field, value) => {
         if (field.includes('.')) {
