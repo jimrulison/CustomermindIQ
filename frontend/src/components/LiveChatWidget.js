@@ -516,7 +516,7 @@ const LiveChatWidget = () => {
           <Button 
             size="sm" 
             className="w-full bg-gradient-to-r from-purple-600 to-blue-600"
-            onClick={() => window.location.href = '#subscription'}
+            onClick={() => window.location.hash = 'subscription'}
           >
             Upgrade to Access Chat
           </Button>
