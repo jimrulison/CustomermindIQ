@@ -206,12 +206,37 @@ const WebsiteIntelligenceHub = () => {
     try {
       console.log('Deleting website:', website);
       
-      // For now, we'll just simulate the deletion since there's no backend endpoint yet
-      // TODO: Implement actual delete API endpoint
-      alert(`Website "${website.website_name}" has been removed from your account.`);
+      // Since there's no backend delete endpoint yet, we'll remove it from the local state
+      // This will make it disappear from the UI immediately
+      if (dashboardData && dashboardData.dashboard && dashboardData.dashboard.user_websites) {
+        const updatedWebsites = dashboardData.dashboard.user_websites.filter(
+          site => site.website_id !== website.website_id && 
+                  site.domain !== website.domain && 
+                  site.website_name !== website.website_name
+        );
+        
+        // Update the local state
+        setDashboardData({
+          ...dashboardData,
+          dashboard: {
+            ...dashboardData.dashboard,
+            user_websites: updatedWebsites,
+            websites_overview: {
+              ...dashboardData.dashboard.websites_overview,
+              total_websites: Math.max(0, (dashboardData.dashboard.websites_overview?.total_websites || 0) - 1),
+              active_websites: Math.max(0, (dashboardData.dashboard.websites_overview?.active_websites || 0) - 1)
+            }
+          }
+        });
+        
+        alert(`Website "${website.website_name}" has been removed from your account.`);
+        console.log('Website removed from local state');
+      }
       
-      // Refresh the data to show updated list
-      loadAllData();
+      // TODO: When backend delete endpoint is implemented, add API call here:
+      // await axios.delete(`${API_BASE_URL}/api/website-intelligence/website/${website.website_id}`, {
+      //   headers: getAuthHeaders()
+      // });
       
     } catch (error) {
       console.error('Error deleting website:', error);
