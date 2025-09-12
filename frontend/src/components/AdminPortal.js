@@ -1241,7 +1241,7 @@ const AdminPortalEnhanced = () => {
                     <div>
                       <p className="text-slate-400 text-sm">Total Uses</p>
                       <p className="text-2xl font-bold text-purple-400">
-                        {discounts.reduce((sum, discount) => sum + (discount.total_uses || 0), 0)}
+                        {(discounts || []).reduce((sum, discount) => sum + (discount.total_uses || 0), 0)}
                       </p>
                     </div>
                     <Target className="w-8 h-8 text-purple-400" />
