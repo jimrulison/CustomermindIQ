@@ -1636,8 +1636,12 @@ const WebsiteIntelligenceHub = () => {
               >
                 Close
               </button>
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                Export Report
+              <button 
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+                onClick={handleExportReport}
+                disabled={loading}
+              >
+                {loading ? 'Exporting...' : 'Export Report'}
               </button>
             </div>
           </div>
