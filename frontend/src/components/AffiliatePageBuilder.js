@@ -220,7 +220,7 @@ const AffiliatePageBuilder = ({ affiliateId }) => {
                         <div className="h-48 bg-gradient-to-br from-blue-600 to-purple-600 flex flex-col items-center justify-center p-4">
                             <img 
                                 src="https://customer-assets.emergentagent.com/job_ced7e1b3-1a48-45ae-9e54-46819c066d8a/artifacts/wzbjjt9q_download.svg" 
-                                alt="CustomerMind IQ" 
+                                alt="CustomerMind IQ brand logo - Transform your business with AI-powered insights" 
                                 className="h-12 mb-4 filter brightness-0 invert"
                             />
                             <div className="text-white text-center">
