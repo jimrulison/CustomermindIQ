@@ -53,11 +53,11 @@ const Footer = ({ onLegalClick }) => {
                     <div className="space-y-4">
                         <h4 className="text-md font-semibold text-white">Support</h4>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Help Center</a></li>
-                            <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Documentation</a></li>
-                            <li><a href="#" className="text-slate-400 hover:text-white transition-colors">API Reference</a></li>
-                            <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Status Page</a></li>
-                            <li><a href="#" className="text-slate-400 hover:text-white transition-colors">Contact Support</a></li>
+                            <li><button onClick={() => window.location.hash = 'support'} className="text-slate-400 hover:text-white transition-colors text-left">Help Center</button></li>
+                            <li><button onClick={() => window.location.hash = 'training'} className="text-slate-400 hover:text-white transition-colors text-left">Documentation</button></li>
+                            <li><button onClick={() => window.location.hash = 'knowledge-base'} className="text-slate-400 hover:text-white transition-colors text-left">API Reference</button></li>
+                            <li><a href="https://status.customermindiq.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">Status Page</a></li>
+                            <li><a href="mailto:support@customermindiq.com" className="text-slate-400 hover:text-white transition-colors">Contact Support</a></li>
                         </ul>
                     </div>
 
