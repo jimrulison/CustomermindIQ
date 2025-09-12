@@ -224,8 +224,14 @@ const WebsiteIntelligenceHub = () => {
     try {
       console.log('Deleting website:', website);
       
-      // Since there's no backend delete endpoint yet, we'll remove it from the local state
-      // This will make it disappear from the UI immediately
+      // Add to deleted websites list to persist the deletion
+      setDeletedWebsites(prev => [...prev, {
+        website_id: website.website_id,
+        domain: website.domain,
+        website_name: website.website_name
+      }]);
+      
+      // Remove from current state immediately
       if (dashboardData && dashboardData.dashboard && dashboardData.dashboard.user_websites) {
         const updatedWebsites = dashboardData.dashboard.user_websites.filter(
           site => site.website_id !== website.website_id && 
@@ -248,7 +254,7 @@ const WebsiteIntelligenceHub = () => {
         });
         
         alert(`Website "${website.website_name}" has been removed from your account.`);
-        console.log('Website removed from local state');
+        console.log('Website removed and added to deleted list');
       }
       
       // TODO: When backend delete endpoint is implemented, add API call here:
