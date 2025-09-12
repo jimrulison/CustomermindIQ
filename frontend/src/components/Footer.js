@@ -110,7 +110,7 @@ const Footer = ({ onLegalClick }) => {
                             <a href="?affiliate=true" className="text-slate-400 hover:text-white transition-colors">
                                 Affiliate Terms
                             </a>
-                            <a href="#" className="text-slate-400 hover:text-white transition-colors">
+                            <a href="https://cookies.customermindiq.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">
                                 Cookie Policy
                             </a>
                         </div>
