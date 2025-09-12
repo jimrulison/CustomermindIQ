@@ -161,10 +161,26 @@ const WebsiteIntelligenceHub = () => {
       
     } catch (error) {
       console.error('Error adding website:', error);
+      console.error('Error response:', error.response);
+      console.error('Error status:', error.response?.status);
+      console.error('Error data:', error.response?.data);
+      
       if (error.response?.status === 403) {
         alert('Website limit reached for your current plan. Please upgrade to add more websites.');
+      } else if (error.response?.status === 401) {
+        alert('Authentication failed. Please log in again.');
+      } else if (error.response?.status === 400) {
+        const errorMsg = error.response?.data?.detail || 'Invalid website data provided.';
+        alert(`Validation Error: ${errorMsg}`);
+      } else if (error.response?.status === 500) {
+        const errorMsg = error.response?.data?.detail || 'Server error occurred.';
+        alert(`Server Error: ${errorMsg}`);
+      } else if (error.code === 'NETWORK_ERROR' || !error.response) {
+        alert('Network error: Unable to connect to server. Please check your connection.');
       } else {
-        alert('Error adding website. Please try again.');
+        const statusCode = error.response?.status || 'Unknown';
+        const errorDetail = error.response?.data?.detail || error.message || 'Unknown error';
+        alert(`Error ${statusCode}: ${errorDetail}`);
       }
     }
   };
