@@ -4406,6 +4406,172 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
           </div>
         </div>
       )}
+
+      {/* Data Source Details Modal */}
+      {showDataSourceModal && selectedDataSource && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-slate-800 rounded-xl border border-slate-700 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between p-6 border-b border-slate-700">
+              <h3 className="text-xl font-semibold text-white">Data Source Details</h3>
+              <button
+                onClick={() => {
+                  setShowDataSourceModal(false);
+                  setSelectedDataSource(null);
+                }}
+                className="text-slate-400 hover:text-white"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="p-6">
+              {/* Permission Details in Modal */}
+              {selectedDataSource && selectedDataSource.currentPermission && (
+                <div className="space-y-6">
+                  {/* Permission Header */}
+                  <div className="bg-slate-900/50 rounded-lg p-4 border border-slate-700">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-lg font-semibold text-white">Permission Details</h4>
+                      <div className={`px-3 py-1 rounded-lg bg-${selectedDataSource.color}-500/20 border border-${selectedDataSource.color}-500/30`}>
+                        <span className={`text-${selectedDataSource.color}-400 text-sm font-medium`}>
+                          {selectedDataSource.currentPermission.replace('_', ' ').toUpperCase()}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-slate-400 text-sm">
+                      API Key: <span className="text-white font-medium">{selectedDataSource.apiKeyName}</span>
+                    </p>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedDataSource.description}</p>
+                  </div>
+
+                  {/* Capabilities */}
+                  {selectedDataSource.capabilities && (
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-white flex items-center">
+                        <CheckCircle className="w-5 h-5 mr-2 text-green-400" />
+                        What This Permission Allows
+                      </h4>
+                      <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
+                        <div className="space-y-2">
+                          {selectedDataSource.capabilities.map((capability, index) => (
+                            <div key={index} className="flex items-start text-sm text-green-100">
+                              <div className="w-2 h-2 bg-green-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                              <span>{capability}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* API Endpoints */}
+                  {selectedDataSource.endpoints && (
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-white flex items-center">
+                        <Code className="w-5 h-5 mr-2 text-blue-400" />
+                        Accessible API Endpoints
+                      </h4>
+                      <div className="bg-slate-700/30 rounded-lg p-4">
+                        <div className="space-y-2">
+                          {selectedDataSource.endpoints.map((endpoint, index) => (
+                            <div key={index} className="font-mono text-sm text-slate-300 bg-slate-800/50 px-3 py-2 rounded border border-slate-600">
+                              {endpoint}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Limitations */}
+                  {selectedDataSource.limitations && (
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-white flex items-center">
+                        <AlertTriangle className="w-5 h-5 mr-2 text-yellow-400" />
+                        Limitations & Restrictions
+                      </h4>
+                      <div className="bg-yellow-500/10 rounded-lg p-4 border border-yellow-500/20">
+                        <div className="space-y-2">
+                          {selectedDataSource.limitations.map((limitation, index) => (
+                            <div key={index} className="flex items-start text-sm text-yellow-100">
+                              <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                              <span>{limitation}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Rate Limit & Security */}
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-white flex items-center">
+                        <Clock className="w-5 h-5 mr-2 text-purple-400" />
+                        Rate Limits
+                      </h4>
+                      <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
+                        <p className="text-purple-100 text-sm">{selectedDataSource.rateLimit}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-white flex items-center">
+                        <Shield className={`w-5 h-5 mr-2 ${
+                          selectedDataSource.security.includes('HIGH') ? 'text-red-400' :
+                          selectedDataSource.security.includes('Medium') ? 'text-orange-400' : 'text-green-400'
+                        }`} />
+                        Security Level
+                      </h4>
+                      <div className={`rounded-lg p-4 border ${
+                        selectedDataSource.security.includes('HIGH') ? 'bg-red-500/10 border-red-500/20' :
+                        selectedDataSource.security.includes('Medium') ? 'bg-orange-500/10 border-orange-500/20' :
+                        'bg-green-500/10 border-green-500/20'
+                      }`}>
+                        <p className={`text-sm ${
+                          selectedDataSource.security.includes('HIGH') ? 'text-red-100' :
+                          selectedDataSource.security.includes('Medium') ? 'text-orange-100' : 'text-green-100'
+                        }`}>
+                          {selectedDataSource.security}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Best Practices */}
+                  <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg p-4 border border-blue-500/20">
+                    <div className="flex items-start">
+                      <Lightbulb className="w-5 h-5 text-blue-400 mr-3 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="text-blue-100 font-medium mb-2">Best Practices</h5>
+                        <p className="text-blue-100 text-sm">
+                          {selectedDataSource.color === 'red' ? 
+                            'Use admin permissions only when necessary. Regularly audit admin access and rotate keys frequently.' :
+                            selectedDataSource.color === 'orange' ?
+                            'Write permissions should be used carefully. Monitor usage and implement proper validation on your end.' :
+                            'Read permissions are generally safe but still monitor for unusual usage patterns and implement rate limiting.'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* General insights for non-permission modals */}
+              {selectedDataSource && !selectedDataSource.currentPermission && !selectedDataSource.usageData && !selectedDataSource.insights && (
+                <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg p-4 border border-blue-500/20">
+                  <div className="flex items-start">
+                    <Info className="w-5 h-5 text-blue-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <p className="text-blue-100 text-sm">
+                      This data helps understand {selectedDataSource.title?.toLowerCase().replace(' - data source', '')} trends and drives website optimization and business decisions.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
