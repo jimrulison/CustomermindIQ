@@ -2811,14 +2811,28 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                             <td className="px-3 py-4" style={{width: '140px', minWidth: '140px'}}>
                               <div className="flex flex-wrap gap-1">
                                 {(apiKey.permissions || ['read_analytics', 'read_websites']).slice(0, 1).map((permission) => (
-                                  <span key={permission} className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">
+                                  <button
+                                    key={permission}
+                                    onClick={() => showPermissionDetails(permission, apiKey.name)}
+                                    className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs hover:bg-blue-500/30 transition-colors cursor-pointer"
+                                    title={`Click to view ${permission.replace('_', ' ')} details`}
+                                  >
                                     {permission.replace('_', ' ')}
-                                  </span>
+                                  </button>
                                 ))}
                                 {(apiKey.permissions?.length || 2) > 1 && (
-                                  <span className="px-2 py-1 bg-slate-500/20 text-slate-400 rounded text-xs">
+                                  <button
+                                    onClick={() => {
+                                      // Show modal with all permissions
+                                      const allPermissions = apiKey.permissions || ['read_analytics', 'read_websites'];
+                                      const permissionsList = allPermissions.map(p => p.replace('_', ' ')).join(', ');
+                                      alert(`All permissions for ${apiKey.name}:\n\n${permissionsList}\n\nClick individual permission badges to see detailed information.`);
+                                    }}
+                                    className="px-2 py-1 bg-slate-500/20 text-slate-400 rounded text-xs hover:bg-slate-500/30 transition-colors cursor-pointer"
+                                    title="Click to view all permissions"
+                                  >
                                     +{(apiKey.permissions?.length || 2) - 1}
-                                  </span>
+                                  </button>
                                 )}
                               </div>
                             </td>
