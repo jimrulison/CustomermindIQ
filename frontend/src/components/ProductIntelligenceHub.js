@@ -325,33 +325,49 @@ const ProductIntelligenceHub = () => {
 
   // Feature detail drill-down
   const showFeatureDetails = (feature) => {
-    alert(`🔍 Feature Analysis: ${feature.feature_name}
+    const featureDetails = {
+      title: `Feature Analysis: ${feature.feature_name}`,
+      description: `Comprehensive analytics and insights for ${feature.feature_name} feature usage`,
+      icon: BarChart3,
+      color: 'blue',
+      currentValue: `${feature.adoption_rate}% adoption`,
+      category: feature.category,
+      usageData: {
+        dailyActiveUsers: feature.daily_active_users?.toLocaleString() || 'N/A',
+        adoptionRate: `${feature.adoption_rate || 'N/A'}% of total users`,
+        stickiness: `${feature.feature_stickiness || 'N/A'}% (DAU/MAU ratio)`,
+        powerUsers: `${feature.power_users || 'N/A'}% are heavy users`,
+        avgSessions: feature.avg_sessions_per_user || 'N/A',
+        retentionImpact: `${feature.retention_correlation || 'N/A'}% correlation`
+      },
+      dataSources: [
+        'Event Tracking: User clicks, page views, interactions captured via analytics SDK',
+        'Session Analytics: Usage duration, frequency patterns from behavioral tracking',
+        'Cohort Analysis: User adoption and retention tracking through lifecycle management',
+        'A/B Testing: Feature performance experiments and statistical analysis'
+      ],
+      insights: [
+        feature.adoption_rate > 70 
+          ? 'High adoption - consider expanding or creating similar features' 
+          : 'Low adoption - investigate barriers: onboarding, UX, or feature discovery',
+        feature.feature_stickiness > 60 
+          ? 'Good retention - analyze success factors and apply to other features' 
+          : 'Poor retention - improve UX, add tutorials, or consider redesign',
+        feature.retention_correlation > 50 
+          ? 'Strong retention driver - prioritize maintenance and enhancement' 
+          : 'Weak retention impact - evaluate feature value or consider sunset'
+      ],
+      optimizations: [
+        'Improve onboarding flow specifically for this feature',
+        'Create contextual tutorials for advanced functionality',
+        'Implement progressive disclosure for complex features',
+        'Monitor usage patterns to identify optimization signals',
+        'Set up automated alerts for usage anomalies'
+      ]
+    };
 
-📊 USAGE BREAKDOWN:
-• Daily Active Users: ${feature.daily_active_users?.toLocaleString() || 'N/A'}
-• Adoption Rate: ${feature.adoption_rate || 'N/A'}% of total users
-• Stickiness: ${feature.feature_stickiness || 'N/A'}% (DAU/MAU ratio)
-• Power Users: ${feature.power_users || 'N/A'}% are heavy users
-• Avg Sessions/User: ${feature.avg_sessions_per_user || 'N/A'}
-• Retention Impact: ${feature.retention_correlation || 'N/A'}% correlation
-
-📈 DATA SOURCES & METHODOLOGY:
-• Event Tracking: User clicks, page views, interactions captured via analytics SDK
-• Session Analytics: Usage duration, frequency patterns from behavioral tracking
-• Cohort Analysis: User adoption and retention tracking through lifecycle management
-• A/B Testing: Feature performance experiments and statistical analysis
-
-⚡ ACTIONABLE INSIGHTS:
-• ${feature.adoption_rate > 70 ? 'High adoption - consider expanding or creating similar features' : 'Low adoption - investigate barriers: onboarding, UX, or feature discovery'}
-• ${feature.feature_stickiness > 60 ? 'Good retention - analyze success factors and apply to other features' : 'Poor retention - improve UX, add tutorials, or consider redesign'}
-• ${feature.retention_correlation > 50 ? 'Strong retention driver - prioritize maintenance and enhancement' : 'Weak retention impact - evaluate feature value or consider sunset'}
-
-🎯 DATA-DRIVEN OPTIMIZATION OPPORTUNITIES:
-• Improve onboarding flow specifically for this feature
-• Create contextual tutorials for advanced functionality
-• Implement progressive disclosure for complex features
-• Monitor usage patterns to identify optimization signals
-• Set up automated alerts for usage anomalies`);
+    setSelectedDataSource(featureDetails);
+    setShowDataSourceModal(true);
   };
 
   useEffect(() => {
