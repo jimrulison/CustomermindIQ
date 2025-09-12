@@ -31,6 +31,8 @@ const IntegrationDataHub = () => {
   const [qualityData, setQualityData] = useState(null);
   const [analyticsData, setAnalyticsData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showDataSourceModal, setShowDataSourceModal] = useState(false);
+  const [selectedDataSource, setSelectedDataSource] = useState(null);
 
   // Data source drill-down handlers for Integration & Data Hub
   const showDataSource = (section, metricType, metricName, currentValue) => {
