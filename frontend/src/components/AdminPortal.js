@@ -1623,7 +1623,7 @@ const AdminPortalEnhanced = () => {
                     <div>
                       <p className="text-slate-400 text-sm">Open Tickets</p>
                       <p className="text-2xl font-bold text-green-400">
-                        {supportTickets.filter(t => t.status === 'open').length}
+                        {(supportTickets || []).filter(t => t.status === 'open').length}
                       </p>
                     </div>
                     <AlertCircle className="w-8 h-8 text-green-400" />
