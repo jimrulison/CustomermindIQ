@@ -1252,7 +1252,7 @@ const AdminPortalEnhanced = () => {
                     <div>
                       <p className="text-slate-400 text-sm">Revenue Impact</p>
                       <p className="text-2xl font-bold text-yellow-400">
-                        ${discounts.reduce((sum, discount) => sum + (discount.total_revenue_impact || 0), 0).toLocaleString()}
+                        ${(discounts || []).reduce((sum, discount) => sum + (discount.total_revenue_impact || 0), 0).toLocaleString()}
                       </p>
                     </div>
                     <DollarSign className="w-8 h-8 text-yellow-400" />
