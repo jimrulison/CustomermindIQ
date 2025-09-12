@@ -102,8 +102,8 @@ const ContactForm = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="grid md:grid-cols-2 gap-8">
+    <div className="max-w-5xl mx-auto p-4 sm:p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
         {/* Contact Information */}
         <div className="space-y-6">
           <div>
@@ -128,9 +128,9 @@ const ContactForm = () => {
             </div>
           </div>
 
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-            <h3 className="font-semibold text-blue-900 mb-2">Why Choose CustomerMind IQ?</h3>
-            <ul className="text-blue-800 text-sm space-y-1">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 sm:p-6">
+            <h3 className="font-semibold text-blue-900 mb-3">Why Choose CustomerMind IQ?</h3>
+            <ul className="text-blue-800 text-sm sm:text-base space-y-2">
               <li>• AI-powered customer intelligence platform</li>
               <li>• 14 specialized analytics modules</li>
               <li>• Growth acceleration engine for annual subscribers</li>
@@ -141,14 +141,14 @@ const ContactForm = () => {
         </div>
 
         {/* Contact Form */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Send us a Message</CardTitle>
-            <CardDescription>
+        <Card className="h-fit">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl sm:text-2xl">Send us a Message</CardTitle>
+            <CardDescription className="text-sm sm:text-base">
               Fill out the form below and we'll get back to you within 24 hours.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">
             {error && (
               <Alert className="mb-6 border-red-200 bg-red-50">
                 <AlertDescription className="text-red-800">{error}</AlertDescription>
