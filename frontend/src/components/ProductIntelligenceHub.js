@@ -38,6 +38,8 @@ const ProductIntelligenceHub = () => {
   const [journeyData, setJourneyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('features');
+  const [showDataSourceModal, setShowDataSourceModal] = useState(false);
+  const [selectedDataSource, setSelectedDataSource] = useState(null);
 
   // Data source drill-down handlers for all sections
   const showDataSource = (section, metricType, metricName, currentValue) => {
