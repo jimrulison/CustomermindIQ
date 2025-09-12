@@ -419,9 +419,15 @@ async def get_website_intelligence_dashboard() -> Dict[str, Any]:
 async def add_website(website_data: Dict[str, Any]) -> Dict[str, Any]:
     """Add a new website for analysis"""
     try:
+        print(f"🔍 Received website_data: {website_data}")
+        print(f"🔍 Type of website_data: {type(website_data)}")
+        
         # Check membership limits (simplified for demo)
         membership_tier = website_data.get("membership_tier", "basic")
         current_websites = website_data.get("current_websites", 0)
+        
+        print(f"🔍 membership_tier: {membership_tier}")
+        print(f"🔍 current_websites: {current_websites}")
         
         tier_limits = {
             "basic": 1,
