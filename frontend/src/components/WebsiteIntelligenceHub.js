@@ -66,9 +66,6 @@ const WebsiteIntelligenceHub = () => {
   const [showWebsiteDetails, setShowWebsiteDetails] = useState(false);
   const [selectedWebsite, setSelectedWebsite] = useState(null);
   const [detailView, setDetailView] = useState('overview'); // 'overview', 'issues', 'opportunities', 'seo', 'performance'
-  
-  // Track locally deleted websites (until backend delete endpoint is implemented)
-  const [deletedWebsites, setDeletedWebsites] = useState([]);
 
   // Load data on component mount
   useEffect(() => {
