@@ -1221,6 +1221,8 @@ const WebsiteIntelligenceHub = () => {
                   setDetailView('overview');
                 }}
                 className="text-slate-400 hover:text-white"
+                aria-label="Close website details modal"
+                title="Close modal"
               >
                 <X className="w-6 h-6" />
               </button>
