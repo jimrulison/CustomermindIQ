@@ -8,14 +8,48 @@ SEO evaluation, and performance assessment for user's own websites.
 from fastapi import APIRouter, HTTPException
 from typing import Dict, List, Any, Optional
 import uuid
+import os
 from datetime import datetime, timedelta
 import random
 import json
+from motor.motor_asyncio import AsyncIOMotorClient
+
+# MongoDB setup
+MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
+DB_NAME = os.getenv("DB_NAME", "customer_mind_iq")
+client = AsyncIOMotorClient(MONGO_URL)
+db = client[DB_NAME]
 
 analyzer_router = APIRouter()
 
-# In-memory storage for user websites (until database integration)
-user_websites_storage = []
+# Helper function to serialize datetime objects for MongoDB
+def prepare_for_mongo(data):
+    """Convert datetime objects to ISO strings for MongoDB storage"""
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if isinstance(value, datetime):
+                data[key] = value.isoformat()
+            elif isinstance(value, dict):
+                data[key] = prepare_for_mongo(value)
+            elif isinstance(value, list):
+                data[key] = [prepare_for_mongo(item) if isinstance(item, dict) else item for item in value]
+    return data
+
+# Helper function to parse datetime objects from MongoDB
+def parse_from_mongo(data):
+    """Convert ISO strings back to datetime objects after retrieving from MongoDB"""
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if isinstance(value, str) and key in ['last_analyzed', 'created_at', 'updated_at', 'added_date']:
+                try:
+                    data[key] = datetime.fromisoformat(value.replace('Z', '+00:00'))
+                except (ValueError, AttributeError):
+                    pass  # Keep as string if not a valid datetime
+            elif isinstance(value, dict):
+                data[key] = parse_from_mongo(value)
+            elif isinstance(value, list):
+                data[key] = [parse_from_mongo(item) if isinstance(item, dict) else item for item in value]
+    return data
 
 @analyzer_router.get("/dashboard")
 async def get_website_intelligence_dashboard() -> Dict[str, Any]:
@@ -92,8 +126,17 @@ async def get_website_intelligence_dashboard() -> Dict[str, Any]:
             }
         ]
         
+        # Get user websites from MongoDB
+        user_websites_cursor = db.user_websites.find({})
+        user_websites_from_db = []
+        async for website in user_websites_cursor:
+            # Remove MongoDB's _id field and parse datetime objects
+            website.pop('_id', None)
+            parsed_website = parse_from_mongo(website)
+            user_websites_from_db.append(parsed_website)
+        
         # Combine static websites with dynamically added ones
-        user_websites = static_websites + user_websites_storage
+        user_websites = static_websites + user_websites_from_db
         
         # Comprehensive Analysis Summary
         analysis_summary = {
@@ -464,13 +507,16 @@ async def add_website(website_data: Dict[str, Any]) -> Dict[str, Any]:
             "security_score": round(random.uniform(80.0, 98.0), 1),
             "mobile_score": round(random.uniform(70.0, 90.0), 1),
             "issues_count": random.randint(2, 12),
-            "opportunities_count": random.randint(5, 15)
+            "opportunities_count": random.randint(5, 15),
+            "created_at": datetime.now(),
+            "updated_at": datetime.now()
         }
         
-        # Store the website in memory
-        user_websites_storage.append(new_website_data)
-        print(f"✅ Website stored: {new_website_data['website_name']} ({new_website_data['domain']})")
-        print(f"✅ Total websites in storage: {len(user_websites_storage)}")
+        # Store the website in MongoDB
+        prepared_data = prepare_for_mongo(new_website_data.copy())
+        result = await db.user_websites.insert_one(prepared_data)
+        print(f"✅ Website stored in MongoDB: {new_website_data['website_name']} ({new_website_data['domain']})")
+        print(f"✅ MongoDB insert result: {result.inserted_id}")
         
         new_website = {
             "status": "success",
@@ -584,18 +630,15 @@ async def delete_website(website_id: str) -> Dict[str, Any]:
     """Delete a website from user's account"""
     try:
         print(f"🔍 Attempting to delete website with ID: {website_id}")
-        print(f"🔍 Current websites in storage: {len(user_websites_storage)}")
         
-        # Find the website in the in-memory storage
-        website_to_delete = None
-        for i, website in enumerate(user_websites_storage):
-            if website.get("website_id") == website_id:
-                website_to_delete = user_websites_storage.pop(i)
-                break
+        # Find and delete the website from MongoDB
+        website_to_delete = await db.user_websites.find_one({"website_id": website_id})
         
         if website_to_delete:
-            print(f"✅ Website deleted from storage: {website_to_delete['website_name']} ({website_to_delete['domain']})")
-            print(f"✅ Remaining websites in storage: {len(user_websites_storage)}")
+            # Remove the website from MongoDB
+            delete_result = await db.user_websites.delete_one({"website_id": website_id})
+            print(f"✅ Website deleted from MongoDB: {website_to_delete['website_name']} ({website_to_delete['domain']})")
+            print(f"✅ MongoDB delete result: {delete_result.deleted_count}")
             
             return {
                 "status": "success",
@@ -606,7 +649,7 @@ async def delete_website(website_id: str) -> Dict[str, Any]:
                     "website_name": website_to_delete["website_name"],
                     "deleted_at": datetime.now().isoformat()
                 },
-                "remaining_websites": len(user_websites_storage)
+                "remaining_websites": await db.user_websites.count_documents({})
             }
         else:
             # Check if it's one of the static websites (cannot be deleted)
