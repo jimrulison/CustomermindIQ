@@ -592,26 +592,26 @@ async def add_website(website_data: Dict[str, Any]) -> Dict[str, Any]:
                 "roi_estimate": f"${random.randint(500, 5000)}/month"
             })
 
-        # Generate more realistic monthly visitors based on website type and domain
+        # Generate more realistic monthly UNIQUE visitors based on website type and domain
         domain = website_data.get("domain", "").lower()
         website_type = website_data.get("type", "General")
         
-        # More realistic monthly visitors based on website characteristics
+        # More realistic monthly UNIQUE visitors (individual people) based on website characteristics
         if any(keyword in domain for keyword in ['store', 'shop', 'buy', 'ecommerce']):
-            # E-commerce sites typically have higher traffic
-            base_visitors = random.randint(8000, 25000)
+            # E-commerce sites typically have higher unique visitor counts
+            base_visitors = random.randint(3000, 12000)  # Reduced for unique visitors
         elif any(keyword in domain for keyword in ['blog', 'news', 'article', 'post']):
-            # Blog/content sites can vary widely
-            base_visitors = random.randint(2000, 15000)
+            # Blog/content sites - unique visitors typically lower than total sessions
+            base_visitors = random.randint(800, 6000)
         elif any(keyword in domain for keyword in ['training', 'course', 'education', 'learn']):
-            # Educational sites typically have moderate traffic
-            base_visitors = random.randint(1500, 8000)
+            # Educational sites - more focused audience
+            base_visitors = random.randint(600, 3500)
         elif any(keyword in domain for keyword in ['corporate', 'company', 'business', 'services']):
-            # Corporate sites typically have lower but steady traffic
-            base_visitors = random.randint(800, 5000)
+            # Corporate sites - typically lower unique visitor counts
+            base_visitors = random.randint(300, 2000)
         else:
-            # General websites
-            base_visitors = random.randint(500, 3000)
+            # General websites - conservative unique visitor estimates
+            base_visitors = random.randint(200, 1500)
         
         # Adjust based on domain length (shorter domains often get more traffic)
         domain_parts = domain.split('.')
