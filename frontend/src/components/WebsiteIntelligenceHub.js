@@ -115,7 +115,9 @@ const WebsiteIntelligenceHub = () => {
   const handleUpdateAll = async () => {
     try {
       setUpdating(true);
-      const response = await axios.post(`${API_BASE_URL}/api/website-intelligence/update-all`);
+      const response = await axios.post(`${API_BASE_URL}/api/website-intelligence/update-all`, {}, {
+        headers: getAuthHeaders()
+      });
       console.log('Update initiated:', response.data);
       
       // Show update in progress and refresh data after a delay
