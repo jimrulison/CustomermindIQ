@@ -812,7 +812,7 @@ const WebsiteIntelligenceHub = () => {
                       <div className="pt-2 border-t border-slate-700/50">
                         <div className="grid grid-cols-2 gap-4 text-xs text-slate-400">
                           <div>
-                            <span>Monthly Visitors</span>
+                            <span>Monthly Unique Visitors</span>
                             <div className="text-white font-medium">{(website.monthly_visitors || 0).toLocaleString()}</div>
                           </div>
                           <div>
