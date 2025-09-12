@@ -1051,7 +1051,9 @@ ${details.updateFrequency}
         'support': 'support',
         'training': 'training',
         'knowledge-base': 'knowledge-base',
-        'subscription': 'subscription'
+        'subscription': 'subscription',
+        'admin': 'admin-portal',
+        'admin-portal': 'admin-portal'
       };
       
       if (hash && hashRedirectMap[hash]) {
