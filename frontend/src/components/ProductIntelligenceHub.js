@@ -18,7 +18,14 @@ import {
   Star,
   Clock,
   Eye,
-  Route
+  Route,
+  X,
+  Database,
+  RefreshCw,
+  Info,
+  TrendingUp as TrendIcon,
+  BarChart,
+  PieChart
 } from 'lucide-react';
 import axios from 'axios';
 
