@@ -181,7 +181,12 @@ const WebsiteIntelligenceHub = () => {
       console.error('Error data:', error.response?.data);
       
       if (error.response?.status === 403) {
-        alert('Website limit reached for your current plan. Please upgrade to add more websites.');
+        const errorMsg = error.response?.data?.detail || 'Website limit reached for your current plan.';
+        if (errorMsg.includes('Website limit reached')) {
+          alert(`❌ MEMBERSHIP LIMIT REACHED\n\nYou've reached the maximum number of websites allowed for your current plan.\n\nYour ${membershipData?.membership_details?.current_tier || 'current'} plan allows a limited number of websites.\n\nTo add more websites:\n• Upgrade to a higher tier plan\n• Or delete some existing websites first\n\nUpgrade your plan in the Membership tab to unlock more website slots.`);
+        } else {
+          alert(`Access Denied: ${errorMsg}`);
+        }
       } else if (error.response?.status === 401) {
         alert('Authentication failed. Please log in again.');
       } else if (error.response?.status === 400) {
