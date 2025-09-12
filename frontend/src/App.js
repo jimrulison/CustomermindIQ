@@ -51,11 +51,13 @@ const RealTimeHealthDashboard = React.lazy(() => import('./components/RealTimeHe
 const CustomerJourneyDashboard = React.lazy(() => import('./components/CustomerJourneyDashboard'));
 const CompetitiveIntelligenceDashboard = React.lazy(() => import('./components/CompetitiveIntelligenceDashboard'));
 const AdminPortal = React.lazy(() => import('./components/AdminPortal'));
-const SalesIntelligenceDashboard = React.lazy(() => import('./components/SalesIntelligenceDashboard'));
-const MarketingROIDashboard = React.lazy(() => import('./components/MarketingROIDashboard'));
-const ProductivityIntelligenceDashboard = React.lazy(() => import('./components/ProductivityIntelligenceDashboard'));
-const UniversalIntelligenceDashboard = React.lazy(() => import('./components/UniversalIntelligenceDashboard'));
 const AffiliatePortal = React.lazy(() => import('./components/AffiliatePortal'));
+
+// Missing components - commented out to fix build
+// const SalesIntelligenceDashboard = React.lazy(() => import('./components/SalesIntelligenceDashboard'));
+// const MarketingROIDashboard = React.lazy(() => import('./components/MarketingROIDashboard'));
+// const ProductivityIntelligenceDashboard = React.lazy(() => import('./components/ProductivityIntelligenceDashboard'));
+// const UniversalIntelligenceDashboard = React.lazy(() => import('./components/UniversalIntelligenceDashboard'));
 
 // Loading component for Suspense
 const LoadingSpinner = () => (
