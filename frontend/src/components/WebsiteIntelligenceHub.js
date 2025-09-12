@@ -312,13 +312,46 @@ const WebsiteIntelligenceHub = () => {
     }
   };
 
-  const getTierColor = (tier) => {
-    const colors = {
-      'Basic': 'bg-blue-500/20 text-blue-400',
-      'Professional': 'bg-purple-500/20 text-purple-400',
-      'Enterprise': 'bg-gold-500/20 text-gold-400'
-    };
-    return colors[tier] || 'bg-gray-500/20 text-gray-400';
+  const handleExportReport = async () => {
+    try {
+      setLoading(true);
+      console.log('🔄 Exporting website intelligence report...');
+      
+      const response = await axios.get(`${API_BASE_URL}/api/website-intelligence/export/report`, {
+        headers: getAuthHeaders(),
+        timeout: 30000
+      });
+      
+      if (response.data.status === 'success') {
+        // Create and download the report as JSON file
+        const reportData = response.data.report;
+        const blob = new Blob([JSON.stringify(reportData, null, 2)], { type: 'application/json' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `website-intelligence-report-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        
+        console.log('✅ Report exported successfully');
+        alert(`Report exported successfully!\n\nReport includes:\n• ${reportData.executive_summary.total_websites_monitored} websites analyzed\n• ${reportData.executive_summary.total_issues_found} issues identified\n• ${reportData.executive_summary.total_opportunities} opportunities found\n• Detailed recommendations and action items`);
+      } else {
+        throw new Error('Export failed: Invalid response');
+      }
+    } catch (error) {
+      console.error('❌ Export error:', error);
+      if (error.response?.status === 401) {
+        alert('Authentication failed. Please log in again.');
+      } else if (error.response?.status === 500) {
+        alert('Server error occurred while generating the report. Please try again.');
+      } else {
+        alert('Failed to export report. Please check your connection and try again.');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getHealthColor = (score) => {
