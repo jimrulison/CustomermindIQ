@@ -2475,7 +2475,7 @@ const AdminPortalEnhanced = () => {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="flex flex-wrap gap-1">
-                                {apiKey.permissions.map((permission) => (
+                                {(apiKey.permissions || []).map((permission) => (
                                   <span key={permission} className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">
                                     {permission}
                                   </span>
