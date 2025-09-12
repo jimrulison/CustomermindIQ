@@ -2306,7 +2306,7 @@ const AdminPortalEnhanced = () => {
               </div>
 
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {workflows.length === 0 ? (
+                {!workflows || workflows.length === 0 ? (
                   <div className="col-span-full bg-slate-800/50 rounded-xl border border-slate-700 p-12 text-center">
                     <Workflow className="w-16 h-16 text-slate-600 mx-auto mb-4" />
                     <h3 className="text-xl font-semibold text-white mb-2">No workflows found</h3>
