@@ -530,16 +530,32 @@ const WebsiteIntelligenceHub = () => {
                       <Progress value={website.health_score} className="h-2" />
                     </div>
 
-                    {/* Metrics Grid */}
+                    {/* Metrics Grid - Now Clickable */}
                     <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="text-center p-2 bg-slate-700/30 rounded">
+                      <button
+                        onClick={() => {
+                          setSelectedWebsite(website);
+                          setDetailView('seo');
+                          setShowWebsiteDetails(true);
+                        }}
+                        className="text-center p-2 bg-slate-700/30 rounded hover:bg-slate-600/30 transition-colors cursor-pointer"
+                        title="Click to view SEO details"
+                      >
                         <div className="text-blue-400 font-semibold">{website.seo_score?.toFixed(1)}</div>
                         <div className="text-slate-400 text-xs">SEO Score</div>
-                      </div>
-                      <div className="text-center p-2 bg-slate-700/30 rounded">
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedWebsite(website);
+                          setDetailView('performance');
+                          setShowWebsiteDetails(true);
+                        }}
+                        className="text-center p-2 bg-slate-700/30 rounded hover:bg-slate-600/30 transition-colors cursor-pointer"
+                        title="Click to view performance details"
+                      >
                         <div className="text-green-400 font-semibold">{website.performance_score?.toFixed(1)}</div>
                         <div className="text-slate-400 text-xs">Performance</div>
-                      </div>
+                      </button>
                     </div>
 
                     {/* Statistics */}
