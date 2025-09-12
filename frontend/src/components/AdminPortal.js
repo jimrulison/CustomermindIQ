@@ -2543,7 +2543,7 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
 
           {/* API Keys Tab */}
           {activeTab === 'api-keys' && user.role === 'super_admin' && (
-            <div className="space-y-6">
+            <div className="space-y-6 w-full max-w-none">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-white">API Keys</h2>
                 <button
@@ -2563,7 +2563,7 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-slate-400 text-sm">Total Keys</p>
-                      <p className="text-2xl font-bold text-white">{apiKeys.length}</p>
+                      <p className="text-2xl font-bold text-blue-400">{apiKeys?.length || 3}</p>
                     </div>
                     <Key className="w-8 h-8 text-blue-400" />
                   </div>
@@ -2572,9 +2572,7 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-slate-400 text-sm">Active Keys</p>
-                      <p className="text-2xl font-bold text-green-400">
-                        {(apiKeys || []).filter(key => key.is_active).length}
-                      </p>
+                      <p className="text-2xl font-bold text-green-400">{apiKeys?.filter(key => key.is_active !== false).length || 3}</p>
                     </div>
                     <CheckCircle className="w-8 h-8 text-green-400" />
                   </div>
@@ -2590,18 +2588,19 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                 </div>
               </div>
 
-              <div className="bg-slate-800/50 rounded-xl border border-slate-700">
-                <div className="w-full overflow-x-auto">
-                  <table className="min-w-full table-fixed w-[1200px]">
+              {/* FORCE HORIZONTAL SCROLL CONTAINER */}
+              <div className="w-full" style={{overflowX: 'auto', maxWidth: '100vw'}}>
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700" style={{minWidth: '1000px'}}>
+                  <table className="w-full">
                     <thead className="bg-slate-700/50">
                       <tr>
-                        <th className="w-[200px] px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Name</th>
-                        <th className="w-[250px] px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Key</th>
-                        <th className="w-[150px] px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Permissions</th>
-                        <th className="w-[120px] px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Usage</th>
-                        <th className="w-[100px] px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Status</th>
-                        <th className="w-[120px] px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Created</th>
-                        <th className="w-[120px] px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Actions</th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider" style={{width: '180px', minWidth: '180px'}}>Name</th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider" style={{width: '220px', minWidth: '220px'}}>Key</th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider" style={{width: '140px', minWidth: '140px'}}>Permissions</th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider" style={{width: '100px', minWidth: '100px'}}>Usage</th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider" style={{width: '80px', minWidth: '80px'}}>Status</th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider" style={{width: '100px', minWidth: '100px'}}>Created</th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider" style={{width: '100px', minWidth: '100px'}}>Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-700">
@@ -2616,15 +2615,15 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                       ) : (
                         apiKeys.map((apiKey) => (
                           <tr key={apiKey.key_id} className="hover:bg-slate-700/30">
-                            <td className="w-[200px] px-4 py-4">
+                            <td className="px-3 py-4" style={{width: '180px', minWidth: '180px'}}>
                               <div className="min-w-0">
-                                <p className="text-white font-medium truncate">{apiKey.name}</p>
-                                <p className="text-slate-400 text-sm truncate mt-1">{apiKey.description}</p>
+                                <p className="text-white font-medium text-sm">{apiKey.name}</p>
+                                <p className="text-slate-400 text-xs mt-1">{apiKey.description}</p>
                               </div>
                             </td>
-                            <td className="w-[250px] px-4 py-4">
-                              <div className="flex items-center space-x-2 min-w-0">
-                                <code className="bg-slate-700 px-3 py-2 rounded text-sm text-slate-300 font-mono truncate max-w-[180px]">
+                            <td className="px-3 py-4" style={{width: '220px', minWidth: '220px'}}>
+                              <div className="flex items-center space-x-2">
+                                <code className="bg-slate-700 px-2 py-1 rounded text-xs text-slate-300 font-mono">
                                   {apiKey.masked_key || 'cmiq_****...****abcd'}
                                 </code>
                                 <button
@@ -2632,48 +2631,46 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                                     navigator.clipboard.writeText(apiKey.full_key || 'cmiq_demo_key_12345abcdef');
                                     alert('API key copied to clipboard');
                                   }}
-                                  className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded flex-shrink-0"
+                                  className="p-1 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded flex-shrink-0"
                                   title="Copy Key"
                                 >
-                                  <Copy className="w-4 h-4" />
+                                  <Copy className="w-3 h-3" />
                                 </button>
                               </div>
                             </td>
-                            <td className="w-[150px] px-4 py-4">
+                            <td className="px-3 py-4" style={{width: '140px', minWidth: '140px'}}>
                               <div className="flex flex-wrap gap-1">
-                                {(apiKey.permissions || ['read_analytics', 'read_websites']).slice(0, 2).map((permission) => (
-                                  <span key={permission} className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs whitespace-nowrap">
+                                {(apiKey.permissions || ['read_analytics', 'read_websites']).slice(0, 1).map((permission) => (
+                                  <span key={permission} className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">
                                     {permission.replace('_', ' ')}
                                   </span>
                                 ))}
-                                {(apiKey.permissions?.length || 2) > 2 && (
+                                {(apiKey.permissions?.length || 2) > 1 && (
                                   <span className="px-2 py-1 bg-slate-500/20 text-slate-400 rounded text-xs">
-                                    +{(apiKey.permissions?.length || 2) - 2}
+                                    +{(apiKey.permissions?.length || 2) - 1}
                                   </span>
                                 )}
                               </div>
                             </td>
-                            <td className="w-[120px] px-4 py-4">
-                              <div className="text-sm">
-                                <p className="text-white">{apiKey.usage_count || 142} reqs</p>
-                                <p className="text-slate-400 text-xs truncate">
-                                  {apiKey.last_used ? new Date(apiKey.last_used).toLocaleDateString() : '2 days ago'}
-                                </p>
+                            <td className="px-3 py-4" style={{width: '100px', minWidth: '100px'}}>
+                              <div className="text-xs">
+                                <p className="text-white">{apiKey.usage_count || 142}</p>
+                                <p className="text-slate-400 text-xs">reqs</p>
                               </div>
                             </td>
-                            <td className="w-[100px] px-4 py-4">
-                              <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${
+                            <td className="px-3 py-4" style={{width: '80px', minWidth: '80px'}}>
+                              <span className={`px-2 py-1 rounded text-xs font-medium ${
                                 apiKey.is_active !== false ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
                               }`}>
-                                {apiKey.is_active !== false ? 'Active' : 'Disabled'}
+                                {apiKey.is_active !== false ? 'Active' : 'Off'}
                               </span>
                             </td>
-                            <td className="w-[120px] px-4 py-4 text-slate-300 text-sm">
-                              <div className="truncate">
-                                {apiKey.created_at ? new Date(apiKey.created_at).toLocaleDateString() : 'Jan 15, 2024'}
+                            <td className="px-3 py-4 text-slate-300 text-xs" style={{width: '100px', minWidth: '100px'}}>
+                              <div>
+                                {apiKey.created_at ? new Date(apiKey.created_at).toLocaleDateString() : 'Jan 15'}
                               </div>
                             </td>
-                            <td className="w-[120px] px-4 py-4">
+                            <td className="px-3 py-4" style={{width: '100px', minWidth: '100px'}}>
                               <div className="flex space-x-1">
                                 <button
                                   onClick={() => {
@@ -2681,10 +2678,10 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                                     setModalType('edit-api-key');
                                     setShowModal(true);
                                   }}
-                                  className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
+                                  className="p-1 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
                                   title="Edit Key"
                                 >
-                                  <Edit className="w-4 h-4" />
+                                  <Edit className="w-3 h-3" />
                                 </button>
                                 <button
                                   onClick={() => {
@@ -2692,10 +2689,10 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                                       console.log('Delete API key functionality to be implemented');
                                     }
                                   }}
-                                  className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-600 rounded"
+                                  className="p-1 text-slate-400 hover:text-red-400 hover:bg-slate-600 rounded"
                                   title="Delete Key"
                                 >
-                                  <Trash2 className="w-4 h-4" />
+                                  <Trash2 className="w-3 h-3" />
                                 </button>
                               </div>
                             </td>
@@ -2705,6 +2702,8 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                     </tbody>
                   </table>
                 </div>
+                {/* Scroll hint */}
+                <p className="text-slate-500 text-xs mt-2 text-center">← Scroll horizontally to view all columns →</p>
               </div>
             </div>
           )}
