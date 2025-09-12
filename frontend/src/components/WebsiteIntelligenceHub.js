@@ -701,7 +701,7 @@ const WebsiteIntelligenceHub = () => {
                   <Button variant="outline" onClick={() => setShowAddWebsite(false)}>
                     Cancel
                   </Button>
-                  <Button onClick={handleAddWebsite} className="bg-green-600 hover:bg-green-700">
+                  <Button onClick={handleAddWebsite} className="bg-green-600 hover:bg-green-700" disabled={!newWebsite.domain || !newWebsite.name}>
                     Add Website
                   </Button>
                 </div>
