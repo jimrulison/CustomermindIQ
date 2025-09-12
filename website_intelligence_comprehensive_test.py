@@ -61,7 +61,7 @@ class WebsiteIntelligenceHubTester:
                 "password": "CustomerMindIQ2025!"
             }
             
-            response = requests.post(f"{self.base_url}/api/auth/login", json=auth_data, timeout=30)
+            response = requests.post(f"{self.base_url}/api/auth/login", json=auth_data, timeout=30, verify=False)
             
             if response.status_code == 200:
                 auth_response = response.json()
