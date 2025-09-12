@@ -1153,3 +1153,464 @@ async def get_detailed_website_report(website_id: str) -> Dict[str, Any]:
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Detailed report error: {str(e)}")
+
+async def generate_pdf_report(user_websites_from_db):
+    """Generate comprehensive PDF report with all detailed information"""
+    from reportlab.lib.pagesizes import letter, A4
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.units import inch
+    from reportlab.lib import colors
+    from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
+    import io
+    import base64
+    from datetime import datetime, timedelta
+    
+    # Create PDF buffer
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=A4, topMargin=0.5*inch, bottomMargin=0.5*inch)
+    
+    # Get styles
+    styles = getSampleStyleSheet()
+    title_style = ParagraphStyle('CustomTitle', parent=styles['Title'], fontSize=24, spaceAfter=30, alignment=TA_CENTER)
+    heading_style = ParagraphStyle('CustomHeading', parent=styles['Heading1'], fontSize=16, spaceAfter=12, textColor=colors.darkblue)
+    subheading_style = ParagraphStyle('CustomSubHeading', parent=styles['Heading2'], fontSize=14, spaceAfter=8, textColor=colors.darkblue)
+    normal_style = ParagraphStyle('CustomNormal', parent=styles['Normal'], fontSize=10, spaceAfter=6, alignment=TA_JUSTIFY)
+    
+    # Build PDF content
+    story = []
+    
+    # Title Page
+    story.append(Paragraph("Website Intelligence Hub", title_style))
+    story.append(Paragraph("Comprehensive Analysis Report", heading_style))
+    story.append(Spacer(1, 0.2*inch))
+    
+    # Report metadata
+    story.append(Paragraph(f"Generated: {datetime.now().strftime('%B %d, %Y at %I:%M %p')}", normal_style))
+    story.append(Paragraph(f"Report Period: {(datetime.now() - timedelta(days=30)).strftime('%B %d, %Y')} - {datetime.now().strftime('%B %d, %Y')}", normal_style))
+    story.append(Paragraph(f"Total Websites Analyzed: {len(user_websites_from_db)}", normal_style))
+    story.append(Spacer(1, 0.3*inch))
+    
+    # Executive Summary
+    story.append(Paragraph("Executive Summary", heading_style))
+    
+    if user_websites_from_db:
+        avg_health = round(sum(w.get('health_score', 0) for w in user_websites_from_db) / len(user_websites_from_db), 1)
+        total_visitors = sum(w.get('monthly_visitors', 0) for w in user_websites_from_db)
+        total_issues = sum(w.get('issues_count', 0) for w in user_websites_from_db)
+        total_opportunities = sum(w.get('opportunities_count', 0) for w in user_websites_from_db)
+        avg_seo = round(sum(w.get('seo_score', 0) for w in user_websites_from_db) / len(user_websites_from_db), 1)
+        avg_performance = round(sum(w.get('performance_score', 0) for w in user_websites_from_db) / len(user_websites_from_db), 1)
+        
+        summary_data = [
+            ["Metric", "Value"],
+            ["Average Health Score", f"{avg_health}%"],
+            ["Total Monthly Unique Visitors", f"{total_visitors:,}"],
+            ["Total Issues Identified", str(total_issues)],
+            ["Total Opportunities Found", str(total_opportunities)],
+            ["Average SEO Score", f"{avg_seo}%"],
+            ["Average Performance Score", f"{avg_performance}%"]
+        ]
+        
+        summary_table = Table(summary_data, colWidths=[3*inch, 2*inch])
+        summary_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.darkblue),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 12),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+            ('GRID', (0, 0), (-1, -1), 1, colors.black)
+        ]))
+        story.append(summary_table)
+        story.append(Spacer(1, 0.2*inch))
+    
+    # Detailed Website Analysis
+    for i, website in enumerate(user_websites_from_db):
+        if i > 0:
+            story.append(PageBreak())
+        
+        story.append(Paragraph(f"Website Analysis: {website.get('website_name', 'Unknown')}", heading_style))
+        story.append(Paragraph(f"Domain: {website.get('domain', 'Unknown')}", subheading_style))
+        story.append(Spacer(1, 0.1*inch))
+        
+        # Website Overview Table
+        overview_data = [
+            ["Metric", "Score", "Status"],
+            ["Overall Health Score", f"{website.get('health_score', 0):.1f}%", "Good" if website.get('health_score', 0) > 80 else "Needs Improvement"],
+            ["SEO Score", f"{website.get('seo_score', 0):.1f}%", "Good" if website.get('seo_score', 0) > 75 else "Needs Improvement"],
+            ["Performance Score", f"{website.get('performance_score', 0):.1f}%", "Good" if website.get('performance_score', 0) > 75 else "Needs Improvement"],
+            ["Security Score", f"{website.get('security_score', 0):.1f}%", "Good" if website.get('security_score', 0) > 85 else "Needs Improvement"],
+            ["Mobile Score", f"{website.get('mobile_score', 0):.1f}%", "Good" if website.get('mobile_score', 0) > 75 else "Needs Improvement"],
+            ["Monthly Unique Visitors", f"{website.get('monthly_visitors', 0):,}", "Active"],
+            ["Conversion Rate", f"{website.get('conversion_rate', 0)}%", "Tracking"]
+        ]
+        
+        overview_table = Table(overview_data, colWidths=[2.5*inch, 1.5*inch, 1.5*inch])
+        overview_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.darkblue),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, -1), 9),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.lightgrey),
+            ('GRID', (0, 0), (-1, -1), 1, colors.black)
+        ]))
+        story.append(overview_table)
+        story.append(Spacer(1, 0.2*inch))
+        
+        # Detailed Issues Section
+        if website.get('detailed_issues'):
+            story.append(Paragraph("Technical Issues Found", subheading_style))
+            
+            for j, issue in enumerate(website.get('detailed_issues', [])[:5]):  # Limit to top 5 issues
+                story.append(Paragraph(f"{j+1}. {issue.get('title', 'Unknown Issue')}", ParagraphStyle('IssueTitleStyle', parent=styles['Normal'], fontSize=11, textColor=colors.red, spaceAfter=4)))
+                story.append(Paragraph(f"<b>Severity:</b> {issue.get('severity', 'Unknown').title()}", normal_style))
+                story.append(Paragraph(f"<b>Description:</b> {issue.get('description', 'No description available')}", normal_style))
+                
+                if issue.get('affected_pages'):
+                    pages_text = ", ".join(issue.get('affected_pages', [])[:3])  # Show first 3 pages
+                    if len(issue.get('affected_pages', [])) > 3:
+                        pages_text += f" (and {len(issue.get('affected_pages', [])) - 3} more)"
+                    story.append(Paragraph(f"<b>Affected Pages:</b> {pages_text}", normal_style))
+                
+                story.append(Paragraph(f"<b>How to Fix:</b> {issue.get('fix_instructions', 'Contact support for assistance')}", normal_style))
+                story.append(Paragraph(f"<b>Impact:</b> {issue.get('impact', 'Will improve website performance')}", normal_style))
+                story.append(Paragraph(f"<b>Estimated Effort:</b> {issue.get('effort', 'Unknown')}", normal_style))
+                story.append(Spacer(1, 0.1*inch))
+            
+            story.append(Spacer(1, 0.2*inch))
+        
+        # Detailed Opportunities Section
+        if website.get('detailed_opportunities'):
+            story.append(Paragraph("Growth Opportunities", subheading_style))
+            
+            for j, opp in enumerate(website.get('detailed_opportunities', [])[:5]):  # Limit to top 5 opportunities
+                story.append(Paragraph(f"{j+1}. {opp.get('title', 'Unknown Opportunity')}", ParagraphStyle('OppTitleStyle', parent=styles['Normal'], fontSize=11, textColor=colors.green, spaceAfter=4)))
+                story.append(Paragraph(f"<b>Priority:</b> {opp.get('priority', 'Unknown')}", normal_style))
+                story.append(Paragraph(f"<b>Description:</b> {opp.get('description', 'No description available')}", normal_style))
+                story.append(Paragraph(f"<b>Potential Impact:</b> {opp.get('potential_impact', 'Positive impact expected')}", normal_style))
+                story.append(Paragraph(f"<b>Implementation:</b> {opp.get('implementation', 'Contact support for implementation guidance')}", normal_style))
+                story.append(Paragraph(f"<b>Estimated ROI:</b> {opp.get('roi_estimate', 'To be determined')}", normal_style))
+                story.append(Paragraph(f"<b>Category:</b> {opp.get('category', 'General')}", normal_style))
+                story.append(Paragraph(f"<b>Effort Required:</b> {opp.get('effort', 'Unknown')}", normal_style))
+                story.append(Spacer(1, 0.1*inch))
+            
+            story.append(Spacer(1, 0.2*inch))
+    
+    # Overall Recommendations Section
+    if user_websites_from_db:
+        story.append(PageBreak())
+        story.append(Paragraph("Overall Recommendations & Action Plan", heading_style))
+        
+        # High Priority Actions
+        story.append(Paragraph("🔴 High Priority Actions (Address Immediately)", subheading_style))
+        high_priority_actions = []
+        for website in user_websites_from_db:
+            for issue in website.get('detailed_issues', []):
+                if issue.get('severity') in ['critical', 'high']:
+                    high_priority_actions.append(f"• <b>{website.get('website_name')}:</b> {issue.get('title')} - {issue.get('fix_instructions', 'See detailed analysis')}")
+        
+        if high_priority_actions:
+            for action in high_priority_actions[:10]:  # Limit to top 10
+                story.append(Paragraph(action, normal_style))
+        else:
+            story.append(Paragraph("• No critical issues found. Great job maintaining your websites!", normal_style))
+        
+        story.append(Spacer(1, 0.2*inch))
+        
+        # Quick Wins
+        story.append(Paragraph("🟡 Quick Wins (Low Effort, High Impact)", subheading_style))
+        quick_wins = []
+        for website in user_websites_from_db:
+            for issue in website.get('detailed_issues', []):
+                if 'low' in issue.get('effort', '').lower():
+                    quick_wins.append(f"• <b>{website.get('website_name')}:</b> {issue.get('title')} - {issue.get('fix_instructions', 'See detailed analysis')}")
+        
+        if quick_wins:
+            for win in quick_wins[:8]:  # Limit to top 8
+                story.append(Paragraph(win, normal_style))
+        else:
+            story.append(Paragraph("• All easy fixes have been identified in the detailed analysis above.", normal_style))
+        
+        story.append(Spacer(1, 0.2*inch))
+        
+        # Long-term Improvements
+        story.append(Paragraph("🟢 Long-term Growth Opportunities", subheading_style))
+        growth_opportunities = []
+        for website in user_websites_from_db:
+            for opp in website.get('detailed_opportunities', []):
+                if opp.get('priority') == 'High':
+                    growth_opportunities.append(f"• <b>{website.get('website_name')}:</b> {opp.get('title')} - {opp.get('potential_impact', 'Significant growth potential')}")
+        
+        if growth_opportunities:
+            for opp in growth_opportunities[:8]:  # Limit to top 8
+                story.append(Paragraph(opp, normal_style))
+        else:
+            story.append(Paragraph("• Focus on resolving current issues before pursuing new growth opportunities.", normal_style))
+    
+    # Footer
+    story.append(Spacer(1, 0.3*inch))
+    story.append(Paragraph("Generated by Website Intelligence Hub - Your AI-Powered Website Analysis Platform", 
+                         ParagraphStyle('FooterStyle', parent=styles['Normal'], fontSize=8, textColor=colors.grey, alignment=TA_CENTER)))
+    
+    # Build PDF
+    doc.build(story)
+    
+    # Get PDF data
+    buffer.seek(0)
+    pdf_data = buffer.getvalue()
+    buffer.close()
+    
+    # Encode PDF as base64 for transfer
+    pdf_base64 = base64.b64encode(pdf_data).decode('utf-8')
+    
+    print(f"✅ Comprehensive PDF report generated successfully ({len(pdf_data)} bytes)")
+    
+    return {
+        "status": "success",
+        "format": "pdf",
+        "filename": f"website-intelligence-comprehensive-report-{datetime.now().strftime('%Y-%m-%d')}.pdf",
+        "data": pdf_base64,
+        "size_bytes": len(pdf_data),
+        "pages_estimated": max(1, len(user_websites_from_db) * 2 + 2),
+        "websites_included": len(user_websites_from_db)
+    }
+
+async def generate_word_report(user_websites_from_db):
+    """Generate comprehensive Word document report"""
+    try:
+        from docx import Document
+        from docx.shared import Inches
+        from docx.enum.text import WD_ALIGN_PARAGRAPH
+        import io
+        import base64
+        from datetime import datetime, timedelta
+        
+        # Create new document
+        doc = Document()
+        
+        # Title
+        title = doc.add_heading('Website Intelligence Hub', 0)
+        title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        
+        subtitle = doc.add_heading('Comprehensive Analysis Report', level=1)
+        subtitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        
+        # Report metadata
+        doc.add_paragraph(f"Generated: {datetime.now().strftime('%B %d, %Y at %I:%M %p')}")
+        doc.add_paragraph(f"Report Period: {(datetime.now() - timedelta(days=30)).strftime('%B %d, %Y')} - {datetime.now().strftime('%B %d, %Y')}")
+        doc.add_paragraph(f"Total Websites Analyzed: {len(user_websites_from_db)}")
+        
+        # Executive Summary
+        doc.add_heading('Executive Summary', level=1)
+        
+        if user_websites_from_db:
+            avg_health = round(sum(w.get('health_score', 0) for w in user_websites_from_db) / len(user_websites_from_db), 1)
+            total_visitors = sum(w.get('monthly_visitors', 0) for w in user_websites_from_db)
+            total_issues = sum(w.get('issues_count', 0) for w in user_websites_from_db)
+            total_opportunities = sum(w.get('opportunities_count', 0) for w in user_websites_from_db)
+            avg_seo = round(sum(w.get('seo_score', 0) for w in user_websites_from_db) / len(user_websites_from_db), 1)
+            avg_performance = round(sum(w.get('performance_score', 0) for w in user_websites_from_db) / len(user_websites_from_db), 1)
+            
+            # Summary table
+            table = doc.add_table(rows=1, cols=2)
+            table.style = 'Table Grid'
+            hdr_cells = table.rows[0].cells
+            hdr_cells[0].text = 'Metric'
+            hdr_cells[1].text = 'Value'
+            
+            metrics = [
+                ('Average Health Score', f'{avg_health}%'),
+                ('Total Monthly Unique Visitors', f'{total_visitors:,}'),
+                ('Total Issues Identified', str(total_issues)),
+                ('Total Opportunities Found', str(total_opportunities)),
+                ('Average SEO Score', f'{avg_seo}%'),
+                ('Average Performance Score', f'{avg_performance}%')
+            ]
+            
+            for metric, value in metrics:
+                row_cells = table.add_row().cells
+                row_cells[0].text = metric
+                row_cells[1].text = value
+        
+        # Website Details
+        for website in user_websites_from_db:
+            doc.add_page_break()
+            doc.add_heading(f"Website Analysis: {website.get('website_name', 'Unknown')}", level=1)
+            doc.add_heading(f"Domain: {website.get('domain', 'Unknown')}", level=2)
+            
+            # Overview table
+            table = doc.add_table(rows=1, cols=3)
+            table.style = 'Table Grid'
+            hdr_cells = table.rows[0].cells
+            hdr_cells[0].text = 'Metric'
+            hdr_cells[1].text = 'Score'
+            hdr_cells[2].text = 'Status'
+            
+            overview_metrics = [
+                ('Overall Health Score', f"{website.get('health_score', 0):.1f}%", "Good" if website.get('health_score', 0) > 80 else "Needs Improvement"),
+                ('SEO Score', f"{website.get('seo_score', 0):.1f}%", "Good" if website.get('seo_score', 0) > 75 else "Needs Improvement"),
+                ('Performance Score', f"{website.get('performance_score', 0):.1f}%", "Good" if website.get('performance_score', 0) > 75 else "Needs Improvement"),
+                ('Security Score', f"{website.get('security_score', 0):.1f}%", "Good" if website.get('security_score', 0) > 85 else "Needs Improvement"),
+                ('Mobile Score', f"{website.get('mobile_score', 0):.1f}%", "Good" if website.get('mobile_score', 0) > 75 else "Needs Improvement"),
+                ('Monthly Unique Visitors', f"{website.get('monthly_visitors', 0):,}", "Active"),
+                ('Conversion Rate', f"{website.get('conversion_rate', 0)}%", "Tracking")
+            ]
+            
+            for metric, score, status in overview_metrics:
+                row_cells = table.add_row().cells
+                row_cells[0].text = metric
+                row_cells[1].text = score
+                row_cells[2].text = status
+            
+            # Issues section
+            if website.get('detailed_issues'):
+                doc.add_heading('Technical Issues Found', level=2)
+                for i, issue in enumerate(website.get('detailed_issues', [])[:5]):
+                    doc.add_heading(f"{i+1}. {issue.get('title', 'Unknown Issue')}", level=3)
+                    doc.add_paragraph(f"Severity: {issue.get('severity', 'Unknown').title()}")
+                    doc.add_paragraph(f"Description: {issue.get('description', 'No description available')}")
+                    if issue.get('affected_pages'):
+                        pages_text = ", ".join(issue.get('affected_pages', [])[:3])
+                        if len(issue.get('affected_pages', [])) > 3:
+                            pages_text += f" (and {len(issue.get('affected_pages', [])) - 3} more)"
+                        doc.add_paragraph(f"Affected Pages: {pages_text}")
+                    doc.add_paragraph(f"How to Fix: {issue.get('fix_instructions', 'Contact support for assistance')}")
+                    doc.add_paragraph(f"Impact: {issue.get('impact', 'Will improve website performance')}")
+                    doc.add_paragraph(f"Estimated Effort: {issue.get('effort', 'Unknown')}")
+            
+            # Opportunities section
+            if website.get('detailed_opportunities'):
+                doc.add_heading('Growth Opportunities', level=2)
+                for i, opp in enumerate(website.get('detailed_opportunities', [])[:5]):
+                    doc.add_heading(f"{i+1}. {opp.get('title', 'Unknown Opportunity')}", level=3)
+                    doc.add_paragraph(f"Priority: {opp.get('priority', 'Unknown')}")
+                    doc.add_paragraph(f"Description: {opp.get('description', 'No description available')}")
+                    doc.add_paragraph(f"Potential Impact: {opp.get('potential_impact', 'Positive impact expected')}")
+                    doc.add_paragraph(f"Implementation: {opp.get('implementation', 'Contact support for implementation guidance')}")
+                    doc.add_paragraph(f"Estimated ROI: {opp.get('roi_estimate', 'To be determined')}")
+                    doc.add_paragraph(f"Category: {opp.get('category', 'General')}")
+                    doc.add_paragraph(f"Effort Required: {opp.get('effort', 'Unknown')}")
+        
+        # Save to buffer
+        buffer = io.BytesIO()
+        doc.save(buffer)
+        buffer.seek(0)
+        docx_data = buffer.getvalue()
+        buffer.close()
+        
+        # Encode as base64
+        docx_base64 = base64.b64encode(docx_data).decode('utf-8')
+        
+        print(f"✅ Comprehensive Word report generated successfully ({len(docx_data)} bytes)")
+        
+        return {
+            "status": "success",
+            "format": "docx",
+            "filename": f"website-intelligence-comprehensive-report-{datetime.now().strftime('%Y-%m-%d')}.docx",
+            "data": docx_base64,
+            "size_bytes": len(docx_data),
+            "websites_included": len(user_websites_from_db)
+        }
+        
+    except ImportError:
+        # Fallback if python-docx is not available
+        return {
+            "status": "error",
+            "message": "Word document generation requires python-docx package. Please use PDF format instead.",
+            "format": "docx"
+        }
+    except Exception as e:
+        print(f"❌ Error generating Word report: {e}")
+        return {
+            "status": "error",
+            "message": f"Word report generation failed: {str(e)}",
+            "format": "docx"
+        }
+
+async def generate_json_report(user_websites_from_db):
+    """Generate comprehensive JSON report (enhanced version of original)"""
+    from datetime import datetime, timedelta
+    
+    # Generate comprehensive report data
+    report_data = {
+        "report_metadata": {
+            "generated_at": datetime.now().isoformat(),
+            "report_type": "Website Intelligence Comprehensive Report",
+            "total_websites": len(user_websites_from_db),
+            "report_period": f"{(datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')} to {datetime.now().strftime('%Y-%m-%d')}",
+            "generated_by": "Website Intelligence Hub",
+            "export_format": "json"
+        },
+        "executive_summary": {
+            "total_websites_monitored": len(user_websites_from_db),
+            "average_health_score": round(sum(w.get('health_score', 0) for w in user_websites_from_db) / len(user_websites_from_db), 1) if user_websites_from_db else 0,
+            "total_monthly_visitors": sum(w.get('monthly_visitors', 0) for w in user_websites_from_db),
+            "total_issues_found": sum(w.get('issues_count', 0) for w in user_websites_from_db),
+            "total_opportunities": sum(w.get('opportunities_count', 0) for w in user_websites_from_db),
+            "average_seo_score": round(sum(w.get('seo_score', 0) for w in user_websites_from_db) / len(user_websites_from_db), 1) if user_websites_from_db else 0,
+            "average_performance_score": round(sum(w.get('performance_score', 0) for w in user_websites_from_db) / len(user_websites_from_db), 1) if user_websites_from_db else 0
+        },
+        "website_details": [],
+        "recommendations_summary": {
+            "high_priority_actions": [],
+            "quick_wins": [],
+            "long_term_improvements": []
+        }
+    }
+    
+    # Add detailed data for each website
+    for website in user_websites_from_db:
+        website_detail = {
+            "website_name": website.get('website_name', 'Unknown'),
+            "domain": website.get('domain', 'Unknown'),
+            "health_score": website.get('health_score', 0),
+            "monthly_visitors": website.get('monthly_visitors', 0),
+            "seo_score": website.get('seo_score', 0),
+            "performance_score": website.get('performance_score', 0),
+            "security_score": website.get('security_score', 0),
+            "mobile_score": website.get('mobile_score', 0),
+            "issues_count": website.get('issues_count', 0),
+            "opportunities_count": website.get('opportunities_count', 0),
+            "last_analyzed": website.get('last_analyzed', datetime.now()).isoformat() if isinstance(website.get('last_analyzed'), datetime) else website.get('last_analyzed', ''),
+            "detailed_issues": website.get('detailed_issues', []),
+            "detailed_opportunities": website.get('detailed_opportunities', []),
+            "conversion_rate": website.get('conversion_rate', 0)
+        }
+        report_data["website_details"].append(website_detail)
+        
+        # Categorize recommendations
+        for issue in website.get('detailed_issues', []):
+            if issue.get('severity') in ['critical', 'high']:
+                report_data["recommendations_summary"]["high_priority_actions"].append({
+                    "website": website.get('website_name'),
+                    "action": issue.get('title'),
+                    "description": issue.get('fix_instructions')
+                })
+            elif issue.get('effort', '').lower().startswith('low'):
+                report_data["recommendations_summary"]["quick_wins"].append({
+                    "website": website.get('website_name'),
+                    "action": issue.get('title'),
+                    "description": issue.get('fix_instructions')
+                })
+        
+        for opportunity in website.get('detailed_opportunities', []):
+            if opportunity.get('priority') == 'High':
+                report_data["recommendations_summary"]["long_term_improvements"].append({
+                    "website": website.get('website_name'),
+                    "opportunity": opportunity.get('title'),
+                    "impact": opportunity.get('potential_impact'),
+                    "implementation": opportunity.get('implementation')
+                })
+    
+    print(f"✅ JSON report generated successfully for {len(user_websites_from_db)} websites")
+    
+    return {
+        "status": "success",
+        "report": report_data,
+        "download_format": "json",
+        "file_size_kb": len(str(report_data)) // 1024 + 1
+    }
