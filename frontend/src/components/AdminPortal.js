@@ -3586,6 +3586,123 @@ const AdminPortalEnhanced = () => {
                 </div>
               )}
 
+              {/* API Key Modal */}
+              {(modalType === 'create-api-key' || modalType === 'edit-api-key') && (
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">
+                        API Key Name *
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g., Production Website Tracker"
+                        defaultValue={editingItem?.name || ''}
+                        className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">
+                        Description
+                      </label>
+                      <textarea
+                        placeholder="Describe the purpose of this API key..."
+                        defaultValue={editingItem?.description || ''}
+                        rows={3}
+                        className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-3">
+                        Permissions
+                      </label>
+                      <div className="space-y-2">
+                        {[
+                          { id: 'read_analytics', label: 'Read Analytics Data', description: 'Access to analytics and reporting endpoints' },
+                          { id: 'read_websites', label: 'Read Website Data', description: 'Access to website information and configurations' },
+                          { id: 'write_websites', label: 'Write Website Data', description: 'Ability to add and update website configurations' },
+                          { id: 'read_users', label: 'Read User Data', description: 'Access to user information and profiles' },
+                          { id: 'admin_access', label: 'Admin Access', description: 'Full administrative permissions (use with caution)' }
+                        ].map((permission) => (
+                          <div key={permission.id} className="flex items-start space-x-3 p-3 bg-slate-800/50 rounded-lg border border-slate-600">
+                            <input
+                              type="checkbox"
+                              id={permission.id}
+                              defaultChecked={editingItem?.permissions?.includes(permission.id) || false}
+                              className="mt-1 w-4 h-4 text-blue-600 bg-slate-700 border-slate-500 rounded focus:ring-blue-500 focus:ring-2"
+                            />
+                            <div className="flex-1 min-w-0">
+                              <label htmlFor={permission.id} className="text-white font-medium cursor-pointer">
+                                {permission.label}
+                              </label>
+                              <p className="text-slate-400 text-sm mt-1">{permission.description}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">
+                        Rate Limit (requests per hour)
+                      </label>
+                      <select 
+                        defaultValue={editingItem?.rate_limit || '1000'}
+                        className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                      >
+                        <option value="100">100 requests/hour (Basic)</option>
+                        <option value="500">500 requests/hour (Standard)</option>
+                        <option value="1000">1,000 requests/hour (Premium)</option>
+                        <option value="5000">5,000 requests/hour (Enterprise)</option>
+                        <option value="unlimited">Unlimited (Admin Only)</option>
+                      </select>
+                    </div>
+
+                    <div className="flex items-center space-x-3 p-3 bg-slate-800/50 rounded-lg border border-slate-600">
+                      <input
+                        type="checkbox"
+                        id="api-key-active"
+                        defaultChecked={editingItem?.is_active !== false}
+                        className="w-4 h-4 text-blue-600 bg-slate-700 border-slate-500 rounded focus:ring-blue-500 focus:ring-2"
+                      />
+                      <div className="flex-1">
+                        <label htmlFor="api-key-active" className="text-white font-medium cursor-pointer">
+                          Active
+                        </label>
+                        <p className="text-slate-400 text-sm">Enable this API key for immediate use</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-end space-x-3 pt-4 border-t border-slate-700">
+                    <button
+                      onClick={() => {
+                        setShowModal(false);
+                        setEditingItem(null);
+                        setModalType('');
+                      }}
+                      className="px-6 py-3 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button 
+                      onClick={() => {
+                        // Here you would typically handle the API key creation/update
+                        alert('API Key functionality will be implemented soon!');
+                        setShowModal(false);
+                        setEditingItem(null);
+                        setModalType('');
+                      }}
+                      className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      {modalType === 'create-api-key' ? 'Generate API Key' : 'Update API Key'}
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {/* Placeholder for other modal types */}
               {(modalType === 'user-analytics' || modalType === 'generate-codes' || modalType === 'send-to-all') && (
                 <div className="text-center py-8">
