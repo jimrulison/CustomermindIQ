@@ -384,7 +384,7 @@ class AdminPortalTester:
             
             if response.status_code == 200:
                 data = response.json()
-                discount_count = len(data) if isinstance(data, list) else data.get('total_discounts', 0)
+                discount_count = len(data.get('discounts', [])) if isinstance(data, dict) else len(data)
                 self.log_test(
                     "Get Discounts", 
                     True, 
@@ -398,14 +398,16 @@ class AdminPortalTester:
         except Exception as e:
             self.log_test("Get Discounts", False, f"Exception: {str(e)}")
         
-        # Test create discount
+        # Test create discount with correct field name
         try:
             discount_data = {
                 "name": "Test Discount",
                 "description": "Test discount for admin portal testing",
-                "type": "percentage",
-                "value": 20,
-                "usage_limits": 100
+                "discount_type": "percentage",  # Use correct field name
+                "value": 20.0,
+                "target_tiers": [],
+                "target_users": [],
+                "is_active": True
             }
             
             start_time = datetime.now()
