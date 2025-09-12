@@ -12,7 +12,7 @@ from .seo_intelligence import seo_router
 from .membership_manager import membership_router
 
 # Create main router for Website Intelligence Hub
-website_intelligence_router = APIRouter(prefix="/api/website-intelligence", tags=["Website Intelligence Hub"])
+website_intelligence_router = APIRouter(tags=["Website Intelligence Hub"])
 
 # Include all sub-routers
 website_intelligence_router.include_router(analyzer_router)
