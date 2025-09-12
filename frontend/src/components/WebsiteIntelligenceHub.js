@@ -1063,6 +1063,333 @@ const WebsiteIntelligenceHub = () => {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Website Details Modal */}
+      {showWebsiteDetails && selectedWebsite && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-slate-800 rounded-xl border border-slate-700 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between p-6 border-b border-slate-700">
+              <h3 className="text-xl font-semibold text-white">
+                {selectedWebsite.website_name} - {detailView === 'issues' ? 'Issues' : 
+                detailView === 'opportunities' ? 'Opportunities' :
+                detailView === 'seo' ? 'SEO Analysis' :
+                detailView === 'performance' ? 'Performance Analysis' : 'Overview'}
+              </h3>
+              <button
+                onClick={() => {
+                  setShowWebsiteDetails(false);
+                  setSelectedWebsite(null);
+                  setDetailView('overview');
+                }}
+                className="text-slate-400 hover:text-white"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="p-6">
+              {/* Issues Detail View */}
+              {detailView === 'issues' && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-lg font-semibold text-white">Website Issues</h4>
+                    <Badge className="bg-red-500/20 text-red-400">
+                      {selectedWebsite.issues_count || 0} Issues Found
+                    </Badge>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-slate-700/30 rounded-lg p-4">
+                      <div className="flex items-start space-x-3">
+                        <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5" />
+                        <div>
+                          <h5 className="font-medium text-white">Slow Page Load Speed</h5>
+                          <p className="text-slate-400 text-sm mt-1">
+                            Your homepage takes 4.2 seconds to load, which is above the recommended 2.5 seconds.
+                          </p>
+                          <div className="mt-2">
+                            <span className="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded">High Priority</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-slate-700/30 rounded-lg p-4">
+                      <div className="flex items-start space-x-3">
+                        <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5" />
+                        <div>
+                          <h5 className="font-medium text-white">Missing Meta Descriptions</h5>
+                          <p className="text-slate-400 text-sm mt-1">
+                            15 pages are missing meta descriptions, which impacts SEO performance.
+                          </p>
+                          <div className="mt-2">
+                            <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">Medium Priority</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-slate-700/30 rounded-lg p-4">
+                      <div className="flex items-start space-x-3">
+                        <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5" />
+                        <div>
+                          <h5 className="font-medium text-white">Broken Internal Links</h5>
+                          <p className="text-slate-400 text-sm mt-1">
+                            3 internal links return 404 errors and need to be fixed.
+                          </p>
+                          <div className="mt-2">
+                            <span className="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded">Low Priority</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 border-t border-slate-700">
+                    <h5 className="font-medium text-white mb-2">Recommended Actions</h5>
+                    <ul className="space-y-2 text-sm text-slate-300">
+                      <li className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                        <span>Optimize images and enable compression to improve load speed</span>
+                      </li>
+                      <li className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                        <span>Add meta descriptions to all pages using relevant keywords</span>
+                      </li>
+                      <li className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                        <span>Update or remove broken internal links</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {/* Opportunities Detail View */}
+              {detailView === 'opportunities' && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-lg font-semibold text-white">Growth Opportunities</h4>
+                    <Badge className="bg-green-500/20 text-green-400">
+                      {selectedWebsite.opportunities_count || 0} Opportunities
+                    </Badge>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-slate-700/30 rounded-lg p-4">
+                      <div className="flex items-start space-x-3">
+                        <Lightbulb className="w-5 h-5 text-green-400 mt-0.5" />
+                        <div>
+                          <h5 className="font-medium text-white">Add Schema Markup</h5>
+                          <p className="text-slate-400 text-sm mt-1">
+                            Implementing structured data could improve your search result appearance and increase click-through rates by 15-20%.
+                          </p>
+                          <div className="mt-2">
+                            <span className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded">High Impact</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-slate-700/30 rounded-lg p-4">
+                      <div className="flex items-start space-x-3">
+                        <Lightbulb className="w-5 h-5 text-blue-400 mt-0.5" />
+                        <div>
+                          <h5 className="font-medium text-white">Mobile Optimization</h5>
+                          <p className="text-slate-400 text-sm mt-1">
+                            Your mobile page speed score is 65. Optimizing for mobile could increase conversions by 10-12%.
+                          </p>
+                          <div className="mt-2">
+                            <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Medium Impact</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-slate-700/30 rounded-lg p-4">
+                      <div className="flex items-start space-x-3">
+                        <Lightbulb className="w-5 h-5 text-purple-400 mt-0.5" />
+                        <div>
+                          <h5 className="font-medium text-white">Content Expansion</h5>
+                          <p className="text-slate-400 text-sm mt-1">
+                            Adding blog content targeting 5 identified keywords could drive 25% more organic traffic.
+                          </p>
+                          <div className="mt-2">
+                            <span className="text-xs bg-purple-500/20 text-purple-400 px-2 py-1 rounded">Long-term</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-slate-700/30 rounded-lg p-4">
+                      <div className="flex items-start space-x-3">
+                        <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5" />
+                        <div>
+                          <h5 className="font-medium text-white">Social Media Integration</h5>
+                          <p className="text-slate-400 text-sm mt-1">
+                            Adding social sharing buttons and Open Graph tags could increase referral traffic by 8-10%.
+                          </p>
+                          <div className="mt-2">
+                            <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">Quick Win</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 border-t border-slate-700">
+                    <h5 className="font-medium text-white mb-2">Priority Recommendations</h5>
+                    <ol className="space-y-2 text-sm text-slate-300">
+                      <li className="flex items-center space-x-3">
+                        <span className="flex-shrink-0 w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs">1</span>
+                        <span>Implement schema markup for products/services (High Impact)</span>
+                      </li>
+                      <li className="flex items-center space-x-3">
+                        <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs">2</span>
+                        <span>Optimize mobile performance and user experience</span>
+                      </li>
+                      <li className="flex items-center space-x-3">
+                        <span className="flex-shrink-0 w-6 h-6 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs">3</span>
+                        <span>Create content strategy for identified keyword opportunities</span>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              )}
+
+              {/* SEO Analysis Detail View */}
+              {detailView === 'seo' && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-lg font-semibold text-white">SEO Analysis</h4>
+                    <Badge className="bg-blue-500/20 text-blue-400">
+                      Score: {selectedWebsite.seo_score?.toFixed(1) || 0}/100
+                    </Badge>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-slate-700/30 rounded-lg p-4">
+                      <h5 className="font-medium text-white mb-2">On-Page SEO</h5>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-slate-300">Title Tags</span>
+                          <span className="text-green-400">Good</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-300">Meta Descriptions</span>
+                          <span className="text-yellow-400">Needs Work</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-300">Header Structure</span>
+                          <span className="text-green-400">Good</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-300">Internal Linking</span>
+                          <span className="text-red-400">Poor</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-slate-700/30 rounded-lg p-4">
+                      <h5 className="font-medium text-white mb-2">Technical SEO</h5>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-slate-300">Site Speed</span>
+                          <span className="text-yellow-400">Fair</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-300">Mobile Friendly</span>
+                          <span className="text-green-400">Good</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-300">SSL Certificate</span>
+                          <span className="text-green-400">Good</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-300">XML Sitemap</span>
+                          <span className="text-green-400">Good</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-slate-700/30 rounded-lg p-4">
+                    <h5 className="font-medium text-white mb-3">Top Keywords</h5>
+                    <div className="flex flex-wrap gap-2">
+                      {['ecommerce platform', 'online store', 'digital marketing', 'web development', 'seo services'].map((keyword, index) => (
+                        <span key={index} className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">
+                          {keyword}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Performance Analysis Detail View */}
+              {detailView === 'performance' && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-lg font-semibold text-white">Performance Analysis</h4>
+                    <Badge className="bg-green-500/20 text-green-400">
+                      Score: {selectedWebsite.performance_score?.toFixed(1) || 0}/100
+                    </Badge>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-slate-700/30 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-blue-400 mb-1">2.1s</div>
+                      <div className="text-slate-300 text-sm">First Contentful Paint</div>
+                    </div>
+                    <div className="bg-slate-700/30 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-yellow-400 mb-1">4.2s</div>
+                      <div className="text-slate-300 text-sm">Largest Contentful Paint</div>
+                    </div>
+                    <div className="bg-slate-700/30 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-green-400 mb-1">0.1s</div>
+                      <div className="text-slate-300 text-sm">Cumulative Layout Shift</div>
+                    </div>
+                  </div>
+
+                  <div className="bg-slate-700/30 rounded-lg p-4">
+                    <h5 className="font-medium text-white mb-3">Performance Recommendations</h5>
+                    <ul className="space-y-2 text-sm text-slate-300">
+                      <li className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                        <span>Compress and optimize images (potential 1.5s improvement)</span>
+                      </li>
+                      <li className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                        <span>Enable browser caching (potential 0.8s improvement)</span>
+                      </li>
+                      <li className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span>Minify CSS and JavaScript (potential 0.3s improvement)</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="flex justify-end space-x-3 p-6 border-t border-slate-700">
+              <button
+                onClick={() => {
+                  setShowWebsiteDetails(false);
+                  setSelectedWebsite(null);
+                  setDetailView('overview');
+                }}
+                className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
+              >
+                Close
+              </button>
+              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                Export Report
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
