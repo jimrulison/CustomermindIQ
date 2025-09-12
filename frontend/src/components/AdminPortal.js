@@ -2172,7 +2172,7 @@ const AdminPortalEnhanced = () => {
               </div>
 
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {emailTemplates.length === 0 ? (
+                {!emailTemplates || emailTemplates.length === 0 ? (
                   <div className="col-span-full bg-slate-800/50 rounded-xl border border-slate-700 p-12 text-center">
                     <Mail className="w-16 h-16 text-slate-600 mx-auto mb-4" />
                     <h3 className="text-xl font-semibold text-white mb-2">No email templates found</h3>
