@@ -142,7 +142,9 @@ const WebsiteIntelligenceHub = () => {
         current_websites: dashboardData?.dashboard?.websites_overview?.total_websites || 0
       };
 
-      const response = await axios.post(`${API_BASE_URL}/api/website-intelligence/website/add`, websiteData);
+      const response = await axios.post(`${API_BASE_URL}/api/website-intelligence/website/add`, websiteData, {
+        headers: getAuthHeaders()
+      });
       console.log('Website added:', response.data);
       
       // Reset form and close dialog
