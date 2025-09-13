@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 from typing import Dict, Any
 
 # Configuration
-BACKEND_URL = "https://mindiq-admin.preview.emergentagent.com"
+BACKEND_URL = "https://ai-mindiq.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test credentials

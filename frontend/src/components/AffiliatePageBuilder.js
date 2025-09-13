@@ -34,7 +34,7 @@ const AffiliatePageBuilder = ({ affiliateId }) => {
         custom_content: {}
     });
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://mindiq-admin.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://ai-mindiq.preview.emergentagent.com';
 
     useEffect(() => {
         loadTemplates();
