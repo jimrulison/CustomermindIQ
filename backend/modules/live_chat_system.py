@@ -152,8 +152,9 @@ def has_premium_chat_access(user: UserProfile) -> bool:
     """
     premium_tiers = ["growth", "scale", "white_label", "custom"]
     
-    # Check subscription tier
-    if user.subscription_tier not in premium_tiers:
+    # Check subscription tier (case-insensitive)
+    user_tier = user.subscription_tier.lower() if user.subscription_tier else ""
+    if user_tier not in premium_tiers:
         return False
     
     # Additional check: must be active subscriber (not trial)
