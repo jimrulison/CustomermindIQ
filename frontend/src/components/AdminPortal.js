@@ -751,14 +751,17 @@ const AdminPortalEnhanced = () => {
 
   const loadWorkflows = async () => {
     try {
+      console.log('🔄 Loading workflows...');
       const response = await axios.get(`${backendUrl}/api/admin/workflows`, {
         headers: getAuthHeaders()
       });
       setWorkflows(response.data.workflows || []);
+      console.log('✅ Workflows loaded from API:', response.data.workflows?.length || 0);
     } catch (error) {
       console.error('Failed to load workflows:', error);
+      console.log('⚠️ Loading workflows demo data...');
       // Load demo data on API error
-      setWorkflows([
+      const demoWorkflows = [
         {
           workflow_id: 'workflow_001',
           name: 'New User Onboarding',
@@ -829,7 +832,9 @@ const AdminPortalEnhanced = () => {
             { step: 2, action: 'limited_time_upgrade_offer', delay: 96 }
           ]
         }
-      ]);
+      ];
+      setWorkflows(demoWorkflows);
+      console.log('✅ Demo workflows loaded:', demoWorkflows.length);
     }
   };
 
