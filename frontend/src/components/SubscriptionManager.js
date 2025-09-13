@@ -65,7 +65,7 @@ const SubscriptionManager = () => {
           'custom': {
             name: 'Custom',
             price: 'Contact us',
-            features: ['Enterprise features', 'Unlimited users', 'Dedicated support', 'Custom integrations']
+            features: ['Scale features', 'Unlimited users', 'Dedicated support', 'Custom integrations']
           }
         });
       }
