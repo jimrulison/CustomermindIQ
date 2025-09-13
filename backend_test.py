@@ -1,27 +1,32 @@
 #!/usr/bin/env python3
 """
-Comprehensive Backend Testing - Product Intelligence & Performance Validation
+Admin Portal Backend API Testing - User-Reported Issues
 
-This script tests the backend endpoints that support the enhanced Product Intelligence UI
-and overall application performance as requested in the review.
+This script tests the specific backend endpoints that the Admin Portal frontend is trying to call.
+Based on the user report that some admin functionality shows demo data or grey boxes.
 
 SPECIFIC TEST OBJECTIVES FROM REVIEW REQUEST:
-1. **Product Intelligence Endpoints:**
-   - GET /api/product-intelligence/feature-usage-dashboard 
-   - GET /api/product-intelligence/onboarding-dashboard
-   - GET /api/product-intelligence/pmf-dashboard  
-   - GET /api/product-intelligence/journey-dashboard
-2. **Authentication & Authorization:**
-   - POST /api/auth/login with admin@customermindiq.com / CustomerMindIQ2025!
-   - Verify JWT token generation and validation
-3. **Website Intelligence Integration:**
-   - GET /api/website-intelligence/dashboard
-4. **Performance & Health Checks:**
-   - GET /api/health (basic health check)
-   - Verify response times are acceptable (<2 seconds)
-5. **Error Handling:**
-   - Test with invalid authentication
-   - Test with malformed requests
+1. **Email Templates API:**
+   - GET /api/admin/email-templates - Should return list of email templates
+   - POST /api/admin/email-templates - Should create a new email template
+   
+2. **Automated Workflows API:**
+   - GET /api/admin/workflows - Should return list of automated workflows  
+   - POST /api/admin/workflows - Should create a new automated workflow
+
+3. **Support Tickets API (for Admin):**
+   - GET /api/admin/support/tickets OR /api/support/admin/tickets - Should return support tickets for admin view
+   - Test both possible endpoint patterns since there might be routing differences
+
+4. **Admin Authentication:**
+   - POST /api/auth/login with admin credentials: admin@customermindiq.com / CustomerMindIQ2025!
+   - Verify JWT token is returned and works for authenticated requests
+
+EXPECTED RESULTS:
+- All endpoints should return proper JSON responses with data
+- Email templates and workflows should not be empty arrays
+- Support tickets endpoint should be accessible 
+- Authentication should work properly for admin access
 
 Use admin credentials: admin@customermindiq.com / CustomerMindIQ2025!
 """
