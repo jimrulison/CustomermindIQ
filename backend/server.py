@@ -358,6 +358,20 @@ async def serve_api_documentation(current_user: UserProfile = Depends(require_ro
     
     return HTMLResponse(content=api_docs_html, media_type="text/html")
 
+# Handle CORS preflight requests for admin manual download
+@app.options("/download-admin-manual-direct")
+async def serve_admin_manual_options():
+    """Handle CORS preflight requests for admin manual download"""
+    return Response(
+        status_code=200,
+        headers={
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Max-Age": "86400"
+        }
+    )
+
 # Serve admin manual with a unique path that won't conflict with frontend routing
 @app.get("/download-admin-manual-direct")
 async def serve_admin_manual_direct(response: Response):
