@@ -2755,11 +2755,25 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                 <h2 className="text-2xl font-bold text-white">Affiliate Monitoring</h2>
                 <div className="flex items-center space-x-4">
                   <button
-                    onClick={loadHighRefundAffiliates}
+                    onClick={async () => {
+                      setLoading(true);
+                      console.log('🔄 Refreshing Affiliate Monitoring Data...');
+                      try {
+                        await loadHighRefundAffiliates();
+                        console.log('✅ Affiliate Monitoring data refreshed successfully');
+                        alert('✅ Affiliate Monitoring data refreshed successfully!');
+                      } catch (error) {
+                        console.error('❌ Failed to refresh Affiliate Monitoring data:', error);
+                        alert('❌ Failed to refresh Affiliate Monitoring data. Please try again.');
+                      } finally {
+                        setLoading(false);
+                      }
+                    }}
                     className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    disabled={loading}
                   >
-                    <RefreshCw className="w-4 h-4 mr-2" />
-                    Refresh Data
+                    <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+                    {loading ? 'Refreshing...' : 'Refresh Data'}
                   </button>
                   <button
                     onClick={refreshMonitoring}
