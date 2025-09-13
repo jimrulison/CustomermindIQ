@@ -1713,7 +1713,7 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                         const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
                         const downloadUrl = `${backendUrl}/api/download/admin-training-manual`;
                         
-                        const performDownload = async () => {
+                        const performDownload = () => {
                           try {
                             console.log(`📥 Starting admin manual download from: ${downloadUrl}`);
                             
@@ -1727,8 +1727,8 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                               alert('✅ Admin Manual download started! Check your downloads folder. If it opens in a new tab instead, right-click and select "Save As".');
                             }, 1000);
                             
-                          } catch (directError) {
-                            console.warn('⚠️ Direct download failed, trying alternative method:', directError);
+                          } catch (error) {
+                            console.warn('⚠️ Direct download failed, trying fallback method:', error);
                             
                             try {
                               // Method 2: Window.open as fallback
@@ -1739,16 +1739,14 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                                 console.log('✅ Download window opened successfully');
                                 alert('✅ Admin Manual opened! If it doesn\'t download automatically, right-click and select "Save As".');
                               } else {
-                                throw new Error('Popup blocked');
+                                console.error('❌ All download methods failed');
+                                alert(`❌ Download failed. Please try opening this URL directly in a new tab: ${downloadUrl}`);
                               }
                               
                             } catch (windowError) {
                               console.error('❌ All download methods failed:', windowError);
                               alert(`❌ Download failed. Please try opening this URL directly in a new tab: ${downloadUrl}`);
                             }
-                          } catch (error) {
-                            console.error('❌ Download failed:', error);
-                            alert('Download failed. Please try refreshing the page or contact support.');
                           }
                         };
                         
