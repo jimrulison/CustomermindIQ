@@ -1706,39 +1706,66 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                   <button
                     onClick={() => {
                       if (tab.isDownload && tab.id === 'admin-manual') {
-                        // Download Admin Training Manual using direct backend endpoint
+                        // Download Admin Training Manual with improved reliability
                         console.log('🔄 Downloading Admin Training Manual...');
-                        const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
                         
-                        try {
-                          // Method 1: Try using window.open
-                          const downloadUrl = `${backendUrl}/download-admin-manual-direct`;
-                          console.log('📥 Download URL:', downloadUrl);
+                        // Use multiple fallback URLs for reliability
+                        const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+                        const downloadUrls = [
+                          `${backendUrl}/download-admin-manual-direct`,
+                          `${backendUrl}/api/download/admin-training-manual`,
+                          // Fallback to localhost if external URL fails
+                          'http://localhost:8001/download-admin-manual-direct'
+                        ];
+                        
+                        const attemptDownload = async (urls, index = 0) => {
+                          if (index >= urls.length) {
+                            console.error('❌ All download methods failed');
+                            alert('Download failed. Please contact support or try refreshing the page.');
+                            return;
+                          }
                           
-                          // Create a temporary anchor element for download
-                          const link = document.createElement('a');
-                          link.href = downloadUrl;
-                          link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
-                          link.style.display = 'none';
-                          link.target = '_blank';
+                          const downloadUrl = urls[index];
+                          console.log(`📥 Attempt ${index + 1}: ${downloadUrl}`);
                           
-                          // Add to DOM, click, and remove
-                          document.body.appendChild(link);
-                          link.click();
-                          document.body.removeChild(link);
-                          
-                          console.log('✅ Admin Training Manual download initiated');
-                          
-                          // Show user feedback
-                          alert('Admin Manual download started! Check your downloads folder.');
-                          
-                        } catch (error) {
-                          console.error('❌ Download failed:', error);
-                          // Fallback: Open in new tab
-                          const fallbackUrl = `${backendUrl}/download-admin-manual-direct`;
-                          window.open(fallbackUrl, '_blank');
-                          alert('Download initiated in new tab. Please save the file from there.');
-                        }
+                          try {
+                            // First, test if the endpoint is reachable
+                            const response = await fetch(downloadUrl, { 
+                              method: 'HEAD',
+                              headers: {
+                                'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+                              }
+                            });
+                            
+                            if (response.ok) {
+                              // If endpoint is reachable, proceed with download
+                              const link = document.createElement('a');
+                              link.href = downloadUrl;
+                              link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
+                              link.style.display = 'none';
+                              link.target = '_blank';
+                              
+                              // Add to DOM, click, and remove
+                              document.body.appendChild(link);
+                              link.click();
+                              document.body.removeChild(link);
+                              
+                              console.log('✅ Admin Training Manual download initiated successfully');
+                              alert('Admin Manual download started! Check your downloads folder.');
+                              return;
+                            } else {
+                              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                            }
+                          } catch (error) {
+                            console.warn(`⚠️ Download attempt ${index + 1} failed:`, error.message);
+                            
+                            // Try next URL
+                            attemptDownload(urls, index + 1);
+                          }
+                        };
+                        
+                        // Start the download attempt sequence
+                        attemptDownload(downloadUrls);
                       } else {
                         setActiveTab(tab.id);
                       }
