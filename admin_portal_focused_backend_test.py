@@ -470,7 +470,7 @@ class AdminPortalTester:
         # Determine overall success based on critical tests
         all_critical_passed = all(passed for _, passed in critical_tests)
         
-        return all_critical_passed, critical_passed, critical_total, critical_passed, critical_total
+        return all_critical_passed, critical_passed, critical_total
 
 def main():
     """Main test execution"""
