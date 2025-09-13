@@ -993,16 +993,58 @@ const AdminPortalEnhanced = () => {
 
   const loadContactForms = async () => {
     try {
+      console.log('🔄 Loading contact forms...');
+      console.log('Backend URL:', backendUrl);
+      
+      const authHeaders = getAuthHeaders();
+      console.log('Auth headers:', authHeaders);
+      
+      // Check if user is authenticated
+      if (!authHeaders.Authorization || authHeaders.Authorization === 'Bearer ') {
+        throw new Error('No authentication token found. Please log in again.');
+      }
+      
       const response = await axios.get(`${backendUrl}/api/odoo/admin/contact-forms`, {
-        headers: getAuthHeaders()
+        headers: authHeaders
       });
+      
+      console.log('Contact forms response:', response.data);
       setContactForms(response.data.submissions || []);
+      console.log('✅ Contact forms loaded:', response.data.submissions?.length || 0);
     } catch (error) {
       console.error('Failed to load contact forms:', error);
-      // Provide demo contact forms
+      console.error('Error details:', {
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        url: error.config?.url
+      });
+      
+      // Handle authentication errors
+      if (error.response?.status === 401) {
+        console.error('Authentication failed for contact forms');
+        // Clear authentication and redirect to login
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user_profile');
+        localStorage.removeItem('refresh_token');
+        window.location.reload();
+        return;
+      } else if (error.message.includes('No authentication token')) {
+        console.error('No authentication token for contact forms');
+        // Clear authentication and redirect to login  
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user_profile');
+        localStorage.removeItem('refresh_token');
+        window.location.reload();
+        return;
+      }
+      
+      // Provide demo contact forms as fallback
+      console.log('⚠️ Loading demo contact forms as fallback...');
       setContactForms([
         {
           form_id: 'FORM-001-2024',
+          submission_id: 'FORM-001-2024', // Add missing field
           name: 'John Doe',
           email: 'john@company.com',
           company: 'Tech Solutions Inc',
@@ -1013,6 +1055,7 @@ const AdminPortalEnhanced = () => {
         },
         {
           form_id: 'FORM-002-2024',
+          submission_id: 'FORM-002-2024', // Add missing field
           name: 'Sarah Johnson',
           email: 'sarah@startup.io', 
           company: 'Growth Startup',
@@ -1023,6 +1066,7 @@ const AdminPortalEnhanced = () => {
         },
         {
           form_id: 'FORM-003-2024',
+          submission_id: 'FORM-003-2024', // Add missing field
           name: 'Mike Chen',
           email: 'mike@enterprise.com',
           company: 'Enterprise Corp',
@@ -1032,6 +1076,7 @@ const AdminPortalEnhanced = () => {
           created_at: '2024-01-13T16:45:00Z'
         }
       ]);
+      console.log('✅ Demo contact forms loaded: 3');
     }
   };
 
