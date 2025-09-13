@@ -10,7 +10,7 @@ import sys
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://portal-rescue.preview.emergentagent.com"
+BASE_URL = "https://admin-portal-fix-9.preview.emergentagent.com"
 ADMIN_EMAIL = "admin@customermindiq.com"
 ADMIN_PASSWORD = "CustomerMindIQ2025!"
 

@@ -11,7 +11,7 @@ from datetime import datetime
 import time
 
 class AdminSystemTester:
-    def __init__(self, base_url="https://portal-rescue.preview.emergentagent.com"):
+    def __init__(self, base_url="https://admin-portal-fix-9.preview.emergentagent.com"):
         self.base_url = base_url
         self.admin_tests = 0
         self.admin_passed = 0

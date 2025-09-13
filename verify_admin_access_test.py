@@ -11,7 +11,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configuration
-BACKEND_URL = "https://portal-rescue.preview.emergentagent.com"
+BACKEND_URL = "https://admin-portal-fix-9.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Admin credentials

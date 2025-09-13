@@ -37,7 +37,7 @@ const AffiliatePortal = () => {
         performanceMetrics: {}
     });
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://portal-rescue.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://admin-portal-fix-9.preview.emergentagent.com';
 
     // Get current affiliate info from localStorage or props
     const getCurrentAffiliateId = () => {
