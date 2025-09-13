@@ -591,12 +591,45 @@ const SupportEnhanced = () => {
                   </AlertDescription>
                 </Alert>
                 
-                <div className="text-center py-8">
-                  <Book className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">FAQ Coming Soon</h3>
-                  <p className="text-gray-600">
-                    We're building a comprehensive FAQ section. For now, please create a support ticket for any questions.
-                  </p>
+                <div className="space-y-6">
+                  <div className="bg-white rounded-lg shadow-sm border p-6">
+                    <h3 className="text-lg font-semibold mb-4 flex items-center">
+                      <Book className="w-5 h-5 mr-2 text-blue-600" />
+                      Frequently Asked Questions
+                    </h3>
+                    
+                    <div className="space-y-4">
+                      <div className="border-b pb-4">
+                        <h4 className="font-medium text-gray-900 mb-2">How do I access the Admin Portal?</h4>
+                        <p className="text-gray-600">Login with your admin credentials and navigate to the Admin Portal section. You'll need admin or super_admin role access.</p>
+                      </div>
+                      
+                      <div className="border-b pb-4">
+                        <h4 className="font-medium text-gray-900 mb-2">How do I create email templates?</h4>
+                        <p className="text-gray-600">Go to Admin Portal → Email Templates → Create Template. You can design custom templates for different campaign types.</p>
+                      </div>
+                      
+                      <div className="border-b pb-4">
+                        <h4 className="font-medium text-gray-900 mb-2">How do I set up automated workflows?</h4>
+                        <p className="text-gray-600">Navigate to Admin Portal → Automated Workflows → Create Workflow. Define triggers, actions, and timing for your automation.</p>
+                      </div>
+                      
+                      <div className="border-b pb-4">
+                        <h4 className="font-medium text-gray-900 mb-2">How do I download the admin manual?</h4>
+                        <p className="text-gray-600">In the Admin Portal, click on "Admin Manual" in the sidebar. The training manual will download automatically.</p>
+                      </div>
+                      
+                      <div className="border-b pb-4">
+                        <h4 className="font-medium text-gray-900 mb-2">How do I manage user accounts?</h4>
+                        <p className="text-gray-600">Use the User Management section in the Admin Portal to view, edit, and manage user accounts, roles, and permissions.</p>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-medium text-gray-900 mb-2">How do I refresh analytics data?</h4>
+                        <p className="text-gray-600">Click the Refresh button in any analytics section to reload the latest data and metrics.</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </CardContent>
