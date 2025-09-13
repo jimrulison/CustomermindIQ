@@ -540,7 +540,7 @@ async def get_support_tier_info(
         "subscription_tier": current_user.subscription_tier,
         "tier_info": SUPPORT_TIER_CONFIG[support_tier],
         "upgrade_benefits": {
-            "professional": SUPPORT_TIER_CONFIG[SupportTier.PROFESSIONAL] if support_tier == SupportTier.BASIC else None,
-            "enterprise": SUPPORT_TIER_CONFIG[SupportTier.ENTERPRISE] if support_tier != SupportTier.ENTERPRISE else None
+            "growth": SUPPORT_TIER_CONFIG[SupportTier.GROWTH] if support_tier == SupportTier.BASIC else None,
+            "scale": SUPPORT_TIER_CONFIG[SupportTier.SCALE] if support_tier != SupportTier.SCALE else None
         }
     }
