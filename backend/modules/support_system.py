@@ -107,7 +107,7 @@ SUPPORT_TIER_CONFIG = {
         "dedicated_csm": False,
         "priority_queue": False
     },
-    SupportTier.PROFESSIONAL: {
+    SupportTier.GROWTH: {
         "response_time_hours": 12,
         "live_chat": True,
         "live_chat_hours": "9am-6pm EST (Business Hours)",
@@ -115,7 +115,7 @@ SUPPORT_TIER_CONFIG = {
         "dedicated_csm": False,
         "priority_queue": True
     },
-    SupportTier.ENTERPRISE: {
+    SupportTier.SCALE: {
         "response_time_hours": 4,
         "live_chat": True,
         "live_chat_hours": "9am-6pm EST (Business Hours)",
