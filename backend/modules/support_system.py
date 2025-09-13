@@ -136,6 +136,8 @@ def get_support_tier(subscription_tier: SubscriptionTier) -> SupportTier:
         return SupportTier.GROWTH  
     elif subscription_tier in [SubscriptionTier.SCALE, "scale"]:
         return SupportTier.SCALE
+    elif subscription_tier in ["white_label", "custom"]:
+        return SupportTier.SCALE  # White Label and Custom get Scale support
     else:
         return SupportTier.BASIC
 
