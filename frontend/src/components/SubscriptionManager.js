@@ -50,7 +50,7 @@ const SubscriptionManager = () => {
           'free': {
             name: 'Free',
             price: 0,
-            features: ['Basic analytics', '1 user', 'Email support']
+            features: ['Launch analytics', '1 user', 'Email support']
           },
           'growth': {
             name: 'Growth',
