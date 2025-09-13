@@ -82,7 +82,9 @@ const LiveChatWidget = () => {
 
   const connectWebSocket = () => {
     try {
-      const wsUrl = `${process.env.REACT_APP_BACKEND_URL.replace('http', 'ws')}/chat/ws/${chatSession.session_id}/user`;
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+      const wsUrl = `${backendUrl.replace('https://', 'wss://').replace('http://', 'ws://')}/chat/ws/${chatSession.session_id}/user`;
+      console.log('🌐 Connecting to WebSocket:', wsUrl);
       const ws = new WebSocket(wsUrl);
       
       ws.onopen = () => {
