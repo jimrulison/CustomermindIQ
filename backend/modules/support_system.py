@@ -32,9 +32,9 @@ router = APIRouter(tags=["Support"])
 
 # Enums
 class SupportTier(str, Enum):
-    BASIC = "basic"           # Free trial, Starter - 24hr response
-    PROFESSIONAL = "professional"  # Professional - 12hr + live chat
-    ENTERPRISE = "enterprise"      # Enterprise - 4hr + live chat + CSM
+    BASIC = "basic"           # Free trial, Launch - 24hr response
+    GROWTH = "growth"         # Growth - 12hr + live chat
+    SCALE = "scale"           # Scale - 4hr + live chat + CSM
 
 class TicketStatus(str, Enum):
     OPEN = "open"
