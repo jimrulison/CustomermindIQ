@@ -483,7 +483,7 @@ async def download_admin_manual():
     return FileResponse(
         path=html_path,
         filename="CustomerMind_IQ_Admin_Training_Manual.html",
-        media_type="text/html",
+        media_type="application/octet-stream",
         headers={"Content-Disposition": "attachment; filename=CustomerMind_IQ_Admin_Training_Manual.html"}
     )
 
