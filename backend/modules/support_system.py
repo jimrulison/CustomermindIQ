@@ -393,7 +393,7 @@ async def start_live_chat(
         "status": "success",
         "message": "Live chat session started. Please wait for an agent.",
         "session": chat_session,
-        "estimated_wait_time": "2-5 minutes" if support_tier == SupportTier.ENTERPRISE else "5-10 minutes"
+        "estimated_wait_time": "2-5 minutes" if support_tier == SupportTier.SCALE else "5-10 minutes"
     }
 
 # Admin Support Management Endpoints
