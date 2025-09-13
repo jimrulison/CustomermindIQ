@@ -1746,8 +1746,6 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                               console.error('❌ All download methods failed:', windowError);
                               alert(`❌ Download failed. Please try opening this URL directly in a new tab: ${downloadUrl}`);
                             }
-                          }
-                            
                           } catch (error) {
                             console.error('❌ Download failed:', error);
                             alert('Download failed. Please try refreshing the page or contact support.');
