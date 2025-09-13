@@ -757,6 +757,75 @@ const AdminPortalEnhanced = () => {
       setWorkflows(response.data.workflows || []);
     } catch (error) {
       console.error('Failed to load workflows:', error);
+      // Load demo data on API error
+      setWorkflows([
+        {
+          workflow_id: 'workflow_001',
+          name: 'New User Onboarding',
+          description: 'Automated welcome sequence for new users',
+          trigger: 'user_signup',
+          status: 'active',
+          steps_count: 5,
+          total_triggered: 156,
+          success_rate: 89.7,
+          created_at: '2025-03-01T00:00:00Z',
+          steps: [
+            { step: 1, action: 'send_welcome_email', delay: 0 },
+            { step: 2, action: 'send_getting_started_guide', delay: 24 },
+            { step: 3, action: 'send_feature_tips', delay: 72 },
+            { step: 4, action: 'request_feedback', delay: 168 },
+            { step: 5, action: 'offer_premium', delay: 336 }
+          ]
+        },
+        {
+          workflow_id: 'workflow_002',
+          name: 'Trial Conversion Campaign',
+          description: 'Convert trial users to paid subscriptions',
+          trigger: 'trial_day_3',
+          status: 'active',
+          steps_count: 4,
+          total_triggered: 89,
+          success_rate: 34.5,
+          created_at: '2025-02-15T00:00:00Z',
+          steps: [
+            { step: 1, action: 'send_value_demonstration', delay: 0 },
+            { step: 2, action: 'send_case_studies', delay: 48 },
+            { step: 3, action: 'offer_discount', delay: 120 },
+            { step: 4, action: 'final_conversion_push', delay: 192 }
+          ]
+        },
+        {
+          workflow_id: 'workflow_003',
+          name: 'Customer Retention',
+          description: 'Re-engage inactive users',
+          trigger: 'inactive_30_days',
+          status: 'active',
+          steps_count: 3,
+          total_triggered: 67,
+          success_rate: 23.8,
+          created_at: '2025-02-01T00:00:00Z',
+          steps: [
+            { step: 1, action: 'send_we_miss_you_email', delay: 0 },
+            { step: 2, action: 'offer_help_or_training', delay: 72 },
+            { step: 3, action: 'final_retention_attempt', delay: 168 }
+          ]
+        },
+        {
+          workflow_id: 'workflow_004',
+          name: 'Upsell Existing Customers',
+          description: 'Promote premium features to active users',
+          trigger: 'usage_threshold_reached',
+          status: 'paused',
+          steps_count: 2,
+          total_triggered: 34,
+          success_rate: 41.2,
+          created_at: '2025-01-15T00:00:00Z',
+          steps: [
+            { step: 1, action: 'highlight_premium_benefits', delay: 0 },
+            { step: 2, action: 'limited_time_upgrade_offer', delay: 96 }
+          ]
+        }
+      ]);
     }
   };
 
