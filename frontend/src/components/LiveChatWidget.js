@@ -513,7 +513,7 @@ const LiveChatWidget = () => {
             <span className="text-white font-medium">Premium Live Chat</span>
           </div>
           <p className="text-slate-300 text-sm mb-3">
-            Live chat support is available for Growth, Scale, and Custom plan subscribers.
+            Live chat support is available for Growth, Scale, White Label, and Custom plan subscribers.
           </p>
           <Button 
             size="sm" 
