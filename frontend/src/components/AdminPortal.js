@@ -2160,11 +2160,11 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                               <div className="flex items-center">
                                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
                                   <span className="text-white text-xs font-medium">
-                                    {ticket.user_email.charAt(0).toUpperCase()}
+                                    {ticket.email?.charAt(0)?.toUpperCase() || '?'}
                                   </span>
                                 </div>
                                 <div className="ml-3">
-                                  <p className="text-white text-sm">{ticket.user_email}</p>
+                                  <p className="text-white text-sm">{ticket.email}</p>
                                 </div>
                               </div>
                             </td>
