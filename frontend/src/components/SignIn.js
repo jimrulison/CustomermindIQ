@@ -185,7 +185,8 @@ const SignIn = ({ onSignIn }) => {
       const result = await login(normalizedEmail, password, false);
       
       if (result.success) {
-        onSignIn(result.user);
+        // AuthContext handles state management - no need to call onSignIn
+        console.log('✅ Login successful, AuthContext will handle state updates');
       } else {
         setError(result.error);
       }
