@@ -455,13 +455,21 @@ const AdminPortalEnhanced = () => {
 
   const loadDashboardData = async () => {
     setLoading(true);
+    setError(''); // Clear any previous errors
     try {
       console.log('Loading admin dashboard data...');
       console.log('Backend URL:', backendUrl);
-      console.log('Auth headers:', getAuthHeaders());
+      
+      const authHeaders = getAuthHeaders();
+      console.log('Auth headers:', authHeaders);
+      
+      // Check if user is authenticated
+      if (!authHeaders.Authorization || authHeaders.Authorization === 'Bearer ') {
+        throw new Error('No authentication token found. Please log in again.');
+      }
       
       const response = await axios.get(`${backendUrl}/api/admin/analytics/dashboard`, {
-        headers: getAuthHeaders()
+        headers: authHeaders
       });
       console.log('Dashboard response:', response.data);
       if (response.data) {
@@ -482,6 +490,18 @@ const AdminPortalEnhanced = () => {
         setError('Dashboard endpoint not found. Please check admin system configuration.');
       } else if (error.response?.status === 401) {
         setError('Authentication failed. Please log in again.');
+        // Clear authentication and redirect to login
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user_profile');
+        localStorage.removeItem('refresh_token');
+        window.location.reload();
+      } else if (error.message.includes('No authentication token')) {
+        setError('Authentication required. Please log in again.');
+        // Clear authentication and redirect to login  
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user_profile');
+        localStorage.removeItem('refresh_token');
+        window.location.reload();
       } else {
         setError(`Failed to load dashboard data: ${error.response?.status || error.message}`);
       }
