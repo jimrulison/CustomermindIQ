@@ -2452,17 +2452,17 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
 
               <div className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden">
                 <div className="overflow-x-auto">
-                  <table className="w-full">
+                  <table className="min-w-full">
                     <thead className="bg-slate-700/50">
                       <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Ticket</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Customer</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Status</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Priority</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Support Tier</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Created</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Due</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">Actions</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[200px]">Ticket</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[180px]">Customer</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[100px]">Status</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[90px]">Priority</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[100px] hidden lg:table-cell">Support Tier</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[100px]">Created</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[100px] hidden xl:table-cell">Due</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider min-w-[120px]">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-700">
@@ -2476,26 +2476,30 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                       ) : (
                         supportTickets.map((ticket) => (
                           <tr key={ticket.ticket_id} className="hover:bg-slate-700/30">
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div>
-                                <p className="text-white font-medium text-sm">{ticket.subject}</p>
+                            <td className="px-4 py-4">
+                              <div className="max-w-[200px]">
+                                <p className="text-white font-medium text-sm truncate" title={ticket.subject}>
+                                  {ticket.subject}
+                                </p>
                                 <p className="text-slate-400 text-xs">#{ticket.ticket_id.slice(-8)}</p>
                               </div>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="flex items-center">
-                                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                            <td className="px-4 py-4">
+                              <div className="flex items-center max-w-[180px]">
+                                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
                                   <span className="text-white text-xs font-medium">
                                     {ticket.email?.charAt(0)?.toUpperCase() || '?'}
                                   </span>
                                 </div>
-                                <div className="ml-3">
-                                  <p className="text-white text-sm">{ticket.email}</p>
+                                <div className="ml-3 min-w-0">
+                                  <p className="text-white text-sm truncate" title={ticket.email}>
+                                    {ticket.email}
+                                  </p>
                                 </div>
                               </div>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className={`px-2 py-1 rounded text-xs font-medium ${
+                            <td className="px-4 py-4">
+                              <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${
                                 ticket.status === 'open' ? 'bg-green-500/20 text-green-400' :
                                 ticket.status === 'in_progress' ? 'bg-blue-500/20 text-blue-400' :
                                 ticket.status === 'waiting_customer' ? 'bg-yellow-500/20 text-yellow-400' :
@@ -2505,8 +2509,8 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                                 {ticket.status.replace('_', ' ')}
                               </span>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className={`px-2 py-1 rounded text-xs font-medium ${
+                            <td className="px-4 py-4">
+                              <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${
                                 ticket.priority === 'urgent' ? 'bg-red-500/20 text-red-400' :
                                 ticket.priority === 'high' ? 'bg-orange-500/20 text-orange-400' :
                                 ticket.priority === 'medium' ? 'bg-yellow-500/20 text-yellow-400' :
@@ -2515,34 +2519,34 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                                 {ticket.priority}
                               </span>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className={`px-2 py-1 rounded text-xs font-medium ${
+                            <td className="px-4 py-4 hidden lg:table-cell">
+                              <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${
                                 ticket.support_tier === 'enterprise' ? 'bg-purple-500/20 text-purple-400' :
                                 ticket.support_tier === 'professional' ? 'bg-blue-500/20 text-blue-400' :
                                 'bg-gray-500/20 text-gray-400'
                               }`}>
-                                {ticket.support_tier}
+                                {ticket.support_tier || 'standard'}
                               </span>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-slate-300 text-sm">
+                            <td className="px-4 py-4 text-slate-300 text-sm whitespace-nowrap">
                               {new Date(ticket.created_at).toLocaleDateString()}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className={`text-sm ${
-                                new Date(ticket.due_date) < new Date() ? 'text-red-400 font-medium' : 'text-slate-300'
+                            <td className="px-4 py-4 hidden xl:table-cell">
+                              <span className={`text-sm whitespace-nowrap ${
+                                ticket.due_date && new Date(ticket.due_date) < new Date() ? 'text-red-400 font-medium' : 'text-slate-300'
                               }`}>
-                                {new Date(ticket.due_date).toLocaleDateString()}
+                                {ticket.due_date ? new Date(ticket.due_date).toLocaleDateString() : 'No due date'}
                               </span>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="flex space-x-2">
+                            <td className="px-4 py-4">
+                              <div className="flex space-x-1">
                                 <button
                                   onClick={() => {
                                     setEditingItem(ticket);
                                     setModalType('view-support-ticket');
                                     setShowModal(true);
                                   }}
-                                  className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded"
+                                  className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded transition-colors"
                                   title="View Details"
                                 >
                                   <Eye className="w-4 h-4" />
@@ -2555,9 +2559,31 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                                       console.log('Assign ticket functionality to be implemented');
                                     }
                                   }}
-                                  className="p-2 text-slate-400 hover:text-yellow-400 hover:bg-slate-600 rounded"
+                                  className="p-2 text-slate-400 hover:text-yellow-400 hover:bg-slate-600 rounded transition-colors"
                                   title="Assign Agent"
                                 >
+                                  <UserPlus className="w-4 h-4" />
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    setEditingItem(ticket);
+                                    setModalType('reply-support-ticket');
+                                    setShowModal(true);
+                                  }}
+                                  className="p-2 text-slate-400 hover:text-green-400 hover:bg-slate-600 rounded transition-colors"
+                                  title="Reply"
+                                >
+                                  <MessageSquare className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
                                   <UserCheck className="w-4 h-4" />
                                 </button>
                               </div>
