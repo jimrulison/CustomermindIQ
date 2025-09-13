@@ -373,9 +373,18 @@ const AdminChatDashboard = () => {
                 </Badge>
               )}
             </div>
-            <Button onClick={loadChatSessions} variant="outline" size="sm">
-              <RefreshCw className="w-4 h-4 mr-2" />
-              Refresh
+            <Button 
+              onClick={async () => {
+                console.log('🔄 Refreshing Live Chat sessions...');
+                await loadChatSessions();
+                console.log('✅ Live Chat sessions refreshed');
+              }} 
+              variant="outline" 
+              size="sm"
+              disabled={loading}
+            >
+              <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+              {loading ? 'Refreshing...' : 'Refresh'}
             </Button>
           </div>
         </CardHeader>
