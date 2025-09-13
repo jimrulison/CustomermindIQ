@@ -18,7 +18,7 @@ import time
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configuration - Use localhost for direct testing
-BACKEND_URL = "http://localhost:8001"
+BACKEND_URL = "http://127.0.0.1:8001"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test credentials
