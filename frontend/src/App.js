@@ -1550,7 +1550,7 @@ ${details.updateFrequency}
 
   // Show sign-in page if not authenticated (unless it's affiliate access or legal docs)
   if (!isAuthenticated) {
-    return <SignIn onSignIn={handleSignIn} />;
+    return <SignIn />;
   }
 
   // Show loading state
