@@ -36,7 +36,8 @@ import {
   PieChart,
   ArrowRightLeft,
   MessageSquare,
-  AlertTriangle
+  AlertTriangle,
+  Shield
 } from 'lucide-react';
 import axios from 'axios';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
