@@ -1706,15 +1706,16 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                   <button
                     onClick={() => {
                       if (tab.isDownload && tab.id === 'admin-manual') {
-                        // Download Admin Training Manual - SIMPLIFIED APPROACH
+                        // Download Admin Training Manual - FIXED: Use proper backend URL
                         console.log('🔄 Downloading Admin Training Manual...');
                         
-                        // Use localhost backend where the actual file is served
-                        const downloadUrl = 'http://localhost:8001/download-admin-manual-direct';
+                        // Use the correct backend URL from environment variable
+                        const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+                        const downloadUrl = `${backendUrl}/download-admin-manual-direct`;
                         
                         const performDownload = async () => {
                           try {
-                            console.log(`📥 Using direct download: ${downloadUrl}`);
+                            console.log(`📥 Using backend URL: ${downloadUrl}`);
                             
                             // Simple and reliable: direct window.open
                             const downloadWindow = window.open(downloadUrl, '_blank');
