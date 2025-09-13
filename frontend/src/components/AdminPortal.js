@@ -2769,16 +2769,28 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-white">Email Templates</h2>
-                <button
-                  onClick={() => {
-                    setModalType('create-template');
-                    setShowModal(true);
-                  }}
-                  className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-                >
-                  <Plus className="w-4 h-4 mr-2" />
-                  Create Template
-                </button>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => {
+                      setLoading(true);
+                      loadEmailTemplates().finally(() => setLoading(false));
+                    }}
+                    className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  >
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Refresh
+                  </button>
+                  <button
+                    onClick={() => {
+                      setModalType('create-template');
+                      setShowModal(true);
+                    }}
+                    className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Create Template
+                  </button>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
