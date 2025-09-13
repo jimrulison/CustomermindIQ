@@ -1907,6 +1907,24 @@ ${details.updateFrequency}
           <AdminPortal />
         )}
         
+        {/* Access Denied for non-admin users trying to access admin portal */}
+        {currentPage === 'admin-portal' && user && (!user.role || !['admin', 'super_admin'].includes(user.role)) && (
+          <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+            <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-8 text-center max-w-md">
+              <Shield className="w-16 h-16 text-red-400 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-white mb-2">Access Denied</h2>
+              <p className="text-slate-300 mb-4">You need admin privileges to access this portal.</p>
+              <p className="text-slate-400 text-sm mb-6">Current role: {user.role || 'None'}</p>
+              <button
+                onClick={() => setCurrentPage('customer-analytics-dashboard')}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
+              >
+                Return to Dashboard
+              </button>
+            </div>
+          </div>
+        )}
+        
         {/* Growth Intelligence Suite Module */}
         {currentPage === 'growth' && (
           <GrowthIntelligenceSuite />
