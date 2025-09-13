@@ -1707,14 +1707,38 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                     onClick={() => {
                       if (tab.isDownload && tab.id === 'admin-manual') {
                         // Download Admin Training Manual using direct backend endpoint
+                        console.log('🔄 Downloading Admin Training Manual...');
                         const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
-                        const link = document.createElement('a');
-                        link.href = `${backendUrl}/download-admin-manual-direct`;
-                        link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
-                        link.target = '_blank';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
+                        
+                        try {
+                          // Method 1: Try using window.open
+                          const downloadUrl = `${backendUrl}/download-admin-manual-direct`;
+                          console.log('📥 Download URL:', downloadUrl);
+                          
+                          // Create a temporary anchor element for download
+                          const link = document.createElement('a');
+                          link.href = downloadUrl;
+                          link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
+                          link.style.display = 'none';
+                          link.target = '_blank';
+                          
+                          // Add to DOM, click, and remove
+                          document.body.appendChild(link);
+                          link.click();
+                          document.body.removeChild(link);
+                          
+                          console.log('✅ Admin Training Manual download initiated');
+                          
+                          // Show user feedback
+                          alert('Admin Manual download started! Check your downloads folder.');
+                          
+                        } catch (error) {
+                          console.error('❌ Download failed:', error);
+                          // Fallback: Open in new tab
+                          const fallbackUrl = `${backendUrl}/download-admin-manual-direct`;
+                          window.open(fallbackUrl, '_blank');
+                          alert('Download initiated in new tab. Please save the file from there.');
+                        }
                       } else {
                         setActiveTab(tab.id);
                       }
