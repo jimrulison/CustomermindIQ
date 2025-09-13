@@ -473,6 +473,7 @@ async def download_complete_manual():
     )
 
 @app.get("/api/download/admin-training-manual")
+@app.head("/api/download/admin-training-manual")
 async def download_admin_manual():
     """Download Admin Training Manual as HTML"""
     html_path = "/app/CustomerMind_IQ_Admin_Training_Manual_Professional.html"
