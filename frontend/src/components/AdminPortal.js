@@ -4226,11 +4226,8 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                 </div>
               )}
 
-              {/* Placeholder for other modal types */}
-              {(modalType === 'user-analytics' || modalType === 'generate-codes' || modalType === 'send-to-all' || 
-                modalType === 'send-to-tier' || modalType === 'custom-send' || modalType === 'create-banner' || 
-                modalType === 'edit-banner' || modalType === 'create-discount' || modalType === 'edit-discount' || 
-                modalType === 'create-cohort' || modalType === 'view-support-ticket' || modalType === 'reply-support-ticket' ||
+              {/* Support Ticket and Contact Form Modals */}
+              {(modalType === 'view-support-ticket' || modalType === 'reply-support-ticket' ||
                 modalType === 'view-contact-form' || modalType === 'reply-contact-form') && (
                 <div className="space-y-6">
                   {/* Support Ticket Details Modal */}
