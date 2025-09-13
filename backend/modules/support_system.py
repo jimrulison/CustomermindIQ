@@ -130,10 +130,12 @@ def get_support_tier(subscription_tier: SubscriptionTier) -> SupportTier:
     """Map subscription tier to support tier"""
     if subscription_tier == SubscriptionTier.FREE:
         return SupportTier.BASIC
-    elif subscription_tier == SubscriptionTier.PROFESSIONAL:
-        return SupportTier.PROFESSIONAL  
-    elif subscription_tier == SubscriptionTier.ENTERPRISE:
-        return SupportTier.ENTERPRISE
+    elif subscription_tier in [SubscriptionTier.LAUNCH, "launch"]:
+        return SupportTier.BASIC
+    elif subscription_tier in [SubscriptionTier.GROWTH, "growth"]:
+        return SupportTier.GROWTH  
+    elif subscription_tier in [SubscriptionTier.SCALE, "scale"]:
+        return SupportTier.SCALE
     else:
         return SupportTier.BASIC
 
