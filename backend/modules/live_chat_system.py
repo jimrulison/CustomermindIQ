@@ -164,7 +164,7 @@ def has_premium_chat_access(user: UserProfile) -> bool:
     return True
 
 def require_premium_chat_access(current_user: UserProfile = Depends(get_current_user)):
-    """Dependency to ensure user has premium chat access"""
+    """Dependency to ensure user has premium chat access"""  
     if not has_premium_chat_access(current_user):
         raise HTTPException(
             status_code=403,
