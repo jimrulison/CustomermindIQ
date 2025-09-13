@@ -4755,6 +4755,100 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                     </div>
                   )}
 
+                  {/* Send Email Modal */}
+                  {modalType === 'send-email' && (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Recipients</label>
+                        <select
+                          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                          id="emailRecipients"
+                        >
+                          <option value="all">All Users</option>
+                          <option value="free">Free Users Only</option>
+                          <option value="paid">Paid Users Only</option>
+                          <option value="trial">Trial Users Only</option>
+                          <option value="custom">Custom List</option>
+                        </select>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Email Template</label>
+                        <select
+                          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                          id="emailTemplate"
+                        >
+                          <option value="">Select template...</option>
+                          <option value="welcome">Welcome Email</option>
+                          <option value="newsletter">Monthly Newsletter</option>
+                          <option value="product_update">Product Update</option>
+                          <option value="trial_warning">Trial Expiration Warning</option>
+                        </select>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Subject Line</label>
+                        <input
+                          type="text"
+                          placeholder="Enter email subject..."
+                          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                          id="emailSubject"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Email Content</label>
+                        <textarea
+                          placeholder="Enter email content..."
+                          rows="6"
+                          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                          id="emailContent"
+                        ></textarea>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2">
+                        <input type="checkbox" id="sendTest" className="rounded" />
+                        <label htmlFor="sendTest" className="text-sm text-slate-300">Send test email to admin first</label>
+                      </div>
+                      
+                      <div className="flex justify-end space-x-3">
+                        <button
+                          onClick={() => {
+                            setShowModal(false);
+                            setModalType('');
+                          }}
+                          className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={() => {
+                            const recipients = document.getElementById('emailRecipients').value;
+                            const template = document.getElementById('emailTemplate').value;
+                            const subject = document.getElementById('emailSubject').value;
+                            const content = document.getElementById('emailContent').value;
+                            const sendTest = document.getElementById('sendTest').checked;
+                            
+                            if (subject && content) {
+                              if (sendTest) {
+                                alert(`Test email sent to admin. Subject: "${subject}"`);
+                              } else {
+                                alert(`Email sent to ${recipients} users. Subject: "${subject}"`);
+                              }
+                              setShowModal(false);
+                              setModalType('');
+                            } else {
+                              alert('Please fill in subject and content');
+                            }
+                          }}
+                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                        >
+                          Send Email
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Generate Discount Codes Modal */}
                   {modalType === 'generate-codes' && (
                     <div className="space-y-4">
