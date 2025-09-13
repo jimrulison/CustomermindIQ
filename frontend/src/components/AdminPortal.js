@@ -3223,14 +3223,25 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                 <h2 className="text-2xl font-bold text-white">Email Templates</h2>
                 <div className="flex space-x-2">
                   <button
-                    onClick={() => {
+                    onClick={async () => {
                       setLoading(true);
-                      loadEmailTemplates().finally(() => setLoading(false));
+                      console.log('🔄 Refreshing Email Templates...');
+                      try {
+                        await loadEmailTemplates();
+                        console.log('✅ Email Templates refreshed successfully');
+                        alert('✅ Email Templates refreshed successfully!');
+                      } catch (error) {
+                        console.error('❌ Failed to refresh Email Templates:', error);
+                        alert('❌ Failed to refresh Email Templates. Please try again.');
+                      } finally {
+                        setLoading(false);
+                      }
                     }}
                     className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    disabled={loading}
                   >
-                    <RefreshCw className="w-4 h-4 mr-2" />
-                    Refresh
+                    <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+                    {loading ? 'Refreshing...' : 'Refresh'}
                   </button>
                   <button
                     onClick={() => {
