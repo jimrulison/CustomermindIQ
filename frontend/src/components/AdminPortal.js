@@ -1706,22 +1706,19 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                   <button
                     onClick={() => {
                       if (tab.isDownload && tab.id === 'admin-manual') {
-                        // Download Admin Training Manual with improved reliability
+                        // Download Admin Training Manual with improved browser compatibility
                         console.log('🔄 Downloading Admin Training Manual...');
                         
-                        // Use multiple fallback URLs for reliability
-                        const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
                         const downloadUrls = [
-                          `${backendUrl}/download-admin-manual-direct`,
-                          `${backendUrl}/api/download/admin-training-manual`,
-                          // Fallback to localhost if external URL fails
+                          `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'}/download-admin-manual-direct`,
+                          `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'}/api/download/admin-training-manual`,
                           'http://localhost:8001/download-admin-manual-direct'
                         ];
                         
                         const attemptDownload = async (urls, index = 0) => {
                           if (index >= urls.length) {
                             console.error('❌ All download methods failed');
-                            alert('Download failed. Please contact support or try refreshing the page.');
+                            alert('Download failed. Please try again or contact support.');
                             return;
                           }
                           
@@ -1729,38 +1726,61 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                           console.log(`📥 Attempt ${index + 1}: ${downloadUrl}`);
                           
                           try {
-                            // First, test if the endpoint is reachable
-                            const response = await fetch(downloadUrl, { 
-                              method: 'HEAD',
-                              headers: {
-                                'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
-                              }
-                            });
+                            // Method 1: Try direct window.open (most reliable for downloads)
+                            console.log('🎯 Using window.open method for download...');
+                            const downloadWindow = window.open(downloadUrl, '_blank');
                             
-                            if (response.ok) {
-                              // If endpoint is reachable, proceed with download
-                              const link = document.createElement('a');
-                              link.href = downloadUrl;
-                              link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
-                              link.style.display = 'none';
-                              link.target = '_blank';
-                              
-                              // Add to DOM, click, and remove
-                              document.body.appendChild(link);
-                              link.click();
-                              document.body.removeChild(link);
-                              
-                              console.log('✅ Admin Training Manual download initiated successfully');
-                              alert('Admin Manual download started! Check your downloads folder.');
-                              return;
-                            } else {
-                              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                            // Check if popup was blocked
+                            if (!downloadWindow || downloadWindow.closed || typeof downloadWindow.closed == 'undefined') {
+                              throw new Error('Popup blocked - trying alternative method');
                             }
-                          } catch (error) {
-                            console.warn(`⚠️ Download attempt ${index + 1} failed:`, error.message);
                             
-                            // Try next URL
-                            attemptDownload(urls, index + 1);
+                            // Success feedback
+                            console.log('✅ Download window opened successfully');
+                            alert('Admin Manual download started! The file should open in a new tab or download automatically.');
+                            return;
+                            
+                          } catch (error) {
+                            console.warn(`⚠️ window.open failed: ${error.message}`);
+                            
+                            try {
+                              // Method 2: Use fetch + blob download (fallback)
+                              console.log('🔄 Trying fetch + blob download method...');
+                              const response = await fetch(downloadUrl, {
+                                method: 'GET',
+                                headers: {
+                                  'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+                                }
+                              });
+                              
+                              if (response.ok) {
+                                const blob = await response.blob();
+                                const url = window.URL.createObjectURL(blob);
+                                const link = document.createElement('a');
+                                link.href = url;
+                                link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
+                                link.style.display = 'none';
+                                
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                                
+                                // Clean up the blob URL
+                                window.URL.revokeObjectURL(url);
+                                
+                                console.log('✅ Blob download completed successfully');
+                                alert('Admin Manual downloaded! Check your downloads folder.');
+                                return;
+                              } else {
+                                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                              }
+                              
+                            } catch (fetchError) {
+                              console.warn(`⚠️ Fetch method failed: ${fetchError.message}`);
+                              
+                              // Try next URL
+                              attemptDownload(urls, index + 1);
+                            }
                           }
                         };
                         
