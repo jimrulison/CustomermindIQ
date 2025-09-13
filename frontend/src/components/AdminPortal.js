@@ -1715,29 +1715,38 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                         
                         const performDownload = async () => {
                           try {
-                            console.log(`📥 Downloading admin manual from: ${downloadUrl}`);
+                            console.log(`📥 Starting admin manual download from: ${downloadUrl}`);
                             
-                            // Primary method: fetch and download as blob for reliable download
-                            const response = await fetch(downloadUrl);
-                            if (response.ok) {
-                              const blob = await response.blob();
-                              const url = window.URL.createObjectURL(blob);
-                              const link = document.createElement('a');
-                              link.href = url;
-                              link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
-                              link.style.display = 'none';
+                            // Method 1: Direct window navigation (most reliable for downloads)
+                            console.log('🔄 Attempting direct window download...');
+                            window.location.href = downloadUrl;
+                            
+                            // Give it a moment to start
+                            setTimeout(() => {
+                              console.log('✅ Download initiated via window.location');
+                              alert('✅ Admin Manual download started! Check your downloads folder. If it opens in a new tab instead, right-click and select "Save As".');
+                            }, 1000);
+                            
+                          } catch (directError) {
+                            console.warn('⚠️ Direct download failed, trying alternative method:', directError);
+                            
+                            try {
+                              // Method 2: Window.open as fallback
+                              console.log('🔄 Attempting window.open fallback...');
+                              const downloadWindow = window.open(downloadUrl, '_blank');
                               
-                              document.body.appendChild(link);
-                              link.click();
-                              document.body.removeChild(link);
+                              if (downloadWindow) {
+                                console.log('✅ Download window opened successfully');
+                                alert('✅ Admin Manual opened! If it doesn\'t download automatically, right-click and select "Save As".');
+                              } else {
+                                throw new Error('Popup blocked');
+                              }
                               
-                              window.URL.revokeObjectURL(url);
-                              
-                              console.log('✅ Admin manual downloaded successfully');
-                              alert('✅ Admin Manual downloaded! Check your downloads folder.');
-                            } else {
-                              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                            } catch (windowError) {
+                              console.error('❌ All download methods failed:', windowError);
+                              alert(`❌ Download failed. Please try opening this URL directly in a new tab: ${downloadUrl}`);
                             }
+                          }
                             
                           } catch (error) {
                             console.error('❌ Download failed:', error);
