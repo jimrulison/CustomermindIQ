@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import Dict, Any, List
 
 # Test Configuration
-BACKEND_URL = "https://admin-portal-fix-9.preview.emergentagent.com/api"
+BACKEND_URL = "https://customeriq-admin.preview.emergentagent.com/api"
 ADMIN_EMAIL = "admin@customermindiq.com"
 ADMIN_PASSWORD = "CustomerMindIQ2025!"
 
