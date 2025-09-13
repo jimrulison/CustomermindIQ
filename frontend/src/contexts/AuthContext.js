@@ -24,29 +24,38 @@ export const AuthProvider = ({ children }) => {
 
   // Check for stored authentication on app start - optimized
   useEffect(() => {
+    console.log('🔍 AuthContext useEffect: Starting authentication check...');
     const storedToken = localStorage.getItem('access_token');
     const storedUser = localStorage.getItem('user_profile');
+    
+    console.log('🔍 AuthContext: Stored token exists:', !!storedToken);
+    console.log('🔍 AuthContext: Stored user exists:', !!storedUser);
     
     if (storedToken && storedUser) {
       try {
         const userProfile = JSON.parse(storedUser);
+        console.log('🔍 AuthContext: Parsed user profile:', userProfile);
+        console.log('🔍 AuthContext: User role:', userProfile.role, 'isAdmin:', ['admin', 'super_admin'].includes(userProfile.role));
+        
         setToken(storedToken);
         setUser(userProfile);
-        console.log('Authentication restored from localStorage');
-        console.log('User role:', userProfile.role, 'isAdmin:', ['admin', 'super_admin'].includes(userProfile.role));
+        console.log('✅ Authentication restored from localStorage');
+        console.log('✅ User role:', userProfile.role, 'isAdmin:', ['admin', 'super_admin'].includes(userProfile.role));
       } catch (error) {
-        console.error('Error parsing stored user profile:', error);
+        console.error('❌ Error parsing stored user profile:', error);
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         localStorage.removeItem('user_profile');
       }
+    } else {
+      console.log('⚠️ No stored authentication found');
     }
     
     // Set loading to false after state synchronization to prevent race condition
     // Use setTimeout to ensure React state updates are processed
     setTimeout(() => {
       setLoading(false);
-      console.log('AuthContext initialization complete');
+      console.log('✅ AuthContext initialization complete - Loading set to false');
     }, 0);
   }, []);
 
