@@ -831,46 +831,73 @@ const AdminPortalEnhanced = () => {
 
   const loadSupportTickets = async () => {
     try {
-      const response = await axios.get(`${backendUrl}/api/support/admin/tickets`, {
+      const response = await axios.get(`${backendUrl}/api/admin/support/tickets`, {
         headers: getAuthHeaders()
       });
       setSupportTickets(response.data.tickets || []);
     } catch (error) {
       console.error('Failed to load support tickets:', error);
-      // Provide demo support tickets
+      // Load demo data on API error
       setSupportTickets([
         {
-          ticket_id: 'TICKET-001-2024',
-          subject: 'Website Analytics Not Updating',
-          user_email: 'user@company.com',
-          status: 'open',
+          ticket_id: 'TICKET_001',
+          subject: 'Login Issues - Cannot Access Dashboard',
+          message: 'I\'ve been trying to log into my account for the past hour but keep getting authentication errors. Can someone help?',
+          email: 'user@example.com',
           priority: 'high',
-          support_tier: 'professional',
-          created_at: '2024-01-15T10:30:00Z',
-          due_date: '2024-01-17T10:30:00Z',
-          message: 'Hello, I am having trouble with the website analytics feature. The data is not updating properly and shows outdated information. Could you please help me resolve this issue?'
+          status: 'open',
+          category: 'technical_support',
+          created_at: '2025-09-12T14:30:00Z',
+          last_updated: '2025-09-12T14:30:00Z',
+          assigned_to: null
         },
         {
-          ticket_id: 'TICKET-002-2024',
-          subject: 'Billing Question - Overage Charges',
-          user_email: 'billing@startup.com',
-          status: 'in_progress',
+          ticket_id: 'TICKET_002',
+          subject: 'Feature Request - Export Data to Excel',
+          message: 'Would it be possible to add an Excel export feature for the analytics reports? This would be very helpful for our team.',
+          email: 'manager@company.com',
           priority: 'medium',
-          support_tier: 'standard',
-          created_at: '2024-01-14T14:20:00Z',
-          due_date: '2024-01-16T14:20:00Z',
-          message: 'I received an invoice with overage charges but I do not understand how these were calculated. Can someone explain the billing structure?'
+          status: 'in_progress',
+          category: 'feature_request',
+          created_at: '2025-09-12T09:15:00Z',
+          last_updated: '2025-09-12T11:22:00Z',
+          assigned_to: 'admin'
         },
         {
-          ticket_id: 'TICKET-003-2024',
-          subject: 'Feature Request - Custom Dashboard',
-          user_email: 'admin@enterprise.com',
-          status: 'waiting_customer',
+          ticket_id: 'TICKET_003',
+          subject: 'Billing Question - Upgrade Pricing',
+          message: 'I want to upgrade to the Growth plan but I\'m not sure about the pricing differences. Can you provide more details?',
+          email: 'customer@business.org',
           priority: 'low',
-          support_tier: 'enterprise',
-          created_at: '2024-01-13T09:15:00Z',
-          due_date: '2024-01-20T09:15:00Z',
-          message: 'Our team would like to request a custom dashboard feature that allows us to create personalized views of our analytics data.'
+          status: 'resolved',
+          category: 'billing',
+          created_at: '2025-09-11T16:45:00Z',
+          last_updated: '2025-09-12T08:30:00Z',
+          assigned_to: 'admin'
+        },
+        {
+          ticket_id: 'TICKET_004',
+          subject: 'API Integration Help Needed',
+          message: 'I\'m trying to integrate with your API but getting 401 errors. I believe my API key is correct. What could be wrong?',
+          email: 'developer@techstartup.io',
+          priority: 'high',
+          status: 'open',
+          category: 'api_support',
+          created_at: '2025-09-12T13:20:00Z',
+          last_updated: '2025-09-12T13:20:00Z',
+          assigned_to: null
+        },
+        {
+          ticket_id: 'TICKET_005',
+          subject: 'Data Not Updating - Website Analytics',
+          message: 'My website analytics haven\'t updated in 3 days. Is there an issue with the data collection?',
+          email: 'webmaster@ecommerce.net',
+          priority: 'medium',
+          status: 'open',
+          category: 'technical_support',
+          created_at: '2025-09-12T11:10:00Z',
+          last_updated: '2025-09-12T11:10:00Z',
+          assigned_to: 'support_agent'
         }
       ]);
     }
