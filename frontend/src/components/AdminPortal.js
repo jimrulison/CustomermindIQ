@@ -651,12 +651,15 @@ const AdminPortalEnhanced = () => {
 
   const loadEmailTemplates = async () => {
     try {
+      console.log('🔄 Loading email templates...');
       const response = await axios.get(`${backendUrl}/api/admin/email-templates`, {
         headers: getAuthHeaders()
       });
+      console.log('📧 Email templates response:', response.data);
       setEmailTemplates(response.data.templates || []);
+      console.log('✅ Email templates loaded successfully:', response.data.templates?.length || 0);
     } catch (error) {
-      console.error('Failed to load email templates:', error);
+      console.error('❌ Failed to load email templates:', error);
       // Load demo data on API error
       setEmailTemplates([
         {
