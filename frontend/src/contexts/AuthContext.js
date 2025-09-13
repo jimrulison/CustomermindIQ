@@ -312,10 +312,18 @@ export const AuthProvider = ({ children }) => {
 
   // Memoize isAuthenticated to ensure proper dependency tracking
   const isAuthenticated = useMemo(() => {
-    const result = !!user && !!token;
-    console.log('AuthContext - isAuthenticated calculated:', result, { user: !!user, token: !!token });
+    const hasUser = !!user;
+    const hasToken = !!token;
+    const result = hasUser && hasToken;
+    console.log('🔍 AuthContext - isAuthenticated calculated:', {
+      hasUser,
+      hasToken, 
+      result,
+      userRole: user?.role,
+      loading
+    });
     return result;
-  }, [user, token]);
+  }, [user, token, loading]);
 
   const value = {
     user,
