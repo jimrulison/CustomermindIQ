@@ -1709,9 +1709,9 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                         // Download Admin Training Manual - FIXED: Use proper backend URL
                         console.log('🔄 Downloading Admin Training Manual...');
                         
-                        // Use the correct backend URL from environment variable
+                        // Use the correct backend URL from environment variable - PRODUCTION ENDPOINT
                         const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
-                        const downloadUrl = `${backendUrl}/download-admin-manual-direct`;
+                        const downloadUrl = `${backendUrl}/api/download/admin-training-manual`;
                         
                         const performDownload = async () => {
                           try {
