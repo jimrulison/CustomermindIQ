@@ -358,7 +358,7 @@ async def start_live_chat(
     if not SUPPORT_TIER_CONFIG[support_tier]["live_chat"]:
         raise HTTPException(
             status_code=403, 
-            detail=f"Live chat not available for {support_tier} tier. Please upgrade to Professional or Enterprise."
+            detail=f"Live chat not available for {support_tier} tier. Please upgrade to Growth or Scale."
         )
     
     # Check if it's business hours (9am-6pm EST)
