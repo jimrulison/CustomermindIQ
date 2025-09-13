@@ -933,12 +933,12 @@ ${details.updateFrequency}
     scheduled_date: ''
   });
 
-  // Authentication functions
-  const handleSignIn = (userData) => {
-    // The AuthContext will handle the authentication state
-    setCurrentPage('customer-analytics-dashboard');
-    setAnalyticsSection('customer');
-  };
+  // Authentication functions (DEPRECATED - AuthContext handles state management)
+  // const handleSignIn = (userData) => {
+  //   // The AuthContext will handle the authentication state
+  //   setCurrentPage('customer-analytics-dashboard');
+  //   setAnalyticsSection('customer');
+  // };
 
   const handleSignOut = async () => {
     try {
