@@ -33,7 +33,7 @@ const AffiliateAuth = () => {
         password: ''
     });
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customer-mind-iq-6.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://portal-rescue.preview.emergentagent.com';
 
     const handleLogin = async (e) => {
         e.preventDefault();

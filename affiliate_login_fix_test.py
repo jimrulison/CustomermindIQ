@@ -119,7 +119,7 @@ class AffiliateLoginFixer:
     def test_external_url_affiliate_login(self):
         """Test affiliate login using the external URL"""
         try:
-            external_url = "https://customer-mind-iq-6.preview.emergentagent.com"
+            external_url = "https://portal-rescue.preview.emergentagent.com"
             affiliate_credentials = {
                 "email": "admin@customermindiq.com",
                 "password": "CustomerMindIQ2025!"

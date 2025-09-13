@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 from typing import Dict, Any
 
 # Configuration
-BACKEND_URL = "https://customer-mind-iq-6.preview.emergentagent.com"
+BACKEND_URL = "https://portal-rescue.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test credentials

@@ -26,7 +26,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configuration
-BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://customer-mind-iq-6.preview.emergentagent.com")
+BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://portal-rescue.preview.emergentagent.com")
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test credentials
@@ -260,7 +260,7 @@ class FrontendBackendConnectionTester:
         print("🌐 TESTING CORS HEADERS CONFIGURATION")
         print("=" * 50)
         
-        frontend_domain = "https://customer-mind-iq-6.preview.emergentagent.com"
+        frontend_domain = "https://portal-rescue.preview.emergentagent.com"
         
         try:
             # Test CORS with OPTIONS request (preflight)

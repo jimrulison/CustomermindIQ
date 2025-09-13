@@ -6,7 +6,7 @@ import time
 import uuid
 
 class AuthAdminSystemTester:
-    def __init__(self, base_url="https://customer-mind-iq-6.preview.emergentagent.com"):
+    def __init__(self, base_url="https://portal-rescue.preview.emergentagent.com"):
         self.base_url = base_url
         self.auth_tests = 0
         self.auth_passed = 0

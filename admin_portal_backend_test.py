@@ -65,7 +65,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configuration - Use production URL from frontend .env
-BACKEND_URL = "https://customer-mind-iq-6.preview.emergentagent.com"
+BACKEND_URL = "https://portal-rescue.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test credentials
