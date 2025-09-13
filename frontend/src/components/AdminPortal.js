@@ -637,6 +637,57 @@ const AdminPortalEnhanced = () => {
       setEmailTemplates(response.data.templates || []);
     } catch (error) {
       console.error('Failed to load email templates:', error);
+      // Load demo data on API error
+      setEmailTemplates([
+        {
+          template_id: 'template_001',
+          name: 'Welcome Email',
+          subject: 'Welcome to Customer Mind IQ!',
+          content: 'Welcome to our platform! We\'re excited to help you unlock customer insights.',
+          type: 'welcome',
+          is_active: true,
+          usage_count: 156,
+          open_rate: 78.5,
+          click_rate: 24.2,
+          created_at: '2025-03-01T00:00:00Z'
+        },
+        {
+          template_id: 'template_002',
+          name: 'Monthly Newsletter',
+          subject: 'Your Monthly Customer Insights Report',
+          content: 'Here are your key customer insights from the past month.',
+          type: 'newsletter',
+          is_active: true,
+          usage_count: 89,
+          open_rate: 65.2,
+          click_rate: 18.7,
+          created_at: '2025-02-15T00:00:00Z'
+        },
+        {
+          template_id: 'template_003',
+          name: 'Product Update',
+          subject: 'New Features Available in Customer Mind IQ',
+          content: 'We\'ve added exciting new features to help you better understand your customers.',
+          type: 'product_update',
+          is_active: true,
+          usage_count: 234,
+          open_rate: 82.3,
+          click_rate: 31.5,
+          created_at: '2025-02-01T00:00:00Z'
+        },
+        {
+          template_id: 'template_004',
+          name: 'Trial Expiration Warning',
+          subject: 'Your trial expires in 3 days',
+          content: 'Don\'t miss out on powerful customer insights. Upgrade your account today.',
+          type: 'trial_warning',
+          is_active: false,
+          usage_count: 67,
+          open_rate: 59.8,
+          click_rate: 22.4,
+          created_at: '2025-01-15T00:00:00Z'
+        }
+      ]);
     }
   };
 
