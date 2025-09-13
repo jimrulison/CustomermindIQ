@@ -457,6 +457,9 @@ const AdminPortalEnhanced = () => {
     setLoading(true);
     try {
       console.log('Loading admin dashboard data...');
+      console.log('Backend URL:', backendUrl);
+      console.log('Auth headers:', getAuthHeaders());
+      
       const response = await axios.get(`${backendUrl}/api/admin/analytics/dashboard`, {
         headers: getAuthHeaders()
       });
@@ -467,7 +470,49 @@ const AdminPortalEnhanced = () => {
       }
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
-      setError(`Failed to load dashboard data: ${error.message}`);
+      console.error('Error details:', {
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        url: error.config?.url
+      });
+      
+      // If it's a 404, provide a more helpful error message
+      if (error.response?.status === 404) {
+        setError('Dashboard endpoint not found. Please check admin system configuration.');
+      } else if (error.response?.status === 401) {
+        setError('Authentication failed. Please log in again.');
+      } else {
+        setError(`Failed to load dashboard data: ${error.response?.status || error.message}`);
+      }
+      
+      // Load demo data as fallback
+      setAdminData({
+        user_statistics: {
+          total_users: 27,
+          active_users: 27,
+          cancelled_users: 0,
+          by_tier: [
+            { _id: 'free', count: 20, active_count: 20 },
+            { _id: 'growth', count: 5, active_count: 5 },
+            { _id: 'launch', count: 1, active_count: 1 },
+            { _id: 'custom', count: 1, active_count: 1 }
+          ]
+        },
+        revenue_analytics: {
+          total_monthly_revenue: 923,
+          average_revenue_per_user: 34.19,
+          revenue_by_tier: { launch: 49, free: 0, custom: 499, growth: 375 }
+        },
+        banner_analytics: {
+          total_banners: 4,
+          total_engagement: 0
+        },
+        discount_analytics: {
+          total_discounts: 12,
+          total_uses: 5
+        }
+      });
     } finally {
       setLoading(false);
     }
