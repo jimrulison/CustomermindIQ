@@ -343,6 +343,7 @@ const AdminChatDashboard = () => {
 
   const getSubscriptionBadge = (tier) => {
     const colors = {
+      launch: 'bg-blue-500/20 text-blue-400',
       growth: 'bg-purple-500/20 text-purple-400',
       scale: 'bg-yellow-500/20 text-yellow-400',
       white_label: 'bg-indigo-500/20 text-indigo-400',
@@ -352,7 +353,7 @@ const AdminChatDashboard = () => {
     return (
       <Badge className={colors[tier] || 'bg-gray-500/20 text-gray-400'}>
         <Crown className="w-3 h-3 mr-1" />
-        {tier?.charAt(0).toUpperCase() + tier?.slice(1)}
+        {tier?.charAt(0).toUpperCase() + tier?.slice(1).replace('_', ' ')}
       </Badge>
     );
   };
