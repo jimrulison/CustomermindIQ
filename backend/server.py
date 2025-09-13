@@ -360,18 +360,34 @@ async def serve_api_documentation(current_user: UserProfile = Depends(require_ro
 
 # Serve admin manual with a unique path that won't conflict with frontend routing
 @app.get("/download-admin-manual-direct")
-async def serve_admin_manual_direct():
+async def serve_admin_manual_direct(response: Response):
     """Serve Admin Training Manual directly (bypasses frontend routing)"""
     html_path = "/app/CustomerMind_IQ_Admin_Training_Manual_Professional.html"  
     if not os.path.exists(html_path):
+        print(f"❌ Admin Training Manual not found at: {html_path}")
         raise HTTPException(status_code=404, detail="Admin Training Manual not found")
     
-    return FileResponse(
-        path=html_path,
-        media_type="text/html",
-        filename="CustomerMind_IQ_Admin_Training_Manual.html",
-        headers={"Content-Disposition": "attachment; filename=CustomerMind_IQ_Admin_Training_Manual.html"}
-    )
+    # Add CORS headers for cross-origin downloads
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, HEAD, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "*"
+    
+    try:
+        print(f"✅ Serving Admin Training Manual from: {html_path}")
+        return FileResponse(
+            path=html_path,
+            media_type="text/html",
+            filename="CustomerMind_IQ_Admin_Training_Manual.html",
+            headers={
+                "Content-Disposition": "attachment; filename=CustomerMind_IQ_Admin_Training_Manual.html",
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0"
+            }
+        )
+    except Exception as e:
+        print(f"❌ Error serving admin manual: {e}")
+        raise HTTPException(status_code=500, detail=f"Error serving admin manual: {str(e)}")
 
 # Serve admin manual directly as static file (workaround for API routing issues) 
 @app.get("/admin-training-manual.html")
