@@ -1715,39 +1715,28 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                         
                         const performDownload = async () => {
                           try {
-                            console.log(`📥 Using backend URL: ${downloadUrl}`);
+                            console.log(`📥 Downloading admin manual from: ${downloadUrl}`);
                             
-                            // Simple and reliable: direct window.open
-                            const downloadWindow = window.open(downloadUrl, '_blank');
-                            
-                            // Check if popup was blocked
-                            if (!downloadWindow || downloadWindow.closed || typeof downloadWindow.closed == 'undefined') {
-                              console.warn('⚠️ Popup blocked, trying fetch method...');
+                            // Primary method: fetch and download as blob for reliable download
+                            const response = await fetch(downloadUrl);
+                            if (response.ok) {
+                              const blob = await response.blob();
+                              const url = window.URL.createObjectURL(blob);
+                              const link = document.createElement('a');
+                              link.href = url;
+                              link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
+                              link.style.display = 'none';
                               
-                              // Fallback: fetch and download as blob
-                              const response = await fetch(downloadUrl);
-                              if (response.ok) {
-                                const blob = await response.blob();
-                                const url = window.URL.createObjectURL(blob);
-                                const link = document.createElement('a');
-                                link.href = url;
-                                link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
-                                link.style.display = 'none';
-                                
-                                document.body.appendChild(link);
-                                link.click();
-                                document.body.removeChild(link);
-                                
-                                window.URL.revokeObjectURL(url);
-                                
-                                console.log('✅ Admin manual downloaded via blob method');
-                                alert('Admin Manual downloaded! Check your downloads folder.');
-                              } else {
-                                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                              }
+                              document.body.appendChild(link);
+                              link.click();
+                              document.body.removeChild(link);
+                              
+                              window.URL.revokeObjectURL(url);
+                              
+                              console.log('✅ Admin manual downloaded successfully');
+                              alert('✅ Admin Manual downloaded! Check your downloads folder.');
                             } else {
-                              console.log('✅ Admin manual opened in new tab');
-                              alert('Admin Manual opened in new tab! You can view it there or save it to your computer.');
+                              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                             }
                             
                           } catch (error) {
