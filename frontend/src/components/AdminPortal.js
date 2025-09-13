@@ -1721,10 +1721,18 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                             console.log('🔄 Attempting direct window download...');
                             window.location.href = downloadUrl;
                             
-                            // Give it a moment to start
+                            // Give it a moment to start and provide better feedback
                             setTimeout(() => {
                               console.log('✅ Download initiated via window.location');
-                              alert('✅ Admin Manual download started! Check your downloads folder. If it opens in a new tab instead, right-click and select "Save As".');
+                              const message = `✅ Admin Manual download initiated!
+                              
+Please check:
+1. Your browser's downloads folder
+2. If a new tab opened, right-click and select "Save As"
+3. Check if your browser blocked the download (look for download icon/notification)
+
+Direct URL: ${downloadUrl}`;
+                              alert(message);
                             }, 1000);
                             
                           } catch (error) {
