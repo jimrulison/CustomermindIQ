@@ -2421,6 +2421,9 @@ test_plan:
   test_priority: "high_first"
 
 agent_communication:
+  - agent: "testing"
+    message: "URGENT: Admin Portal Create Forms Testing Complete - CRITICAL ISSUES FOUND. Successfully accessed admin portal using admin@customermindiq.com credentials. MAJOR PROBLEMS IDENTIFIED: 1) Create Cohort modal opens but form fields are completely missing (no input fields for name, description, dates) - modal appears but is empty. 2) Create Code/Generate Codes button NOT FOUND in Discount Codes tab - button does not exist. 3) Create Discount button NOT FOUND in Discount Management tab - button does not exist. 4) Modal overlay blocking interactions detected. User report confirmed - create forms are missing or non-functional. These are critical UI issues preventing admin functionality. Recommend immediate investigation of AdminPortal.js modal implementations and button visibility logic."
+
   - agent: "main"
     message: "Implemented complete Customer Intelligence AI module with 5 microservices: behavioral clustering, churn prevention, lead scoring, sentiment analysis, and journey mapping. Added 11 new API endpoints to backend. All microservices use AI for advanced customer intelligence. Dependencies added (scikit-learn). Ready for backend testing of new intelligence endpoints."
   - agent: "testing"
