@@ -1706,96 +1706,52 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                   <button
                     onClick={() => {
                       if (tab.isDownload && tab.id === 'admin-manual') {
-                        // Download Admin Training Manual - FIXED for external deployment
+                        // Download Admin Training Manual - SIMPLIFIED APPROACH
                         console.log('🔄 Downloading Admin Training Manual...');
                         
-                        // The external URL routes everything to React, so we need to use localhost for the actual file
-                        const downloadUrls = [
-                          // Primary: Use localhost backend (where the actual file is served)
-                          'http://localhost:8001/download-admin-manual-direct',
-                          'http://localhost:8001/api/download/admin-training-manual',
-                          // Fallback: Try external with /api prefix (in case it's routed differently)
-                          `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'}/api/download/admin-training-manual`
-                        ];
+                        // Use localhost backend where the actual file is served
+                        const downloadUrl = 'http://localhost:8001/download-admin-manual-direct';
                         
-                        const attemptDownload = async (urls, index = 0) => {
-                          if (index >= urls.length) {
-                            console.error('❌ All download methods failed');
-                            alert('Download failed. The admin manual file may not be available. Please contact support.');
-                            return;
-                          }
+                        try {
+                          console.log(`📥 Using direct download: ${downloadUrl}`);
                           
-                          const downloadUrl = urls[index];
-                          console.log(`📥 Attempt ${index + 1}: ${downloadUrl}`);
+                          // Simple and reliable: direct window.open
+                          const downloadWindow = window.open(downloadUrl, '_blank');
                           
-                          try {
-                            // Test if the endpoint actually serves the file (not HTML)
-                            console.log('🧪 Testing endpoint for actual file content...');
-                            const testResponse = await fetch(downloadUrl, { 
-                              method: 'HEAD',
-                              headers: {
-                                'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
-                              }
-                            });
+                          // Check if popup was blocked
+                          if (!downloadWindow || downloadWindow.closed || typeof downloadWindow.closed == 'undefined') {
+                            console.warn('⚠️ Popup blocked, trying fetch method...');
                             
-                            if (testResponse.ok) {
-                              const contentType = testResponse.headers.get('content-type');
-                              console.log(`📋 Content-Type: ${contentType}`);
+                            // Fallback: fetch and download as blob
+                            const response = await fetch(downloadUrl);
+                            if (response.ok) {
+                              const blob = await response.blob();
+                              const url = window.URL.createObjectURL(blob);
+                              const link = document.createElement('a');
+                              link.href = url;
+                              link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
+                              link.style.display = 'none';
                               
-                              // Check if it's actually serving an HTML file (not React app)
-                              if (contentType && contentType.includes('text/html')) {
-                                // Additional check: get a small portion to verify it's the admin manual
-                                const testContent = await fetch(downloadUrl, {
-                                  method: 'GET',
-                                  headers: { 
-                                    'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
-                                    'Range': 'bytes=0-500'  // Get first 500 bytes to check content
-                                  }
-                                });
-                                
-                                const contentPreview = await testContent.text();
-                                console.log(`🔍 Content preview: ${contentPreview.substring(0, 100)}...`);
-                                
-                                // Check if it contains admin manual content (not React app)
-                                if (contentPreview.includes('Admin Training Manual') || 
-                                    contentPreview.includes('CustomerMind IQ') || 
-                                    contentPreview.includes('admin-manual')) {
-                                  
-                                  console.log('✅ Verified: Endpoint serves actual admin manual file');
-                                  
-                                  // Proceed with download using window.open
-                                  const downloadWindow = window.open(downloadUrl, '_blank');
-                                  
-                                  if (!downloadWindow || downloadWindow.closed || typeof downloadWindow.closed == 'undefined') {
-                                    throw new Error('Popup blocked - trying alternative method');
-                                  }
-                                  
-                                  console.log('✅ Admin manual download initiated successfully');
-                                  alert('Admin Manual opened in new tab! You can view it there or save it to your computer.');
-                                  return;
-                                  
-                                } else {
-                                  console.warn('⚠️ Endpoint serves React app HTML, not admin manual file');
-                                  throw new Error('Endpoint serves wrong content type');
-                                }
-                              } else {
-                                console.warn('⚠️ Unexpected content type for admin manual');
-                                throw new Error(`Unexpected content type: ${contentType}`);
-                              }
+                              document.body.appendChild(link);
+                              link.click();
+                              document.body.removeChild(link);
+                              
+                              window.URL.revokeObjectURL(url);
+                              
+                              console.log('✅ Admin manual downloaded via blob method');
+                              alert('Admin Manual downloaded! Check your downloads folder.');
                             } else {
-                              throw new Error(`HTTP ${testResponse.status}: ${testResponse.statusText}`);
+                              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                             }
-                            
-                          } catch (error) {
-                            console.warn(`⚠️ Download attempt ${index + 1} failed: ${error.message}`);
-                            
-                            // Try next URL
-                            attemptDownload(urls, index + 1);
+                          } else {
+                            console.log('✅ Admin manual opened in new tab');
+                            alert('Admin Manual opened in new tab! You can view it there or save it to your computer.');
                           }
-                        };
-                        
-                        // Start the download attempt sequence
-                        attemptDownload(downloadUrls);
+                          
+                        } catch (error) {
+                          console.error('❌ Download failed:', error);
+                          alert('Download failed. Please try refreshing the page or contact support.');
+                        }
                       } else {
                         setActiveTab(tab.id);
                       }
