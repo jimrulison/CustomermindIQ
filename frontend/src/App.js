@@ -1903,7 +1903,7 @@ ${details.updateFrequency}
         )}
         
         {/* Secure Admin Portal Module - Requires Admin Role */}
-        {currentPage === 'admin-portal' && (
+        {currentPage === 'admin-portal' && user?.role && ['admin', 'super_admin'].includes(user.role) && (
           <AdminPortal />
         )}
         
