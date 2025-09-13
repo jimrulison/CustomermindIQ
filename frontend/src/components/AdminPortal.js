@@ -1713,48 +1713,48 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                         const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
                         const downloadUrl = `${backendUrl}/api/download/admin-training-manual`;
                         
-                        const performDownload = () => {
+                        const performDownload = async () => {
                           try {
-                            console.log(`📥 Starting admin manual download from: ${downloadUrl}`);
+                            console.log(`📥 Starting authenticated admin manual download from: ${downloadUrl}`);
                             
-                            // Method 1: Direct window navigation (most reliable for downloads)
-                            console.log('🔄 Attempting direct window download...');
-                            window.location.href = downloadUrl;
+                            // Get authentication token
+                            const token = localStorage.getItem('token');
+                            console.log('🔑 Using authentication token for download');
                             
-                            // Give it a moment to start and provide better feedback
-                            setTimeout(() => {
-                              console.log('✅ Download initiated via window.location');
-                              const message = `✅ Admin Manual download initiated!
+                            // Method 1: Authenticated fetch with blob download
+                            const response = await fetch(downloadUrl, {
+                              method: 'GET',
+                              headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                              }
+                            });
+                            
+                            if (response.ok) {
+                              const blob = await response.blob();
+                              const url = window.URL.createObjectURL(blob);
+                              const link = document.createElement('a');
+                              link.href = url;
+                              link.download = 'CustomerMind_IQ_Admin_Training_Manual.html';
+                              link.style.display = 'none';
                               
-Please check:
-1. Your browser's downloads folder
-2. If a new tab opened, right-click and select "Save As"
-3. Check if your browser blocked the download (look for download icon/notification)
-
-Direct URL: ${downloadUrl}`;
-                              alert(message);
-                            }, 1000);
+                              document.body.appendChild(link);
+                              link.click();
+                              document.body.removeChild(link);
+                              
+                              window.URL.revokeObjectURL(url);
+                              
+                              console.log('✅ Admin manual downloaded successfully with authentication');
+                              alert('✅ Admin Manual downloaded successfully! Check your downloads folder.');
+                            } else {
+                              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                            }
                             
                           } catch (error) {
-                            console.warn('⚠️ Direct download failed, trying fallback method:', error);
+                            console.error('❌ Authenticated download failed:', error);
                             
-                            try {
-                              // Method 2: Window.open as fallback
-                              console.log('🔄 Attempting window.open fallback...');
-                              const downloadWindow = window.open(downloadUrl, '_blank');
-                              
-                              if (downloadWindow) {
-                                console.log('✅ Download window opened successfully');
-                                alert('✅ Admin Manual opened! If it doesn\'t download automatically, right-click and select "Save As".');
-                              } else {
-                                console.error('❌ All download methods failed');
-                                alert(`❌ Download failed. Please try opening this URL directly in a new tab: ${downloadUrl}`);
-                              }
-                              
-                            } catch (windowError) {
-                              console.error('❌ All download methods failed:', windowError);
-                              alert(`❌ Download failed. Please try opening this URL directly in a new tab: ${downloadUrl}`);
-                            }
+                            // Fallback: Try direct URL with instructions
+                            alert(`❌ Download failed. Please try this direct link:\n\n${downloadUrl}\n\n(Copy and paste this URL into a new browser tab)`);
                           }
                         };
                         
