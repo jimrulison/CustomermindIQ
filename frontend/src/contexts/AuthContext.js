@@ -301,6 +301,13 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Memoize isAuthenticated to ensure proper dependency tracking
+  const isAuthenticated = useMemo(() => {
+    const result = !!user && !!token;
+    console.log('AuthContext - isAuthenticated calculated:', result, { user: !!user, token: !!token });
+    return result;
+  }, [user, token]);
+
   const value = {
     user,
     token,
@@ -315,7 +322,7 @@ export const AuthProvider = ({ children }) => {
     isAdmin,
     hasSubscriptionTier,
     apiCall,
-    isAuthenticated: !!user && !!token,
+    isAuthenticated,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
