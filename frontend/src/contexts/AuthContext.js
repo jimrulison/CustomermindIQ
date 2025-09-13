@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }) => {
         setToken(storedToken);
         setUser(userProfile);
         console.log('Authentication restored from localStorage');
+        console.log('User role:', userProfile.role, 'isAdmin:', ['admin', 'super_admin'].includes(userProfile.role));
       } catch (error) {
         console.error('Error parsing stored user profile:', error);
         localStorage.removeItem('access_token');
@@ -41,9 +42,12 @@ export const AuthProvider = ({ children }) => {
       }
     }
     
-    // Set loading to false immediately - don't wait for API validation
-    setLoading(false);
-    console.log('AuthContext initialization complete');
+    // Set loading to false after state synchronization to prevent race condition
+    // Use setTimeout to ensure React state updates are processed
+    setTimeout(() => {
+      setLoading(false);
+      console.log('AuthContext initialization complete');
+    }, 0);
   }, []);
 
   // Register new user
