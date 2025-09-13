@@ -23,6 +23,10 @@ ADMIN_PASSWORD = "CustomerMindIQ2025!"
 class SubscriptionTierTester:
     def __init__(self):
         self.session = requests.Session()
+        self.session.verify = False  # Disable SSL verification for testing
+        # Suppress SSL warnings
+        import urllib3
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         self.admin_token = None
         self.test_results = []
         
