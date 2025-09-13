@@ -374,6 +374,7 @@ async def serve_admin_manual_options():
 
 # Serve admin manual with a unique path that won't conflict with frontend routing
 @app.get("/download-admin-manual-direct")
+@app.head("/download-admin-manual-direct")
 async def serve_admin_manual_direct(response: Response):
     """Serve Admin Training Manual directly (bypasses frontend routing)"""
     html_path = "/app/CustomerMind_IQ_Admin_Training_Manual_Professional.html"  
