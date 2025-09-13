@@ -124,6 +124,18 @@ test_plan:
     - "Admin Portal Create Forms - Missing Modal Content"
   test_all: false
   test_priority: "high_first"
+
+  - task: "Admin Portal Create Forms - Critical Modal Rendering Issue"
+    implemented: true
+    working: false
+    file: "frontend/src/components/AdminPortal.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "🚨 CRITICAL ISSUE CONFIRMED (Jan 30, 2025): Admin Portal modals showing empty grey boxes instead of form content as reported by user. COMPREHENSIVE TESTING RESULTS: ✅ Modal overlay opens correctly for both 'Create Template' and 'Create Workflow' buttons, ✅ Modal titles display properly ('Create Email Template' and 'Create Automated Workflow'), ❌ CRITICAL PROBLEM: Form content completely missing - NO form fields found (#templateName, #templateSubject, #templateContent, #templateType all missing from Create Template modal, #workflowName, #workflowDescription, #workflowTrigger all missing from Create Workflow modal). Total form elements in modal: 0. ROOT CAUSE IDENTIFIED: Create modals (lines 5689-5925) are incorrectly placed inside support ticket conditional block (lines 5163-5164) that only renders when modalType is 'view-support-ticket', 'reply-support-ticket', 'view-contact-form', or 'reply-contact-form'. When modalType is 'create-template' or 'create-workflow', the conditional block evaluates to false, preventing form content from rendering, resulting in empty grey boxes. SOLUTION REQUIRED: Move create-template and create-workflow modals outside the support ticket conditional block to fix the rendering issue."
   - task: "Schema Markup Implementation for SEO Enhancement"
     implemented: true
     working: true
