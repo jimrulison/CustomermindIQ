@@ -2584,17 +2584,6 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                   </table>
                 </div>
               </div>
-                                  <UserCheck className="w-4 h-4" />
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
 
               {/* Support Statistics */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
