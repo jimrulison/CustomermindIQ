@@ -4483,6 +4483,10 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                 {modalType === 'create-discount' && 'Create New Discount'}
                 {modalType === 'edit-discount' && 'Edit Discount'}
                 {modalType === 'create-cohort' && 'Create User Cohort'}
+                {modalType === 'create-template' && 'Create Email Template'}
+                {modalType === 'edit-template' && 'Edit Email Template'}
+                {modalType === 'create-workflow' && 'Create Automated Workflow'}
+                {modalType === 'edit-workflow' && 'Edit Automated Workflow'}
                 {modalType === 'create-trial-email' && 'Create Trial Email Template'}
                 {modalType === 'edit-trial-email' && 'Edit Trial Email Template'}
                 {modalType === 'view-trial-email-stats' && 'Trial Email Statistics'}
