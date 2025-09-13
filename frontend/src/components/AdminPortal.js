@@ -2364,11 +2364,46 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                 <h2 className="text-2xl font-bold text-white">Support Tickets</h2>
                 <div className="flex items-center space-x-4">
                   <button
-                    onClick={loadSupportTickets}
-                    className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    onClick={async () => {
+                      console.log('🔄 Refreshing Support Tickets...');
+                      setLoading(true);
+                      try {
+                        await loadSupportTickets();
+                        console.log('✅ Support Tickets refreshed successfully');
+                        // Show success feedback
+                        const button = document.querySelector('[data-refresh-support-tickets]');
+                        if (button) {
+                          const originalText = button.innerHTML;
+                          button.innerHTML = '<svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Refreshed';
+                          setTimeout(() => {
+                            button.innerHTML = originalText;
+                          }, 2000);
+                        }
+                      } catch (error) {
+                        console.error('❌ Failed to refresh Support Tickets:', error);
+                        // Show error feedback
+                        const button = document.querySelector('[data-refresh-support-tickets]');
+                        if (button) {
+                          const originalText = button.innerHTML;
+                          button.innerHTML = '<svg class="w-4 h-4 mr-2 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>Failed';
+                          setTimeout(() => {
+                            button.innerHTML = originalText;
+                          }, 2000);
+                        }
+                      } finally {
+                        setLoading(false);
+                      }
+                    }}
+                    data-refresh-support-tickets
+                    disabled={loading}
+                    className={`flex items-center px-4 py-2 text-white rounded-lg transition-colors ${
+                      loading 
+                        ? 'bg-slate-600 cursor-not-allowed' 
+                        : 'bg-blue-600 hover:bg-blue-700'
+                    }`}
                   >
-                    <RefreshCw className="w-4 h-4 mr-2" />
-                    Refresh
+                    <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+                    {loading ? 'Refreshing...' : 'Refresh'}
                   </button>
                 </div>
               </div>
