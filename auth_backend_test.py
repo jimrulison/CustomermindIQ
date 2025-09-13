@@ -10,7 +10,7 @@ import sys
 from datetime import datetime
 
 class AuthenticationTester:
-    def __init__(self, base_url="https://ai-mindiq.preview.emergentagent.com"):
+    def __init__(self, base_url="https://customer-mind-iq-6.preview.emergentagent.com"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0
