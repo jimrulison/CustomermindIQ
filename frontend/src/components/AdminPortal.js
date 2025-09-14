@@ -680,71 +680,9 @@ const AdminPortalEnhanced = () => {
         return;
       }
       
-      // Provide demo support tickets as fallback
-      console.log('⚠️ Loading demo support tickets as fallback...');
-      setSupportTickets([
-        {
-          ticket_id: 'TICKET_001',
-          subject: 'Login Issues - Cannot Access Dashboard',
-          message: 'I\'ve been trying to log into my account for the past hour but keep getting authentication errors. Can someone help?',
-          email: 'user@example.com',
-          priority: 'high',
-          status: 'open',
-          category: 'technical_support',
-          created_at: '2025-09-12T14:30:00Z',
-          last_updated: '2025-09-12T14:30:00Z',
-          assigned_to: null
-        },
-        {
-          ticket_id: 'TICKET_002',
-          subject: 'Feature Request - Export Data to Excel',
-          message: 'It would be great if I could export my analytics data to Excel format for further analysis. Is this feature available?',
-          email: 'business@company.com', 
-          priority: 'medium',
-          status: 'pending',
-          category: 'feature_request',
-          created_at: '2025-09-12T11:15:00Z',
-          last_updated: '2025-09-12T15:22:00Z',
-          assigned_to: 'support_agent_1'
-        },
-        {
-          ticket_id: 'TICKET_003',
-          subject: 'Billing Question - Subscription Renewal',
-          message: 'My subscription is about to expire next week, but I haven\'t received any renewal notifications. Could you please check my billing status?',
-          email: 'finance@startup.io',
-          priority: 'medium', 
-          status: 'open',
-          category: 'billing',
-          created_at: '2025-09-11T16:45:00Z',
-          last_updated: '2025-09-11T16:45:00Z',
-          assigned_to: null
-        },
-        {
-          ticket_id: 'TICKET_004',
-          subject: 'API Integration Help Needed',
-          message: 'I\'m trying to integrate with your API but getting 401 errors. The documentation seems outdated. Can someone provide current examples?',
-          email: 'developer@techstartup.io',
-          priority: 'high',
-          status: 'open', 
-          category: 'technical_support',
-          created_at: '2025-09-12T09:30:00Z',
-          last_updated: '2025-09-12T09:30:00Z',
-          assigned_to: 'tech_support_lead'
-        },
-        {
-          ticket_id: 'TICKET_005',
-          subject: 'Data Not Updating - Website Analytics',
-          message: 'The website analytics dashboard hasn\'t updated since yesterday. All my tracking codes are correctly installed. Please investigate.',
-          email: 'webmaster@ecommerce.net',
-          priority: 'medium',
-          status: 'open',
-          category: 'technical_support', 
-          created_at: '2025-09-12T13:20:00Z',
-          last_updated: '2025-09-12T13:20:00Z',
-          assigned_to: null
-        }
-      ]);
-      console.log('✅ Demo support tickets loaded: 5');
+      // Set empty support tickets on error
+      console.log('⚠️ Support tickets not available');
+      setSupportTickets([]);
     }
   };
 
