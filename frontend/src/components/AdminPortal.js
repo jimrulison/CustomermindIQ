@@ -601,52 +601,10 @@ const AdminPortalEnhanced = () => {
       console.log('✅ API Keys loaded from API:', response.data.api_keys);
       setApiKeys(response.data.api_keys || []);
     } catch (error) {
-      console.error('❌ Failed to load API keys from API:', error);
-      console.log('🎯 Using demo API keys fallback...');
-      // Provide demo data when API is not available
-      const demoKeys = [
-        {
-          key_id: 'demo_1',
-          name: 'Production Website Tracker',
-          description: 'Main API key for website analytics tracking',
-          masked_key: 'cmiq_prod_****...****abcd',
-          full_key: 'cmiq_prod_12345abcdef67890ghijklmnop',
-          permissions: ['read_analytics', 'read_websites', 'write_websites'],
-          usage_count: 2847,
-          last_used: '2024-01-15T10:30:00Z',
-          is_active: true,
-          created_at: '2024-01-01T00:00:00Z',
-          rate_limit: 1000
-        },
-        {
-          key_id: 'demo_2', 
-          name: 'Development Testing Key',
-          description: 'API key for development and testing purposes',
-          masked_key: 'cmiq_dev_****...****xyz9',
-          full_key: 'cmiq_dev_98765fedcba43210zyxwvuts',
-          permissions: ['read_analytics', 'read_websites'],
-          usage_count: 456,
-          last_used: '2024-01-14T15:20:00Z',
-          is_active: true,
-          created_at: '2024-01-10T00:00:00Z',
-          rate_limit: 500
-        },
-        {
-          key_id: 'demo_3',
-          name: 'Backup Analytics Key',
-          description: 'Secondary key for backup analytics system',
-          masked_key: 'cmiq_bkup_****...****mnop',
-          full_key: 'cmiq_bkup_abcdef123456789mnopqrst',
-          permissions: ['read_analytics'],
-          usage_count: 89,
-          last_used: '2024-01-12T09:15:00Z',
-          is_active: false,
-          created_at: '2024-01-05T00:00:00Z',
-          rate_limit: 100
-        }
-      ];
-      console.log('✅ Demo API keys set:', demoKeys);
-      setApiKeys(demoKeys);
+      console.error('Failed to load API keys from API:', error);
+      console.log('🎯 API keys not available');
+      // Set empty API keys on error
+      setApiKeys([]);
     }
   };
 
