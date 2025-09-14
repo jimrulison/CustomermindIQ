@@ -4677,7 +4677,11 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                   
                   <div className="flex justify-end space-x-3 pt-4">
                     <button
-                      onClick={() => setShowModal(false)}
+                      onClick={() => {
+                        setShowModal(false);
+                        setModalType('');
+                        setEditingItem(null);
+                      }}
                       className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700"
                     >
                       Cancel
