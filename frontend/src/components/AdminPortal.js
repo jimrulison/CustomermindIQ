@@ -440,13 +440,13 @@ const AdminPortalEnhanced = () => {
       });
     } catch (error) {
       console.error('Error fetching notifications:', error);
-      // Set demo data for development
+      // Set empty notifications on error
       setNotifications({
-        supportTickets: 3,
-        liveChat: 2,
-        affiliateChat: 5,
-        contactForms: 1,
-        emails: 4
+        supportTickets: 0,
+        liveChat: 0,
+        affiliateChat: 0,
+        contactForms: 0,
+        emails: 0
       });
     }
   };
