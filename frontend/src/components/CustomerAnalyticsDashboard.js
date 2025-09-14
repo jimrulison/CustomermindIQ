@@ -105,9 +105,9 @@ const CustomerAnalyticsDashboard = ({
       borderColor: 'border-green-500/30',
       iconColor: 'text-green-400',
       metrics: {
-        revenue: '$891K',
-        growth: '+24.1%',
-        forecast: '88.7%'
+        revenue: revenueData?.total_revenue ? `$${(revenueData.total_revenue / 1000).toFixed(0)}K` : '$0',
+        growth: revenueData?.growth_rate ? `${revenueData.growth_rate > 0 ? '+' : ''}${revenueData.growth_rate.toFixed(1)}%` : '0%',
+        forecast: revenueData?.forecast_accuracy ? `${revenueData.forecast_accuracy.toFixed(1)}%` : '0%'
       },
       features: ['Revenue Forecasting', 'Price Optimization', 'Profit Analysis', 'Subscription Analytics']
     },
