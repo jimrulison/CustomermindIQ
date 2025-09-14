@@ -5885,7 +5885,11 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                 {modalType === 'create-workflow' ? 'Create Automated Workflow' : 'Edit Automated Workflow'}
               </h3>
               <button
-                onClick={() => setShowModal(false)}
+                onClick={() => {
+                  setShowModal(false);
+                  setModalType('');
+                  setEditingItem(null);
+                }}
                 className="text-slate-400 hover:text-white transition-colors"
               >
                 <X className="w-6 h-6" />
