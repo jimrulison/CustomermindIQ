@@ -558,39 +558,8 @@ const AdminPortalEnhanced = () => {
       setDiscountCodes(response.data.codes || []);
     } catch (error) {
       console.error('Failed to load discount codes:', error);
-      // Load demo data on API error
-      setDiscountCodes([
-        {
-          code_id: 'code_001',
-          code: 'SPRING25',
-          discount_id: discountId,
-          usage_count: 15,
-          max_uses: 100,
-          is_active: true,
-          expires_at: '2025-12-31T23:59:59Z',
-          created_at: '2025-03-01T00:00:00Z'
-        },
-        {
-          code_id: 'code_002',
-          code: 'WELCOME10',
-          discount_id: discountId,
-          usage_count: 43,
-          max_uses: 200,
-          is_active: true,
-          expires_at: '2025-12-31T23:59:59Z',
-          created_at: '2025-02-15T00:00:00Z'
-        },
-        {
-          code_id: 'code_003',
-          code: 'SAVE50',
-          discount_id: discountId,
-          usage_count: 87,
-          max_uses: 100,
-          is_active: false,
-          expires_at: '2025-06-30T23:59:59Z',
-          created_at: '2025-01-01T00:00:00Z'
-        }
-      ]);
+      // Set empty codes on API error
+      setDiscountCodes([]);
     }
   };
 
