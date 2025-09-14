@@ -3694,6 +3694,344 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
             </div>
           )}
 
+          {/* Web Pages Reference Tab */}
+          {activeTab === 'web-pages' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold text-white">Web Pages Reference</h2>
+                  <p className="text-slate-400 mt-1">Complete list of all customer-accessible web pages and URLs</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Globe className="w-5 h-5 text-blue-400" />
+                  <span className="text-sm text-slate-400">CustomerMindIQ.com</span>
+                </div>
+              </div>
+
+              <div className="grid gap-6">
+                {/* Primary Pages */}
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                    Primary Pages
+                  </h3>
+                  <div className="grid gap-3">
+                    {[
+                      { url: 'https://customermindIQ.com/', desc: 'Main landing page with hero section' },
+                      { url: 'https://customermindIQ.com/#dashboard', desc: 'Main user dashboard' },
+                      { url: 'https://customermindIQ.com/#admin', desc: 'Admin portal (requires admin login)' }
+                    ].map((page, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                        <div className="flex-1">
+                          <code className="text-blue-400 font-mono text-sm bg-slate-900/50 px-2 py-1 rounded">{page.url}</code>
+                          <p className="text-slate-300 text-sm mt-1">{page.desc}</p>
+                        </div>
+                        <button
+                          onClick={() => window.open(page.url, '_blank')}
+                          className="ml-3 p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded transition-colors"
+                          title="Open in new tab"
+                        >
+                          <MousePointer className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Authentication Pages */}
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full mr-3"></div>
+                    Authentication
+                  </h3>
+                  <div className="grid gap-3">
+                    {[
+                      { url: 'https://customermindIQ.com/#signin', desc: 'User sign-in page' },
+                      { url: 'https://customermindIQ.com/#register', desc: 'User registration/trial signup' }
+                    ].map((page, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                        <div className="flex-1">
+                          <code className="text-blue-400 font-mono text-sm bg-slate-900/50 px-2 py-1 rounded">{page.url}</code>
+                          <p className="text-slate-300 text-sm mt-1">{page.desc}</p>
+                        </div>
+                        <button
+                          onClick={() => window.open(page.url, '_blank')}
+                          className="ml-3 p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded transition-colors"
+                          title="Open in new tab"
+                        >
+                          <MousePointer className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Dashboard Modules - Customer Analytics */}
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-purple-500 rounded-full mr-3"></div>
+                    Dashboard Modules - Customer Analytics
+                  </h3>
+                  <div className="grid gap-3">
+                    {[
+                      { url: 'https://customermindIQ.com/#customer-intelligence', desc: 'Customer insights' },
+                      { url: 'https://customermindIQ.com/#customer-health', desc: 'Customer health monitoring' },
+                      { url: 'https://customermindIQ.com/#customer-success', desc: 'Customer success dashboard' },
+                      { url: 'https://customermindIQ.com/#customer-journey', desc: 'Customer journey analysis' }
+                    ].map((page, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                        <div className="flex-1">
+                          <code className="text-blue-400 font-mono text-sm bg-slate-900/50 px-2 py-1 rounded">{page.url}</code>
+                          <p className="text-slate-300 text-sm mt-1">{page.desc}</p>
+                        </div>
+                        <button
+                          onClick={() => window.open(page.url, '_blank')}
+                          className="ml-3 p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded transition-colors"
+                          title="Open in new tab"
+                        >
+                          <MousePointer className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Dashboard Modules - Business Intelligence */}
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-orange-500 rounded-full mr-3"></div>
+                    Dashboard Modules - Business Intelligence
+                  </h3>
+                  <div className="grid gap-3">
+                    {[
+                      { url: 'https://customermindIQ.com/#executive-intelligence', desc: 'Executive dashboard' },
+                      { url: 'https://customermindIQ.com/#growth-intelligence', desc: 'Growth analytics' },
+                      { url: 'https://customermindIQ.com/#product-intelligence', desc: 'Product analytics' },
+                      { url: 'https://customermindIQ.com/#ai-business-insights', desc: 'AI-powered insights' }
+                    ].map((page, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                        <div className="flex-1">
+                          <code className="text-blue-400 font-mono text-sm bg-slate-900/50 px-2 py-1 rounded">{page.url}</code>
+                          <p className="text-slate-300 text-sm mt-1">{page.desc}</p>
+                        </div>
+                        <button
+                          onClick={() => window.open(page.url, '_blank')}
+                          className="ml-3 p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded transition-colors"
+                          title="Open in new tab"
+                        >
+                          <MousePointer className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Dashboard Modules - Website Analytics */}
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full mr-3"></div>
+                    Dashboard Modules - Website Analytics
+                  </h3>
+                  <div className="grid gap-3">
+                    {[
+                      { url: 'https://customermindIQ.com/#website-intelligence', desc: 'Website performance hub' },
+                      { url: 'https://customermindIQ.com/#website-analytics', desc: 'Website analytics dashboard' }
+                    ].map((page, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                        <div className="flex-1">
+                          <code className="text-blue-400 font-mono text-sm bg-slate-900/50 px-2 py-1 rounded">{page.url}</code>
+                          <p className="text-slate-300 text-sm mt-1">{page.desc}</p>
+                        </div>
+                        <button
+                          onClick={() => window.open(page.url, '_blank')}
+                          className="ml-3 p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded transition-colors"
+                          title="Open in new tab"
+                        >
+                          <MousePointer className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Dashboard Modules - Integration & Tools */}
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-teal-500 rounded-full mr-3"></div>
+                    Dashboard Modules - Integration & Tools
+                  </h3>
+                  <div className="grid gap-3">
+                    {[
+                      { url: 'https://customermindIQ.com/#integration-hub', desc: 'Integration management' },
+                      { url: 'https://customermindIQ.com/#ai-command-center', desc: 'AI controls' },
+                      { url: 'https://customermindIQ.com/#compliance-suite', desc: 'Compliance monitoring' }
+                    ].map((page, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                        <div className="flex-1">
+                          <code className="text-blue-400 font-mono text-sm bg-slate-900/50 px-2 py-1 rounded">{page.url}</code>
+                          <p className="text-slate-300 text-sm mt-1">{page.desc}</p>
+                        </div>
+                        <button
+                          onClick={() => window.open(page.url, '_blank')}
+                          className="ml-3 p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded transition-colors"
+                          title="Open in new tab"
+                        >
+                          <MousePointer className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Affiliate System */}
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-pink-500 rounded-full mr-3"></div>
+                    Affiliate System
+                  </h3>
+                  <div className="grid gap-3">
+                    {[
+                      { url: 'https://customermindIQ.com/affiliates.html', desc: 'Affiliate registration page' },
+                      { url: 'https://customermindIQ.com/affiliate-banners.html', desc: 'Marketing banners' },
+                      { url: 'https://customermindIQ.com/affiliate-forms-demo.html', desc: 'Demo forms' },
+                      { url: 'https://customermindIQ.com/affiliate-video.html', desc: 'Video resources' },
+                      { url: 'https://customermindIQ.com/affiliate-branded-demo.html', desc: 'Branded demo page' }
+                    ].map((page, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                        <div className="flex-1">
+                          <code className="text-blue-400 font-mono text-sm bg-slate-900/50 px-2 py-1 rounded">{page.url}</code>
+                          <p className="text-slate-300 text-sm mt-1">{page.desc}</p>
+                        </div>
+                        <button
+                          onClick={() => window.open(page.url, '_blank')}
+                          className="ml-3 p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded transition-colors"
+                          title="Open in new tab"
+                        >
+                          <MousePointer className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Training & Documentation */}
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-indigo-500 rounded-full mr-3"></div>
+                    Training & Documentation
+                  </h3>
+                  <div className="grid gap-3">
+                    {[
+                      { url: 'https://customermindIQ.com/#training', desc: 'Training center' },
+                      { url: 'https://customermindIQ.com/quick-start-guide.html', desc: 'Quick start guide' },
+                      { url: 'https://customermindIQ.com/admin-training-manual.html', desc: 'Admin manual' },
+                      { url: 'https://customermindIQ.com/CustomerMind_IQ_Quick_Start_Guide_Growth.html', desc: 'Growth tier guide' },
+                      { url: 'https://customermindIQ.com/admin_training_manual.html', desc: 'Comprehensive admin training' }
+                    ].map((page, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                        <div className="flex-1">
+                          <code className="text-blue-400 font-mono text-sm bg-slate-900/50 px-2 py-1 rounded">{page.url}</code>
+                          <p className="text-slate-300 text-sm mt-1">{page.desc}</p>
+                        </div>
+                        <button
+                          onClick={() => window.open(page.url, '_blank')}
+                          className="ml-3 p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded transition-colors"
+                          title="Open in new tab"
+                        >
+                          <MousePointer className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Business Pages */}
+                <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                    <div className="w-3 h-3 bg-red-500 rounded-full mr-3"></div>
+                    Business Pages
+                  </h3>
+                  <div className="grid gap-3">
+                    {[
+                      { url: 'https://customermindIQ.com/#about', desc: 'About page' },
+                      { url: 'https://customermindIQ.com/#contact', desc: 'Contact form' },
+                      { url: 'https://customermindIQ.com/#support', desc: 'Support center' },
+                      { url: 'https://customermindIQ.com/#pricing', desc: 'Pricing plans' },
+                      { url: 'https://customermindIQ.com/#privacy', desc: 'Privacy policy' },
+                      { url: 'https://customermindIQ.com/#terms', desc: 'Terms of service' },
+                      { url: 'https://customermindIQ.com/#legal', desc: 'Legal documents' }
+                    ].map((page, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                        <div className="flex-1">
+                          <code className="text-blue-400 font-mono text-sm bg-slate-900/50 px-2 py-1 rounded">{page.url}</code>
+                          <p className="text-slate-300 text-sm mt-1">{page.desc}</p>
+                        </div>
+                        <button
+                          onClick={() => window.open(page.url, '_blank')}
+                          className="ml-3 p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-600 rounded transition-colors"
+                          title="Open in new tab"
+                        >
+                          <MousePointer className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Actions */}
+              <div className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 rounded-xl border border-blue-500/30 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Quick Actions</h3>
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    onClick={() => window.open('https://customermindIQ.com/', '_blank')}
+                    className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    <Globe className="w-4 h-4 mr-2" />
+                    Open Main Site
+                  </button>
+                  <button
+                    onClick={() => window.open('https://customermindIQ.com/#admin', '_blank')}
+                    className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                  >
+                    <Shield className="w-4 h-4 mr-2" />
+                    Open Admin Portal
+                  </button>
+                  <button
+                    onClick={() => {
+                      const urls = [
+                        'https://customermindIQ.com/',
+                        'https://customermindIQ.com/#dashboard',
+                        'https://customermindIQ.com/#admin',
+                        'https://customermindIQ.com/affiliates.html',
+                        'https://customermindIQ.com/#training'
+                      ];
+                      urls.forEach(url => window.open(url, '_blank'));
+                    }}
+                    className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                  >
+                    <MousePointer className="w-4 h-4 mr-2" />
+                    Open All Key Pages
+                  </button>
+                  <button
+                    onClick={() => {
+                      const pageList = document.querySelector('[data-web-pages-list]')?.innerText || 'Web pages list not found';
+                      navigator.clipboard.writeText(pageList).then(() => {
+                        alert('✅ Web pages list copied to clipboard!');
+                      }).catch(() => {
+                        alert('❌ Failed to copy to clipboard');
+                      });
+                    }}
+                    className="flex items-center px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
+                  >
+                    <Copy className="w-4 h-4 mr-2" />
+                    Copy URLs List
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Settings Tab */}
           {activeTab === 'settings' && (
             <div className="space-y-6">
