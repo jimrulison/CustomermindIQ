@@ -734,44 +734,9 @@ const AdminPortalEnhanced = () => {
         return;
       }
       
-      // Provide demo contact forms as fallback
-      console.log('⚠️ Loading demo contact forms as fallback...');
-      setContactForms([
-        {
-          form_id: 'FORM-001-2024',
-          submission_id: 'FORM-001-2024', // Add missing field
-          name: 'John Doe',
-          email: 'john@company.com',
-          company: 'Tech Solutions Inc',
-          subject: 'Pricing Inquiry',
-          message: 'Hi, I would like to learn more about your analytics platform and how it can help our business grow. Could someone please reach out to discuss pricing and implementation?',
-          status: 'new',
-          created_at: '2024-01-15T14:15:00Z'
-        },
-        {
-          form_id: 'FORM-002-2024',
-          submission_id: 'FORM-002-2024', // Add missing field
-          name: 'Sarah Johnson',
-          email: 'sarah@startup.io', 
-          company: 'Growth Startup',
-          subject: 'Feature Questions',
-          message: 'I have some questions about the advanced analytics features. Do you support custom integrations with third-party tools?',
-          status: 'responded',
-          created_at: '2024-01-14T11:30:00Z'
-        },
-        {
-          form_id: 'FORM-003-2024',
-          submission_id: 'FORM-003-2024', // Add missing field
-          name: 'Mike Chen',
-          email: 'mike@enterprise.com',
-          company: 'Enterprise Corp',
-          subject: 'Enterprise Demo Request',
-          message: 'We are interested in scheduling a demo for our enterprise team. We have about 500 employees and need a comprehensive analytics solution.',
-          status: 'new',
-          created_at: '2024-01-13T16:45:00Z'
-        }
-      ]);
-      console.log('✅ Demo contact forms loaded: 3');
+      // Set empty contact forms on error
+      console.log('⚠️ Contact forms not available');
+      setContactForms([]);
     }
   };
 
