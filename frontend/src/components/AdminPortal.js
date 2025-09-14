@@ -1683,6 +1683,7 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
               {[
                 { id: 'dashboard', name: 'Dashboard', icon: BarChart3 },
                 { id: 'admin-manual', name: 'Admin Manual', icon: Download, isDownload: true },
+                { id: 'web-pages', name: 'Web Pages Reference', icon: Globe },
                 { id: 'users', name: 'User Management', icon: Users },
                 { id: 'banners', name: 'Banner Management', icon: Megaphone },
                 { id: 'discounts', name: 'Discount Management', icon: DollarSign },
