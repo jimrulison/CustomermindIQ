@@ -506,31 +506,26 @@ const AdminPortalEnhanced = () => {
         setError(`Failed to load dashboard data: ${error.response?.status || error.message}`);
       }
       
-      // Load demo data as fallback
+      // Set empty admin data on error
       setAdminData({
         user_statistics: {
-          total_users: 27,
-          active_users: 27,
-          cancelled_users: 0,
-          by_tier: [
-            { _id: 'free', count: 20, active_count: 20 },
-            { _id: 'growth', count: 5, active_count: 5 },
-            { _id: 'launch', count: 1, active_count: 1 },
-            { _id: 'custom', count: 1, active_count: 1 }
-          ]
+          total_users: 0,
+          active_users: 0,
+          trial_users: 0,
+          premium_users: 0,
+          churn_rate: 0
         },
-        revenue_analytics: {
-          total_monthly_revenue: 923,
-          average_revenue_per_user: 34.19,
-          revenue_by_tier: { launch: 49, free: 0, custom: 499, growth: 375 }
+        revenue_metrics: {
+          monthly_revenue: 0,
+          total_revenue: 0,
+          average_revenue_per_user: 0,
+          subscription_growth: 0
         },
-        banner_analytics: {
-          total_banners: 4,
-          total_engagement: 0
-        },
-        discount_analytics: {
-          total_discounts: 12,
-          total_uses: 5
+        activity_metrics: {
+          daily_active_users: 0,
+          weekly_active_users: 0,
+          monthly_active_users: 0,
+          feature_usage: {}
         }
       });
     } finally {
