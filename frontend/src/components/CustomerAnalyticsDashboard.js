@@ -135,9 +135,9 @@ const CustomerAnalyticsDashboard = ({
       borderColor: 'border-cyan-500/30',
       iconColor: 'text-cyan-400',
       metrics: {
-        health: '85.2/100',
-        retention: '94.1%',
-        satisfaction: '4.8/5'
+        health: customerData?.health_score ? `${customerData.health_score.toFixed(1)}/100` : '0/100',
+        retention: customerData?.retention_rate ? `${customerData.retention_rate.toFixed(1)}%` : '0%',
+        satisfaction: customerData?.satisfaction_score ? `${customerData.satisfaction_score.toFixed(1)}/5` : '0/5'
       },
       features: ['Health Scoring', 'Success Metrics', 'Retention Strategies', 'Risk Assessment']
     },
