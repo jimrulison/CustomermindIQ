@@ -758,61 +758,9 @@ const AdminPortalEnhanced = () => {
       }
     } catch (error) {
       console.error('Failed to load email campaigns:', error);
-      console.log('⚠️ API error, loading email campaigns demo data...');
-      // Load demo data on API error
-      setEmailCampaigns([
-        {
-          campaign_id: 'camp_001',
-          subject: 'Welcome to Customer Mind IQ!',
-          recipient_count: 1250,
-          status: 'sent',
-          provider: 'sendgrid',
-          sent_count: 1189,
-          failed_count: 61,
-          created_at: '2025-09-12T10:00:00Z'
-        },
-        {
-          campaign_id: 'camp_002', 
-          subject: 'Your Monthly Analytics Report',
-          recipient_count: 890,
-          status: 'sent',
-          provider: 'sendgrid',
-          sent_count: 845,
-          failed_count: 45,
-          created_at: '2025-09-11T14:30:00Z'
-        },
-        {
-          campaign_id: 'camp_003',
-          subject: 'New Features Available Now',
-          recipient_count: 2100,
-          status: 'sent',
-          provider: 'mailchimp',
-          sent_count: 2034,
-          failed_count: 66,
-          created_at: '2025-09-10T11:15:00Z'
-        },
-        {
-          campaign_id: 'camp_004',
-          subject: 'Special Offer - 25% Off Annual Plans',
-          recipient_count: 567,
-          status: 'sending',
-          provider: 'sendgrid',
-          sent_count: 289,
-          failed_count: 12,
-          created_at: '2025-09-12T16:45:00Z'
-        },
-        {
-          campaign_id: 'camp_005',
-          subject: 'Weekly Newsletter - Industry Insights',
-          recipient_count: 1890,
-          status: 'queued',
-          provider: 'mailchimp',
-          sent_count: 0,
-          failed_count: 0,
-          created_at: '2025-09-12T18:00:00Z'
-        }
-      ]);
-      console.log('✅ Demo email campaigns loaded: 5');
+      console.log('⚠️ API error, keeping email campaigns empty');
+      // Set empty campaigns on API error
+      setEmailCampaigns([]);
     }
   };
 
