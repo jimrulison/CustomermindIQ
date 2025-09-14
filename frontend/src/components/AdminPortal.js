@@ -5752,7 +5752,11 @@ ${exportType},${currentDate},Success,Demo Data Generated`;
                 {modalType === 'create-template' ? 'Create Email Template' : 'Edit Email Template'}
               </h3>
               <button
-                onClick={() => setShowModal(false)}
+                onClick={() => {
+                  setShowModal(false);
+                  setModalType('');
+                  setEditingItem(null);
+                }}
                 className="text-slate-400 hover:text-white transition-colors"
               >
                 <X className="w-6 h-6" />
