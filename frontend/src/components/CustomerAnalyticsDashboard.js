@@ -91,8 +91,8 @@ const CustomerAnalyticsDashboard = ({
       iconColor: 'text-purple-400',
       metrics: {
         campaigns: marketingData?.campaigns_count || 0,
-        automation: '87.5%',
-        roi: '340%'
+        automation: marketingData?.automation_rate ? `${marketingData.automation_rate.toFixed(1)}%` : '0%',
+        roi: marketingData?.roi ? `${marketingData.roi.toFixed(0)}%` : '0%'
       },
       features: ['Multi-Channel Campaigns', 'A/B Testing', 'Dynamic Content', 'Lead Scoring']
     },
