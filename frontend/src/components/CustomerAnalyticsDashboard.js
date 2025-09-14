@@ -120,9 +120,9 @@ const CustomerAnalyticsDashboard = ({
       borderColor: 'border-orange-500/30',
       iconColor: 'text-orange-400',
       metrics: {
-        clusters: '5 Groups',
-        churn: '78.4%',
-        upsell: '$74K'
+        clusters: advancedFeaturesData?.customer_clusters ? `${advancedFeaturesData.customer_clusters} Groups` : '0 Groups',
+        churn: advancedFeaturesData?.churn_prevention_rate ? `${advancedFeaturesData.churn_prevention_rate.toFixed(1)}%` : '0%',
+        upsell: advancedFeaturesData?.upsell_revenue ? `$${(advancedFeaturesData.upsell_revenue / 1000).toFixed(0)}K` : '$0'
       },
       features: ['Behavioral Clustering', 'Churn Prevention', 'Cross-Sell Intelligence', 'Sentiment Analysis']
     },
