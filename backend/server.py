@@ -1013,45 +1013,8 @@ class OdooService:
             return await self._get_demo_customers()
     
     async def _get_demo_customers(self) -> List[Dict]:
-        """Demo customer data for Customer Mind IQ showcase"""
-        return [
-            {
-                "customer_id": "demo_1",
-                "name": "TechCorp Solutions",
-                "email": "admin@techcorp.com",
-                "total_purchases": 5,
-                "total_spent": 15000.0,
-                "software_owned": ["CRM Pro", "Inventory Manager", "Analytics Suite"],
-                "last_purchase_date": datetime.now() - timedelta(days=30)
-            },
-            {
-                "customer_id": "demo_2", 
-                "name": "StartupXYZ",
-                "email": "founder@startupxyz.com",
-                "total_purchases": 3,
-                "total_spent": 8500.0,
-                "software_owned": ["Basic CRM", "Email Marketing"],
-                "last_purchase_date": datetime.now() - timedelta(days=45)
-            },
-            {
-                "customer_id": "demo_3",
-                "name": "Enterprise Corp",
-                "email": "it@enterprise.com", 
-                "total_purchases": 8,
-                "total_spent": 25000.0,
-                "software_owned": ["Enterprise CRM", "Advanced Analytics", "Project Management", "HR Suite"],
-                "last_purchase_date": datetime.now() - timedelta(days=15)
-            },
-            {
-                "customer_id": "demo_4",
-                "name": "Digital Agency Pro",
-                "email": "contact@digitalagency.com",
-                "total_purchases": 4,
-                "total_spent": 12000.0,
-                "software_owned": ["Creative Suite", "Client Portal", "Time Tracking"],
-                "last_purchase_date": datetime.now() - timedelta(days=60)
-            }
-        ]
+        """Return empty customer data when ODOO is not available"""
+        return []
     
     async def send_email_campaign(self, campaign: EmailCampaign) -> bool:
         """Send email campaign via ODOO integration"""
