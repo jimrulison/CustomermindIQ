@@ -1,165 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-  
+
   <!-- Homepage -->
   <url>
     <loc>https://customermindiq.com/</loc>
-    <lastmod>2024-12-12</lastmod>
+    <lastmod>2025-09-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://customer-assets.emergentagent.com/job_mindiq-auth/artifacts/bi9l7mag_Customer%20Mind%20IQ%20logo.png</image:loc>
-      <image:title>Customer Mind IQ Logo</image:title>
-      <image:caption>Customer Mind IQ - AI-Powered Customer Intelligence Platform</image:caption>
-    </image:image>
   </url>
-  
-  <!-- Customer Analytics Dashboard -->
+
+  <!-- Main Product Pages -->
   <url>
-    <loc>https://customermindiq.com/#customer-analytics</loc>
-    <lastmod>2024-12-12</lastmod>
+    <loc>https://customermindiq.com/customer-intelligence</loc>
+    <lastmod>2025-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-  
-  <!-- Website Analytics Dashboard -->
+
   <url>
-    <loc>https://customermindiq.com/#website-analytics</loc>
-    <lastmod>2024-12-12</lastmod>
+    <loc>https://customermindiq.com/revenue-analytics</loc>
+    <lastmod>2025-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-  
-  <!-- Productivity Intelligence -->
+
   <url>
-    <loc>https://customermindiq.com/#productivity</loc>
-    <lastmod>2024-12-12</lastmod>
+    <loc>https://customermindiq.com/marketing-automation</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://customermindiq.com/website-intelligence</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://customermindiq.com/product-intelligence</loc>
+    <lastmod>2025-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  
-  <!-- Training & Documentation -->
+
   <url>
-    <loc>https://customermindiq.com/#training</loc>
-    <lastmod>2024-12-12</lastmod>
+    <loc>https://customermindiq.com/ai-business-insights</loc>
+    <lastmod>2025-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  
-  <!-- Support Center -->
+
+  <!-- Business Pages -->
   <url>
-    <loc>https://customermindiq.com/#support</loc>
-    <lastmod>2024-12-12</lastmod>
+    <loc>https://customermindiq.com/pricing</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://customermindiq.com/features</loc>
+    <lastmod>2025-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  
-  <!-- Knowledge Base -->
+
   <url>
-    <loc>https://customermindiq.com/#knowledge-base</loc>
-    <lastmod>2024-12-12</lastmod>
+    <loc>https://customermindiq.com/integrations</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://customermindiq.com/security</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://customermindiq.com/compliance</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Company Pages -->
+  <url>
+    <loc>https://customermindiq.com/about</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://customermindiq.com/contact</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://customermindiq.com/support</loc>
+    <lastmod>2025-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-  
-  <!-- Subscription & Pricing -->
+
+  <!-- Training & Resources -->
   <url>
-    <loc>https://customermindiq.com/#subscription</loc>
-    <lastmod>2024-12-12</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://customermindiq.com/training</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://customermindiq.com/blog</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
-  
+
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://customermindiq.com/privacy</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://customermindiq.com/terms</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Dashboard & App Pages (authenticated) -->
+  <url>
+    <loc>https://customermindiq.com/dashboard</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+
   <!-- Affiliate Program -->
   <url>
     <loc>https://customermindiq.com/affiliates</loc>
-    <lastmod>2024-12-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Legal Documents -->
-  <url>
-    <loc>https://customermindiq.com/legal#privacy</loc>
-    <lastmod>2024-12-12</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  
-  <url>
-    <loc>https://customermindiq.com/legal#terms</loc>
-    <lastmod>2024-12-12</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  
-  <!-- Training Manuals -->
-  <url>
-    <loc>https://customermindiq.com/admin-training-manual.html</loc>
-    <lastmod>2024-12-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://customermindiq.com/quick-start-guide.html</loc>
-    <lastmod>2024-12-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://customermindiq.com/complete-training-manual.html</loc>
-    <lastmod>2024-12-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <!-- Affiliate Landing Pages -->
-  <url>
-    <loc>https://customermindiq.com/affiliate-branded-demo.html</loc>
-    <lastmod>2024-12-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://customermindiq.com/affiliate-banners.html</loc>
-    <lastmod>2024-12-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://customermindiq.com/affiliate-forms-demo.html</loc>
-    <lastmod>2024-12-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://customermindiq.com/affiliate-video.html</loc>
-    <lastmod>2024-12-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <!-- Landing Page -->
-  <url>
-    <loc>https://customermindiq.com/landing.html</loc>
-    <lastmod>2024-12-12</lastmod>
+    <lastmod>2025-09-14</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Training Videos -->
-  <url>
-    <loc>https://customermindiq.com/training-videos.html</loc>
-    <lastmod>2024-12-12</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-  
+
+  <!-- Use Cases & Industries -->
+  <url>
+    <loc>https://customermindiq.com/use-cases/saas</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://customermindiq.com/use-cases/ecommerce</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://customermindiq.com/use-cases/agency</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://customermindiq.com/use-cases/enterprise</loc>
+    <lastmod>2025-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
