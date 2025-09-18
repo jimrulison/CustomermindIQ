@@ -190,12 +190,12 @@ app.mount("/static", StaticFiles(directory="/app/backend/static"), name="static"
 
 @app.get("/api/admin/api-documentation")
 async def serve_api_documentation(current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))):
-    """Serve API Documentation (Scale & White Label tiers only)"""
-    # Check if user has Scale or White Label tier
-    if current_user.subscription_tier not in ["scale", "white_label", "annual"]:
+    """Serve API Documentation (Scale tier only)"""
+    # Check if user has Scale tier
+    if current_user.subscription_tier not in ["scale", "annual"]:
         raise HTTPException(
             status_code=403, 
-            detail="API Documentation is only available for Scale and White Label tier subscribers"
+            detail="API Documentation is only available for Scale tier subscribers"
         )
     
     # Create comprehensive API documentation
