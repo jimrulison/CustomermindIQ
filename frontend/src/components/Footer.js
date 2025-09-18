@@ -108,9 +108,14 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">
-              © {currentYear} Fancy Free Living LLC. All rights reserved.
-            </p>
+            <div className="text-center md:text-left">
+              <p className="text-gray-400 text-sm font-medium">
+                © {currentYear} Fancy Free Living LLC. All rights reserved.
+              </p>
+              <p className="text-gray-500 text-xs mt-1">
+                Customer Mind IQ™ is a trademark of Fancy Free Living LLC
+              </p>
+            </div>
             <div className="flex items-center space-x-6 mt-4 md:mt-0">
               <p className="text-gray-400 text-sm">
                 Made with ❤️ for better customer relationships
