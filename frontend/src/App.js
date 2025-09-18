@@ -44,6 +44,9 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import SignIn from './components/SignIn';
 import OverageApproval from './components/OverageApproval';
 import Header from './components/Header';
+import Footer from './components/Footer';
+import ContactPage from './components/ContactPage';
+import NotFound from './components/NotFound';
 import SchemaMarkup from './components/SchemaMarkup';
 import BreadcrumbSchema from './components/BreadcrumbSchema';
 
