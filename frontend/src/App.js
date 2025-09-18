@@ -98,11 +98,7 @@ const AffiliateAuth = React.lazy(() => import('./components/AffiliateAuth'));
 const LegalDocuments = React.lazy(() => import('./components/LegalDocuments'));
 const Footer = React.lazy(() => import('./components/Footer'));
 
-// Lazy load new components
-const PrivacyPolicy = React.lazy(() => import('./components/PrivacyPolicy'));
-const TermsOfService = React.lazy(() => import('./components/TermsOfService'));
-const Contact = React.lazy(() => import('./components/Contact'));
-const CookieConsent = React.lazy(() => import('./components/CookieConsent'));
+//
 
 // Missing components - commented out to fix build
 // const UniversalIntelligenceDashboard = React.lazy(() => import('./components/UniversalIntelligenceDashboard'));
