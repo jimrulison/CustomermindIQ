@@ -243,15 +243,15 @@ const CookieConsent = () => {
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <Icon className="h-5 w-5 text-blue-600" />
-                          <h4 className="font-medium text-gray-900">{category.name}</h4>
+                          <Icon className="h-5 w-5 text-blue-600" aria-hidden="true" />
+                          <h4 id={`${category.id}-name`} className="font-medium text-gray-900">{category.name}</h4>
                           {category.required && (
                             <span className="px-2 py-1 text-xs font-medium text-blue-700 bg-blue-100 rounded-full">
                               Required
                             </span>
                           )}
                         </div>
-                        <p className="text-sm text-gray-600 mb-2">{category.description}</p>
+                        <p id={`${category.id}-description`} className="text-sm text-gray-600 mb-2">{category.description}</p>
                         <p className="text-xs text-gray-500">
                           <strong>Examples:</strong> {category.examples}
                         </p>
