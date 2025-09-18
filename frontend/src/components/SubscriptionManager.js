@@ -521,9 +521,8 @@ Your request will be handled by our admin team within 2 hours.`);
             const isCurrentPlan = currentSubscription?.plan_type === planId;
             const isUpgrade = currentSubscription && (
               (currentSubscription.plan_type === 'free' && planId !== 'free') ||
-              (currentSubscription.plan_type === 'launch' && ['growth', 'scale', 'white_label', 'custom'].includes(planId)) ||
-              (currentSubscription.plan_type === 'growth' && ['scale', 'white_label', 'custom'].includes(planId)) ||
-              (currentSubscription.plan_type === 'scale' && ['white_label', 'custom'].includes(planId))
+              (currentSubscription.plan_type === 'launch' && ['growth', 'scale'].includes(planId)) ||
+              (currentSubscription.plan_type === 'growth' && ['scale'].includes(planId))
             );
 
             return (
