@@ -156,8 +156,7 @@ const SignIn = ({ onSignIn }) => {
         setSubscriptionPlans({
           launch: { name: 'Launch Plan', monthly_price: 49, annual_price: 490 },
           growth: { name: 'Growth Plan', monthly_price: 75, annual_price: 750, most_popular: true },
-          scale: { name: 'Scale Plan', monthly_price: 199, annual_price: 1990 },
-          custom: { name: 'Custom Plan', monthly_price: 'contact_sales' }
+          scale: { name: 'Scale Plan', monthly_price: 199, annual_price: 1990 }
         });
       }
     } catch (error) {
