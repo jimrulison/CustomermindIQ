@@ -93,38 +93,6 @@ SUBSCRIPTION_PLANS = {
             "Priority support - Live chat when available, 4hr support response time",
             "Growth Acceleration Engine (Annual Only)"
         ]
-    },
-    "white_label": {
-        "name": "White Label Plan",
-        "description": "Custom white-label solution for agencies and resellers",
-        "monthly_price": "contact_sales",
-        "annual_price": "contact_sales",
-        "contact_required": True,
-        "features": [
-            "Everything in the Scale Plan",
-            "White-label branding",
-            "Custom domain support",
-            "Reseller dashboard",
-            "Custom pricing controls",
-            "Dedicated account manager",
-            "Growth Acceleration Engine (Annual Only)"
-        ]
-    },
-    "custom": {
-        "name": "Custom Plan",
-        "description": "Tailored solution built specifically for your unique business needs",
-        "monthly_price": "contact_sales",
-        "annual_price": "contact_sales",
-        "contact_required": True,
-        "features": [
-            "Custom feature development",
-            "Dedicated IT support team",
-            "Custom integrations",
-            "Service level agreements",
-            "Priority feature requests",
-            "Custom pricing and terms",
-            "Growth Acceleration Engine (Annual Only)"
-        ]
     }
 }
 
