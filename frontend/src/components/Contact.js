@@ -84,11 +84,14 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <Helmet>
-        <title>Contact Us - Customer Mind IQ</title>
-        <meta name="description" content="Get in touch with Customer Mind IQ. Contact our team for support, sales inquiries, or general questions about our AI-powered customer intelligence platform." />
-        <meta name="robots" content="index, follow" />
-      </Helmet>
+      <SEOHead 
+        title={seoData.title}
+        description={seoData.description}
+        keywords={seoData.keywords}
+        canonicalUrl={seoData.canonicalUrl}
+        structuredData={seoData.structuredData}
+        pageType="website"
+      />
       
       <div className="max-w-7xl mx-auto">
         {/* Header */}
