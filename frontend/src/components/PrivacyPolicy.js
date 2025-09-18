@@ -1,14 +1,49 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEOHead from './SEOHead';
 
 const PrivacyPolicy = () => {
+  const seoData = {
+    title: "Privacy Policy - Customer Mind IQ | Data Protection & Security Compliance",
+    description: "Comprehensive privacy policy for Customer Mind IQ platform. Learn how we protect your data with enterprise-grade security, GDPR compliance, and transparent data practices. Your privacy is our priority.",
+    keywords: "privacy policy, data protection, GDPR compliance, customer data security, AI platform privacy, business intelligence privacy, data processing agreement, customer intelligence privacy, enterprise data security, privacy compliance",
+    canonicalUrl: "https://customermindiq.com/privacy-policy",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Privacy Policy - Customer Mind IQ",
+      "description": "Privacy policy and data protection information for Customer Mind IQ platform",
+      "url": "https://customermindiq.com/privacy-policy",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Customer Mind IQ",
+        "url": "https://customermindiq.com"
+      },
+      "lastReviewed": new Date().toISOString().split('T')[0],
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fancy Free Living LLC",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "7901 4th St N STE 300",
+          "addressLocality": "St. Petersburg",
+          "addressRegion": "FL",
+          "postalCode": "33702",
+          "addressCountry": "US"
+        }
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <Helmet>
-        <title>Privacy Policy - Customer Mind IQ</title>
-        <meta name="description" content="Privacy Policy for Customer Mind IQ platform. Learn how we collect, use, and protect your personal information." />
-        <meta name="robots" content="index, follow" />
-      </Helmet>
+      <SEOHead 
+        title={seoData.title}
+        description={seoData.description}
+        keywords={seoData.keywords}
+        canonicalUrl={seoData.canonicalUrl}
+        structuredData={seoData.structuredData}
+        pageType="article"
+      />
       
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Privacy Policy</h1>
