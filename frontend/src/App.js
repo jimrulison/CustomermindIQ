@@ -104,6 +104,7 @@ const PrivacyPolicy = React.lazy(() => import('./components/PrivacyPolicy'));
 const TermsOfService = React.lazy(() => import('./components/TermsOfService'));
 const Contact = React.lazy(() => import('./components/Contact'));
 const CookieConsent = React.lazy(() => import('./components/CookieConsent'));
+const SkipNavigation = React.lazy(() => import('./components/SkipNavigation'));
 
 // Missing components - commented out to fix build
 // const UniversalIntelligenceDashboard = React.lazy(() => import('./components/UniversalIntelligenceDashboard'));
