@@ -194,17 +194,22 @@ async def create_subscription(
     request: Request,
     current_user: dict = Depends(get_current_user)
 ):
-    """Create new subscription with Stripe"""
+    """Create new subscription with Stripe (convert from trial)"""
     db = request.state.db
     
+    # Determine the actual plan ID based on founders pricing
+    actual_plan_id = subscription_data.plan_id
+    if subscription_data.use_founders_pricing and current_user.get("founders_eligible", True):
+        actual_plan_id = f"{subscription_data.plan_id}_founders"
+    
     # Validate plan
-    if subscription_data.plan_id not in PRICING_PLANS:
+    if actual_plan_id not in PRICING_PLANS:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Invalid pricing plan"
         )
     
-    plan = PRICING_PLANS[subscription_data.plan_id]
+    plan = PRICING_PLANS[actual_plan_id]
     
     # Calculate price based on billing cycle
     if subscription_data.billing_cycle == "monthly":
@@ -235,12 +240,13 @@ async def create_subscription(
                 name=current_user.get("full_name", ""),
                 metadata={
                     "user_id": current_user["id"],
-                    "company": current_user.get("company_name", "")
+                    "company": current_user.get("company_name", ""),
+                    "founders_pricing": str(subscription_data.use_founders_pricing)
                 }
             )
         
         # Create price object if not exists
-        price_id = f"price_{subscription_data.plan_id}_{subscription_data.billing_cycle}"
+        price_id = f"price_{actual_plan_id}_{subscription_data.billing_cycle}"
         
         try:
             price = stripe.Price.retrieve(price_id)
@@ -254,43 +260,70 @@ async def create_subscription(
                     "name": plan.name,
                     "description": plan.description
                 },
-                metadata={"plan_id": subscription_data.plan_id}
+                metadata={"plan_id": actual_plan_id}
             )
         
+        # For trial users, add trial period to subscription
+        trial_period_days = None
+        if current_user.get("subscription_status") == "trial":
+            # Calculate remaining trial days
+            trial_end = current_user.get("trial_end_date")
+            if trial_end and trial_end > datetime.now(timezone.utc):
+                remaining_days = (trial_end - datetime.now(timezone.utc)).days
+                trial_period_days = max(1, remaining_days)  # At least 1 day
+        
         # Create subscription
-        stripe_subscription = stripe.Subscription.create(
-            customer=stripe_customer.id,
-            items=[{"price": price.id}],
-            payment_behavior="default_incomplete",
-            payment_settings={"save_default_payment_method": "on_subscription"},
-            expand=["latest_invoice.payment_intent"],
-            metadata={
+        subscription_params = {
+            "customer": stripe_customer.id,
+            "items": [{"price": price.id}],
+            "payment_behavior": "default_incomplete",
+            "payment_settings": {"save_default_payment_method": "on_subscription"},
+            "expand": ["latest_invoice.payment_intent"],
+            "metadata": {
                 "user_id": current_user["id"],
-                "plan_id": subscription_data.plan_id,
-                "billing_cycle": subscription_data.billing_cycle
+                "plan_id": actual_plan_id,
+                "billing_cycle": subscription_data.billing_cycle,
+                "founders_pricing": str(subscription_data.use_founders_pricing)
             }
-        )
+        }
+        
+        # Add trial period if applicable
+        if trial_period_days:
+            subscription_params["trial_period_days"] = trial_period_days
+        
+        stripe_subscription = stripe.Subscription.create(**subscription_params)
         
         # Update user subscription in database
+        update_data = {
+            "subscription_status": "active" if not trial_period_days else "trial_converting",
+            "subscription_plan": actual_plan_id,
+            "stripe_customer_id": stripe_customer.id,
+            "stripe_subscription_id": stripe_subscription.id,
+            "billing_cycle": subscription_data.billing_cycle,
+            "subscription_start": datetime.now(timezone.utc),
+            "subscription_end": datetime.now(timezone.utc) + timedelta(days=30 if interval == "month" else 365),
+            "updated_at": datetime.now(timezone.utc),
+            "founders_pricing_used": subscription_data.use_founders_pricing
+        }
+        
+        # If trial is ending, update trial status
+        if current_user.get("subscription_status") == "trial":
+            update_data["is_trial_active"] = False
+            update_data["trial_converted_date"] = datetime.now(timezone.utc)
+        
         await db.users.update_one(
             {"email": user_email},
-            {
-                "$set": {
-                    "subscription_status": "active",
-                    "subscription_plan": subscription_data.plan_id,
-                    "stripe_customer_id": stripe_customer.id,
-                    "stripe_subscription_id": stripe_subscription.id,
-                    "subscription_start": datetime.now(timezone.utc),
-                    "subscription_end": datetime.now(timezone.utc) + timedelta(days=30 if interval == "month" else 365),
-                    "updated_at": datetime.now(timezone.utc)
-                }
-            }
+            {"$set": update_data}
         )
         
         return {
             "subscription_id": stripe_subscription.id,
             "client_secret": stripe_subscription.latest_invoice.payment_intent.client_secret,
-            "status": stripe_subscription.status
+            "status": stripe_subscription.status,
+            "plan_name": plan.name,
+            "amount": amount,
+            "billing_cycle": subscription_data.billing_cycle,
+            "founders_pricing": subscription_data.use_founders_pricing
         }
         
     except stripe.error.StripeError as e:
