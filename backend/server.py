@@ -444,19 +444,6 @@ async def serve_training_portal():
     )
 
 # Training Materials Download Endpoints (HTML versions for deployment)
-@app.get("/api/download/quick-start-guide")
-async def download_quick_start_guide():
-    """Download Quick Start Guide as HTML"""
-    html_path = "/app/CustomerMind_IQ_Quick_Start_Guide_Professional.html"
-    if not os.path.exists(html_path):
-        raise HTTPException(status_code=404, detail="Quick Start Guide not found")
-    
-    return FileResponse(
-        path=html_path,
-        filename="CustomerMind_IQ_Quick_Start_Guide.html",
-        media_type="text/html",
-        headers={"Content-Disposition": "attachment; filename=CustomerMind_IQ_Quick_Start_Guide.html"}
-    )
 
 @app.get("/api/download/complete-training-manual")
 async def download_complete_manual():
