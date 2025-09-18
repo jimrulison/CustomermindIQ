@@ -150,8 +150,13 @@ const CookieConsent = () => {
 
   return (
     <>
+      <Announcer />
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black bg-opacity-25 z-40" style={{ display: showDetails ? 'block' : 'none' }} />
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-25 z-40" 
+        style={{ display: showDetails ? 'block' : 'none' }}
+        aria-hidden={!showDetails}
+      />
       
       {/* Cookie Banner */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-2xl z-50 transform transition-transform duration-300">
