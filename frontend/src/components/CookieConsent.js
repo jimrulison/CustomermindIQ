@@ -265,6 +265,8 @@ const CookieConsent = () => {
                             onChange={(e) => handleConsentChange(category.id, e.target.checked)}
                             disabled={category.required}
                             className="sr-only peer"
+                            aria-describedby={`${category.id}-description`}
+                            aria-labelledby={`${category.id}-name`}
                           />
                           <div className={`relative w-11 h-6 rounded-full transition-colors ${
                             category.required 
@@ -277,6 +279,9 @@ const CookieConsent = () => {
                               isEnabled ? 'translate-x-5' : 'translate-x-0'
                             }`} />
                           </div>
+                          <span className="sr-only">
+                            {category.required ? 'Required - cannot be disabled' : isEnabled ? 'Enabled' : 'Disabled'}
+                          </span>
                         </label>
                       </div>
                     </div>
