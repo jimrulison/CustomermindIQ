@@ -183,21 +183,24 @@ const CookieConsent = () => {
               
               <div className="flex flex-col sm:flex-row gap-3 min-w-max">
                 <button
-                  onClick={() => setShowDetails(true)}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                  onClick={handleShowDetails}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  aria-describedby="cookie-banner-description"
                 >
-                  <Settings className="h-4 w-4 inline mr-2" />
+                  <Settings className="h-4 w-4 inline mr-2" aria-hidden="true" />
                   Customize
                 </button>
                 <button
                   onClick={handleRejectAll}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  aria-describedby="cookie-banner-description"
                 >
                   Reject All
                 </button>
                 <button
                   onClick={handleAcceptAll}
-                  className="px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+                  className="px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  aria-describedby="cookie-banner-description"
                 >
                   Accept All
                 </button>
