@@ -14,6 +14,8 @@ Allow: /pricing
 Allow: /features
 Allow: /about
 Allow: /contact
+Allow: /privacy-policy
+Allow: /terms-of-service
 Allow: /support
 Allow: /blog/
 Allow: /integrations
