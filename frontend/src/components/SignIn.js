@@ -467,8 +467,6 @@ const SignIn = ({ onSignIn }) => {
                                 {planId === 'launch' && '5 websites • 50 keywords • Basic analytics'}
                                 {planId === 'growth' && '10 websites • 200 keywords • Full analytics'}
                                 {planId === 'scale' && 'Unlimited • Advanced features • Priority support'}
-                                {planId === 'white_label' && 'White-label branding • Reseller dashboard'}
-                                {planId === 'custom' && 'Custom features • Dedicated IT support'}
                               </p>
                               {typeof plan.annual_price === 'number' && (
                                 <span className="text-xs text-green-300">
