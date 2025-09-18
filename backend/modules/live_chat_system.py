@@ -168,7 +168,7 @@ def require_premium_chat_access(current_user: UserProfile = Depends(get_current_
     if not has_premium_chat_access(current_user):
         raise HTTPException(
             status_code=403,
-            detail="Live Chat is available for Growth, Scale, White Label, and Custom plan subscribers only. Upgrade your subscription to access premium support features."
+            detail="Live Chat is available for Growth and Scale plan subscribers only. Upgrade your subscription to access premium support features."
         )
     return current_user
 
