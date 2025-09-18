@@ -209,18 +209,26 @@ const CookieConsent = () => {
           </div>
         ) : (
           // Detailed preferences view
-          <div className="max-w-4xl mx-auto px-4 py-6 max-h-[80vh] overflow-y-auto">
+          <div 
+            ref={detailsRef}
+            className="max-w-4xl mx-auto px-4 py-6 max-h-[80vh] overflow-y-auto"
+            tabIndex={-1}
+            role="dialog"
+            aria-labelledby="cookie-preferences-title"
+            aria-describedby="cookie-preferences-description"
+          >
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-semibold text-gray-900">Cookie Preferences</h3>
+              <h3 id="cookie-preferences-title" className="text-xl font-semibold text-gray-900">Cookie Preferences</h3>
               <button
-                onClick={() => setShowDetails(false)}
-                className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                onClick={handleHideDetails}
+                className="p-2 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg"
+                aria-label="Close cookie preferences dialog"
               >
-                <X className="h-5 w-5" />
+                <X className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
             
-            <p className="text-gray-600 mb-6">
+            <p id="cookie-preferences-description" className="text-gray-600 mb-6">
               We respect your privacy. Please choose which types of cookies you want to allow. 
               These settings will only apply to this browser and device.
             </p>
