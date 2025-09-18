@@ -336,6 +336,98 @@ async def send_chat_message(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to send message: {str(e)}")
 
+@router.get("/chat/sessions")
+async def get_user_chat_sessions(
+    current_user: UserProfile = Depends(require_premium_chat_access)
+):
+    """Get chat sessions for the current user"""
+    try:
+        sessions = await db.chat_sessions.find({
+            "user_id": current_user.user_id
+        }).sort("created_at", -1).to_list(length=50)
+        
+        # Remove ObjectIds and format sessions
+        for session in sessions:
+            if "_id" in session:
+                del session["_id"]
+            
+            # Get latest message preview
+            latest_message = await db.chat_messages.find_one(
+                {"session_id": session["session_id"]},
+                sort=[("timestamp", -1)]
+            )
+            
+            if latest_message:
+                if "_id" in latest_message:
+                    del latest_message["_id"]
+                session["latest_message"] = latest_message
+            else:
+                session["latest_message"] = None
+        
+        return {
+            "status": "success",
+            "sessions": sessions,
+            "total": len(sessions)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get chat sessions: {str(e)}")
+
+@router.get("/admin/chat/sessions")
+async def get_admin_chat_sessions(
+    status: str = None,
+    limit: int = 50,
+    offset: int = 0,
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
+):
+    """Get chat sessions for admin management"""
+    try:
+        query = {}
+        if status:
+            query["status"] = status
+            
+        sessions = await db.chat_sessions.find(query).sort("created_at", -1).skip(offset).limit(limit).to_list(length=limit)
+        total = await db.chat_sessions.count_documents(query)
+        
+        # Remove ObjectIds and enrich sessions
+        for session in sessions:
+            if "_id" in session:
+                del session["_id"]
+            
+            # Get user info
+            user = await db.users.find_one({"user_id": session["user_id"]})
+            if user:
+                session["user_info"] = {
+                    "name": f"{user.get('first_name', '')} {user.get('last_name', '')}".strip(),
+                    "email": user.get("email"),
+                    "subscription_tier": user.get("subscription_tier")
+                }
+            
+            # Get message count
+            message_count = await db.chat_messages.count_documents({"session_id": session["session_id"]})
+            session["message_count"] = message_count
+            
+            # Get latest message
+            latest_message = await db.chat_messages.find_one(
+                {"session_id": session["session_id"]},
+                sort=[("timestamp", -1)]
+            )
+            if latest_message:
+                if "_id" in latest_message:
+                    del latest_message["_id"]
+                session["latest_message"] = latest_message
+        
+        return {
+            "status": "success",
+            "sessions": sessions,
+            "total": total,
+            "limit": limit,
+            "offset": offset
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get admin chat sessions: {str(e)}")
+
 @router.get("/chat/messages/{session_id}")
 async def get_chat_messages(
     session_id: str,
