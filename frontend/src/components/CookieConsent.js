@@ -159,7 +159,13 @@ const CookieConsent = () => {
       />
       
       {/* Cookie Banner */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-2xl z-50 transform transition-transform duration-300">
+      <section 
+        className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-2xl z-50 transform transition-transform duration-300"
+        role="dialog"
+        aria-modal={showDetails}
+        aria-labelledby="cookie-banner-title"
+        aria-describedby="cookie-banner-description"
+      >
         {!showDetails ? (
           // Simple banner view
           <div className="max-w-7xl mx-auto px-4 py-6">
