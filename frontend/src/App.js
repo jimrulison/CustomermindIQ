@@ -3354,11 +3354,7 @@ Click "Pursue" in Expansion Opportunities to initiate outreach!`)}
   );
 }
 
-// Lazy load new components
-const PrivacyPolicy = React.lazy(() => import('./components/PrivacyPolicy'));
-const TermsOfService = React.lazy(() => import('./components/TermsOfService'));
-const Contact = React.lazy(() => import('./components/Contact'));
-const CookieConsent = React.lazy(() => import('./components/CookieConsent'));
+//
 
 // Main App component wrapped with AuthProvider and Router
 function App() {
