@@ -10,7 +10,7 @@ import json
 import aiofiles
 import mimetypes
 from pathlib import Path
-from auth.auth_system import get_current_user, UserProfile
+from auth.auth_system import get_current_user, UserProfile, require_role, UserRole
 from dotenv import load_dotenv
 
 # Load environment variables
