@@ -131,17 +131,25 @@
 
   <!-- Legal Pages -->
   <url>
-    <loc>https://customermindiq.com/privacy</loc>
-    <lastmod>2025-09-14</lastmod>
+    <loc>https://customermindiq.com/privacy-policy</loc>
+    <lastmod>2025-09-18</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.4</priority>
   </url>
 
   <url>
-    <loc>https://customermindiq.com/terms</loc>
-    <lastmod>2025-09-14</lastmod>
+    <loc>https://customermindiq.com/terms-of-service</loc>
+    <lastmod>2025-09-18</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.4</priority>
+  </url>
+
+  <!-- Contact Page -->
+  <url>
+    <loc>https://customermindiq.com/contact</loc>
+    <lastmod>2025-09-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
   <!-- Dashboard & App Pages (authenticated) -->
