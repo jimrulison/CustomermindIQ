@@ -69,6 +69,11 @@ const PrivacyPolicy = () => {
         pageType="article"
       />
       
+      <FAQSchema 
+        faqs={privacyFAQs} 
+        pageTitle="Privacy Policy - Customer Mind IQ FAQ" 
+      />
+      
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Privacy Policy</h1>
         <p className="text-sm text-gray-600 mb-8">Last updated: {new Date().toLocaleDateString()}</p>
