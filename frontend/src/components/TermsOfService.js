@@ -1,14 +1,49 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEOHead from './SEOHead';
 
 const TermsOfService = () => {
+  const seoData = {
+    title: "Terms of Service - Customer Mind IQ | Legal Agreement & Service Conditions",
+    description: "Complete terms of service for Customer Mind IQ AI-powered customer intelligence platform. Understand your rights, service levels, subscription terms, and legal agreement for our business analytics software.",
+    keywords: "terms of service, legal agreement, service conditions, SaaS terms, customer intelligence terms, AI platform agreement, business intelligence legal, software service agreement, subscription terms, platform legal terms",
+    canonicalUrl: "https://customermindiq.com/terms-of-service",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Terms of Service - Customer Mind IQ",
+      "description": "Terms of service and legal agreement for Customer Mind IQ platform",
+      "url": "https://customermindiq.com/terms-of-service",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Customer Mind IQ",
+        "url": "https://customermindiq.com"
+      },
+      "lastReviewed": new Date().toISOString().split('T')[0],
+      "publisher": {
+        "@type": "Organization",
+        "name": "Fancy Free Living LLC",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "7901 4th St N STE 300",
+          "addressLocality": "St. Petersburg",
+          "addressRegion": "FL",
+          "postalCode": "33702",
+          "addressCountry": "US"
+        }
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <Helmet>
-        <title>Terms of Service - Customer Mind IQ</title>
-        <meta name="description" content="Terms of Service for Customer Mind IQ platform. Learn about the terms and conditions of using our services." />
-        <meta name="robots" content="index, follow" />
-      </Helmet>
+      <SEOHead 
+        title={seoData.title}
+        description={seoData.description}
+        keywords={seoData.keywords}
+        canonicalUrl={seoData.canonicalUrl}
+        structuredData={seoData.structuredData}
+        pageType="article"
+      />
       
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Terms of Service</h1>
