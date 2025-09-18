@@ -739,7 +739,7 @@ async def upgrade_subscription(upgrade_data: dict):
         current_cycle = user.get("billing_cycle", "monthly")
         
         # Validate upgrade path
-        plan_hierarchy = ["launch", "growth", "scale", "white_label", "custom"]
+        plan_hierarchy = ["launch", "growth", "scale"]
         current_idx = plan_hierarchy.index(current_plan) if current_plan in plan_hierarchy else 0
         new_idx = plan_hierarchy.index(new_plan_type) if new_plan_type in plan_hierarchy else 0
         
