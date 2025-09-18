@@ -97,11 +97,6 @@ const SubscriptionManager = () => {
           name: 'Scale', 
           price: 99,
           features: ['Premium analytics', '25 users', 'Priority support', 'Advanced integrations']
-        },
-        'custom': {
-          name: 'Custom',
-          price: 'Contact us',
-          features: ['Scale features', 'Unlimited users', 'Dedicated support', 'Custom integrations']
         }
       });
       
