@@ -3362,44 +3362,46 @@ Click "Pursue" in Expansion Opportunities to initiate outreach!`)}
 
 function App() {
   return (
-    <Router>
-      <AuthProvider>
-        <Routes>
-          <Route path="/privacy-policy" element={
-            <Suspense fallback={<LoadingSpinner />}>
-              <PrivacyPolicy />
-            </Suspense>
-          } />
-          <Route path="/terms-of-service" element={
-            <Suspense fallback={<LoadingSpinner />}>
-              <TermsOfService />
-            </Suspense>
-          } />
-          <Route path="/contact" element={
-            <Suspense fallback={<LoadingSpinner />}>
-              <Contact />
-            </Suspense>
-          } />
-          <Route path="/404" element={
-            <Suspense fallback={<LoadingSpinner />}>
-              <NotFound />
-            </Suspense>
-          } />
-          <Route path="/*" element={
-            <>
-              <AppContent />
-              <CookieConsent />
-            </>
-          } />
-          {/* Catch-all route for 404 */}
-          <Route path="*" element={
-            <Suspense fallback={<LoadingSpinner />}>
-              <NotFound />
-            </Suspense>
-          } />
-        </Routes>
-      </AuthProvider>
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <AuthProvider>
+          <Routes>
+            <Route path="/privacy-policy" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <PrivacyPolicy />
+              </Suspense>
+            } />
+            <Route path="/terms-of-service" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <TermsOfService />
+              </Suspense>
+            } />
+            <Route path="/contact" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <Contact />
+              </Suspense>
+            } />
+            <Route path="/404" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <NotFound />
+              </Suspense>
+            } />
+            <Route path="/*" element={
+              <>
+                <AppContent />
+                <CookieConsent />
+              </>
+            } />
+            {/* Catch-all route for 404 */}
+            <Route path="*" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <NotFound />
+              </Suspense>
+            } />
+          </Routes>
+        </AuthProvider>
+      </Router>
+    </HelmetProvider>
   );
 }
 
