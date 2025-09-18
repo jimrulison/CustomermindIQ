@@ -74,8 +74,8 @@ const CookieConsent = () => {
 
   const initializeAnalytics = () => {
     // Initialize Google Analytics or other analytics tools
-    if (typeof gtag !== 'undefined') {
-      gtag('consent', 'update', {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('consent', 'update', {
         'analytics_storage': 'granted',
         'ad_storage': consent.marketing ? 'granted' : 'denied'
       });
