@@ -196,38 +196,6 @@ SUBSCRIPTION_FEATURES = {
         "regular_monthly_price": 399,
         "regular_annual_price": 3990,
         "annual_savings_months": 2
-    },
-    "white_label": {
-        "name": "White Label Plan",
-        "description": "Custom white-label solution for agencies and resellers",
-        "features": [
-            "Everything in the Scale Plan",
-            "White-label branding",
-            "Custom domain support",
-            "Reseller dashboard",
-            "Custom pricing controls",
-            "Dedicated account manager"
-        ],
-        "growth_acceleration_access": True,
-        "monthly_price": "contact_sales",
-        "annual_price": "contact_sales",
-        "contact_required": True
-    },
-    "custom": {
-        "name": "Custom Plan",
-        "description": "Tailored solution built specifically for your unique business needs",
-        "features": [
-            "Custom feature development",
-            "Dedicated IT support team",
-            "Custom integrations",
-            "Service level agreements",
-            "Priority feature requests",
-            "Custom pricing and terms"
-        ],
-        "growth_acceleration_access": True,
-        "monthly_price": "contact_sales",
-        "annual_price": "contact_sales", 
-        "contact_required": True
     }
 }
 
