@@ -52,49 +52,114 @@ PRICING_PLANS = {
         id="growth_starter",
         name="Growth Starter",
         description="Perfect for small businesses starting their growth journey",
-        monthly_price=9700,  # $97
-        annual_price=97000,  # $970 (2 months free)
+        monthly_price=13900,  # $139
+        annual_price=139000,  # $1,390 (12 months for price of 10)
         features=[
             "Basic growth insights",
-            "3 key metrics tracking",
+            "3 key metrics tracking", 
             "Monthly reports",
             "Email support",
-            "Growth opportunity scanner"
+            "Growth opportunity scanner",
+            "Revenue leak detection",
+            "7-day free trial"
         ]
     ),
     "growth_professional": PricingPlan(
-        id="growth_professional",
+        id="growth_professional", 
         name="Growth Professional",
         description="Complete growth acceleration suite for growing businesses",
-        monthly_price=19700,  # $197
-        annual_price=197000,  # $1,970 (2 months free)
+        monthly_price=24900,  # $249
+        annual_price=247000,  # $2,470 (12 months for price of 10)
         features=[
+            "Everything in Growth Starter",
             "Full Growth Acceleration suite",
             "Unlimited metrics tracking",
             "Weekly AI insights",
-            "Advanced predictions",
+            "Advanced predictions", 
             "A/B testing automation",
-            "Revenue leak detection",
             "ROI calculator",
-            "Priority support"
+            "Priority support",
+            "Custom growth strategies",
+            "7-day free trial"
         ],
         is_popular=True
     ),
     "growth_enterprise": PricingPlan(
         id="growth_enterprise",
-        name="Growth Enterprise",
+        name="Growth Enterprise", 
         description="Advanced growth optimization for scaling businesses",
-        monthly_price=39700,  # $397
-        annual_price=397000,  # $3,970 (2 months free)
+        monthly_price=44900,  # $449
+        annual_price=449000,  # $4,490 (12 months for price of 10)
         features=[
             "Everything in Professional",
-            "Custom growth strategies",
             "Real-time optimization",
             "Dedicated account manager",
             "Custom integrations",
             "White-label options",
             "Phone + email support",
-            "Custom reporting"
+            "Custom reporting",
+            "Advanced API access",
+            "Multi-team collaboration",
+            "7-day free trial"
+        ]
+    ),
+    # Founders Pricing (50% off)
+    "growth_starter_founders": PricingPlan(
+        id="growth_starter_founders",
+        name="Growth Starter - Founders",
+        description="Perfect for small businesses starting their growth journey (FOUNDERS PRICE - 50% OFF)",
+        monthly_price=11900,  # $119 (50% off $139)
+        annual_price=119000,  # $1,190 (50% off $1,390)
+        features=[
+            "🎉 FOUNDERS PRICE - 50% OFF FOREVER",
+            "Basic growth insights",
+            "3 key metrics tracking",
+            "Monthly reports", 
+            "Email support",
+            "Growth opportunity scanner",
+            "Revenue leak detection",
+            "7-day free trial"
+        ]
+    ),
+    "growth_professional_founders": PricingPlan(
+        id="growth_professional_founders",
+        name="Growth Professional - Founders", 
+        description="Complete growth acceleration suite for growing businesses (FOUNDERS PRICE - 50% OFF)",
+        monthly_price=12400,  # $124 (50% off $249)
+        annual_price=124000,  # $1,240 (50% off $2,470)
+        features=[
+            "🎉 FOUNDERS PRICE - 50% OFF FOREVER",
+            "Everything in Growth Starter",
+            "Full Growth Acceleration suite",
+            "Unlimited metrics tracking",
+            "Weekly AI insights",
+            "Advanced predictions",
+            "A/B testing automation", 
+            "ROI calculator",
+            "Priority support",
+            "Custom growth strategies",
+            "7-day free trial"
+        ],
+        is_popular=True
+    ),
+    "growth_enterprise_founders": PricingPlan(
+        id="growth_enterprise_founders",
+        name="Growth Enterprise - Founders",
+        description="Advanced growth optimization for scaling businesses (FOUNDERS PRICE - 50% OFF)", 
+        monthly_price=22400,  # $224 (50% off $449)
+        annual_price=224000,  # $2,240 (50% off $4,490)
+        features=[
+            "🎉 FOUNDERS PRICE - 50% OFF FOREVER",
+            "Everything in Professional",
+            "Real-time optimization",
+            "Dedicated account manager", 
+            "Custom integrations",
+            "White-label options",
+            "Phone + email support",
+            "Custom reporting",
+            "Advanced API access",
+            "Multi-team collaboration",
+            "7-day free trial"
         ]
     )
 }
