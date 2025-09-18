@@ -3386,7 +3386,7 @@ function App() {
                 <NotFound />
               </Suspense>
             } />
-            <Route path="/*" element={
+            <Route path="/" element={
               <>
                 <AppContent />
                 <CookieConsent />
