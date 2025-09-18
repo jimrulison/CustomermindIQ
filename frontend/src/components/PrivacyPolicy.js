@@ -35,6 +35,29 @@ const PrivacyPolicy = () => {
     }
   };
 
+  const privacyFAQs = [
+    {
+      question: "How does Customer Mind IQ protect my customer data?",
+      answer: "Customer Mind IQ uses enterprise-grade security measures including end-to-end encryption, regular security audits, SOC 2 compliance, and strict access controls. All data is encrypted both in transit and at rest using industry-standard AES-256 encryption."
+    },
+    {
+      question: "Is Customer Mind IQ GDPR compliant?",
+      answer: "Yes, Customer Mind IQ is fully GDPR compliant. We provide data processing agreements, support data subject rights, implement privacy by design, and ensure lawful basis for all data processing activities."
+    },
+    {
+      question: "What personal information does Customer Mind IQ collect?",
+      answer: "We collect only necessary information including contact details, account credentials, usage analytics, and business data you provide. We never collect sensitive personal information without explicit consent."
+    },
+    {
+      question: "Can I delete my data from Customer Mind IQ?",
+      answer: "Yes, you have the right to request deletion of your personal data. Contact us at info@FancyFreeLiving.com to request data deletion, and we will process your request within 30 days."
+    },
+    {
+      question: "Does Customer Mind IQ share data with third parties?",
+      answer: "We only share data with trusted service providers necessary for platform operation, and only under strict data processing agreements. We never sell your data to third parties."
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <SEOHead 
