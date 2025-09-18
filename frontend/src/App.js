@@ -3358,9 +3358,7 @@ Click "Pursue" in Expansion Opportunities to initiate outreach!`)}
   );
 }
 
-//
 
-// Main App component wrapped with AuthProvider and Router
 function App() {
   return (
     <Router>
