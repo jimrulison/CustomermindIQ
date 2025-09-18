@@ -1,5 +1,6 @@
 import React from 'react';
 import SEOHead from './SEOHead';
+import FAQSchema from './FAQSchema';
 
 const PrivacyPolicy = () => {
   const seoData = {
