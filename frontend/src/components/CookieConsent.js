@@ -172,10 +172,10 @@ const CookieConsent = () => {
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <Shield className="h-5 w-5 text-blue-600" />
-                  <h3 className="text-lg font-semibold text-gray-900">Cookie Preferences</h3>
+                  <Shield className="h-5 w-5 text-blue-600" aria-hidden="true" />
+                  <h3 id="cookie-banner-title" className="text-lg font-semibold text-gray-900">Cookie Preferences</h3>
                 </div>
-                <p className="text-gray-600 text-sm">
+                <p id="cookie-banner-description" className="text-gray-600 text-sm">
                   We use cookies to enhance your experience, analyze site usage, and personalize content. 
                   Choose your cookie preferences or accept all to continue.
                 </p>
