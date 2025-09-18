@@ -72,6 +72,25 @@ const CookieConsent = () => {
     if (consent.analytics) {
       initializeAnalytics();
     }
+    
+    announceSuccess('Cookie preferences saved successfully.');
+  };
+
+  const handleShowDetails = () => {
+    setShowDetails(true);
+    announce('Cookie preferences dialog opened. Use Tab to navigate through options.');
+    
+    // Focus the details modal after it opens
+    setTimeout(() => {
+      if (detailsRef.current) {
+        detailsRef.current.focus();
+      }
+    }, 100);
+  };
+
+  const handleHideDetails = () => {
+    setShowDetails(false);
+    announce('Cookie preferences dialog closed.');
   };
 
   const initializeAnalytics = () => {
