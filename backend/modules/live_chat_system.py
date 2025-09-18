@@ -147,10 +147,10 @@ manager = ChatConnectionManager()
 def has_premium_chat_access(user: UserProfile) -> bool:
     """
     Check if user has access to live chat feature
-    Available for: Growth, Scale, White Label, Custom plans only
+    Available for: Growth, Scale plans only
     NOT available for: Free trial, Launch plan
     """
-    premium_tiers = ["growth", "scale", "white_label", "custom"]
+    premium_tiers = ["growth", "scale"]
     
     # Check subscription tier (case-insensitive)
     user_tier = user.subscription_tier.lower() if user.subscription_tier else ""
