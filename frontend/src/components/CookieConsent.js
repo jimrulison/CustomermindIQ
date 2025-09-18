@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Settings, Shield, BarChart3, Target } from 'lucide-react';
+import ScreenReaderAnnouncer, { useScreenReaderAnnouncer } from './ScreenReaderAnnouncer';
 
 const CookieConsent = () => {
   const [showBanner, setShowBanner] = useState(false);
@@ -10,6 +11,9 @@ const CookieConsent = () => {
     marketing: false,
     preferences: false
   });
+
+  const detailsRef = useRef(null);
+  const { announce, announceSuccess, ScreenReaderAnnouncer: Announcer } = useScreenReaderAnnouncer();
 
   useEffect(() => {
     // Check if user has already given consent
