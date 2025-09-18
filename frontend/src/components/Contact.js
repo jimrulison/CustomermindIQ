@@ -274,6 +274,16 @@ const Contact = () => {
             </div>
           </div>
         </div>
+        
+        {/* Copyright Notice */}
+        <div className="mt-12 pt-8 border-t border-gray-200 text-center">
+          <p className="text-gray-600 text-sm font-medium">
+            © {new Date().getFullYear()} Fancy Free Living LLC. All rights reserved.
+          </p>
+          <p className="text-gray-500 text-xs mt-1">
+            Customer Mind IQ™ is a trademark of Fancy Free Living LLC
+          </p>
+        </div>
       </div>
     </div>
   );
