@@ -339,6 +339,65 @@ async def create_subscription(
             detail="Failed to create subscription"
         )
 
+@subscription_router.get("/trial-status", response_model=TrialInfo)
+async def get_trial_status(
+    request: Request,
+    current_user: dict = Depends(get_current_user)
+):
+    """Get current user's trial status"""
+    db = request.state.db
+    
+    user = await db.users.find_one({"email": current_user["email"]})
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+    
+    trial_start = user.get("trial_start_date", datetime.now(timezone.utc))
+    trial_end = user.get("trial_end_date", datetime.now(timezone.utc))
+    is_trial_active = user.get("is_trial_active", False)
+    
+    # Calculate days remaining
+    if is_trial_active and trial_end > datetime.now(timezone.utc):
+        days_remaining = (trial_end - datetime.now(timezone.utc)).days
+    else:
+        days_remaining = 0
+        is_trial_active = False
+    
+    return TrialInfo(
+        is_trial_active=is_trial_active,
+        trial_start_date=trial_start,
+        trial_end_date=trial_end,
+        days_remaining=max(0, days_remaining),
+        trial_plan=user.get("subscription_plan", "growth_professional")
+    )
+
+@subscription_router.get("/founders-eligibility")
+async def check_founders_eligibility(
+    request: Request,
+    current_user: dict = Depends(get_current_user)
+):
+    """Check if user is eligible for founders pricing"""
+    db = request.state.db
+    
+    user = await db.users.find_one({"email": current_user["email"]})
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+    
+    founders_eligible = user.get("founders_eligible", False)
+    already_used = user.get("founders_pricing_used", False)
+    
+    return {
+        "founders_eligible": founders_eligible and not already_used,
+        "founders_pricing_used": already_used,
+        "discount_percentage": 50,
+        "message": "🎉 Limited time: Get 50% off forever with Founders Pricing!" if founders_eligible and not already_used else "Founders pricing not available"
+    }
+
 @subscription_router.get("/current", response_model=Dict[str, Any])
 async def get_current_subscription(
     request: Request,
