@@ -133,11 +133,16 @@ async def register(user_data: UserCreate, request: Request):
         "company_name": user_data.company_name,
         "password_hash": hashed_password,
         "subscription_status": "trial",
-        "subscription_plan": "growth_professional",
-        "trial_end_date": datetime.now(timezone.utc) + timedelta(days=7),
+        "subscription_plan": "growth_professional",  # Default to Professional during trial
+        "trial_start_date": datetime.now(timezone.utc),
+        "trial_end_date": datetime.now(timezone.utc) + timedelta(days=7),  # 7-day free trial
+        "is_trial_active": True,
         "created_at": datetime.now(timezone.utc),
         "updated_at": datetime.now(timezone.utc),
-        "is_active": True
+        "is_active": True,
+        # Track which pricing tier they'll choose after trial
+        "intended_plan": "growth_professional",  # Can be updated when they choose
+        "founders_eligible": True  # New users are eligible for founders pricing
     }
     
     # Insert user
