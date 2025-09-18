@@ -58,6 +58,8 @@ const CookieConsent = () => {
     localStorage.setItem('cookieConsentDate', new Date().toISOString());
     setShowBanner(false);
     setShowDetails(false);
+    
+    announceSuccess('Essential cookies only. Your preferences have been saved.');
   };
 
   const handleSavePreferences = () => {
