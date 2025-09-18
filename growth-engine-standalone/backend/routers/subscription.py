@@ -35,6 +35,14 @@ class SubscriptionCreate(BaseModel):
     plan_id: str
     billing_cycle: str  # "monthly" or "annual"
     payment_method_id: str
+    use_founders_pricing: bool = False  # Whether to use founders pricing
+
+class TrialInfo(BaseModel):
+    is_trial_active: bool
+    trial_start_date: datetime
+    trial_end_date: datetime
+    days_remaining: int
+    trial_plan: str
 
 class SubscriptionResponse(BaseModel):
     id: str
