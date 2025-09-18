@@ -224,6 +224,35 @@ export const seoData = {
         "name": "CustomerMind IQ"
       }
     }
+  },
+  
+  // Legal pages SEO data
+  privacyPolicy: {
+    title: "Privacy Policy - Customer Mind IQ | Enterprise Data Security & GDPR Compliance",
+    description: "Comprehensive privacy policy for Customer Mind IQ's AI customer intelligence platform. Enterprise-grade data security, GDPR compliance, and transparent data practices. Your customer data privacy is our top priority.",
+    keywords: "privacy policy customer intelligence, GDPR compliance AI platform, data protection customer analytics, enterprise data security, business intelligence privacy, customer data processing agreement, AI platform data privacy, SaaS privacy compliance",
+    canonicalUrl: "https://customermindiq.com/privacy-policy"
+  },
+  
+  termsOfService: {
+    title: "Terms of Service - Customer Mind IQ | SaaS Legal Agreement & Service Level",
+    description: "Complete terms of service for Customer Mind IQ AI platform. Understand service levels, subscription terms, and legal agreement for our customer intelligence software. Enterprise-grade SaaS terms.",
+    keywords: "terms of service customer intelligence, SaaS legal agreement, AI platform terms, customer analytics service agreement, business intelligence terms, software service level agreement, enterprise SaaS terms",
+    canonicalUrl: "https://customermindiq.com/terms-of-service"
+  },
+  
+  contact: {
+    title: "Contact Customer Mind IQ - Expert Support & Sales | St. Petersburg, Florida",
+    description: "Contact Customer Mind IQ for expert support, sales inquiries, and product demos. Based in St. Petersburg, FL. Get personalized assistance for AI customer intelligence solutions. Response within 24 hours guaranteed.",
+    keywords: "contact customer mind iq, customer intelligence support, AI platform sales, product demo request, St. Petersburg Florida business, customer analytics expert support, enterprise sales inquiry",
+    canonicalUrl: "https://customermindiq.com/contact"
+  },
+
+  support: {
+    title: "Support Center - Customer Mind IQ | Help Documentation & Expert Assistance",
+    description: "Get expert support for Customer Mind IQ platform. Access help documentation, video tutorials, and contact our support team. 24/7 assistance for enterprise customers.",
+    keywords: "customer mind iq support, customer intelligence help, AI platform support, technical documentation, customer success support, platform tutorials",
+    canonicalUrl: "https://customermindiq.com/support"
   }
 };
 
