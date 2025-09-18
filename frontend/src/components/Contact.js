@@ -1,8 +1,47 @@
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEOHead from './SEOHead';
 import { Mail, MapPin, Phone, Clock, Send, CheckCircle } from 'lucide-react';
 
 const Contact = () => {
+  const seoData = {
+    title: "Contact Customer Mind IQ - Get Expert Support & Sales Assistance | Florida Based",
+    description: "Contact Customer Mind IQ for expert support, sales inquiries, and product demos. Based in St. Petersburg, FL. Get personalized assistance for AI-powered customer intelligence solutions. Email: info@FancyFreeLiving.com",
+    keywords: "contact customer mind iq, customer support, sales inquiry, product demo, AI customer intelligence support, business intelligence help, St. Petersburg Florida, customer success team, technical support, enterprise sales",
+    canonicalUrl: "https://customermindiq.com/contact",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": ["WebPage", "ContactPage"],
+      "name": "Contact Customer Mind IQ",
+      "description": "Contact information and support for Customer Mind IQ AI platform",
+      "url": "https://customermindiq.com/contact",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Customer Mind IQ",
+        "url": "https://customermindiq.com"
+      },
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "Fancy Free Living LLC",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "7901 4th St N STE 300",
+          "addressLocality": "St. Petersburg",
+          "addressRegion": "FL",
+          "postalCode": "33702",
+          "addressCountry": "US"
+        },
+        "email": "info@FancyFreeLiving.com",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "email": "info@FancyFreeLiving.com",
+          "areaServed": "US",
+          "availableLanguage": "English"
+        }
+      }
+    }
+  };
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
