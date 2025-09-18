@@ -3352,12 +3352,53 @@ Click "Pursue" in Expansion Opportunities to initiate outreach!`)}
   );
 }
 
+// Lazy load new components
+const PrivacyPolicy = React.lazy(() => import('./components/PrivacyPolicy'));
+const TermsOfService = React.lazy(() => import('./components/TermsOfService'));
+const Contact = React.lazy(() => import('./components/Contact'));
+const CookieConsent = React.lazy(() => import('./components/CookieConsent'));
+
 // Main App component wrapped with AuthProvider and Router
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/privacy-policy" element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <PrivacyPolicy />
+            </Suspense>
+          } />
+          <Route path="/terms-of-service" element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <TermsOfService />
+            </Suspense>
+          } />
+          <Route path="/contact" element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <Contact />
+            </Suspense>
+          } />
+          <Route path="/404" element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <NotFound />
+            </Suspense>
+          } />
+          <Route path="/*" element={
+            <>
+              <AppContent />
+              <CookieConsent />
+            </>
+          } />
+          {/* Catch-all route for 404 */}
+          <Route path="*" element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <NotFound />
+            </Suspense>
+          } />
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
 }
 
