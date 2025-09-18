@@ -530,6 +530,32 @@ async def download_quick_reference_guide():
         headers={"Content-Disposition": "attachment; filename=CustomerMind_IQ_Quick_Reference_Guide.html"}
     )
 
+@app.get("/health")
+async def health_check():
+    """Health check endpoint"""
+    return {
+        "status": "healthy",
+        "timestamp": datetime.utcnow().isoformat(),
+        "version": "2.1.0",
+        "service": "CustomerMind IQ Backend"
+    }
+
+@app.get("/api/auth/me")
+async def get_current_user_info(current_user: UserProfile = Depends(get_current_user)):
+    """Get current user information"""
+    return {
+        "user_id": current_user.user_id,
+        "email": current_user.email,
+        "first_name": current_user.first_name,
+        "last_name": current_user.last_name,
+        "role": current_user.role,
+        "subscription_tier": current_user.subscription_tier,
+        "is_active": current_user.is_active,
+        "email_verified": current_user.email_verified,
+        "created_at": current_user.created_at.isoformat() if current_user.created_at else None
+    }
+
+# Startup event
 @app.on_event("startup")
 async def startup_event():
     """Initialize application on startup"""
