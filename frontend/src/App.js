@@ -3366,6 +3366,9 @@ function App() {
     <HelmetProvider>
       <Router>
         <AuthProvider>
+          <Suspense fallback={<LoadingSpinner />}>
+            <SkipNavigation />
+          </Suspense>
           <Routes>
             <Route path="/privacy-policy" element={
               <Suspense fallback={<LoadingSpinner />}>
