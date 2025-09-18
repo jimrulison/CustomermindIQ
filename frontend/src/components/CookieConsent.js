@@ -290,7 +290,7 @@ const CookieConsent = () => {
             </div>
           </div>
         )}
-      </div>
+      </section>
     </>
   );
 };
