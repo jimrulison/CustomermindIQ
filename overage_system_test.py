@@ -24,7 +24,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configuration
-BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://customeriq-admin.preview.emergentagent.com")
+BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://customeriq-fix.preview.emergentagent.com")
 API_BASE = f"{BACKEND_URL}/api"
 
 class OverageApprovalSystemTester:

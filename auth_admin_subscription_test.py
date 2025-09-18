@@ -5,7 +5,7 @@ from datetime import datetime
 import time
 
 class AuthAdminSubscriptionTester:
-    def __init__(self, base_url="https://customeriq-admin.preview.emergentagent.com"):
+    def __init__(self, base_url="https://customeriq-fix.preview.emergentagent.com"):
         self.base_url = base_url
         self.auth_tests = 0
         self.auth_passed = 0

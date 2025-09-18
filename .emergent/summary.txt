@@ -1,94 +1,98 @@
 <analysis>
-The AI engineer's work primarily focused on resolving critical UI/UX and data-related bugs within the Customer Mind IQ application's Admin Portal. Key challenges addressed included fixing grey box modals for Email Templates and Automated Workflows (resolved by a JSX structural bug in ). The most challenging issue was the persistent Admin Manual Download failure, which required multiple debugging iterations. The root cause was identified as missing authentication headers in the frontend's download request, compounded by initial issues with hardcoded URLs and incorrect  headers in the backend. This was resolved by implementing an authenticated  request in  and ensuring correct  in . Following this, non-functional refresh buttons for Email Templates and Affiliate Monitoring were fixed by adding visual feedback, loading states, and robust function calls. The process involved extensive use of a  and iterative refinement.
+The AI engineer's work in this trajectory primarily focused on enhancing the Customer Mind IQ application by implementing several user-requested features and bug fixes. Initial tasks involved updating outdated subscription tier names across the frontend, backend, and documentation based on provided pricing schedules. This was followed by resolving a critical UI bug where the Create Email Template modal failed to close properly. Subsequently, a new Web Pages Reference section was added to the Admin Portal, providing an organized view of all application URLs. A significant effort was then dedicated to systematically removing all hardcoded test and demo data from both frontend components and backend functions. The engineer also implemented a comprehensive SEO strategy, creating new components and optimizing existing files. Finally, the work shifted to verifying and fixing all internal/external links, resolving backend 404 errors, and at the trajectory's end, was actively implementing a custom 404 page and updating site-wide contact information.
 </analysis>
 
 <product_requirements>
-The Customer Mind IQ platform is an AI-driven customer intelligence system with the following development focus:
+The Customer Mind IQ platform is an AI-driven customer intelligence system. The trajectory's work addressed critical updates and enhancements.
+**Problem at Hand (Current Trajectory):** The user identified discrepancies in subscription tier names (e.g., Professional instead of Launch) across the application, especially in chat functionalities. A critical UI bug prevented the Create Email Template modal from closing. The admin portal lacked a central reference for all application URLs. The application was populated with misleading demo data, and a complete SEO overhaul was needed. Finally, broken links and an unhandled 404 page, along with outdated contact information, required attention.
 
-1.  **Website Intelligence Hub**: CRUD operations, analytics, and reporting.
-2.  **Internationalization**: Multi-language UI support.
-3.  **Mobile Responsiveness**: UI optimization for various devices.
-4.  **Admin Portal Functionality**:
-    *   Includes CSV export, data display, API key management, support tickets, and contact forms.
-    *   Initial fixes involved resolving coming soon placeholders, dashboard 404 errors, ensuring support tickets open, and functional create forms.
-    *   Recent updates specifically addressed: Advanced Analytics Refresh, Email Templates and Automated Workflows (ensuring modals display correctly and refresh works), Live Chat Contact and Contact Forms refresh, viewable Support Tickets, and consistent Admin Manual download functionality.
-5.  **Performance Optimization**: Improved page load speeds.
-6.  **Accessibility**: Integrates alt text and accessibility utilities.
-7.  **Training Module**: Includes Starter Steps content.
-8.  **Broken Internal Links**: Resolved 404s with redirects.
-9.  **Schema Markup**: Implemented JSON-LD for SEO.
-10. **UI Enhancements**: Replaced basic alerts with professional modals.
-11. **Integration & Data Hub**: Populated empty sections with fallback/demo data and enhanced data source modals.
-12. **Admin Portal Permissions**: Interactive permission badges with modal details.
+**Implementation Done So Far:**
+*   **Tier Name Update:** Replaced outdated tier names (Professional, Basic, AD BASIC, etc.) with current ones (Launch, Growth, Scale, White Label, Custom) in , , , , , and various documentation files (e.g., , ).
+*   **Modal Fix:** Fixed the Create Email Template and Create Automated Workflow modals in  to correctly close and reset state upon clicking the 'X' or 'Cancel' buttons.
+*   **Admin Portal - Web Pages:** Added a new Web Pages Reference tab to , listing 33 categorized application URLs with interactive open/copy functions.
+*   **Demo Data Removal:** Systematically removed all hardcoded demo data from , , and backend functions in  to ensure empty/zero states are displayed until real data is available.
+*   **SEO Implementation:** Created a comprehensive SEO strategy including , , , , , , and , targeting key business outcomes.
+*   **Link Verification & Fixes:** Addressed missing backend endpoints (, , ), created missing static HTML/PWA files, and resolved a duplicate route definition causing a 404 for the quick start guide.
+*   **404 Page & Contact Info:** Currently implementing a new 404 page and updating site-wide contact information to Fancy Free Living LLC, 7901 4th St N STE 300, St. Petersburg, FL 33702 USA info@FancyFreeLiving.com.
 </product_requirements>
 
 <key_technical_concepts>
--   **Full-Stack Development**: React (frontend), FastAPI (backend), MongoDB (database).
--   **Deployment & Routing**: Kubernetes, Supervisor, React Router,  prefix.
--   **UI/UX & I18n**: Tailwind CSS, , , modals.
--   **State Management**: React Context API, , .
--   **Error Handling**: Client/server error handling, demo data fallbacks.
--   **Debugging**: Log analysis, browser console, automated testing agents.
--   **Authentication**: Bearer token authentication (localStorage).
+-   **Full-Stack Development**: React (frontend), FastAPI (backend), MongoDB.
+-   **State Management**: React , , context API.
+-   **Routing**: React Router, FastAPI path operations,  prefix for backend.
+-   **SEO**: Meta tags, JSON-LD structured data, , , .
+-   **File System Operations**: Reading, writing, and renaming files programmatically.
+-   **Error Handling**: Frontend  blocks, backend .
+-   **Authentication**: Bearer token via .
 </key_technical_concepts>
 
 <code_architecture>
 
+
 -   
-    -   **Importance**: Main FastAPI application entry point, defining API routes and serving static content. It integrates routers from various modules.
+    -   **Importance**: Main FastAPI application entry point.
     -   **Changes**:
-        -   Enhanced admin manual download endpoints, adding robust CORS headers, explicit  method handlers, improved error handling, and comprehensive logging.
-        -   Added  decorators for proper HEAD request handling.
-        -   **Updated  for  from  to ** (Chat 35) to force browser download, then reverted/re-emphasized for direct download after troubleshooting (Chat 54-57).
+        -   Disabled  and  functions to remove backend demo data.
+        -   Added  and  endpoints.
+        -   Added download endpoint for .
+        -   **Fixed a critical bug by removing a duplicate  route definition (Chat 311-312).**
 -   
-    -   **Importance**: The central Admin dashboard UI component, managing state, data loading, and modal displays.
+    -   **Importance**: Manages live chat functionalities and access tiers.
+    -   **Changes**: Updated live chat access logic (lines 153, 169-171) to use the new tier names (, , , ). Added  and  endpoints.
+-   
+    -   **Importance**: Handles support-related functionalities.
+    -   **Changes**: Updated various references to outdated tier names (e.g., ) with the new, correct ones.
+-   
+    -   **Importance**: Central Admin dashboard UI component.
     -   **Changes**:
-        -   **Grey Box Modals**: Fixed JSX conditional rendering by moving Create Email Template and Create Automated Workflow modals to independent rendering blocks.
-        -   **Admin Manual Download**:
-            *   Initially used  with a hardcoded  URL, then updated to use .
-            *   Attempted blob download method, but failed due to browser security restrictions.
-            *   Reverted to  for direct download, fixing multiple JavaScript syntax errors in the process.
-            *   **The final, successful fix involved implementing an authenticated  request to retrieve the manual as a blob, explicitly including the Bearer token from localStorage for authentication, and then triggering a client-side download.**
-            *   Added user feedback alerts for download initiation and completion.
-        -   **Email Templates and Affiliate Monitoring Refresh Buttons**:
-            *   Modified the  and  functions and their respective refresh buttons.
-            *   Introduced  and  states to disable buttons and display Refreshing... text with a spinning  icon during data fetching.
-            *   Added comprehensive console logging and user-facing success/error alerts upon refresh completion for both sections.
-            *   Ensured proper  handling and error management.
+        -   Fixed email template and automated workflow modals' 'X' and 'Cancel' buttons to correctly reset state (, , ).
+        -   Added a new Web Pages Reference tab with a Globe icon, containing categorized interactive links to all application pages.
+        -   Extensively removed all hardcoded demo data and replaced them with empty states or  in  initializations or  blocks for various dashboard metrics, customer data, discounts, email templates, API keys, workflows, support tickets, contact forms, and export data.
 -    and 
-    -   **Importance**: Contain FastAPI routers for Admin Portal and support functionalities.
-    -   **Changes**: Reviewed and their integration was confirmed; no explicit code changes were noted or made in these files during the trajectory.
+    -   **Importance**: Frontend components for live chat display and administration.
+    -   **Changes**: Updated display logic to reflect the correct tier names for chat access.
 -   
-    -   **Importance**: Defines the main application structure and client-side routing.
-    -   **Changes**: Inspected to understand navigation flows. No explicit code changes were implemented in this file.
+    -   **Importance**: Manages subscription tier displays and logic.
+    -   **Changes**: Updated references to outdated tier names.
+-   
+    -   **Importance**: Displays core customer analytics metrics.
+    -   **Changes**: Removed all hardcoded demo metrics (e.g., , , ) to display actual or zero values.
+-    (NEW),  (NEW),  (NEW),  (NEW),  (NEW),  (NEW),  (NEW),  (NEW)
+    -   **Importance**: New components and utility files for comprehensive SEO implementation, including dynamic meta tags, structured data, and page-specific optimizations.
+-   , , 
+    -   **Importance**: Technical SEO files for search engine crawling and PWA manifest.
+    -   **Changes**: Updated with comprehensive directives and site structure.
+-    (NEW),  (NEW)
+    -   **Importance**: New static HTML files for affiliate resources.
+-    (NEW), favicon files (NEW)
+    -   **Importance**: PWA manifest and icons.
+-    (NEW),  (NEW)
+    -   **Importance**: New components for the custom 404 page and contact page.
+-   
+    -   **Importance**: Main application structure and client-side routing.
+    -   **Changes**: Modified to incorporate new SEO components and routes for 404 and contact page. Fixed ESLint error related to duplicate Footer declaration.
+-   Documentation files (e.g., , , )
+    -   **Importance**: User guides and training materials.
+    -   **Changes**: Updated to reflect new tier names and, in some cases, renamed to align with the new tier structure.
 </code_architecture>
 
 <pending_tasks>
--   **Kubernetes Ingress Routing Fix**: The underlying infrastructure issue affecting external  calls for some specific routes remains unresolved.
--   **Automated Testing**: User explicitly requested to defer automated testing until further notice.
+-   **Kubernetes Ingress Routing Fix**: The system prompt mentioned an underlying infrastructure issue affecting external  calls for some specific routes that remains unresolved from the previous engineer's work.
+-   **Frontend Testing for Tier Updates**: The user chose to manually test the frontend for the tier name changes, so automated frontend testing was not executed by the AI engineer for this task.
+-   **Complete 404 Page Content**: The AI engineer could not extract content from the provided  artifact and proceeded with a generic design, which might need user verification or a re-attempt at extraction.
 </pending_tasks>
 
 <current_work>
-Immediately before this summary, the AI engineer successfully addressed two critical user-reported issues: the non-functional Email Templates and Affiliate Monitoring refresh buttons within the Admin Portal. The user initially reported that these buttons do not do anything (Chat Message 100).
+Immediately before this summary, the AI engineer was actively working on implementing a custom 404 error page and updating the site-wide contact information. This involved:
+1.  **Extracting 404 Page Content**: An attempt was made to extract the 404 page content from the user-provided  file. This attempt was unsuccessful due to limitations in extracting content from the document type.
+2.  **Creating a Generic 404 Page**: Due to the failure in extracting content, the AI engineer proceeded to create a new React component, , to serve as the custom 404 page with a professional design.
+3.  **Implementing Contact Page and Details**: New contact information (Fancy Free Living LLC, 7901 4th St N STE 300, St. Petersburg, FL 33702 USA info@FancyFreeLiving.com) was provided by the user. The engineer started creating a  component and intended to place the contact information on a dedicated contact page and at the bottom of every page.
+4.  **Integrating Components and Routes**: The  file was being modified to integrate the new  and  components into the application's routing structure.
+5.  **Resolving Linting Issues**: During the update of , an ESLint error was encountered: Parsing error: Identifier Footer has already been declared. The engineer identified that both a lazy-loaded  component and a direct import of  existed. The direct import was removed to resolve the conflict and allow the lazy-loaded version to be used.
 
-The investigation revealed that while the underlying API calls were generally functional (especially for affiliate monitoring), the frontend lacked proper visual feedback (loading states, spinners, success messages), and the email templates refresh was not consistently triggering its associated loading function.
-
-To resolve this, the AI engineer made comprehensive changes in :
-1.  **State Management**: Introduced  and  states.
-2.  **Visual Feedback**:
-    *   Modified the refresh buttons to display Refreshing... text during operation.
-    *   Integrated  icons that animate to provide a visual spinner.
-    *   Disabled the refresh buttons while data was being fetched to prevent multiple concurrent requests.
-3.  **Functionality Enhancement**:
-    *   Ensured  and  functions were robustly called using .
-    *   Added detailed console logging to trace the start of the refresh, API calls, and responses for both email templates and high-refund affiliates.
-4.  **User Experience**:
-    *   Implemented user-facing alert messages upon successful completion of data refresh (e.g., ✅ Email Templates refreshed successfully!, ✅ Affiliate Monitoring data refreshed successfully!).
-    *   Included  blocks for both functions to handle potential API call failures gracefully, resetting loading states and displaying error alerts.
-
-These modifications ensure that when a user clicks the refresh buttons, they receive clear visual and textual feedback, indicating that data is being loaded, thereby confirming that the functionality is working as expected and improving the overall user experience within the Admin Portal.
+The last action in the trajectory was the AI engineer stating, Now let me add the contact and 404 routes to the Routes section. Let me find where the routes are defined, indicating the ongoing process of updating  with the new routes.
 </current_work>
 
 <optional_next_step>
-The next step is to investigate and resolve the Kubernetes Ingress Routing issue as identified in the pending tasks. This aligns with the user's earlier instruction we will get onto other things after that is done (Chat Message 5), following the successful resolution of the admin manual download and refresh button issues.
+Integrate the  and  components by defining their routes in  and ensuring the new contact info is displayed as requested.
 </optional_next_step>
