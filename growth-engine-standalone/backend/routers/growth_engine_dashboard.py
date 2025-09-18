@@ -122,7 +122,7 @@ class GrowthDashboardService:
                 id=str(test["_id"]),
                 type="ab_test",
                 title=f"A/B Test: {test.get('name', 'Unknown')}",
-                description=test.get('description', '')[:100) + "..." if len(test.get('description', '')) > 100 else test.get('description', ''),
+                description=test.get('description', '')[:100] + "..." if len(test.get('description', '')) > 100 else test.get('description', ''),
                 timestamp=test.get('created_at', datetime.now(timezone.utc)),
                 status=test.get('status', 'draft')
             ))
