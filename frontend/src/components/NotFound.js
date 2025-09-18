@@ -27,11 +27,10 @@ const NotFound = () => {
           {/* Main Message */}
           <div className="mb-12">
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Oops! Page Not Found
+              Yiks ! a 404 page.
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-              The page you're looking for seems to have vanished into the digital void. 
-              But don't worry – our AI-powered customer intelligence platform is still here to help you succeed!
+              Get me home!!
             </p>
           </div>
 
