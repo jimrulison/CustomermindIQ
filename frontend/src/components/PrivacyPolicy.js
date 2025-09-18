@@ -212,6 +212,19 @@ const PrivacyPolicy = () => {
               </div>
             </div>
           </section>
+          
+          {/* Frequently Asked Questions */}
+          <section>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Frequently Asked Questions</h2>
+            <div className="space-y-6">
+              {privacyFAQs.map((faq, index) => (
+                <div key={index} className="bg-gray-50 rounded-lg p-6">
+                  <h3 className="font-semibold text-gray-800 mb-3">{faq.question}</h3>
+                  <p className="text-gray-600">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
         
         {/* Copyright Notice */}
