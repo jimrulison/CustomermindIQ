@@ -518,39 +518,6 @@ async def close_chat_session(
 
 # Admin Endpoints (require admin role)
 
-@router.get("/admin/chat/sessions")
-async def get_admin_chat_sessions(
-    status: Optional[str] = None,
-    current_user: UserProfile = Depends(get_current_user)
-):
-    """Get all chat sessions for admin management"""
-    if current_user.role not in ["admin", "super_admin"]:
-        raise HTTPException(status_code=403, detail="Admin access required")
-    
-    try:
-        # Build query filter
-        query = {}
-        if status:
-            query["status"] = status
-        
-        # Get sessions
-        sessions = await db.chat_sessions.find(query).sort("created_at", -1).to_list(length=100)
-        
-        # Convert ObjectId and datetime for JSON
-        for session in sessions:
-            session["_id"] = str(session["_id"])
-            session["created_at"] = session["created_at"].isoformat()
-            session["last_activity"] = session["last_activity"].isoformat()
-        
-        return {
-            "status": "success",
-            "sessions": sessions,
-            "total_count": len(sessions)
-        }
-        
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to get sessions: {str(e)}")
-
 @router.post("/admin/chat/assign-session/{session_id}")
 async def assign_chat_session(
     session_id: str,
