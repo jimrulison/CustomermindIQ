@@ -42,6 +42,8 @@ const CookieConsent = () => {
     if (allConsent.analytics) {
       initializeAnalytics();
     }
+    
+    announceSuccess('All cookies accepted. Your preferences have been saved.');
   };
 
   const handleRejectAll = () => {
