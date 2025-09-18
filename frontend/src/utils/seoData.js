@@ -1,9 +1,9 @@
 // SEO data and configurations for all pages
 export const seoData = {
   home: {
-    title: "CustomerMind IQ - AI-Powered Customer Intelligence & Analytics Platform | 300-500% ROI",
-    description: "Transform your business with CustomerMind IQ's AI-powered customer intelligence platform. Get 91.8% accurate churn prediction, 40% better marketing ROI, and real-time analytics. Free 7-day trial, no credit card required.",
-    keywords: "customer intelligence platform, customer analytics software, AI-powered customer insights, churn prediction, customer behavior analysis, business intelligence, customer success platform, marketing automation, revenue forecasting, customer segmentation",
+    title: "CustomerMind IQ - #1 AI Customer Intelligence Platform | 300-500% ROI Guaranteed",
+    description: "Transform your business with CustomerMind IQ's AI-powered customer intelligence platform. Get 91.8% accurate churn prediction, 40% better marketing ROI, and real-time analytics. Beat HubSpot & Salesforce with advanced AI. Free 7-day trial, no credit card required.",
+    keywords: "customer intelligence platform, AI customer analytics software, customer behavior analysis tool, churn prediction software, customer success platform, business intelligence dashboard, marketing automation AI, revenue forecasting platform, customer segmentation analytics, competitive intelligence software, HubSpot alternative, Salesforce alternative, customer data platform CDP, predictive customer analytics, customer lifetime value CLV",
     canonicalUrl: "https://customermindiq.com/",
     structuredData: {
       "@context": "https://schema.org",
