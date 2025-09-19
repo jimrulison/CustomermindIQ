@@ -22,7 +22,7 @@ import os
 from datetime import datetime
 
 # Configuration
-BACKEND_URL = "https://customeriq-fix.preview.emergentagent.com"
+BACKEND_URL = "https://customer-insights-12.preview.emergentagent.com"
 ADMIN_EMAIL = "admin@customermindiq.com"
 ADMIN_PASSWORD = "CustomerMindIQ2025!"
 

@@ -64,7 +64,7 @@ def main():
     local_success = test_affiliate_login("http://localhost:8001", "Local Backend")
     
     # Test external backend
-    external_success = test_affiliate_login("https://customeriq-fix.preview.emergentagent.com", "External Backend")
+    external_success = test_affiliate_login("https://customer-insights-12.preview.emergentagent.com", "External Backend")
     
     print("\n" + "=" * 60)
     print("🎯 FINAL TEST RESULTS")
