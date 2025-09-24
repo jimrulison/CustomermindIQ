@@ -146,9 +146,9 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Multi-Site Affiliate System Backend Implementation"
     - "Admin Portal Create Forms Testing"
     - "Modal System Functionality Validation"
-    - "User Interface Critical Issues"
   stuck_tasks: 
     - "Admin Portal Create Forms - Missing Modal Content"
   test_all: false
