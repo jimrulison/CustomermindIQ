@@ -1796,7 +1796,7 @@ async def create_multisite_commission_record(
             affiliate_id, customer_id, site_id, plan_type, amount, billing_cycle
         )
         
-        # Create commission record
+        # Create commission record (avoid ObjectId issues by using string IDs)
         commission_record = {
             "commission_id": str(uuid.uuid4()),
             "affiliate_id": affiliate_id,
@@ -1807,7 +1807,7 @@ async def create_multisite_commission_record(
             "commission_rate": commission_data["total_commission"] / amount,
             "base_amount": amount,
             "status": "pending",
-            "earned_date": datetime.now(timezone.utc),
+            "earned_date": datetime.now(timezone.utc).isoformat(),  # Convert to string
             "cross_site_bonus": commission_data["multi_site_bonus"] + commission_data["combo_bonus"],
             "combo_discount_applied": commission_data["combo_bonus"] > 0,
             "attributed_sites": await get_affiliate_active_sites(affiliate_id),
@@ -1819,19 +1819,20 @@ async def create_multisite_commission_record(
         held_amount = commission_data["total_commission"] * (settings.percentage / 100)
         available_amount = commission_data["total_commission"] - held_amount
         
-        await db.earnings_holdback.insert_one({
+        holdback_record = {
             "id": str(uuid.uuid4()),
             "affiliate_id": affiliate_id,
             "commission_id": commission_record["commission_id"],
             "original_amount": commission_data["total_commission"],
             "held_amount": held_amount,
-            "held_date": datetime.now(timezone.utc),
-            "release_date": datetime.now(timezone.utc) + timedelta(days=settings.hold_days),
+            "held_date": datetime.now(timezone.utc).isoformat(),  # Convert to string
+            "release_date": (datetime.now(timezone.utc) + timedelta(days=settings.hold_days)).isoformat(),
             "status": "held"
-        })
+        }
         
-        # Store record
+        # Store records
         await db.enhanced_commission_records.insert_one(commission_record)
+        await db.earnings_holdback.insert_one(holdback_record)
         
         # Update affiliate totals
         await db.affiliates.update_one(
@@ -1852,7 +1853,7 @@ async def create_multisite_commission_record(
         }
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Commission creation failed: {str(e)}")
 
 @router.post("/admin/initialize-sites")
 async def initialize_sites(current_user: UserProfile = Depends(require_role(UserRole.SUPER_ADMIN))):
