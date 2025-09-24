@@ -236,7 +236,7 @@ class MultiSiteAffiliateSystemTester:
                 self.log_result("❌ Multi-site Commission", False, "No affiliate ID available for testing")
                 return False
             
-            commission_data = {
+            params = {
                 "affiliate_id": self.affiliate_id,
                 "customer_id": f"test_customer_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
                 "site_id": "customermindiq",
@@ -245,7 +245,7 @@ class MultiSiteAffiliateSystemTester:
                 "billing_cycle": "monthly"
             }
             
-            async with self.session.post(f"{BACKEND_URL}/api/affiliate/commission/create", json=commission_data) as response:
+            async with self.session.post(f"{BACKEND_URL}/api/affiliate/commission/create", params=params) as response:
                 if response.status == 200:
                     data = await response.json()
                     
