@@ -1158,36 +1158,66 @@ async def generate_tracking_link(
 
 @router.get("/materials")
 async def get_affiliate_materials(affiliate_id: str = Query(...)):
-    """Get affiliate marketing materials"""
+    """Enhanced affiliate marketing materials with multi-site support"""
     try:
-        # TODO: Generate dynamic marketing materials
+        active_sites = await get_affiliate_active_sites(affiliate_id)
+        
+        # If no active sites, default to main site for compatibility
+        if not active_sites:
+            active_sites = ["customermindiq"]
+        
         materials = {
-            "banners": [
-                {
-                    "name": "Email Header Banner",
-                    "size": "600x200",
-                    "url": f"https://cdn.customermindiq.com/banners/email-header-{affiliate_id}.png",
-                    "tracking_url": generate_tracking_url(affiliate_id, "email-banner", "trial")
-                }
-            ],
-            "email_templates": [
-                {
-                    "name": "Educational Template",
-                    "subject": "The #1 reason 68% of businesses lose customers",
-                    "content": "Hi [First Name], Quick question...",
-                    "tracking_url": generate_tracking_url(affiliate_id, "email-template-1", "trial")
-                }
-            ],
-            "landing_pages": [
-                {
-                    "name": "Main Landing Page",
-                    "url": f"https://customermindiq.com/affiliate/{affiliate_id}",
-                    "description": "Personalized landing page with your affiliate branding"
-                }
-            ]
+            "banners": [],
+            "email_templates": [],
+            "landing_pages": [],
+            "social_media": []
         }
         
-        return materials
+        # Generate materials for each active site
+        for site_id in active_sites:
+            site_config = await get_site_config(site_id)
+            site_name = site_config["name"]
+            
+            # Banners
+            materials["banners"].append({
+                "site_id": site_id,
+                "site_name": site_name,
+                "name": f"{site_name} - Email Header Banner",
+                "size": "600x200",
+                "url": f"https://cdn.customermindiq.com/banners/{site_id}-email-header.png",
+                "tracking_url": (await generate_multisite_tracking_link(
+                    {"path": "/trial"}, affiliate_id, site_id, "email-banner"
+                ))["tracking_url"]
+            })
+            
+            # Email templates
+            materials["email_templates"].append({
+                "site_id": site_id,
+                "site_name": site_name,
+                "name": f"{site_name} - Educational Template",
+                "subject": f"Discover the power of {site_name}",
+                "content": f"Experience the benefits of {site_name}...",
+                "tracking_url": (await generate_multisite_tracking_link(
+                    {"path": "/trial"}, affiliate_id, site_id, "email-template"
+                ))["tracking_url"]
+            })
+            
+            # Landing pages
+            materials["landing_pages"].append({
+                "site_id": site_id,
+                "site_name": site_name,
+                "name": f"{site_name} - Main Landing Page",
+                "url": f"https://{site_config['domain']}/affiliate/{affiliate_id}",
+                "description": f"Personalized landing page for {site_name}"
+            })
+        
+        return {
+            "success": True,
+            "materials": materials,
+            "active_sites_count": len(active_sites),
+            "total_materials": sum(len(materials[key]) for key in materials),
+            "multi_site_enabled": len(active_sites) > 1
+        }
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Materials error: {str(e)}")
