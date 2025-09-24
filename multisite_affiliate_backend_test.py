@@ -57,16 +57,19 @@ class MultiSiteAffiliateSystemTester:
                 "password": ADMIN_PASSWORD
             }
             
-            async with self.session.post(f"{BACKEND_URL}/api/auth/login", json=login_data) as response:
-                if response.status == 200:
-                    data = await response.json()
-                    self.admin_token = data.get("access_token")
-                    self.log_result("✅ Admin Login", True, f"Successfully authenticated as admin")
-                    return True
-                else:
-                    error_text = await response.text()
-                    self.log_result("❌ Admin Login", False, f"Login failed: {response.status} - {error_text}")
-                    return False
+            # Add SSL verification bypass for testing
+            connector = aiohttp.TCPConnector(ssl=False)
+            async with aiohttp.ClientSession(connector=connector, timeout=aiohttp.ClientTimeout(total=30)) as temp_session:
+                async with temp_session.post(f"{BACKEND_URL}/api/auth/login", json=login_data) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        self.admin_token = data.get("access_token")
+                        self.log_result("✅ Admin Login", True, f"Successfully authenticated as admin")
+                        return True
+                    else:
+                        error_text = await response.text()
+                        self.log_result("❌ Admin Login", False, f"Login failed: {response.status} - {error_text}")
+                        return False
         except Exception as e:
             self.log_result("❌ Admin Login", False, f"Login error: {str(e)}")
             return False
