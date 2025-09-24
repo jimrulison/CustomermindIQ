@@ -34,7 +34,7 @@ const AffiliatePageBuilder = ({ affiliateId }) => {
         custom_content: {}
     });
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customer-insights-12.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://seo-legal-update.preview.emergentagent.com';
 
     useEffect(() => {
         loadTemplates();

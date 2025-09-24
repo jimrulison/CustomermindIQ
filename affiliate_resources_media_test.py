@@ -23,7 +23,7 @@ from datetime import datetime
 from typing import Dict, List, Any
 
 # Backend URL from environment
-BACKEND_URL = "https://customer-insights-12.preview.emergentagent.com"
+BACKEND_URL = "https://seo-legal-update.preview.emergentagent.com"
 
 class AffiliateResourcesMediaTester:
     def __init__(self):
