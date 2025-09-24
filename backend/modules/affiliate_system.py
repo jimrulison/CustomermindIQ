@@ -962,7 +962,138 @@ async def login_affiliate(login_data: AffiliateLogin):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Login failed: {str(e)}")
 
-# ========== AFFILIATE MANAGEMENT ENDPOINTS ==========
+@router.get("/multisite-dashboard")
+async def get_multisite_dashboard(
+    affiliate_id: str = Query(...),
+    site_ids: Optional[List[str]] = Query(None)
+):
+    """Get multi-site affiliate dashboard data"""
+    try:
+        # Get affiliate data
+        affiliate = await db.affiliates.find_one({"affiliate_id": affiliate_id})
+        if not affiliate:
+            raise HTTPException(status_code=404, detail="Affiliate not found")
+        
+        # Get affiliate's sites if none specified
+        if not site_ids:
+            site_ids = await get_affiliate_active_sites(affiliate_id)
+        
+        dashboard_data = {}
+        total_stats = {
+            "total_earnings": 0,
+            "total_clicks": 0,
+            "total_conversions": 0,
+            "multi_site_bonuses": 0,
+            "combo_bonuses": 0
+        }
+        
+        # Get performance data for each site
+        for site_id in site_ids:
+            site_data = await get_site_performance_data(affiliate_id, site_id)
+            dashboard_data[site_id] = site_data
+            
+            # Aggregate totals
+            total_stats["total_earnings"] += site_data.get("earnings", 0)
+            total_stats["total_clicks"] += site_data.get("clicks", 0)
+            total_stats["total_conversions"] += site_data.get("conversions", 0)
+            total_stats["multi_site_bonuses"] += site_data.get("multi_site_bonuses", 0)
+            total_stats["combo_bonuses"] += site_data.get("combo_bonuses", 0)
+        
+        # Get combo discount opportunities
+        combo_opportunities = await get_combo_discount_opportunities(affiliate_id)
+        
+        return {
+            "sites_data": dashboard_data,
+            "aggregated_stats": total_stats,
+            "combo_opportunities": combo_opportunities,
+            "affiliate_tier": await get_affiliate_tier(affiliate_id),
+            "next_tier_requirements": await get_next_tier_requirements(affiliate_id),
+            "available_sites": [
+                {
+                    "site_id": site_id,
+                    "name": config["name"],
+                    "domain": config["domain"],
+                    "logo_url": config["logo_url"]
+                }
+                for site_id, config in SITES_CONFIG.items()
+            ]
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Dashboard error: {str(e)}")
+
+async def get_site_performance_data(affiliate_id: str, site_id: str) -> Dict:
+    """Get performance data for a specific site"""
+    
+    # Get site clicks from multisite tracking links
+    site_clicks = await db.multisite_tracking_links.aggregate([
+        {"$match": {"affiliate_id": affiliate_id, "site_id": site_id}},
+        {"$group": {"_id": None, "total_clicks": {"$sum": "$clicks"}}}
+    ]).to_list(length=1)
+    
+    clicks = site_clicks[0]["total_clicks"] if site_clicks else 0
+    
+    # Get site commissions and earnings
+    site_commissions = await db.enhanced_commission_records.find({
+        "affiliate_id": affiliate_id,
+        "site_id": site_id
+    }).to_list(length=None)
+    
+    earnings = sum(commission.get("commission_amount", 0) for commission in site_commissions)
+    conversions = len(site_commissions)
+    multi_site_bonuses = sum(commission.get("cross_site_bonus", 0) for commission in site_commissions)
+    combo_bonuses = sum(commission.get("bonus_details", {}).get("combo_bonus", 0) for commission in site_commissions)
+    
+    return {
+        "earnings": earnings,
+        "clicks": clicks,
+        "conversions": conversions,
+        "multi_site_bonuses": multi_site_bonuses,
+        "combo_bonuses": combo_bonuses,
+        "conversion_rate": (conversions / clicks * 100) if clicks > 0 else 0
+    }
+
+async def get_combo_discount_opportunities(affiliate_id: str) -> List[Dict]:
+    """Get available combo discount opportunities for affiliate"""
+    
+    active_rules = await db.combo_discount_rules.find({"status": "active"}).to_list(length=None)
+    opportunities = []
+    
+    for rule in active_rules:
+        # Check progress towards rule requirements
+        affiliate_sites = await get_affiliate_active_sites(affiliate_id)
+        required_sites = set(rule["sites_required"])
+        active_required_sites = set(affiliate_sites).intersection(required_sites)
+        
+        progress = len(active_required_sites) / len(required_sites) * 100
+        
+        opportunities.append({
+            "rule_id": rule["rule_id"],
+            "name": rule["name"],
+            "description": rule["description"],
+            "bonus_percentage": rule["bonus_percentage"] * 100,
+            "progress": progress,
+            "sites_needed": list(required_sites - active_required_sites),
+            "eligible": progress >= 100
+        })
+    
+    return opportunities
+
+async def get_next_tier_requirements(affiliate_id: str) -> Dict:
+    """Get requirements for next affiliate tier"""
+    active_sites = await get_affiliate_active_sites(affiliate_id)
+    current_count = len(active_sites)
+    
+    if current_count >= 10:
+        return {"current_tier": "platinum", "next_tier": None}
+    elif current_count >= 5:
+        return {"current_tier": "gold", "next_tier": "platinum", "sites_needed": 10 - current_count}
+    elif current_count >= 2:
+        return {"current_tier": "silver", "next_tier": "gold", "sites_needed": 5 - current_count}
+    else:
+        return {"current_tier": "bronze", "next_tier": "silver", "sites_needed": 2 - current_count}
 
 @router.get("/dashboard")
 async def get_affiliate_dashboard(affiliate_id: str = Query(...)):
