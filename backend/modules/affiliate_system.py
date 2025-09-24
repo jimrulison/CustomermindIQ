@@ -915,7 +915,7 @@ async def register_affiliate(registration: AffiliateRegistration):
 
 @router.post("/auth/login")
 async def login_affiliate(login_data: AffiliateLogin):
-    """Affiliate login"""
+    """Affiliate login with multi-site information"""
     try:
         # Find affiliate by email
         affiliate = await db.affiliates.find_one({"email": login_data.email})
@@ -939,6 +939,10 @@ async def login_affiliate(login_data: AffiliateLogin):
         # Create JWT token
         token = create_jwt_token(affiliate["affiliate_id"])
         
+        # Get active sites count and tier
+        active_sites = await get_affiliate_active_sites(affiliate["affiliate_id"])
+        tier = await get_affiliate_tier(affiliate["affiliate_id"])
+        
         return {
             "success": True,
             "token": token,
@@ -946,7 +950,10 @@ async def login_affiliate(login_data: AffiliateLogin):
                 "id": affiliate["affiliate_id"],
                 "name": f"{affiliate['first_name']} {affiliate['last_name']}",
                 "status": affiliate["status"],
-                "total_commissions": affiliate["total_commissions"]
+                "total_commissions": affiliate["total_commissions"],
+                "active_sites_count": len(active_sites),
+                "tier": tier,
+                "multi_site_enabled": True
             }
         }
         
