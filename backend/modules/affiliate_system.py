@@ -1749,6 +1749,164 @@ async def link_customer_to_affiliate(customer_data: Dict[str, Any]):
         print(f"Customer linking error: {e}")
         return {"success": False, "error": str(e)}
 
+@router.post("/multisite-links/generate")
+async def generate_multisite_links(
+    affiliate_id: str = Query(...),
+    site_ids: List[str] = Query(...),
+    campaign_name: Optional[str] = None,
+    link_paths: List[str] = Query(default=["/"])
+):
+    """Generate tracking links for multiple sites at once"""
+    try:
+        all_links = {}
+        
+        for site_id in site_ids:
+            site_links = {}
+            for path in link_paths:
+                link_data = await generate_multisite_tracking_link(
+                    link_data={"path": path},
+                    affiliate_id=affiliate_id,
+                    site_id=site_id,
+                    campaign_name=campaign_name
+                )
+                site_links[path] = link_data
+            all_links[site_id] = site_links
+        
+        return {
+            "success": True,
+            "tracking_links": all_links,
+            "campaign_name": campaign_name,
+            "generated_at": datetime.now(timezone.utc),
+            "total_sites": len(site_ids)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Link generation failed: {str(e)}")
+
+@router.post("/commission/create")
+async def create_multisite_commission_record(
+    affiliate_id: str,
+    customer_id: str,
+    site_id: str,
+    plan_type: str,
+    amount: float,
+    billing_cycle: str = "monthly"
+):
+    """Create commission record with multi-site bonuses"""
+    try:
+        # Calculate commission with bonuses
+        commission_data = await calculate_multisite_commission(
+            affiliate_id, customer_id, site_id, plan_type, amount, billing_cycle
+        )
+        
+        # Create commission record
+        commission_record = {
+            "commission_id": str(uuid.uuid4()),
+            "affiliate_id": affiliate_id,
+            "customer_id": customer_id,
+            "site_id": site_id,
+            "plan_type": plan_type,
+            "commission_amount": commission_data["total_commission"],
+            "commission_rate": commission_data["total_commission"] / amount,
+            "base_amount": amount,
+            "status": "pending",
+            "earned_date": datetime.now(timezone.utc),
+            "cross_site_bonus": commission_data["multi_site_bonus"] + commission_data["combo_bonus"],
+            "combo_discount_applied": commission_data["combo_bonus"] > 0,
+            "attributed_sites": await get_affiliate_active_sites(affiliate_id),
+            "bonus_details": commission_data["bonus_details"]
+        }
+        
+        # Apply holdback (existing logic)
+        settings = await get_affiliate_holdback_settings(affiliate_id)
+        held_amount = commission_data["total_commission"] * (settings.percentage / 100)
+        available_amount = commission_data["total_commission"] - held_amount
+        
+        await db.earnings_holdback.insert_one({
+            "id": str(uuid.uuid4()),
+            "affiliate_id": affiliate_id,
+            "commission_id": commission_record["commission_id"],
+            "original_amount": commission_data["total_commission"],
+            "held_amount": held_amount,
+            "held_date": datetime.now(timezone.utc),
+            "release_date": datetime.now(timezone.utc) + timedelta(days=settings.hold_days),
+            "status": "held"
+        })
+        
+        # Store record
+        await db.enhanced_commission_records.insert_one(commission_record)
+        
+        # Update affiliate totals
+        await db.affiliates.update_one(
+            {"affiliate_id": affiliate_id},
+            {
+                "$inc": {
+                    "total_commissions": commission_data["total_commission"],
+                    "available_commissions": available_amount,
+                    "held_commissions": held_amount
+                }
+            }
+        )
+        
+        return {
+            "success": True,
+            "commission_record": commission_record,
+            "breakdown": commission_data
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/admin/initialize-sites")
+async def initialize_sites(current_user: UserProfile = Depends(require_role(UserRole.SUPER_ADMIN))):
+    """Initialize sites configuration (Admin only)"""
+    try:
+        sites_created = 0
+        
+        for site_id, config in SITES_CONFIG.items():
+            existing_site = await db.sites.find_one({"site_id": site_id})
+            if not existing_site:
+                site_data = {
+                    "site_id": site_id,
+                    "name": config["name"],
+                    "domain": config["domain"],
+                    "logo_url": config.get("logo_url"),
+                    "primary_color": "#3B82F6",
+                    "commission_multiplier": 1.0,
+                    "status": "active",
+                    "created_date": datetime.now(timezone.utc)
+                }
+                
+                await db.sites.insert_one(site_data)
+                sites_created += 1
+        
+        # Initialize default combo rules
+        rules_created = 0
+        for rule_config in DEFAULT_COMBO_RULES:
+            existing_rule = await db.combo_discount_rules.find_one({"name": rule_config["name"]})
+            if not existing_rule:
+                rule_data = {
+                    "rule_id": str(uuid.uuid4()),
+                    **rule_config,
+                    "status": "active",
+                    "valid_from": datetime.now(timezone.utc)
+                }
+                
+                await db.combo_discount_rules.insert_one(rule_data)
+                rules_created += 1
+        
+        return {
+            "success": True,
+            "sites_created": sites_created,
+            "combo_rules_created": rules_created,
+            "message": f"Initialized {sites_created} sites and {rules_created} combo rules"
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Initialization failed: {str(e)}")
+
+# ========== AFFILIATE MANAGEMENT ENDPOINTS ==========
+
 # ========== ENHANCED ADMIN ENDPOINTS ==========
 
 @router.get("/admin/monitoring/high-refund")
