@@ -143,7 +143,7 @@ class LinkType(str, Enum):
     DEMO = "demo"
     PRICING = "pricing"
 
-# Registration Models
+# Enhanced affiliate registration for multi-site
 class AffiliateAddress(BaseModel):
     street: str = Field(..., max_length=255)
     city: str = Field(..., max_length=100)
@@ -171,6 +171,8 @@ class AffiliateRegistration(BaseModel):
     payment_method: PaymentMethod
     payment_details: PaymentDetails
     terms_accepted: bool = Field(..., description="Must accept terms and conditions")
+    # Multi-site preferences
+    interested_sites: List[str] = []  # Sites they want to promote
 
     @validator('password')
     def validate_password(cls, v):
@@ -183,6 +185,124 @@ class AffiliateRegistration(BaseModel):
         if not v:
             raise ValueError('You must accept the terms and conditions')
         return v
+
+# ========== CONFIGURATION ==========
+
+# Site configurations - 10 sites as specified
+SITES_CONFIG = {
+    "customermindiq": {
+        "name": "CustomerMindIQ.com",
+        "domain": "customermindiq.com",
+        "logo_url": "/logos/customermindiq.png"
+    },
+    "postvelocity": {
+        "name": "PostVelocity.com", 
+        "domain": "postvelocity.com",
+        "logo_url": "/logos/postvelocity.png"
+    },
+    "connectmycustomer": {
+        "name": "ConnectMyCustomer.com",
+        "domain": "connectmycustomer.com", 
+        "logo_url": "/logos/connectmycustomer.png"
+    },
+    "usethissearch": {
+        "name": "UseThisSearch.com",
+        "domain": "usethissearch.com",
+        "logo_url": "/logos/usethissearch.png"
+    },
+    "groupkeywords": {
+        "name": "GroupKeywords.com",
+        "domain": "groupkeywords.com",
+        "logo_url": "/logos/groupkeywords.png"
+    },
+    "trainercreator": {
+        "name": "TrainerCreator.com",
+        "domain": "trainercreator.com",
+        "logo_url": "/logos/trainercreator.png"
+    },
+    "cleancutvideos": {
+        "name": "CleanCutVideos.com",
+        "domain": "cleancutvideos.com",
+        "logo_url": "/logos/cleancutvideos.png"
+    },
+    "seegrabpost": {
+        "name": "SeeGrabPost.com",
+        "domain": "seegrabpost.com",
+        "logo_url": "/logos/seegrabpost.png"
+    },
+    "backlinkdigger": {
+        "name": "BacklinkDigger.com",
+        "domain": "backlinkdigger.com",
+        "logo_url": "/logos/backlinkdigger.png"
+    },
+    "site_10": {
+        "name": "Site 10 - TBD",
+        "domain": "site10.com",
+        "logo_url": "/logos/site10.png"
+    }
+}
+
+# Multi-Site Commission Structure (EASILY ADJUSTABLE)
+MULTI_SITE_COMMISSION_RATES = {
+    "launch": {
+        "base_rates": {
+            "initial": 0.30, 
+            "recurring": [0.20] * 11 + [0.10] * 12
+        },
+        "multi_site_bonuses": {
+            2: 0.05,   # 5% bonus for 2+ sites
+            3: 0.10,   # 10% bonus for 3+ sites
+            5: 0.15,   # 15% bonus for 5+ sites
+            10: 0.20   # 20% bonus for all sites
+        }
+    },
+    "growth": {
+        "base_rates": {
+            "initial": 0.40, 
+            "recurring": [0.20] * 11 + [0.10] * 12
+        },
+        "multi_site_bonuses": {
+            2: 0.05,
+            3: 0.12,
+            5: 0.18,
+            10: 0.25
+        }
+    },
+    "scale": {
+        "base_rates": {
+            "initial": 0.50, 
+            "recurring": [0.20] * 11 + [0.10] * 12
+        },
+        "multi_site_bonuses": {
+            2: 0.05,
+            3: 0.15,
+            5: 0.20,
+            10: 0.30
+        }
+    }
+}
+
+# Default Combo Discount Rules (EASILY ADJUSTABLE)
+DEFAULT_COMBO_RULES = [
+    {
+        "name": "Cross-Site Customer Journey",
+        "description": "Purchase from 3+ sites within 30 days = 15% bonus",
+        "sites_required": ["customermindiq", "postvelocity", "connectmycustomer"],
+        "timeframe_days": 30,
+        "bonus_percentage": 0.15,
+        "min_conversions_per_site": 1,
+        "min_total_value": 0.0
+    },
+    {
+        "name": "Black Friday Special",
+        "description": "Conversions across 5+ sites in November = 25% bonus", 
+        "sites_required": ["customermindiq", "postvelocity", "connectmycustomer", "usethissearch", "groupkeywords"],
+        "timeframe_days": 30,
+        "bonus_percentage": 0.25,
+        "min_conversions_per_site": 1,
+        "min_total_value": 100.0
+    }
+]
 
 # New models for enhanced affiliate system
 class HoldbackSettings(BaseModel):
