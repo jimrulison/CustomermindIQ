@@ -817,7 +817,7 @@ async def process_monthly_holdback_releases():
 
 @router.post("/auth/register")
 async def register_affiliate(registration: AffiliateRegistration):
-    """Register new affiliate"""
+    """Register new affiliate with multi-site preferences"""
     try:
         # Check if email already exists
         existing_affiliate = await db.affiliates.find_one({"email": registration.email})
@@ -852,17 +852,21 @@ async def register_affiliate(registration: AffiliateRegistration):
             "address": registration.address.dict(),
             "payment_method": registration.payment_method.value,
             "payment_details": registration.payment_details.dict(),
+            # Multi-site enhancements
+            "interested_sites": registration.interested_sites,
+            "active_sites": [],  # Will be populated after approval
+            # Existing fields
             "total_clicks": 0,
             "total_conversions": 0,
             "total_commissions": 0.0,
-            "available_commissions": 0.0,  # New: immediately available earnings
-            "held_commissions": 0.0,       # New: held earnings awaiting release
-            "pending_release": 0.0,        # New: held funds ready for next payment
+            "available_commissions": 0.0,
+            "held_commissions": 0.0,
+            "pending_release": 0.0,
             "paid_commissions": 0.0,
-            "refund_rate_90d": 0.0,        # New: 90-day refund rate
-            "account_paused": False,       # New: admin can pause account
-            "terms_accepted": registration.terms_accepted,  # New: terms acceptance
-            "terms_accepted_at": current_time if registration.terms_accepted else None,  # New: when terms accepted
+            "refund_rate_90d": 0.0,
+            "account_paused": False,
+            "terms_accepted": registration.terms_accepted,
+            "terms_accepted_at": current_time if registration.terms_accepted else None,
             "created_at": current_time,
             "updated_at": current_time,
             "approved_at": None,
@@ -871,7 +875,7 @@ async def register_affiliate(registration: AffiliateRegistration):
             "verification_token": secrets.token_urlsafe(32)
         }
         
-        # Insert into database
+        # Insert affiliate
         result = await db.affiliates.insert_one(affiliate_data)
         
         # Initialize monitoring record
@@ -887,16 +891,21 @@ async def register_affiliate(registration: AffiliateRegistration):
             "custom_holdback": None
         })
         
-        # Insert into database
-        result = await db.affiliates.insert_one(affiliate_data)
-        
-        # TODO: Send verification email
+        # Create site relationships for interested sites
+        for site_id in registration.interested_sites:
+            await db.site_affiliate_relationships.insert_one({
+                "site_id": site_id,
+                "affiliate_id": affiliate_id,
+                "join_date": current_time,
+                "status": "pending"  # Will be activated after approval
+            })
         
         return {
             "success": True,
             "affiliate_id": affiliate_id,
             "message": "Registration successful. Please verify your email.",
-            "verification_email_sent": True
+            "verification_email_sent": True,
+            "sites_applied_for": len(registration.interested_sites)
         }
         
     except HTTPException:
