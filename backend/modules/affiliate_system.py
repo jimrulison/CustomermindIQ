@@ -1101,60 +1101,128 @@ async def get_affiliate_dashboard_legacy(affiliate_id: str = Query(...)):
     return await get_multisite_dashboard(affiliate_id=affiliate_id)
 
 @router.post("/generate-link")
-async def generate_tracking_link(
+async def generate_tracking_link_legacy(
     link_data: Dict[str, Any],
     affiliate_id: str = Query(...)
 ):
-    """Generate tracking link for affiliate"""
+    """Legacy link generation - defaults to main site for compatibility"""
     try:
-        campaign_name = link_data.get("campaign_name", "default")
-        link_type = LinkType(link_data.get("link_type", "trial"))
-        custom_params = link_data.get("custom_params", {})
-        
-        # Generate tracking URL
-        tracking_url = generate_tracking_url(affiliate_id, campaign_name, link_type.value)
-        
-        # Add custom UTM parameters
-        utm_params = []
-        for key, value in custom_params.items():
-            if key.startswith("utm_"):
-                utm_params.append(f"{key}={value}")
-        
-        if utm_params:
-            separator = "&" if "?" in tracking_url else "?"
-            tracking_url = f"{tracking_url}{separator}{'&'.join(utm_params)}"
-        
-        # Generate short URL
-        short_url = generate_short_url()
-        
-        # Create tracking link record
-        link_record = {
-            "id": str(uuid.uuid4()),
-            "affiliate_id": affiliate_id,
-            "campaign_name": campaign_name,
-            "link_type": link_type.value,
-            "original_url": "https://customermindiq.com",
-            "tracking_url": tracking_url,
-            "short_url": short_url,
-            "clicks": 0,
-            "conversions": 0,
-            "created_at": datetime.now(timezone.utc)
-        }
-        
-        # Store in database
-        await db.tracking_links.insert_one(link_record)
+        # Default to main site for legacy compatibility
+        result = await generate_multisite_tracking_link(
+            link_data=link_data,
+            affiliate_id=affiliate_id,
+            site_id="customermindiq",
+            campaign_name=link_data.get("campaign_name")
+        )
         
         return {
             "success": True,
-            "tracking_url": tracking_url,
-            "short_url": short_url,
-            "qr_code": f"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."  # TODO: Generate actual QR code
+            "tracking_url": result["tracking_url"],
+            "short_url": result["short_url"],
+            "qr_code": f"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."  # Placeholder
         }
         
-    except HTTPException:
-        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Link generation failed: {str(e)}")
+
+@router.post("/track/event")
+async def track_affiliate_event(event_data: Dict[str, Any]):
+    """Enhanced event tracking with multi-site support"""
+    try:
+        event_type = event_data.get("event_type")
+        affiliate_id = event_data.get("affiliate_id")
+        site_id = event_data.get("site_id", "customermindiq")  # Default to main site
+        
+        if not affiliate_id:
+            return {"success": True}  # Silent fail for missing affiliate ID
+        
+        # Record the tracking event with site information
+        tracking_record = {
+            "id": str(uuid.uuid4()),
+            "affiliate_id": affiliate_id,
+            "site_id": site_id,  # Multi-site enhancement
+            "campaign_name": event_data.get("campaign"),
+            "visitor_ip": event_data.get("ip"),
+            "user_agent": event_data.get("user_agent"),
+            "referrer": event_data.get("referrer"),
+            "landing_page": event_data.get("landing_page"),
+            "utm_source": event_data.get("utm_source"),
+            "utm_medium": event_data.get("utm_medium"),
+            "utm_campaign": event_data.get("utm_campaign"),
+            "session_id": event_data.get("session_id"),
+            "clicked_at": datetime.now(timezone.utc),
+            "converted": False,
+            "conversion_date": None
+        }
+        
+        # Store in both legacy and new collections for compatibility
+        await db.click_tracking.insert_one(tracking_record)  # Legacy
+        await db.multisite_click_tracking.insert_one(tracking_record)  # New
+        
+        # Update affiliate click count
+        await db.affiliates.update_one(
+            {"affiliate_id": affiliate_id},
+            {"$inc": {"total_clicks": 1}}
+        )
+        
+        # Handle specific event types
+        if event_type == "conversion":
+            await handle_multisite_conversion_event(event_data)
+        
+        return {"success": True, "site_id": site_id}
+        
+    except Exception as e:
+        print(f"Tracking error: {e}")
+        return {"success": False, "error": str(e)}
+
+async def handle_multisite_conversion_event(event_data: Dict[str, Any]):
+    """Handle conversion events with multi-site commission calculation"""
+    try:
+        affiliate_id = event_data.get("affiliate_id")
+        customer_id = event_data.get("customer_id")
+        site_id = event_data.get("site_id", "customermindiq")
+        plan_type = event_data.get("plan_type", "launch")
+        billing_cycle = event_data.get("billing_cycle", "monthly")
+        amount = float(event_data.get("amount", 0))
+        
+        # Update conversion tracking in both collections
+        update_data = {
+            "$set": {
+                "converted": True,
+                "conversion_date": datetime.now(timezone.utc)
+            }
+        }
+        
+        await db.click_tracking.update_one(
+            {
+                "affiliate_id": affiliate_id,
+                "session_id": event_data.get("session_id")
+            },
+            update_data
+        )
+        
+        await db.multisite_click_tracking.update_one(
+            {
+                "affiliate_id": affiliate_id,
+                "session_id": event_data.get("session_id"),
+                "site_id": site_id
+            },
+            update_data
+        )
+        
+        # Create multi-site commission record
+        await create_multisite_commission_record(
+            affiliate_id, customer_id, site_id, plan_type, amount, billing_cycle
+        )
+        
+        # Update affiliate conversion stats
+        await db.affiliates.update_one(
+            {"affiliate_id": affiliate_id},
+            {"$inc": {"total_conversions": 1}}
+        )
+        
+    except Exception as e:
+        print(f"Multi-site conversion handling error: {e}")
 
 @router.get("/materials")
 async def get_affiliate_materials(affiliate_id: str = Query(...)):
