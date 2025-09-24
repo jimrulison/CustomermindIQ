@@ -35,7 +35,69 @@ stripe.api_key = os.getenv("STRIPE_API_KEY", "sk_test_emergent")
 JWT_SECRET = os.getenv("JWT_SECRET", "affiliate-jwt-secret-key")
 JWT_ALGORITHM = "HS256"
 
-router = APIRouter(prefix="/api/affiliate", tags=["Affiliate System"])
+router = APIRouter(prefix="/api/affiliate", tags=["Multi-Site Affiliate System"])
+
+# ========== MULTI-SITE MODELS ==========
+
+class Site(BaseModel):
+    site_id: str = Field(primary_key=True)
+    name: str
+    domain: str
+    logo_url: Optional[str] = None
+    primary_color: str = "#3B82F6"
+    commission_multiplier: float = 1.0
+    status: str = "active"  # active, inactive, maintenance
+    created_date: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    custom_commission_rates: Optional[Dict] = None
+
+class SiteAffiliateRelationship(BaseModel):
+    site_id: str
+    affiliate_id: str
+    join_date: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    status: str = "active"  # active, inactive, pending
+    site_specific_rate_override: Optional[float] = None
+
+class EnhancedCommissionRecord(BaseModel):
+    commission_id: str = Field(primary_key=True)
+    affiliate_id: str
+    customer_id: str
+    site_id: str  # NEW: Which site generated this
+    plan_type: str
+    commission_amount: float
+    commission_rate: float
+    base_amount: float
+    status: str
+    earned_date: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    paid_date: Optional[datetime] = None
+    
+    # Multi-site enhancements
+    cross_site_bonus: float = 0.0
+    combo_discount_applied: bool = False
+    attributed_sites: List[str] = []
+    bonus_details: Dict = {}
+
+class ComboDiscountRule(BaseModel):
+    rule_id: str = Field(primary_key=True)
+    name: str
+    description: str
+    sites_required: List[str]  # Which sites need conversions
+    timeframe_days: int = 30
+    bonus_percentage: float  # e.g., 0.15 for 15% bonus
+    min_conversions_per_site: int = 1
+    min_total_value: float = 0.0
+    status: str = "active"  # active, inactive
+    valid_from: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    valid_until: Optional[datetime] = None
+
+class ComboDiscountTracking(BaseModel):
+    tracking_id: str = Field(primary_key=True)
+    affiliate_id: str
+    rule_id: str
+    customer_id: str
+    sites_involved: List[str]
+    total_bonus_amount: float
+    applied_date: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    commission_ids: List[str]
 
 # ========== MODELS ==========
 
