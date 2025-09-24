@@ -111,6 +111,7 @@ class MultiSiteAffiliateSystemTester:
                 "last_name": "Tester",
                 "email": self.test_affiliate_email,
                 "phone": "+1-555-0123",
+                "password": "SecurePass123!",
                 "address": {
                     "street": "123 Test Street",
                     "city": "Test City",
@@ -118,8 +119,8 @@ class MultiSiteAffiliateSystemTester:
                     "zip_code": "12345",
                     "country": "US"
                 },
-                "payment_method": {
-                    "type": "paypal",
+                "payment_method": "paypal",
+                "payment_details": {
                     "paypal_email": self.test_affiliate_email
                 },
                 "promotion_method": "social",
