@@ -442,6 +442,225 @@ def generate_short_url() -> str:
     """Generate short URL"""
     return f"https://cmiq.ly/{secrets.token_urlsafe(6)}"
 
+# ========== MULTI-SITE FUNCTIONS ==========
+
+async def get_affiliate_active_sites(affiliate_id: str) -> List[str]:
+    """Get all active sites for an affiliate"""
+    relationships = await db.site_affiliate_relationships.find({
+        "affiliate_id": affiliate_id,
+        "status": "active"
+    }).to_list(length=None)
+    
+    return [rel["site_id"] for rel in relationships]
+
+async def get_site_config(site_id: str) -> Dict:
+    """Get site configuration"""
+    site = await db.sites.find_one({"site_id": site_id})
+    if site:
+        return site
+    
+    # Fallback to default config
+    return SITES_CONFIG.get(site_id, {
+        "name": f"Site {site_id}",
+        "domain": f"{site_id}.com",
+        "logo_url": f"/logos/{site_id}.png"
+    })
+
+def calculate_multi_site_bonus(site_count: int, plan_type: str, base_commission: float) -> float:
+    """Calculate bonus based on number of active sites"""
+    if site_count < 2:
+        return 0.0
+    
+    bonus_rates = MULTI_SITE_COMMISSION_RATES[plan_type]["multi_site_bonuses"]
+    
+    # Find the highest applicable bonus rate
+    applicable_bonus = 0.0
+    for required_sites, bonus_rate in sorted(bonus_rates.items()):
+        if site_count >= required_sites:
+            applicable_bonus = bonus_rate
+    
+    return base_commission * applicable_bonus
+
+async def check_combo_discount_eligibility(
+    affiliate_id: str,
+    customer_id: str,
+    current_site_id: str,
+    current_amount: float
+) -> float:
+    """Check if customer qualifies for combo discounts"""
+    
+    # Get active combo rules
+    active_rules = await db.combo_discount_rules.find({"status": "active"}).to_list(length=None)
+    
+    total_bonus = 0.0
+    
+    for rule in active_rules:
+        cutoff_date = datetime.now(timezone.utc) - timedelta(days=rule["timeframe_days"])
+        
+        # Check if customer has recent conversions on required sites
+        recent_conversions = await db.enhanced_commission_records.find({
+            "customer_id": customer_id,
+            "site_id": {"$in": rule["sites_required"]},
+            "earned_date": {"$gte": cutoff_date}
+        }).to_list(length=None)
+        
+        # Group by site
+        sites_with_conversions = {}
+        for conv in recent_conversions:
+            if conv["site_id"] not in sites_with_conversions:
+                sites_with_conversions[conv["site_id"]] = []
+            sites_with_conversions[conv["site_id"]].append(conv)
+        
+        # Add current site if it's in required sites
+        if current_site_id in rule["sites_required"]:
+            if current_site_id not in sites_with_conversions:
+                sites_with_conversions[current_site_id] = []
+        
+        # Check if rule requirements are met
+        if len(sites_with_conversions) >= len(rule["sites_required"]):
+            # Calculate total value across sites
+            total_value = sum(conv["base_amount"] for convs in sites_with_conversions.values() for conv in convs)
+            total_value += current_amount  # Include current purchase
+            
+            if total_value >= rule["min_total_value"]:
+                # Apply bonus
+                bonus_amount = total_value * rule["bonus_percentage"]
+                total_bonus += bonus_amount
+                
+                # Log combo discount application
+                await db.combo_discount_tracking.insert_one({
+                    "tracking_id": str(uuid.uuid4()),
+                    "affiliate_id": affiliate_id,
+                    "rule_id": rule["rule_id"],
+                    "customer_id": customer_id,
+                    "sites_involved": list(sites_with_conversions.keys()) + [current_site_id],
+                    "total_bonus_amount": bonus_amount,
+                    "applied_date": datetime.now(timezone.utc),
+                    "commission_ids": []
+                })
+    
+    return total_bonus
+
+async def calculate_multisite_commission(
+    affiliate_id: str,
+    customer_id: str,
+    site_id: str,
+    plan_type: str,
+    amount: float,
+    billing_cycle: str = "monthly"
+) -> Dict:
+    """Calculate commission with multi-site bonuses and combo discounts"""
+    
+    # Get base commission
+    base_rate = MULTI_SITE_COMMISSION_RATES[plan_type]["base_rates"]["initial"]
+    base_commission = amount * base_rate
+    
+    # Get affiliate's active sites for multi-site bonus
+    active_sites = await get_affiliate_active_sites(affiliate_id)
+    multi_site_bonus = calculate_multi_site_bonus(
+        len(active_sites), 
+        plan_type, 
+        base_commission
+    )
+    
+    # Check for combo discount eligibility
+    combo_bonus = await check_combo_discount_eligibility(
+        affiliate_id,
+        customer_id,
+        site_id,
+        amount
+    )
+    
+    # Calculate total commission
+    total_commission = base_commission + multi_site_bonus + combo_bonus
+    
+    return {
+        "base_commission": base_commission,
+        "multi_site_bonus": multi_site_bonus,
+        "combo_bonus": combo_bonus,
+        "total_commission": total_commission,
+        "bonus_details": {
+            "active_sites_count": len(active_sites),
+            "combo_rules_applied": combo_bonus > 0,
+            "site_id": site_id
+        }
+    }
+
+# ========== MULTI-SITE TRACKING LINKS ==========
+
+async def generate_multisite_tracking_link(
+    link_data: Dict,
+    affiliate_id: str,
+    site_id: str,
+    campaign_name: Optional[str] = None
+) -> Dict:
+    """Generate tracking links with multi-site support"""
+    
+    # Get site configuration
+    site_config = await get_site_config(site_id)
+    base_url = f"https://{site_config['domain']}"
+    
+    # Generate enhanced UTM parameters
+    utm_params = {
+        "utm_source": f"affiliate_{affiliate_id}",
+        "utm_medium": "affiliate",
+        "utm_campaign": campaign_name or f"general_{site_id}",
+        "utm_content": f"site_{site_id}",
+        "utm_term": f"multisite_{len(await get_affiliate_active_sites(affiliate_id))}",
+        "ref": affiliate_id,
+        "site_id": site_id,
+        "ms_track": "1",  # Multi-site tracking flag
+        "aff_tier": await get_affiliate_tier(affiliate_id)
+    }
+    
+    # Build tracking URL
+    path = link_data.get("path", "")
+    tracking_url = f"{base_url}{path}?" + urlencode(utm_params)
+    
+    # Generate short URL
+    short_url = f"https://cmiq.ly/{secrets.token_urlsafe(6)}"
+    
+    # Store for analytics
+    await db.multisite_tracking_links.insert_one({
+        "id": str(uuid.uuid4()),
+        "affiliate_id": affiliate_id,
+        "site_id": site_id,
+        "url": tracking_url,
+        "short_url": short_url,
+        "utm_params": utm_params,
+        "campaign_name": campaign_name,
+        "clicks": 0,
+        "conversions": 0,
+        "created_at": datetime.now(timezone.utc)
+    })
+    
+    return {
+        "tracking_url": tracking_url,
+        "short_url": short_url,
+        "utm_params": utm_params,
+        "site_name": site_config["name"],
+        "expected_commission_rate": await get_expected_commission_rate(affiliate_id, site_id)
+    }
+
+async def get_affiliate_tier(affiliate_id: str) -> str:
+    """Get affiliate tier based on performance"""
+    active_sites = await get_affiliate_active_sites(affiliate_id)
+    site_count = len(active_sites)
+    
+    if site_count >= 10:
+        return "platinum"
+    elif site_count >= 5:
+        return "gold"
+    elif site_count >= 2:
+        return "silver"
+    else:
+        return "bronze"
+
+async def get_expected_commission_rate(affiliate_id: str, site_id: str) -> float:
+    """Calculate expected commission rate for affiliate on specific site"""
+    # This would be based on average plan type conversions, etc.
+    return 0.40  # Default to growth plan rate
+
 # Commission calculation rates
 COMMISSION_RATES = {
     "launch": {"initial": 0.30, "trailing_2_12": 0.20, "trailing_13_24": 0.10},
