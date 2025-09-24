@@ -39,7 +39,9 @@ class MultiSiteAffiliateSystemTester:
 
     async def setup_session(self):
         """Initialize HTTP session"""
+        connector = aiohttp.TCPConnector(ssl=False)
         self.session = aiohttp.ClientSession(
+            connector=connector,
             timeout=aiohttp.ClientTimeout(total=30),
             headers={"Content-Type": "application/json"}
         )
