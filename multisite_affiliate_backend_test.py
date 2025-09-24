@@ -353,7 +353,7 @@ class MultiSiteAffiliateSystemTester:
             # Test affiliate login
             login_data = {
                 "email": self.test_affiliate_email,
-                "password": "temp_password_123"  # This might not work, but let's try
+                "password": "SecurePass123!"  # Use the same password from registration
             }
             
             async with self.session.post(f"{BACKEND_URL}/api/affiliate/auth/login", json=login_data) as response:
