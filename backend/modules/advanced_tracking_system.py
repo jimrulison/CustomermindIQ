@@ -325,6 +325,22 @@ class AdvancedTrackingEngine:
         # Store conversion
         await self._save_conversion_data(conversion_data)
         
+        # Send analytics event for real-time processing
+        try:
+            from modules.ai_analytics_system import rt_manager
+            await rt_manager.update_real_time_metrics(
+                conversion_request.affiliate_id, 
+                conversion_request.site_id, 
+                "conversion", 
+                {
+                    "value": conversion_request.conversion_value,
+                    "conversion_id": conversion_id,
+                    "event_type": conversion_request.event_type
+                }
+            )
+        except Exception as e:
+            logging.warning(f"Failed to update real-time analytics for conversion: {e}")
+        
         return conversion_data
     
     async def _perform_attribution(self, conversion_data: ConversionData, 
