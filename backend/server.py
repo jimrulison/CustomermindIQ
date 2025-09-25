@@ -142,6 +142,9 @@ from modules.affiliate_system import router as affiliate_router
 # Import Advanced Tracking System
 from modules.advanced_tracking_system import router as advanced_tracking_router
 
+# Import AI Analytics System
+from modules.ai_analytics_system import router as ai_analytics_router
+
 # Import Authentication System
 from auth.auth_system import router as auth_router, create_default_admin, UserProfile, get_current_user, require_role, UserRole, hash_password, SubscriptionTier
 
