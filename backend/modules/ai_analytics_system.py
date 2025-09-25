@@ -665,18 +665,24 @@ class AIAnalyticsEngine:
             cutoff_time = datetime.now(timezone.utc) - timedelta(hours=hours)
             cutoff_time_naive = cutoff_time.replace(tzinfo=None)  # Also try without timezone
             
-            # Get tracking events
+            # Get tracking events - try both timezone-aware and naive queries
             tracking_cursor = self.db.advanced_tracking_events.find({
                 "affiliate_id": affiliate_id,
-                "created_at": {"$gte": cutoff_time}
+                "$or": [
+                    {"created_at": {"$gte": cutoff_time}},
+                    {"created_at": {"$gte": cutoff_time_naive}}
+                ]
             }).sort("created_at", 1)
             
             tracking_events = await tracking_cursor.to_list(length=None)
             
-            # Get conversion events
+            # Get conversion events - try both timezone-aware and naive queries
             conversion_cursor = self.db.advanced_conversion_events.find({
                 "affiliate_id": affiliate_id,
-                "conversion_timestamp": {"$gte": cutoff_time}
+                "$or": [
+                    {"conversion_timestamp": {"$gte": cutoff_time}},
+                    {"conversion_timestamp": {"$gte": cutoff_time_naive}}
+                ]
             }).sort("conversion_timestamp", 1)
             
             conversion_events = await conversion_cursor.to_list(length=None)
