@@ -52,10 +52,11 @@ class EmailIntegrationsAdminTester:
             if response.status_code == 200:
                 data = response.json()
                 self.admin_token = data.get("access_token")
+                user_profile = data.get("user_profile", {})
                 await self.log_result(
                     "Admin Authentication", 
                     True, 
-                    f"Admin login successful, token length: {len(self.admin_token) if self.admin_token else 0}"
+                    f"Admin login successful, role: {user_profile.get('role')}, tier: {user_profile.get('subscription_tier')}, token length: {len(self.admin_token) if self.admin_token else 0}"
                 )
                 return True
             else:
