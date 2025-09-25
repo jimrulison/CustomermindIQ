@@ -44,3 +44,10 @@ aiofiles==23.2.1
 stripe>=8.0.0
 reportlab==4.0.7
 python-docx==0.8.11
+# Advanced Tracking System Dependencies
+asyncpg>=0.28.0
+redis>=4.5.0
+aioredis>=2.0.1
+geoip2>=4.6.0
+user-agents>=2.2.0
+slowapi>=0.1.8
