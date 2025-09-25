@@ -638,7 +638,7 @@ async def get_integration_logs(
     platform: Optional[EmailPlatform] = None,
     affiliate_id: Optional[str] = None,
     limit: int = 50,
-    current_user: UserProfile = Depends(require_role(UserRole.ADMIN))
+    current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
 ):
     """Get integration webhook logs (Admin only)"""
     try:
