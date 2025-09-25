@@ -126,6 +126,16 @@ const MultiSiteAffiliatePortal = () => {
         }
     };
 
+    // Show Email Integrations component if requested
+    if (showEmailIntegrations) {
+        return (
+            <AffiliateEmailIntegrations 
+                affiliateId={affiliateId} 
+                onBack={() => setShowEmailIntegrations(false)} 
+            />
+        );
+    }
+
     if (loading) {
         return (
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
