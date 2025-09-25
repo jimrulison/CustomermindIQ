@@ -603,7 +603,7 @@ async def process_zapier_conversion(affiliate_id: str, payload: Dict):
 # ========== ADMIN ENDPOINTS ==========
 
 @router.get("/admin/overview")
-async def get_integrations_overview(current_user: UserProfile = Depends(require_role(UserRole.ADMIN))):
+async def get_integrations_overview(current_user: UserProfile = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))):
     """Get overview of all integrations (Admin only)"""
     try:
         # Get integration statistics
