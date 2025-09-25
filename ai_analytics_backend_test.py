@@ -237,15 +237,11 @@ class AIAnalyticsBackendTester:
                 )
             
             # Test email open event
+            url = f"{BASE_URL}/v3/analytics/event?affiliate_id={TEST_AFFILIATE_ID}&site_id={TEST_SITE_ID}&event_type=email_open"
             email_data = {
-                "affiliate_id": TEST_AFFILIATE_ID,
-                "site_id": TEST_SITE_ID,
-                "event_type": "email_open",
-                "event_data": {
-                    "email": "test@example.com",
-                    "campaign_id": "email_campaign_001",
-                    "timestamp": datetime.now().isoformat()
-                }
+                "email": "test@example.com",
+                "campaign_id": "email_campaign_001",
+                "timestamp": datetime.now().isoformat()
             }
             
             response = await self.client.post(url, json=email_data)
