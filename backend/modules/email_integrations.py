@@ -7,6 +7,7 @@ import hashlib
 import httpx
 from datetime import datetime, timezone
 from typing import List, Dict, Any, Optional
+from enum import Enum
 from fastapi import APIRouter, HTTPException, Depends, Header, BackgroundTasks
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, EmailStr, Field
