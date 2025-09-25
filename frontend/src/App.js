@@ -3374,6 +3374,13 @@ Click "Pursue" in Expansion Opportunities to initiate outreach!`)}
 
       {/* Live Chat Widget - Always available for premium users */}
       {user && <LiveChatWidget />}
+      
+      {/* Advanced Tracking Integration - Always Active */}
+      <Suspense fallback={null}>
+        <AdvancedTrackingIntegration debug={process.env.NODE_ENV === 'development'} />
+        <TrialTrackingIntegration />
+        <SubscriptionTrackingIntegration />
+      </Suspense>
     </div>
   );
 }
