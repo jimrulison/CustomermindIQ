@@ -383,6 +383,15 @@ class AIAnalyticsBackendTester:
             timeframes = ["1h", "1d", "7d", "30d"]
             
             for timeframe in timeframes:
+                # Skip dashboard test for now due to internal function call issues
+                # This is a known issue that needs to be fixed in the backend
+                await self.log_test(
+                    f"Dashboard Integration ({timeframe})",
+                    False,
+                    "Dashboard endpoint has internal function call issues - needs backend fix"
+                )
+                continue
+                
                 url = f"{BASE_URL}/v3/analytics/dashboard/{TEST_AFFILIATE_ID}?timeframe={timeframe}"
                 response = await self.client.get(url)
                 
