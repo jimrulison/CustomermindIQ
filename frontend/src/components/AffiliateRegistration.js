@@ -40,8 +40,23 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
             account_number: '',
             account_type: 'checking'
         },
-        terms_accepted: false
+        terms_accepted: false,
+        // Multi-site enhancement
+        interested_sites: []
     });
+
+    // Available sites for multi-site selection
+    const availableSites = [
+        { id: 'customermindiq', name: 'CustomerMindIQ.com', description: 'AI-powered customer intelligence' },
+        { id: 'postvelocity', name: 'PostVelocity.com', description: 'Social media automation' },
+        { id: 'connectmycustomer', name: 'ConnectMyCustomer.com', description: 'Customer relationship tools' },
+        { id: 'usethissearch', name: 'UseThisSearch.com', description: 'Search optimization' },
+        { id: 'groupkeywords', name: 'GroupKeywords.com', description: 'Keyword research tools' },
+        { id: 'trainercreator', name: 'TrainerCreator.com', description: 'Training course platform' },
+        { id: 'cleancutvideos', name: 'CleanCutVideos.com', description: 'Video editing services' },
+        { id: 'seegrabpost', name: 'SeeGrabPost.com', description: 'Content grabbing tools' },
+        { id: 'backlinkdigger', name: 'BacklinkDigger.com', description: 'SEO backlink analysis' }
+    ];
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [showPassword, setShowPassword] = useState(true);
