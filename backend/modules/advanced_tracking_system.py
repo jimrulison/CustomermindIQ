@@ -258,6 +258,18 @@ class AdvancedTrackingEngine:
         # Store in database
         await self._save_tracking_data(tracking_data)
         
+        # Send analytics event for real-time processing
+        try:
+            from modules.ai_analytics_system import rt_manager
+            await rt_manager.update_real_time_metrics(
+                track_data.affiliate_id, 
+                track_data.site_id, 
+                "click", 
+                {"tracking_id": tracking_id}
+            )
+        except Exception as e:
+            logging.warning(f"Failed to update real-time analytics for click: {e}")
+        
         return tracking_data
     
     async def track_conversion(self, request: Request, conversion_request: TrackConversionRequest) -> ConversionData:
