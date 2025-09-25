@@ -203,16 +203,12 @@ class AIAnalyticsBackendTester:
             await asyncio.sleep(1)
             
             # Test conversion event
+            url = f"{BASE_URL}/v3/analytics/event?affiliate_id={TEST_AFFILIATE_ID}&site_id={TEST_SITE_ID}&event_type=conversion"
             conversion_data = {
-                "affiliate_id": TEST_AFFILIATE_ID,
-                "site_id": TEST_SITE_ID,
-                "event_type": "conversion",
-                "event_data": {
-                    "value": 99.99,
-                    "order_id": "test_order_001",
-                    "customer_id": "test_customer_001",
-                    "timestamp": datetime.now().isoformat()
-                }
+                "value": 99.99,
+                "order_id": "test_order_001",
+                "customer_id": "test_customer_001",
+                "timestamp": datetime.now().isoformat()
             }
             
             response = await self.client.post(url, json=conversion_data)
