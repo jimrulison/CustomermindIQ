@@ -37,12 +37,12 @@ router = APIRouter(prefix="/api/integrations", tags=["Email Platform Integration
 
 # ========== MODELS ==========
 
-class EmailPlatform(str):
+class EmailPlatform(str, Enum):
     CONVERTKIT = "convertkit"
     GETRESPONSE = "getresponse"  
     ZAPIER = "zapier"
 
-class IntegrationStatus(str):
+class IntegrationStatus(str, Enum):
     ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
