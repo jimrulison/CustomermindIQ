@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import AffiliateEmailIntegrations from './AffiliateEmailIntegrations';
 import { 
     Users, 
     DollarSign, 
@@ -31,6 +32,7 @@ const MultiSiteAffiliatePortal = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [affiliateId, setAffiliateId] = useState('');
+    const [showEmailIntegrations, setShowEmailIntegrations] = useState(false); // NEW
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://seo-legal-update.preview.emergentagent.com';
 
