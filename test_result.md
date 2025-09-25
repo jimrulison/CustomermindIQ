@@ -146,11 +146,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Multi-Site Affiliate System Backend Implementation"
-    - "Admin Portal Create Forms Testing"
-    - "Modal System Functionality Validation"
+    - "Multi-Site Affiliate Frontend Implementation Testing"
+    - "Enhanced Affiliate Registration Testing"
+    - "Multi-Site Backend Integration Testing"
   stuck_tasks: 
-    - "Admin Portal Create Forms - Missing Modal Content"
+    - "Multi-Site Affiliate Frontend Components - Authentication Required"
   test_all: false
   test_priority: "high_first"
 
