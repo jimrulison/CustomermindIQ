@@ -2696,6 +2696,9 @@ app.include_router(payment_router, prefix="/api/payments", tags=["Payment System
 # Affiliate System Router
 app.include_router(affiliate_router, tags=["Affiliate System"])
 
+# Include Advanced Tracking System
+app.include_router(advanced_tracking_router, tags=["Advanced Tracking"])
+
 # Import Affiliate Chat System Module
 from modules.affiliate_chat import router as affiliate_chat_router
 from modules.affiliate_landing_pages import affiliate_pages_router
