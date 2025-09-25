@@ -2702,6 +2702,9 @@ app.include_router(affiliate_router, tags=["Affiliate System"])
 # Include Advanced Tracking System
 app.include_router(advanced_tracking_router, tags=["Advanced Tracking"])
 
+# Include AI Analytics System  
+app.include_router(ai_analytics_router, tags=["AI Analytics"])
+
 # Import Affiliate Chat System Module
 from modules.affiliate_chat import router as affiliate_chat_router
 from modules.affiliate_landing_pages import affiliate_pages_router
