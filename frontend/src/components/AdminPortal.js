@@ -4042,6 +4042,134 @@ const AdminPortalEnhanced = () => {
             </div>
           )}
 
+          {/* Email Integrations Tab */}
+          {activeTab === 'email-integrations' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">Email Platform Integrations</h2>
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => window.open('#email-integrations-admin', '_blank')}
+                    className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+                  >
+                    <Zap className="w-4 h-4 mr-2" />
+                    Open Full Interface
+                  </button>
+                  <button
+                    onClick={() => {
+                      setModalType('setup-integration');
+                      setShowModal(true);
+                    }}
+                    className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Setup Integration
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* ConvertKit Card */}
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center">
+                      <div className="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center">
+                        <Mail className="w-5 h-5 text-pink-600" />
+                      </div>
+                      <div className="ml-3">
+                        <h3 className="text-lg font-semibold text-white">ConvertKit</h3>
+                        <p className="text-slate-400 text-sm">Email marketing automation</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2 mb-4">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Active Integrations:</span>
+                      <span className="text-white">0</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Last Sync:</span>
+                      <span className="text-slate-300">Never</span>
+                    </div>
+                  </div>
+                  <button className="w-full px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700">
+                    View Integrations
+                  </button>
+                </div>
+
+                {/* GetResponse Card */}
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center">
+                      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <Mail className="w-5 h-5 text-blue-600" />
+                      </div>
+                      <div className="ml-3">
+                        <h3 className="text-lg font-semibold text-white">GetResponse</h3>
+                        <p className="text-slate-400 text-sm">Email marketing platform</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2 mb-4">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Active Integrations:</span>
+                      <span className="text-white">0</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Last Sync:</span>
+                      <span className="text-slate-300">Never</span>
+                    </div>
+                  </div>
+                  <button className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    View Integrations
+                  </button>
+                </div>
+
+                {/* Zapier Card */}
+                <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center">
+                      <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <Zap className="w-5 h-5 text-orange-600" />
+                      </div>
+                      <div className="ml-3">
+                        <h3 className="text-lg font-semibold text-white">Zapier</h3>
+                        <p className="text-slate-400 text-sm">Automation workflows</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2 mb-4">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Active Integrations:</span>
+                      <span className="text-white">0</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Last Sync:</span>
+                      <span className="text-slate-300">Never</span>
+                    </div>
+                  </div>
+                  <button className="w-full px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700">
+                    View Integrations
+                  </button>
+                </div>
+              </div>
+
+              {/* Recent Activity */}
+              <div className="bg-slate-800/50 rounded-lg border border-slate-700">
+                <div className="p-6 border-b border-slate-700">
+                  <h3 className="text-lg font-semibold text-white">Recent Integration Activity</h3>
+                  <p className="text-slate-400 text-sm mt-1">Latest webhook events and sync activities</p>
+                </div>
+                <div className="p-6">
+                  <div className="text-center py-8">
+                    <Zap className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+                    <p className="text-slate-400">No recent integration activity</p>
+                    <p className="text-slate-500 text-sm">Setup integrations to see webhook events and sync data</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           {/* Trial Emails Tab */}
           {activeTab === 'trial-emails' && (
             <div className="space-y-6">
