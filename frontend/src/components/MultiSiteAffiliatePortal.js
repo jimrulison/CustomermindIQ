@@ -34,7 +34,7 @@ const MultiSiteAffiliatePortal = () => {
     const [affiliateId, setAffiliateId] = useState('');
     const [showEmailIntegrations, setShowEmailIntegrations] = useState(false); // NEW
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://seo-legal-update.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customeriq-hub.preview.emergentagent.com';
 
     useEffect(() => {
         // Get affiliate data from localStorage

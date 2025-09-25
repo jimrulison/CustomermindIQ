@@ -29,7 +29,7 @@ const EmailIntegrationsAdmin = () => {
     const [showApiKey, setShowApiKey] = useState({});
     const [error, setError] = useState('');
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://seo-legal-update.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customeriq-hub.preview.emergentagent.com';
 
     const platformInfo = {
         convertkit: {

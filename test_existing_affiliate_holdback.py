@@ -8,7 +8,7 @@ import requests
 import json
 
 # Configuration
-BACKEND_URL = "https://seo-legal-update.preview.emergentagent.com"
+BACKEND_URL = "https://customeriq-hub.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Admin credentials

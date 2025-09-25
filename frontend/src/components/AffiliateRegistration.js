@@ -62,7 +62,7 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
     const [showPassword, setShowPassword] = useState(true);
     const [showConfirmPassword, setShowConfirmPassword] = useState(true);
 
-    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://seo-legal-update.preview.emergentagent.com';
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customeriq-hub.preview.emergentagent.com';
 
     const handleInputChange = (field, value) => {
         if (field.includes('.')) {

@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Get backend URL from environment
-BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://seo-legal-update.preview.emergentagent.com")
+BACKEND_URL = os.getenv("REACT_APP_BACKEND_URL", "https://customeriq-hub.preview.emergentagent.com")
 
 class TrialRegistrationTester:
     def __init__(self):

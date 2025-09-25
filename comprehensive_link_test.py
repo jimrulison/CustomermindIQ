@@ -11,7 +11,7 @@ This script performs comprehensive link testing for the CustomerMind IQ applicat
 5. SEO URL Structure - canonical URLs, sitemap validation, structured data, robots.txt
 6. Link Consistency - broken links, navigation consistency, breadcrumbs, header/footer links
 
-BACKEND URL: https://seo-legal-update.preview.emergentagent.com
+BACKEND URL: https://customeriq-hub.preview.emergentagent.com
 ADMIN CREDENTIALS: admin@customermindiq.com / CustomerMindIQ2025!
 """
 
@@ -31,7 +31,7 @@ from urllib.parse import urljoin, urlparse
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configuration - Use production URL from frontend .env
-BACKEND_URL = "https://seo-legal-update.preview.emergentagent.com"
+BACKEND_URL = "https://customeriq-hub.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test credentials

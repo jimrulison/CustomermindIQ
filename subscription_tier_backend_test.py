@@ -16,7 +16,7 @@ from typing import Dict, Any, List
 sys.path.append('/app/backend')
 
 # Test Configuration
-BACKEND_URL = "https://seo-legal-update.preview.emergentagent.com/api"
+BACKEND_URL = "https://customeriq-hub.preview.emergentagent.com/api"
 ADMIN_EMAIL = "admin@customermindiq.com"
 ADMIN_PASSWORD = "CustomerMindIQ2025!"
 

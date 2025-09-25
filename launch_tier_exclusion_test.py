@@ -13,7 +13,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Test Configuration
-BACKEND_URL = "https://seo-legal-update.preview.emergentagent.com/api"
+BACKEND_URL = "https://customeriq-hub.preview.emergentagent.com/api"
 
 class LaunchTierExclusionTester:
     def __init__(self):
