@@ -522,6 +522,62 @@ const AffiliateRegistration = ({ onRegistrationComplete }) => {
                         {step === 2 && renderStep2()}
                         {step === 3 && renderStep3()}
 
+                        {/* Multi-Site Selection - New Section */}
+                        <div>
+                            <h3 className="text-lg font-medium text-gray-900 mb-4">Sites You'd Like to Promote</h3>
+                            <p className="text-sm text-gray-600 mb-4">
+                                Select the sites you're interested in promoting. You can earn multi-site bonuses for promoting multiple sites!
+                            </p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {availableSites.map((site) => (
+                                    <label key={site.id} className="relative flex p-4 border rounded-lg cursor-pointer hover:border-indigo-300 transition-colors">
+                                        <input
+                                            type="checkbox"
+                                            value={site.id}
+                                            checked={formData.interested_sites.includes(site.id)}
+                                            onChange={(e) => {
+                                                const siteId = e.target.value;
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    interested_sites: e.target.checked 
+                                                        ? [...prev.interested_sites, siteId]
+                                                        : prev.interested_sites.filter(id => id !== siteId)
+                                                }));
+                                            }}
+                                            className="sr-only"
+                                        />
+                                        <div className={`flex-1 ${formData.interested_sites.includes(site.id) ? 'border-indigo-500 bg-indigo-50' : ''}`}>
+                                            <div className="flex items-center">
+                                                <div className="flex-1">
+                                                    <div className="text-sm font-medium text-gray-900">{site.name}</div>
+                                                    <div className="text-xs text-gray-500">{site.description}</div>
+                                                </div>
+                                                {formData.interested_sites.includes(site.id) && (
+                                                    <div className="ml-2">
+                                                        <svg className="h-5 w-5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
+                                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                                        </svg>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </label>
+                                ))}
+                            </div>
+                            {formData.interested_sites.length > 1 && (
+                                <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                                    <div className="flex items-center">
+                                        <svg className="h-5 w-5 text-green-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                        </svg>
+                                        <span className="text-sm text-green-700">
+                                            Great! You'll be eligible for multi-site bonuses with {formData.interested_sites.length} sites selected.
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
                         {/* Terms and Conditions - Only on final step */}
                         {step === 3 && (
                             <div className="mt-8 p-6 bg-gray-50 rounded-lg border">
