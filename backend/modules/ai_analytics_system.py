@@ -665,27 +665,40 @@ class AIAnalyticsEngine:
             cutoff_time = datetime.now(timezone.utc) - timedelta(hours=hours)
             cutoff_time_naive = cutoff_time.replace(tzinfo=None)  # Also try without timezone
             
-            # Get tracking events - try both timezone-aware and naive queries
+            # Get tracking events - temporarily skip date filtering due to MongoDB query issues
+            # TODO: Fix date filtering issue with MongoDB
             tracking_cursor = self.db.advanced_tracking_events.find({
-                "affiliate_id": affiliate_id,
-                "$or": [
-                    {"created_at": {"$gte": cutoff_time}},
-                    {"created_at": {"$gte": cutoff_time_naive}}
-                ]
+                "affiliate_id": affiliate_id
             }).sort("created_at", 1)
             
             tracking_events = await tracking_cursor.to_list(length=None)
             
-            # Get conversion events - try both timezone-aware and naive queries
+            # Get conversion events - temporarily skip date filtering due to MongoDB query issues  
+            # TODO: Fix date filtering issue with MongoDB
             conversion_cursor = self.db.advanced_conversion_events.find({
-                "affiliate_id": affiliate_id,
-                "$or": [
-                    {"conversion_timestamp": {"$gte": cutoff_time}},
-                    {"conversion_timestamp": {"$gte": cutoff_time_naive}}
-                ]
+                "affiliate_id": affiliate_id
             }).sort("conversion_timestamp", 1)
             
             conversion_events = await conversion_cursor.to_list(length=None)
+            
+            # Filter events by date in Python since MongoDB query has issues
+            if tracking_events:
+                tracking_events = [
+                    event for event in tracking_events 
+                    if event.get('created_at') and (
+                        event.get('created_at') >= cutoff_time_naive or 
+                        (hasattr(event.get('created_at'), 'replace') and event.get('created_at').replace(tzinfo=timezone.utc) >= cutoff_time)
+                    )
+                ]
+            
+            if conversion_events:
+                conversion_events = [
+                    event for event in conversion_events 
+                    if event.get('conversion_timestamp') and (
+                        event.get('conversion_timestamp') >= cutoff_time_naive or 
+                        (hasattr(event.get('conversion_timestamp'), 'replace') and event.get('conversion_timestamp').replace(tzinfo=timezone.utc) >= cutoff_time)
+                    )
+                ]
             
             # Aggregate data by hour or day
             time_buckets = {}
