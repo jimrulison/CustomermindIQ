@@ -97,6 +97,7 @@ const AIBusinessInsights = React.lazy(() => import('./components/AIBusinessInsig
 const ProductivityIntelligence = React.lazy(() => import('./components/ProductivityIntelligence'));
 const AffiliateRegistration = React.lazy(() => import('./components/AffiliateRegistration'));
 const AffiliateAuth = React.lazy(() => import('./components/AffiliateAuth'));
+const EmailIntegrationsAdmin = React.lazy(() => import('./components/EmailIntegrationsAdmin'));
 const LegalDocuments = React.lazy(() => import('./components/LegalDocuments'));
 const Footer = React.lazy(() => import('./components/Footer'));
 
