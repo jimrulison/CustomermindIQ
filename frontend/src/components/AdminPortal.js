@@ -4169,6 +4169,7 @@ const AdminPortalEnhanced = () => {
                 </div>
               </div>
             </div>
+          )}
 
           {/* Trial Emails Tab */}
           {activeTab === 'trial-emails' && (
