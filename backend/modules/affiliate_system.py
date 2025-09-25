@@ -1856,6 +1856,138 @@ async def create_multisite_commission_record(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Commission creation failed: {str(e)}")
 
+@router.post("/v2/commission/create")
+async def create_commission_v2_with_tracking(
+    affiliate_id: str,
+    customer_email: EmailStr,
+    plan_type: str,
+    commission_amount: float,
+    tracking_id: Optional[str] = None,
+    site_id: str = "customermindiq"
+):
+    """Create commission with advanced tracking integration"""
+    try:
+        commission_id = f"comm_{uuid.uuid4().hex[:16]}"
+        
+        # Calculate multi-site commission with bonuses
+        base_commission = commission_amount
+        
+        # Get affiliate's active sites for multi-site bonus calculation
+        active_sites = await get_affiliate_active_sites(affiliate_id)
+        multi_site_bonus = calculate_multi_site_bonus(len(active_sites), plan_type, base_commission)
+        
+        # Check for combo discount eligibility
+        combo_bonus = await check_combo_discount_eligibility(
+            affiliate_id, customer_email, site_id, commission_amount
+        )
+        
+        total_commission = base_commission + multi_site_bonus + combo_bonus
+        
+        # Create enhanced commission record
+        commission_data = {
+            "commission_id": commission_id,
+            "tracking_id": tracking_id,  # Link to advanced tracking
+            "affiliate_id": affiliate_id,
+            "customer_email": customer_email,
+            "customer_id": customer_email,  # Use email as customer ID for now
+            "site_id": site_id,
+            "plan_type": plan_type,
+            "commission_amount": total_commission,
+            "base_amount": base_commission,
+            "commission_rate": 0.30,  # Default 30%
+            "status": "approved",
+            "earned_date": datetime.now(timezone.utc),
+            "paid_date": None,
+            
+            # Multi-site enhancements
+            "cross_site_bonus": multi_site_bonus,
+            "combo_discount_applied": combo_bonus > 0,
+            "attributed_sites": active_sites,
+            "bonus_details": {
+                "multi_site_bonus": multi_site_bonus,
+                "combo_bonus": combo_bonus,
+                "total_sites": len(active_sites)
+            }
+        }
+        
+        # Store commission
+        await db.enhanced_commissions.insert_one(commission_data)
+        
+        # Update affiliate totals
+        await db.affiliates.update_one(
+            {"affiliate_id": affiliate_id},
+            {
+                "$inc": {
+                    "total_commissions": total_commission,
+                    "available_commissions": total_commission,
+                    "total_conversions": 1
+                },
+                "$set": {"updated_at": datetime.now(timezone.utc)}
+            }
+        )
+        
+        # Log combo bonus if applied
+        if combo_bonus > 0:
+            await db.combo_discount_tracking.insert_one({
+                "tracking_id": f"combo_{uuid.uuid4().hex[:12]}",
+                "affiliate_id": affiliate_id,
+                "rule_id": "multi_site_bonus",
+                "customer_id": customer_email,
+                "sites_involved": [site_id],
+                "total_bonus_amount": combo_bonus,
+                "applied_date": datetime.now(timezone.utc),
+                "commission_ids": [commission_id]
+            })
+        
+        return {
+            "success": True,
+            "commission_id": commission_id,
+            "total_commission": total_commission,
+            "breakdown": {
+                "base_commission": base_commission,
+                "multi_site_bonus": multi_site_bonus,
+                "combo_bonus": combo_bonus
+            },
+            "tracking_integration": {
+                "tracking_id": tracking_id,
+                "attribution_method": "advanced_tracking" if tracking_id else "direct"
+            }
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Commission creation failed: {str(e)}")
+
+@router.get("/v2/tracking/integration-test")
+async def test_tracking_integration(affiliate_id: str, customer_email: EmailStr):
+    """Test integration with advanced tracking system"""
+    try:
+        # Simulate a conversion with tracking
+        tracking_id = f"test_track_{uuid.uuid4().hex[:12]}"
+        
+        # Create a test commission using the advanced system
+        commission_result = await create_commission_v2_with_tracking(
+            affiliate_id=affiliate_id,
+            customer_email=customer_email,
+            plan_type="growth",
+            commission_amount=75.0,
+            tracking_id=tracking_id,
+            site_id="customermindiq"
+        )
+        
+        return {
+            "success": True,
+            "integration_test": "passed",
+            "test_tracking_id": tracking_id,
+            "commission_created": commission_result
+        }
+        
+    except Exception as e:
+        return {
+            "success": False,
+            "integration_test": "failed",
+            "error": str(e)
+        }
+
 @router.post("/admin/initialize-sites")
 async def initialize_sites(current_user: UserProfile = Depends(require_role(UserRole.SUPER_ADMIN))):
     """Initialize sites configuration (Admin only)"""
