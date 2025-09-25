@@ -184,6 +184,35 @@ const MultiSiteAffiliatePortal = () => {
                     </div>
                 )}
 
+                {/* Tab Navigation */}
+                <div className="mb-8">
+                    <div className="border-b border-gray-200">
+                        <nav className="-mb-px flex space-x-8">
+                            {tabs.map((tab) => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => {
+                                        if (tab.id === 'email-integrations') {
+                                            setShowEmailIntegrations(true);
+                                        } else {
+                                            setShowEmailIntegrations(false);
+                                            setActiveTab(tab.id);
+                                        }
+                                    }}
+                                    className={`flex items-center py-2 px-1 border-b-2 font-medium text-sm ${
+                                        activeTab === tab.id
+                                            ? 'border-indigo-500 text-indigo-600'
+                                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                    }`}
+                                >
+                                    <span className="mr-2">{tab.icon}</span>
+                                    {tab.name}
+                                </button>
+                            ))}
+                        </nav>
+                    </div>
+                </div>
+
                 {/* Site Selector */}
                 <div className="mb-8 bg-white rounded-lg shadow p-6">
                     <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
