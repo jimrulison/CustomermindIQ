@@ -213,8 +213,11 @@ const MultiSiteAffiliatePortal = () => {
                     </div>
                 </div>
 
-                {/* Site Selector */}
-                <div className="mb-8 bg-white rounded-lg shadow p-6">
+                {/* Tab Content */}
+                {activeTab === 'dashboard' && (
+                    <>
+                        {/* Site Selector */}
+                        <div className="mb-8 bg-white rounded-lg shadow p-6">
                     <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                         <Globe className="w-5 h-5 mr-2" />
                         Select Sites to View
