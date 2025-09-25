@@ -495,6 +495,29 @@ const MultiSiteAffiliatePortal = () => {
                         </div>
                     </div>
                 )}
+                    </>
+                )}
+
+                {/* AI Analytics Tab */}
+                {activeTab === 'analytics' && (
+                    <AIAnalyticsDashboard 
+                        affiliateId={affiliateId} 
+                        siteIds={selectedSites.length > 0 ? selectedSites : null}
+                        showRealTimeMetrics={true}
+                        showInsights={true}
+                        showPredictions={true}
+                        showAlerts={true}
+                        refreshInterval={30000} // 30 seconds
+                    />
+                )}
+
+                {/* Performance Tab */}
+                {activeTab === 'performance' && (
+                    <div className="bg-white rounded-lg shadow p-6">
+                        <h2 className="text-lg font-semibold text-gray-900 mb-4">Performance Analytics</h2>
+                        <p className="text-gray-600">Detailed performance metrics and charts coming soon...</p>
+                    </div>
+                )}
             </div>
         </div>
     );
