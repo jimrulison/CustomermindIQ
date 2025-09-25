@@ -661,8 +661,9 @@ class AIAnalyticsEngine:
         """Get performance data from tracking events and commissions"""
         
         try:
-            # Calculate cutoff time
+            # Calculate cutoff time - handle both timezone-aware and naive datetimes
             cutoff_time = datetime.now(timezone.utc) - timedelta(hours=hours)
+            cutoff_time_naive = cutoff_time.replace(tzinfo=None)  # Also try without timezone
             
             # Get tracking events
             tracking_cursor = self.db.advanced_tracking_events.find({
