@@ -58,6 +58,7 @@ const CustomerJourneyDashboard = React.lazy(() => import('./components/CustomerJ
 const CompetitiveIntelligenceDashboard = React.lazy(() => import('./components/CompetitiveIntelligenceDashboard'));
 const AdminPortal = React.lazy(() => import('./components/AdminPortal'));
 const AffiliatePortal = React.lazy(() => import('./components/AffiliatePortal'));
+const MultiSiteAffiliatePortal = React.lazy(() => import('./components/MultiSiteAffiliatePortal'));
 
 // Missing components - commented out to fix build
 // const SalesIntelligenceDashboard = React.lazy(() => import('./components/SalesIntelligenceDashboard'));
