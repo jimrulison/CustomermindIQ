@@ -1,4 +1,4 @@
-# Multi-Site Affiliate System
+# Multi-Site Affiliate System with Advanced Tracking Integration
 import os
 import uuid
 import secrets
@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 import asyncio
 import stripe
 from urllib.parse import urlencode
+import json
 
 # Import authentication from main auth system
 from auth.auth_system import get_current_user, UserProfile, require_role, UserRole
