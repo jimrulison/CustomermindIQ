@@ -363,7 +363,10 @@ const MultiSiteAffiliatePortal = () => {
                             View Analytics
                         </button>
 
-                        <button className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                        <button 
+                            onClick={() => setShowEmailIntegrations(true)}
+                            className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                        >
                             <Settings className="w-4 h-4 mr-2" />
                             Email Integrations
                         </button>
