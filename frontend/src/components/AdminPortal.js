@@ -1129,6 +1129,7 @@ const AdminPortalEnhanced = () => {
                 { id: 'affiliate-monitoring', name: 'Affiliate Monitoring', icon: AlertTriangle },
                 { id: 'contact-forms', name: 'Contact Forms', icon: Mail },
                 { id: 'emails', name: 'Email System', icon: Mail },
+                { id: 'email-integrations', name: 'Email Integrations', icon: Zap },
                 { id: 'trial-emails', name: 'Trial Emails', icon: Clock },
                 { id: 'refunds', name: 'Refunds & Usage', icon: CreditCard },
                 ...(user.role === 'super_admin' ? [
