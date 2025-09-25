@@ -115,6 +115,9 @@ from modules.email_system import router as email_router
 # Import Email Providers System (NEW)
 from modules.email_providers.api_routes import router as email_providers_router
 
+# Import Email Integrations Module
+from modules.email_integrations import router as email_integrations_router
+
 # Import ODOO Integration System
 from modules.odoo_integration import router as odoo_router
 
