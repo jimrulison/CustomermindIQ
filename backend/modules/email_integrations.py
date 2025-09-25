@@ -623,6 +623,11 @@ async def get_integrations_overview(current_user: UserProfile = Depends(require_
         # Get recent webhook logs
         recent_logs = await db.integration_webhook_logs.find().sort("created_at", -1).limit(10).to_list(length=10)
         
+        # Convert ObjectIds to strings
+        for log in recent_logs:
+            if "_id" in log:
+                log["_id"] = str(log["_id"])
+        
         return {
             "success": True,
             "platform_stats": stats,
