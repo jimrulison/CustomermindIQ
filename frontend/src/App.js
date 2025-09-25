@@ -98,9 +98,9 @@ const ProductivityIntelligence = React.lazy(() => import('./components/Productiv
 const AffiliateRegistration = React.lazy(() => import('./components/AffiliateRegistration'));
 const AffiliateAuth = React.lazy(() => import('./components/AffiliateAuth'));
 const EmailIntegrationsAdmin = React.lazy(() => import('./components/EmailIntegrationsAdmin'));
-const AdvancedTrackingIntegration = React.lazy(() => import('./components/AdvancedTrackingIntegration'));
-const TrialTrackingIntegration = React.lazy(() => import('./components/TrialTrackingIntegration'));
-const SubscriptionTrackingIntegration = React.lazy(() => import('./components/SubscriptionTrackingIntegration'));
+const AdvancedTrackingIntegration = React.lazy(() => import('./components/AdvancedTrackingIntegration').then(module => ({ default: module.default })));
+const TrialTrackingIntegration = React.lazy(() => import('./components/AdvancedTrackingIntegration').then(module => ({ default: module.TrialTrackingIntegration })));
+const SubscriptionTrackingIntegration = React.lazy(() => import('./components/AdvancedTrackingIntegration').then(module => ({ default: module.SubscriptionTrackingIntegration })));
 const LegalDocuments = React.lazy(() => import('./components/LegalDocuments'));
 const Footer = React.lazy(() => import('./components/Footer'));
 
