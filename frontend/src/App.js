@@ -1722,6 +1722,12 @@ ${details.updateFrequency}
           />
         )}
         
+        {currentPage === 'multisite-affiliate-portal' && (
+          <MultiSiteAffiliatePortal 
+            onNavigate={handleNavigate}
+          />
+        )}
+        
         {currentPage === 'affiliate-registration' && (
           <AffiliateRegistration 
             onRegistrationComplete={(data) => {
