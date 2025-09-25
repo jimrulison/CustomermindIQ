@@ -655,6 +655,11 @@ async def get_integration_logs(
         
         logs = await db.integration_webhook_logs.find(query).sort("created_at", -1).limit(limit).to_list(length=limit)
         
+        # Convert ObjectIds to strings
+        for log in logs:
+            if "_id" in log:
+                log["_id"] = str(log["_id"])
+        
         return {
             "success": True,
             "logs": logs,
