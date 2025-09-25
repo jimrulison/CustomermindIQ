@@ -166,20 +166,15 @@ class AIAnalyticsBackendTester:
     async def test_event_tracking(self):
         """Test analytics event tracking"""
         try:
-            # Test click event
-            click_data = {
-                "affiliate_id": TEST_AFFILIATE_ID,
-                "site_id": TEST_SITE_ID,
-                "event_type": "click",
-                "event_data": {
-                    "source": "test",
-                    "campaign": "analytics_test",
-                    "timestamp": datetime.now().isoformat()
-                }
+            # Test click event - using query parameters as expected by API
+            url = f"{BASE_URL}/v3/analytics/event?affiliate_id={TEST_AFFILIATE_ID}&site_id={TEST_SITE_ID}&event_type=click"
+            event_data = {
+                "source": "test",
+                "campaign": "analytics_test",
+                "timestamp": datetime.now().isoformat()
             }
             
-            url = f"{BASE_URL}/v3/analytics/event"
-            response = await self.client.post(url, json=click_data)
+            response = await self.client.post(url, json=event_data)
             
             if response.status_code == 200:
                 data = response.json()
