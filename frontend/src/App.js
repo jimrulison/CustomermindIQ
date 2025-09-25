@@ -1944,6 +1944,13 @@ ${details.updateFrequency}
           </div>
         )}
         
+        {/* Email Integrations Admin Module */}
+        {currentPage === 'email-integrations-admin' && (
+          <EmailIntegrationsAdmin 
+            onNavigate={handleNavigate}
+          />
+        )}
+        
         {/* Growth Intelligence Suite Module */}
         {currentPage === 'growth' && (
           <GrowthIntelligenceSuite />
