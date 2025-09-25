@@ -48,6 +48,17 @@
         
         <!-- Microsoft -->
         <meta name="msapplication-TileColor" content="#0f172a" />
+        
+        <!-- Advanced Tracking Configuration -->
+        <script>
+            window.affiliateTrackerConfig = {
+                apiBaseUrl: window.location.origin + '/api/v2/track',
+                debug: false, // Set to true for development
+                enableFingerprinting: true,
+                enablePixelTracking: true,
+                cookieDomain: window.location.hostname
+            };
+        </script>
         <meta name="msapplication-config" content="/browserconfig.xml" />
         
         <!-- Additional SEO Meta Tags -->
