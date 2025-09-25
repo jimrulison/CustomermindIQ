@@ -33,9 +33,18 @@ const MultiSiteAffiliatePortal = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [affiliateId, setAffiliateId] = useState('');
-    const [showEmailIntegrations, setShowEmailIntegrations] = useState(false); // NEW
+    const [showEmailIntegrations, setShowEmailIntegrations] = useState(false);
+    const [activeTab, setActiveTab] = useState('dashboard'); // NEW: Tab state
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'https://customeriq-hub.preview.emergentagent.com';
+
+    // Tab configuration
+    const tabs = [
+        { id: 'dashboard', name: 'Dashboard', icon: '📊' },
+        { id: 'analytics', name: 'AI Analytics', icon: '🤖' },
+        { id: 'performance', name: 'Performance', icon: '📈' },
+        { id: 'email-integrations', name: 'Email Marketing', icon: '📧' }
+    ];
 
     useEffect(() => {
         // Get affiliate data from localStorage
