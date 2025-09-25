@@ -459,9 +459,11 @@ async def get_affiliate_integrations(affiliate_id: str):
             {"affiliate_id": affiliate_id}
         ).to_list(length=None)
         
-        # Remove sensitive data
+        # Remove sensitive data and convert ObjectId to string
         for integration in integrations:
             integration.pop("encrypted_api_key", None)
+            if "_id" in integration:
+                integration["_id"] = str(integration["_id"])
         
         return {
             "success": True,
