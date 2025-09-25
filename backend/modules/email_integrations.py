@@ -431,6 +431,26 @@ async def test_integration(affiliate_id: str, platform: EmailPlatform):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Test failed: {str(e)}")
 
+# ========== HEALTH CHECK ==========
+
+@router.get("/health")
+async def integration_health_check():
+    """Health check for integration system"""
+    try:
+        # Test database connection
+        await db.affiliate_integrations.count_documents({})
+        
+        return {
+            "success": True,
+            "status": "healthy",
+            "encryption": "enabled",
+            "platforms_supported": ["convertkit", "getresponse", "zapier"],
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=503, detail=f"Health check failed: {str(e)}")
+
 @router.get("/{affiliate_id}")
 async def get_affiliate_integrations(affiliate_id: str):
     """Get all integrations for an affiliate"""
