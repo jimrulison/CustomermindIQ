@@ -164,14 +164,16 @@ const MultiSiteAffiliatePortal = () => {
                 {/* Header */}
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900">Multi-Site Affiliate Dashboard</h1>
-                    <div className="mt-2 flex items-center space-x-4">
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                            <Star className="w-4 h-4 mr-1" />
-                            {dashboardData.affiliate_tier} Tier
-                        </span>
-                        <span className="text-gray-500">
-                            {selectedSites.length} of {dashboardData.available_sites?.length || 0} sites selected
-                        </span>
+                    <div className="mt-2 flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                                <Star className="w-4 h-4 mr-1" />
+                                {dashboardData.affiliate_tier} Tier
+                            </span>
+                            <span className="text-gray-500">
+                                {selectedSites.length} of {dashboardData.available_sites?.length || 0} sites selected
+                            </span>
+                        </div>
                     </div>
                 </div>
 
