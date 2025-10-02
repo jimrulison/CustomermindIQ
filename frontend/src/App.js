@@ -1644,14 +1644,14 @@ ${details.updateFrequency}
         </div>
       )}
       
-      <Routes>
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/" element={
-          <div className="container mx-auto px-6 py-8">
-            {/* Usage Status Banner - Show when user needs overage approval */}</div>
-        } />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      {/* Handle special routes */}
+      {location.pathname === '/contact' ? (
+        <ContactPage />
+      ) : location.pathname !== '/' && !location.pathname.match(/^\/(signin|signup)/) ? (
+        <NotFound />
+      ) : (
+        <div className="container mx-auto px-6 py-8">
+          {/* Usage Status Banner - Show when user needs overage approval */}
         {overageStatus?.approval_required && !showOverageApproval && (
           <div className="mb-6">
             <Alert className="bg-orange-500/10 border-orange-500/20">
