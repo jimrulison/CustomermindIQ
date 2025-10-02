@@ -144,6 +144,11 @@ const LiveChatWidget = () => {
           file_info: data.message?.file_info
         };
         setMessages(prev => [...prev, message]);
+        
+        // Increment unread count if minimized and message is from admin
+        if (isMinimized && data.sender_type === 'admin') {
+          setUnreadCount(prev => prev + 1);
+        }
         break;
         
       case 'admin_joined':
