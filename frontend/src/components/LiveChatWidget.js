@@ -463,6 +463,7 @@ const LiveChatWidget = () => {
       setIsTyping(false);
       setAdminTyping(false);
       setFileUpload(null);
+      setUnreadCount(0);
     } catch (error) {
       console.error('Error closing chat session:', error);
     }
