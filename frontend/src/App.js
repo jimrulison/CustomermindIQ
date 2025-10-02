@@ -3359,11 +3359,7 @@ function App() {
     <HelmetProvider>
       <AuthProvider>
         <Router>
-          <Routes>
-            <Route path="/" element={<AppContent />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AppContent />
         </Router>
       </AuthProvider>
     </HelmetProvider>
