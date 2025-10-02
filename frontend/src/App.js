@@ -3333,10 +3333,13 @@ Click "Pursue" in Expansion Opportunities to initiate outreach!`)}
             </div>
           </div>
         )}
-      </div>
+        </div>
+      )}
 
-      {/* Footer */}
-      <Footer onLegalClick={(type) => {
+      {/* Footer - Only render on main routes */}
+      {location.pathname === '/' || location.pathname.match(/^\/(signin|signup)/) ? (
+        <Suspense fallback={<div></div>}>
+          <Footer onLegalClick={(type) => {
         if (type === 'privacy') {
           setShowLegalDocs(true);
           // Update URL to show privacy policy
