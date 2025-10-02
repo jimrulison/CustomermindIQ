@@ -555,7 +555,7 @@ const LiveChatWidget = () => {
       {isOpen && (
         <div className={`fixed bottom-6 right-6 z-40 transition-all duration-300 ${
           isMinimized ? 'h-16' : 'h-96'
-        } ${isMinimized ? 'w-80' : 'w-80'}`}>
+        } w-80`}>
           <Card className="w-80 bg-slate-900 border-slate-700 shadow-xl">
             {/* Chat Header */}
             <CardHeader className="pb-2">
