@@ -1646,26 +1646,11 @@ ${details.updateFrequency}
       {/* Route-based content rendering */}
       <Routes>
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="*" element={
-          currentPage === 'signin' ? <NotFound /> :
-          <>
-            <div className="container mx-auto px-6 py-8">
-              {/* Usage Status Banner - Show when user needs overage approval */}</div>
-          </>
-        } />
-      </Routes>
-
-      {/* Main application content - only show when not on special routes */}
-      <Routes>
         <Route path="/" element={
           <div className="container mx-auto px-6 py-8">
             {/* Usage Status Banner - Show when user needs overage approval */}</div>
         } />
-        <Route path="*" element={
-          window.location.pathname === '/contact' ? null :
-          <div className="container mx-auto px-6 py-8">
-            {/* Usage Status Banner - Show when user needs overage approval */}</div>
-        } />
+        <Route path="*" element={<NotFound />} />
       </Routes>
         {overageStatus?.approval_required && !showOverageApproval && (
           <div className="mb-6">
