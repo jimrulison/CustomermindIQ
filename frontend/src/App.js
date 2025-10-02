@@ -3356,15 +3356,17 @@ Click "Pursue" in Expansion Opportunities to initiate outreach!`)}
 // Main App component wrapped with AuthProvider and Router
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<AppContent />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <HelmetProvider>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<AppContent />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </HelmetProvider>
   );
 }
 
