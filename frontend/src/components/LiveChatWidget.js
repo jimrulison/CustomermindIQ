@@ -598,6 +598,29 @@ const LiveChatWidget = () => {
               </div>
             </CardHeader>
 
+            {/* Minimized State Indicator */}
+            {isMinimized && chatSession && (
+              <CardContent className="p-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                    <span className="text-slate-300 text-sm">
+                      {chatSession.status === 'active' ? 
+                        `Chatting with ${chatSession.admin_name || 'Admin'}` : 
+                        'Waiting for admin...'}
+                    </span>
+                  </div>
+                  {adminTyping && (
+                    <div className="flex space-x-1">
+                      <div className="w-1 h-1 bg-green-400 rounded-full animate-bounce"></div>
+                      <div className="w-1 h-1 bg-green-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                      <div className="w-1 h-1 bg-green-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            )}
+
             {/* Chat Content */}
             {!isMinimized && (
               <CardContent className="p-0">
