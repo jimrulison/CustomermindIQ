@@ -1647,9 +1647,7 @@ ${details.updateFrequency}
       {/* Handle special routes */}
       {location.pathname === '/contact' ? (
         <ContactPage />
-      ) : location.pathname !== '/' && !location.pathname.match(/^\/(signin|signup)/) ? (
-        <NotFound />
-      ) : (
+      ) : location.pathname === '/' || location.pathname.match(/^\/(signin|signup)/) ? (
         <div className="container mx-auto px-6 py-8">
           {/* Usage Status Banner - Show when user needs overage approval */}
         {overageStatus?.approval_required && !showOverageApproval && (
