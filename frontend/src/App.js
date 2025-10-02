@@ -3356,7 +3356,9 @@ Click "Pursue" in Expansion Opportunities to initiate outreach!`)}
 function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <Router>
+        <AppContent />
+      </Router>
     </AuthProvider>
   );
 }
