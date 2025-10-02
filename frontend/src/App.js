@@ -1552,8 +1552,8 @@ ${details.updateFrequency}
     }} />;
   }
 
-  // Show sign-in page if not authenticated (unless it's affiliate access or legal docs)
-  if (!isAuthenticated) {
+  // Show sign-in page if not authenticated (unless it's affiliate access, legal docs, or special routes)
+  if (!isAuthenticated && location.pathname !== '/contact' && !location.pathname.match(/^\/[^\/]+$/)) {
     return <SignIn />;
   }
 
