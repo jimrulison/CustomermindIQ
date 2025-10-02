@@ -103,7 +103,7 @@ def main():
     # Connect to MongoDB
     client, db = get_mongo_connection()
     
-    if not client or not db:
+    if client is None or db is None:
         print("❌ Cannot proceed without database connection")
         sys.exit(1)
     
