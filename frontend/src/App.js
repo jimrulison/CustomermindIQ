@@ -1552,8 +1552,12 @@ ${details.updateFrequency}
     }} />;
   }
 
-  // Show sign-in page if not authenticated (unless it's affiliate access, legal docs, or special routes)
-  if (!isAuthenticated && location.pathname !== '/contact' && !location.pathname.match(/^\/[^\/]+$/)) {
+  // Show sign-in page if not authenticated (unless it's public routes)
+  const publicRoutes = ['/contact'];
+  const isPublicRoute = publicRoutes.includes(location.pathname);
+  const isNotFoundRoute = location.pathname !== '/' && !publicRoutes.includes(location.pathname) && !location.pathname.match(/^\/(signin|signup)/);
+  
+  if (!isAuthenticated && !isPublicRoute && !isNotFoundRoute) {
     return <SignIn />;
   }
 
