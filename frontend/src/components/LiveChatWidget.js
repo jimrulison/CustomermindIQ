@@ -556,7 +556,13 @@ const LiveChatWidget = () => {
         <div className={`fixed bottom-6 right-6 z-40 transition-all duration-300 ${
           isMinimized ? 'h-16' : 'h-96'
         } w-80`}>
-          <Card className="w-80 bg-slate-900 border-slate-700 shadow-xl">
+          <Card className={`w-80 bg-slate-900 border-slate-700 shadow-xl transition-all duration-200 ${
+            isMinimized ? 'hover:bg-slate-800 cursor-pointer' : ''
+          }`}
+          onClick={isMinimized ? () => {
+            setIsMinimized(false);
+            setUnreadCount(0);
+          } : undefined}>
             {/* Chat Header */}
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
