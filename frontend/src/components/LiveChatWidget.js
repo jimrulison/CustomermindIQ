@@ -566,8 +566,15 @@ const LiveChatWidget = () => {
                     size="sm"
                     onClick={() => setIsMinimized(!isMinimized)}
                     className="h-6 w-6 p-0 text-slate-400 hover:text-white"
+                    title={isMinimized ? "Expand chat" : "Minimize chat"}
                   >
-                    <Minimize2 className="w-4 h-4" />
+                    {isMinimized ? (
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                      </svg>
+                    ) : (
+                      <Minimize2 className="w-4 h-4" />
+                    )}
                   </Button>
                   <Button
                     variant="ghost"
