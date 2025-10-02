@@ -3356,6 +3356,8 @@ Click "Pursue" in Expansion Opportunities to initiate outreach!`)}
           window.history.pushState({}, '', url);
         }
       }} />
+        </Suspense>
+      ) : null}
 
       {/* Live Chat Widget - Always available for premium users */}
       {user && <LiveChatWidget />}
