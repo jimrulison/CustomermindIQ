@@ -111,6 +111,7 @@ const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001
 function AppContent() {
   // Get authentication state from context
   const { user, isAuthenticated, logout, apiCall } = useAuth();
+  const location = useLocation();
 
   // Application state
   const [currentPage, setCurrentPage] = useState('customer-analytics-dashboard');
