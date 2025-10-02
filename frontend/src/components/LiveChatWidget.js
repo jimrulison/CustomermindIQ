@@ -620,6 +620,11 @@ const LiveChatWidget = () => {
                         `Chatting with ${chatSession.admin_name || 'Admin'}` : 
                         'Waiting for admin...'}
                     </span>
+                    {unreadCount > 0 && (
+                      <Badge className="bg-red-500 text-white text-xs px-1 py-0 h-4 min-w-4 rounded-full">
+                        {unreadCount > 9 ? '9+' : unreadCount}
+                      </Badge>
+                    )}
                   </div>
                   {adminTyping && (
                     <div className="flex space-x-1">
