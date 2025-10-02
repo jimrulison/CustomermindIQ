@@ -39,6 +39,7 @@ const LiveChatWidget = () => {
   const [adminTyping, setAdminTyping] = useState(false);
   const [fileUpload, setFileUpload] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
   const typingTimeoutRef = useRef(null);
