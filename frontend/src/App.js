@@ -3332,6 +3332,8 @@ Click "Pursue" in Expansion Opportunities to initiate outreach!`)}
           </div>
         )}
         </div>
+      ) : (
+        <NotFound />
       )}
 
       {/* Footer - Only render on main routes */}
