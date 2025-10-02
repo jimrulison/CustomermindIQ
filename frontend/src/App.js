@@ -1643,7 +1643,6 @@ ${details.updateFrequency}
         </div>
       )}
       
-      {/* Route-based content rendering */}
       <Routes>
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/" element={
