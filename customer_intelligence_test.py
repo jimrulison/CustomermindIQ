@@ -10,7 +10,7 @@ import json
 from datetime import datetime
 
 class CustomerIntelligenceTester:
-    def __init__(self, base_url="https://customeriq-admin.preview.emergentagent.com"):
+    def __init__(self, base_url="https://subscription-tiers-4.preview.emergentagent.com"):
         self.base_url = base_url
         self.customer_intelligence_tests = 0
         self.customer_intelligence_passed = 0

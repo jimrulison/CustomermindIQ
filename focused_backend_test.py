@@ -15,7 +15,7 @@ from datetime import datetime
 import time
 
 class FocusedBackendTester:
-    def __init__(self, base_url="https://customeriq-admin.preview.emergentagent.com"):
+    def __init__(self, base_url="https://subscription-tiers-4.preview.emergentagent.com"):
         self.base_url = base_url
         self.results = {
             'marketing_automation_pro': {'total': 0, 'passed': 0, 'failed': 0, 'details': []},

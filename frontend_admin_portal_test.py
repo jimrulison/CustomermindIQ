@@ -43,8 +43,8 @@ import time
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configuration
-BACKEND_URL = "https://customeriq-admin.preview.emergentagent.com"
-FRONTEND_URL = "https://customeriq-admin.preview.emergentagent.com"
+BACKEND_URL = "https://subscription-tiers-4.preview.emergentagent.com"
+FRONTEND_URL = "https://subscription-tiers-4.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test credentials
