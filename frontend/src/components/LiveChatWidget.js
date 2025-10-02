@@ -570,7 +570,12 @@ const LiveChatWidget = () => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => setIsMinimized(!isMinimized)}
+                    onClick={() => {
+                      setIsMinimized(!isMinimized);
+                      if (isMinimized) {
+                        setUnreadCount(0); // Clear unread count when expanding
+                      }
+                    }}
                     className="h-6 w-6 p-0 text-slate-400 hover:text-white"
                     title={isMinimized ? "Expand chat" : "Minimize chat"}
                   >
